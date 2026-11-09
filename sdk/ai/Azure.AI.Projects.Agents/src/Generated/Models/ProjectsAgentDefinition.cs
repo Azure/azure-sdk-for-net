@@ -9,7 +9,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// The ProjectsAgentDefinition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DeclarativeAgentDefinition"/>, <see cref="ExternalAgentDefinition"/>, <see cref="HostedAgentDefinition"/>, <see cref="VoiceAgentDefinition"/>, and <see cref="WorkflowAgentDefinition"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DeclarativeAgentDefinition"/>, <see cref="ExternalAgentDefinition"/>, <see cref="HostedAgentDefinition"/>, <see cref="VoiceAgentBaseDefinition"/>, and <see cref="WorkflowAgentDefinition"/>.
     /// </summary>
     public abstract partial class ProjectsAgentDefinition
     {
@@ -18,21 +18,25 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="ProjectsAgentDefinition"/>. </summary>
         /// <param name="kind"></param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         private protected ProjectsAgentDefinition(ProjectsAgentKind kind)
         {
             Kind = kind;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="ProjectsAgentDefinition"/>. </summary>
         /// <param name="kind"></param>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal ProjectsAgentDefinition(ProjectsAgentKind kind, ContentFilterConfiguration contentFilterConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             ContentFilterConfiguration = contentFilterConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Gets or sets the Kind. </summary>
         internal ProjectsAgentKind Kind { get; set; }

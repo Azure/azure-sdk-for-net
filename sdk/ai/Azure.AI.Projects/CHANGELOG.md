@@ -4,11 +4,24 @@
 
 ### Features Added
 
+- Added Agent Insights analysis priorities, generated summaries, and run-input models aligned with the current service contract.
+- Added rubric scoring and safety-generation configuration, model-suggested dimension weights, and endpoint evaluator schema versions.
+- Added evaluator diagnostic history and health metrics, trace/conversation evaluation data sources, conversation-based data generation, and user-conversation simulation configuration.
+- Added optional-model evaluator generation inputs and parameterless daily schedules while retaining the existing explicit-model, weighted-dimension, and explicit-hours constructors.
+
 ### Breaking Changes
+
+- `EvaluationsDimension.Weight` is now an optional `int?` property.
+- `EvaluatorGenerationArtifacts.Reference` now uses `VersionedDatasetReference` instead of the removed `DatasetReference` model, retaining the required dataset version.
+- `AgentInsightMonitors.GetInsights` and `GetInsightsAsync` now accept `categories`, `severities`, and `statuses` collections instead of singular filters.
+- Agent Insights monitor/run creation now uses generated method parameters instead of `AgentInsightMonitorCreate` and `AgentInsightRunCreate`. The retired overview models were removed in favor of monitor summaries.
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Agent Insights no longer requires the `AgentInsights=V1Preview` feature header.
+- Regenerated from `feature/foundry-release` at [`298aa64878ea0a8f5eb2f610760a60356c3e58e2`](https://github.com/Azure/azure-rest-api-specs/tree/298aa64878ea0a8f5eb2f610760a60356c3e58e2).
 
 ## 3.0.0-beta.6 (2026-10-30)
 

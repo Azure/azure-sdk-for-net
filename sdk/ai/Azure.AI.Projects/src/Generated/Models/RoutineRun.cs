@@ -4,23 +4,23 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A single routine run returned from the run history API. </summary>
-    [Experimental("AAIP001")]
     public partial class RoutineRun
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RoutineRun"/>. </summary>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal RoutineRun()
         {
             TriggerEventPayload = new ChangeTrackingDictionary<string, BinaryData>();
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="RoutineRun"/>. </summary>
         /// <param name="id"> The unique run identifier for the routine attempt. </param>
@@ -47,6 +47,7 @@ namespace Azure.AI.Projects
         /// <param name="errorType"> The fully qualified error type captured for a failed attempt, when available. </param>
         /// <param name="errorMessage"> The truncated failure message captured for a failed attempt, when available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal RoutineRun(string id, BinaryData statusInternal, RoutineRunPhase? phase, RoutineTriggerKind? triggerType, string triggerName, IDictionary<string, BinaryData> triggerEventPayload, RoutineAttemptSource? attemptSource, RoutineActionKind? actionType, string agentId, string agentEndpointId, string conversationId, string sessionId, DateTimeOffset? triggeredOn, DateTimeOffset? scheduledFireOn, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string dispatchId, string actionCorrelationId, string responseId, string taskId, int? errorStatusCode, string errorType, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
@@ -74,6 +75,7 @@ namespace Azure.AI.Projects
             ErrorMessage = errorMessage;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> The unique run identifier for the routine attempt. </summary>
         public string Id { get; }

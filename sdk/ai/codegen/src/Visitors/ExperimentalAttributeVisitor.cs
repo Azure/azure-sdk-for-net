@@ -13,13 +13,13 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 
 namespace Extensions.Plugin.Visitors
 {
     /// <summary>
-    /// A visitor that adds <see cref="ExperimentalAttribute"/> to generated public types that are not
-    /// present in the stable-types baseline. This ensures that newly introduced generated types are
-    /// automatically tagged as experimental until explicitly promoted.
+    /// A visitor that adds <see cref="ExperimentalAttribute"/> to generated models and members whose
+    /// Foundry metadata requires preview features, while retaining stable surfaces with conditional preview variants.
     /// </summary>
     /// <remarks>
     /// This visitor mirrors the pattern established by the upstream OpenAI library's codegen plugin
@@ -31,6 +31,7 @@ namespace Extensions.Plugin.Visitors
 
         private readonly HashSet<string> _experimentalClasses = new(StringComparer.Ordinal);
         private readonly HashSet<string> _experimentalProperties = new(StringComparer.Ordinal);
+        private readonly HashSet<string> _conditionalClasses = new(StringComparer.Ordinal);
 
         private readonly HashSet<string> _attributedTypes = new(StringComparer.Ordinal);
 
@@ -88,12 +89,104 @@ namespace Extensions.Plugin.Visitors
             return HasExperimentalAncestor(theType);
         }
 
-        private static bool HasExperimentalDecorator(IEnumerable<InputDecoratorInfo> decorators) => decorators
-                .Where(x => string.Equals(x.Name, "TypeSpec.OpenAPI.@extension"))
-                .Where(x => x.Arguments.ContainsKey("key"))
-                .Select(x => x.Arguments["key"])
-                .Where(x => x.ToString().Contains("x-ms-foundry-meta"))
-                .Any();
+        private static (bool Required, bool Conditional) GetPreviewMetadata(IEnumerable<InputDecoratorInfo> decorators)
+        {
+            bool requiredPreview = false;
+            bool conditionalPreview = false;
+            foreach (InputDecoratorInfo decorator in decorators)
+            {
+                if (decorator.Name != "TypeSpec.OpenAPI.@extension" ||
+                    decorator.Arguments == null ||
+                    !decorator.Arguments.TryGetValue("key", out BinaryData key))
+                {
+                    continue;
+                }
+                using JsonDocument keyDocument = JsonDocument.Parse(key);
+                if (keyDocument.RootElement.ValueKind != JsonValueKind.String ||
+                    keyDocument.RootElement.GetString() != "x-ms-foundry-meta")
+                {
+                    continue;
+                }
+                if (!decorator.Arguments.TryGetValue("value", out BinaryData metadata))
+                {
+                    throw new InvalidOperationException("Foundry metadata extension must have a value.");
+                }
+                using JsonDocument document = JsonDocument.Parse(metadata);
+                JsonElement value = document.RootElement;
+                bool hasPreviewMetadata = false;
+                if (value.ValueKind == JsonValueKind.Object &&
+                    value.TryGetProperty("required_previews", out JsonElement required))
+                {
+                    if (required.ValueKind != JsonValueKind.Array)
+                    {
+                        throw new InvalidOperationException("required_previews must be an array.");
+                    }
+                    requiredPreview |= required.GetArrayLength() > 0;
+                    hasPreviewMetadata = true;
+                }
+                // Conditional metadata describes preview variants on a GA surface, not a preview base type.
+                if (value.ValueKind == JsonValueKind.Object &&
+                    value.TryGetProperty("conditional_previews", out JsonElement conditional))
+                {
+                    if (conditional.ValueKind != JsonValueKind.Array)
+                    {
+                        throw new InvalidOperationException("conditional_previews must be an array.");
+                    }
+                    conditionalPreview |= conditional.GetArrayLength() > 0;
+                    hasPreviewMetadata = true;
+                }
+                if (!hasPreviewMetadata)
+                {
+                    requiredPreview = true;
+                }
+            }
+            return (requiredPreview, conditionalPreview);
+        }
+
+        internal static void SuppressExperimentalImplementationReferences(TypeProvider type, string diagnosticId)
+        {
+            const string justification = "Model initialization and serialization support experimental members and variants.";
+            foreach (ConstructorProvider constructor in type.Constructors)
+            {
+                constructor.Update(suppressions:
+                    [.. constructor.Suppressions, new SuppressionStatement(null, Snippet.Literal(diagnosticId), justification)]);
+            }
+            foreach (TypeProvider serializer in type.SerializationProviders)
+            {
+                foreach (MethodProvider method in serializer.Methods)
+                {
+                    method.Update(suppressions:
+                        [.. method.Suppressions, new SuppressionStatement(null, Snippet.Literal(diagnosticId), justification)]);
+                }
+            }
+        }
+
+        private static bool IsLiveDecisionDependency(InputModelType modelType, ModelProvider type)
+        {
+            // These upstream Live models lack Foundry preview metadata and are only exposed by Live.
+            // Scope the fallback to exact source identities in Agents, not arbitrary dependencies of Live
+            // models: those can be shared with stable APIs. Existing inheritance and factory handling below
+            // also cover the QuestionParam, LiveDecisionQuestion, and AnswerResource descendants.
+            return type?.Type.Namespace == "Azure.AI.Projects.Agents"
+                && modelType.CrossLanguageDefinitionId is
+                    "OpenAI.QuestionParam" or
+                    "OpenAI.ChoiceOptionParam" or
+                    "OpenAI.ScoreLevelParam" or
+                    "OpenAI.LiveDecisionQuestion" or
+                    "OpenAI.LiveDecisionChoiceParam" or
+                    "OpenAI.LiveDecisionScoreLevelParam" or
+                    "OpenAI.LiveDecisionInputJsonParam" or
+                    "OpenAI.LiveDecisionJsonObject" or
+                    "OpenAI.LiveSessionCreateParamsDelegationLiveClientDelegationParam" or
+                    "OpenAI.LiveSessionUpdateParamsDelegationLiveClientDelegationParam" or
+                    "OpenAI.DecisionResponse" or
+                    "OpenAI.AnswerResource" or
+                    "OpenAI.ChoiceProbabilityResource" or
+                    "OpenAI.ScoreProbabilityResource" or
+                    "OpenAI.ResponseUsageResource" or
+                    "OpenAI.InputTokensDetailsResource" or
+                    "OpenAI.OutputTokensDetailsResource";
+        }
 
         private static string ToCapitalizedCamelCase(string value)
         {
@@ -111,17 +204,30 @@ namespace Extensions.Plugin.Visitors
         /// <inheritdoc />
         protected override ModelProvider PreVisitModel(InputModelType modelType, ModelProvider type)
         {
-            bool hasExperimental = HasExperimentalDecorator(modelType.Decorators);
-            if (hasExperimental)
+            var preview = GetPreviewMetadata(modelType.Decorators);
+            if (preview.Required || IsLiveDecisionDependency(modelType, type))
             {
                 _experimentalClasses.Add(type.Type.FullyQualifiedName);
+            }
+            if (preview.Conditional)
+            {
+                _conditionalClasses.Add(type.Type.FullyQualifiedName);
             }
             return base.PreVisitModel(modelType, type);
         }
 
         protected override EnumProvider PreVisitEnum(InputEnumType enumType, EnumProvider type)
         {
-            if (HasExperimentalDecorator(enumType.Decorators))
+            bool isLiveEnum = type?.Type.Namespace == "Azure.AI.Projects.Agents"
+                && (enumType.CrossLanguageDefinitionId?.StartsWith("OpenAI.Live", StringComparison.Ordinal) == true ||
+                    // Literal helper enums have no source ID; these belong only to Live initial-message models.
+                    (string.IsNullOrEmpty(enumType.CrossLanguageDefinitionId) && enumType.Name is
+                        "LiveInitialAssistantMessageItemParamType" or
+                        "LiveInitialDeveloperMessageItemParamType" or
+                        "LiveInitialInputTextContentPartParamType" or
+                        "LiveInitialTextContentPartParamType" or
+                        "LiveInitialUserMessageItemParamType"));
+            if (GetPreviewMetadata(enumType.Decorators).Required || isLiveEnum)
             {
                 _experimentalClasses.Add(type.Type.FullyQualifiedName);
             }
@@ -131,7 +237,7 @@ namespace Extensions.Plugin.Visitors
         protected override PropertyProvider PreVisitProperty(InputProperty property, PropertyProvider propertyProvider)
         {
             string fixedPropertyName = ToCapitalizedCamelCase(property.Name);
-            if (HasExperimentalDecorator(property.Decorators))
+            if (GetPreviewMetadata(property.Decorators).Required)
             {
                 _experimentalProperties.Add($"{propertyProvider.EnclosingType.Type.FullyQualifiedName}.{fixedPropertyName}");
             }
@@ -148,6 +254,10 @@ namespace Extensions.Plugin.Visitors
         }
 
         public bool IsPropertyListed(string property) => _experimentalProperties.Contains(property);
+
+        private bool HasOnlyExperimentalConstructors(TypeProvider type)
+            => type.Constructors.Count > 0 &&
+                type.Constructors.All(constructor => constructor.Signature.Parameters.Any(parameter => IsExperimental(parameter.Type)));
 
         /// <summary>
         /// Return true if the class is marked as experimental in custom code.
@@ -206,11 +316,18 @@ namespace Extensions.Plugin.Visitors
             {
                 return base.VisitType(type);
             }
+            bool supportsPreviewVariants = _conditionalClasses.Contains(type.Type.FullyQualifiedName) ||
+                type is ModelProvider model && model.DerivedModels.Any(derived =>
+                    IsExperimental(derived.Type) || HasOnlyExperimentalConstructors(derived));
+            if (supportsPreviewVariants)
+            {
+                SuppressExperimentalImplementationReferences(type, DiagnosticId);
+            }
             bool isDirty = false;
             // Constructors
             List<ConstructorProvider> constructors = [];
             // In a first run we will check if all the constructors are experimental and if it is the case, mark class experimental.
-            if (type.Constructors.Count > 0 && type.Constructors.All(x => x.Signature.Parameters.Any(x => IsExperimental(x.Type))))
+            if (HasOnlyExperimentalConstructors(type))
             {
                 type.Update(
                     attributes: [.. type.Attributes,
@@ -288,6 +405,10 @@ namespace Extensions.Plugin.Visitors
                     fields: fields,
                     properties: properties
                 );
+                if (!supportsPreviewVariants)
+                {
+                    SuppressExperimentalImplementationReferences(type, DiagnosticId);
+                }
                 return type;
             }
             return base.VisitType(type);

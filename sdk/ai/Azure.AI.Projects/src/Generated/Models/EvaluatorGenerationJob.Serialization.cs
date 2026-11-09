@@ -21,6 +21,7 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected virtual EvaluatorGenerationJob PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EvaluatorGenerationJob>)this).GetFormatFromOptions(options) : options.Format;
@@ -35,8 +36,10 @@ namespace Azure.AI.Projects.Evaluation
                     throw new FormatException($"The model {nameof(EvaluatorGenerationJob)} does not support reading '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EvaluatorGenerationJob>)this).GetFormatFromOptions(options) : options.Format;
@@ -48,36 +51,48 @@ namespace Azure.AI.Projects.Evaluation
                     throw new FormatException($"The model {nameof(EvaluatorGenerationJob)} does not support writing '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         BinaryData IPersistableModel<EvaluatorGenerationJob>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         EvaluatorGenerationJob IPersistableModel<EvaluatorGenerationJob>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         string IPersistableModel<EvaluatorGenerationJob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="EvaluatorGenerationJob"/> from. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         public static explicit operator EvaluatorGenerationJob(ClientResult result)
         {
             PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeEvaluatorGenerationJob(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         void IJsonModel<EvaluatorGenerationJob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EvaluatorGenerationJob>)this).GetFormatFromOptions(options) : options.Format;
@@ -112,6 +127,11 @@ namespace Azure.AI.Projects.Evaluation
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (options.Format != "W" && Optional.IsDefined(Category))
+            {
+                writer.WritePropertyName("category"u8);
+                writer.WriteStringValue(Category.Value.ToString());
+            }
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model);
             writer.WritePropertyName("evaluator_name"u8);
@@ -125,6 +145,26 @@ namespace Azure.AI.Projects.Evaluation
             {
                 writer.WritePropertyName("evaluator_description"u8);
                 writer.WriteStringValue(EvaluatorDescription);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Scoring))
+            {
+                writer.WritePropertyName("scoring"u8);
+                writer.WriteObjectValue(Scoring, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PassThreshold))
+            {
+                writer.WritePropertyName("pass_threshold"u8);
+                writer.WriteNumberValue(PassThreshold.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Dimensions))
+            {
+                writer.WritePropertyName("dimensions"u8);
+                writer.WriteStartArray();
+                foreach (EvaluationsDimension item in Dimensions)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W")
             {
@@ -167,13 +207,17 @@ namespace Azure.AI.Projects.Evaluation
                 }
             }
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         EvaluatorGenerationJob IJsonModel<EvaluatorGenerationJob>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected virtual EvaluatorGenerationJob JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EvaluatorGenerationJob>)this).GetFormatFromOptions(options) : options.Format;
@@ -184,9 +228,11 @@ namespace Azure.AI.Projects.Evaluation
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEvaluatorGenerationJob(document.RootElement, options);
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal static EvaluatorGenerationJob DeserializeEvaluatorGenerationJob(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -198,10 +244,14 @@ namespace Azure.AI.Projects.Evaluation
             ProjectsJobStatus status = default;
             FoundryOpenAIError error = default;
             IList<EvaluatorGenerationJobSource> sources = default;
+            EvaluatorGenerationCategory? category = default;
             string model = default;
             string evaluatorName = default;
             string evaluatorDisplayName = default;
             string evaluatorDescription = default;
+            RubricScoring scoring = default;
+            float? passThreshold = default;
+            IReadOnlyList<EvaluationsDimension> dimensions = default;
             DateTimeOffset createdOn = default;
             DateTimeOffset? finishedOn = default;
             EvaluatorGenerationTokenUsage usage = default;
@@ -247,6 +297,15 @@ namespace Azure.AI.Projects.Evaluation
                     sources = array;
                     continue;
                 }
+                if (prop.NameEquals("category"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    category = new EvaluatorGenerationCategory(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("model"u8))
                 {
                     model = prop.Value.GetString();
@@ -265,6 +324,38 @@ namespace Azure.AI.Projects.Evaluation
                 if (prop.NameEquals("evaluator_description"u8))
                 {
                     evaluatorDescription = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("scoring"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scoring = RubricScoring.DeserializeRubricScoring(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("pass_threshold"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    passThreshold = prop.Value.GetSingle();
+                    continue;
+                }
+                if (prop.NameEquals("dimensions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<EvaluationsDimension> array = new List<EvaluationsDimension>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(EvaluationsDimension.DeserializeEvaluationsDimension(item, options));
+                    }
+                    dimensions = array;
                     continue;
                 }
                 if (prop.NameEquals("created_at"u8))
@@ -315,15 +406,20 @@ namespace Azure.AI.Projects.Evaluation
                 status,
                 error,
                 sources ?? new ChangeTrackingList<EvaluatorGenerationJobSource>(),
+                category,
                 model,
                 evaluatorName,
                 evaluatorDisplayName,
                 evaluatorDescription,
+                scoring,
+                passThreshold,
+                dimensions ?? new ChangeTrackingList<EvaluationsDimension>(),
                 createdOn,
                 finishedOn,
                 usage,
                 inputQualityWarnings ?? new ChangeTrackingList<RubricGenerationInputQualityWarning>(),
                 additionalBinaryDataProperties);
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
     }
 }

@@ -15,6 +15,7 @@ namespace Azure.AI.Projects
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected virtual DispatchRoutineResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DispatchRoutineResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -29,8 +30,10 @@ namespace Azure.AI.Projects
                     throw new FormatException($"The model {nameof(DispatchRoutineResult)} does not support reading '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DispatchRoutineResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -42,36 +45,48 @@ namespace Azure.AI.Projects
                     throw new FormatException($"The model {nameof(DispatchRoutineResult)} does not support writing '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         BinaryData IPersistableModel<DispatchRoutineResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         DispatchRoutineResult IPersistableModel<DispatchRoutineResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         string IPersistableModel<DispatchRoutineResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="DispatchRoutineResult"/> from. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         public static explicit operator DispatchRoutineResult(ClientResult result)
         {
             PipelineResponse response = result.GetRawResponse();
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDispatchRoutineResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         void IJsonModel<DispatchRoutineResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DispatchRoutineResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -110,13 +125,17 @@ namespace Azure.AI.Projects
                 }
             }
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         DispatchRoutineResult IJsonModel<DispatchRoutineResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected virtual DispatchRoutineResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DispatchRoutineResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -127,9 +146,11 @@ namespace Azure.AI.Projects
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDispatchRoutineResult(document.RootElement, options);
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal static DispatchRoutineResult DeserializeDispatchRoutineResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -164,5 +185,6 @@ namespace Azure.AI.Projects
             }
             return new DispatchRoutineResult(dispatchId, actionCorrelationId, taskId, additionalBinaryDataProperties);
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
     }
 }

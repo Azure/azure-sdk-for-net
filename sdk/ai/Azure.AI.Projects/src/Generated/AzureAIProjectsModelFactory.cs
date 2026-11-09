@@ -18,7 +18,7 @@ namespace Azure.AI.Projects
     public static partial class AzureAIProjectsModelFactory
     {
 
-        /// <summary> An Agent Insights monitor summary returned by list operations. </summary>
+        /// <summary> Monitor list item without the summary. </summary>
         /// <param name="id"> The monitor identifier. </param>
         /// <param name="agentName"> The agent this monitor analyzes. There can be only one monitor per agent. </param>
         /// <param name="enabled"> Whether scheduled insight generation is armed for the monitor. </param>
@@ -27,10 +27,10 @@ namespace Azure.AI.Projects
         /// <param name="nextScheduledRunOn"> The next time a scheduled agent insight run will start. Omitted when scheduled generation is disabled. </param>
         /// <param name="estimatedCost"> Estimated cost accumulated by Agent Insights for this monitor. </param>
         /// <param name="suspension"> Why the system suspended scheduled generation. Null when the monitor is not suspended. </param>
+        /// <param name="priorities"> Analysis priorities. Omitted when not configured. </param>
         /// <param name="updatedOn"> The time when this monitor was last updated. </param>
         /// <returns> A new <see cref="Projects.AgentInsightMonitorListItem"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static AgentInsightMonitorListItem AgentInsightMonitorListItem(string id = default, string agentName = default, bool enabled = default, double runIntervalHours = default, string modelDeploymentName = default, DateTimeOffset? nextScheduledRunOn = default, AgentInsightEstimatedCost estimatedCost = default, AgentInsightSuspension suspension = default, DateTimeOffset updatedOn = default)
+        public static AgentInsightMonitorListItem AgentInsightMonitorListItem(string id = default, string agentName = default, bool enabled = default, double runIntervalHours = default, string modelDeploymentName = default, DateTimeOffset? nextScheduledRunOn = default, AgentInsightEstimatedCost estimatedCost = default, AgentInsightSuspension suspension = default, AgentInsightPrioritiesRead priorities = default, DateTimeOffset updatedOn = default)
         {
             return new AgentInsightMonitorListItem(
                 id,
@@ -41,6 +41,7 @@ namespace Azure.AI.Projects
                 nextScheduledRunOn,
                 estimatedCost,
                 suspension,
+                priorities,
                 updatedOn,
                 additionalBinaryDataProperties: null);
         }
@@ -48,7 +49,6 @@ namespace Azure.AI.Projects
         /// <summary> Estimated Agent Insights cost. </summary>
         /// <param name="amount"> Estimated cost amount. </param>
         /// <returns> A new <see cref="Projects.AgentInsightEstimatedCost"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentInsightEstimatedCost AgentInsightEstimatedCost(double amount = default)
         {
             return new AgentInsightEstimatedCost(amount, "USD", additionalBinaryDataProperties: null);
@@ -60,7 +60,6 @@ namespace Azure.AI.Projects
         /// <param name="occurredOn"> The time when the suspension occurred. </param>
         /// <param name="details"> Additional reason-specific suspension details. </param>
         /// <returns> A new <see cref="Projects.AgentInsightSuspension"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentInsightSuspension AgentInsightSuspension(string code = default, string message = default, DateTimeOffset occurredOn = default, IDictionary<string, BinaryData> details = default)
         {
             details ??= new ChangeTrackingDictionary<string, BinaryData>();
@@ -68,16 +67,26 @@ namespace Azure.AI.Projects
             return new AgentInsightSuspension(code, message, occurredOn, details, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Fields accepted when creating an Agent Insights monitor for an agent. </summary>
-        /// <param name="agentName"> The agent this monitor should analyze. </param>
-        /// <param name="enabled"> Whether scheduled insight generation should be armed. Defaults to false. </param>
-        /// <param name="runIntervalHours"> Interval between scheduled insight runs, in hours. Defaults to 6. </param>
-        /// <param name="modelDeploymentName"> The model deployment to use for analyzing traces. Accepts either the deployment name alone or with the connection name as '{connectionName}/modelDeploymentName'. </param>
-        /// <returns> A new <see cref="Projects.AgentInsightMonitorCreate"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static AgentInsightMonitorCreate AgentInsightMonitorCreate(string agentName = default, bool? enabled = default, double? runIntervalHours = default, string modelDeploymentName = default)
+        /// <summary> Monitor analysis priorities returned by the service. </summary>
+        /// <param name="categories"> Up to 20 distinct normalized category identifiers. Can include legacy names containing commas. Empty uses defaults. </param>
+        /// <param name="instructions"> Analysis guidance. Omitted when unavailable. </param>
+        /// <returns> A new <see cref="Projects.AgentInsightPrioritiesRead"/> instance for mocking. </returns>
+        public static AgentInsightPrioritiesRead AgentInsightPrioritiesRead(IEnumerable<string> categories = default, string instructions = default)
         {
-            return new AgentInsightMonitorCreate(agentName, enabled, runIntervalHours, modelDeploymentName, additionalBinaryDataProperties: null);
+            categories ??= new ChangeTrackingList<string>();
+
+            return new AgentInsightPrioritiesRead(categories.ToList(), instructions, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Monitor analysis priorities. </summary>
+        /// <param name="categories"> Up to 20 distinct normalized category identifiers (128 UTF-8 bytes each). Empty uses defaults. </param>
+        /// <param name="instructions"> Analysis guidance, up to 2,000 UTF-8 bytes after trimming. Null or blank removes guidance. </param>
+        /// <returns> A new <see cref="Projects.AgentInsightPriorities"/> instance for mocking. </returns>
+        public static AgentInsightPriorities AgentInsightPriorities(IEnumerable<string> categories = default, string instructions = default)
+        {
+            categories ??= new ChangeTrackingList<string>();
+
+            return new AgentInsightPriorities(categories.ToList(), instructions, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A per-agent Agent Insights monitor that owns configuration, runs, and discovered insights. </summary>
@@ -89,11 +98,11 @@ namespace Azure.AI.Projects
         /// <param name="nextScheduledRunOn"> The next time a scheduled agent insight run will start. Omitted when scheduled generation is disabled. </param>
         /// <param name="estimatedCost"> Estimated cost accumulated by Agent Insights for this monitor. </param>
         /// <param name="suspension"> Why the system suspended scheduled generation. Null when the monitor is not suspended. </param>
-        /// <param name="overview"> The effective overview, or null before an overview is available. </param>
+        /// <param name="agentSummary"> Generated summary. Omitted when unavailable. </param>
+        /// <param name="priorities"> Analysis priorities. Omitted when not configured. </param>
         /// <param name="updatedOn"> The time when this monitor was last updated. </param>
         /// <returns> A new <see cref="Projects.AgentInsightMonitor"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static AgentInsightMonitor AgentInsightMonitor(string id = default, string agentName = default, bool enabled = default, double runIntervalHours = default, string modelDeploymentName = default, DateTimeOffset? nextScheduledRunOn = default, AgentInsightEstimatedCost estimatedCost = default, AgentInsightSuspension suspension = default, AgentInsightsOverview overview = default, DateTimeOffset updatedOn = default)
+        public static AgentInsightMonitor AgentInsightMonitor(string id = default, string agentName = default, bool enabled = default, double runIntervalHours = default, string modelDeploymentName = default, DateTimeOffset? nextScheduledRunOn = default, AgentInsightEstimatedCost estimatedCost = default, AgentInsightSuspension suspension = default, AgentInsightSummary agentSummary = default, AgentInsightPrioritiesRead priorities = default, DateTimeOffset updatedOn = default)
         {
             return new AgentInsightMonitor(
                 id,
@@ -104,29 +113,26 @@ namespace Azure.AI.Projects
                 nextScheduledRunOn,
                 estimatedCost,
                 suspension,
-                overview,
+                agentSummary,
+                priorities,
                 updatedOn,
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The effective overview for an Agent Insights monitor. </summary>
-        /// <param name="content"> The overview content. </param>
-        /// <param name="source"> Where the effective overview came from. </param>
-        /// <param name="updatedOn"> The time when this overview was last updated. </param>
-        /// <returns> A new <see cref="Projects.AgentInsightsOverview"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static AgentInsightsOverview AgentInsightsOverview(string content = default, AgentInsightOverviewSource source = default, DateTimeOffset updatedOn = default)
+        /// <summary> Service-generated agent summary. </summary>
+        /// <param name="markdown"> Summary in Markdown. </param>
+        /// <returns> A new <see cref="Projects.AgentInsightSummary"/> instance for mocking. </returns>
+        public static AgentInsightSummary AgentInsightSummary(string markdown = default)
         {
-            return new AgentInsightsOverview(content, source, updatedOn, additionalBinaryDataProperties: null);
+            return new AgentInsightSummary(markdown, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Inputs used when creating an agent insight run. </summary>
+        /// <summary> Inputs recorded for an Agent Insights run. </summary>
         /// <param name="lookbackHours"> Optional finite positive number of hours of trace history to analyze, up to 2,160. Defaults to 168. </param>
-        /// <returns> A new <see cref="Projects.AgentInsightRunCreate"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static AgentInsightRunCreate AgentInsightRunCreate(double? lookbackHours = default)
+        /// <returns> A new <see cref="Projects.AgentInsightRunInputs"/> instance for mocking. </returns>
+        public static AgentInsightRunInputs AgentInsightRunInputs(double? lookbackHours = default)
         {
-            return new AgentInsightRunCreate(lookbackHours, additionalBinaryDataProperties: null);
+            return new AgentInsightRunInputs(lookbackHours, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Result statistics produced when an agent insight run succeeds. </summary>
@@ -137,7 +143,6 @@ namespace Azure.AI.Projects
         /// <param name="insightsReopened"> The number of insights reopened by the run. </param>
         /// <param name="tokenUsage"> Token usage for the run's insight-generation analysis. </param>
         /// <returns> A new <see cref="Projects.AgentInsightRunResult"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentInsightRunResult AgentInsightRunResult(int tracesInWindow = default, int tracesAnalyzed = default, int insightsCreated = default, int insightsUpdated = default, int insightsReopened = default, AgentInsightTokenUsage tokenUsage = default)
         {
             return new AgentInsightRunResult(
@@ -156,7 +161,6 @@ namespace Azure.AI.Projects
         /// <param name="cachedTokens"> The number of input tokens served from cache. </param>
         /// <param name="totalTokens"> The total number of tokens used by the run. </param>
         /// <returns> A new <see cref="Projects.AgentInsightTokenUsage"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentInsightTokenUsage AgentInsightTokenUsage(int inputTokens = default, int outputTokens = default, int? cachedTokens = default, int totalTokens = default)
         {
             return new AgentInsightTokenUsage(inputTokens, outputTokens, cachedTokens, totalTokens, additionalBinaryDataProperties: null);
@@ -177,7 +181,6 @@ namespace Azure.AI.Projects
         /// <param name="description"> The root-cause diagnosis for the issue. </param>
         /// <param name="details"> Additional insight details. Omitted unless details are requested. </param>
         /// <returns> A new <see cref="Projects.AgentInsight"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentInsight AgentInsight(string id = default, string monitorId = default, string agentName = default, string agentVersion = default, string title = default, AgentInsightSeverity severity = default, string category = default, AgentInsightStatus status = default, int traceCount = default, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default, string description = default, AgentInsightDetails details = default)
         {
             return new AgentInsight(
@@ -202,7 +205,6 @@ namespace Azure.AI.Projects
         /// <param name="linkedTraces"> Up to 200 most recent traces linked to this insight as supporting evidence. </param>
         /// <param name="recommendedActions"> The recommended remediation for this insight. </param>
         /// <returns> A new <see cref="Projects.AgentInsightDetails"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentInsightDetails AgentInsightDetails(IEnumerable<AgentInsightHighlightedTrace> highlightedTraces = default, IEnumerable<AgentInsightLinkedTrace> linkedTraces = default, AgentInsightRecommendedAction recommendedActions = default)
         {
             highlightedTraces ??= new ChangeTrackingList<AgentInsightHighlightedTrace>();
@@ -218,7 +220,6 @@ namespace Azure.AI.Projects
         /// <param name="totalTokens"> Aggregate input and output tokens reported across all model inference calls in this trace, including calls to different models. Intended for relative usage comparison, not cost estimation. </param>
         /// <param name="timestamp"> The time when the trace was recorded. </param>
         /// <returns> A new <see cref="Projects.AgentInsightHighlightedTrace"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentInsightHighlightedTrace AgentInsightHighlightedTrace(string traceId = default, string summary = default, TimeSpan durationMs = default, int? totalTokens = default, DateTimeOffset timestamp = default)
         {
             return new AgentInsightHighlightedTrace(
@@ -234,7 +235,6 @@ namespace Azure.AI.Projects
         /// <param name="traceId"> The trace identifier. </param>
         /// <param name="timestamp"> The time when the trace was recorded. </param>
         /// <returns> A new <see cref="Projects.AgentInsightLinkedTrace"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentInsightLinkedTrace AgentInsightLinkedTrace(string traceId = default, DateTimeOffset timestamp = default)
         {
             return new AgentInsightLinkedTrace(traceId, timestamp, additionalBinaryDataProperties: null);
@@ -243,7 +243,6 @@ namespace Azure.AI.Projects
         /// <summary> The recommended remediation for an agent insight. </summary>
         /// <param name="proposedFix"> The single recommended fix for the issue represented by the insight. </param>
         /// <returns> A new <see cref="Projects.AgentInsightRecommendedAction"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentInsightRecommendedAction AgentInsightRecommendedAction(AgentInsightProposedFix proposedFix = default)
         {
             return new AgentInsightRecommendedAction(proposedFix, additionalBinaryDataProperties: null);
@@ -254,7 +253,6 @@ namespace Azure.AI.Projects
         /// <param name="text"> The human-readable remediation guidance. </param>
         /// <param name="changes"> The concrete changes. Omitted for a prose-only fix. </param>
         /// <returns> A new <see cref="Projects.AgentInsightProposedFix"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentInsightProposedFix AgentInsightProposedFix(AgentInsightProposedFixKind kind = default, string text = default, IEnumerable<AgentInsightProposedFixChange> changes = default)
         {
             changes ??= new ChangeTrackingList<AgentInsightProposedFixChange>();
@@ -271,7 +269,6 @@ namespace Azure.AI.Projects
         /// <param name="oldValue"> The bounded Prompt value before the change. Present for Prompt changes, including when null. </param>
         /// <param name="newValue"> The bounded Prompt value after the change. Present for Prompt changes, including when null. </param>
         /// <returns> A new <see cref="Projects.AgentInsightProposedFixChange"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentInsightProposedFixChange AgentInsightProposedFixChange(string path = default, string language = default, string diff = default, AgentInsightPromptSurface? surface = default, string target = default, BinaryData oldValue = default, BinaryData newValue = default)
         {
             return new AgentInsightProposedFixChange(
@@ -365,6 +362,35 @@ namespace Azure.AI.Projects
         public static AgenticIdentityPreviewCredentials AgenticIdentityPreviewCredentials()
         {
             return new AgenticIdentityPreviewCredentials(CredentialType.AgenticIdentityPreview, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The error object. </summary>
+        /// <param name="code"> One of a server-defined set of error codes. </param>
+        /// <param name="message"> A human-readable representation of the error. </param>
+        /// <param name="target"> The target of the error. </param>
+        /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
+        /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
+        /// <returns> A new <see cref="Projects.ProjectsError"/> instance for mocking. </returns>
+        public static ProjectsError ProjectsError(string code = default, string message = default, string target = default, IEnumerable<ProjectsError> details = default, InnerError innererror = default)
+        {
+            details ??= new ChangeTrackingList<ProjectsError>();
+
+            return new ProjectsError(
+                code,
+                message,
+                target,
+                details.ToList(),
+                innererror,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An object containing more specific information about the error. As per Azure REST API guidelines - https://aka.ms/AzureRestApiGuidelines#handling-errors. </summary>
+        /// <param name="code"> One of a server-defined set of error codes. </param>
+        /// <param name="innererror"> Inner error. </param>
+        /// <returns> A new <see cref="Projects.InnerError"/> instance for mocking. </returns>
+        public static InnerError InnerError(string code = default, InnerError innererror = default)
+        {
+            return new InnerError(code, innererror, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -888,10 +914,13 @@ namespace Azure.AI.Projects
         /// <param name="action"> Definition of the evaluation rule action. </param>
         /// <param name="filter"> Filter condition of the evaluation rule. </param>
         /// <param name="eventType"> Event type that the evaluation rule applies to. </param>
+        /// <param name="schedule"> Timing for timerTrigger rules. Required for timerTrigger and not allowed for other event types. </param>
+        /// <param name="provisioningStatus"> Provisioning state of the rule's schedule. Returned for timerTrigger rules only. </param>
+        /// <param name="error"> Error that caused the rule to be disabled, if any. </param>
         /// <param name="enabled"> Indicates whether the evaluation rule is enabled. Default is true. </param>
         /// <param name="systemData"> System metadata for the evaluation rule. </param>
         /// <returns> A new <see cref="Evaluation.EvaluationRule"/> instance for mocking. </returns>
-        public static EvaluationRule EvaluationRule(string id = default, string displayName = default, string description = default, EvaluationRuleAction action = default, EvaluationRuleFilter filter = default, EvaluationRuleEventType eventType = default, bool enabled = default, IReadOnlyDictionary<string, string> systemData = default)
+        public static EvaluationRule EvaluationRule(string id = default, string displayName = default, string description = default, EvaluationRuleAction action = default, EvaluationRuleFilter filter = default, EvaluationRuleEventType eventType = default, ScheduleTrigger schedule = default, ScheduleProvisioningStatus? provisioningStatus = default, ProjectsError error = default, bool enabled = default, IReadOnlyDictionary<string, string> systemData = default)
         {
             systemData ??= new ChangeTrackingDictionary<string, string>();
 
@@ -902,6 +931,9 @@ namespace Azure.AI.Projects
                 action,
                 filter,
                 eventType,
+                schedule,
+                provisioningStatus,
+                error,
                 enabled,
                 systemData,
                 additionalBinaryDataProperties: null);
@@ -909,7 +941,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Evaluation action model.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.ContinuousEvaluationRuleAction"/> and <see cref="Evaluation.HumanEvaluationPreviewRuleAction"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.ContinuousEvaluationRuleAction"/>, <see cref="Projects.DatasetEvaluationRuleAction"/>, <see cref="Evaluation.HumanEvaluationPreviewRuleAction"/>, and <see cref="Projects.TraceEvaluationRuleAction"/>.
         /// </summary>
         /// <param name="type"> Type of the evaluation action. </param>
         /// <returns> A new <see cref="Evaluation.EvaluationRuleAction"/> instance for mocking. </returns>
@@ -928,74 +960,298 @@ namespace Azure.AI.Projects
             return new ContinuousEvaluationRuleAction(EvaluationRuleActionType.ContinuousEvaluation, additionalBinaryDataProperties: null, evalId, maxHourlyRuns, samplingRate);
         }
 
-        /// <summary> Evaluation rule action for human evaluation. </summary>
-        /// <param name="templateId"> Human evaluation template Id. </param>
-        /// <returns> A new <see cref="Evaluation.HumanEvaluationPreviewRuleAction"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static HumanEvaluationPreviewRuleAction HumanEvaluationPreviewRuleAction(string templateId = default)
+        /// <summary> Configures a scheduled evaluation of observed agent traces. </summary>
+        /// <param name="evalId"> Identifier of the evaluation used to score the selected traces. </param>
+        /// <param name="source">
+        /// Trace inputs for each scheduled occurrence. The selected variant's query-window and sampling behavior is preserved.
+        /// For `azure_ai_traces`, set exactly one of `agent_id` or `agent_name`; `trace_ids` is not supported.
+        /// For `azure_ai_trace_data_source`, set `trace_source`.
+        /// Preview source types may appear in responses for existing schedules but are rejected on create and update.
+        /// </param>
+        /// <param name="evaluationLevel"> Level at which each scheduled run evaluates. Required when the evaluation uses the messages item schema. </param>
+        /// <returns> A new <see cref="Projects.TraceEvaluationRuleAction"/> instance for mocking. </returns>
+        public static TraceEvaluationRuleAction TraceEvaluationRuleAction(string evalId = default, BinaryData source = default, ProjectsEvaluationLevel? evaluationLevel = default)
         {
-            return new HumanEvaluationPreviewRuleAction(EvaluationRuleActionType.HumanEvaluationPreview, additionalBinaryDataProperties: null, templateId);
-        }
-
-        /// <summary> Evaluation filter model. </summary>
-        /// <param name="agentName"> Filter by agent name. </param>
-        /// <returns> A new <see cref="Evaluation.EvaluationRuleFilter"/> instance for mocking. </returns>
-        public static EvaluationRuleFilter EvaluationRuleFilter(string agentName = default)
-        {
-            return new EvaluationRuleFilter(agentName, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Evaluation Taxonomy Definition. </summary>
-        /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="version"> The version of the resource. </param>
-        /// <param name="description"> The asset description text. </param>
-        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="taxonomyInput"> Input configuration for the evaluation taxonomy. </param>
-        /// <param name="taxonomyCategories"> List of taxonomy categories. </param>
-        /// <param name="properties"> Additional properties for the evaluation taxonomy. </param>
-        /// <returns> A new <see cref="Evaluation.EvaluationTaxonomy"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static EvaluationTaxonomy EvaluationTaxonomy(string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default, EvaluationTaxonomyInput taxonomyInput = default, IEnumerable<TaxonomyCategory> taxonomyCategories = default, IDictionary<string, string> properties = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            taxonomyCategories ??= new ChangeTrackingList<TaxonomyCategory>();
-            properties ??= new ChangeTrackingDictionary<string, string>();
-
-            return new EvaluationTaxonomy(
-                id,
-                name,
-                version,
-                description,
-                tags,
-                taxonomyInput,
-                taxonomyCategories.ToList(),
-                properties,
-                additionalBinaryDataProperties: null);
+            return new TraceEvaluationRuleAction(EvaluationRuleActionType.TraceEvaluation, additionalBinaryDataProperties: null, evalId, source, evaluationLevel);
         }
 
         /// <summary>
-        /// Input configuration for the evaluation taxonomy.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.AgentTaxonomyInput"/>.
+        /// A data source for evaluation runs over agent traces stored in Application Insights.
+        /// See [create an evaluation dataset from traces](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/traces-to-dataset?tabs=python).
         /// </summary>
-        /// <param name="type"> Input type of the evaluation taxonomy. </param>
-        /// <returns> A new <see cref="Evaluation.EvaluationTaxonomyInput"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static EvaluationTaxonomyInput EvaluationTaxonomyInput(string @type = default)
+        /// <param name="traceIds"> Collection of Agent trace identifiers that should be evaluated. </param>
+        /// <param name="conversationIds"> Collection of conversation identifiers to filter traces by conversation. </param>
+        /// <param name="agentId"> The agent ID used to filter traces for evaluation. </param>
+        /// <param name="agentName"> The agent name used to filter traces for evaluation. </param>
+        /// <param name="lookbackHours">
+        /// Lookback window (in hours) applied when retrieving traces from Application Insights.
+        ///     For scheduled evaluations this is inferred from the recurrence interval.
+        /// </param>
+        /// <param name="endsOn"> Unix timestamp (in seconds) marking the end of the trace query window. Defaults to the current time. </param>
+        /// <param name="maxTraces"> Sampling limit applied to traces retrieved for evaluation. </param>
+        /// <param name="ingestionDelaySeconds"> The delay to apply for ingestion when querying traces. </param>
+        /// <returns> A new <see cref="Projects.TracesEvalRunDataSource"/> instance for mocking. </returns>
+        public static TracesEvalRunDataSource TracesEvalRunDataSource(IEnumerable<string> traceIds = default, IEnumerable<string> conversationIds = default, string agentId = default, string agentName = default, int? lookbackHours = default, DateTimeOffset? endsOn = default, int? maxTraces = default, TimeSpan? ingestionDelaySeconds = default)
         {
-            return new UnknownEvaluationTaxonomyInput(new EvaluationTaxonomyInputType(@type), additionalBinaryDataProperties: null);
+            traceIds ??= new ChangeTrackingList<string>();
+            conversationIds ??= new ChangeTrackingList<string>();
+
+            return new TracesEvalRunDataSource(
+                "azure_ai_traces",
+                additionalBinaryDataProperties: null,
+                traceIds.ToList(),
+                conversationIds.ToList(),
+                agentId,
+                agentName,
+                lookbackHours,
+                endsOn,
+                maxTraces,
+                ingestionDelaySeconds);
         }
 
-        /// <summary> Input configuration for the evaluation taxonomy when the input type is agent. </summary>
-        /// <param name="target"> Target configuration for the agent. </param>
-        /// <param name="riskCategories"> List of risk categories to evaluate against. </param>
-        /// <returns> A new <see cref="Evaluation.AgentTaxonomyInput"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static AgentTaxonomyInput AgentTaxonomyInput(EvaluationTarget target = default, IEnumerable<RiskCategory> riskCategories = default)
+        /// <summary>
+        /// Base class for run data sources with discriminator support.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AzureAITraceDataSourceEvalRunDataSource"/>, <see cref="Projects.AzureAITraceDataSourcePreviewEvalRunDataSource"/>, <see cref="Projects.EvalCsvRunDataSource"/>, <see cref="Projects.TargetCompletionEvalRunDataSource"/>, <see cref="Projects.TracesEvalRunDataSource"/>, <see cref="Projects.TracesPreviewEvalRunDataSource"/>, <see cref="Projects.UserConversationSimulationEvalRunDataSource"/>, and <see cref="Projects.UserConversationSimulationPreviewEvalRunDataSource"/>.
+        /// </summary>
+        /// <param name="type"> The data source type discriminator. </param>
+        /// <returns> A new <see cref="Projects.EvalRunDataSource"/> instance for mocking. </returns>
+        public static EvalRunDataSource EvalRunDataSource(string @type = default)
         {
-            riskCategories ??= new ChangeTrackingList<RiskCategory>();
+            return new UnknownEvalRunDataSource(@type, additionalBinaryDataProperties: null);
+        }
 
-            return new AgentTaxonomyInput(EvaluationTaxonomyInputType.Agent, additionalBinaryDataProperties: null, target, riskCategories.ToList());
+        /// <summary> Preview form of `azure_ai_traces`. Returned only for rules backed by existing preview schedules; rejected on create and update. </summary>
+        /// <param name="traceIds"> Collection of Agent trace identifiers that should be evaluated. </param>
+        /// <param name="conversationIds"> Collection of conversation identifiers to filter traces by conversation. </param>
+        /// <param name="agentId"> The agent ID used to filter traces for evaluation. </param>
+        /// <param name="agentName"> The agent name used to filter traces for evaluation. </param>
+        /// <param name="lookbackHours">
+        /// Lookback window (in hours) applied when retrieving traces from Application Insights.
+        ///     For scheduled evaluations this is inferred from the recurrence interval.
+        /// </param>
+        /// <param name="endsOn"> Unix timestamp (in seconds) marking the end of the trace query window. Defaults to the current time. </param>
+        /// <param name="maxTraces"> Sampling limit applied to traces retrieved for evaluation. </param>
+        /// <param name="ingestionDelaySeconds"> The delay to apply for ingestion when querying traces. </param>
+        /// <returns> A new <see cref="Projects.TracesPreviewEvalRunDataSource"/> instance for mocking. </returns>
+        public static TracesPreviewEvalRunDataSource TracesPreviewEvalRunDataSource(IEnumerable<string> traceIds = default, IEnumerable<string> conversationIds = default, string agentId = default, string agentName = default, int? lookbackHours = default, DateTimeOffset? endsOn = default, int? maxTraces = default, TimeSpan? ingestionDelaySeconds = default)
+        {
+            traceIds ??= new ChangeTrackingList<string>();
+            conversationIds ??= new ChangeTrackingList<string>();
+
+            return new TracesPreviewEvalRunDataSource(
+                "azure_ai_traces_preview",
+                additionalBinaryDataProperties: null,
+                traceIds.ToList(),
+                conversationIds.ToList(),
+                agentId,
+                agentName,
+                lookbackHours,
+                endsOn,
+                maxTraces,
+                ingestionDelaySeconds);
+        }
+
+        /// <summary>
+        /// A data source that selects traces for evaluation.
+        /// See [create an evaluation dataset from traces](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/traces-to-dataset?tabs=python).
+        /// </summary>
+        /// <param name="traceSource"> The trace source that defines how traces are selected for evaluation. </param>
+        /// <returns> A new <see cref="Projects.AzureAITraceDataSourceEvalRunDataSource"/> instance for mocking. </returns>
+        public static AzureAITraceDataSourceEvalRunDataSource AzureAITraceDataSourceEvalRunDataSource(TraceSource traceSource = default)
+        {
+            return new AzureAITraceDataSourceEvalRunDataSource("azure_ai_trace_data_source", additionalBinaryDataProperties: null, traceSource);
+        }
+
+        /// <summary>
+        /// Base class for polymorphic trace sources nested within an AzureAITraceDataSourceEvalRunDataSource.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AgentFilterTraceSource"/>, <see cref="Projects.ConversationIdTraceSource"/>, and <see cref="Projects.TraceIdTraceSource"/>.
+        /// </summary>
+        /// <param name="type"> The discriminator that identifies which kind of trace source this is. </param>
+        /// <returns> A new <see cref="Projects.TraceSource"/> instance for mocking. </returns>
+        public static TraceSource TraceSource(string @type = default)
+        {
+            return new UnknownTraceSource(new TraceSourceType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A trace source that selects traces by explicit trace IDs. </summary>
+        /// <param name="traceIds"> Collection of trace identifiers to evaluate. </param>
+        /// <returns> A new <see cref="Projects.TraceIdTraceSource"/> instance for mocking. </returns>
+        public static TraceIdTraceSource TraceIdTraceSource(IEnumerable<string> traceIds = default)
+        {
+            traceIds ??= new ChangeTrackingList<string>();
+
+            return new TraceIdTraceSource(TraceSourceType.TraceIdSource, additionalBinaryDataProperties: null, traceIds.ToList());
+        }
+
+        /// <summary> A trace source that selects traces by conversation IDs. </summary>
+        /// <param name="conversationIds"> Collection of conversation identifiers to filter traces by. </param>
+        /// <returns> A new <see cref="Projects.ConversationIdTraceSource"/> instance for mocking. </returns>
+        public static ConversationIdTraceSource ConversationIdTraceSource(IEnumerable<string> conversationIds = default)
+        {
+            conversationIds ??= new ChangeTrackingList<string>();
+
+            return new ConversationIdTraceSource(TraceSourceType.ConversationIdSource, additionalBinaryDataProperties: null, conversationIds.ToList());
+        }
+
+        /// <summary> A trace source that selects traces by agent reference with time-based filtering. </summary>
+        /// <param name="agentId"> The identifier of the agent to filter traces by. </param>
+        /// <param name="agentName"> The name of the agent to filter traces by. </param>
+        /// <param name="agentVersion"> The version of the agent to filter traces by. </param>
+        /// <param name="startsOn"> Start time for the trace query window, expressed as a Unix timestamp (seconds). </param>
+        /// <param name="endsOn"> End time for the trace query window, expressed as a Unix timestamp (seconds). </param>
+        /// <param name="maxTraces"> Maximum number of traces to sample. Must be greater than 0. </param>
+        /// <param name="filterStrategy"> The strategy used to filter traces. </param>
+        /// <returns> A new <see cref="Projects.AgentFilterTraceSource"/> instance for mocking. </returns>
+        public static AgentFilterTraceSource AgentFilterTraceSource(string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, int? maxTraces = default, FilterStrategyType? filterStrategy = default)
+        {
+            return new AgentFilterTraceSource(
+                TraceSourceType.AgentFilter,
+                additionalBinaryDataProperties: null,
+                agentId,
+                agentName,
+                agentVersion,
+                startsOn,
+                endsOn,
+                maxTraces,
+                filterStrategy);
+        }
+
+        /// <summary> Preview form of `azure_ai_trace_data_source`. Returned only for rules backed by existing preview schedules; rejected on create and update. </summary>
+        /// <param name="traceSource"> The trace source that defines how traces are selected for evaluation. </param>
+        /// <returns> A new <see cref="Projects.AzureAITraceDataSourcePreviewEvalRunDataSource"/> instance for mocking. </returns>
+        public static AzureAITraceDataSourcePreviewEvalRunDataSource AzureAITraceDataSourcePreviewEvalRunDataSource(TraceSource traceSource = default)
+        {
+            return new AzureAITraceDataSourcePreviewEvalRunDataSource("azure_ai_trace_data_source_preview", additionalBinaryDataProperties: null, traceSource);
+        }
+
+        /// <summary>
+        /// Evaluates a model or agent by simulating user conversations against it.
+        /// Each source item defines a test scenario. Use a JSONL source or an `inline_user_conversation_simulation` source with strongly typed test cases. JSONL attributes use the inline test-case property names by default; specify `data_mapping` only when the dataset uses different names. The model specified by `model_configuration` generates the simulated user's turns and drives the conversation with `target` until it reaches the desired length or maximum turn limit. The evaluation's testing criteria are then applied to the conversation.
+        /// </summary>
+        /// <param name="source"> Test scenarios supplied as JSONL rows or strongly typed inline test cases. </param>
+        /// <param name="target"> Model or agent being evaluated. It receives turns from the simulated user. </param>
+        /// <param name="modelConfiguration"> Model used to simulate the user side of each conversation by generating turns sent to the evaluated `target`. </param>
+        /// <param name="defaultSimulationConfiguration"> Default configuration for generating simulated user conversations and persisting their output. Conversation properties in a test case's `simulation_configuration` override the corresponding defaults. </param>
+        /// <param name="dataMapping"> Maps JSONL dataset attributes to user conversation simulation inputs when their names differ from the defaults. The default attribute names are `test_case_id`, `test_case_category`, `test_case_description`, and `simulation_configuration`, matching `UserConversationSimulationTestCase`. Omit when the dataset uses these names or when using `inline_user_conversation_simulation`. </param>
+        /// <returns> A new <see cref="Projects.UserConversationSimulationEvalRunDataSource"/> instance for mocking. </returns>
+        public static UserConversationSimulationEvalRunDataSource UserConversationSimulationEvalRunDataSource(BinaryData source = default, EvaluationTarget target = default, EvaluationModelConfiguration modelConfiguration = default, UserConversationSimulationDefaultConfiguration defaultSimulationConfiguration = default, IDictionary<string, string> dataMapping = default)
+        {
+            dataMapping ??= new ChangeTrackingDictionary<string, string>();
+
+            return new UserConversationSimulationEvalRunDataSource(
+                "azure_ai_user_conversation_simulation",
+                additionalBinaryDataProperties: null,
+                source,
+                target,
+                modelConfiguration,
+                defaultSimulationConfiguration,
+                dataMapping);
+        }
+
+        /// <summary> EvalJsonlFileContentSource. </summary>
+        /// <param name="content"> The content of the jsonl file. </param>
+        /// <returns> A new <see cref="Projects.EvalJsonlFileContentSource"/> instance for mocking. </returns>
+        public static EvalJsonlFileContentSource EvalJsonlFileContentSource(IEnumerable<EvalJsonlFileContentSourceContent> content = default)
+        {
+            content ??= new ChangeTrackingList<EvalJsonlFileContentSourceContent>();
+
+            return new EvalJsonlFileContentSource("file_content", content.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The EvalJsonlFileContentSourceContent. </summary>
+        /// <param name="item"></param>
+        /// <param name="sample"></param>
+        /// <returns> A new <see cref="Projects.EvalJsonlFileContentSourceContent"/> instance for mocking. </returns>
+        public static EvalJsonlFileContentSourceContent EvalJsonlFileContentSourceContent(IDictionary<string, BinaryData> item = default, IDictionary<string, BinaryData> sample = default)
+        {
+            item ??= new ChangeTrackingDictionary<string, BinaryData>();
+            sample ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new EvalJsonlFileContentSourceContent(item, sample, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> EvalJsonlFileIdSource. </summary>
+        /// <param name="id"> The identifier of the file. </param>
+        /// <returns> A new <see cref="Projects.EvalJsonlFileIdSource"/> instance for mocking. </returns>
+        public static EvalJsonlFileIdSource EvalJsonlFileIdSource(string id = default)
+        {
+            return new EvalJsonlFileIdSource("file_id", id, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Supplies strongly typed test scenarios directly in the evaluation run request. </summary>
+        /// <param name="testCases"> Test scenarios from which user conversations are simulated. At least one test case is required. </param>
+        /// <returns> A new <see cref="Projects.UserConversationSimulationInlineTestCasesSource"/> instance for mocking. </returns>
+        public static UserConversationSimulationInlineTestCasesSource UserConversationSimulationInlineTestCasesSource(IEnumerable<UserConversationSimulationTestCase> testCases = default)
+        {
+            testCases ??= new ChangeTrackingList<UserConversationSimulationTestCase>();
+
+            return new UserConversationSimulationInlineTestCasesSource("inline_user_conversation_simulation", testCases.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Defines one test scenario. Simulation configuration properties specified here override the corresponding data-source defaults. </summary>
+        /// <param name="testCaseId"> Identifier for the test case. When omitted, the service generates a random identifier. </param>
+        /// <param name="testCaseCategory"> Category used to group related test cases. When omitted, the service leaves the category null. </param>
+        /// <param name="testCaseDescription"> Scenario, simulated user goal, and behavioral constraints that guide the conversation. The length must be from 1 through 2,500 characters. </param>
+        /// <param name="simulationConfiguration"> Configuration for conversations generated from this test case. Each specified property overrides the corresponding property in `default_simulation_configuration`. </param>
+        /// <returns> A new <see cref="Projects.UserConversationSimulationTestCase"/> instance for mocking. </returns>
+        public static UserConversationSimulationTestCase UserConversationSimulationTestCase(string testCaseId = default, string testCaseCategory = default, string testCaseDescription = default, UserConversationSimulationConfiguration simulationConfiguration = default)
+        {
+            return new UserConversationSimulationTestCase(testCaseId, testCaseCategory, testCaseDescription, simulationConfiguration, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Configures the number, length, audio effects, and simulated user behavior of conversations. </summary>
+        /// <param name="maxNumTurns"> Hard limit on turns in each conversation. When omitted, the service defaults to 20. </param>
+        /// <param name="conversationRepetitions"> Number of independent conversation repetitions for each test case. Defaults to 1 when not specified at either the data-source or test-case level. </param>
+        /// <param name="desiredNumTurns"> Target number of turns in each conversation. The effective value cannot exceed the effective `max_num_turns`. When omitted, no target is set and the simulation model determines the conversation length dynamically from the scenario. </param>
+        /// <param name="audioEffects"> Audio effects applied to voice conversation simulations. This property is ignored for text-only simulations. </param>
+        /// <param name="userBehavior"> Conversation behavior of the simulated user. </param>
+        /// <returns> A new <see cref="Projects.UserConversationSimulationConfiguration"/> instance for mocking. </returns>
+        public static UserConversationSimulationConfiguration UserConversationSimulationConfiguration(int? maxNumTurns = default, int? conversationRepetitions = default, int? desiredNumTurns = default, UserConversationSimulationAudioEffectsConfiguration audioEffects = default, UserConversationSimulationUserBehaviorConfiguration userBehavior = default)
+        {
+            return new UserConversationSimulationConfiguration(
+                maxNumTurns,
+                conversationRepetitions,
+                desiredNumTurns,
+                audioEffects,
+                userBehavior,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Configures effects applied to simulated conversation audio. </summary>
+        /// <param name="effects"> Effects to apply to simulated audio. </param>
+        /// <param name="volumePercentage"> Volume of the configured audio effects, as a percentage from 1 through 100. When omitted, the service defaults to 15. </param>
+        /// <returns> A new <see cref="Projects.UserConversationSimulationAudioEffectsConfiguration"/> instance for mocking. </returns>
+        public static UserConversationSimulationAudioEffectsConfiguration UserConversationSimulationAudioEffectsConfiguration(IEnumerable<UserConversationSimulationAudioEffect> effects = default, int? volumePercentage = default)
+        {
+            effects ??= new ChangeTrackingList<UserConversationSimulationAudioEffect>();
+
+            return new UserConversationSimulationAudioEffectsConfiguration(effects.ToList(), volumePercentage, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Configures conversation behavior for the simulated user. </summary>
+        /// <param name="interruption"> Configures how the simulated user interrupts the target while it is speaking. Omit to disable interruption. </param>
+        /// <returns> A new <see cref="Projects.UserConversationSimulationUserBehaviorConfiguration"/> instance for mocking. </returns>
+        public static UserConversationSimulationUserBehaviorConfiguration UserConversationSimulationUserBehaviorConfiguration(UserConversationSimulationInterruptionConfiguration interruption = default)
+        {
+            return new UserConversationSimulationUserBehaviorConfiguration(interruption, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Configuration for simulated user interruption behavior.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.UserConversationSimulationDefaultInterruptionConfiguration"/>.
+        /// </summary>
+        /// <param name="type"> The interruption type. </param>
+        /// <returns> A new <see cref="Projects.UserConversationSimulationInterruptionConfiguration"/> instance for mocking. </returns>
+        public static UserConversationSimulationInterruptionConfiguration UserConversationSimulationInterruptionConfiguration(string @type = default)
+        {
+            return new UnknownUserConversationSimulationInterruptionConfiguration(@type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Configures the default interruption behavior for the simulated user. </summary>
+        /// <returns> A new <see cref="Projects.UserConversationSimulationDefaultInterruptionConfiguration"/> instance for mocking. </returns>
+        public static UserConversationSimulationDefaultInterruptionConfiguration UserConversationSimulationDefaultInterruptionConfiguration()
+        {
+            return new UserConversationSimulationDefaultInterruptionConfiguration("default", additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -1065,6 +1321,672 @@ namespace Azure.AI.Projects
             return new ToolDescription(name, description, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Configures the model that plays the simulated user. This model is separate from the evaluated `target`. </summary>
+        /// <param name="model"> Model deployment that generates simulated user turns, in the format `{connectionName}/modelDeploymentName`. </param>
+        /// <param name="samplingParams"> Sampling parameters applied when the simulation model produces user turns. </param>
+        /// <param name="voiceModel"> Voice configuration used to convert simulated user text to speech. Currently, only Azure standard voices are supported. Omit for text-only simulation. </param>
+        /// <returns> A new <see cref="Projects.EvaluationModelConfiguration"/> instance for mocking. </returns>
+        public static EvaluationModelConfiguration EvaluationModelConfiguration(string model = default, ModelSamplingParams samplingParams = default, EvaluationVoiceModelConfiguration voiceModel = default)
+        {
+            return new EvaluationModelConfiguration(model, samplingParams, voiceModel, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Voice configuration used to convert text to speech for evaluation through the Voice Live endpoint.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.EvaluationAzureStandardVoiceModelConfiguration"/>.
+        /// </summary>
+        /// <param name="type"> The voice kind. </param>
+        /// <returns> A new <see cref="Projects.EvaluationVoiceModelConfiguration"/> instance for mocking. </returns>
+        public static EvaluationVoiceModelConfiguration EvaluationVoiceModelConfiguration(string @type = default)
+        {
+            return new UnknownEvaluationVoiceModelConfiguration(@type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Configures an Azure standard neural voice used to convert text to speech for evaluation through the Voice Live endpoint. </summary>
+        /// <param name="name"> The Azure neural voice name. </param>
+        /// <param name="temperature"> The synthesis temperature, from 0 to 1. When omitted, the service defaults to the underlying voice model's default temperature. </param>
+        /// <returns> A new <see cref="Projects.EvaluationAzureStandardVoiceModelConfiguration"/> instance for mocking. </returns>
+        public static EvaluationAzureStandardVoiceModelConfiguration EvaluationAzureStandardVoiceModelConfiguration(string name = default, float? temperature = default)
+        {
+            return new EvaluationAzureStandardVoiceModelConfiguration("azure-standard", additionalBinaryDataProperties: null, name, temperature);
+        }
+
+        /// <summary> Configures default conversation behavior and optional run-wide persistence of generated conversations. </summary>
+        /// <param name="maxNumTurns"> Hard limit on turns in each conversation. When omitted, the service defaults to 20. </param>
+        /// <param name="conversationRepetitions"> Number of independent conversation repetitions for each test case. Defaults to 1 when not specified at either the data-source or test-case level. </param>
+        /// <param name="desiredNumTurns"> Target number of turns in each conversation. The effective value cannot exceed the effective `max_num_turns`. When omitted, no target is set and the simulation model determines the conversation length dynamically from the scenario. </param>
+        /// <param name="audioEffects"> Audio effects applied to voice conversation simulations. This property is ignored for text-only simulations. </param>
+        /// <param name="userBehavior"> Conversation behavior of the simulated user. </param>
+        /// <param name="enableConversationDatasetGeneration"> Whether to write all generated conversations to a versioned Foundry dataset. When enabled, the completed run includes a `simulated_user_conversations` entry in `output_datasets`. When omitted, the service defaults to `false`. </param>
+        /// <param name="outputConversationDatasetName"> Name of the dataset to which generated conversations are written. This property is used only when `enable_conversation_dataset_generation` is `true`. When omitted, the service generates a dataset name. </param>
+        /// <returns> A new <see cref="Projects.UserConversationSimulationDefaultConfiguration"/> instance for mocking. </returns>
+        public static UserConversationSimulationDefaultConfiguration UserConversationSimulationDefaultConfiguration(int? maxNumTurns = default, int? conversationRepetitions = default, int? desiredNumTurns = default, UserConversationSimulationAudioEffectsConfiguration audioEffects = default, UserConversationSimulationUserBehaviorConfiguration userBehavior = default, bool? enableConversationDatasetGeneration = default, string outputConversationDatasetName = default)
+        {
+            return new UserConversationSimulationDefaultConfiguration(
+                maxNumTurns,
+                conversationRepetitions,
+                desiredNumTurns,
+                audioEffects,
+                userBehavior,
+                enableConversationDatasetGeneration,
+                outputConversationDatasetName,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Preview form of `azure_ai_user_conversation_simulation`. Returned only for rules backed by existing preview schedules; rejected on create and update. </summary>
+        /// <param name="source"> Test scenarios supplied as JSONL rows or strongly typed inline test cases. </param>
+        /// <param name="target"> Model or agent being evaluated. It receives turns from the simulated user. </param>
+        /// <param name="modelConfiguration"> Model used to simulate the user side of each conversation by generating turns sent to the evaluated `target`. </param>
+        /// <param name="defaultSimulationConfiguration"> Default configuration for generating simulated user conversations and persisting their output. Conversation properties in a test case's `simulation_configuration` override the corresponding defaults. </param>
+        /// <param name="dataMapping"> Maps JSONL dataset attributes to user conversation simulation inputs when their names differ from the defaults. The default attribute names are `test_case_id`, `test_case_category`, `test_case_description`, and `simulation_configuration`, matching `UserConversationSimulationTestCase`. Omit when the dataset uses these names or when using `inline_user_conversation_simulation`. </param>
+        /// <returns> A new <see cref="Projects.UserConversationSimulationPreviewEvalRunDataSource"/> instance for mocking. </returns>
+        public static UserConversationSimulationPreviewEvalRunDataSource UserConversationSimulationPreviewEvalRunDataSource(BinaryData source = default, EvaluationTarget target = default, EvaluationModelConfiguration modelConfiguration = default, UserConversationSimulationDefaultConfiguration defaultSimulationConfiguration = default, IDictionary<string, string> dataMapping = default)
+        {
+            dataMapping ??= new ChangeTrackingDictionary<string, string>();
+
+            return new UserConversationSimulationPreviewEvalRunDataSource(
+                "azure_ai_user_conversation_simulation_preview",
+                additionalBinaryDataProperties: null,
+                source,
+                target,
+                modelConfiguration,
+                defaultSimulationConfiguration,
+                dataMapping);
+        }
+
+        /// <summary>
+        /// A CSV data source for evaluation runs.
+        /// See [evaluation datasets](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/evaluation-datasets).
+        /// </summary>
+        /// <param name="source"> The source of the CSV data, either inline content or a file reference. </param>
+        /// <returns> A new <see cref="Projects.EvalCsvRunDataSource"/> instance for mocking. </returns>
+        public static EvalCsvRunDataSource EvalCsvRunDataSource(EvalCsvFileIdSource source = default)
+        {
+            return new EvalCsvRunDataSource("csv", additionalBinaryDataProperties: null, source);
+        }
+
+        /// <summary> Represents a reference to an uploaded CSV file used as a source for evaluation data. </summary>
+        /// <param name="id"> The identifier of the uploaded CSV file. </param>
+        /// <returns> A new <see cref="Projects.EvalCsvFileIdSource"/> instance for mocking. </returns>
+        public static EvalCsvFileIdSource EvalCsvFileIdSource(string id = default)
+        {
+            return new EvalCsvFileIdSource("file_id", id, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// A data source for evaluating model or agent target completions.
+        /// See [evaluate conversations](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/cloud-evaluation-conversations?tabs=python).
+        /// </summary>
+        /// <param name="inputMessages"> Input messages configuration. </param>
+        /// <param name="source"> The source configuration for inline or file data. </param>
+        /// <param name="target"> The target configuration for the evaluation. </param>
+        /// <param name="itemGenerationParams"> The parameters for item generation. </param>
+        /// <returns> A new <see cref="Projects.TargetCompletionEvalRunDataSource"/> instance for mocking. </returns>
+        public static TargetCompletionEvalRunDataSource TargetCompletionEvalRunDataSource(CreateEvalCompletionsRunDataSourceInputMessagesItemReference inputMessages = default, BinaryData source = default, EvaluationTarget target = default, ItemGenerationParams itemGenerationParams = default)
+        {
+            return new TargetCompletionEvalRunDataSource(
+                "azure_ai_target_completions",
+                additionalBinaryDataProperties: null,
+                inputMessages,
+                source,
+                target,
+                itemGenerationParams);
+        }
+
+        /// <summary> The CreateEvalCompletionsRunDataSourceInputMessagesItemReference. </summary>
+        /// <param name="itemReference"></param>
+        /// <returns> A new <see cref="Projects.CreateEvalCompletionsRunDataSourceInputMessagesItemReference"/> instance for mocking. </returns>
+        public static CreateEvalCompletionsRunDataSourceInputMessagesItemReference CreateEvalCompletionsRunDataSourceInputMessagesItemReference(string itemReference = default)
+        {
+            return new CreateEvalCompletionsRunDataSourceInputMessagesItemReference("item_reference", itemReference, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Configures how the service prepares input items for an evaluation run before applying testing criteria.
+        /// Depending on `type`, preparation can generate new inputs, retrieve existing responses, transform source data, or simulate conversations. Each `type` selects a workflow-specific model with the parameters required by that preparation workflow. These parameters do not define the evaluated target or the testing criteria.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.RedTeamItemGenerationParams"/>, <see cref="Projects.RedTeamSeedPromptsItemGenerationParams"/>, <see cref="Projects.RedTeamTaxonomyItemGenerationParams"/>, <see cref="Projects.ResponseRetrievalItemGenerationParams"/>, <see cref="Projects.SyntheticDataGenerationItemGenerationParams"/>, and <see cref="Projects.TargetCompletionItemGenerationParams"/>.
+        /// </summary>
+        /// <param name="type"> Preparation workflow to use. This discriminator determines which additional parameters are available. </param>
+        /// <returns> A new <see cref="Projects.ItemGenerationParams"/> instance for mocking. </returns>
+        public static ItemGenerationParams ItemGenerationParams(string @type = default)
+        {
+            return new UnknownItemGenerationParams(new ItemGenerationParamsType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents the parameters for red team item generation. </summary>
+        /// <param name="attackStrategies"> The collection of attack strategies to be used. </param>
+        /// <param name="numTurns"> The number of turns allowed in the game. </param>
+        /// <returns> A new <see cref="Projects.RedTeamItemGenerationParams"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static RedTeamItemGenerationParams RedTeamItemGenerationParams(IEnumerable<AttackStrategy> attackStrategies = default, int numTurns = default)
+        {
+            attackStrategies ??= new ChangeTrackingList<AttackStrategy>();
+
+            return new RedTeamItemGenerationParams(ItemGenerationParamsType.RedTeam, additionalBinaryDataProperties: null, attackStrategies.ToList(), numTurns);
+        }
+
+        /// <summary> Represents the parameters for red team seed prompts item generation. </summary>
+        /// <param name="attackStrategies"> The collection of attack strategies to be used. </param>
+        /// <param name="numTurns"> The number of turns allowed in the game. </param>
+        /// <param name="source"> The source of JSONL content to be processed. </param>
+        /// <returns> A new <see cref="Projects.RedTeamSeedPromptsItemGenerationParams"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static RedTeamSeedPromptsItemGenerationParams RedTeamSeedPromptsItemGenerationParams(IEnumerable<AttackStrategy> attackStrategies = default, int numTurns = default, EvalJsonlFileContentSource source = default)
+        {
+            attackStrategies ??= new ChangeTrackingList<AttackStrategy>();
+
+            return new RedTeamSeedPromptsItemGenerationParams(ItemGenerationParamsType.RedTeamSeedPrompts, additionalBinaryDataProperties: null, attackStrategies.ToList(), numTurns, source);
+        }
+
+        /// <summary> Represents the parameters for red team taxonomy item generation. </summary>
+        /// <param name="attackStrategies"> The collection of attack strategies to be used. </param>
+        /// <param name="numTurns"> The number of turns allowed in the game. </param>
+        /// <param name="source"> The source from which JSONL content is read. </param>
+        /// <returns> A new <see cref="Projects.RedTeamTaxonomyItemGenerationParams"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static RedTeamTaxonomyItemGenerationParams RedTeamTaxonomyItemGenerationParams(IEnumerable<AttackStrategy> attackStrategies = default, int numTurns = default, EvalJsonlFileContentSource source = default)
+        {
+            attackStrategies ??= new ChangeTrackingList<AttackStrategy>();
+
+            return new RedTeamTaxonomyItemGenerationParams(ItemGenerationParamsType.RedTeamTaxonomy, additionalBinaryDataProperties: null, attackStrategies.ToList(), numTurns, source);
+        }
+
+        /// <summary>
+        /// Parameters for retrieving deployed conversations for evaluation.
+        /// See [evaluate deployed conversations](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/cloud-evaluation-deployed-conversations?tabs=python).
+        /// </summary>
+        /// <param name="maxNumTurns"> The maximum number of turns of chat history to evaluate. </param>
+        /// <param name="dataMapping">
+        /// Maps `response_id` to the source field that contains a stored Responses API
+        /// response identifier. For example, `{"response_id": "{{item.resp_id}}"}`.
+        /// Field names are case-sensitive.
+        /// </param>
+        /// <param name="source">
+        /// The inline JSONL content containing the response identifiers to retrieve.
+        /// The `azure_ai_responses` data source supports `file_content` only;
+        /// providing a `file_id` results in a `400 Bad Request` response.
+        /// </param>
+        /// <returns> A new <see cref="Projects.ResponseRetrievalItemGenerationParams"/> instance for mocking. </returns>
+        public static ResponseRetrievalItemGenerationParams ResponseRetrievalItemGenerationParams(int maxNumTurns = default, IDictionary<string, string> dataMapping = default, BinaryData source = default)
+        {
+            dataMapping ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ResponseRetrievalItemGenerationParams(ItemGenerationParamsType.ResponseRetrieval, additionalBinaryDataProperties: null, maxNumTurns, dataMapping, source);
+        }
+
+        /// <summary> Represents the parameters for synthetic data generation item generation. </summary>
+        /// <param name="samplesCount"> The maximum number of data samples to generate. </param>
+        /// <param name="prompt"> The prompt used to generate synthetic data. This property is optional when the target is an agent that already has instructions. </param>
+        /// <param name="modelDeploymentName"> The name of the model deployment to use for generating synthetic data. </param>
+        /// <param name="outputDatasetName"> The name of the output dataset where generated synthetic data will be stored. If not provided, service generates dataset name automatically. </param>
+        /// <param name="outputDatasetId"> The identifier of the output dataset where generated synthetic data is stored. The generated data is a jsonl file with columns id, query and test_description. </param>
+        /// <param name="sources"> The optional seed data content source files for data generation. </param>
+        /// <returns> A new <see cref="Projects.SyntheticDataGenerationItemGenerationParams"/> instance for mocking. </returns>
+        public static SyntheticDataGenerationItemGenerationParams SyntheticDataGenerationItemGenerationParams(int samplesCount = default, string prompt = default, string modelDeploymentName = default, string outputDatasetName = default, string outputDatasetId = default, IEnumerable<EvalJsonlFileIdSource> sources = default)
+        {
+            sources ??= new ChangeTrackingList<EvalJsonlFileIdSource>();
+
+            return new SyntheticDataGenerationItemGenerationParams(
+                ItemGenerationParamsType.SyntheticDataGeneration,
+                additionalBinaryDataProperties: null,
+                samplesCount,
+                prompt,
+                modelDeploymentName,
+                outputDatasetName,
+                outputDatasetId,
+                sources.ToList());
+        }
+
+        /// <summary>
+        /// Parameters for generating target completions for simulated conversations.
+        /// See [simulate conversations](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/cloud-evaluation-simulate-conversations?tabs=python).
+        /// </summary>
+        /// <param name="maxConcurrency"> The maximum number of target completions to execute concurrently. The services defaults to 1 if a value is not specified by the caller, which invokes the target sequentially. </param>
+        /// <returns> A new <see cref="Projects.TargetCompletionItemGenerationParams"/> instance for mocking. </returns>
+        public static TargetCompletionItemGenerationParams TargetCompletionItemGenerationParams(int? maxConcurrency = default)
+        {
+            return new TargetCompletionItemGenerationParams(ItemGenerationParamsType.TargetCompletion, additionalBinaryDataProperties: null, maxConcurrency);
+        }
+
+        /// <summary> Configures a scheduled evaluation of dataset inputs. </summary>
+        /// <param name="evalId"> Identifier of the evaluation used to score the dataset. </param>
+        /// <param name="source"> Dataset inputs for each scheduled occurrence. Preview source types may appear in responses for existing schedules but are rejected on create and update. </param>
+        /// <param name="evaluationLevel"> Level at which each scheduled run evaluates. Required when the evaluation uses the messages item schema. </param>
+        /// <returns> A new <see cref="Projects.DatasetEvaluationRuleAction"/> instance for mocking. </returns>
+        public static DatasetEvaluationRuleAction DatasetEvaluationRuleAction(string evalId = default, BinaryData source = default, ProjectsEvaluationLevel? evaluationLevel = default)
+        {
+            return new DatasetEvaluationRuleAction(EvaluationRuleActionType.DatasetEvaluation, additionalBinaryDataProperties: null, evalId, source, evaluationLevel);
+        }
+
+        /// <summary> JsonlRunDataSource. </summary>
+        /// <param name="source"> Determines what populates the `item` namespace in the data source. </param>
+        /// <returns> A new <see cref="Projects.CreateEvalJsonlRunDataSource"/> instance for mocking. </returns>
+        public static CreateEvalJsonlRunDataSource CreateEvalJsonlRunDataSource(BinaryData source = default)
+        {
+            return new CreateEvalJsonlRunDataSource("jsonl", source, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> CompletionsRunDataSource. </summary>
+        /// <param name="inputMessages"> Used when sampling from a model. Dictates the structure of the messages passed into the model. Can either be a reference to a prebuilt trajectory (ie, `item.input_trajectory`), or a template with variable references to the `item` namespace. </param>
+        /// <param name="samplingParams"></param>
+        /// <param name="model"> The name of the model to use for generating completions (e.g. "o3-mini"). </param>
+        /// <param name="source"> Determines what populates the `item` namespace in this run's data source. </param>
+        /// <returns> A new <see cref="Projects.CreateEvalCompletionsRunDataSource"/> instance for mocking. </returns>
+        public static CreateEvalCompletionsRunDataSource CreateEvalCompletionsRunDataSource(BinaryData inputMessages = default, CreateEvalCompletionsRunDataSourceSamplingParams samplingParams = default, string model = default, BinaryData source = default)
+        {
+            return new CreateEvalCompletionsRunDataSource(
+                "completions",
+                inputMessages,
+                samplingParams,
+                model,
+                source,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The CreateEvalCompletionsRunDataSourceInputMessagesTemplate. </summary>
+        /// <param name="template"></param>
+        /// <returns> A new <see cref="Projects.CreateEvalCompletionsRunDataSourceInputMessagesTemplate"/> instance for mocking. </returns>
+        public static CreateEvalCompletionsRunDataSourceInputMessagesTemplate CreateEvalCompletionsRunDataSourceInputMessagesTemplate(IEnumerable<BinaryData> template = default)
+        {
+            template ??= new ChangeTrackingList<BinaryData>();
+
+            return new CreateEvalCompletionsRunDataSourceInputMessagesTemplate("template", template.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Eval message object. </summary>
+        /// <param name="role">
+        /// The role of the message input. One of `user`, `assistant`, `system`, or
+        ///   `developer`.
+        /// </param>
+        /// <param name="content"></param>
+        /// <param name="type"> The type of the message input. Always `message`. </param>
+        /// <returns> A new <see cref="Projects.EvalItem"/> instance for mocking. </returns>
+        public static EvalItem EvalItem(CreateEvalResponsesRunDataSourceInputMessagesTemplateTemplateRole role = default, BinaryData content = default, EvalItemType? @type = default)
+        {
+            return new EvalItem(role, content, @type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The CreateEvalCompletionsRunDataSourceSamplingParams. </summary>
+        /// <param name="reasoningEffort"></param>
+        /// <param name="temperature"></param>
+        /// <param name="maxCompletionTokens"></param>
+        /// <param name="topP"></param>
+        /// <param name="seed"></param>
+        /// <param name="responseFormat"></param>
+        /// <param name="tools"></param>
+        /// <returns> A new <see cref="Projects.CreateEvalCompletionsRunDataSourceSamplingParams"/> instance for mocking. </returns>
+        public static CreateEvalCompletionsRunDataSourceSamplingParams CreateEvalCompletionsRunDataSourceSamplingParams(ReasoningEffort? reasoningEffort = default, double? temperature = default, long? maxCompletionTokens = default, double? topP = default, long? seed = default, BinaryData responseFormat = default, IEnumerable<ChatCompletionTool> tools = default)
+        {
+            tools ??= new ChangeTrackingList<ChatCompletionTool>();
+
+            return new CreateEvalCompletionsRunDataSourceSamplingParams(
+                reasoningEffort,
+                temperature,
+                maxCompletionTokens,
+                topP,
+                seed,
+                responseFormat,
+                tools.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Text. </summary>
+        /// <returns> A new <see cref="Projects.ResponseFormatText"/> instance for mocking. </returns>
+        public static ResponseFormatText ResponseFormatText()
+        {
+            return new ResponseFormatText("text", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> JSON schema. </summary>
+        /// <param name="jsonSchema"> Structured Outputs configuration options, including a JSON Schema. </param>
+        /// <returns> A new <see cref="Projects.ResponseFormatJsonSchema"/> instance for mocking. </returns>
+        public static ResponseFormatJsonSchema ResponseFormatJsonSchema(ResponseFormatJsonSchemaJsonSchema jsonSchema = default)
+        {
+            return new ResponseFormatJsonSchema(CreateChatCompletionRequestResponseFormatType.JsonSchema, additionalBinaryDataProperties: null, jsonSchema);
+        }
+
+        /// <summary> The ResponseFormatJsonSchemaJsonSchema. </summary>
+        /// <param name="description"></param>
+        /// <param name="name"></param>
+        /// <param name="schema"></param>
+        /// <param name="strict"></param>
+        /// <returns> A new <see cref="Projects.ResponseFormatJsonSchemaJsonSchema"/> instance for mocking. </returns>
+        public static ResponseFormatJsonSchemaJsonSchema ResponseFormatJsonSchemaJsonSchema(string description = default, string name = default, object schema = default, bool? strict = default)
+        {
+            return new ResponseFormatJsonSchemaJsonSchema(description, name, schema, strict, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// An object specifying the format that the model must output.
+        /// Setting to `{ "type": "json_schema", "json_schema": {...} }` enables
+        /// Structured Outputs which ensures the model will match your supplied JSON
+        /// schema. Learn more in the [Structured Outputs
+        /// guide](https://developers.openai.com/api/docs/guides/structured-outputs).
+        /// Setting to `{ "type": "json_object" }` enables the older JSON mode, which
+        /// ensures the message the model generates is valid JSON. Using `json_schema`
+        /// is preferred for models that support it.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.ResponseFormatJsonSchema"/>.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="Projects.CreateChatCompletionRequestResponseFormat"/> instance for mocking. </returns>
+        public static CreateChatCompletionRequestResponseFormat CreateChatCompletionRequestResponseFormat(string @type = default)
+        {
+            return new UnknownCreateChatCompletionRequestResponseFormat(new CreateChatCompletionRequestResponseFormatType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> JSON object. </summary>
+        /// <returns> A new <see cref="Projects.ResponseFormatJsonObject"/> instance for mocking. </returns>
+        public static ResponseFormatJsonObject ResponseFormatJsonObject()
+        {
+            return new ResponseFormatJsonObject("json_object", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Function tool. </summary>
+        /// <param name="function"></param>
+        /// <returns> A new <see cref="Projects.ChatCompletionTool"/> instance for mocking. </returns>
+        public static ChatCompletionTool ChatCompletionTool(FunctionObject function = default)
+        {
+            return new ChatCompletionTool("function", function, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The FunctionObject. </summary>
+        /// <param name="description"> A description of what the function does, used by the model to choose when and how to call the function. </param>
+        /// <param name="name"> The name of the function to be called. Must be a-z, A-Z, 0-9, or contain underscores and dashes, with a maximum length of 64. </param>
+        /// <param name="parameters"></param>
+        /// <param name="strict"></param>
+        /// <returns> A new <see cref="Projects.FunctionObject"/> instance for mocking. </returns>
+        public static FunctionObject FunctionObject(string description = default, string name = default, FunctionParameters parameters = default, bool? strict = default)
+        {
+            return new FunctionObject(description, name, parameters, strict, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// The parameters the functions accepts, described as a JSON Schema object. See the [guide](https://developers.openai.com/api/docs/guides/function-calling) for examples, and the [JSON Schema reference](https://json-schema.org/understanding-json-schema/) for documentation about the format.
+        /// Omitting `parameters` defines a function with an empty parameter list.
+        /// </summary>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="Projects.FunctionParameters"/> instance for mocking. </returns>
+        public static FunctionParameters FunctionParameters(IDictionary<string, BinaryData> additionalProperties = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new FunctionParameters(additionalProperties);
+        }
+
+        /// <summary> StoredCompletionsRunDataSource. </summary>
+        /// <param name="metadata"></param>
+        /// <param name="model"></param>
+        /// <param name="createdAfter"></param>
+        /// <param name="createdBefore"></param>
+        /// <param name="limit"></param>
+        /// <returns> A new <see cref="Projects.EvalStoredCompletionsSource"/> instance for mocking. </returns>
+        public static EvalStoredCompletionsSource EvalStoredCompletionsSource(ProjectsMetadata metadata = default, string model = default, long? createdAfter = default, long? createdBefore = default, long? limit = default)
+        {
+            return new EvalStoredCompletionsSource(
+                "stored_completions",
+                metadata,
+                model,
+                createdAfter,
+                createdBefore,
+                limit,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Set of 16 key-value pairs that can be attached to an object. This can be
+        /// useful for storing additional information about the object in a structured
+        /// format, and querying for objects via API or the dashboard.
+        /// Keys are strings with a maximum length of 64 characters. Values are strings
+        /// with a maximum length of 512 characters.
+        /// </summary>
+        /// <param name="additionalProperties"></param>
+        /// <returns> A new <see cref="Projects.ProjectsMetadata"/> instance for mocking. </returns>
+        public static ProjectsMetadata ProjectsMetadata(IDictionary<string, string> additionalProperties = default)
+        {
+            additionalProperties ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ProjectsMetadata(additionalProperties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Evaluation rule action for human evaluation. </summary>
+        /// <param name="templateId"> Human evaluation template Id. </param>
+        /// <returns> A new <see cref="Evaluation.HumanEvaluationPreviewRuleAction"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static HumanEvaluationPreviewRuleAction HumanEvaluationPreviewRuleAction(string templateId = default)
+        {
+            return new HumanEvaluationPreviewRuleAction(EvaluationRuleActionType.HumanEvaluationPreview, additionalBinaryDataProperties: null, templateId);
+        }
+
+        /// <summary> Evaluation filter model. </summary>
+        /// <param name="agentName"> Filter by agent name. </param>
+        /// <returns> A new <see cref="Evaluation.EvaluationRuleFilter"/> instance for mocking. </returns>
+        public static EvaluationRuleFilter EvaluationRuleFilter(string agentName = default)
+        {
+            return new EvaluationRuleFilter(agentName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Base model for Trigger of the schedule.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.CronTrigger"/>, <see cref="Evaluation.OneTimeTrigger"/>, and <see cref="Evaluation.RecurrenceTrigger"/>.
+        /// </summary>
+        /// <param name="type"> Type of the trigger. </param>
+        /// <returns> A new <see cref="Evaluation.ScheduleTrigger"/> instance for mocking. </returns>
+        public static ScheduleTrigger ScheduleTrigger(string @type = default)
+        {
+            return new UnknownTrigger(new TriggerType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Cron based trigger. </summary>
+        /// <param name="expression"> Five-field cron expression that defines the schedule frequency: minute hour day-of-month month day-of-week. </param>
+        /// <param name="timeZone"> Time zone for the cron schedule. Defaults to `UTC`. </param>
+        /// <param name="startTime"> Start time for the cron schedule in ISO 8601 format. </param>
+        /// <param name="endTime"> End time for the cron schedule in ISO 8601 format. </param>
+        /// <returns> A new <see cref="Evaluation.CronTrigger"/> instance for mocking. </returns>
+        public static CronTrigger CronTrigger(string expression = default, string timeZone = default, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default)
+        {
+            return new CronTrigger(
+                TriggerType.Cron,
+                additionalBinaryDataProperties: null,
+                expression,
+                timeZone,
+                startTime,
+                endTime);
+        }
+
+        /// <summary> Recurrence based trigger. </summary>
+        /// <param name="startTime"> Start time for the recurrence schedule in ISO 8601 format. </param>
+        /// <param name="endTime"> End time for the recurrence schedule in ISO 8601 format. </param>
+        /// <param name="timeZone"> Time zone for the recurrence schedule. Defaults to `UTC`. </param>
+        /// <param name="interval"> Interval for the recurrence schedule. </param>
+        /// <param name="schedule"> Recurrence schedule for the recurrence trigger. </param>
+        /// <returns> A new <see cref="Evaluation.RecurrenceTrigger"/> instance for mocking. </returns>
+        public static RecurrenceTrigger RecurrenceTrigger(DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, string timeZone = default, int interval = default, RecurrenceSchedule schedule = default)
+        {
+            return new RecurrenceTrigger(
+                TriggerType.Recurrence,
+                additionalBinaryDataProperties: null,
+                startTime,
+                endTime,
+                timeZone,
+                interval,
+                schedule);
+        }
+
+        /// <summary>
+        /// Recurrence schedule model.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.DailyRecurrenceSchedule"/>, <see cref="Evaluation.HourlyRecurrenceSchedule"/>, <see cref="Evaluation.MonthlyRecurrenceSchedule"/>, and <see cref="Evaluation.WeeklyRecurrenceSchedule"/>.
+        /// </summary>
+        /// <param name="type"> Recurrence type for the recurrence schedule. </param>
+        /// <returns> A new <see cref="Evaluation.RecurrenceSchedule"/> instance for mocking. </returns>
+        public static RecurrenceSchedule RecurrenceSchedule(string @type = default)
+        {
+            return new UnknownRecurrenceSchedule(new RecurrenceType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Hourly recurrence schedule. </summary>
+        /// <returns> A new <see cref="Evaluation.HourlyRecurrenceSchedule"/> instance for mocking. </returns>
+        public static HourlyRecurrenceSchedule HourlyRecurrenceSchedule()
+        {
+            return new HourlyRecurrenceSchedule(RecurrenceType.Hourly, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Daily recurrence schedule. </summary>
+        /// <param name="hours"> Hours for the recurrence schedule. If omitted, the service uses the current UTC hour when the schedule is created. </param>
+        /// <returns> A new <see cref="Evaluation.DailyRecurrenceSchedule"/> instance for mocking. </returns>
+        public static DailyRecurrenceSchedule DailyRecurrenceSchedule(IEnumerable<int> hours = default)
+        {
+            hours ??= new ChangeTrackingList<int>();
+
+            return new DailyRecurrenceSchedule(RecurrenceType.Daily, additionalBinaryDataProperties: null, hours.ToList());
+        }
+
+        /// <summary> Weekly recurrence schedule. </summary>
+        /// <param name="daysOfWeek"> Days of the week for the recurrence schedule. </param>
+        /// <returns> A new <see cref="Evaluation.WeeklyRecurrenceSchedule"/> instance for mocking. </returns>
+        public static WeeklyRecurrenceSchedule WeeklyRecurrenceSchedule(IEnumerable<DayOfWeek> daysOfWeek = default)
+        {
+            daysOfWeek ??= new ChangeTrackingList<DayOfWeek>();
+
+            return new WeeklyRecurrenceSchedule(RecurrenceType.Weekly, additionalBinaryDataProperties: null, daysOfWeek.ToList());
+        }
+
+        /// <summary> Monthly recurrence schedule. </summary>
+        /// <param name="daysOfMonth"> Days of the month for the recurrence schedule. </param>
+        /// <returns> A new <see cref="Evaluation.MonthlyRecurrenceSchedule"/> instance for mocking. </returns>
+        public static MonthlyRecurrenceSchedule MonthlyRecurrenceSchedule(IEnumerable<int> daysOfMonth = default)
+        {
+            daysOfMonth ??= new ChangeTrackingList<int>();
+
+            return new MonthlyRecurrenceSchedule(RecurrenceType.Monthly, additionalBinaryDataProperties: null, daysOfMonth.ToList());
+        }
+
+        /// <summary> One-time trigger. </summary>
+        /// <param name="triggerAt"> Date and time for the one-time trigger in ISO 8601 format. </param>
+        /// <param name="timeZone"> Time zone for the one-time trigger. Defaults to `UTC`. </param>
+        /// <returns> A new <see cref="Evaluation.OneTimeTrigger"/> instance for mocking. </returns>
+        public static OneTimeTrigger OneTimeTrigger(DateTimeOffset triggerAt = default, string timeZone = default)
+        {
+            return new OneTimeTrigger(TriggerType.OneTime, additionalBinaryDataProperties: null, triggerAt, timeZone);
+        }
+
+        /// <summary>
+        /// The base source model for data generation jobs.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AgentDataGenerationJobSource"/>, <see cref="Projects.FileDataGenerationJobSource"/>, <see cref="Projects.PromptDataGenerationJobSource"/>, and <see cref="Projects.TracesDataGenerationJobSource"/>.
+        /// </summary>
+        /// <param name="type"> The type of source. </param>
+        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
+        /// <returns> A new <see cref="Projects.DataGenerationJobSource"/> instance for mocking. </returns>
+        public static DataGenerationJobSource DataGenerationJobSource(string @type = default, string description = default)
+        {
+            return new UnknownDataGenerationJobSource(new DataGenerationJobSourceType(@type), description, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Prompt source for data generation jobs — inline text provided by the user. </summary>
+        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
+        /// <param name="prompt"> Inline prompt text (e.g., agent description, policy text, supplementary context). </param>
+        /// <returns> A new <see cref="Projects.PromptDataGenerationJobSource"/> instance for mocking. </returns>
+        public static PromptDataGenerationJobSource PromptDataGenerationJobSource(string description = default, string prompt = default)
+        {
+            return new PromptDataGenerationJobSource(DataGenerationJobSourceType.Prompt, additionalBinaryDataProperties: null, description, prompt);
+        }
+
+        /// <summary> Agent source for data generation jobs — references an agent to fetch instructions and metadata from. </summary>
+        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
+        /// <param name="agentName"> The agent name to fetch instructions from. </param>
+        /// <param name="agentVersion"> The agent version. If not specified, the latest version is used. </param>
+        /// <returns> A new <see cref="Projects.AgentDataGenerationJobSource"/> instance for mocking. </returns>
+        public static AgentDataGenerationJobSource AgentDataGenerationJobSource(string description = default, string agentName = default, string agentVersion = default)
+        {
+            return new AgentDataGenerationJobSource(DataGenerationJobSourceType.Agent, additionalBinaryDataProperties: null, description, agentName, agentVersion);
+        }
+
+        /// <summary> Traces source for data generation jobs — conversation traces from Application Insights. </summary>
+        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
+        /// <param name="agentId"> The unique agent ID used to filter traces. Provide either `agent_id` or `agent_name` — at least one is required. </param>
+        /// <param name="agentName"> The agent name to fetch traces for. Provide either `agent_id` or `agent_name` — at least one is required. </param>
+        /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
+        /// <param name="startsOn"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
+        /// <param name="endsOn"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
+        /// <param name="traceIds"> Optional explicit list of trace IDs to include. </param>
+        /// <returns> A new <see cref="Projects.TracesDataGenerationJobSource"/> instance for mocking. </returns>
+        public static TracesDataGenerationJobSource TracesDataGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<string> traceIds = default)
+        {
+            traceIds ??= new ChangeTrackingList<string>();
+
+            return new TracesDataGenerationJobSource(
+                DataGenerationJobSourceType.Traces,
+                additionalBinaryDataProperties: null,
+                description,
+                agentId,
+                agentName,
+                agentVersion,
+                startsOn,
+                endsOn,
+                traceIds.ToList());
+        }
+
+        /// <summary> File source for data generation jobs — Azure OpenAI file input. </summary>
+        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
+        /// <param name="id"> Input Azure Open AI file id used for data generation. </param>
+        /// <returns> A new <see cref="Projects.FileDataGenerationJobSource"/> instance for mocking. </returns>
+        public static FileDataGenerationJobSource FileDataGenerationJobSource(string description = default, string id = default)
+        {
+            return new FileDataGenerationJobSource(DataGenerationJobSourceType.File, description, additionalBinaryDataProperties: null, id);
+        }
+
+        /// <summary> Evaluation Taxonomy Definition. </summary>
+        /// <param name="id"> Asset ID, a unique identifier for the asset. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="version"> The version of the resource. </param>
+        /// <param name="description"> The asset description text. </param>
+        /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="taxonomyInput"> Input configuration for the evaluation taxonomy. </param>
+        /// <param name="taxonomyCategories"> List of taxonomy categories. </param>
+        /// <param name="properties"> Additional properties for the evaluation taxonomy. </param>
+        /// <returns> A new <see cref="Evaluation.EvaluationTaxonomy"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static EvaluationTaxonomy EvaluationTaxonomy(string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default, EvaluationTaxonomyInput taxonomyInput = default, IEnumerable<TaxonomyCategory> taxonomyCategories = default, IDictionary<string, string> properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+            taxonomyCategories ??= new ChangeTrackingList<TaxonomyCategory>();
+            properties ??= new ChangeTrackingDictionary<string, string>();
+
+            return new EvaluationTaxonomy(
+                id,
+                name,
+                version,
+                description,
+                tags,
+                taxonomyInput,
+                taxonomyCategories.ToList(),
+                properties,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Input configuration for the evaluation taxonomy.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.AgentTaxonomyInput"/>.
+        /// </summary>
+        /// <param name="type"> Input type of the evaluation taxonomy. </param>
+        /// <returns> A new <see cref="Evaluation.EvaluationTaxonomyInput"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static EvaluationTaxonomyInput EvaluationTaxonomyInput(string @type = default)
+        {
+            return new UnknownEvaluationTaxonomyInput(new EvaluationTaxonomyInputType(@type), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Input configuration for the evaluation taxonomy when the input type is agent. </summary>
+        /// <param name="target"> Target configuration for the agent. </param>
+        /// <param name="riskCategories"> List of risk categories to evaluate against. </param>
+        /// <returns> A new <see cref="Evaluation.AgentTaxonomyInput"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static AgentTaxonomyInput AgentTaxonomyInput(EvaluationTarget target = default, IEnumerable<RiskCategory> riskCategories = default)
+        {
+            riskCategories ??= new ChangeTrackingList<RiskCategory>();
+
+            return new AgentTaxonomyInput(EvaluationTaxonomyInputType.Agent, additionalBinaryDataProperties: null, target, riskCategories.ToList());
+        }
+
         /// <summary> Taxonomy category definition. </summary>
         /// <param name="id"> Unique identifier of the taxonomy category. </param>
         /// <param name="name"> Name of the taxonomy category. </param>
@@ -1108,6 +2030,293 @@ namespace Azure.AI.Projects
                 isEnabled,
                 properties,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// The shared fields for recorded evaluator changes and health snapshots.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.DefinitionUpdatedDiagnosticChange"/>, <see cref="Projects.DimensionAddedDiagnosticChange"/>, <see cref="Projects.DimensionRemovedDiagnosticChange"/>, <see cref="Projects.DimensionUpdatedDiagnosticChange"/>, <see cref="Projects.HealthComputedDiagnosticChange"/>, and <see cref="Projects.VersionCreatedDiagnosticChange"/>.
+        /// </summary>
+        /// <param name="id"> The stable server-assigned diagnostic identifier. </param>
+        /// <param name="evaluatorVersion"> The evaluator version associated with the recorded snapshot. </param>
+        /// <param name="occurredOn"> The server-recorded time when the change occurred, expressed as Unix seconds. </param>
+        /// <param name="changeType"> A stable machine-readable classification describing why the change occurred. </param>
+        /// <param name="explanation"> A bounded deterministic summary of the change. </param>
+        /// <param name="type"> The diagnostic change shape. </param>
+        /// <returns> A new <see cref="Projects.EvaluatorDiagnostic"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static EvaluatorDiagnostic EvaluatorDiagnostic(string id = default, string evaluatorVersion = default, DateTimeOffset occurredOn = default, EvaluatorDiagnosticChangeType changeType = default, string explanation = default, string @type = default)
+        {
+            return new UnknownEvaluatorDiagnostic(
+                id,
+                evaluatorVersion,
+                occurredOn,
+                changeType,
+                explanation,
+                new EvaluatorDiagnosticType(@type),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Health computed during evaluator generation and retained as a historical snapshot. GET does not recompute these values after later edits. </summary>
+        /// <param name="id"> The stable server-assigned diagnostic identifier. </param>
+        /// <param name="evaluatorVersion"> The evaluator version associated with the recorded snapshot. </param>
+        /// <param name="occurredOn"> The server-recorded time when the change occurred, expressed as Unix seconds. </param>
+        /// <param name="changeType"> A stable machine-readable classification describing why the change occurred. </param>
+        /// <param name="explanation"> A bounded deterministic summary of the change. </param>
+        /// <param name="actor"> The authenticated user or service responsible for the lineage event. </param>
+        /// <param name="generationJobId"> The generation job that produced the health snapshot. </param>
+        /// <param name="health"> The computed health metrics and their availability. </param>
+        /// <returns> A new <see cref="Projects.HealthComputedDiagnosticChange"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static HealthComputedDiagnosticChange HealthComputedDiagnosticChange(string id = default, string evaluatorVersion = default, DateTimeOffset occurredOn = default, EvaluatorDiagnosticChangeType changeType = default, string explanation = default, EvaluatorDiagnosticActor actor = default, string generationJobId = default, EvaluatorHealthMetrics health = default)
+        {
+            return new HealthComputedDiagnosticChange(
+                id,
+                evaluatorVersion,
+                occurredOn,
+                changeType,
+                explanation,
+                EvaluatorDiagnosticType.HealthComputed,
+                additionalBinaryDataProperties: null,
+                actor,
+                generationJobId,
+                health);
+        }
+
+        /// <summary>
+        /// The actor responsible for an evaluator lineage diagnostic.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.ServiceEvaluatorDiagnosticActor"/> and <see cref="Projects.UserEvaluatorDiagnosticActor"/>.
+        /// </summary>
+        /// <param name="type"> The type of actor. </param>
+        /// <param name="id"> A stable opaque principal or service identifier, when available. </param>
+        /// <returns> A new <see cref="Projects.EvaluatorDiagnosticActor"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static EvaluatorDiagnosticActor EvaluatorDiagnosticActor(string @type = default, string id = default)
+        {
+            return new UnknownEvaluatorDiagnosticActor(new EvaluatorDiagnosticActorType(@type), id, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An authenticated user responsible for an evaluator lineage diagnostic. </summary>
+        /// <param name="id"> A stable opaque principal or service identifier, when available. </param>
+        /// <returns> A new <see cref="Projects.UserEvaluatorDiagnosticActor"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static UserEvaluatorDiagnosticActor UserEvaluatorDiagnosticActor(string id = default)
+        {
+            return new UserEvaluatorDiagnosticActor(EvaluatorDiagnosticActorType.User, id, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A Foundry service component responsible for an evaluator lineage diagnostic. </summary>
+        /// <param name="id"> A stable opaque principal or service identifier, when available. </param>
+        /// <returns> A new <see cref="Projects.ServiceEvaluatorDiagnosticActor"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static ServiceEvaluatorDiagnosticActor ServiceEvaluatorDiagnosticActor(string id = default)
+        {
+            return new ServiceEvaluatorDiagnosticActor(EvaluatorDiagnosticActorType.Service, id, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A snapshot of existing rubric-health computations. Missing components remain null and are not replaced with zeros. </summary>
+        /// <param name="nDimensions"> The number of rubric dimensions used by the computation. </param>
+        /// <param name="dimensionIds"> The dimension identifiers in their order when health was computed. </param>
+        /// <param name="diversity"> Embedding-based dimension diversity, or null when unavailable. </param>
+        /// <param name="coverage"> Embedding-based source coverage, or null when unavailable. </param>
+        /// <param name="negativeVsPositive"> Failure-path balance computed by the existing keyword heuristic. </param>
+        /// <param name="overall"> The existing weighted overall score. Null if any component is unavailable; weights are not renormalized around missing components. </param>
+        /// <param name="confidence"> Provisional structural confidence: 'low', 'med', or 'high'. This is not a calibrated statistical confidence. </param>
+        /// <param name="redundantPairs"> Pairs of dimension indices flagged as redundant by the existing computation. </param>
+        /// <returns> A new <see cref="Projects.EvaluatorHealthMetrics"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static EvaluatorHealthMetrics EvaluatorHealthMetrics(int nDimensions = default, IEnumerable<string> dimensionIds = default, double? diversity = default, double? coverage = default, double negativeVsPositive = default, double? overall = default, EvaluatorHealthConfidence confidence = default, IEnumerable<IList<int>> redundantPairs = default)
+        {
+            dimensionIds ??= new ChangeTrackingList<string>();
+            redundantPairs ??= new ChangeTrackingList<IList<int>>();
+
+            return new EvaluatorHealthMetrics(
+                nDimensions,
+                dimensionIds.ToList(),
+                diversity,
+                coverage,
+                negativeVsPositive,
+                overall,
+                confidence,
+                redundantPairs.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A diagnostic change recording the creation of an evaluator version. </summary>
+        /// <param name="id"> The stable server-assigned diagnostic identifier. </param>
+        /// <param name="evaluatorVersion"> The evaluator version associated with the recorded snapshot. </param>
+        /// <param name="occurredOn"> The server-recorded time when the change occurred, expressed as Unix seconds. </param>
+        /// <param name="changeType"> A stable machine-readable classification describing why the change occurred. </param>
+        /// <param name="explanation"> A bounded deterministic summary of the change. </param>
+        /// <param name="actor"> The authenticated user or service responsible for the lineage event. </param>
+        /// <param name="priorVersion"> The preceding published evaluator version, when one exists. </param>
+        /// <param name="generationJobId"> The evaluator generation job that created the version, when applicable. </param>
+        /// <returns> A new <see cref="Projects.VersionCreatedDiagnosticChange"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VersionCreatedDiagnosticChange VersionCreatedDiagnosticChange(string id = default, string evaluatorVersion = default, DateTimeOffset occurredOn = default, EvaluatorDiagnosticChangeType changeType = default, string explanation = default, EvaluatorDiagnosticActor actor = default, string priorVersion = default, string generationJobId = default)
+        {
+            return new VersionCreatedDiagnosticChange(
+                id,
+                evaluatorVersion,
+                occurredOn,
+                changeType,
+                explanation,
+                EvaluatorDiagnosticType.VersionCreated,
+                additionalBinaryDataProperties: null,
+                actor,
+                priorVersion,
+                generationJobId);
+        }
+
+        /// <summary> A diagnostic change recording the addition of a rubric dimension. </summary>
+        /// <param name="id"> The stable server-assigned diagnostic identifier. </param>
+        /// <param name="evaluatorVersion"> The evaluator version associated with the recorded snapshot. </param>
+        /// <param name="occurredOn"> The server-recorded time when the change occurred, expressed as Unix seconds. </param>
+        /// <param name="changeType"> A stable machine-readable classification describing why the change occurred. </param>
+        /// <param name="explanation"> A bounded deterministic summary of the change. </param>
+        /// <param name="actor"> The authenticated user or service responsible for the lineage event. </param>
+        /// <param name="dimensionId"> The public dimension identifier associated with the change. It remains stable until explicitly changed; changing an identifier produces a removal change for the prior identifier and an addition change for the new identifier. </param>
+        /// <param name="after"> The resulting complete dimension snapshot. </param>
+        /// <param name="changedFields"> The public dimension fields changed, when reported. </param>
+        /// <returns> A new <see cref="Projects.DimensionAddedDiagnosticChange"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static DimensionAddedDiagnosticChange DimensionAddedDiagnosticChange(string id = default, string evaluatorVersion = default, DateTimeOffset occurredOn = default, EvaluatorDiagnosticChangeType changeType = default, string explanation = default, EvaluatorDiagnosticActor actor = default, string dimensionId = default, EvaluationsDimension after = default, IEnumerable<string> changedFields = default)
+        {
+            changedFields ??= new ChangeTrackingList<string>();
+
+            return new DimensionAddedDiagnosticChange(
+                id,
+                evaluatorVersion,
+                occurredOn,
+                changeType,
+                explanation,
+                EvaluatorDiagnosticType.DimensionAdded,
+                additionalBinaryDataProperties: null,
+                actor,
+                dimensionId,
+                after,
+                changedFields.ToList());
+        }
+
+        /// <summary> One measurable criterion within a rubric. Quality criteria may use rating weights; safety criteria classify a behavior as allowed or disallowed. </summary>
+        /// <param name="id"> Stable identifier for this dimension (snake_case, e.g., `correct_resolution`). Required. Provided by the user when manually creating a rubric evaluator or during human-in-the-loop review of a generated set; the generation pipeline produces an initial value the user can edit. Editable when saving new versions. </param>
+        /// <param name="description"> What this dimension measures (e.g., 'Correctly identifies the user's reservation intent and pursues the appropriate workflow'). </param>
+        /// <param name="allowed"> Safety behavior classification: true means allowed behavior and false means disallowed behavior. Required on every safety criterion instead of weight. This is not an evaluation verdict. Omit for ordinary quality criteria; omission never defaults a safety criterion to false. Preserved through edits and regeneration. </param>
+        /// <param name="weight"> Optional configured weight for legacy or Likert scoring. For Likert, omit every weight for equal contribution or supply a weight for every dimension; partially weighted definitions are rejected. Boolean scoring rejects every configured weight, including explicit unit weights. No schema default is emitted. </param>
+        /// <param name="generatedWeight"> Read-only model-suggested weight (1-10) returned for unweighted Likert dimensions. </param>
+        /// <param name="isAlwaysApplicable"> When true, the LLM judge always scores this dimension regardless of relevance (skips applicability assessment). The service-generated general quality/policy dimension has this set to true and is non-editable. Users may set this on their own custom dimensions. The service defaults to `false` if a value is not specified by the caller. </param>
+        /// <returns> A new <see cref="Evaluation.EvaluationsDimension"/> instance for mocking. </returns>
+        public static EvaluationsDimension EvaluationsDimension(string id = default, string description = default, bool? allowed = default, int? weight = default, int? generatedWeight = default, bool? isAlwaysApplicable = default)
+        {
+            return new EvaluationsDimension(
+                id,
+                description,
+                allowed,
+                weight,
+                generatedWeight,
+                isAlwaysApplicable,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A diagnostic change recording an update to a rubric dimension. </summary>
+        /// <param name="id"> The stable server-assigned diagnostic identifier. </param>
+        /// <param name="evaluatorVersion"> The evaluator version associated with the recorded snapshot. </param>
+        /// <param name="occurredOn"> The server-recorded time when the change occurred, expressed as Unix seconds. </param>
+        /// <param name="changeType"> A stable machine-readable classification describing why the change occurred. </param>
+        /// <param name="explanation"> A bounded deterministic summary of the change. </param>
+        /// <param name="actor"> The authenticated user or service responsible for the lineage event. </param>
+        /// <param name="dimensionId"> The public dimension identifier associated with the change. It remains stable until explicitly changed; changing an identifier produces a removal change for the prior identifier and an addition change for the new identifier. </param>
+        /// <param name="before"> The complete dimension snapshot before the update. </param>
+        /// <param name="after"> The complete dimension snapshot after the update. </param>
+        /// <param name="changedFields"> The public dimension fields changed, when reported. </param>
+        /// <returns> A new <see cref="Projects.DimensionUpdatedDiagnosticChange"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static DimensionUpdatedDiagnosticChange DimensionUpdatedDiagnosticChange(string id = default, string evaluatorVersion = default, DateTimeOffset occurredOn = default, EvaluatorDiagnosticChangeType changeType = default, string explanation = default, EvaluatorDiagnosticActor actor = default, string dimensionId = default, EvaluationsDimension before = default, EvaluationsDimension after = default, IEnumerable<string> changedFields = default)
+        {
+            changedFields ??= new ChangeTrackingList<string>();
+
+            return new DimensionUpdatedDiagnosticChange(
+                id,
+                evaluatorVersion,
+                occurredOn,
+                changeType,
+                explanation,
+                EvaluatorDiagnosticType.DimensionUpdated,
+                additionalBinaryDataProperties: null,
+                actor,
+                dimensionId,
+                before,
+                after,
+                changedFields.ToList());
+        }
+
+        /// <summary> A diagnostic change recording the removal of a rubric dimension. </summary>
+        /// <param name="id"> The stable server-assigned diagnostic identifier. </param>
+        /// <param name="evaluatorVersion"> The evaluator version associated with the recorded snapshot. </param>
+        /// <param name="occurredOn"> The server-recorded time when the change occurred, expressed as Unix seconds. </param>
+        /// <param name="changeType"> A stable machine-readable classification describing why the change occurred. </param>
+        /// <param name="explanation"> A bounded deterministic summary of the change. </param>
+        /// <param name="actor"> The authenticated user or service responsible for the lineage event. </param>
+        /// <param name="dimensionId"> The public dimension identifier associated with the change. It remains stable until explicitly changed; changing an identifier produces a removal change for the prior identifier and an addition change for the new identifier. </param>
+        /// <param name="before"> The complete dimension snapshot before removal. </param>
+        /// <param name="changedFields"> The public dimension fields changed, when reported. </param>
+        /// <returns> A new <see cref="Projects.DimensionRemovedDiagnosticChange"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static DimensionRemovedDiagnosticChange DimensionRemovedDiagnosticChange(string id = default, string evaluatorVersion = default, DateTimeOffset occurredOn = default, EvaluatorDiagnosticChangeType changeType = default, string explanation = default, EvaluatorDiagnosticActor actor = default, string dimensionId = default, EvaluationsDimension before = default, IEnumerable<string> changedFields = default)
+        {
+            changedFields ??= new ChangeTrackingList<string>();
+
+            return new DimensionRemovedDiagnosticChange(
+                id,
+                evaluatorVersion,
+                occurredOn,
+                changeType,
+                explanation,
+                EvaluatorDiagnosticType.DimensionRemoved,
+                additionalBinaryDataProperties: null,
+                actor,
+                dimensionId,
+                before,
+                changedFields.ToList());
+        }
+
+        /// <summary> A diagnostic change recording functional evaluator changes outside individual dimensions. </summary>
+        /// <param name="id"> The stable server-assigned diagnostic identifier. </param>
+        /// <param name="evaluatorVersion"> The evaluator version associated with the recorded snapshot. </param>
+        /// <param name="occurredOn"> The server-recorded time when the change occurred, expressed as Unix seconds. </param>
+        /// <param name="changeType"> A stable machine-readable classification describing why the change occurred. </param>
+        /// <param name="explanation"> A bounded deterministic summary of the change. </param>
+        /// <param name="actor"> The authenticated user or service responsible for the lineage event. </param>
+        /// <param name="fieldChanges"> The functional field changes applied. </param>
+        /// <returns> A new <see cref="Projects.DefinitionUpdatedDiagnosticChange"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static DefinitionUpdatedDiagnosticChange DefinitionUpdatedDiagnosticChange(string id = default, string evaluatorVersion = default, DateTimeOffset occurredOn = default, EvaluatorDiagnosticChangeType changeType = default, string explanation = default, EvaluatorDiagnosticActor actor = default, IEnumerable<EvaluatorFieldChange> fieldChanges = default)
+        {
+            fieldChanges ??= new ChangeTrackingList<EvaluatorFieldChange>();
+
+            return new DefinitionUpdatedDiagnosticChange(
+                id,
+                evaluatorVersion,
+                occurredOn,
+                changeType,
+                explanation,
+                EvaluatorDiagnosticType.DefinitionUpdated,
+                additionalBinaryDataProperties: null,
+                actor,
+                fieldChanges.ToList());
+        }
+
+        /// <summary> A change to one functional evaluator field. </summary>
+        /// <param name="field"> A stable path identifying the changed field. </param>
+        /// <param name="before"> The prior snapshot, mapping the exact `field` path to its JSON value. The mapped value may be a scalar, array, object, or null. </param>
+        /// <param name="after"> The resulting snapshot, mapping the exact `field` path to its JSON value. The mapped value may be a scalar, array, object, or null. </param>
+        /// <returns> A new <see cref="Projects.EvaluatorFieldChange"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static EvaluatorFieldChange EvaluatorFieldChange(string @field = default, IDictionary<string, BinaryData> before = default, IDictionary<string, BinaryData> after = default)
+        {
+            before ??= new ChangeTrackingDictionary<string, BinaryData>();
+            after ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new EvaluatorFieldChange(@field, before, after, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Evaluator Definition. </summary>
@@ -1240,14 +2449,16 @@ namespace Azure.AI.Projects
                 promptText);
         }
 
-        /// <summary> Rubric-based evaluator definition — stores dimensions produced by the generate API. Used for both quality and safety evaluators. </summary>
+        /// <summary> Rubric evaluator definition. Ordinary quality rubrics report one aggregate. Safety rubrics require Boolean scoring and an explicit allowed classification on every dimension, and report disallowed_behavior_violated and allowed_behavior_violated as two independent lower-is-better metrics. Safety rubrics have no weights, threshold, or combined safety score. </summary>
         /// <param name="initParameters"> The JSON schema (Draft 2020-12) for the evaluator's input parameters. This includes parameters like type, properties, required. </param>
         /// <param name="dataSchema"> The JSON schema (Draft 2020-12) for the evaluator's input data. This includes parameters like type, properties, required. </param>
         /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
-        /// <param name="dimensions"> The set of dimensions — the scoring blueprint used by the LLM judge. Quality evaluators include a non-editable residual dimension with id 'general_quality' (always_applicable: true); safety evaluators include 'general_policy_compliance'. Both use the same Dimension structure. </param>
-        /// <param name="passThreshold"> Pass/fail threshold for the aggregate rubric score, on the same normalized 0.0-1.0 scale as the emitted `score`. When the runtime weighted average meets or exceeds this value, the result is `pass`. Defaults to 0.5 (equivalent to a raw 1-5 weighted average of 3.0). The 'any dimension scored 1 → fail' rule still applies regardless of this threshold. </param>
+        /// <param name="dimensions"> The rubric criteria. Safety dimensions require allowed and omit weight. Rating generation includes a service residual; Boolean generation does not inject a generic residual. Existing ordinary and legacy definitions retain their behavior. </param>
+        /// <param name="passThreshold"> Optional normalized threshold for Likert scoring, interpreted as 0.5 when omitted. Ordinary Boolean scoring requires all applicable checks to pass: omit this field or set it to 1; its effective threshold is 1 and other values are rejected. Safety rubrics omit this field and report two separate metrics without an overall threshold. </param>
+        /// <param name="scoring"> Simple scoring choices. Omission preserves existing legacy scoring for existing clients. No policy version is required from the caller. </param>
         /// <returns> A new <see cref="Projects.RubricBasedEvaluatorDefinition"/> instance for mocking. </returns>
-        public static RubricBasedEvaluatorDefinition RubricBasedEvaluatorDefinition(BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default, IEnumerable<EvaluationsDimension> dimensions = default, float? passThreshold = default)
+        [Experimental("AAIP001")]
+        public static RubricBasedEvaluatorDefinition RubricBasedEvaluatorDefinition(BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default, IEnumerable<EvaluationsDimension> dimensions = default, float? passThreshold = default, RubricScoring scoring = default)
         {
             metrics ??= new ChangeTrackingDictionary<string, EvaluatorMetric>();
             dimensions ??= new ChangeTrackingList<EvaluationsDimension>();
@@ -1259,18 +2470,17 @@ namespace Azure.AI.Projects
                 metrics,
                 additionalBinaryDataProperties: null,
                 dimensions.ToList(),
-                passThreshold);
+                passThreshold,
+                scoring);
         }
 
-        /// <summary> A single dimension — one independent, measurable quality dimension within a rubric evaluator's scoring blueprint. </summary>
-        /// <param name="id"> Stable identifier for this dimension (snake_case, e.g., `correct_resolution`). Required. Provided by the user when manually creating a rubric evaluator or during human-in-the-loop review of a generated set; the generation pipeline produces an initial value the user can edit. Editable when saving new versions. </param>
-        /// <param name="description"> What this dimension measures (e.g., 'Correctly identifies the user's reservation intent and pursues the appropriate workflow'). </param>
-        /// <param name="weight"> Relative weight of this dimension (1-10). The generation pipeline assigns exactly one dimension weight 8-10; all others use 1-6. User edits are not constrained by this heuristic. </param>
-        /// <param name="isAlwaysApplicable"> When true, the LLM judge always scores this dimension regardless of relevance (skips applicability assessment). The service-generated general quality/policy dimension has this set to true and is non-editable. Users may set this on their own custom dimensions. The service defaults to `false` if a value is not specified by the caller. </param>
-        /// <returns> A new <see cref="Evaluation.EvaluationsDimension"/> instance for mocking. </returns>
-        public static EvaluationsDimension EvaluationsDimension(string id = default, string description = default, int weight = default, bool? isAlwaysApplicable = default)
+        /// <summary> Simple rubric scoring choices. Omission preserves existing legacy scoring. </summary>
+        /// <param name="mode"> Rubric-level scoring mode. Defaults to Likert when scoring is supplied. Omitting scoring preserves existing legacy behavior. </param>
+        /// <returns> A new <see cref="Projects.RubricScoring"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static RubricScoring RubricScoring(RubricScoringMode? mode = default)
         {
-            return new EvaluationsDimension(id, description, weight, isAlwaysApplicable, additionalBinaryDataProperties: null);
+            return new RubricScoring(mode, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Endpoint-based evaluator definition. The customer owns and hosts an HTTP endpoint that implements the evaluation contract. The evaluator references a Project Connection by name; the connection stores the endpoint URL and credentials (API Key or Entra ID). At execution time, the service resolves the connection to obtain the endpoint URL and authentication details, then calls the endpoint for each evaluation row. </summary>
@@ -1278,9 +2488,10 @@ namespace Azure.AI.Projects
         /// <param name="dataSchema"> The JSON schema (Draft 2020-12) for the evaluator's input data. This includes parameters like type, properties, required. </param>
         /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
         /// <param name="connectionName"> Name of the Project Connection that stores the endpoint URL and credentials. The connection must exist on the project and have a non-empty target URL. Supported auth types: ApiKey (sends `api-key` header) and AAD/Entra ID (acquires a bearer token via the project's Managed Identity). </param>
+        /// <param name="schemaVersion"> Version of the contract between the service and the evaluator endpoint. Optional on create; if omitted, the service uses `0.0.1`, so existing clients that do not send this property are unaffected. Stored evaluator versions keep the value they were created with. Registration rejects values the service does not support; the type stays extensible so responses can return newer versions. Version `0.0.2` requires `metrics` to contain exactly one metric, of type `ordinal` or `continuous`. </param>
         /// <returns> A new <see cref="Evaluation.EndpointBasedEvaluatorDefinition"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static EndpointBasedEvaluatorDefinition EndpointBasedEvaluatorDefinition(BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default, string connectionName = default)
+        public static EndpointBasedEvaluatorDefinition EndpointBasedEvaluatorDefinition(BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default, string connectionName = default, EndpointEvaluatorSchemaVersion? schemaVersion = default)
         {
             metrics ??= new ChangeTrackingDictionary<string, EvaluatorMetric>();
 
@@ -1290,27 +2501,28 @@ namespace Azure.AI.Projects
                 dataSchema,
                 metrics,
                 additionalBinaryDataProperties: null,
-                connectionName);
+                connectionName,
+                schemaVersion);
         }
 
         /// <summary> Service-managed provenance artifacts produced by an evaluator generation job. Present only on EvaluatorVersion resources created via the generation pipeline. The combined-JSONL Foundry Dataset is read-only and resolves to a versioned dataset in a service-reserved namespace. </summary>
         /// <param name="reference"> Reference to the single Foundry Dataset (one combined JSONL file, version-aligned to `EvaluatorVersion.version`) holding all artifacts produced by the generation pipeline. Each row in the JSONL carries a `kind` field discriminating its content (e.g. `spec`, `tools`, `context`). </param>
         /// <param name="datasetRowKinds"> The kinds of rows present in `dataset`. Always contains `"spec"` (the generated evaluation specification, a Markdown document describing what the evaluator measures). May additionally contain `"tools"` (when the generation pipeline produced or inferred OpenAI tool schemas) and/or `"context"` (when supplementary materials such as file uploads or trace samples were used during generation). </param>
         /// <returns> A new <see cref="Evaluation.EvaluatorGenerationArtifacts"/> instance for mocking. </returns>
-        public static EvaluatorGenerationArtifacts EvaluatorGenerationArtifacts(DatasetReference reference = default, IEnumerable<string> datasetRowKinds = default)
+        public static EvaluatorGenerationArtifacts EvaluatorGenerationArtifacts(VersionedDatasetReference reference = default, IEnumerable<string> datasetRowKinds = default)
         {
             datasetRowKinds ??= new ChangeTrackingList<string>();
 
             return new EvaluatorGenerationArtifacts(reference, datasetRowKinds.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Reference to a versioned Foundry Dataset. </summary>
+        /// <summary> Reference to a Dataset whose concrete version has already been resolved. </summary>
         /// <param name="name"> Dataset name. </param>
-        /// <param name="version"> Dataset version. </param>
-        /// <returns> A new <see cref="Projects.DatasetReference"/> instance for mocking. </returns>
-        public static DatasetReference DatasetReference(string name = default, string version = default)
+        /// <param name="version"> Concrete Dataset version. </param>
+        /// <returns> A new <see cref="Projects.VersionedDatasetReference"/> instance for mocking. </returns>
+        public static VersionedDatasetReference VersionedDatasetReference(string name = default, string version = default)
         {
-            return new DatasetReference(name, version, additionalBinaryDataProperties: null);
+            return new VersionedDatasetReference(name, version, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Request body for getting evaluator credentials. </summary>
@@ -1322,22 +2534,32 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Caller-supplied inputs for an evaluator generation job. </summary>
-        /// <param name="sources"> Source materials for generation — agent descriptions, prompts, traces, or datasets. Each entry is an `EvaluatorGenerationJobSource` variant discriminated by `type`. </param>
-        /// <param name="model"> The LLM model to use for rubric generation (e.g., 'gpt-4o'). Required — users must provide their own model rather than relying on service-owned capacity. </param>
+        /// <param name="sources"> Source materials for generation. Safety generation requires a nonempty prompt source for the objective and at least one agent or trace source for application context. An arbitrary dataset cannot replace safety application context. Ordinary generation keeps its existing supported sources. </param>
+        /// <param name="category"> Generation intent. Omission preserves the existing quality path. Explicitly select safety for safety generation and regeneration. Safety output uses Boolean scoring, allowed classifications, and two named violation metrics. </param>
+        /// <param name="model"> The caller's model for quality rubric generation (e.g., 'gpt-4o'). Required by the service when category is quality or omitted. Safety generation and regeneration use centrally managed red teaming simulation capacity, ignore this field when supplied, and do not fall back to caller capacity. Safety rubric scoring separately uses centrally managed red teaming evaluator capacity. </param>
         /// <param name="evaluatorName"> The evaluator name (immutable identifier). 1-256 characters; allowed characters are ASCII letters, digits, underscore (`_`), period (`.`), tilde (`~`), and hyphen (`-`). The prefix `builtin.` is reserved for system-managed evaluators and is rejected by the service. If an evaluator with this name already exists in the project (and is rubric-subtype), the service creates a new version under the same name and uses the prior version's `dimensions` as context for incremental improvement (foundation of the post-//build adaptive loop). Old versions remain queryable via `get_version(name, version)`. If the existing evaluator is not a rubric-subtype evaluator (built-in, prompt-based, code-based), the request is rejected with `400 Bad Request`. </param>
         /// <param name="evaluatorDisplayName"> Optional human-friendly display name for the resulting evaluator. Surfaced as `EvaluatorVersion.display_name` on the persisted evaluator. When omitted, the service uses `evaluator_name` as the display name. The `evaluator_` prefix disambiguates this from the immutable `evaluator_name` identifier. </param>
         /// <param name="description"> Optional human-friendly description for the resulting evaluator. Surfaced as `EvaluatorVersion.description` on the persisted evaluator. Typically collected from the UI alongside `evaluator_display_name`. The `evaluator_` prefix disambiguates this from any other description fields on related models. </param>
+        /// <param name="scoring"> Scoring choices for the generated evaluator. For quality, supplied scoring defaults to Likert; omitted weights on first creation yield equal contribution, and regeneration preserves saved choices. Omitting scoring preserves existing quality generation behavior. Safety generation resolves omitted scoring to Boolean and rejects a conflicting supplied mode; its dimensions use allowed rather than weights and its two metric results are not combined. </param>
+        /// <param name="passThreshold"> Optional normalized Likert threshold: omission uses 0.5 for fresh generation and inherits the saved threshold on regeneration. For ordinary Boolean generation, omit this field or set it to 1; other values are rejected and its all-pass threshold is fixed at 1. Safety generation omits this field because its two violation metrics have no overall threshold. </param>
+        /// <param name="dimensions"> Caller-approved dimensions to preserve while generating other checks. Omission preserves prior approved dimensions on regeneration; an explicit list replaces the fixed set. Safety fixed dimensions require an explicit allowed Boolean, omit weights, and preserve classification as part of their policy meaning. </param>
         /// <returns> A new <see cref="Evaluation.EvaluatorGenerationInputs"/> instance for mocking. </returns>
-        public static EvaluatorGenerationInputs EvaluatorGenerationInputs(IEnumerable<EvaluatorGenerationJobSource> sources = default, string model = default, string evaluatorName = default, string evaluatorDisplayName = default, string description = default)
+        [Experimental("AAIP001")]
+        public static EvaluatorGenerationInputs EvaluatorGenerationInputs(IEnumerable<EvaluatorGenerationJobSource> sources = default, EvaluatorGenerationCategory? category = default, string model = default, string evaluatorName = default, string evaluatorDisplayName = default, string description = default, RubricScoring scoring = default, float? passThreshold = default, IEnumerable<EvaluationsDimension> dimensions = default)
         {
             sources ??= new ChangeTrackingList<EvaluatorGenerationJobSource>();
+            dimensions ??= new ChangeTrackingList<EvaluationsDimension>();
 
             return new EvaluatorGenerationInputs(
                 sources.ToList(),
+                category,
                 model,
                 evaluatorName,
                 evaluatorDisplayName,
                 description,
+                scoring,
+                passThreshold,
+                dimensions.ToList(),
                 additionalBinaryDataProperties: null);
         }
 
@@ -1378,9 +2600,12 @@ namespace Azure.AI.Projects
         /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
         /// <param name="startsOn"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
         /// <param name="endsOn"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
+        /// <param name="traceIds"> Optional explicit list of trace IDs to include. </param>
         /// <returns> A new <see cref="Projects.TracesEvaluatorGenerationJobSource"/> instance for mocking. </returns>
-        public static TracesEvaluatorGenerationJobSource TracesEvaluatorGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default)
+        public static TracesEvaluatorGenerationJobSource TracesEvaluatorGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<string> traceIds = default)
         {
+            traceIds ??= new ChangeTrackingList<string>();
+
             return new TracesEvaluatorGenerationJobSource(
                 EvaluatorGenerationJobSourceType.Traces,
                 additionalBinaryDataProperties: null,
@@ -1389,7 +2614,8 @@ namespace Azure.AI.Projects
                 agentName,
                 agentVersion,
                 startsOn,
-                endsOn);
+                endsOn,
+                traceIds.ToList());
         }
 
         /// <summary> Dataset source for evaluator generation jobs — reference to a dataset. </summary>
@@ -1438,7 +2664,6 @@ namespace Azure.AI.Projects
         /// <param name="request"> Request for the insights analysis. </param>
         /// <param name="result"> The result of the insights report. </param>
         /// <returns> A new <see cref="Evaluation.ProjectsInsight"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static ProjectsInsight ProjectsInsight(string id = default, InsightsMetadata metadata = default, OperationStatus state = default, string displayName = default, InsightRequest request = default, InsightResult result = default)
         {
             return new ProjectsInsight(
@@ -1455,7 +2680,6 @@ namespace Azure.AI.Projects
         /// <param name="createdAt"> The timestamp when the insights were created. </param>
         /// <param name="completedAt"> The timestamp when the insights were completed. </param>
         /// <returns> A new <see cref="Evaluation.InsightsMetadata"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static InsightsMetadata InsightsMetadata(DateTimeOffset createdAt = default, DateTimeOffset? completedAt = default)
         {
             return new InsightsMetadata(createdAt, completedAt, additionalBinaryDataProperties: null);
@@ -1467,7 +2691,6 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="type"> The type of request. </param>
         /// <returns> A new <see cref="Evaluation.InsightRequest"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static InsightRequest InsightRequest(string @type = default)
         {
             return new UnknownInsightRequest(new InsightType(@type), additionalBinaryDataProperties: null);
@@ -1478,7 +2701,6 @@ namespace Azure.AI.Projects
         /// <param name="runIds"> List of evaluation run IDs for the insights. </param>
         /// <param name="modelConfiguration"> Configuration of the model used in the insight generation. </param>
         /// <returns> A new <see cref="Evaluation.EvaluationRunClusterInsightRequest"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static EvaluationRunClusterInsightRequest EvaluationRunClusterInsightRequest(string evalId = default, IEnumerable<string> runIds = default, InsightModelConfiguration modelConfiguration = default)
         {
             runIds ??= new ChangeTrackingList<string>();
@@ -1489,7 +2711,6 @@ namespace Azure.AI.Projects
         /// <summary> Configuration of the model used in the insight generation. </summary>
         /// <param name="modelDeploymentName"> The model deployment to be evaluated. Accepts either the deployment name alone or with the connection name as '{connectionName}/&lt;modelDeploymentName&gt;'. </param>
         /// <returns> A new <see cref="Evaluation.InsightModelConfiguration"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static InsightModelConfiguration InsightModelConfiguration(string modelDeploymentName = default)
         {
             return new InsightModelConfiguration(modelDeploymentName, additionalBinaryDataProperties: null);
@@ -1499,7 +2720,6 @@ namespace Azure.AI.Projects
         /// <param name="agentName"> Identifier for the agent. </param>
         /// <param name="modelConfiguration"> Configuration of the model used in the insight generation. </param>
         /// <returns> A new <see cref="Evaluation.AgentClusterInsightRequest"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentClusterInsightRequest AgentClusterInsightRequest(string agentName = default, InsightModelConfiguration modelConfiguration = default)
         {
             return new AgentClusterInsightRequest(InsightType.AgentClusterInsight, additionalBinaryDataProperties: null, agentName, modelConfiguration);
@@ -1510,7 +2730,6 @@ namespace Azure.AI.Projects
         /// <param name="baselineRunId"> The baseline run ID for comparison. </param>
         /// <param name="treatmentRunIds"> List of treatment run IDs for comparison. </param>
         /// <returns> A new <see cref="Evaluation.EvaluationComparisonInsightRequest"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static EvaluationComparisonInsightRequest EvaluationComparisonInsightRequest(string evalId = default, string baselineRunId = default, IEnumerable<string> treatmentRunIds = default)
         {
             treatmentRunIds ??= new ChangeTrackingList<string>();
@@ -1524,7 +2743,6 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="type"> The type of insights result. </param>
         /// <returns> A new <see cref="Evaluation.InsightResult"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static InsightResult InsightResult(string @type = default)
         {
             return new UnknownInsightResult(new InsightType(@type), additionalBinaryDataProperties: null);
@@ -1534,7 +2752,6 @@ namespace Azure.AI.Projects
         /// <param name="comparisons"> Comparison results for each treatment run against the baseline. </param>
         /// <param name="method"> The statistical method used for comparison. </param>
         /// <returns> A new <see cref="Evaluation.EvaluationComparisonInsightResult"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static EvaluationComparisonInsightResult EvaluationComparisonInsightResult(IEnumerable<EvalRunResultComparison> comparisons = default, string @method = default)
         {
             comparisons ??= new ChangeTrackingList<EvalRunResultComparison>();
@@ -1549,7 +2766,6 @@ namespace Azure.AI.Projects
         /// <param name="baselineRunSummary"> Summary statistics of the baseline run. </param>
         /// <param name="compareItems"> List of comparison results for each treatment run. </param>
         /// <returns> A new <see cref="Evaluation.EvalRunResultComparison"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static EvalRunResultComparison EvalRunResultComparison(string testingCriteria = default, string metricName = default, string evaluatorName = default, EvalRunResultSummary baselineRunSummary = default, IEnumerable<EvalRunResultCompareItem> compareItems = default)
         {
             compareItems ??= new ChangeTrackingList<EvalRunResultCompareItem>();
@@ -1569,7 +2785,6 @@ namespace Azure.AI.Projects
         /// <param name="average"> Average value of the metric in the evaluation run. </param>
         /// <param name="standardDeviation"> Standard deviation of the metric in the evaluation run. </param>
         /// <returns> A new <see cref="Evaluation.EvalRunResultSummary"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static EvalRunResultSummary EvalRunResultSummary(string runId = default, int sampleCount = default, float average = default, float standardDeviation = default)
         {
             return new EvalRunResultSummary(runId, sampleCount, average, standardDeviation, additionalBinaryDataProperties: null);
@@ -1582,7 +2797,6 @@ namespace Azure.AI.Projects
         /// <param name="pValue"> P-value for the treatment effect. </param>
         /// <param name="treatmentEffect"> Type of treatment effect. </param>
         /// <returns> A new <see cref="Evaluation.EvalRunResultCompareItem"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static EvalRunResultCompareItem EvalRunResultCompareItem(string treatmentRunId = default, EvalRunResultSummary treatmentRunSummary = default, float deltaEstimate = default, float pValue = default, TreatmentEffectType treatmentEffect = default)
         {
             return new EvalRunResultCompareItem(
@@ -1597,7 +2811,6 @@ namespace Azure.AI.Projects
         /// <summary> Insights from the evaluation run cluster analysis. </summary>
         /// <param name="clusterInsight"></param>
         /// <returns> A new <see cref="Evaluation.EvaluationRunClusterInsightResult"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static EvaluationRunClusterInsightResult EvaluationRunClusterInsightResult(ClusterInsightResult clusterInsight = default)
         {
             return new EvaluationRunClusterInsightResult(InsightType.EvaluationRunClusterInsight, additionalBinaryDataProperties: null, clusterInsight);
@@ -1623,7 +2836,6 @@ namespace Azure.AI.Projects
         ///   modify the canonical insights results.
         /// </param>
         /// <returns> A new <see cref="Evaluation.ClusterInsightResult"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static ClusterInsightResult ClusterInsightResult(InsightSummary summary = default, IEnumerable<InsightCluster> clusters = default, IDictionary<string, ChartCoordinate> coordinates = default)
         {
             clusters ??= new ChangeTrackingList<InsightCluster>();
@@ -1639,7 +2851,6 @@ namespace Azure.AI.Projects
         /// <param name="methodName"> Method used for clustering. </param>
         /// <param name="usage"> Token usage while performing clustering analysis. </param>
         /// <returns> A new <see cref="Evaluation.InsightSummary"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static InsightSummary InsightSummary(int sampleCount = default, int uniqueSubclusterCount = default, int uniqueClusterCount = default, string methodName = default, ClusterTokenUsage usage = default)
         {
             return new InsightSummary(
@@ -1656,7 +2867,6 @@ namespace Azure.AI.Projects
         /// <param name="outputTokenUsage"> output token usage. </param>
         /// <param name="totalTokenUsage"> total token usage. </param>
         /// <returns> A new <see cref="Evaluation.ClusterTokenUsage"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static ClusterTokenUsage ClusterTokenUsage(int inputTokenUsage = default, int outputTokenUsage = default, int totalTokenUsage = default)
         {
             return new ClusterTokenUsage(inputTokenUsage, outputTokenUsage, totalTokenUsage, additionalBinaryDataProperties: null);
@@ -1672,7 +2882,6 @@ namespace Azure.AI.Projects
         /// <param name="subClusters"> List of subclusters within this cluster. Empty if no subclusters exist. </param>
         /// <param name="samples"> List of samples that belong to this cluster. Empty if samples are part of subclusters. </param>
         /// <returns> A new <see cref="Evaluation.InsightCluster"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static InsightCluster InsightCluster(string id = default, string label = default, string suggestion = default, string suggestionTitle = default, string description = default, int weight = default, IEnumerable<InsightCluster> subClusters = default, IEnumerable<InsightSample> samples = default)
         {
             subClusters ??= new ChangeTrackingList<InsightCluster>();
@@ -1699,7 +2908,6 @@ namespace Azure.AI.Projects
         /// <param name="features"> Features to help with additional filtering of data in UX. </param>
         /// <param name="correlationInfo"> Info about the correlation for the analysis sample. </param>
         /// <returns> A new <see cref="Evaluation.InsightSample"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static InsightSample InsightSample(string id = default, string @type = default, IDictionary<string, BinaryData> features = default, IDictionary<string, BinaryData> correlationInfo = default)
         {
             features ??= new ChangeTrackingDictionary<string, BinaryData>();
@@ -1714,7 +2922,6 @@ namespace Azure.AI.Projects
         /// <param name="correlationInfo"> Info about the correlation for the analysis sample. </param>
         /// <param name="evaluationResult"> Evaluation result for the analysis sample. </param>
         /// <returns> A new <see cref="Evaluation.EvaluationResultSample"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static EvaluationResultSample EvaluationResultSample(string id = default, IDictionary<string, BinaryData> features = default, IDictionary<string, BinaryData> correlationInfo = default, EvalResult evaluationResult = default)
         {
             features ??= new ChangeTrackingDictionary<string, BinaryData>();
@@ -1735,7 +2942,6 @@ namespace Azure.AI.Projects
         /// <param name="score"> score. </param>
         /// <param name="isPassed"> indicates if the check passed or failed. </param>
         /// <returns> A new <see cref="Evaluation.EvalResult"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static EvalResult EvalResult(string name = default, string @type = default, float score = default, bool isPassed = default)
         {
             return new EvalResult(name, @type, score, isPassed, additionalBinaryDataProperties: null);
@@ -1746,7 +2952,6 @@ namespace Azure.AI.Projects
         /// <param name="y"> Y-axis coordinate. </param>
         /// <param name="size"> Size of the chart element. </param>
         /// <returns> A new <see cref="Evaluation.ChartCoordinate"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static ChartCoordinate ChartCoordinate(int x = default, int y = default, int size = default)
         {
             return new ChartCoordinate(x, y, size, additionalBinaryDataProperties: null);
@@ -1755,7 +2960,6 @@ namespace Azure.AI.Projects
         /// <summary> Insights from the agent cluster analysis. </summary>
         /// <param name="clusterInsight"></param>
         /// <returns> A new <see cref="Evaluation.AgentClusterInsightResult"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentClusterInsightResult AgentClusterInsightResult(ClusterInsightResult clusterInsight = default)
         {
             return new AgentClusterInsightResult(InsightType.AgentClusterInsight, additionalBinaryDataProperties: null, clusterInsight);
@@ -1792,119 +2996,6 @@ namespace Azure.AI.Projects
                 properties,
                 systemData,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Base model for Trigger of the schedule.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.CronTrigger"/>, <see cref="Evaluation.OneTimeTrigger"/>, and <see cref="Evaluation.RecurrenceTrigger"/>.
-        /// </summary>
-        /// <param name="type"> Type of the trigger. </param>
-        /// <returns> A new <see cref="Evaluation.ScheduleTrigger"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static ScheduleTrigger ScheduleTrigger(string @type = default)
-        {
-            return new UnknownTrigger(new TriggerType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Cron based trigger. </summary>
-        /// <param name="expression"> Cron expression that defines the schedule frequency. </param>
-        /// <param name="timeZone"> Time zone for the cron schedule. Defaults to `UTC`. </param>
-        /// <param name="startTime"> Start time for the cron schedule in ISO 8601 format. </param>
-        /// <param name="endTime"> End time for the cron schedule in ISO 8601 format. </param>
-        /// <returns> A new <see cref="Evaluation.CronTrigger"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static CronTrigger CronTrigger(string expression = default, string timeZone = default, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default)
-        {
-            return new CronTrigger(
-                TriggerType.Cron,
-                additionalBinaryDataProperties: null,
-                expression,
-                timeZone,
-                startTime,
-                endTime);
-        }
-
-        /// <summary> Recurrence based trigger. </summary>
-        /// <param name="startTime"> Start time for the recurrence schedule in ISO 8601 format. </param>
-        /// <param name="endTime"> End time for the recurrence schedule in ISO 8601 format. </param>
-        /// <param name="timeZone"> Time zone for the recurrence schedule. Defaults to `UTC`. </param>
-        /// <param name="interval"> Interval for the recurrence schedule. </param>
-        /// <param name="schedule"> Recurrence schedule for the recurrence trigger. </param>
-        /// <returns> A new <see cref="Evaluation.RecurrenceTrigger"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static RecurrenceTrigger RecurrenceTrigger(DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, string timeZone = default, int interval = default, RecurrenceSchedule schedule = default)
-        {
-            return new RecurrenceTrigger(
-                TriggerType.Recurrence,
-                additionalBinaryDataProperties: null,
-                startTime,
-                endTime,
-                timeZone,
-                interval,
-                schedule);
-        }
-
-        /// <summary>
-        /// Recurrence schedule model.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.DailyRecurrenceSchedule"/>, <see cref="Evaluation.HourlyRecurrenceSchedule"/>, <see cref="Evaluation.MonthlyRecurrenceSchedule"/>, and <see cref="Evaluation.WeeklyRecurrenceSchedule"/>.
-        /// </summary>
-        /// <param name="type"> Recurrence type for the recurrence schedule. </param>
-        /// <returns> A new <see cref="Evaluation.RecurrenceSchedule"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static RecurrenceSchedule RecurrenceSchedule(string @type = default)
-        {
-            return new UnknownRecurrenceSchedule(new RecurrenceType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Hourly recurrence schedule. </summary>
-        /// <returns> A new <see cref="Evaluation.HourlyRecurrenceSchedule"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static HourlyRecurrenceSchedule HourlyRecurrenceSchedule()
-        {
-            return new HourlyRecurrenceSchedule(RecurrenceType.Hourly, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Daily recurrence schedule. </summary>
-        /// <param name="hours"> Hours for the recurrence schedule. </param>
-        /// <returns> A new <see cref="Evaluation.DailyRecurrenceSchedule"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static DailyRecurrenceSchedule DailyRecurrenceSchedule(IEnumerable<int> hours = default)
-        {
-            hours ??= new ChangeTrackingList<int>();
-
-            return new DailyRecurrenceSchedule(RecurrenceType.Daily, additionalBinaryDataProperties: null, hours.ToList());
-        }
-
-        /// <summary> Weekly recurrence schedule. </summary>
-        /// <param name="daysOfWeek"> Days of the week for the recurrence schedule. </param>
-        /// <returns> A new <see cref="Evaluation.WeeklyRecurrenceSchedule"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static WeeklyRecurrenceSchedule WeeklyRecurrenceSchedule(IEnumerable<DayOfWeek> daysOfWeek = default)
-        {
-            daysOfWeek ??= new ChangeTrackingList<DayOfWeek>();
-
-            return new WeeklyRecurrenceSchedule(RecurrenceType.Weekly, additionalBinaryDataProperties: null, daysOfWeek.ToList());
-        }
-
-        /// <summary> Monthly recurrence schedule. </summary>
-        /// <param name="daysOfMonth"> Days of the month for the recurrence schedule. </param>
-        /// <returns> A new <see cref="Evaluation.MonthlyRecurrenceSchedule"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static MonthlyRecurrenceSchedule MonthlyRecurrenceSchedule(IEnumerable<int> daysOfMonth = default)
-        {
-            daysOfMonth ??= new ChangeTrackingList<int>();
-
-            return new MonthlyRecurrenceSchedule(RecurrenceType.Monthly, additionalBinaryDataProperties: null, daysOfMonth.ToList());
-        }
-
-        /// <summary> One-time trigger. </summary>
-        /// <param name="triggerAt"> Date and time for the one-time trigger in ISO 8601 format. </param>
-        /// <param name="timeZone"> Time zone for the one-time trigger. Defaults to `UTC`. </param>
-        /// <returns> A new <see cref="Evaluation.OneTimeTrigger"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static OneTimeTrigger OneTimeTrigger(DateTimeOffset triggerAt = default, string timeZone = default)
-        {
-            return new OneTimeTrigger(TriggerType.OneTime, additionalBinaryDataProperties: null, triggerAt, timeZone);
         }
 
         /// <summary>
@@ -2249,7 +3340,6 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="type"> The trigger type. </param>
         /// <returns> A new <see cref="Projects.RoutineTrigger"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static RoutineTrigger RoutineTrigger(string @type = default)
         {
             return new UnknownRoutineTrigger(new RoutineTriggerKind(@type), additionalBinaryDataProperties: null);
@@ -2259,7 +3349,6 @@ namespace Azure.AI.Projects
         /// <param name="cronExpression"> A 5-field cron expression. The service enforces a minimum interval of five minutes by default. </param>
         /// <param name="timeZone"> An IANA or Windows time zone identifier for the schedule. </param>
         /// <returns> A new <see cref="Projects.ScheduleRoutineTrigger"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static ScheduleRoutineTrigger ScheduleRoutineTrigger(string cronExpression = default, string timeZone = default)
         {
             return new ScheduleRoutineTrigger(RoutineTriggerKind.Schedule, additionalBinaryDataProperties: null, cronExpression, timeZone);
@@ -2268,7 +3357,6 @@ namespace Azure.AI.Projects
         /// <summary> A one-shot timer routine trigger. </summary>
         /// <param name="at"> The UTC date and time at which the timer fires. </param>
         /// <returns> A new <see cref="Projects.TimerRoutineTrigger"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static TimerRoutineTrigger TimerRoutineTrigger(DateTimeOffset? at = default)
         {
             return new TimerRoutineTrigger(RoutineTriggerKind.Timer, additionalBinaryDataProperties: null, at);
@@ -2280,7 +3368,6 @@ namespace Azure.AI.Projects
         /// <param name="repository"> The GitHub repository filter that scopes which issues can fire the trigger. </param>
         /// <param name="issueEvent"> The GitHub issue event that fires the routine. </param>
         /// <returns> A new <see cref="Projects.GitHubIssueRoutineTrigger"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static GitHubIssueRoutineTrigger GitHubIssueRoutineTrigger(string connectionId = default, string owner = default, string repository = default, GitHubIssueEvent issueEvent = default)
         {
             return new GitHubIssueRoutineTrigger(
@@ -2297,7 +3384,6 @@ namespace Azure.AI.Projects
         /// <param name="eventName"> The provider-specific event name that fires the routine. </param>
         /// <param name="parameters"> Provider-specific trigger parameters. </param>
         /// <returns> A new <see cref="Projects.CustomRoutineTrigger"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static CustomRoutineTrigger CustomRoutineTrigger(string provider = default, string eventName = default, IDictionary<string, BinaryData> parameters = default)
         {
             parameters ??= new ChangeTrackingDictionary<string, BinaryData>();
@@ -2311,7 +3397,6 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="type"> The action type. </param>
         /// <returns> A new <see cref="Projects.RoutineAction"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static RoutineAction RoutineAction(string @type = default)
         {
             return new UnknownRoutineAction(new RoutineActionKind(@type), additionalBinaryDataProperties: null);
@@ -2323,7 +3408,6 @@ namespace Azure.AI.Projects
         /// <param name="input"> Static JSON value sent as the complete downstream input when the routine fires. The value is passed through as-is; no templating is applied. </param>
         /// <param name="conversation"> An optional existing conversation identifier to continue during the downstream dispatch. </param>
         /// <returns> A new <see cref="Projects.AgentResponsesApiRoutineAction"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentResponsesApiRoutineAction AgentResponsesApiRoutineAction(string agentName = default, string agentEndpointId = default, BinaryData input = default, string conversation = default)
         {
             return new AgentResponsesApiRoutineAction(
@@ -2341,7 +3425,6 @@ namespace Azure.AI.Projects
         /// <param name="input"> Static JSON value sent as the complete downstream input when the routine fires. The value is passed through as-is; no templating is applied. </param>
         /// <param name="sessionId"> An optional existing hosted-agent session identifier to continue during the downstream dispatch. </param>
         /// <returns> A new <see cref="Projects.AgentInvocationsApiRoutineAction"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentInvocationsApiRoutineAction AgentInvocationsApiRoutineAction(string agentName = default, string agentEndpointId = default, BinaryData input = default, string sessionId = default)
         {
             return new AgentInvocationsApiRoutineAction(
@@ -2362,7 +3445,6 @@ namespace Azure.AI.Projects
         /// <param name="createdOn"> The time when the routine was created. </param>
         /// <param name="updatedOn"> The time when the routine was last updated. </param>
         /// <returns> A new <see cref="Projects.ProjectsRoutine"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static ProjectsRoutine ProjectsRoutine(string name = default, string description = default, bool isEnabled = default, IDictionary<string, RoutineTrigger> triggers = default, RoutineAction action = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default)
         {
             triggers ??= new ChangeTrackingDictionary<string, RoutineTrigger>();
@@ -2403,7 +3485,6 @@ namespace Azure.AI.Projects
         /// <param name="errorType"> The fully qualified error type captured for a failed attempt, when available. </param>
         /// <param name="errorMessage"> The truncated failure message captured for a failed attempt, when available. </param>
         /// <returns> A new <see cref="Projects.RoutineRun"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static RoutineRun RoutineRun(string id = default, BinaryData statusInternal = default, RoutineRunPhase? phase = default, RoutineTriggerKind? triggerType = default, string triggerName = default, IDictionary<string, BinaryData> triggerEventPayload = default, RoutineAttemptSource? attemptSource = default, RoutineActionKind? actionType = default, string agentId = default, string agentEndpointId = default, string conversationId = default, string sessionId = default, DateTimeOffset? triggeredOn = default, DateTimeOffset? scheduledFireOn = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, string dispatchId = default, string actionCorrelationId = default, string responseId = default, string taskId = default, int? errorStatusCode = default, string errorType = default, string errorMessage = default)
         {
             triggerEventPayload ??= new ChangeTrackingDictionary<string, BinaryData>();
@@ -2441,7 +3522,6 @@ namespace Azure.AI.Projects
         /// </summary>
         /// <param name="type"> The manual dispatch payload type. </param>
         /// <returns> A new <see cref="Projects.RoutineDispatchPayload"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static RoutineDispatchPayload RoutineDispatchPayload(string @type = default)
         {
             return new UnknownRoutineDispatchPayload(new RoutineDispatchPayloadType(@type), additionalBinaryDataProperties: null);
@@ -2450,7 +3530,6 @@ namespace Azure.AI.Projects
         /// <summary> A manual payload used to test a responses API routine dispatch. </summary>
         /// <param name="input"> The JSON value sent as the complete downstream responses input. The value is passed through as-is and can be an object, string, number, boolean, array, or null. </param>
         /// <returns> A new <see cref="Projects.AgentResponsesApiDispatchPayload"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentResponsesApiDispatchPayload AgentResponsesApiDispatchPayload(BinaryData input = default)
         {
             return new AgentResponsesApiDispatchPayload(RoutineDispatchPayloadType.InvokeAgentResponsesApi, additionalBinaryDataProperties: null, input);
@@ -2459,7 +3538,6 @@ namespace Azure.AI.Projects
         /// <summary> A manual payload used to test an invocations API routine dispatch. </summary>
         /// <param name="input"> The JSON value sent as the complete downstream invocations input. The value is passed through as-is and can be an object, string, number, boolean, array, or null. </param>
         /// <returns> A new <see cref="Projects.AgentInvocationsApiDispatchPayload"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static AgentInvocationsApiDispatchPayload AgentInvocationsApiDispatchPayload(BinaryData input = default)
         {
             return new AgentInvocationsApiDispatchPayload(RoutineDispatchPayloadType.InvokeAgentInvocationsApi, additionalBinaryDataProperties: null, input);
@@ -2470,7 +3548,6 @@ namespace Azure.AI.Projects
         /// <param name="actionCorrelationId"> A downstream action correlation identifier, when available. </param>
         /// <param name="taskId"> A workspace task identifier created for the dispatch, when available. </param>
         /// <returns> A new <see cref="Projects.DispatchRoutineResult"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static DispatchRoutineResult DispatchRoutineResult(string dispatchId = default, string actionCorrelationId = default, string taskId = default)
         {
             return new DispatchRoutineResult(dispatchId, actionCorrelationId, taskId, additionalBinaryDataProperties: null);
@@ -2480,12 +3557,14 @@ namespace Azure.AI.Projects
         /// <param name="outputs"> The final job outputs: Azure OpenAI files for fine-tuning, or datasets for evaluation. </param>
         /// <param name="generatedSamples"> The number of samples actually generated. </param>
         /// <param name="tokenUsage"> The token usage information for the data generation job. </param>
+        /// <param name="warnings"> Nonfatal warnings associated with otherwise usable output. `test_case_description_generation_incomplete` indicates that conversation rows were produced but one or more optional descriptions failed. Warning messages do not expose raw provider or model error bodies. </param>
         /// <returns> A new <see cref="Projects.DataGenerationJobResult"/> instance for mocking. </returns>
-        public static DataGenerationJobResult DataGenerationJobResult(IEnumerable<DataGenerationJobOutput> outputs = default, int generatedSamples = default, DataGenerationTokenUsage tokenUsage = default)
+        public static DataGenerationJobResult DataGenerationJobResult(IEnumerable<DataGenerationJobOutput> outputs = default, int generatedSamples = default, DataGenerationTokenUsage tokenUsage = default, IEnumerable<DataGenerationWarning> warnings = default)
         {
             outputs ??= new ChangeTrackingList<DataGenerationJobOutput>();
+            warnings ??= new ChangeTrackingList<DataGenerationWarning>();
 
-            return new DataGenerationJobResult(outputs.ToList(), generatedSamples, tokenUsage, additionalBinaryDataProperties: null);
+            return new DataGenerationJobResult(outputs.ToList(), generatedSamples, tokenUsage, warnings.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -2503,7 +3582,6 @@ namespace Azure.AI.Projects
         /// <param name="id"> The id of the output Azure OpenAI file. </param>
         /// <param name="filename"> The filename of the output Azure OpenAI file. </param>
         /// <returns> A new <see cref="Projects.FileDataGenerationJobOutput"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static FileDataGenerationJobOutput FileDataGenerationJobOutput(string id = default, string filename = default)
         {
             return new FileDataGenerationJobOutput(DataGenerationJobOutputType.File, additionalBinaryDataProperties: null, id, filename);
@@ -2540,74 +3618,18 @@ namespace Azure.AI.Projects
             return new DataGenerationTokenUsage(promptTokens, completionTokens, totalTokens, additionalBinaryDataProperties: null);
         }
 
-        /// <summary>
-        /// The base source model for data generation jobs.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AgentDataGenerationJobSource"/>, <see cref="Projects.FileDataGenerationJobSource"/>, <see cref="Projects.PromptDataGenerationJobSource"/>, and <see cref="Projects.TracesDataGenerationJobSource"/>.
-        /// </summary>
-        /// <param name="type"> The type of source. </param>
-        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
-        /// <returns> A new <see cref="Projects.DataGenerationJobSource"/> instance for mocking. </returns>
-        public static DataGenerationJobSource DataGenerationJobSource(string @type = default, string description = default)
+        /// <summary> A nonfatal warning associated with data generation output. </summary>
+        /// <param name="code"> The warning code. </param>
+        /// <param name="message"> A safe, human-readable warning message that does not include raw provider or model error bodies. </param>
+        /// <returns> A new <see cref="Projects.DataGenerationWarning"/> instance for mocking. </returns>
+        public static DataGenerationWarning DataGenerationWarning(DataGenerationWarningCode? code = default, string message = default)
         {
-            return new UnknownDataGenerationJobSource(new DataGenerationJobSourceType(@type), description, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Prompt source for data generation jobs — inline text provided by the user. </summary>
-        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
-        /// <param name="prompt"> Inline prompt text (e.g., agent description, policy text, supplementary context). </param>
-        /// <returns> A new <see cref="Projects.PromptDataGenerationJobSource"/> instance for mocking. </returns>
-        public static PromptDataGenerationJobSource PromptDataGenerationJobSource(string description = default, string prompt = default)
-        {
-            return new PromptDataGenerationJobSource(DataGenerationJobSourceType.Prompt, additionalBinaryDataProperties: null, description, prompt);
-        }
-
-        /// <summary> Agent source for data generation jobs — references an agent to fetch instructions and metadata from. </summary>
-        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
-        /// <param name="agentName"> The agent name to fetch instructions from. </param>
-        /// <param name="agentVersion"> The agent version. If not specified, the latest version is used. </param>
-        /// <returns> A new <see cref="Projects.AgentDataGenerationJobSource"/> instance for mocking. </returns>
-        public static AgentDataGenerationJobSource AgentDataGenerationJobSource(string description = default, string agentName = default, string agentVersion = default)
-        {
-            return new AgentDataGenerationJobSource(DataGenerationJobSourceType.Agent, additionalBinaryDataProperties: null, description, agentName, agentVersion);
-        }
-
-        /// <summary> Traces source for data generation jobs — conversation traces from Application Insights. </summary>
-        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
-        /// <param name="agentId"> The unique agent ID used to filter traces. Provide either `agent_id` or `agent_name` — at least one is required. </param>
-        /// <param name="agentName"> The agent name to fetch traces for. Provide either `agent_id` or `agent_name` — at least one is required. </param>
-        /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
-        /// <param name="startsOn"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
-        /// <param name="endsOn"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
-        /// <param name="traceIds"> Optional explicit list of trace IDs to include. </param>
-        /// <returns> A new <see cref="Projects.TracesDataGenerationJobSource"/> instance for mocking. </returns>
-        public static TracesDataGenerationJobSource TracesDataGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<string> traceIds = default)
-        {
-            traceIds ??= new ChangeTrackingList<string>();
-
-            return new TracesDataGenerationJobSource(
-                DataGenerationJobSourceType.Traces,
-                additionalBinaryDataProperties: null,
-                description,
-                agentId,
-                agentName,
-                agentVersion,
-                startsOn,
-                endsOn,
-                traceIds.ToList());
-        }
-
-        /// <summary> File source for data generation jobs — Azure OpenAI file input. </summary>
-        /// <param name="description"> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </param>
-        /// <param name="id"> Input Azure Open AI file id used for data generation. </param>
-        /// <returns> A new <see cref="Projects.FileDataGenerationJobSource"/> instance for mocking. </returns>
-        public static FileDataGenerationJobSource FileDataGenerationJobSource(string description = default, string id = default)
-        {
-            return new FileDataGenerationJobSource(DataGenerationJobSourceType.File, description, additionalBinaryDataProperties: null, id);
+            return new DataGenerationWarning(code, message, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
         /// Configuration for managing data generation jobs.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.SimpleQnADataGenerationJobConfiguration"/>, <see cref="Projects.SimulationSeedDataGenerationJobConfiguration"/>, <see cref="Projects.ToolUseFineTuningDataGenerationJobConfiguration"/>, and <see cref="Projects.TracesDataGenerationJobConfiguration"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.ConversationsDataGenerationJobConfiguration"/>, <see cref="Projects.SimpleQnADataGenerationJobConfiguration"/>, <see cref="Projects.SimulationSeedDataGenerationJobConfiguration"/>, <see cref="Projects.ToolUseFineTuningDataGenerationJobConfiguration"/>, and <see cref="Projects.TracesDataGenerationJobConfiguration"/>.
         /// </summary>
         /// <param name="type"> The data generation job type. </param>
         /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
@@ -2619,7 +3641,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> LLM model options for data generation jobs. </summary>
-        /// <param name="model"> Base model name used to generate data. </param>
+        /// <param name="model"> Base model name used to generate data. For trace and conversation jobs, a nonempty value is required when `generate_test_case_rubric` is true. Conversation jobs also require a nonempty value when `generate_test_case_description` is true. Model options must be omitted for conversation reconstruction when neither description nor rubric generation is enabled. </param>
         /// <returns> A new <see cref="Projects.DataGenerationModelOptions"/> instance for mocking. </returns>
         public static DataGenerationModelOptions DataGenerationModelOptions(string model = default)
         {
@@ -2632,7 +3654,6 @@ namespace Azure.AI.Projects
         /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. </param>
         /// <param name="questionTypes"> The question types to generate. Used only for fine-tuning scenarios. </param>
         /// <returns> A new <see cref="Projects.SimpleQnADataGenerationJobConfiguration"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static SimpleQnADataGenerationJobConfiguration SimpleQnADataGenerationJobConfiguration(float? trainSplit = default, DataGenerationModelOptions modelOptions = default, int maxSamples = default, IEnumerable<SimpleQnAFineTuningQuestionType> questionTypes = default)
         {
             questionTypes ??= new ChangeTrackingList<SimpleQnAFineTuningQuestionType>();
@@ -2651,8 +3672,9 @@ namespace Azure.AI.Projects
         /// <param name="modelOptions"> The LLM model options. </param>
         /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. If omitted, sampling is turned off. </param>
         /// <param name="redactPrivateContent"> Whether to redact private content from traces. When omitted or set to true, private content is redacted. Set to false to opt out of redaction. </param>
+        /// <param name="generateTestCaseRubric"> Whether to generate test-case rubric dimensions for each captured turn sample. This is a preview feature requiring the `Foundry-Features: DataGenerationJobs=V1Preview` request header. When true, requires a nonempty `model_options.model`. </param>
         /// <returns> A new <see cref="Projects.TracesDataGenerationJobConfiguration"/> instance for mocking. </returns>
-        public static TracesDataGenerationJobConfiguration TracesDataGenerationJobConfiguration(float? trainSplit = default, DataGenerationModelOptions modelOptions = default, int? maxSamples = default, bool? redactPrivateContent = default)
+        public static TracesDataGenerationJobConfiguration TracesDataGenerationJobConfiguration(float? trainSplit = default, DataGenerationModelOptions modelOptions = default, int? maxSamples = default, bool? redactPrivateContent = default, bool? generateTestCaseRubric = default)
         {
             return new TracesDataGenerationJobConfiguration(
                 DataGenerationJobKind.Traces,
@@ -2660,7 +3682,29 @@ namespace Azure.AI.Projects
                 modelOptions,
                 additionalBinaryDataProperties: null,
                 maxSamples,
-                redactPrivateContent);
+                redactPrivateContent,
+                generateTestCaseRubric);
+        }
+
+        /// <summary> The configuration for reconstructing existing traced conversations for evaluation, not synthetic conversation simulation. This preview requires `scenario` to be `evaluation`, sources of type `traces`, and the `Foundry-Features: DataGenerationJobs=V1Preview` request header. Conversation-level sampling is implicit; `sample_level` is not supported. Existing trace selection, annotations, and output dataset row schemas are unchanged. Create, get, and list responses preserve `type: conversations`. The service enforces the scenario, source, and conditional model-options requirements. Conversation-level output rows contain `test_case_id`, `messages`, `tool_definitions`, and `metadata`. A successful optional description adds `test_case_description`. If description generation fails, the row is retained with safe row-level status and error metadata, without raw provider or model error bodies. </summary>
+        /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
+        /// <param name="maxSamples"> Maximum number of whole conversations to generate, up to service-defined limits. If omitted, sampling is turned off. </param>
+        /// <param name="redactPrivateContent"> Whether to redact private content from traces. When omitted or set to true, private content is redacted. Set to false to opt out of redaction. </param>
+        /// <param name="generateTestCaseDescription"> Whether to generate an AI-authored test-case description for each reconstructed conversation. This is a preview feature. If omitted, the service defaults to `false`. When true, requires a nonempty `model_options.model`. Model options must be omitted when neither description nor rubric generation is enabled. </param>
+        /// <param name="generateTestCaseRubric"> Whether to generate test-case rubric dimensions for each reconstructed conversation. This is a preview feature. When true, requires a nonempty `model_options.model`. Model options must be omitted when neither description nor rubric generation is enabled. </param>
+        /// <param name="modelOptions"> The model used to generate test-case descriptions or rubric dimensions. Required with a nonempty `model` when `generate_test_case_description` or `generate_test_case_rubric` is true; must be omitted otherwise. </param>
+        /// <returns> A new <see cref="Projects.ConversationsDataGenerationJobConfiguration"/> instance for mocking. </returns>
+        public static ConversationsDataGenerationJobConfiguration ConversationsDataGenerationJobConfiguration(float? trainSplit = default, int? maxSamples = default, bool? redactPrivateContent = default, bool? generateTestCaseDescription = default, bool? generateTestCaseRubric = default, DataGenerationModelOptions modelOptions = default)
+        {
+            return new ConversationsDataGenerationJobConfiguration(
+                DataGenerationJobKind.Conversations,
+                trainSplit,
+                additionalBinaryDataProperties: null,
+                maxSamples,
+                redactPrivateContent,
+                generateTestCaseDescription,
+                generateTestCaseRubric,
+                modelOptions);
         }
 
         /// <summary> The configuration for a task generation data generation job. Use with multiturn evaluation scenarios and with prompt, file, or agent sources. Generated dataset rows include fields such as `id`, `category`, `test_case_description`, and `desired_num_turns`. </summary>
@@ -2678,7 +3722,6 @@ namespace Azure.AI.Projects
         /// <param name="modelOptions"> The LLM model options. </param>
         /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. </param>
         /// <returns> A new <see cref="Projects.ToolUseFineTuningDataGenerationJobConfiguration"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static ToolUseFineTuningDataGenerationJobConfiguration ToolUseFineTuningDataGenerationJobConfiguration(float? trainSplit = default, DataGenerationModelOptions modelOptions = default, int maxSamples = default)
         {
             return new ToolUseFineTuningDataGenerationJobConfiguration(DataGenerationJobKind.ToolUse, trainSplit, modelOptions, additionalBinaryDataProperties: null, maxSamples);
@@ -2688,7 +3731,7 @@ namespace Azure.AI.Projects
         /// <param name="name"> Dataset name to assign to the output. </param>
         /// <param name="description"> Description to assign to the output dataset. </param>
         /// <param name="tags"> Tags to assign to the output dataset. </param>
-        /// <param name="writeMode"> Controls how dataset outputs are written. If omitted, defaults to `overwrite` and creates the next dataset version using only newly generated rows. </param>
+        /// <param name="writeMode"> Controls how dataset outputs are written. If omitted, defaults to `overwrite` and creates the next dataset version using only newly generated rows. `merge` combines newly generated rows with the latest existing dataset version and de-duplicates trace rows. For conversation jobs, a newly generated conversation snapshot replaces the existing snapshot of the same conversation wholesale. The replacement snapshot may omit earlier turns outside the selected time window. Existing conversations without a newly generated replacement remain unchanged. Merging replaces whole conversation snapshots rather than unioning individual turns, so it does not retain every previous turn from the replaced snapshot. </param>
         /// <returns> A new <see cref="Projects.EvaluationDataGenerationJobOutputConfiguration"/> instance for mocking. </returns>
         public static EvaluationDataGenerationJobOutputConfiguration EvaluationDataGenerationJobOutputConfiguration(string name = default, string description = default, IDictionary<string, string> tags = default, DataGenerationJobOutputWriteMode? writeMode = default)
         {
@@ -2702,7 +3745,6 @@ namespace Azure.AI.Projects
         /// <param name="writeMode"> Controls how file outputs are written. If omitted, defaults to `overwrite` and writes only the newly generated fine-tuning file content. </param>
         /// <param name="mergeFileId"> File ID to merge into when `write_mode` is `merge`. </param>
         /// <returns> A new <see cref="Projects.SupervisedFineTuningDataGenerationJobOutputConfiguration"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static SupervisedFineTuningDataGenerationJobOutputConfiguration SupervisedFineTuningDataGenerationJobOutputConfiguration(string name = default, DataGenerationJobOutputWriteMode? writeMode = default, string mergeFileId = default)
         {
             return new SupervisedFineTuningDataGenerationJobOutputConfiguration(name, writeMode, mergeFileId, additionalBinaryDataProperties: null);
@@ -2713,7 +3755,6 @@ namespace Azure.AI.Projects
         /// <param name="writeMode"> Controls how file outputs are written. If omitted, defaults to `overwrite` and writes only the newly generated fine-tuning file content. </param>
         /// <param name="mergeFileId"> File ID to merge into when `write_mode` is `merge`. </param>
         /// <returns> A new <see cref="Projects.ReinforcementFineTuningDataGenerationJobOutputConfiguration"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static ReinforcementFineTuningDataGenerationJobOutputConfiguration ReinforcementFineTuningDataGenerationJobOutputConfiguration(string name = default, DataGenerationJobOutputWriteMode? writeMode = default, string mergeFileId = default)
         {
             return new ReinforcementFineTuningDataGenerationJobOutputConfiguration(name, writeMode, mergeFileId, additionalBinaryDataProperties: null);
@@ -2760,7 +3801,6 @@ namespace Azure.AI.Projects
         /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
         /// <param name="outputConfiguration"> Optional file output configuration for the generated supervised fine-tuning data. </param>
         /// <returns> A new <see cref="Projects.SupervisedFineTuningDataGenerationJobInputs"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static SupervisedFineTuningDataGenerationJobInputs SupervisedFineTuningDataGenerationJobInputs(string name = default, IEnumerable<DataGenerationJobSource> sources = default, DataGenerationJobConfiguration generationConfiguration = default, SupervisedFineTuningDataGenerationJobOutputConfiguration outputConfiguration = default)
         {
             sources ??= new ChangeTrackingList<DataGenerationJobSource>();
@@ -2780,7 +3820,6 @@ namespace Azure.AI.Projects
         /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
         /// <param name="outputConfiguration"> Optional file output configuration for the generated reinforcement fine-tuning data. </param>
         /// <returns> A new <see cref="Projects.ReinforcementFineTuningDataGenerationJobInputs"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
         public static ReinforcementFineTuningDataGenerationJobInputs ReinforcementFineTuningDataGenerationJobInputs(string name = default, IEnumerable<DataGenerationJobSource> sources = default, DataGenerationJobConfiguration generationConfiguration = default, ReinforcementFineTuningDataGenerationJobOutputConfiguration outputConfiguration = default)
         {
             sources ??= new ChangeTrackingList<DataGenerationJobSource>();
@@ -2792,6 +3831,22 @@ namespace Azure.AI.Projects
                 DataGenerationJobScenario.ReinforcementFinetuningPreview,
                 additionalBinaryDataProperties: null,
                 outputConfiguration);
+        }
+
+        /// <summary> Evaluation rule model. </summary>
+        /// <param name="id"> Unique identifier for the evaluation rule. </param>
+        /// <param name="displayName"> Display Name for the evaluation rule. </param>
+        /// <param name="description"> Description for the evaluation rule. </param>
+        /// <param name="action"> Definition of the evaluation rule action. </param>
+        /// <param name="filter"> Filter condition of the evaluation rule. </param>
+        /// <param name="eventType"> Event type that the evaluation rule applies to. </param>
+        /// <param name="enabled"> Indicates whether the evaluation rule is enabled. Default is true. </param>
+        /// <param name="systemData"> System metadata for the evaluation rule. </param>
+        /// <returns> A new <see cref="Evaluation.EvaluationRule"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static EvaluationRule EvaluationRule(string id, string displayName, string description, EvaluationRuleAction action, EvaluationRuleFilter filter, EvaluationRuleEventType eventType, bool enabled, IReadOnlyDictionary<string, string> systemData)
+        {
+            return EvaluationRule(id: id, displayName: displayName, description: description, action: action, filter: filter, eventType: eventType, schedule: default, provisioningStatus: default, error: default, enabled: enabled, systemData: systemData);
         }
 
         /// <summary> Evaluation rule action for continuous evaluation. </summary>

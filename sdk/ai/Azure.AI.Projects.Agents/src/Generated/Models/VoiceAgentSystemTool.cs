@@ -4,17 +4,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A service-managed control that acts on the active voice session without customer code or external authentication. </summary>
-    [Experimental("AAIP001")]
     public partial class VoiceAgentSystemTool : VoiceAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="VoiceAgentSystemTool"/>. </summary>
         /// <param name="name"> The service-managed control action. Known values are stable; additional values may be added over time. </param>
-        public VoiceAgentSystemTool(VoiceAgentSystemToolName name) : base("system")
+        public VoiceAgentSystemTool(VoiceAgentSystemToolName name) : base(VoiceAgentToolType.System)
         {
             Name = name;
         }
@@ -24,10 +22,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The service-managed control action. Known values are stable; additional values may be added over time. </param>
         /// <param name="description"> An optional description of the system tool. </param>
-        internal VoiceAgentSystemTool(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceAgentSystemToolName name, string description) : base(@type, additionalBinaryDataProperties)
+        /// <param name="timeoutSeconds"> Execution timeout, from 1 to 300 seconds. If omitted, the service defaults to 60 seconds. </param>
+        internal VoiceAgentSystemTool(VoiceAgentToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceAgentSystemToolName name, string description, TimeSpan? timeoutSeconds) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
+            TimeoutSeconds = timeoutSeconds;
         }
 
         /// <summary> The service-managed control action. Known values are stable; additional values may be added over time. </summary>
@@ -35,5 +35,8 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> An optional description of the system tool. </summary>
         public string Description { get; set; }
+
+        /// <summary> Execution timeout, from 1 to 300 seconds. If omitted, the service defaults to 60 seconds. </summary>
+        public TimeSpan? TimeoutSeconds { get; set; }
     }
 }

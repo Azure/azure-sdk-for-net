@@ -19,11 +19,13 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Initializes a new instance of <see cref="EvaluatorDefinition"/>. </summary>
         /// <param name="type"> The type of evaluator definition. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         private protected EvaluatorDefinition(EvaluatorDefinitionType @type)
         {
             Type = @type;
             Metrics = new ChangeTrackingDictionary<string, EvaluatorMetric>();
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="EvaluatorDefinition"/>. </summary>
         /// <param name="type"> The type of evaluator definition. </param>
@@ -31,6 +33,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="dataSchema"> The JSON schema (Draft 2020-12) for the evaluator's input data. This includes parameters like type, properties, required. </param>
         /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal EvaluatorDefinition(EvaluatorDefinitionType @type, BinaryData initParameters, BinaryData dataSchema, IDictionary<string, EvaluatorMetric> metrics, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
@@ -39,6 +42,7 @@ namespace Azure.AI.Projects.Evaluation
             Metrics = metrics;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> The type of evaluator definition. </summary>
         internal EvaluatorDefinitionType Type { get; set; }

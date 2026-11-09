@@ -19,6 +19,7 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Initializes a new instance of <see cref="AzureAIAgentTarget"/>. </summary>
         /// <param name="name"> The name of the Azure AI agent to invoke as the evaluation target. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         public AzureAIAgentTarget(string name) : base("azure_ai_agent")
         {
             Argument.AssertNotNull(name, nameof(name));
@@ -27,6 +28,7 @@ namespace Azure.AI.Projects.Evaluation
             ToolDescriptions = new ChangeTrackingList<ToolDescription>();
             Tools = new ChangeTrackingList<ResponseTool>();
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="AzureAIAgentTarget"/>. </summary>
         /// <param name="type"> The type of target. </param>

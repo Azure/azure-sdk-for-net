@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A GitHub issue routine trigger. </summary>
-    [Experimental("AAIP001")]
     public partial class GitHubIssueRoutineTrigger : RoutineTrigger
     {
         /// <summary> Initializes a new instance of <see cref="GitHubIssueRoutineTrigger"/>. </summary>
@@ -18,6 +16,7 @@ namespace Azure.AI.Projects
         /// <param name="repository"> The GitHub repository filter that scopes which issues can fire the trigger. </param>
         /// <param name="issueEvent"> The GitHub issue event that fires the routine. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionId"/>, <paramref name="owner"/> or <paramref name="repository"/> is null. </exception>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         public GitHubIssueRoutineTrigger(string connectionId, string owner, string repository, GitHubIssueEvent issueEvent) : base(RoutineTriggerKind.GithubIssue)
         {
             Argument.AssertNotNull(connectionId, nameof(connectionId));
@@ -29,6 +28,7 @@ namespace Azure.AI.Projects
             Repository = repository;
             IssueEvent = issueEvent;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="GitHubIssueRoutineTrigger"/>. </summary>
         /// <param name="type"> The trigger type. </param>
@@ -37,6 +37,7 @@ namespace Azure.AI.Projects
         /// <param name="owner"> The GitHub owner or organization that scopes which issues can fire the trigger. </param>
         /// <param name="repository"> The GitHub repository filter that scopes which issues can fire the trigger. </param>
         /// <param name="issueEvent"> The GitHub issue event that fires the routine. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal GitHubIssueRoutineTrigger(RoutineTriggerKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string connectionId, string owner, string repository, GitHubIssueEvent issueEvent) : base(@type, additionalBinaryDataProperties)
         {
             ConnectionId = connectionId;
@@ -44,6 +45,7 @@ namespace Azure.AI.Projects
             Repository = repository;
             IssueEvent = issueEvent;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> The workspace connection identifier that resolves the GitHub configuration for the trigger. </summary>
         public string ConnectionId { get; set; }

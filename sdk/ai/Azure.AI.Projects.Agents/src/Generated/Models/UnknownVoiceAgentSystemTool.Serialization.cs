@@ -102,15 +102,16 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            string @type = "unknown";
+            VoiceAgentToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             VoiceAgentSystemToolName name = default;
             string description = default;
+            TimeSpan? timeoutSeconds = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new VoiceAgentToolType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -123,12 +124,21 @@ namespace Azure.AI.Projects.Agents
                     description = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("timeout_seconds"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timeoutSeconds = TimeSpan.FromSeconds(prop.Value.GetInt32());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UnknownVoiceAgentSystemTool(@type, additionalBinaryDataProperties, name, description);
+            return new UnknownVoiceAgentSystemTool(@type, additionalBinaryDataProperties, name, description, timeoutSeconds);
         }
     }
 }

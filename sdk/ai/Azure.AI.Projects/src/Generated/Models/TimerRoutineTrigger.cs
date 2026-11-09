@@ -4,27 +4,29 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A one-shot timer routine trigger. </summary>
-    [Experimental("AAIP001")]
     public partial class TimerRoutineTrigger : RoutineTrigger
     {
         /// <summary> Initializes a new instance of <see cref="TimerRoutineTrigger"/>. </summary>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         public TimerRoutineTrigger() : base(RoutineTriggerKind.Timer)
         {
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="TimerRoutineTrigger"/>. </summary>
         /// <param name="type"> The trigger type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="at"> The UTC date and time at which the timer fires. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal TimerRoutineTrigger(RoutineTriggerKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, DateTimeOffset? at) : base(@type, additionalBinaryDataProperties)
         {
             At = at;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> The UTC date and time at which the timer fires. </summary>
         public DateTimeOffset? At { get; set; }

@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
@@ -12,7 +11,6 @@ namespace Azure.AI.Projects
     /// Base model for a routine action.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentInvocationsApiRoutineAction"/> and <see cref="AgentResponsesApiRoutineAction"/>.
     /// </summary>
-    [Experimental("AAIP001")]
     public abstract partial class RoutineAction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -20,19 +18,23 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="RoutineAction"/>. </summary>
         /// <param name="type"> The action type. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         private protected RoutineAction(RoutineActionKind @type)
         {
             Type = @type;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="RoutineAction"/>. </summary>
         /// <param name="type"> The action type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal RoutineAction(RoutineActionKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> The action type. </summary>
         internal RoutineActionKind Type { get; set; }

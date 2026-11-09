@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -12,7 +11,6 @@ namespace Azure.AI.Projects.Agents
     /// A managed runtime and agent loop used to execute a prompt agent.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="GitHubCopilotHarness"/> and <see cref="MicrosoftCopilotHarness"/>.
     /// </summary>
-    [Experimental("AAIP001")]
     public abstract partial class AgentHarness
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -20,19 +18,23 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="AgentHarness"/>. </summary>
         /// <param name="type"> The type of managed harness. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         private protected AgentHarness(string @type)
         {
             Type = @type;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="AgentHarness"/>. </summary>
         /// <param name="type"> The type of managed harness. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal AgentHarness(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> The type of managed harness. </summary>
         internal string Type { get; set; }

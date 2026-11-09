@@ -26,6 +26,8 @@ namespace Azure.AI.Projects.Agents
             }
         };
         private readonly string _apiVersion;
+        [Experimental("AAIP001")]
+        private BetaVoiceAgentsLiveConversations _cachedAgentEndpointLiveConversations;
 
         /// <summary> Initializes a new instance of AgentAdministrationClient for mocking. </summary>
         protected AgentAdministrationClient()
@@ -1012,6 +1014,13 @@ namespace Azure.AI.Projects.Agents
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets the client for stored native Live conversations. </summary>
+        [Experimental("AAIP001")]
+        public virtual BetaVoiceAgentsLiveConversations GetBetaVoiceAgentEndpointLiveConversations()
+        {
+            return (Volatile.Read(ref _cachedAgentEndpointLiveConversations) ?? Interlocked.CompareExchange(ref _cachedAgentEndpointLiveConversations, new BetaVoiceAgentsLiveConversations(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null)) ?? _cachedAgentEndpointLiveConversations;
         }
     }
 }

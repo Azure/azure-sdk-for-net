@@ -21,6 +21,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         protected override VoiceAgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentMcpTool>)this).GetFormatFromOptions(options) : options.Format;
@@ -35,8 +36,10 @@ namespace Azure.AI.Projects.Agents
                     throw new FormatException($"The model {nameof(VoiceAgentMcpTool)} does not support reading '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentMcpTool>)this).GetFormatFromOptions(options) : options.Format;
@@ -48,28 +51,38 @@ namespace Azure.AI.Projects.Agents
                     throw new FormatException($"The model {nameof(VoiceAgentMcpTool)} does not support writing '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         BinaryData IPersistableModel<VoiceAgentMcpTool>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         VoiceAgentMcpTool IPersistableModel<VoiceAgentMcpTool>.Create(BinaryData data, ModelReaderWriterOptions options) => (VoiceAgentMcpTool)PersistableModelCreateCore(data, options);
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         string IPersistableModel<VoiceAgentMcpTool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         void IJsonModel<VoiceAgentMcpTool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentMcpTool>)this).GetFormatFromOptions(options) : options.Format;
@@ -191,13 +204,17 @@ namespace Azure.AI.Projects.Agents
                 writer.WriteStringValue(ResponseScheduling.Value.ToString());
             }
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         VoiceAgentMcpTool IJsonModel<VoiceAgentMcpTool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VoiceAgentMcpTool)JsonModelCreateCore(ref reader, options);
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         protected override VoiceAgentTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceAgentMcpTool>)this).GetFormatFromOptions(options) : options.Format;
@@ -208,16 +225,18 @@ namespace Azure.AI.Projects.Agents
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVoiceAgentMcpTool(document.RootElement, options);
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // Model initialization and serialization support experimental members and variants.
         internal static VoiceAgentMcpTool DeserializeVoiceAgentMcpTool(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string @type = "mcp";
+            VoiceAgentToolType @type = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string serverLabel = default;
             Uri serverUrl = default;
@@ -236,7 +255,7 @@ namespace Azure.AI.Projects.Agents
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    @type = new VoiceAgentToolType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("server_label"u8))
@@ -384,5 +403,6 @@ namespace Azure.AI.Projects.Agents
                 _allowedToolsIsDefined = allowedToolsIsDefined
             };
         }
+#pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
     }
 }

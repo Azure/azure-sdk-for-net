@@ -4,7 +4,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -14,7 +13,6 @@ namespace Azure.AI.Projects.Agents
     ///   close, or a client or network disconnect that the service can still finalize.
     /// <list type="bullet"><item><description>`failed`: a terminal service, bridge, storage, or unrecoverable transport failure prevented finalization.</description></item></list>
     /// </summary>
-    [Experimental("AAIP001")]
     public readonly partial struct VoiceConversationStatus : IEquatable<VoiceConversationStatus>
     {
         private readonly string _value;

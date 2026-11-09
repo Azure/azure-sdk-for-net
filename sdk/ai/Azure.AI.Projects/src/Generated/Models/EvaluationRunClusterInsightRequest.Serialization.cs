@@ -14,12 +14,15 @@ namespace Azure.AI.Projects.Evaluation
     public partial class EvaluationRunClusterInsightRequest : InsightRequest, IJsonModel<EvaluationRunClusterInsightRequest>
     {
         /// <summary> Initializes a new instance of <see cref="EvaluationRunClusterInsightRequest"/> for deserialization. </summary>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal EvaluationRunClusterInsightRequest()
         {
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected override InsightRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EvaluationRunClusterInsightRequest>)this).GetFormatFromOptions(options) : options.Format;
@@ -34,8 +37,10 @@ namespace Azure.AI.Projects.Evaluation
                     throw new FormatException($"The model {nameof(EvaluationRunClusterInsightRequest)} does not support reading '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EvaluationRunClusterInsightRequest>)this).GetFormatFromOptions(options) : options.Format;
@@ -47,28 +52,38 @@ namespace Azure.AI.Projects.Evaluation
                     throw new FormatException($"The model {nameof(EvaluationRunClusterInsightRequest)} does not support writing '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         BinaryData IPersistableModel<EvaluationRunClusterInsightRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         EvaluationRunClusterInsightRequest IPersistableModel<EvaluationRunClusterInsightRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => (EvaluationRunClusterInsightRequest)PersistableModelCreateCore(data, options);
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         string IPersistableModel<EvaluationRunClusterInsightRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         void IJsonModel<EvaluationRunClusterInsightRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EvaluationRunClusterInsightRequest>)this).GetFormatFromOptions(options) : options.Format;
@@ -97,13 +112,17 @@ namespace Azure.AI.Projects.Evaluation
                 writer.WriteObjectValue(ModelConfiguration, options);
             }
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         EvaluationRunClusterInsightRequest IJsonModel<EvaluationRunClusterInsightRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EvaluationRunClusterInsightRequest)JsonModelCreateCore(ref reader, options);
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected override InsightRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EvaluationRunClusterInsightRequest>)this).GetFormatFromOptions(options) : options.Format;
@@ -114,9 +133,11 @@ namespace Azure.AI.Projects.Evaluation
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEvaluationRunClusterInsightRequest(document.RootElement, options);
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal static EvaluationRunClusterInsightRequest DeserializeEvaluationRunClusterInsightRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -173,5 +194,6 @@ namespace Azure.AI.Projects.Evaluation
             }
             return new EvaluationRunClusterInsightRequest(@type, additionalBinaryDataProperties, evalId, runIds ?? new ChangeTrackingList<string>(), modelConfiguration);
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
     }
 }

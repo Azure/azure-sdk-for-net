@@ -4,11 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary> A single dimension — one independent, measurable quality dimension within a rubric evaluator's scoring blueprint. </summary>
+    /// <summary> One measurable criterion within a rubric. Quality criteria may use rating weights; safety criteria classify a behavior as allowed or disallowed. </summary>
     public partial class EvaluationsDimension
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -17,32 +18,38 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> Initializes a new instance of <see cref="EvaluationsDimension"/>. </summary>
         /// <param name="id"> Stable identifier for this dimension (snake_case, e.g., `correct_resolution`). Required. Provided by the user when manually creating a rubric evaluator or during human-in-the-loop review of a generated set; the generation pipeline produces an initial value the user can edit. Editable when saving new versions. </param>
         /// <param name="description"> What this dimension measures (e.g., 'Correctly identifies the user's reservation intent and pursues the appropriate workflow'). </param>
-        /// <param name="weight"> Relative weight of this dimension (1-10). The generation pipeline assigns exactly one dimension weight 8-10; all others use 1-6. User edits are not constrained by this heuristic. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="description"/> is null. </exception>
-        public EvaluationsDimension(string id, string description, int weight)
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
+        public EvaluationsDimension(string id, string description)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(description, nameof(description));
 
             Id = id;
             Description = description;
-            Weight = weight;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="EvaluationsDimension"/>. </summary>
         /// <param name="id"> Stable identifier for this dimension (snake_case, e.g., `correct_resolution`). Required. Provided by the user when manually creating a rubric evaluator or during human-in-the-loop review of a generated set; the generation pipeline produces an initial value the user can edit. Editable when saving new versions. </param>
         /// <param name="description"> What this dimension measures (e.g., 'Correctly identifies the user's reservation intent and pursues the appropriate workflow'). </param>
-        /// <param name="weight"> Relative weight of this dimension (1-10). The generation pipeline assigns exactly one dimension weight 8-10; all others use 1-6. User edits are not constrained by this heuristic. </param>
+        /// <param name="allowed"> Safety behavior classification: true means allowed behavior and false means disallowed behavior. Required on every safety criterion instead of weight. This is not an evaluation verdict. Omit for ordinary quality criteria; omission never defaults a safety criterion to false. Preserved through edits and regeneration. </param>
+        /// <param name="weight"> Optional configured weight for legacy or Likert scoring. For Likert, omit every weight for equal contribution or supply a weight for every dimension; partially weighted definitions are rejected. Boolean scoring rejects every configured weight, including explicit unit weights. No schema default is emitted. </param>
+        /// <param name="generatedWeight"> Read-only model-suggested weight (1-10) returned for unweighted Likert dimensions. </param>
         /// <param name="isAlwaysApplicable"> When true, the LLM judge always scores this dimension regardless of relevance (skips applicability assessment). The service-generated general quality/policy dimension has this set to true and is non-editable. Users may set this on their own custom dimensions. The service defaults to `false` if a value is not specified by the caller. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluationsDimension(string id, string description, int weight, bool? isAlwaysApplicable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
+        internal EvaluationsDimension(string id, string description, bool? allowed, int? weight, int? generatedWeight, bool? isAlwaysApplicable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Description = description;
+            Allowed = allowed;
             Weight = weight;
+            GeneratedWeight = generatedWeight;
             IsAlwaysApplicable = isAlwaysApplicable;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Stable identifier for this dimension (snake_case, e.g., `correct_resolution`). Required. Provided by the user when manually creating a rubric evaluator or during human-in-the-loop review of a generated set; the generation pipeline produces an initial value the user can edit. Editable when saving new versions. </summary>
         public string Id { get; set; }
@@ -50,8 +57,15 @@ namespace Azure.AI.Projects.Evaluation
         /// <summary> What this dimension measures (e.g., 'Correctly identifies the user's reservation intent and pursues the appropriate workflow'). </summary>
         public string Description { get; set; }
 
-        /// <summary> Relative weight of this dimension (1-10). The generation pipeline assigns exactly one dimension weight 8-10; all others use 1-6. User edits are not constrained by this heuristic. </summary>
-        public int Weight { get; set; }
+        /// <summary> Safety behavior classification: true means allowed behavior and false means disallowed behavior. Required on every safety criterion instead of weight. This is not an evaluation verdict. Omit for ordinary quality criteria; omission never defaults a safety criterion to false. Preserved through edits and regeneration. </summary>
+        [Experimental("AAIP001")]
+        public bool? Allowed { get; set; }
+
+        /// <summary> Optional configured weight for legacy or Likert scoring. For Likert, omit every weight for equal contribution or supply a weight for every dimension; partially weighted definitions are rejected. Boolean scoring rejects every configured weight, including explicit unit weights. No schema default is emitted. </summary>
+        public int? Weight { get; set; }
+
+        /// <summary> Read-only model-suggested weight (1-10) returned for unweighted Likert dimensions. </summary>
+        public int? GeneratedWeight { get; }
 
         /// <summary> When true, the LLM judge always scores this dimension regardless of relevance (skips applicability assessment). The service-generated general quality/policy dimension has this set to true and is non-editable. Users may set this on their own custom dimensions. The service defaults to `false` if a value is not specified by the caller. </summary>
         public bool? IsAlwaysApplicable { get; set; }

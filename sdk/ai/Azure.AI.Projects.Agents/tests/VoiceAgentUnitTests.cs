@@ -3,12 +3,59 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Linq;
+using System.Text.Json;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Agents.Tests;
 #pragma warning disable AAIP001
 public class VoiceAgentUnitTests
 {
+    [Test]
+    public void RealtimeModelFactoryPreservesSoundscape()
+    {
+        VoiceAgentSoundscapeConfig soundscape = new();
+        VoiceAgentDefinition definition = ProjectsAgentsModelFactory.VoiceAgentDefinition(
+            model: "realtime-model", soundscape: soundscape);
+
+        Assert.That(definition.Soundscape, Is.SameAs(soundscape));
+        using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(definition));
+        Assert.That(document.RootElement.GetProperty("soundscape").ValueKind, Is.EqualTo(JsonValueKind.Object));
+    }
+
+    [Test]
+    public void RealtimeModelFactoryPreservesPostCall()
+    {
+        VoiceAgentPostCallConfig postCall = new([]);
+        VoiceAgentDefinition definition = ProjectsAgentsModelFactory.VoiceAgentDefinition(
+            model: "realtime-model", postCall: postCall);
+
+        Assert.That(definition.PostCall, Is.SameAs(postCall));
+        using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(definition));
+        Assert.That(document.RootElement.GetProperty("post_call").GetProperty("destinations").GetArrayLength(), Is.Zero);
+    }
+
+    [Test]
+    public void RealtimeModelFactoryKeepsExistingParameterOrderWhenAddingFields()
+    {
+        string[] originalParameters =
+        [
+            "contentFilterConfiguration", "modelType", "model", "conversationEngine", "instructions", "greeting", "audio",
+            "outputModalities", "internalMaxOutputTokens", "include", "interimResponse", "avatar", "tools", "internalToolChoice",
+            "parallelToolCalls", "structuredInputs", "subagentConfig", "store"
+        ];
+        string[] parameters = typeof(ProjectsAgentsModelFactory)
+            .GetMethod(nameof(ProjectsAgentsModelFactory.VoiceAgentDefinition))
+            .GetParameters().Select(parameter => parameter.Name).ToArray();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(parameters.Take(originalParameters.Length), Is.EqualTo(originalParameters));
+            Assert.That(parameters.Skip(originalParameters.Length), Is.EqualTo(new[] { "soundscape", "postCall" }));
+            Assert.That(parameters, Does.Not.Contain("kind").And.Not.Contain("subProtocol"));
+        });
+    }
+
     [Test]
     [TestCase(null, null, true)]
     [TestCase(null, "inf", false)]

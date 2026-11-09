@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Caller-supplied inputs for a reinforcement fine-tuning data generation job. This is a preview feature. </summary>
-    [Experimental("AAIP001")]
     public partial class ReinforcementFineTuningDataGenerationJobInputs : DataGenerationJobInputs
     {
         /// <summary> Initializes a new instance of <see cref="ReinforcementFineTuningDataGenerationJobInputs"/>. </summary>
@@ -17,6 +15,7 @@ namespace Azure.AI.Projects
         /// <param name="sources"> The sources used for the data generation job. </param>
         /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="sources"/> or <paramref name="generationConfiguration"/> is null. </exception>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         public ReinforcementFineTuningDataGenerationJobInputs(string name, IEnumerable<DataGenerationJobSource> sources, DataGenerationJobConfiguration generationConfiguration) : base(name, sources, generationConfiguration, DataGenerationJobScenario.ReinforcementFinetuningPreview)
         {
             Argument.AssertNotNull(name, nameof(name));
@@ -24,6 +23,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNull(generationConfiguration, nameof(generationConfiguration));
 
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="ReinforcementFineTuningDataGenerationJobInputs"/>. </summary>
         /// <param name="name"> The display name of the data generation job. </param>
@@ -32,10 +32,12 @@ namespace Azure.AI.Projects
         /// <param name="scenario"> The scenario of the data generation job. Either for fine-tuning or evaluation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="outputConfiguration"> Optional file output configuration for the generated reinforcement fine-tuning data. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal ReinforcementFineTuningDataGenerationJobInputs(string name, IList<DataGenerationJobSource> sources, DataGenerationJobConfiguration generationConfiguration, DataGenerationJobScenario scenario, IDictionary<string, BinaryData> additionalBinaryDataProperties, ReinforcementFineTuningDataGenerationJobOutputConfiguration outputConfiguration) : base(name, sources, generationConfiguration, scenario, additionalBinaryDataProperties)
         {
             OutputConfiguration = outputConfiguration;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Optional file output configuration for the generated reinforcement fine-tuning data. </summary>
         public ReinforcementFineTuningDataGenerationJobOutputConfiguration OutputConfiguration { get; set; }

@@ -4,19 +4,18 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A custom event routine trigger. </summary>
-    [Experimental("AAIP001")]
     public partial class CustomRoutineTrigger : RoutineTrigger
     {
         /// <summary> Initializes a new instance of <see cref="CustomRoutineTrigger"/>. </summary>
         /// <param name="provider"> The external provider that emits the custom event. </param>
         /// <param name="parameters"> Provider-specific trigger parameters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="provider"/> or <paramref name="parameters"/> is null. </exception>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         public CustomRoutineTrigger(string provider, IDictionary<string, BinaryData> parameters) : base(RoutineTriggerKind.Custom)
         {
             Argument.AssertNotNull(provider, nameof(provider));
@@ -25,6 +24,7 @@ namespace Azure.AI.Projects
             Provider = provider;
             Parameters = parameters;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="CustomRoutineTrigger"/>. </summary>
         /// <param name="type"> The trigger type. </param>
@@ -32,12 +32,14 @@ namespace Azure.AI.Projects
         /// <param name="provider"> The external provider that emits the custom event. </param>
         /// <param name="eventName"> The provider-specific event name that fires the routine. </param>
         /// <param name="parameters"> Provider-specific trigger parameters. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal CustomRoutineTrigger(RoutineTriggerKind @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string provider, string eventName, IDictionary<string, BinaryData> parameters) : base(@type, additionalBinaryDataProperties)
         {
             Provider = provider;
             EventName = eventName;
             Parameters = parameters;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> The external provider that emits the custom event. </summary>
         public string Provider { get; set; }
