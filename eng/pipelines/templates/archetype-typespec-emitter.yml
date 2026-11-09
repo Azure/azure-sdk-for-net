@@ -407,6 +407,13 @@ extends:
             fetchDepth: 1
             fetchTags: false
 
+          - pwsh: |
+              # Discover common objects even when the shallow PR merge lacks advertised branch tips.
+              git config --local push.negotiate true
+              if ($LASTEXITCODE -ne 0) { throw "Failed to enable Git push negotiation." }
+            displayName: Enable Git push negotiation
+            workingDirectory: $(Build.SourcesDirectory)
+
           - template: /eng/common/pipelines/templates/steps/login-to-github.yml
             parameters:
               TokenOwners:
@@ -504,6 +511,13 @@ extends:
           - checkout: self
             fetchDepth: 1
             fetchTags: false
+
+          - pwsh: |
+              # Discover common objects even when the shallow PR merge lacks advertised branch tips.
+              git config --local push.negotiate true
+              if ($LASTEXITCODE -ne 0) { throw "Failed to enable Git push negotiation." }
+            displayName: Enable Git push negotiation
+            workingDirectory: $(Build.SourcesDirectory)
 
           - template: /eng/common/pipelines/templates/steps/login-to-github.yml
             parameters:

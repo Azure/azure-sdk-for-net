@@ -164,6 +164,45 @@ Describe "TypeSpec emitter regeneration commits" -Tag "UnitTest" {
     }
 }
 
+Describe "TypeSpec emitter regeneration push negotiation" -Tag "UnitTest" -ForEach @(
+    @{ Job = "Initialize" },
+    @{ Job = "Generate" }
+) {
+    BeforeAll {
+        function git { throw "git must be mocked in these tests." }
+        $jobs = @(Find-PipelineNode $pipeline "job" $Job)
+        $jobs.Count | Should -Be 1
+        $steps = @($jobs[0].steps)
+        $negotiationSteps = @(Find-PipelineNode $jobs[0] "displayName" "Enable Git push negotiation")
+        $negotiationSteps.Count | Should -Be 1
+        $negotiationStep = $negotiationSteps[0]
+    }
+
+    It "enables repo-local negotiation before pushing in <Job>" {
+        $negotiationStep.workingDirectory | Should -BeExactly '$(Build.SourcesDirectory)'
+        $steps[0].checkout | Should -BeExactly "self"
+        $steps[0].fetchDepth | Should -Be 1
+        $pushSteps = @(Find-PipelineNode $jobs[0] "template" "/eng/common/pipelines/templates/steps/git-push-changes.yml")
+        $pushSteps.Count | Should -Be 1
+        [array]::IndexOf($steps, $negotiationStep) | Should -BeGreaterThan 0
+        [array]::IndexOf($steps, $negotiationStep) | Should -BeLessThan ([array]::IndexOf($steps, $pushSteps[0]))
+
+        Mock git { $global:LASTEXITCODE = 0 }
+        & ([scriptblock]::Create($negotiationStep.pwsh))
+
+        Should -Invoke git -Times 1 -Exactly -ParameterFilter {
+            ($args -join " ") -eq "config --local push.negotiate true"
+        }
+    }
+
+    It "fails when enabling negotiation fails in <Job>" {
+        Mock git { $global:LASTEXITCODE = 42 }
+
+        { & ([scriptblock]::Create($negotiationStep.pwsh)) } |
+            Should -Throw "Failed to enable Git push negotiation."
+    }
+}
+
 Describe "TypeSpec emitter regeneration PR metadata" -Tag "UnitTest" {
     It "preserves metadata for <Reason>, <Emitter>, <Version>, <Result>" -ForEach $titleCases {
         $actual = Invoke-TitleStep -Reason $Reason -Result $Result -EmitterIdentifier "-$Emitter" -Prerelease $Prerelease -Version $Version
