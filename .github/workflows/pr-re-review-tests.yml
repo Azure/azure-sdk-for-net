@@ -33,5 +33,13 @@ jobs:
           # GitHub's wrapper otherwise propagates the last native test command's exit code.
           exit 0
 
-      - name: Run unresolve-review-thread job tests
-        run: node --test .github/workflows/test/pr-re-review-unresolve-thread.test.cjs .github/workflows/test/pr-re-review-evidence.test.cjs
+      - name: Provision pinned handler and receipt test helpers
+        uses: github/gh-aw-actions/setup@458b269006dcf88e3b5496b6fbecabe4b9a0f954 # v0.92.0
+        with:
+          destination: ${{ runner.temp }}/gh-aw-test-actions
+          job-name: ${{ github.job }}
+
+      - name: Run review capture, continuation, and publication tests
+        env:
+          GH_AW_TEST_ACTIONS_DIR: ${{ runner.temp }}/gh-aw-test-actions
+        run: node --test .github/workflows/pr-re-review/*.Tests.cjs .github/workflows/test/pr-re-review-unresolve-thread.test.cjs .github/workflows/test/pr-re-review-evidence.test.cjs

@@ -249,7 +249,7 @@ Describe 'Compiled re-review publication guard' {
         }
     }
 
-    It 'checks out the guard from the trusted base commit without persisting credentials' {
+    It 'checks out the guard from the trusted PR base without persisting credentials' {
         $checkout = Get-Step 'Checkout trusted re-review publication guard'
         Get-StepProperty $checkout 'uses' | Should -BeExactly 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1'
         $with = Get-StepMapping $checkout 'with'
@@ -268,7 +268,7 @@ Describe 'Compiled re-review publication guard' {
         $located = [array]::IndexOf($script:StepNames, 'Setup agent output environment variable')
         $checkout = [array]::IndexOf($script:StepNames, 'Checkout trusted re-review publication guard')
         $guard = [array]::IndexOf($script:StepNames, 'Require complete re-review coverage before publishing')
-        $evidence = [array]::IndexOf($script:StepNames, 'Reconcile re-review evidence with the trusted PR inventory')
+        $evidence = [array]::IndexOf($script:StepNames, 'Verify source-backed worker assessments with shared read coverage')
         $publish = [array]::IndexOf($script:StepNames, 'Process Safe Outputs')
         $located | Should -BeGreaterOrEqual 0
         $checkout | Should -BeGreaterThan $located
@@ -280,19 +280,12 @@ Describe 'Compiled re-review publication guard' {
     It '<Name> has no condition or continue-on-error that could bypass a failed guard' -ForEach @(
         @{ Name = 'Checkout trusted re-review publication guard' }
         @{ Name = 'Require complete re-review coverage before publishing' }
-        @{ Name = 'Reconcile re-review evidence with the trusted PR inventory' }
+        @{ Name = 'Verify source-backed worker assessments with shared read coverage' }
         @{ Name = 'Process Safe Outputs' }
     ) {
         $step = Get-Step $Name
         Get-StepProperty $step 'if' | Should -BeNullOrEmpty
         Get-StepProperty $step 'continue-on-error' | Should -BeNullOrEmpty
-    }
-
-    It 'reads the runtime transcript and invokes the trusted evidence validator before publication' {
-        $step = Get-Step 'Reconcile re-review evidence with the trusted PR inventory'
-        Get-StepProperty $step 'uses' | Should -BeExactly 'actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0'
-        $step.Lines -join "`n" | Should -Match '/tmp/gh-aw/agent-session\.jsonl'
-        $step.Lines -join "`n" | Should -Match 'await validatePublication'
     }
 
     It 'blocks run 40400877253 when the compiled step runs the guard' {

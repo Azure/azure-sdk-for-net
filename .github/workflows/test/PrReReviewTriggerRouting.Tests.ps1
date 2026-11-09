@@ -238,6 +238,29 @@ Describe 'pr-re-review trigger routing' {
         }
     }
 
+    Context 'reopen publication guard' {
+        BeforeAll {
+            # Evaluate the compiled job condition, replacing only the framework's
+            # cancellation and output-type functions with their passing values.
+            $reopenCondition = (Get-JobCondition 'unresolve_review_thread').Replace('!cancelled()', 'true').Replace("contains(needs.agent.outputs.output_types, 'unresolve_review_thread')", 'true')
+        }
+
+        It 'allows reopen only when skipped count is <Skipped> and safe-output result is <Result>' -ForEach @(
+            @{ Skipped = '0'; Result = 'success'; Expected = $true }
+            @{ Skipped = '9'; Result = 'success'; Expected = $false }
+            @{ Skipped = ''; Result = 'success'; Expected = $false }
+            @{ Skipped = $null; Result = 'success'; Expected = $false }
+            @{ Skipped = 'invalid'; Result = 'success'; Expected = $false }
+            @{ Skipped = '0'; Result = 'failure'; Expected = $false }
+        ) {
+            $context = @{ needs = @{
+                agent = @{ result = 'success' }
+                safe_outputs = @{ result = $Result; outputs = @{ process_safe_outputs_items_skipped = $Skipped } }
+            } }
+            Test-WorkflowCondition $reopenCondition $context | Should -Be $Expected
+        }
+    }
+
     It 'keys workflow concurrency by event so the skipped twin run never queues behind the real run' {
         $group = (Get-YamlSection $LockLines 'concurrency' 0) -cmatch '^  group: '
         $group | Should -HaveCount 1
