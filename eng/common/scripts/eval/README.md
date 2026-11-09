@@ -25,43 +25,45 @@ Repo-local adapters can customize it without copying that infrastructure:
 | `preEvalTemplate` / `postEvalTemplate` | Existing parameter-free setup/teardown step templates. |
 | `evalInvokeTemplate` | Existing invocation template accepting `vallyRoot`, `UseAzSdkAuthentication` and `threshold`. |
 | `azureSubscription` | Optional service-connection override. Stage/job templates default to `''` and omit an empty override; the common invoke template retains its `opensource-api-connection` default. |
-| `vallyArguments` | Optional array of supplementary Vally option/value pairs. Strings are required except that trial/worker counts also accept numbers. Available through the stage, shard job and common invoke template. Defaults to `[]`. |
+| `vallyArguments` | Optional array of supplementary Vally options, values and switches. Strings are required except that trial/worker counts also accept numbers. Available through the stage, shard job and common invoke template. Defaults to `[]`. |
 
-Supported supplementary options are `--tag`, `--runs`, `--workers` and `--timeout`.
-For example, `['--tag', 'mode=forced', '--runs', '3']` selects a local benchmark
-configuration without replacing the common runner. Trial/worker counts must be
-positive integer strings or safe integer numbers. Azure template expansion can
-serialize numeric parameters as JSON numbers even when using `format`; the runner
-validates and converts only `--runs` / `--workers` numeric values to strings.
-All other options and values must be strings. Both authentication branches forward the array as JSON in
-`VALLY_ARGUMENTS_JSON`; the runner passes literal arguments to the pinned CLI using
-Node directly, without a shell or whitespace splitting of supplementary values.
-The template JSON-escapes dollar signs before agent macro expansion; the runner's
-JSON decoding restores them. Tags such as `build=$(Build.BuildId)` stay literal,
-even when the pipeline variable exists.
-Unsupported flags (including aliases and `--flag=value`) are rejected. Eval
-selection, output paths, JUnit, plugins and verdict settings remain framework-owned.
-Legacy custom invoke templates retain their existing parameter contract when the
-array is empty. A custom template opting into a non-empty array must declare its
-own `vallyArguments` parameter; otherwise template compilation rejects it.
+**Not allowed in `vallyArguments`:**
 
-`--runs` greater than 1 must not be combined with `failOnFailedTests: true`.
-Use `failOnFailedTests: false` (the default) for multi-run observations;
-explicit `--runs 1` may still be used with the gate enabled. Unsupported
-combinations fail the common shard's configuration check before installation or
-evaluation. When composing shard and summary jobs directly, pass the same
-`failOnFailedTests` value to both. This check covers explicit `--runs` values in
-`vallyArguments` only; Summary does not infer run counts from results. Callers must
-ensure that repetition configured in `.vally.yaml` or custom invoke templates is
-not combined with the enabled gate.
+| Affected part | Reserved options | Reason |
+| --- | --- | --- |
+| Shard structure and execution context | `--eval-spec` / `-e`, `--no-eval-spec`, `--suite`, `--no-suite`, `--eval-plugin`, `--no-eval-plugin`, `--work-dir`, `--no-work-dir` | Prepare already assigns files to shards. These change eval selection/loading or the working directory; `--suite` also conflicts with the assigned `-e` arguments. Use `evalGlobs` and `vallyRoot` instead. |
+| Result collection and Summary | `--output-dir`, `--no-output-dir`, `--output`, `--no-output`, `--junit`, `--no-junit` | The pipeline owns result locations and enables JUnit. In Vally 0.19.0, `--output jsonl` sends results to stdout instead of `results.jsonl`. |
+| Validation and scoring | `--threshold`, `--no-threshold`, `--skip-grade`, `--no-skip-grade`, `--skip-validate`, `--no-skip-validate` | The runner does not support bypassing validation/grading, and scoring must match the shard gate. Set the template's `threshold` parameter instead. |
+| Exit-code gating | `--require-pass`, `--no-require-pass` | The shard decides pass/fail from `results.jsonl`, not Vally's exit code; this option would not control the pipeline gate. |
 
-`--tag` filters stimuli during execution only; it does not filter Prepare's matrix.
-The caller must align `evalGlobs` (or its custom matrix) with the tags so every
-planned eval retains at least one matching stimulus. For example, `--tag area=github`
-alone does not remove other areas from the matrix: also restrict the selected files
-to the intended GitHub evals. Recheck this alignment when adding evals or changing tags.
-Zero-match evals are not treated as successful skips; a zero-trial shard still fails
-the verdict/completeness checks even with `failOnFailedTests: false`.
+**Allowed:** other Vally options using `--option value` or standalone switches such as
+`--verbose`. This includes `--tag`, `--runs`, `--workers`, `--timeout`,
+`--model` and supplementary plugin options. New options need no common-template changes;
+Vally validates their names, values and whether they require a value.
+Aliases, `--flag=value` and positional paths/globs are not supported.
+Values must be nonempty strings without null characters and must not start with `-`;
+`--runs` and `--workers` also accept positive safe integer numbers.
+Arguments are passed literally, without a shell or whitespace splitting.
+
+For example, replace `<tag-key>` and `<tag-value>` with a tag defined in your eval stimuli:
+
+```yaml
+vallyArguments:
+  - --tag
+  - '<tag-key>=<tag-value>'
+  - --runs
+  - 3
+  - --workers
+  - 2
+  - --verbose
+failOnFailedTests: false
+```
+
+Multiple runs require `failOnFailedTests: false`, including repetition configured
+outside `vallyArguments`. `--tag` uses keys and values defined in your eval stimuli,
+not predefined mode names. Tags filter stimuli, not the shard matrix: keep
+`evalGlobs` aligned so every selected eval has matching stimuli.
+Custom invoke templates must declare `vallyArguments` to receive a non-empty array.
 
 Use the existing pre/post-eval and MCP setup hooks for repository-specific work.
 Authenticated callers can pass `azureSubscription` explicitly to the stage or shard
