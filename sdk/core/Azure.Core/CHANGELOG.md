@@ -1,12 +1,10 @@
 # Release History
 
-## 1.65.0-beta.1 (Unreleased)
+## 1.65.0 (2026-11-09)
 
 ### Features Added
 
 - Added support for Azure Arc user-assigned managed identities. `ManagedIdentityCredential` supports selection by client ID, resource ID, or object ID; `DefaultAzureCredential` supports selection through its client ID and resource ID options.
-
-### Breaking Changes
 
 ### Bugs Fixed
 
