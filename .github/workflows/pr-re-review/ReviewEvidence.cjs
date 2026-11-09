@@ -15,18 +15,23 @@ function truncated(text) {
 function parseSession(session) {
   const pending = new Map();
   const calls = new Map();
+  let submitted = false;
   for (const line of session.split(/\r?\n/).filter(line => line.trim())) {
     const event = JSON.parse(line);
     const data = event.data;
     if (event.type === "tool.execution_start") {
       // Only reads completed before submission can support that review.
-      if (data.mcpServerName === "safeoutputs" && data.mcpToolName === "submit_pull_request_review") break;
+      if (data.mcpServerName === "safeoutputs" && data.mcpToolName === "submit_pull_request_review") {
+        submitted = true;
+        break;
+      }
       pending.set(data.toolCallId, data);
     } else if (event.type === "tool.execution_complete" && data.success === true) {
       const start = pending.get(data.toolCallId);
       if (start) calls.set(data.toolCallId, { ...start, result: data.result, order: calls.size });
     }
   }
+  requireEvidence(submitted, "transcript has no recognized review submission boundary.");
   return calls;
 }
 
@@ -36,6 +41,7 @@ function visiblePayload(call, calls, depth = 0) {
   requireEvidence(typeof text === "string", "successful tool result has no visible content.");
   let value;
   try { value = JSON.parse(text); } catch { value = text; }
+  value = decodeVisibleText(value);
   const payloadPath = value?.payloadPath ||
     (typeof value === "string" && value.match(/Saved to: ([^\r\n]+)/)?.[1]);
   if (payloadPath) {
@@ -50,7 +56,7 @@ function visiblePayload(call, calls, depth = 0) {
     requireEvidence(read, `offloaded payload was not fully read: ${call.toolCallId}. Retry with smaller pages.`);
     return visiblePayload(read, calls, depth + 1);
   }
-  requireEvidence(!truncated(text), "tool output is truncated.");
+  requireEvidence(!truncated(text) && !(typeof value === "string" && truncated(value)), "tool output is truncated.");
   return value;
 }
 
@@ -67,11 +73,15 @@ function filePage(value) {
   throw new Error("Re-review evidence: file page has no file payload.");
 }
 
-function historyPayload(value) {
-  if (Array.isArray(value) && value.length === 1 && Array.isArray(value[0]?.content)) return historyPayload(value[0]);
-  if (Array.isArray(value?.content)) {
-    requireEvidence(value.isError !== true, "history read returned an MCP error.");
-    return historyPayload(JSON.parse(value.content.filter(part => part.type === "text").map(part => part.text).join("\n")));
+function decodeVisibleText(value, depth = 0) {
+  requireEvidence(depth < 5, "visible text envelope nesting is unsupported.");
+  if (Array.isArray(value) && value.length === 1 && Array.isArray(value[0]?.content)) return decodeVisibleText(value[0], depth + 1);
+  requireEvidence(value?.isError !== true, "tool read returned an MCP error.");
+  if (Array.isArray(value?.content) && value.content.every(part => part.type === "text")) {
+    const text = value.content.map(part => part.text).join("\n");
+    let decoded;
+    try { decoded = JSON.parse(text); } catch { decoded = text; }
+    return decodeVisibleText(decoded, depth + 1);
   }
   return value;
 }
@@ -106,7 +116,7 @@ function validateEvidence({ output, session, inventory, target }) {
   for (const call of historyCalls) {
     if (!["get_review_comments", "get_reviews"].includes(call.arguments.method)) continue;
     let payload;
-    try { payload = historyPayload(visiblePayload(call, calls)); } catch { continue; }
+    try { payload = visiblePayload(call, calls); } catch { continue; }
     if (call.arguments.method === "get_reviews" && Array.isArray(payload)) {
       fetchedReviews = true;
       payload.forEach(review => readReviews.add(review.id));

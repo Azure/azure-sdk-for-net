@@ -62,7 +62,10 @@ function input(state) {
     target,
     inventory: { files: state.files, threads: 9, unresolved: 2,
       threadIds: Array.from({ length: 9 }, (_, index) => `thread${index}`), reviewIds: [123] },
-    session: state.events.map(event => JSON.stringify(event)).join("\n"),
+    session: [...state.events, {
+      type: "tool.execution_start",
+      data: { toolCallId: "submit", mcpServerName: "safeoutputs", mcpToolName: "submit_pull_request_review" }
+    }].map(event => JSON.stringify(event)).join("\n"),
     output: { errors: [], items: [{
       type: "submit_pull_request_review",
       body: `Coverage: 9/9 threads fetched, 2/2 unresolved threads verified, ${state.files.length}/${state.files.length} changed files reviewed\n` +
@@ -126,6 +129,40 @@ test("an offload is consumed only by a full successful view, not a path mention 
   }
 });
 
+function textEnvelope(value) {
+  return { content: [{ type: "text", text: JSON.stringify(value) }] };
+}
+
+test("wrapped offload metadata is consumed after a successful full view", () => {
+  const metadata = { payloadPath: "/tmp/page.json" };
+  for (const payload of [textEnvelope(metadata), [textEnvelope(metadata)], textEnvelope([textEnvelope(metadata)])]) {
+    const state = fixture();
+    pageCompletion(state).result.content = JSON.stringify(payload);
+    addCall(state, "view", {}, [textEnvelope(state.files)], {
+      start: { toolName: "view", mcpServerName: undefined, mcpToolName: undefined,
+        arguments: { path: metadata.payloadPath, view_range: [1, -1] } }
+    });
+    assert.doesNotThrow(() => validateEvidence(input(state)));
+  }
+});
+
+test("wrapped offloads still require a full successful read and reject MCP errors or truncation", () => {
+  for (const change of ["missing view", "failed view", "partial view", "MCP error", "truncated view"]) {
+    const state = fixture();
+    const payload = textEnvelope({ payloadPath: "/tmp/page.json" });
+    if (change === "MCP error") payload.isError = true;
+    pageCompletion(state).result.content = JSON.stringify([payload]);
+    if (change !== "missing view") {
+      addCall(state, "view", {}, textEnvelope(change === "truncated view" ? "Output truncated." : state.files), {
+        success: change !== "failed view",
+        start: { toolName: "view", mcpServerName: undefined, mcpToolName: undefined,
+          arguments: { path: "/tmp/page.json", view_range: [1, change === "partial view" ? 2 : -1] } }
+      });
+    }
+    assert.throws(() => validateEvidence(input(state)), /pagination/);
+  }
+});
+
 test("hidden detailed content cannot turn an unread offload into a consumed page", () => {
   const state = fixture();
   pageCompletion(state).result = {
@@ -156,7 +193,10 @@ test("a missing patch requires actual file content pinned to the correct revisio
   assert.throws(() => validateEvidence(input(state)), /missing pinned content read/);
   state.evidence.files[0].contentCallId = "content";
   addCall(state, "content", {}, [{
-    content: [{ type: "resource", resource: { text: state.evidence.files[0].quote } }]
+    content: [
+      { type: "text", text: "successfully downloaded text file" },
+      { type: "resource", resource: { text: state.evidence.files[0].quote } }
+    ]
   }], {
     start: { toolName: "github-get_file_contents", mcpToolName: "get_file_contents",
       arguments: { owner: target.owner, repo: target.repo, path: state.files[0].filename, sha: head } }
@@ -206,6 +246,18 @@ test("reads performed after submitting the review cannot retroactively support i
     data: { mcpServerName: "safeoutputs", mcpToolName: "submit_pull_request_review" }
   });
   assert.throws(() => validateEvidence(input(state)), /pagination/);
+});
+
+test("a complete-looking transcript without a recognized submission event is rejected", () => {
+  for (const change of ["missing", "wrong server", "wrong tool"]) {
+    const value = input(fixture());
+    const events = value.session.split("\n").map(JSON.parse);
+    if (change === "missing") events.pop();
+    if (change === "wrong server") events.at(-1).data.mcpServerName = "github";
+    if (change === "wrong tool") events.at(-1).data.mcpToolName = "get_files";
+    value.session = events.map(event => JSON.stringify(event)).join("\n");
+    assert.throws(() => validateEvidence(value), /no recognized review submission boundary/);
+  }
 });
 
 test("rejects invented coverage totals even with complete file evidence", () => {
