@@ -12,26 +12,26 @@ using Azure.ResourceManager.Quota;
 namespace Azure.ResourceManager.Quota.Models
 {
     /// <summary> Record of a cancellation action on a transfer. </summary>
-    public partial class CancellationRecord
+    public partial class QuotaTransferCancellationRecord
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CancellationRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaTransferCancellationRecord"/>. </summary>
         /// <param name="actor"> Principal that performed the cancellation. </param>
         /// <param name="occurredOn"> Timestamp at which the cancellation was recorded. </param>
-        internal CancellationRecord(string actor, DateTimeOffset occurredOn)
+        internal QuotaTransferCancellationRecord(string actor, DateTimeOffset occurredOn)
         {
             Actor = actor;
             OccurredOn = occurredOn;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CancellationRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaTransferCancellationRecord"/>. </summary>
         /// <param name="reason"> Optional free-text reason supplied by the donor when cancelling. </param>
         /// <param name="actor"> Principal that performed the cancellation. </param>
         /// <param name="occurredOn"> Timestamp at which the cancellation was recorded. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CancellationRecord(string reason, string actor, DateTimeOffset occurredOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QuotaTransferCancellationRecord(string reason, string actor, DateTimeOffset occurredOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Reason = reason;
             Actor = actor;

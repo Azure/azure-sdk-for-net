@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.Quota.Models
             writer.WriteStringValue(ResourceName);
             writer.WritePropertyName("amount"u8);
             writer.WriteNumberValue(Amount);
-            if (Optional.IsDefined(AutoApprove))
+            if (Optional.IsDefined(IsAutoApproveEnabled))
             {
                 writer.WritePropertyName("autoApprove"u8);
-                writer.WriteBooleanValue(AutoApprove.Value);
+                writer.WriteBooleanValue(IsAutoApproveEnabled.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -199,12 +199,12 @@ namespace Azure.ResourceManager.Quota.Models
             string billingAccountId = default;
             string resourceName = default;
             long amount = default;
-            bool? autoApprove = default;
+            bool? isAutoApproveEnabled = default;
             DateTimeOffset? createdOn = default;
             DateTimeOffset? expiresOn = default;
             string createdBy = default;
-            ApprovalRecord approval = default;
-            CancellationRecord cancellation = default;
+            QuotaTransferApprovalRecord approval = default;
+            QuotaTransferCancellationRecord cancellation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    autoApprove = prop.Value.GetBoolean();
+                    isAutoApproveEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("createdAt"u8))
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    approval = ApprovalRecord.DeserializeApprovalRecord(prop.Value, options);
+                    approval = QuotaTransferApprovalRecord.DeserializeQuotaTransferApprovalRecord(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("cancellation"u8))
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    cancellation = CancellationRecord.DeserializeCancellationRecord(prop.Value, options);
+                    cancellation = QuotaTransferCancellationRecord.DeserializeQuotaTransferCancellationRecord(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Quota.Models
                 billingAccountId,
                 resourceName,
                 amount,
-                autoApprove,
+                isAutoApproveEnabled,
                 createdOn,
                 expiresOn,
                 createdBy,

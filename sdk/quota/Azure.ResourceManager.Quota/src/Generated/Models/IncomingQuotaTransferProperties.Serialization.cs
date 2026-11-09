@@ -187,8 +187,8 @@ namespace Azure.ResourceManager.Quota.Models
             string resourceName = default;
             long? amount = default;
             string sourceEtag = default;
-            ApprovalRecord approval = default;
-            RejectionRecord rejection = default;
+            QuotaTransferApprovalRecord approval = default;
+            QuotaTransferRejectionRecord rejection = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    approval = ApprovalRecord.DeserializeApprovalRecord(prop.Value, options);
+                    approval = QuotaTransferApprovalRecord.DeserializeQuotaTransferApprovalRecord(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("rejection"u8))
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Quota.Models
                     {
                         continue;
                     }
-                    rejection = RejectionRecord.DeserializeRejectionRecord(prop.Value, options);
+                    rejection = QuotaTransferRejectionRecord.DeserializeQuotaTransferRejectionRecord(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

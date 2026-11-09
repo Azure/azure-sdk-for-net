@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// Mutually exclusive with `approval`.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IncomingQuotaTransferProperties(TransferProvisioningState? provisioningState, TransferStatus? transferStatus, string transferId, ResourceIdentifier transferRef, string sourceSubscriptionId, string sourceTenantId, string billingAccountId, string resourceName, long? amount, string sourceEtag, ApprovalRecord approval, RejectionRecord rejection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IncomingQuotaTransferProperties(TransferProvisioningState? provisioningState, TransferStatus? transferStatus, string transferId, ResourceIdentifier transferRef, string sourceSubscriptionId, string sourceTenantId, string billingAccountId, string resourceName, long? amount, string sourceEtag, QuotaTransferApprovalRecord approval, QuotaTransferRejectionRecord rejection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             TransferStatus = transferStatus;
@@ -111,13 +111,13 @@ namespace Azure.ResourceManager.Quota.Models
         /// Mutually exclusive with `rejection`.
         /// </summary>
         [WirePath("approval")]
-        public ApprovalRecord Approval { get; }
+        public QuotaTransferApprovalRecord Approval { get; }
 
         /// <summary>
         /// Rejection record. Populated when `transferStatus` is `Rejected`.
         /// Mutually exclusive with `approval`.
         /// </summary>
         [WirePath("rejection")]
-        public RejectionRecord Rejection { get; }
+        public QuotaTransferRejectionRecord Rejection { get; }
     }
 }

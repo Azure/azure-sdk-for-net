@@ -12,26 +12,26 @@ using Azure.ResourceManager.Quota;
 namespace Azure.ResourceManager.Quota.Models
 {
     /// <summary> Record of an approval action on a transfer. </summary>
-    public partial class ApprovalRecord
+    public partial class QuotaTransferApprovalRecord
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ApprovalRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaTransferApprovalRecord"/>. </summary>
         /// <param name="actor"> Principal that performed the approval (typically a UPN or service principal id). </param>
         /// <param name="occurredOn"> Timestamp at which the approval was recorded. </param>
-        internal ApprovalRecord(string actor, DateTimeOffset occurredOn)
+        internal QuotaTransferApprovalRecord(string actor, DateTimeOffset occurredOn)
         {
             Actor = actor;
             OccurredOn = occurredOn;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApprovalRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaTransferApprovalRecord"/>. </summary>
         /// <param name="comment"> Optional free-text comment supplied by the approver. </param>
         /// <param name="actor"> Principal that performed the approval (typically a UPN or service principal id). </param>
         /// <param name="occurredOn"> Timestamp at which the approval was recorded. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApprovalRecord(string comment, string actor, DateTimeOffset occurredOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QuotaTransferApprovalRecord(string comment, string actor, DateTimeOffset occurredOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Comment = comment;
             Actor = actor;

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Quota;
@@ -556,7 +557,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="properties"> Properties of the quota transfer. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <returns> A new <see cref="Quota.QuotaTransferData"/> instance for mocking. </returns>
-        public static QuotaTransferData QuotaTransferData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, QuotaTransferProperties properties = default, string eTag = default)
+        public static QuotaTransferData QuotaTransferData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, QuotaTransferProperties properties = default, ETag? eTag = default)
         {
             return new QuotaTransferData(
                 id,
@@ -585,7 +586,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// (for example, `standardDv5Family` under Microsoft.Compute).
         /// </param>
         /// <param name="amount"> Amount to transfer in the resource's native unit (e.g. vCPU count). </param>
-        /// <param name="autoApprove">
+        /// <param name="isAutoApproveEnabled">
         /// Same-tenant one-shot opt-in. When true, the donor PUT admission-checks recipient-side
         /// RBAC and cap at submit time and drives the transfer to terminal Completed within the
         /// same LRO, with no recipient approve required. The outcome is reflected by
@@ -604,7 +605,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// Mutually exclusive with `approval`.
         /// </param>
         /// <returns> A new <see cref="Models.QuotaTransferProperties"/> instance for mocking. </returns>
-        public static QuotaTransferProperties QuotaTransferProperties(TransferProvisioningState? provisioningState = default, TransferStatus? transferStatus = default, string transferId = default, string displayName = default, string comment = default, string destinationSubscriptionId = default, string destinationTenantId = default, string billingAccountId = default, string resourceName = default, long amount = default, bool? autoApprove = default, DateTimeOffset? createdOn = default, DateTimeOffset? expiresOn = default, string createdBy = default, ApprovalRecord approval = default, CancellationRecord cancellation = default)
+        public static QuotaTransferProperties QuotaTransferProperties(TransferProvisioningState? provisioningState = default, TransferStatus? transferStatus = default, string transferId = default, string displayName = default, string comment = default, string destinationSubscriptionId = default, string destinationTenantId = default, string billingAccountId = default, string resourceName = default, long amount = default, bool? isAutoApproveEnabled = default, DateTimeOffset? createdOn = default, DateTimeOffset? expiresOn = default, string createdBy = default, QuotaTransferApprovalRecord approval = default, QuotaTransferCancellationRecord cancellation = default)
         {
             return new QuotaTransferProperties(
                 provisioningState,
@@ -617,7 +618,7 @@ namespace Azure.ResourceManager.Quota.Models
                 billingAccountId,
                 resourceName,
                 amount,
-                autoApprove,
+                isAutoApproveEnabled,
                 createdOn,
                 expiresOn,
                 createdBy,
@@ -630,20 +631,20 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="comment"> Optional free-text comment supplied by the approver. </param>
         /// <param name="actor"> Principal that performed the approval (typically a UPN or service principal id). </param>
         /// <param name="occurredOn"> Timestamp at which the approval was recorded. </param>
-        /// <returns> A new <see cref="Models.ApprovalRecord"/> instance for mocking. </returns>
-        public static ApprovalRecord ApprovalRecord(string comment = default, string actor = default, DateTimeOffset occurredOn = default)
+        /// <returns> A new <see cref="Models.QuotaTransferApprovalRecord"/> instance for mocking. </returns>
+        public static QuotaTransferApprovalRecord QuotaTransferApprovalRecord(string comment = default, string actor = default, DateTimeOffset occurredOn = default)
         {
-            return new ApprovalRecord(comment, actor, occurredOn, default);
+            return new QuotaTransferApprovalRecord(comment, actor, occurredOn, default);
         }
 
         /// <summary> Record of a cancellation action on a transfer. </summary>
         /// <param name="reason"> Optional free-text reason supplied by the donor when cancelling. </param>
         /// <param name="actor"> Principal that performed the cancellation. </param>
         /// <param name="occurredOn"> Timestamp at which the cancellation was recorded. </param>
-        /// <returns> A new <see cref="Models.CancellationRecord"/> instance for mocking. </returns>
-        public static CancellationRecord CancellationRecord(string reason = default, string actor = default, DateTimeOffset occurredOn = default)
+        /// <returns> A new <see cref="Models.QuotaTransferCancellationRecord"/> instance for mocking. </returns>
+        public static QuotaTransferCancellationRecord QuotaTransferCancellationRecord(string reason = default, string actor = default, DateTimeOffset occurredOn = default)
         {
-            return new CancellationRecord(reason, actor, occurredOn, default);
+            return new QuotaTransferCancellationRecord(reason, actor, occurredOn, default);
         }
 
         /// <summary> Request body for the donor cancel action. </summary>
@@ -667,7 +668,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="properties"> Properties of the incoming quota transfer. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <returns> A new <see cref="Quota.IncomingQuotaTransferData"/> instance for mocking. </returns>
-        public static IncomingQuotaTransferData IncomingQuotaTransferData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IncomingQuotaTransferProperties properties = default, string eTag = default)
+        public static IncomingQuotaTransferData IncomingQuotaTransferData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IncomingQuotaTransferProperties properties = default, ETag? eTag = default)
         {
             return new IncomingQuotaTransferData(
                 id,
@@ -702,7 +703,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// Mutually exclusive with `approval`.
         /// </param>
         /// <returns> A new <see cref="Models.IncomingQuotaTransferProperties"/> instance for mocking. </returns>
-        public static IncomingQuotaTransferProperties IncomingQuotaTransferProperties(TransferProvisioningState? provisioningState = default, TransferStatus? transferStatus = default, string transferId = default, ResourceIdentifier transferRef = default, string sourceSubscriptionId = default, string sourceTenantId = default, string billingAccountId = default, string resourceName = default, long? amount = default, string sourceEtag = default, ApprovalRecord approval = default, RejectionRecord rejection = default)
+        public static IncomingQuotaTransferProperties IncomingQuotaTransferProperties(TransferProvisioningState? provisioningState = default, TransferStatus? transferStatus = default, string transferId = default, ResourceIdentifier transferRef = default, string sourceSubscriptionId = default, string sourceTenantId = default, string billingAccountId = default, string resourceName = default, long? amount = default, string sourceEtag = default, QuotaTransferApprovalRecord approval = default, QuotaTransferRejectionRecord rejection = default)
         {
             return new IncomingQuotaTransferProperties(
                 provisioningState,
@@ -724,10 +725,10 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="reason"> Optional free-text reason supplied by the recipient when rejecting. </param>
         /// <param name="actor"> Principal that performed the rejection. </param>
         /// <param name="occurredOn"> Timestamp at which the rejection was recorded. </param>
-        /// <returns> A new <see cref="Models.RejectionRecord"/> instance for mocking. </returns>
-        public static RejectionRecord RejectionRecord(string reason = default, string actor = default, DateTimeOffset occurredOn = default)
+        /// <returns> A new <see cref="Models.QuotaTransferRejectionRecord"/> instance for mocking. </returns>
+        public static QuotaTransferRejectionRecord QuotaTransferRejectionRecord(string reason = default, string actor = default, DateTimeOffset occurredOn = default)
         {
-            return new RejectionRecord(reason, actor, occurredOn, default);
+            return new QuotaTransferRejectionRecord(reason, actor, occurredOn, default);
         }
 
         /// <summary> Request body for the recipient approve action. </summary>

@@ -12,26 +12,26 @@ using Azure.ResourceManager.Quota;
 namespace Azure.ResourceManager.Quota.Models
 {
     /// <summary> Record of a rejection action on a transfer. </summary>
-    public partial class RejectionRecord
+    public partial class QuotaTransferRejectionRecord
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RejectionRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaTransferRejectionRecord"/>. </summary>
         /// <param name="actor"> Principal that performed the rejection. </param>
         /// <param name="occurredOn"> Timestamp at which the rejection was recorded. </param>
-        internal RejectionRecord(string actor, DateTimeOffset occurredOn)
+        internal QuotaTransferRejectionRecord(string actor, DateTimeOffset occurredOn)
         {
             Actor = actor;
             OccurredOn = occurredOn;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RejectionRecord"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaTransferRejectionRecord"/>. </summary>
         /// <param name="reason"> Optional free-text reason supplied by the recipient when rejecting. </param>
         /// <param name="actor"> Principal that performed the rejection. </param>
         /// <param name="occurredOn"> Timestamp at which the rejection was recorded. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RejectionRecord(string reason, string actor, DateTimeOffset occurredOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QuotaTransferRejectionRecord(string reason, string actor, DateTimeOffset occurredOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Reason = reason;
             Actor = actor;

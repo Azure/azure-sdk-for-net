@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Quota
     public partial class IncomingQuotaTransferData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.IncomingQuotaTransferData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.IncomingQuotaTransferData>
     {
         internal IncomingQuotaTransferData() { }
-        public string ETag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Quota.Models.IncomingQuotaTransferProperties Properties { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.Quota
     public partial class QuotaTransferData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.QuotaTransferData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.QuotaTransferData>
     {
         public QuotaTransferData() { }
-        public string ETag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Quota.Models.QuotaTransferProperties Properties { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -768,26 +768,8 @@ namespace Azure.ResourceManager.Quota.Mocking
 }
 namespace Azure.ResourceManager.Quota.Models
 {
-    public partial class ApprovalRecord : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.ApprovalRecord>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.ApprovalRecord>
-    {
-        internal ApprovalRecord() { }
-        public string Actor { get { throw null; } }
-        public string Comment { get { throw null; } }
-        public System.DateTimeOffset OccurredOn { get { throw null; } }
-        protected virtual Azure.ResourceManager.Quota.Models.ApprovalRecord JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Quota.Models.ApprovalRecord PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Quota.Models.ApprovalRecord System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.ApprovalRecord>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.ApprovalRecord>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Quota.Models.ApprovalRecord System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.ApprovalRecord>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.ApprovalRecord>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.ApprovalRecord>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public static partial class ArmQuotaModelFactory
     {
-        public static Azure.ResourceManager.Quota.Models.ApprovalRecord ApprovalRecord(string comment = null, string actor = null, System.DateTimeOffset occurredOn = default(System.DateTimeOffset)) { throw null; }
-        public static Azure.ResourceManager.Quota.Models.CancellationRecord CancellationRecord(string reason = null, string actor = null, System.DateTimeOffset occurredOn = default(System.DateTimeOffset)) { throw null; }
         public static Azure.ResourceManager.Quota.CurrentQuotaLimitBaseData CurrentQuotaLimitBaseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.QuotaProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Quota.CurrentUsagesBaseData CurrentUsagesBaseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.QuotaUsagesProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.GroupQuotaDetails GroupQuotaDetails(string resourceName, long? limit, string comment, string unit, long? availableLimit = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quota.Models.SubscriptionAllocatedQuota> allocatedToSubscriptionsValue = null, string value = null, string localizedValue = null) { throw null; }
@@ -817,8 +799,8 @@ namespace Azure.ResourceManager.Quota.Models
         public static Azure.ResourceManager.Quota.Models.GroupQuotaSubscriptionRequestStatusProperties GroupQuotaSubscriptionRequestStatusProperties(string subscriptionId = null, System.DateTimeOffset? requestSubmitOn = default(System.DateTimeOffset?), Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestStatus?)) { throw null; }
         public static Azure.ResourceManager.Quota.Models.GroupQuotaUsagesBase GroupQuotaUsagesBase(string value = null, string localizedValue = null, long? limit = default(long?), long? usages = default(long?), string unit = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.IncomingQuotaTransferApproveContent IncomingQuotaTransferApproveContent(string comment = null) { throw null; }
-        public static Azure.ResourceManager.Quota.IncomingQuotaTransferData IncomingQuotaTransferData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.IncomingQuotaTransferProperties properties = null, string eTag = null) { throw null; }
-        public static Azure.ResourceManager.Quota.Models.IncomingQuotaTransferProperties IncomingQuotaTransferProperties(Azure.ResourceManager.Quota.Models.TransferProvisioningState? provisioningState = default(Azure.ResourceManager.Quota.Models.TransferProvisioningState?), Azure.ResourceManager.Quota.Models.TransferStatus? transferStatus = default(Azure.ResourceManager.Quota.Models.TransferStatus?), string transferId = null, Azure.Core.ResourceIdentifier transferRef = null, string sourceSubscriptionId = null, string sourceTenantId = null, string billingAccountId = null, string resourceName = null, long? amount = default(long?), string sourceEtag = null, Azure.ResourceManager.Quota.Models.ApprovalRecord approval = null, Azure.ResourceManager.Quota.Models.RejectionRecord rejection = null) { throw null; }
+        public static Azure.ResourceManager.Quota.IncomingQuotaTransferData IncomingQuotaTransferData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.IncomingQuotaTransferProperties properties = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.Quota.Models.IncomingQuotaTransferProperties IncomingQuotaTransferProperties(Azure.ResourceManager.Quota.Models.TransferProvisioningState? provisioningState = default(Azure.ResourceManager.Quota.Models.TransferProvisioningState?), Azure.ResourceManager.Quota.Models.TransferStatus? transferStatus = default(Azure.ResourceManager.Quota.Models.TransferStatus?), string transferId = null, Azure.Core.ResourceIdentifier transferRef = null, string sourceSubscriptionId = null, string sourceTenantId = null, string billingAccountId = null, string resourceName = null, long? amount = default(long?), string sourceEtag = null, Azure.ResourceManager.Quota.Models.QuotaTransferApprovalRecord approval = null, Azure.ResourceManager.Quota.Models.QuotaTransferRejectionRecord rejection = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.IncomingQuotaTransferRejectContent IncomingQuotaTransferRejectContent(string reason = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.QuotaAllocationRequestBase QuotaAllocationRequestBase(long? limit = default(long?), string value = null, string localizedValue = null, string region = null) { throw null; }
         public static Azure.ResourceManager.Quota.QuotaAllocationRequestStatusData QuotaAllocationRequestStatusData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.QuotaAllocationRequestBase requestedResource = null, System.DateTimeOffset? requestSubmittedOn = default(System.DateTimeOffset?), Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestStatus?), string faultCode = null) { throw null; }
@@ -830,12 +812,14 @@ namespace Azure.ResourceManager.Quota.Models
         public static Azure.ResourceManager.Quota.QuotaRequestDetailData QuotaRequestDetailData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, Azure.ResourceManager.Quota.Models.QuotaRequestState? provisioningState, string message, Azure.ResourceManager.Quota.Models.ServiceErrorDetail error, System.DateTimeOffset? requestSubmitOn, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quota.Models.QuotaSubRequestDetail> value) { throw null; }
         public static Azure.ResourceManager.Quota.Models.QuotaRequestResourceName QuotaRequestResourceName(string value = null, string localizedValue = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.QuotaSubRequestDetail QuotaSubRequestDetail(Azure.ResourceManager.Quota.Models.QuotaRequestResourceName name = null, string resourceTypeName = null, string unit = null, Azure.ResourceManager.Quota.Models.QuotaRequestState? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestState?), string message = null, System.Guid? subRequestId = default(System.Guid?), Azure.ResourceManager.Quota.Models.QuotaLimitJsonObject limit = null) { throw null; }
+        public static Azure.ResourceManager.Quota.Models.QuotaTransferApprovalRecord QuotaTransferApprovalRecord(string comment = null, string actor = null, System.DateTimeOffset occurredOn = default(System.DateTimeOffset)) { throw null; }
         public static Azure.ResourceManager.Quota.Models.QuotaTransferCancelContent QuotaTransferCancelContent(string reason = null) { throw null; }
-        public static Azure.ResourceManager.Quota.QuotaTransferData QuotaTransferData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.QuotaTransferProperties properties = null, string eTag = null) { throw null; }
-        public static Azure.ResourceManager.Quota.Models.QuotaTransferProperties QuotaTransferProperties(Azure.ResourceManager.Quota.Models.TransferProvisioningState? provisioningState = default(Azure.ResourceManager.Quota.Models.TransferProvisioningState?), Azure.ResourceManager.Quota.Models.TransferStatus? transferStatus = default(Azure.ResourceManager.Quota.Models.TransferStatus?), string transferId = null, string displayName = null, string comment = null, string destinationSubscriptionId = null, string destinationTenantId = null, string billingAccountId = null, string resourceName = null, long amount = (long)0, bool? autoApprove = default(bool?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), string createdBy = null, Azure.ResourceManager.Quota.Models.ApprovalRecord approval = null, Azure.ResourceManager.Quota.Models.CancellationRecord cancellation = null) { throw null; }
+        public static Azure.ResourceManager.Quota.Models.QuotaTransferCancellationRecord QuotaTransferCancellationRecord(string reason = null, string actor = null, System.DateTimeOffset occurredOn = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.ResourceManager.Quota.QuotaTransferData QuotaTransferData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Quota.Models.QuotaTransferProperties properties = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.Quota.Models.QuotaTransferProperties QuotaTransferProperties(Azure.ResourceManager.Quota.Models.TransferProvisioningState? provisioningState = default(Azure.ResourceManager.Quota.Models.TransferProvisioningState?), Azure.ResourceManager.Quota.Models.TransferStatus? transferStatus = default(Azure.ResourceManager.Quota.Models.TransferStatus?), string transferId = null, string displayName = null, string comment = null, string destinationSubscriptionId = null, string destinationTenantId = null, string billingAccountId = null, string resourceName = null, long amount = (long)0, bool? isAutoApproveEnabled = default(bool?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), string createdBy = null, Azure.ResourceManager.Quota.Models.QuotaTransferApprovalRecord approval = null, Azure.ResourceManager.Quota.Models.QuotaTransferCancellationRecord cancellation = null) { throw null; }
+        public static Azure.ResourceManager.Quota.Models.QuotaTransferRejectionRecord QuotaTransferRejectionRecord(string reason = null, string actor = null, System.DateTimeOffset occurredOn = default(System.DateTimeOffset)) { throw null; }
         public static Azure.ResourceManager.Quota.Models.QuotaUsagesObject QuotaUsagesObject(int value = 0, Azure.ResourceManager.Quota.Models.QuotaUsagesType? usagesType = default(Azure.ResourceManager.Quota.Models.QuotaUsagesType?)) { throw null; }
         public static Azure.ResourceManager.Quota.Models.QuotaUsagesProperties QuotaUsagesProperties(Azure.ResourceManager.Quota.Models.QuotaUsagesObject usages = null, string unit = null, Azure.ResourceManager.Quota.Models.QuotaRequestResourceName name = null, string resourceTypeName = null, System.TimeSpan? quotaPeriod = default(System.TimeSpan?), bool? isQuotaApplicable = default(bool?), System.BinaryData properties = null) { throw null; }
-        public static Azure.ResourceManager.Quota.Models.RejectionRecord RejectionRecord(string reason = null, string actor = null, System.DateTimeOffset occurredOn = default(System.DateTimeOffset)) { throw null; }
         public static Azure.ResourceManager.Quota.Models.ServiceErrorDetail ServiceErrorDetail(string code = null, string message = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.SubscriptionAllocatedQuota SubscriptionAllocatedQuota(string subscriptionId = null, long? quotaAllocated = default(long?)) { throw null; }
         public static Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocations SubscriptionQuotaAllocations(Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocationsProperties properties = null) { throw null; }
@@ -843,22 +827,6 @@ namespace Azure.ResourceManager.Quota.Models
         public static Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocationsListProperties SubscriptionQuotaAllocationsListProperties(Azure.ResourceManager.Quota.Models.QuotaRequestStatus? provisioningState = default(Azure.ResourceManager.Quota.Models.QuotaRequestStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocations> value = null, string nextLink = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.SubscriptionQuotaAllocationsProperties SubscriptionQuotaAllocationsProperties(string resourceName = null, long? limit = default(long?), long? shareableQuota = default(long?), string value = null, string localizedValue = null) { throw null; }
         public static Azure.ResourceManager.Quota.Models.SubscriptionQuotaDetails SubscriptionQuotaDetails(string resourceName = null, long? limit = default(long?), long? shareableQuota = default(long?), string value = null, string localizedValue = null) { throw null; }
-    }
-    public partial class CancellationRecord : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.CancellationRecord>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.CancellationRecord>
-    {
-        internal CancellationRecord() { }
-        public string Actor { get { throw null; } }
-        public System.DateTimeOffset OccurredOn { get { throw null; } }
-        public string Reason { get { throw null; } }
-        protected virtual Azure.ResourceManager.Quota.Models.CancellationRecord JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Quota.Models.CancellationRecord PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Quota.Models.CancellationRecord System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.CancellationRecord>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.CancellationRecord>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Quota.Models.CancellationRecord System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.CancellationRecord>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.CancellationRecord>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.CancellationRecord>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EnforcementState : System.IEquatable<Azure.ResourceManager.Quota.Models.EnforcementState>
@@ -1163,10 +1131,10 @@ namespace Azure.ResourceManager.Quota.Models
     {
         internal IncomingQuotaTransferProperties() { }
         public long? Amount { get { throw null; } }
-        public Azure.ResourceManager.Quota.Models.ApprovalRecord Approval { get { throw null; } }
+        public Azure.ResourceManager.Quota.Models.QuotaTransferApprovalRecord Approval { get { throw null; } }
         public string BillingAccountId { get { throw null; } }
         public Azure.ResourceManager.Quota.Models.TransferProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Quota.Models.RejectionRecord Rejection { get { throw null; } }
+        public Azure.ResourceManager.Quota.Models.QuotaTransferRejectionRecord Rejection { get { throw null; } }
         public string ResourceName { get { throw null; } }
         public string SourceEtag { get { throw null; } }
         public string SourceSubscriptionId { get { throw null; } }
@@ -1391,6 +1359,22 @@ namespace Azure.ResourceManager.Quota.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaSubRequestDetail>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaSubRequestDetail>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class QuotaTransferApprovalRecord : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaTransferApprovalRecord>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaTransferApprovalRecord>
+    {
+        internal QuotaTransferApprovalRecord() { }
+        public string Actor { get { throw null; } }
+        public string Comment { get { throw null; } }
+        public System.DateTimeOffset OccurredOn { get { throw null; } }
+        protected virtual Azure.ResourceManager.Quota.Models.QuotaTransferApprovalRecord JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.QuotaTransferApprovalRecord PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Quota.Models.QuotaTransferApprovalRecord System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaTransferApprovalRecord>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaTransferApprovalRecord>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Quota.Models.QuotaTransferApprovalRecord System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaTransferApprovalRecord>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaTransferApprovalRecord>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaTransferApprovalRecord>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class QuotaTransferCancelContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaTransferCancelContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaTransferCancelContent>
     {
         public QuotaTransferCancelContent() { }
@@ -1405,14 +1389,29 @@ namespace Azure.ResourceManager.Quota.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaTransferCancelContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaTransferCancelContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class QuotaTransferCancellationRecord : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaTransferCancellationRecord>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaTransferCancellationRecord>
+    {
+        internal QuotaTransferCancellationRecord() { }
+        public string Actor { get { throw null; } }
+        public System.DateTimeOffset OccurredOn { get { throw null; } }
+        public string Reason { get { throw null; } }
+        protected virtual Azure.ResourceManager.Quota.Models.QuotaTransferCancellationRecord JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.QuotaTransferCancellationRecord PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Quota.Models.QuotaTransferCancellationRecord System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaTransferCancellationRecord>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaTransferCancellationRecord>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Quota.Models.QuotaTransferCancellationRecord System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaTransferCancellationRecord>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaTransferCancellationRecord>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaTransferCancellationRecord>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class QuotaTransferProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaTransferProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaTransferProperties>
     {
         public QuotaTransferProperties(string displayName, string destinationSubscriptionId, string resourceName, long amount) { }
         public long Amount { get { throw null; } set { } }
-        public Azure.ResourceManager.Quota.Models.ApprovalRecord Approval { get { throw null; } }
-        public bool? AutoApprove { get { throw null; } set { } }
+        public Azure.ResourceManager.Quota.Models.QuotaTransferApprovalRecord Approval { get { throw null; } }
         public string BillingAccountId { get { throw null; } }
-        public Azure.ResourceManager.Quota.Models.CancellationRecord Cancellation { get { throw null; } }
+        public Azure.ResourceManager.Quota.Models.QuotaTransferCancellationRecord Cancellation { get { throw null; } }
         public string Comment { get { throw null; } set { } }
         public string CreatedBy { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -1420,6 +1419,7 @@ namespace Azure.ResourceManager.Quota.Models
         public string DestinationTenantId { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
+        public bool? IsAutoApproveEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Quota.Models.TransferProvisioningState? ProvisioningState { get { throw null; } }
         public string ResourceName { get { throw null; } set { } }
         public string TransferId { get { throw null; } }
@@ -1433,6 +1433,22 @@ namespace Azure.ResourceManager.Quota.Models
         Azure.ResourceManager.Quota.Models.QuotaTransferProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaTransferProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaTransferProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaTransferProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class QuotaTransferRejectionRecord : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaTransferRejectionRecord>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaTransferRejectionRecord>
+    {
+        internal QuotaTransferRejectionRecord() { }
+        public string Actor { get { throw null; } }
+        public System.DateTimeOffset OccurredOn { get { throw null; } }
+        public string Reason { get { throw null; } }
+        protected virtual Azure.ResourceManager.Quota.Models.QuotaTransferRejectionRecord JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Quota.Models.QuotaTransferRejectionRecord PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Quota.Models.QuotaTransferRejectionRecord System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaTransferRejectionRecord>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaTransferRejectionRecord>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Quota.Models.QuotaTransferRejectionRecord System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaTransferRejectionRecord>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaTransferRejectionRecord>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaTransferRejectionRecord>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class QuotaUsagesObject : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.QuotaUsagesObject>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.QuotaUsagesObject>
     {
@@ -1485,22 +1501,6 @@ namespace Azure.ResourceManager.Quota.Models
         public static implicit operator Azure.ResourceManager.Quota.Models.QuotaUsagesType? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Quota.Models.QuotaUsagesType left, Azure.ResourceManager.Quota.Models.QuotaUsagesType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class RejectionRecord : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.RejectionRecord>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.RejectionRecord>
-    {
-        internal RejectionRecord() { }
-        public string Actor { get { throw null; } }
-        public System.DateTimeOffset OccurredOn { get { throw null; } }
-        public string Reason { get { throw null; } }
-        protected virtual Azure.ResourceManager.Quota.Models.RejectionRecord JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Quota.Models.RejectionRecord PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Quota.Models.RejectionRecord System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.RejectionRecord>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.RejectionRecord>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Quota.Models.RejectionRecord System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.RejectionRecord>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.RejectionRecord>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.RejectionRecord>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ServiceErrorDetail : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Quota.Models.ServiceErrorDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Quota.Models.ServiceErrorDetail>
     {

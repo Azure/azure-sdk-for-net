@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// (for example, `standardDv5Family` under Microsoft.Compute).
         /// </param>
         /// <param name="amount"> Amount to transfer in the resource's native unit (e.g. vCPU count). </param>
-        /// <param name="autoApprove">
+        /// <param name="isAutoApproveEnabled">
         /// Same-tenant one-shot opt-in. When true, the donor PUT admission-checks recipient-side
         /// RBAC and cap at submit time and drives the transfer to terminal Completed within the
         /// same LRO, with no recipient approve required. The outcome is reflected by
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// Mutually exclusive with `approval`.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QuotaTransferProperties(TransferProvisioningState? provisioningState, TransferStatus? transferStatus, string transferId, string displayName, string comment, string destinationSubscriptionId, string destinationTenantId, string billingAccountId, string resourceName, long amount, bool? autoApprove, DateTimeOffset? createdOn, DateTimeOffset? expiresOn, string createdBy, ApprovalRecord approval, CancellationRecord cancellation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QuotaTransferProperties(TransferProvisioningState? provisioningState, TransferStatus? transferStatus, string transferId, string displayName, string comment, string destinationSubscriptionId, string destinationTenantId, string billingAccountId, string resourceName, long amount, bool? isAutoApproveEnabled, DateTimeOffset? createdOn, DateTimeOffset? expiresOn, string createdBy, QuotaTransferApprovalRecord approval, QuotaTransferCancellationRecord cancellation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             TransferStatus = transferStatus;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Quota.Models
             BillingAccountId = billingAccountId;
             ResourceName = resourceName;
             Amount = amount;
-            AutoApprove = autoApprove;
+            IsAutoApproveEnabled = isAutoApproveEnabled;
             CreatedOn = createdOn;
             ExpiresOn = expiresOn;
             CreatedBy = createdBy;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// not (e.g. cross-tenant, missing RBAC, cap exceeded) and the recipient must approve.
         /// </summary>
         [WirePath("autoApprove")]
-        public bool? AutoApprove { get; set; }
+        public bool? IsAutoApproveEnabled { get; set; }
 
         /// <summary> Time the transfer was created. </summary>
         [WirePath("createdAt")]
@@ -168,13 +168,13 @@ namespace Azure.ResourceManager.Quota.Models
         /// Mutually exclusive with `cancellation`.
         /// </summary>
         [WirePath("approval")]
-        public ApprovalRecord Approval { get; }
+        public QuotaTransferApprovalRecord Approval { get; }
 
         /// <summary>
         /// Cancellation record. Populated when `transferStatus` is `Cancelled`.
         /// Mutually exclusive with `approval`.
         /// </summary>
         [WirePath("cancellation")]
-        public CancellationRecord Cancellation { get; }
+        public QuotaTransferCancellationRecord Cancellation { get; }
     }
 }

@@ -13,57 +13,57 @@ using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    /// <summary> Record of an approval action on a transfer. </summary>
-    public partial class ApprovalRecord : IJsonModel<ApprovalRecord>
+    /// <summary> Record of a rejection action on a transfer. </summary>
+    public partial class QuotaTransferRejectionRecord : IJsonModel<QuotaTransferRejectionRecord>
     {
-        /// <summary> Initializes a new instance of <see cref="ApprovalRecord"/> for deserialization. </summary>
-        internal ApprovalRecord()
+        /// <summary> Initializes a new instance of <see cref="QuotaTransferRejectionRecord"/> for deserialization. </summary>
+        internal QuotaTransferRejectionRecord()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ApprovalRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual QuotaTransferRejectionRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApprovalRecord>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QuotaTransferRejectionRecord>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeApprovalRecord(document.RootElement, options);
+                        return DeserializeQuotaTransferRejectionRecord(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApprovalRecord)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaTransferRejectionRecord)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApprovalRecord>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QuotaTransferRejectionRecord>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerQuotaContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ApprovalRecord)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaTransferRejectionRecord)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApprovalRecord>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<QuotaTransferRejectionRecord>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApprovalRecord IPersistableModel<ApprovalRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        QuotaTransferRejectionRecord IPersistableModel<QuotaTransferRejectionRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApprovalRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<QuotaTransferRejectionRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ApprovalRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<QuotaTransferRejectionRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApprovalRecord>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QuotaTransferRejectionRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApprovalRecord)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaTransferRejectionRecord)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Comment))
+            if (Optional.IsDefined(Reason))
             {
-                writer.WritePropertyName("comment"u8);
-                writer.WriteStringValue(Comment);
+                writer.WritePropertyName("reason"u8);
+                writer.WriteStringValue(Reason);
             }
             writer.WritePropertyName("actor"u8);
             writer.WriteStringValue(Actor);
@@ -107,38 +107,38 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApprovalRecord IJsonModel<ApprovalRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        QuotaTransferRejectionRecord IJsonModel<QuotaTransferRejectionRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ApprovalRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual QuotaTransferRejectionRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApprovalRecord>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<QuotaTransferRejectionRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApprovalRecord)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaTransferRejectionRecord)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApprovalRecord(document.RootElement, options);
+            return DeserializeQuotaTransferRejectionRecord(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ApprovalRecord DeserializeApprovalRecord(JsonElement element, ModelReaderWriterOptions options)
+        internal static QuotaTransferRejectionRecord DeserializeQuotaTransferRejectionRecord(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string comment = default;
+            string reason = default;
             string actor = default;
             DateTimeOffset occurredOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("comment"u8))
+                if (prop.NameEquals("reason"u8))
                 {
-                    comment = prop.Value.GetString();
+                    reason = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("actor"u8))
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Quota.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ApprovalRecord(comment, actor, occurredOn, additionalBinaryDataProperties);
+            return new QuotaTransferRejectionRecord(reason, actor, occurredOn, additionalBinaryDataProperties);
         }
     }
 }
