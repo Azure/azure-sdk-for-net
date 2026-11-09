@@ -29,12 +29,13 @@ namespace Azure.Data.AI
         /// </param>
         /// <param name="model"> The name of the model used for the semantic reranking operation. </param>
         /// <param name="returnSentenceScore"> Whether to return sentence-level scores in the response. </param>
-        /// <returns> A new <see cref="AI.SemanticRerankingInferenceContent"/> instance for mocking. </returns>
-        public static SemanticRerankingInferenceContent SemanticRerankingInferenceContent(string query = default, IEnumerable<string> documents = default, bool? returnDocuments = default, int? topK = default, int? batchSize = default, bool? sort = default, SemanticRerankingDocumentType? documentType = default, string targetPaths = default, string model = default, bool? returnSentenceScore = default)
+        /// <returns> A new <see cref="AI.SemanticRerankingOptions"/> instance for mocking. </returns>
+        public static SemanticRerankingOptions SemanticRerankingOptions(string query = default, IEnumerable<string> documents = default, bool? returnDocuments = default, int? topK = default, int? batchSize = default, bool? sort = default, SemanticRerankingDocumentType? documentType = default, IEnumerable<string> targetPaths = default, string model = default, bool? returnSentenceScore = default)
         {
             documents ??= new ChangeTrackingList<string>();
+            targetPaths ??= new ChangeTrackingList<string>();
 
-            return new SemanticRerankingInferenceContent(
+            return new SemanticRerankingOptions(
                 query,
                 documents.ToList(),
                 returnDocuments,
@@ -42,7 +43,7 @@ namespace Azure.Data.AI
                 batchSize,
                 sort,
                 documentType,
-                targetPaths,
+                targetPaths.ToList(),
                 model,
                 returnSentenceScore,
                 additionalBinaryDataProperties: null);
@@ -50,13 +51,13 @@ namespace Azure.Data.AI
 
         /// <summary> The result of a semantic reranking operation. </summary>
         /// <param name="scores"> The relevance scores for the submitted documents. </param>
-        /// <param name="meta"> Additional metadata about the semantic reranking operation. </param>
-        /// <returns> A new <see cref="AI.SemanticRerankingInferenceResult"/> instance for mocking. </returns>
-        public static SemanticRerankingInferenceResult SemanticRerankingInferenceResult(IEnumerable<SemanticRerankingScore> scores = default, SemanticRerankingMetaResult meta = default)
+        /// <param name="metadata"> Additional metadata about the semantic reranking operation. </param>
+        /// <returns> A new <see cref="AI.SemanticRerankingResult"/> instance for mocking. </returns>
+        public static SemanticRerankingResult SemanticRerankingResult(IEnumerable<SemanticRerankingScore> scores = default, SemanticRerankingMetadata metadata = default)
         {
             scores ??= new ChangeTrackingList<SemanticRerankingScore>();
 
-            return new SemanticRerankingInferenceResult(scores.ToList(), meta, additionalBinaryDataProperties: null);
+            return new SemanticRerankingResult(scores.ToList(), metadata, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A relevance score assigned to a submitted document. </summary>
@@ -86,10 +87,10 @@ namespace Azure.Data.AI
         /// <param name="latency"> The latency of the semantic reranking operation. </param>
         /// <param name="modelName"> The name of the model used for the semantic reranking operation. </param>
         /// <param name="modelVersion"> The version of the model used for the semantic reranking operation. </param>
-        /// <returns> A new <see cref="AI.SemanticRerankingMetaResult"/> instance for mocking. </returns>
-        public static SemanticRerankingMetaResult SemanticRerankingMetaResult(TokenUsageResult tokenUsage = default, LatencyResult latency = default, string modelName = default, string modelVersion = default)
+        /// <returns> A new <see cref="AI.SemanticRerankingMetadata"/> instance for mocking. </returns>
+        public static SemanticRerankingMetadata SemanticRerankingMetadata(TokenUsageResult tokenUsage = default, LatencyResult latency = default, string modelName = default, string modelVersion = default)
         {
-            return new SemanticRerankingMetaResult(tokenUsage, latency, modelName, modelVersion, additionalBinaryDataProperties: null);
+            return new SemanticRerankingMetadata(tokenUsage, latency, modelName, modelVersion, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The result of the token usage in the semantic reranking operation. </summary>
