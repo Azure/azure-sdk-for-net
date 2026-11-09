@@ -16,16 +16,30 @@ export function validateVallyArguments(value, { failOnFailedTests = false } = {}
     (typeof arg === "string" && arg.includes("\0")))) {
     throw new Error("Vally arguments must be an array of strings or numeric count values without null characters.");
   }
-  // Deliberately exclude eval selection, plugins, output, JUnit and verdict overrides.
-  const allowed = new Set(["--tag", "--runs", "--workers", "--timeout"]);
+  // These options would change matrix selection, result collection or the verdict contract.
+  const reserved = new Set([
+    "--eval-spec", "--suite", "--work-dir", "--eval-plugin",
+    "--output-dir", "--output", "--junit", "--threshold",
+    "--require-pass", "--skip-grade", "--skip-validate",
+  ]);
   const args = [];
-  for (let index = 0; index < value.length; index += 2) {
+  for (let index = 0; index < value.length; index++) {
     const option = value[index];
-    if (!allowed.has(option)) {
-      throw new Error(`Unsupported supplementary Vally option: ${option}`);
+    if (typeof option !== "string" || !/^--[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/.test(option)) {
+      throw new Error(`Unsupported supplementary Vally option format: ${option}. Use --option value or --switch, not aliases or --option=value.`);
+    }
+    if (reserved.has(option) || reserved.has(option.replace(/^--no-/, "--"))) {
+      throw new Error(`Reserved Vally option: ${option}. Eval selection, output and verdict settings are framework-owned.`);
     }
     let argument = value[index + 1];
     const isCount = option === "--runs" || option === "--workers";
+    if (argument === undefined || (typeof argument === "string" && argument.startsWith("-"))) {
+      if (isCount) {
+        throw new Error(`Missing value for ${option}`);
+      }
+      args.push(option);
+      continue;
+    }
     // Azure template expansion can serialize even format('{0}', number) as a JSON number.
     if (typeof argument === "number") {
       if (!isCount || !Number.isSafeInteger(argument) || argument < 1) {
@@ -33,7 +47,7 @@ export function validateVallyArguments(value, { failOnFailedTests = false } = {}
       }
       argument = String(argument);
     }
-    if (!argument || argument.startsWith("-")) {
+    if (!argument) {
       throw new Error(`Missing value for ${option}`);
     }
     if (isCount &&
@@ -44,6 +58,7 @@ export function validateVallyArguments(value, { failOnFailedTests = false } = {}
       assertSupportedEvalGate({ runs: Number(argument), failOnFailedTests });
     }
     args.push(option, argument);
+    index++;
   }
   return args;
 }
@@ -57,7 +72,7 @@ export function validateVallyArguments(value, { failOnFailedTests = false } = {}
  * @param {string} options.shardName Shard name (log messages + result folder).
  * @param {string} options.outputDir `--output-dir` Vally writes results into.
  * @param {number} [options.threshold] Pass-rate gate forwarded to `vally eval --threshold`.
- * @param {(string | number)[]} [options.vallyArguments] Allowlisted arguments; numeric trial/worker counts are normalized.
+ * @param {(string | number)[]} [options.vallyArguments] Non-reserved options and switches; numeric trial/worker counts are normalized.
  * @returns {number} 0 when the shard verdict passes, 1 otherwise.
  */
 export function runShard({ evalArgs, shardName, outputDir, threshold = 0.8, vallyArguments = [] },

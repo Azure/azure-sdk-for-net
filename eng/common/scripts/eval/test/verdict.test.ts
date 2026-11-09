@@ -178,12 +178,29 @@ describe("supplementary Vally arguments", () => {
     assert.deepEqual(options.vallyArguments, args);
   });
 
-  it("accepts only supported option/value pairs without splitting values", () => {
+  it("passes non-reserved options through without a catalog or splitting values", () => {
     const args = ["--tag", "label=two words; $(not-a-command) & \"quoted\"", "--runs", "3", "--workers", "1", "--timeout", "5m"];
+    args.push("--model", "example-model", "--max-retries", "0", "--reporter-plugin", "./reporter.js",
+      "--executor-plugin", "./executor.js", "--grader-plugin", "./grader.js", "--future-option", "literal value");
     assert.deepEqual(validateVallyArguments(args), args);
     const options = parseArgs(["--eval-args", "-e example.eval.yaml", "--shard-name", "example", "--output-dir", "out"],
       { VALLY_ARGUMENTS_JSON: JSON.stringify(args) });
     assert.deepEqual(options.vallyArguments, args);
+  });
+
+  it("preserves switches before, between and after option values without a switch catalog", () => {
+    for (const args of [
+      ["--verbose"],
+      ["--verbose", "--in-place", "--future-switch"],
+      ["--verbose", "--model", "example-model", "--future-switch", "--runs", 2, "--in-place"],
+    ]) {
+      const expected = args.map(String);
+      assert.deepEqual(validateVallyArguments(args), expected);
+      assert.deepEqual(parseArgs(["--validate-only"],
+        { VALLY_ARGUMENTS_JSON: JSON.stringify(args) }).vallyArguments, expected);
+    }
+    // Vally, not the wrapper, validates whether ordinary options require values.
+    assert.deepEqual(validateVallyArguments(["--model"]), ["--model"]);
   });
 
   it("normalizes numeric trial and worker counts produced by Azure template expansion", () => {
@@ -200,14 +217,27 @@ describe("supplementary Vally arguments", () => {
     }
   });
 
-  it("rejects output, verdict, discovery and plugin overrides, including aliases and equals syntax", () => {
-    for (const option of ["--output-dir", "--output-dir=elsewhere", "--junit", "--no-junit", "--threshold",
-      "--require-pass", "--skip-grade", "--skip-validate", "-e", "--eval-spec", "--suite", "--work-dir",
-      "--reporter-plugin", "--executor-plugin", "--grader-plugin", "--runs=3", "--", "-r"]) {
-      assert.throws(() => validateVallyArguments([option, "value"]), /Unsupported/);
+  it("rejects framework-owned output, verdict and eval selection overrides", () => {
+    for (const option of ["--output-dir", "--output", "--junit", "--threshold",
+      "--require-pass", "--skip-grade", "--skip-validate", "--eval-spec", "--suite", "--work-dir", "--eval-plugin"]) {
+      for (const spelling of [option, option.replace(/^--/, "--no-")]) {
+        assert.throws(() => validateVallyArguments([spelling, "value"]), /Reserved Vally option/);
+        assert.throws(() => validateVallyArguments(["--verbose", spelling]), /Reserved Vally option/);
+      }
     }
-    for (const args of [null, {}, " --runs 3", [3], ["--runs"], ["--runs", "0"], ["--runs", "-1"],
+  });
+
+  it("rejects aliases, equals syntax, positional eval paths and malformed arguments", () => {
+    for (const option of ["-e", "-eelsewhere.eval.yaml", "-r", "--", "--output-dir=elsewhere",
+      "--no-junit=false", "--runs=3", "--model=example", "elsewhere.eval.yaml", "**/*.eval.yaml",
+      "--model example", "--model\n", "--model;echo"]) {
+      assert.throws(() => validateVallyArguments([option, "value"]), /Unsupported.*format/);
+    }
+    for (const args of [null, {}, " --runs 3", [3], ["--runs"], ["--workers"],
+      ["--runs", "--verbose"], ["--workers", "--in-place"], ["--runs", "0"], ["--runs", "-1"],
       ["--workers", "1.5"], ["--tag", "--threshold"], ["--tag", "value\0"],
+      ["--model", ""], ["--model", 1], ["--model", null], ["--model", "value\0"],
+      ["--model", "example", "elsewhere.eval.yaml"],
       ["--runs", null], ["--runs", true], ["--runs", {}], ["--runs", []],
       ["--runs", 0], ["--runs", -1], ["--runs", 1.5], ["--runs", NaN],
       ["--workers", Infinity], ["--workers", Number.MAX_SAFE_INTEGER + 1],
@@ -235,7 +265,9 @@ describe("supplementary Vally arguments", () => {
         type: "run-summary", evals: [{ name: "test", passed: true, stimuliRun: 1 }]
       }));
     `);
-    const args = ["--tag", "label=a b; $(echo bad) & \"quotes\" %PATH%", "--tag", "build=$(Build.BuildId)", "--runs", 3];
+    const args = ["--verbose", "--tag", "label=a b; $(echo bad) & \"quotes\" %PATH%", "--tag", "build=$(Build.BuildId)", "--runs", 3,
+      "--in-place", "--model", "example-model", "--reporter-plugin", "./reporter with spaces.js",
+      "--future-option", "literal value", "--future-switch"];
     const options = parseArgs(["--eval-args", "-e test.eval.yaml", "--shard-name", "test", "--output-dir", outputDir],
       { VALLY_ARGUMENTS_JSON: JSON.stringify(args).replaceAll("$", "\\u0024") });
     const exit = runShard(options, {
