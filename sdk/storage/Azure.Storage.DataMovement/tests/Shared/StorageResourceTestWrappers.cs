@@ -140,18 +140,18 @@ public class StorageResourceContainerFailureWrapper : StorageResourceContainer
     {
         if (_throwScopeManager.InScope)
         {
-            throw new InjectedFailureException();
+            throw _exceptionFactory();
         }
 
         await foreach (StorageResource resource in _inner.GetStorageResourcesAsync(destinationContainer, cancellationToken))
         {
             if (resource is StorageResourceItem item)
             {
-                yield return new StorageResourceItemFailureWrapper(item, _throwScopeManager);
+                yield return new StorageResourceItemFailureWrapper(item, _throwScopeManager, _exceptionFactory);
             }
             else if (resource is StorageResourceContainer container)
             {
-                yield return new StorageResourceContainerFailureWrapper(container, _throwScopeManager);
+                yield return new StorageResourceContainerFailureWrapper(container, _throwScopeManager, _exceptionFactory);
             }
             else
             {
