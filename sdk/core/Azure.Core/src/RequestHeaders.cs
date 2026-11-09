@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -43,7 +44,7 @@ namespace Azure.Core
         /// <param name="header">The header to add.</param>
         public void Add(HttpHeader header)
         {
-            _request.AddHeader(header.Name, header.Value);
+            Add(header.Name, header.Value);
         }
 
         /// <summary>
@@ -53,6 +54,7 @@ namespace Azure.Core
         /// <param name="value">The header value.</param>
         public void Add(string name, string value)
         {
+            ValidateHeaderValue(name, value);
             _request.AddHeader(name, value);
         }
 
@@ -95,7 +97,16 @@ namespace Azure.Core
         /// <param name="value">The header value.</param>
         public void SetValue(string name, string value)
         {
+            ValidateHeaderValue(name, value);
             _request.SetHeader(name, value);
+        }
+
+        private static void ValidateHeaderValue(string name, string value)
+        {
+            if (value != null && (value.IndexOf('\r') >= 0 || value.IndexOf('\n') >= 0))
+            {
+                throw new ArgumentException($"The value of header '{name}' cannot contain CR or LF characters.", nameof(value));
+            }
         }
 
         /// <summary>

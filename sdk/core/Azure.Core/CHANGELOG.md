@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 - Fixed `ManagedIdentityCredential` truncating federated token files larger than 4096 characters during token exchange.
+- Fixed `RequestHeaders.Add` and `RequestHeaders.SetValue` to reject header values containing CR (`\r`) or LF (`\n`) characters to prevent header injection.
 
 ### Other Changes
 
