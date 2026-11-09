@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -15,13 +14,9 @@ namespace Azure.AI.Projects.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VersionSelector"/>. </summary>
-        /// <param name="versionSelectionRules"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionSelectionRules"/> is null. </exception>
-        public VersionSelector(IEnumerable<VersionSelectionRule> versionSelectionRules)
+        public VersionSelector()
         {
-            Argument.AssertNotNull(versionSelectionRules, nameof(versionSelectionRules));
-
-            VersionSelectionRules = versionSelectionRules.ToList();
+            VersionSelectionRules = new ChangeTrackingList<VersionSelectionRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VersionSelector"/>. </summary>

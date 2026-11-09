@@ -1573,13 +1573,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="description"> An optional agent description. The authoring service resolves its fallback when omitted. </param>
         /// <param name="tools"> Optional tools carried through verbatim onto the generated agent (see `VoiceAgentTool`). </param>
         /// <param name="draft"> (Preview) When `true`, the generated voice agent is created as a draft — an editable, unpublished version the caller can review and refine before publishing it via the standard create/version path. The service defaults to `false` if a value is not specified by the caller, in which case the agent is created and published normally. </param>
-        /// <returns> A new <see cref="Agents.GenerateVoiceAgentRequest"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.GenerateVoiceAgentContent"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static GenerateVoiceAgentRequest GenerateVoiceAgentRequest(string name = default, VoiceModelType? modelType = default, string model = default, string useCase = default, string goal = default, string description = default, IEnumerable<VoiceAgentTool> tools = default, bool? draft = default)
+        public static GenerateVoiceAgentContent GenerateVoiceAgentContent(string name = default, VoiceModelType? modelType = default, string model = default, string useCase = default, string goal = default, string description = default, IEnumerable<VoiceAgentTool> tools = default, bool? draft = default)
         {
             tools ??= new ChangeTrackingList<VoiceAgentTool>();
 
-            return new GenerateVoiceAgentRequest(
+            return new GenerateVoiceAgentContent(
                 "voice",
                 name,
                 modelType,
@@ -1905,49 +1905,6 @@ namespace Azure.AI.Projects.Agents
         public static VoiceRecordingChannelLayout VoiceRecordingChannelLayout()
         {
             return new VoiceRecordingChannelLayout("user", "agent", additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// The request to create a telephony binding.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.CreateTeamsPhoneExtensibilityTelephonyBindingRequest"/> and <see cref="Agents.CreateTwilioTelephonyBindingRequest"/>.
-        /// </summary>
-        /// <param name="provider"> The telephony provider. </param>
-        /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
-        /// <param name="label"> An optional display label for the binding. </param>
-        /// <returns> A new <see cref="Agents.CreateTelephonyBindingRequest"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static CreateTelephonyBindingRequest CreateTelephonyBindingRequest(string provider = default, string connectionName = default, string label = default)
-        {
-            return new UnknownCreateTelephonyBindingRequest(new TelephonyProvider(provider), connectionName, label, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> The request to create a Microsoft Teams Phone extensibility binding. </summary>
-        /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
-        /// <param name="label"> An optional display label for the binding. </param>
-        /// <param name="phoneNumber"> The optional display phone number for the Teams resource account. </param>
-        /// <param name="resourceAccountObjectId"> The Microsoft Teams resource-account object identifier as a GUID. </param>
-        /// <returns> A new <see cref="Agents.CreateTeamsPhoneExtensibilityTelephonyBindingRequest"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static CreateTeamsPhoneExtensibilityTelephonyBindingRequest CreateTeamsPhoneExtensibilityTelephonyBindingRequest(string connectionName = default, string label = default, string phoneNumber = default, string resourceAccountObjectId = default)
-        {
-            return new CreateTeamsPhoneExtensibilityTelephonyBindingRequest(
-                TelephonyProvider.TeamsPhoneExtensibility,
-                connectionName,
-                label,
-                additionalBinaryDataProperties: null,
-                phoneNumber,
-                resourceAccountObjectId);
-        }
-
-        /// <summary> The request to create a Twilio binding. </summary>
-        /// <param name="connectionName"> The Foundry connection name for the telephony provider. </param>
-        /// <param name="label"> An optional display label for the binding. </param>
-        /// <param name="phoneNumber"> The Twilio E.164 phone number. </param>
-        /// <returns> A new <see cref="Agents.CreateTwilioTelephonyBindingRequest"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static CreateTwilioTelephonyBindingRequest CreateTwilioTelephonyBindingRequest(string connectionName = default, string label = default, string phoneNumber = default)
-        {
-            return new CreateTwilioTelephonyBindingRequest(TelephonyProvider.Twilio, connectionName, label, additionalBinaryDataProperties: null, phoneNumber);
         }
 
         /// <summary>
@@ -2336,31 +2293,6 @@ namespace Azure.AI.Projects.Agents
         public static SipTelephonyTransferDestination SipTelephonyTransferDestination(Uri value = default)
         {
             return new SipTelephonyTransferDestination(TelephonyTransferDestinationKind.Sip, additionalBinaryDataProperties: null, value);
-        }
-
-        /// <summary> A request to create one durable direct outbound call job. </summary>
-        /// <param name="destination"> The phone destination to call. </param>
-        /// <param name="connectionName"> The Foundry connection name in the current project used to originate the call. Its category selects Twilio or Azure Communication Services / Teams Phone extensibility. No inbound telephony binding is required. </param>
-        /// <param name="source"> The caller identity used to originate the call. For a Twilio connection, provide an authorized E.164 phone number. For an Azure Communication Services / Teams Phone extensibility connection, provide the Teams Resource Account object ID. The identity type is inferred from the connection category; originating does not change inbound routing. </param>
-        /// <param name="purpose"> An optional customer-declared purpose for placing the call. </param>
-        /// <param name="structuredInputs"> Structured input values available to the agent and greeting for this call. Agent-declared inputs are validated against their schemas; omitted optional inputs may use their Agent-defined default values, while omitted required inputs are rejected. Additional inputs remain available as dynamic template variables. </param>
-        /// <param name="schedule"> The optional execution window. </param>
-        /// <param name="retryPolicy"> The provider-attempt retry policy. Omit it for one attempt with no retry delay. </param>
-        /// <returns> A new <see cref="Agents.CreateTelephonyCallJobRequest"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static CreateTelephonyCallJobRequest CreateTelephonyCallJobRequest(TelephonyOutboundDestination destination = default, string connectionName = default, string source = default, string purpose = default, IDictionary<string, BinaryData> structuredInputs = default, TelephonyCallJobSchedule schedule = default, TelephonyOutboundRetryPolicy retryPolicy = default)
-        {
-            structuredInputs ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new CreateTelephonyCallJobRequest(
-                destination,
-                connectionName,
-                source,
-                purpose,
-                structuredInputs,
-                schedule,
-                retryPolicy,
-                additionalBinaryDataProperties: null);
         }
 
         /// <summary> The destination of an outbound call. </summary>
@@ -3179,14 +3111,14 @@ namespace Azure.AI.Projects.Agents
         /// <param name="compatibility"> Environment requirements or compatibility notes for the skill. </param>
         /// <param name="metadata"> Arbitrary key-value metadata for additional properties. </param>
         /// <param name="allowedTools"> List of pre-approved tools the skill may use. Experimental. </param>
-        /// <returns> A new <see cref="Agents.SkillInlineRequest"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.SkillInlineContent"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static SkillInlineRequest SkillInlineRequest(string description = default, string instructions = default, string license = default, string compatibility = default, IDictionary<string, string> metadata = default, IEnumerable<string> allowedTools = default)
+        public static SkillInlineContent SkillInlineContent(string description = default, string instructions = default, string license = default, string compatibility = default, IDictionary<string, string> metadata = default, IEnumerable<string> allowedTools = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
             allowedTools ??= new ChangeTrackingList<string>();
 
-            return new SkillInlineRequest(
+            return new SkillInlineContent(
                 description,
                 instructions,
                 license,
@@ -3937,13 +3869,13 @@ namespace Azure.AI.Projects.Agents
             return new PatchAgentOptions(agentEndpoint, agentCard, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The UpdateToolboxRequest. </summary>
+        /// <summary> The UpdateToolboxContent. </summary>
         /// <param name="name"> The name of the toolbox to update. </param>
         /// <param name="defaultVersion"> The version identifier that the toolbox should point to. When set, the toolbox's default version will resolve to this version instead of the latest. </param>
-        /// <returns> A new <see cref="Agents.UpdateToolboxRequest"/> instance for mocking. </returns>
-        public static UpdateToolboxRequest UpdateToolboxRequest(string name = default, string defaultVersion = default)
+        /// <returns> A new <see cref="Agents.UpdateToolboxContent"/> instance for mocking. </returns>
+        public static UpdateToolboxContent UpdateToolboxContent(string name = default, string defaultVersion = default)
         {
-            return new UpdateToolboxRequest(name, defaultVersion, additionalBinaryDataProperties: null);
+            return new UpdateToolboxContent(name, defaultVersion, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"></param>

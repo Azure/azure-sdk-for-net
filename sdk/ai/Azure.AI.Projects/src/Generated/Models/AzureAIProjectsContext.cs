@@ -306,14 +306,14 @@ namespace Azure.AI.Projects
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Memory.MemoryUpdateResultDetails is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MemoryUpdateResultDetails))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Memory.MemoryUpdateResultDetails is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.ModelCredentialRequest is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(ModelCredentialRequest))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.ModelCredentialRequest is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.ModelCredentialContent is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(ModelCredentialContent))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.ModelCredentialContent is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ModelDeployment))]
     [ModelReaderWriterBuildable(typeof(ModelDeploymentSku))]
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.ModelPendingUploadRequest is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(ModelPendingUploadRequest))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.ModelPendingUploadRequest is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.ModelPendingUploadContent is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(ModelPendingUploadContent))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.ModelPendingUploadContent is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.ModelPendingUploadResult is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ModelPendingUploadResult))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.ModelPendingUploadResult is experimental and may change in future versions.

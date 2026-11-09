@@ -9,7 +9,7 @@ using System.ClientModel.Primitives;
 
 namespace Specs.Azure.Example.Basic
 {
-    [ModelReaderWriterBuildable(typeof(ActionRequest))]
+    [ModelReaderWriterBuildable(typeof(ActionContent))]
     [ModelReaderWriterBuildable(typeof(ActionResult))]
     [ModelReaderWriterBuildable(typeof(Model))]
     public partial class SpecsAzureExampleBasicContext : ModelReaderWriterContext

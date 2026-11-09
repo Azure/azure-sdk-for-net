@@ -14,7 +14,7 @@ namespace Specs.Azure.Tcgc.ClientInit.Default
     {
         public static Input Input(string name = default) => throw null;
 
-        public static WithBodyRequest WithBodyRequest(string name = default) => throw null;
+        public static WithBodyContent WithBodyContent(string name = default) => throw null;
 
         public static BlobProperties BlobProperties(string name = default, long size = default, string contentType = default, DateTimeOffset createdOn = default) => throw null;
     }
