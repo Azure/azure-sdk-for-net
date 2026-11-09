@@ -151,7 +151,8 @@ public partial class ResponsesTelemetryTests
     private void ValidateMcpSpans(
         string agentName,
         object agentVersion,
-        bool contentRecordingEnabled)
+        bool contentRecordingEnabled,
+        bool streaming)
     {
         _exporter.ForceFlush();
 
@@ -167,18 +168,17 @@ public partial class ResponsesTelemetryTests
         var initialSpan = spans[0];
         GenAiTraceVerifier.ValidateSpanAttributes(initialSpan, expectedAttributes, allowUnexpected: false);
 
-        // TODO: Re enable this code after the options AddProxy proxy will be implemented. See 5859124.
-        //string initialInput = initialSpan.GetTagItem("gen_ai.input.messages") as string;
-        //Assert.That(initialInput, Does.Contain("\"role\":\"user\""));
-        //if (contentRecordingEnabled)
-        //{
-        //    Assert.That(initialInput, Does.Contain(McpPrompt));
-        //}
-        //else
-        //{
-        //    Assert.That(initialInput, Does.Not.Contain(McpPrompt));
-        //    Assert.That(initialInput, Does.Contain("\"type\":\"text\""));
-        //}
+        string initialInput = initialSpan.GetTagItem("gen_ai.input.messages") as string;
+        Assert.That(initialInput, Does.Contain("\"role\":\"user\""));
+        if (contentRecordingEnabled)
+        {
+            Assert.That(initialInput, Does.Contain(McpPrompt));
+        }
+        else
+        {
+            Assert.That(initialInput, Does.Not.Contain(McpPrompt));
+            Assert.That(initialInput, Does.Contain("\"type\":\"text\""));
+        }
 
         string initialOutput = initialSpan.GetTagItem("gen_ai.output.messages") as string;
         Assert.That(initialOutput, Does.Contain("\"role\":\"assistant\""));
@@ -248,7 +248,7 @@ public partial class ResponsesTelemetryTests
                 await RunMcpNonStreamingAsync(client);
             }
 
-            ValidateMcpSpans(agentName, agentVersion.Version, contentRecordingEnabled);
+            ValidateMcpSpans(agentName, agentVersion.Version, contentRecordingEnabled, streaming);
         }
         finally
         {

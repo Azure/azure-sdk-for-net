@@ -15,14 +15,9 @@ namespace Azure.AI.Extensions.OpenAI;
 internal sealed class NormalizingStreamingResultProcessor
 {
     private readonly StreamingTelemetryContext _telemetryContext;
-    private OpenTelemetryResponseScope _scope = null;
     public NormalizingStreamingResultProcessor(StreamingTelemetryContext telemetryContext)
     {
         _telemetryContext = telemetryContext;
-        if (telemetryContext != null)
-        {
-            _scope = _telemetryContext.CreateScope();
-        }
     }
 
     public async IAsyncEnumerable<StreamingResponseUpdate> NormalizeUpdateAsync(
@@ -30,13 +25,14 @@ internal sealed class NormalizingStreamingResultProcessor
        [EnumeratorCancellation] CancellationToken cancellationToken
     )
     {
+        using OpenTelemetryResponseScope scope =
+            _telemetryContext?.CreateScope();
+
         await foreach (StreamingResponseUpdate update in updates.WithCancellation(cancellationToken).ConfigureAwait(false))
         {
             StreamingResponseUpdate fixedUpdate = AzureAIExtensions.NormalizeStreamingUpdate(update);
-            _scope?.RecordStreamingUpdate(fixedUpdate);
+            scope?.RecordStreamingUpdate(fixedUpdate);
             yield return fixedUpdate;
         }
-        _scope?.Dispose();
-        _scope = null;
     }
 }

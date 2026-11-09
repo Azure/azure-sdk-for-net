@@ -62,8 +62,7 @@ public partial class ResponsesTelemetryTests
             { "gen_ai.response.id", "*" },
             { "gen_ai.usage.input_tokens", "+" },
             { "gen_ai.usage.output_tokens", "+" },
-            // TODO: Re enable this code after the options AddProxy proxy will be implemented. See 5859124.
-            //{ "gen_ai.input.messages", "*" },
+            { "gen_ai.input.messages", "*" },
             { "gen_ai.output.messages", "*" },
         };
         GenAiTraceVerifier.ValidateSpanAttributes(span, expectedAttributes, allowUnexpected: false);
@@ -114,8 +113,7 @@ public partial class ResponsesTelemetryTests
             { "gen_ai.response.id", "*" },
             { "gen_ai.usage.input_tokens", "+" },
             { "gen_ai.usage.output_tokens", "+" },
-            // TODO: Re enable this code after the options AddProxy proxy will be implemented. See 5859124.
-            // { "gen_ai.input.messages", "*" },
+            { "gen_ai.input.messages", "*" },
             { "gen_ai.output.messages", "*" },
         };
         GenAiTraceVerifier.ValidateSpanAttributes(span, expectedAttributes, allowUnexpected: false);
@@ -213,8 +211,7 @@ public partial class ResponsesTelemetryTests
                 { "gen_ai.response.id", "*" },
                 { "gen_ai.usage.input_tokens", "+" },
                 { "gen_ai.usage.output_tokens", "+" },
-                // TODO: Re enable this code after the options AddProxy proxy will be implemented. See 5859124.
-                //{ "gen_ai.input.messages", "*" },
+                { "gen_ai.input.messages", "*" },
                 { "gen_ai.output.messages", "*" },
             };
             GenAiTraceVerifier.ValidateSpanAttributes(span, expectedAttributes, allowUnexpected: false);

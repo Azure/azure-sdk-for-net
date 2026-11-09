@@ -27,6 +27,7 @@ public partial class ProjectResponsesClient : ResponsesClient
     private readonly string _defaultAgentName;
     private readonly string _defaultAgentVersion;
     private readonly string _defaultConversationId;
+    private readonly AsyncLocal<StreamingTelemetryContext> _streamingTelemetryContext = new();
 
     /// <summary>
     /// Creates a new instance of <see cref="ProjectResponsesClient"/>.
@@ -363,19 +364,21 @@ public partial class ProjectResponsesClient : ResponsesClient
     /// <param name="options"> The options used to create the streaming response. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <returns> The streaming response updates. </returns>
-    public override Task<AsyncStreamingResult<StreamingResponseUpdate>> CreateResponseStreamingAsync(CreateResponseOptions options, CancellationToken cancellationToken = default)
+    public override async Task<AsyncStreamingResult<StreamingResponseUpdate>> CreateResponseStreamingAsync(CreateResponseOptions options, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(options, nameof(options));
         options.StreamingEnabled = true;
         ApplyClientDefaults(options);
+        StreamingTelemetryContext previousContext = _streamingTelemetryContext.Value;
         StreamingTelemetryContext telemetryContext = OpenTelemetryResponseScope.IsEnabled ? StreamingTelemetryContext.Create(options, Endpoint, _defaultModelName) : null;
 
         try
         {
-            return base.CreateResponseStreamingAsync(
+            _streamingTelemetryContext.Value = telemetryContext;
+            return await base.CreateResponseStreamingAsync(
                 options,
                 cancellationToken
-            );
+            ).ConfigureAwait(false);
         }
         catch (Exception ex)
         {
@@ -383,6 +386,10 @@ public partial class ProjectResponsesClient : ResponsesClient
             scope?.RecordError(ex);
             scope?.Dispose();
             throw;
+        }
+        finally
+        {
+            _streamingTelemetryContext.Value = previousContext;
         }
     }
 
@@ -398,16 +405,7 @@ public partial class ProjectResponsesClient : ResponsesClient
         Func<Stream, CancellationToken, IAsyncEnumerable<StreamingResponseUpdate>> updateProducer,
         CancellationToken cancellationToken)
     {
-        CreateResponseOptions options = new()
-        {
-            StreamingEnabled = true,
-            // TODO: Re enable this code after the options AddProxy proxy will be implemented. See 5859124.
-            //PreviousResponseId = previousResponseId,
-            //InputItems = { ResponseItem.CreateUserMessageItem(userInputText) },
-            //Model = model,
-        };
-        ApplyClientDefaults(options);
-        StreamingTelemetryContext telemetryContext = OpenTelemetryResponseScope.IsEnabled ? StreamingTelemetryContext.Create(options, Endpoint, _defaultModelName) : null;
+        StreamingTelemetryContext telemetryContext = _streamingTelemetryContext.Value;
 
         return base.CreateStreamingResult(
             response,

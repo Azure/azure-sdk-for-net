@@ -224,19 +224,18 @@ public partial class ResponsesTelemetryTests : ProjectsOpenAITestBase
 
     #region Helpers
 
-    private static Dictionary<string, object> GetCommonExpectedAttributes() => new()
-    {
-        { "gen_ai.provider.name", "microsoft.foundry" },
-        { "server.address", "*" },
-        { "az.namespace", "Microsoft.CognitiveServices" },
-        { "gen_ai.response.model", "*" },
-        { "gen_ai.response.id", "*" },
-        { "gen_ai.usage.input_tokens", "+" },
-        { "gen_ai.usage.output_tokens", "+" },
-        // TODO: Re enable this code after the options AddProxy proxy will be implemented. See 5859124.
-        // { "gen_ai.input.messages", "*" },
-        { "gen_ai.output.messages", "*" },
-    };
+    private static Dictionary<string, object> GetCommonExpectedAttributes()  => new()
+        {
+            { "gen_ai.provider.name", "microsoft.foundry" },
+            { "server.address", "*" },
+            { "az.namespace", "Microsoft.CognitiveServices" },
+            { "gen_ai.response.model", "*" },
+            { "gen_ai.response.id", "*" },
+            { "gen_ai.usage.input_tokens", "+" },
+            { "gen_ai.usage.output_tokens", "+" },
+            { "gen_ai.input.messages", "*" },
+            { "gen_ai.output.messages", "*" },
+        };
 
     private static Dictionary<string, object> GetExpectedChatAttributes(string modelDeploymentName)
     {

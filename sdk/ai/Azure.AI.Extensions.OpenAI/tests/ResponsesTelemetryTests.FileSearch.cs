@@ -117,7 +117,8 @@ public partial class ResponsesTelemetryTests
     private void ValidateFileSearchSpan(
         string agentName,
         object agentVersion,
-        bool contentRecordingEnabled)
+        bool contentRecordingEnabled,
+        bool streaming)
     {
         _exporter.ForceFlush();
 
@@ -212,7 +213,7 @@ public partial class ResponsesTelemetryTests
                 await RunFileSearchNonStreamingAsync(client);
             }
 
-            ValidateFileSearchSpan(agentName, agentVersion.Version, contentRecordingEnabled);
+            ValidateFileSearchSpan(agentName, agentVersion.Version, contentRecordingEnabled, streaming);
         }
         finally
         {

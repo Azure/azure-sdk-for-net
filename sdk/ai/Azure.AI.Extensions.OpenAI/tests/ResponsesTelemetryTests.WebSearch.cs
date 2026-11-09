@@ -70,7 +70,8 @@ public partial class ResponsesTelemetryTests
     private void ValidateWebSearchSpan(
         string agentName,
         object agentVersion,
-        bool contentRecordingEnabled)
+        bool contentRecordingEnabled,
+        bool streaming)
     {
         _exporter.ForceFlush();
 
@@ -84,18 +85,17 @@ public partial class ResponsesTelemetryTests
             allowUnexpected: false);
 
         // --- Input messages ---
-        // TODO: Re enable this code after the options AddProxy proxy will be implemented. See 5859124.
-        //string inputMessages = span.GetTagItem("gen_ai.input.messages") as string;
-        //Assert.That(inputMessages, Does.Contain("\"role\":\"user\""));
-        //if (contentRecordingEnabled)
-        //{
-        //    Assert.That(inputMessages, Does.Contain("\"content\":\"" + WebSearchPrompt + "\""));
-        //}
-        //else
-        //{
-        //    Assert.That(inputMessages, Does.Not.Contain(WebSearchPrompt));
-        //    Assert.That(inputMessages, Does.Contain("\"type\":\"text\""));
-        //}
+        string inputMessages = span.GetTagItem("gen_ai.input.messages") as string;
+        Assert.That(inputMessages, Does.Contain("\"role\":\"user\""));
+        if (contentRecordingEnabled)
+        {
+            Assert.That(inputMessages, Does.Contain("\"content\":\"" + WebSearchPrompt + "\""));
+        }
+        else
+        {
+            Assert.That(inputMessages, Does.Not.Contain(WebSearchPrompt));
+            Assert.That(inputMessages, Does.Contain("\"type\":\"text\""));
+        }
 
         // --- Output messages ---
         string outputMessages = span.GetTagItem("gen_ai.output.messages") as string;
@@ -161,7 +161,7 @@ public partial class ResponsesTelemetryTests
                 await RunWebSearchNonStreamingAsync(client);
             }
 
-            ValidateWebSearchSpan(agentName, agentVersion.Version, contentRecordingEnabled);
+            ValidateWebSearchSpan(agentName, agentVersion.Version, contentRecordingEnabled, streaming);
         }
         finally
         {

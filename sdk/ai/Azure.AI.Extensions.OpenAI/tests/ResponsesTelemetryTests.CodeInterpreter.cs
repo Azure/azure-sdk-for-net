@@ -77,7 +77,8 @@ public partial class ResponsesTelemetryTests
     private void ValidateCodeInterpreterSpan(
         string agentName,
         object agentVersion,
-        bool contentRecordingEnabled)
+        bool contentRecordingEnabled
+        )
     {
         _exporter.ForceFlush();
 
@@ -90,20 +91,19 @@ public partial class ResponsesTelemetryTests
             GetExpectedAgentAttributes(agentName, agentVersion),
             allowUnexpected: false);
 
-        // TODO: Re enable this code after the options AddProxy proxy will be implemented. See 5859124.
-        //string inputMessages = span.GetTagItem("gen_ai.input.messages") as string;
-        //Assert.That(inputMessages, Does.Contain("\"role\":\"user\""));
-        //if (contentRecordingEnabled)
-        //{
-        //    // User prompt text should appear in the input
-        //    Assert.That(inputMessages, Does.Contain("\"content\":\"" + CodeInterpreterPrompt + "\""));
-        //}
-        //else
-        //{
-        //    // User prompt text must be absent; only the structural type hint remains
-        //    Assert.That(inputMessages, Does.Not.Contain(CodeInterpreterPrompt));
-        //    Assert.That(inputMessages, Does.Contain("\"type\":\"text\""));
-        //}
+        string inputMessages = span.GetTagItem("gen_ai.input.messages") as string;
+        Assert.That(inputMessages, Does.Contain("\"role\":\"user\""));
+        if (contentRecordingEnabled)
+        {
+            // User prompt text should appear in the input
+            Assert.That(inputMessages, Does.Contain("\"content\":\"" + CodeInterpreterPrompt + "\""));
+        }
+        else
+        {
+            // User prompt text must be absent; only the structural type hint remains
+            Assert.That(inputMessages, Does.Not.Contain(CodeInterpreterPrompt));
+            Assert.That(inputMessages, Does.Contain("\"type\":\"text\""));
+        }
 
         string outputMessages = span.GetTagItem("gen_ai.output.messages") as string;
         Assert.That(outputMessages, Does.Contain("\"role\":\"assistant\""));

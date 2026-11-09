@@ -25,29 +25,19 @@ public static partial class AsyncEnumerableExtensions
         IAsyncEnumerator<TSource> enumerator = asyncEnumerable.GetAsyncEnumerator();
         try
         {
-            while (true)
+#pragma warning disable AZC0102
+            while (enumerator.MoveNextAsync().AsTask().GetAwaiter().GetResult())
             {
-                //enumerator.MoveNextAsync().EnsureCompleted()
-                ValueTask<bool> moveNextTask = enumerator.MoveNextAsync();
-                if (!moveNextTask.IsCompleted)
-                {
-#pragma warning disable AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
-                    moveNextTask.EnsureCompleted();
-#pragma warning restore AZC0104
-                    yield return enumerator.Current;
-                }
-                if (!moveNextTask.Result)
-                {
-                    yield break;
-                }
+#pragma warning restore AZC0102
+                yield return enumerator.Current;
             }
         }
         finally
         {
             ValueTask disposeTask = enumerator.DisposeAsync();
-#pragma warning disable AZC0104 // Use EnsureCompleted() directly on asynchronous method return value.
-            disposeTask.EnsureCompleted();
-#pragma warning restore AZC0104
+#pragma warning disable AZC0102 // Use EnsureCompleted() directly on asynchronous method return value.
+            disposeTask.AsTask().GetAwaiter().GetResult();
+#pragma warning restore AZC0102
         }
 #endif
     }

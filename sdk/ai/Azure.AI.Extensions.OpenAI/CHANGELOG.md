@@ -5,6 +5,13 @@
 ### Features Added
 
 ### Breaking Changes
+- Removed the synchronous `ProjectResponsesClient.CreateResponseStreaming` overloads. Use `CreateResponseStreamingAsync` and asynchronous enumeration.
+- `ProjectResponsesClient.CreateResponseStreamingAsync` overloads now return
+  `Task<AsyncStreamingResult<StreamingResponseUpdate>>` instead of
+  `AsyncCollectionResult<StreamingResponseUpdate>`. Await stream creation
+  before enumerating updates.
+- The `ProjectConversationsClient` constructor now accepts `ConversationClientOptions` instead of `OpenAIClientOptions`.
+- The `ProjectVectorStoresClient` constructor now accepts `VectorStoreClientOptions` instead of `OpenAIClientOptions`.
 
 ### Bugs Fixed
 
