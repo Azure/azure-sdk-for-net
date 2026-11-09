@@ -5,8 +5,10 @@
 ### Features Added
 
 ### Breaking Changes
+- `AzureFunctionDefinitionFunction` was removed, please use the same class from `Azure.AI.Extensions.OpenAI`.
 
 ### Bugs Fixed
+- Fixed the cancellation of `ToolboxRecord` update.
 
 ### Other Changes
 

@@ -25,7 +25,6 @@ using OpenAI.Conversations;
 using OpenAI.Files;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
-using OpenTelemetry.Trace;
 
 namespace Azure.AI.Projects.Tests;
 #pragma warning disable OPENAICUA001

@@ -742,11 +742,11 @@ namespace Azure.AI.Projects
         /// <summary> Represents a request for a pending upload of a model version. </summary>
         /// <param name="pendingUploadId"> If PendingUploadId is not provided, a random GUID will be used. </param>
         /// <param name="connectionName"> Azure Storage Account connection name to use for generating temporary SAS token. </param>
-        /// <returns> A new <see cref="Projects.ModelPendingUploadContent"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Projects.ModelPendingUploadRequest"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ModelPendingUploadContent ModelPendingUploadContent(string pendingUploadId = default, string connectionName = default)
+        public static ModelPendingUploadRequest ModelPendingUploadRequest(string pendingUploadId = default, string connectionName = default)
         {
-            return new ModelPendingUploadContent(pendingUploadId, connectionName, "TemporaryBlobReference", additionalBinaryDataProperties: null);
+            return new ModelPendingUploadRequest(pendingUploadId, connectionName, "TemporaryBlobReference", additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents the response for a model pending upload request. </summary>

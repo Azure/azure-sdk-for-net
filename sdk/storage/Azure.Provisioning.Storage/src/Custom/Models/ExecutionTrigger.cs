@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
+#nullable disable
 
 using System;
 using System.ComponentModel;
@@ -24,11 +24,11 @@ public partial class ExecutionTrigger : ProvisionableConstruct
     public BicepValue<ExecutionTriggerType> TriggerType
 #pragma warning restore CS0618
     {
-        get { Initialize(); return _triggerType!; }
-        set { Initialize(); _triggerType!.Assign(value); }
+        get { Initialize(); return _triggerType; }
+        set { Initialize(); _triggerType.Assign(value); }
     }
 #pragma warning disable CS0618 // Compatibility field intentionally uses the obsolete shipped enum.
-    private BicepValue<ExecutionTriggerType>? _triggerType;
+    private BicepValue<ExecutionTriggerType> _triggerType;
 #pragma warning restore CS0618
 
     partial void DefineAdditionalProperties()
