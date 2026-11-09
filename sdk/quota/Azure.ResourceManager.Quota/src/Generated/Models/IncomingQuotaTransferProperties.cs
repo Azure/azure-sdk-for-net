@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Quota;
 
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// Mutually exclusive with `approval`.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IncomingQuotaTransferProperties(TransferProvisioningState? provisioningState, TransferStatus? transferStatus, string transferId, ResourceIdentifier transferRef, string sourceSubscriptionId, string sourceTenantId, string billingAccountId, string resourceName, long? amount, string sourceEtag, QuotaTransferApprovalRecord approval, QuotaTransferRejectionRecord rejection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IncomingQuotaTransferProperties(TransferProvisioningState? provisioningState, TransferStatus? transferStatus, string transferId, ResourceIdentifier transferRef, string sourceSubscriptionId, string sourceTenantId, string billingAccountId, string resourceName, long? amount, ETag? sourceEtag, QuotaTransferApprovalRecord approval, QuotaTransferRejectionRecord rejection, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             TransferStatus = transferStatus;
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// as the If-Match value on approve and reject requests.
         /// </summary>
         [WirePath("sourceEtag")]
-        public string SourceEtag { get; }
+        public ETag? SourceEtag { get; }
 
         /// <summary>
         /// Approval record. Populated when `transferStatus` is `Accepted` or `Completed`.

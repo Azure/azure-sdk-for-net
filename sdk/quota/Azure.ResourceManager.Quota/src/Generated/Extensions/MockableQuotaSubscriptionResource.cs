@@ -36,8 +36,6 @@ namespace Azure.ResourceManager.Quota.Mocking
 
         private ClientDiagnostics IncomingQuotaTransfersClientDiagnostics => _incomingQuotaTransfersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Quota.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private IncomingQuotaTransfers IncomingQuotaTransfersRestClient => _incomingQuotaTransfersRestClient ??= new IncomingQuotaTransfers(IncomingQuotaTransfersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-01-preview");
-
         /// <summary>
         /// List incoming quota transfers across every targetProvider and region for the
         /// subscription.
@@ -58,13 +56,13 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IncomingQuotaTransferResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<IncomingQuotaTransferResource> GetBySubscriptionAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<IncomingQuotaTransferResource> GetIncomingQuotaTransfersAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IncomingQuotaTransferData, IncomingQuotaTransferResource>(new IncomingQuotaTransferDataAsync0CollectionResultOfT(IncomingQuotaTransfersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableQuotaSubscriptionResource.GetBySubscription"), data => new IncomingQuotaTransferResource(Client, data));
+            return new AsyncPageableWrapper<IncomingQuotaTransferData, IncomingQuotaTransferResource>(new IncomingQuotaTransferDataAsync0CollectionResultOfT(IncomingQuotaTransfersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableQuotaSubscriptionResource.GetIncomingQuotaTransfers"), data => new IncomingQuotaTransferResource(Client, data));
         }
 
         /// <summary>
@@ -87,13 +85,13 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="IncomingQuotaTransferResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<IncomingQuotaTransferResource> GetBySubscription(CancellationToken cancellationToken = default)
+        public virtual Pageable<IncomingQuotaTransferResource> GetIncomingQuotaTransfers(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IncomingQuotaTransferData, IncomingQuotaTransferResource>(new IncomingQuotaTransferData0CollectionResultOfT(IncomingQuotaTransfersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableQuotaSubscriptionResource.GetBySubscription"), data => new IncomingQuotaTransferResource(Client, data));
+            return new PageableWrapper<IncomingQuotaTransferData, IncomingQuotaTransferResource>(new IncomingQuotaTransferData0CollectionResultOfT(IncomingQuotaTransfersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableQuotaSubscriptionResource.GetIncomingQuotaTransfers"), data => new IncomingQuotaTransferResource(Client, data));
         }
     }
 }

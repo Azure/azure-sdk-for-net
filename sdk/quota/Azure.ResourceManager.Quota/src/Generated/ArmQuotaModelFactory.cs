@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// Mutually exclusive with `approval`.
         /// </param>
         /// <returns> A new <see cref="Models.IncomingQuotaTransferProperties"/> instance for mocking. </returns>
-        public static IncomingQuotaTransferProperties IncomingQuotaTransferProperties(TransferProvisioningState? provisioningState = default, TransferStatus? transferStatus = default, string transferId = default, ResourceIdentifier transferRef = default, string sourceSubscriptionId = default, string sourceTenantId = default, string billingAccountId = default, string resourceName = default, long? amount = default, string sourceEtag = default, QuotaTransferApprovalRecord approval = default, QuotaTransferRejectionRecord rejection = default)
+        public static IncomingQuotaTransferProperties IncomingQuotaTransferProperties(TransferProvisioningState? provisioningState = default, TransferStatus? transferStatus = default, string transferId = default, ResourceIdentifier transferRef = default, string sourceSubscriptionId = default, string sourceTenantId = default, string billingAccountId = default, string resourceName = default, long? amount = default, ETag? sourceEtag = default, QuotaTransferApprovalRecord approval = default, QuotaTransferRejectionRecord rejection = default)
         {
             return new IncomingQuotaTransferProperties(
                 provisioningState,

@@ -722,18 +722,18 @@ namespace Azure.ResourceManager.Quota
         /// subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableQuotaSubscriptionResource.GetBySubscriptionAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableQuotaSubscriptionResource.GetIncomingQuotaTransfersAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="IncomingQuotaTransferResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<IncomingQuotaTransferResource> GetBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static AsyncPageable<IncomingQuotaTransferResource> GetIncomingQuotaTransfersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableQuotaSubscriptionResource(subscriptionResource).GetBySubscriptionAsync(cancellationToken);
+            return GetMockableQuotaSubscriptionResource(subscriptionResource).GetIncomingQuotaTransfersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -741,18 +741,18 @@ namespace Azure.ResourceManager.Quota
         /// subscription.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableQuotaSubscriptionResource.GetBySubscription(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableQuotaSubscriptionResource.GetIncomingQuotaTransfers(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="IncomingQuotaTransferResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<IncomingQuotaTransferResource> GetBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        public static Pageable<IncomingQuotaTransferResource> GetIncomingQuotaTransfers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableQuotaSubscriptionResource(subscriptionResource).GetBySubscription(cancellationToken);
+            return GetMockableQuotaSubscriptionResource(subscriptionResource).GetIncomingQuotaTransfers(cancellationToken);
         }
 
         /// <summary>

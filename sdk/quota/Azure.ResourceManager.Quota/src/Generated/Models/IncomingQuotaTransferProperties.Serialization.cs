@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Quota;
 
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.Quota.Models
             if (options.Format != "W" && Optional.IsDefined(SourceEtag))
             {
                 writer.WritePropertyName("sourceEtag"u8);
-                writer.WriteStringValue(SourceEtag);
+                writer.WriteStringValue(SourceEtag.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(Approval))
             {
@@ -186,7 +187,7 @@ namespace Azure.ResourceManager.Quota.Models
             string billingAccountId = default;
             string resourceName = default;
             long? amount = default;
-            string sourceEtag = default;
+            ETag? sourceEtag = default;
             QuotaTransferApprovalRecord approval = default;
             QuotaTransferRejectionRecord rejection = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -255,7 +256,11 @@ namespace Azure.ResourceManager.Quota.Models
                 }
                 if (prop.NameEquals("sourceEtag"u8))
                 {
-                    sourceEtag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceEtag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("approval"u8))
