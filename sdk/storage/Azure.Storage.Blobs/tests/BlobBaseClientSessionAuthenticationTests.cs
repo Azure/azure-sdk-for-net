@@ -594,10 +594,10 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        public async Task GetPropertiesAsync_Sessions_FallbackToBearer()
+        public async Task GetPropertiesAsync_Sessions()
         {
-            var containerName = GetNewContainerName();
-            var countingPolicy = new SessionAuthCountingPolicy(containerName);
+            string containerName = GetNewContainerName();
+            SessionAuthCountingPolicy countingPolicy = new SessionAuthCountingPolicy(containerName);
             BlobClientOptions options = GetOptions();
             options.SessionOptions = new SessionOptions()
             {
@@ -607,34 +607,22 @@ namespace Azure.Storage.Blobs.Test
             BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
             await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthServiceClient);
 
-            // Arrange
-            var data = GetRandomBuffer(Constants.KB);
-            List<BlockBlobClient> blobs = new List<BlockBlobClient>(3)
+            byte[] data = GetRandomBuffer(Constants.KB);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            using (MemoryStream stream = new MemoryStream(data))
             {
-                InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName())),
-                InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName())),
-                InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()))
-            };
-            foreach (BlockBlobClient blob in blobs)
-            {
-                using (var stream = new MemoryStream(data))
-                {
-                    await blob.UploadAsync(stream);
-                }
+                await blob.UploadAsync(stream);
             }
 
-            // Act — GetProperties
             countingPolicy.Start();
-            for (int i = 0; i < 3; i++)
-            {
-                await blobs[i].GetPropertiesAsync();
-            }
+            Response<BlobProperties> response = await blob.GetPropertiesAsync();
 
-            // Assert — HEAD requests should never trigger session creation or use session auth
-            Assert.AreEqual(0, countingPolicy.CreateSessionCount, "Expected no create session request for HEAD-only operations");
-            Assert.AreEqual(0, countingPolicy.GetSessionAuthCount, "Expected GetProperties requests to not use Session authorization");
-            Assert.AreEqual(0, countingPolicy.NonGetSessionAuthCount, "Expected no non-GET requests to use Session authorization");
-            Assert.IsTrue(countingPolicy.BearerNonGetCount >= 3, "Expected GetProperties requests to use Bearer authorization");
+            Assert.AreEqual(data.Length, response.Value.ContentLength);
+            Assert.AreEqual(BlobType.Block, response.Value.BlobType);
+            Assert.AreEqual(1, countingPolicy.CreateSessionCount, "Expected GetProperties to create a session");
+            Assert.AreEqual(1, countingPolicy.NonGetSessionAuthCount, "Expected GetProperties to use Session authorization");
+            Assert.AreEqual(0, countingPolicy.GetSessionAuthCount, "Expected no Get Blob requests");
+            Assert.AreEqual(1, countingPolicy.BearerNonGetCount, "Expected only CreateSession to use Bearer authorization");
         }
 
         [RecordedTest]
@@ -675,15 +663,15 @@ namespace Azure.Storage.Blobs.Test
             await downloadResponse.Value.Content.CopyToAsync(actual);
             TestHelper.AssertSequenceEqual(data, actual.ToArray());
 
-            // GetProperties (HEAD — should use bearer)
+            // GetProperties (HEAD — should use session)
             await existingBlob.GetPropertiesAsync();
 
             // Assert
             Assert.AreEqual(1, countingPolicy.CreateSessionCount, "Expected create session request to be called");
             Assert.AreEqual(1, countingPolicy.GetSessionAuthCount, "Expected only the download request to use Session authorization");
-            Assert.AreEqual(0, countingPolicy.NonGetSessionAuthCount, "Expected upload and GetProperties requests to not use Session authorization");
+            Assert.AreEqual(1, countingPolicy.NonGetSessionAuthCount, "Expected GetProperties to use Session authorization");
             Assert.AreEqual(0, countingPolicy.BearerGetBlobCount, "Expected the download request to not use Bearer authorization");
-            Assert.IsTrue(countingPolicy.BearerNonGetCount >= 2, "Expected upload and GetProperties requests to use Bearer authorization");
+            Assert.IsTrue(countingPolicy.BearerNonGetCount >= 2, "Expected upload and CreateSession requests to use Bearer authorization");
         }
 
         [RecordedTest]

@@ -117,8 +117,9 @@ namespace Azure.Storage.Blobs.Models
         /// <inheritdoc />
         internal override bool IsRequestEligible(HttpMessage message)
         {
-            // Only GET blob requests are eligible for session tokens.
-            if (message.Request.Method != RequestMethod.Get)
+            // Only GET and HEAD blob requests are eligible for session tokens.
+            if (message.Request.Method != RequestMethod.Get
+                && message.Request.Method != RequestMethod.Head)
             {
                 return false;
             }

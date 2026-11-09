@@ -381,23 +381,31 @@ namespace Azure.Storage.Blobs.Tests
         [TestCase("https://testaccount.blob.core.windows.net/mycontainer/myblob?comp=tags", false)]
         [TestCase("https://testaccount.blob.core.windows.net/mycontainer/myblob?restype=container", false)]
         [TestCase("https://testaccount.blob.core.windows.net/mycontainer/myblob?snapshot=2023-01-01T00:00:00.0000000Z", true)]
-        public void IsRequestEligible_GetRequests(string uri, bool expected)
+        public void IsRequestEligible_GetAndHeadRequests(string uri, bool expected)
         {
             var (provider, _) = CreateProvider(ServiceUri);
-            HttpMessage message = CreateMessage(new Uri(uri));
+            foreach (RequestMethod method in new[] { RequestMethod.Get, RequestMethod.Head })
+            {
+                using HttpMessage message = CreateMessage(new Uri(uri));
+                message.Request.Method = method;
 
-            Assert.AreEqual(expected, provider.IsRequestEligible(message));
+                Assert.AreEqual(expected, provider.IsRequestEligible(message), $"Unexpected eligibility for {method}.");
+            }
         }
 
-        [Test]
-        public void IsRequestEligible_NonGetRequest_IsFalse()
+        [TestCase("PUT")]
+        [TestCase("POST")]
+        [TestCase("DELETE")]
+        [TestCase("PATCH")]
+        [TestCase("OPTIONS")]
+        public void IsRequestEligible_NonGetOrHeadRequest_IsFalse(string method)
         {
             var (provider, _) = CreateProvider(ServiceUri);
             HttpMessage message = CreateMessage(BlobUri);
-            message.Request.Method = RequestMethod.Head;
+            message.Request.Method = new RequestMethod(method);
 
             Assert.IsFalse(provider.IsRequestEligible(message),
-                "Only GET requests are eligible for session authentication.");
+                "Only GET and HEAD requests are eligible for session authentication.");
         }
 
         [Test]

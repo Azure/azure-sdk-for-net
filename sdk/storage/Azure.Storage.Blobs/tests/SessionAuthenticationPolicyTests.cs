@@ -401,8 +401,10 @@ namespace Azure.Storage.Blobs.Tests
             VerifyBearerPolicyInvoked(mockBearer, Times.Once());
         }
 
-        [Test]
-        public async Task NonGetRequest_DelegatesToBearer()
+        [TestCase("PUT")]
+        [TestCase("POST")]
+        [TestCase("DELETE")]
+        public async Task NonGetOrHeadRequest_DelegatesToBearer(string method)
         {
             var mockBearer = CreateMockBearerPolicy();
             var policy = CreateSessionPolicy(
@@ -413,7 +415,7 @@ namespace Azure.Storage.Blobs.Tests
             await SendBlobGetAsync(
                 policy,
                 BlobUri,
-                RequestMethod.Head,
+                new RequestMethod(method),
                 new MockResponse(200));
 
             VerifyBearerPolicyInvoked(mockBearer, Times.Once());
@@ -617,8 +619,9 @@ namespace Azure.Storage.Blobs.Tests
         #endregion
 
         #region Session Token Acquisition & Signing
-        [Test]
-        public async Task SessionAcquireSucceeds_SetsSessionAuthorizationHeader()
+        [TestCase("GET")]
+        [TestCase("HEAD")]
+        public async Task SessionAcquireSucceeds_SetsSessionAuthorizationHeader(string method)
         {
             var mockBearer = CreateMockBearerPolicy();
             var policy = CreateSessionPolicy(
@@ -626,10 +629,10 @@ namespace Azure.Storage.Blobs.Tests
                 EnabledOptions,
                 CreateSessionMockResponse());
 
-            var (message, outerTransport) = await SendBlobGetAsync(
+            (HttpMessage message, MockTransport outerTransport) = await SendBlobGetAsync(
                 policy,
                 BlobUri,
-                RequestMethod.Get,
+                new RequestMethod(method),
                 CreateBlobGetResponse(200));
 
             Assert.IsTrue(
