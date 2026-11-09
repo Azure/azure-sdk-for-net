@@ -111,7 +111,7 @@ namespace Azure.Communication.Messages.Models.Channels
             }
             MessageActionBindingKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            ButtonSetContent content = default;
+            ButtonSetRequest content = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -121,7 +121,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 }
                 if (prop.NameEquals("content"u8))
                 {
-                    content = ButtonSetContent.DeserializeButtonSetContent(prop.Value, options);
+                    content = ButtonSetRequest.DeserializeButtonSetRequest(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

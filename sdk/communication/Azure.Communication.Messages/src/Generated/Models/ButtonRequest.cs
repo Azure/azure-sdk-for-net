@@ -11,16 +11,16 @@ using System.Collections.Generic;
 namespace Azure.Communication.Messages
 {
     /// <summary> The message content of type Button information. </summary>
-    public partial class ButtonContent
+    public partial class ButtonRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ButtonContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ButtonRequest"/>. </summary>
         /// <param name="id"> Unique Id of the button content. </param>
         /// <param name="title"> Title of the button content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="title"/> is null. </exception>
-        public ButtonContent(string id, string title)
+        public ButtonRequest(string id, string title)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(title, nameof(title));
@@ -29,11 +29,11 @@ namespace Azure.Communication.Messages
             Title = title;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ButtonContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ButtonRequest"/>. </summary>
         /// <param name="id"> Unique Id of the button content. </param>
         /// <param name="title"> Title of the button content. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ButtonContent(string id, string title, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ButtonRequest(string id, string title, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Title = title;

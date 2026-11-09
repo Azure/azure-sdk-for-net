@@ -12,13 +12,13 @@ using System.Linq;
 namespace Azure.Communication.Messages
 {
     /// <summary> The action content of type ActionGroup. </summary>
-    public partial class ActionGroupContent : MessageContent
+    public partial class ActionGroupRequest : MessageRequest
     {
-        /// <summary> Initializes a new instance of <see cref="ActionGroupContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionGroupRequest"/>. </summary>
         /// <param name="title"> Title of the actionGroup content. </param>
         /// <param name="groups"> Set or group of actions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="title"/> or <paramref name="groups"/> is null. </exception>
-        public ActionGroupContent(string title, IEnumerable<ActionGroup> groups) : base(MessageContentKind.Group)
+        public ActionGroupRequest(string title, IEnumerable<ActionGroup> groups) : base(MessageContentKind.Group)
         {
             Argument.AssertNotNull(title, nameof(title));
             Argument.AssertNotNull(groups, nameof(groups));
@@ -27,12 +27,12 @@ namespace Azure.Communication.Messages
             Groups = groups.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ActionGroupContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ActionGroupRequest"/>. </summary>
         /// <param name="kind"> Kind of MessageContent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="title"> Title of the actionGroup content. </param>
         /// <param name="groups"> Set or group of actions. </param>
-        internal ActionGroupContent(MessageContentKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string title, IList<ActionGroup> groups) : base(kind, additionalBinaryDataProperties)
+        internal ActionGroupRequest(MessageContentKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string title, IList<ActionGroup> groups) : base(kind, additionalBinaryDataProperties)
         {
             Title = title;
             Groups = groups;
