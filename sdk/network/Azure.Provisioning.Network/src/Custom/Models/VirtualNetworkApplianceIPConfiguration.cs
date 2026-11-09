@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 namespace Azure.Provisioning.Network;
 
 public partial class VirtualNetworkApplianceIPConfiguration
@@ -41,10 +43,10 @@ public partial class VirtualNetworkApplianceIPConfiguration
     /// <summary> The name of the virtual network appliance IP configuration. </summary>
     public BicepValue<string> Name
     {
-        get { Initialize(); return _name!; }
-        set { Initialize(); _name!.Assign(value); }
+        get { Initialize(); return _name; }
+        set { Initialize(); _name.Assign(value); }
     }
-    private BicepValue<string>? _name;
+    private BicepValue<string> _name;
 
     partial void DefineAdditionalProperties()
     {

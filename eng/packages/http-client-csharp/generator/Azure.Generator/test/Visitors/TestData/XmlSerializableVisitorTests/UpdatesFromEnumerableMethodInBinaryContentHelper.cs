@@ -2,7 +2,7 @@
 content.XmlWriter.WriteStartElement(rootNameHint);
 foreach (var item in enumerable)
 {
-    content.XmlWriter.WriteObjectValue(item, (options ?? global::Samples.ModelSerializationExtensions.WireOptions), childNameHint);
+    content.XmlWriter.WriteObjectValue(item, global::Samples.ModelSerializationExtensions.WireOptions, childNameHint);
 }
 content.XmlWriter.WriteEndElement();
 return content;

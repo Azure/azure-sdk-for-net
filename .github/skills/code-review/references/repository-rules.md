@@ -223,6 +223,24 @@ entries that no longer match a real diff accumulate silently and nothing will fl
   nothing errors when it is absent, so review is the only gate. Nearly every package exposing a
   `*ClientSettings` type ships one, and the few that do not are hand-authored integrations. Only
   one of the two locations should exist
+- **Anything constructible in code must be constructible from configuration and DI** 🟡. Apply
+  this whenever the change adds a constructor or constructor parameter, an options property, a
+  credential type, or newly supported values, identity kinds, or hosts for an existing one —
+  including a capability that arrives with no `api/*.cs` change, such as through a dependency
+  bump. Binding is explicit per setting, so a missed one is silently unconfigurable — nothing
+  fails. The places to check are usually untouched by the PR, which is no reason to skip them;
+  report a verified gap in one of them, not their absence from the diff:
+  1. **Binding** — connection parameters in the `*ClientSettings` type's `BindCore`, options
+     properties in the options type's `IConfigurationSection` constructor, credential settings
+     in `DefaultAzureCredentialOptions(CredentialSettings, IConfigurationSection)`, and a new
+     credential type's `CredentialSource` in `AzureCredentialResolver`
+  2. **Test** — each code construction the change adds or tests has a counterpart test that
+     builds it from `IConfiguration`, as `GetAzureClientSettings` and `AddAzureClient` do, and
+     asserts the same outcome. Pair them one for one: a wrapper or chain exposing the capability,
+     such as `DefaultAzureCredential`, is a separate path, and an inherited fixture covers only the
+     tests it reruns
+  3. **Schema** — every new setting appears in the package's `ConfigurationSchema.json` with its
+     bound name, type, and allowed values
 
 ## Naming — Review-Only
 

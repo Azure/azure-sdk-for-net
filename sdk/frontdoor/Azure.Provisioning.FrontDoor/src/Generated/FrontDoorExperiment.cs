@@ -21,7 +21,7 @@ namespace Azure.Provisioning.FrontDoor
         private BicepValue<AzureLocation> _location;
         private BicepDictionary<string> _tags;
         private ExperimentProperties _properties;
-        private ResourceReference<FrontDoorNetworkExperimentProfile> _parent;
+        private ProvisioningResourceReference<FrontDoorNetworkExperimentProfile> _parent;
 
         /// <summary> Creates a new FrontDoorExperiment. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -231,7 +231,7 @@ namespace Azure.Provisioning.FrontDoor
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _properties = DefineModelProperty<ExperimentProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<FrontDoorNetworkExperimentProfile>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<FrontDoorNetworkExperimentProfile>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

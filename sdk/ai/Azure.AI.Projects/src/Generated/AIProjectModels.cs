@@ -552,9 +552,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(modelVersion, nameof(modelVersion));
 
-            using Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(modelVersion, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
-            ClientResult result = CreateModelVersionRequest(name, version, content, cancellationToken.ToRequestOptions());
+            ClientResult result = CreateModelVersionRequest(name, version, modelVersion, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((CreateAsyncResult)result, result.GetRawResponse());
         }
 
@@ -572,9 +570,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(modelVersion, nameof(modelVersion));
 
-            using Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(modelVersion, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
-            ClientResult result = await CreateModelVersionRequestAsync(name, version, content, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await CreateModelVersionRequestAsync(name, version, modelVersion, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((CreateAsyncResult)result, result.GetRawResponse());
         }
 
@@ -658,7 +654,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="pendingUploadRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<ModelPendingUploadResult> StartModelPendingUpload(string name, string version, ModelPendingUploadContent pendingUploadRequest, CancellationToken cancellationToken = default)
+        public virtual ClientResult<ModelPendingUploadResult> StartModelPendingUpload(string name, string version, ModelPendingUploadRequest pendingUploadRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));
@@ -676,7 +672,7 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="version"/> or <paramref name="pendingUploadRequest"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<ModelPendingUploadResult>> StartModelPendingUploadAsync(string name, string version, ModelPendingUploadContent pendingUploadRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<ModelPendingUploadResult>> StartModelPendingUploadAsync(string name, string version, ModelPendingUploadRequest pendingUploadRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(version, nameof(version));

@@ -8,8 +8,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> The AzureFunctionDefinitionFunction. </summary>
-    public partial class AzureFunctionDefinitionFunction
+    internal partial class AzureFunctionDefinitionFunction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

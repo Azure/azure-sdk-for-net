@@ -503,7 +503,7 @@ managing skills in Microsoft Foundry. Skills may be created from a folder with i
 ```C# Snippet:Sample_CreateSkill_SkillsCRUD_Async
 AgentsSkill skillFromFile = await skillsClient.CreateSkillVersionFromFilesAsync("roll-dice", GetDirectory("roll-dice"));
 Console.WriteLine($"Created skillfrom directory {skillFromFile.Name}, Id: {skillFromFile.Id}");
-SkillInlineContent content = new(
+SkillInlineRequest content = new(
     description: "Calculates the sum of two numbers.",
     instructions: """
         To calculate the sum  run
@@ -537,7 +537,7 @@ Console.WriteLine($"Retrieved agent {agentVersion.Name}, v. {agentVersion.Versio
 2. Create the skill.
 
 ```C# Snippet:Sample_CreateSkill_AgentsEndpoint_Async
-SkillInlineContent content = new(
+SkillInlineRequest content = new(
     description: "Calculates the sum of two numbers.",
     instructions: """
         To calculate the sum  run

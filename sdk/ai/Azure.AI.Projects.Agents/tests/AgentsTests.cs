@@ -4,17 +4,24 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Text.Json;
+using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Extensions.OpenAI;
+using Azure.AI.Projects.Agents.Telemetry;
 using Microsoft.ClientModel.TestFramework;
+using Microsoft.ClientModel.TestFramework.Mocks;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using NUnit.Framework.Legacy;
 using OpenAI.Responses;
+using OpenTelemetry;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 #pragma warning disable AAIP001
 #pragma warning disable SCME0006
@@ -22,6 +29,10 @@ namespace Azure.AI.Projects.Agents.Tests;
 
 public class AgentsTests : AgentsTestBase
 {
+    private const string SourceName = "Azure.AI.Projects.Agents.AgentsClient";
+    private const string EnableSwitch = "Azure.Experimental.EnableGenAITracing";
+    private const string MessageEventsSwitch = "Azure.Experimental.UseMessageEvents";
+    private const string ContentSwitch = "Azure.Experimental.TraceGenAIMessageContent";
     public AgentsTests(bool isAsync) : base(isAsync)
     {
     }
@@ -486,6 +497,24 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
+    public async Task TestToolboxUpdateCancelation()
+    {
+        var transport = new MockPipelineTransport(_ =>
+            new MockPipelineResponse(200).WithContent("{}"))
+        {
+            ExpectSyncPipeline = false
+        };
+        var client = new AgentAdministrationClient(
+            new Uri("https://example.test/api/projects/p"),
+            new AgentAdministrationClientOptions { Transport = transport });
+        using var cancellation = new CancellationTokenSource();
+        cancellation.Cancel();
+        var options = new RequestOptions { CancellationToken = cancellation.Token };
+        Assert.CatchAsync<OperationCanceledException>(async () =>
+            await client.GetAgentToolboxes().UpdateDefaultVersionAsync("box", "v1", options));
+    }
+
+    [RecordedTest]
     public async Task TestPatchHostedAgent()
     {
         AgentAdministrationClient agentsClient = GetTestClient();
@@ -499,7 +528,7 @@ public class AgentsTests : AgentsTestBase
                 Responses = new()
             }
         };
-        SkillInlineContent content = new(
+        SkillInlineRequest content = new(
             description: "Calculates the sum of two numbers.",
             instructions: """
                 To calculate the sum  run
@@ -840,7 +869,7 @@ public class AgentsTests : AgentsTestBase
                 await skillsClient.DeleteSkillAsync(skill1.Name);
             }
         }
-        SkillInlineContent content = new(
+        SkillInlineRequest content = new(
             description: "Calculates the sum of two numbers.",
             instructions: """
                 To calculate the sum run
@@ -920,7 +949,7 @@ public class AgentsTests : AgentsTestBase
         AgentAdministrationClient agentsClient = GetTestClient();
         ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
         int initialCount = (await skillsClient.GetSkillsAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending).ToListAsync()).Count;
-        SkillInlineContent contrent = new(
+        SkillInlineRequest contrent = new(
             description: "Calculates the sum of two numbers.",
             instructions: """
                 To calculate the sum  run
@@ -1120,6 +1149,154 @@ public class AgentsTests : AgentsTestBase
         versions = [.. await agentsClient.GetAgentVersionsAsync(agentName: AGENT_NAME, includeDrafts: true).Select(x => x.Version).ToListAsync()];
         Assert.That(versions, Does.Contain(newAgentVersion.Version));
         Assert.That(versions, Does.Contain(agentVersionDraft.Version));
+    }
+
+    [Test]
+    [TestCase(false, null, false)]
+    [TestCase(false, null, true)]
+    [TestCase(false, "foo bar", false)]
+    [TestCase(false, "foo } bar", false)]
+    [TestCase(false, "foo } bar", false)]
+    [TestCase(false, "} -- {", false)]
+    [TestCase(true, null, false)]
+    [TestCase(true, null, true)]
+    [TestCase(true, "foo bar", false)]
+    [TestCase(true, "foo } bar", false)]
+    [TestCase(true, "foo } bar", false)]
+    [TestCase(true, "} -- {", false)]
+    public void TestScopeWithMultipartData(bool metaFirst, string malformedJson, bool longInput)
+    {
+        BinaryData dataZip = default;
+        // Create the metadata.
+        string cpu = "0.425";
+        string memory = "100500Gi";
+        HostedAgentDefinition agentDefinition = new(
+            versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
+            cpu: cpu,
+            memory: memory
+        );
+        // Generate some zipped contents.
+        string subdir = Path.GetRandomFileName();
+        string tempDirectory = Path.Combine(Path.GetTempPath(), subdir.Substring(0, subdir.Length - 4));
+        Directory.CreateDirectory(tempDirectory);
+        try
+        {
+            if (longInput)
+            {
+                Random rv = new Random(42);
+                byte[] randomBytes = new byte[14360];
+                for (int i = 0; i< randomBytes.Length; i++)
+                {
+                    randomBytes[i] = (byte)rv.Next(32, 126);
+                }
+                File.WriteAllBytes(Path.Combine(tempDirectory, Path.GetRandomFileName()), randomBytes);
+            }
+            else
+            {
+                File.WriteAllText(Path.Combine(tempDirectory, Path.GetRandomFileName()), "E = m * c ^ 2");
+            }
+            dataZip = FileHelper.CreateAndReadZipFileFromDirectory(tempDirectory);
+            if (longInput)
+            {
+                Assert.That(dataZip.Length > 1000);
+            }
+        }
+        finally
+        {
+            Directory.Delete(tempDirectory, true);
+        }
+        Assert.That(dataZip, Is.Not.Null, "Unable to create or read the zip archive.");
+        // Serialize code Agent to multipart content.
+        using MultiPartFormDataBinaryContent content = new();
+        BinaryData metadataPart = string.IsNullOrEmpty(malformedJson) ? ModelReaderWriter.Write(new ProjectsAgentVersionCreationOptions(agentDefinition), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default) : BinaryData.FromString(malformedJson);
+        if (metaFirst)
+        {
+            content.Add(metadataPart.ToString(), name: "metadata", contentType: "application/json");
+            content.Add(dataZip, name: "code", filename: $"{Path.GetFileName(tempDirectory)}.zip", contentType: "application/zip");
+        }
+        else
+        {
+            content.Add(dataZip, name: "code", filename: $"{Path.GetFileName(tempDirectory)}.zip", contentType: "application/zip");
+            content.Add(metadataPart.ToString(), name: "metadata", contentType: "application/json");
+        }
+        // Initialize telemetry
+        TracerProvider _tracerProvider = null;
+        MemoryTraceExporter _exporter = new();
+        string oldTracesEnabledInitialValue = Environment.GetEnvironmentVariable("AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING", EnvironmentVariableTarget.Process);
+        string oldContentRecordingEnabledInitialValue = Environment.GetEnvironmentVariable("OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT", EnvironmentVariableTarget.Process);
+        string oldUseMessageEventsInitialValue = Environment.GetEnvironmentVariable("AZURE_EXPERIMENTAL_TRACING_GEN_AI_USE_MESSAGE_EVENTS", EnvironmentVariableTarget.Process);
+        bool hadEnableSwitch = AppContext.TryGetSwitch(EnableSwitch, out bool originalEnableSwitch);
+        bool hadContentSwitch = AppContext.TryGetSwitch(ContentSwitch, out bool originalContentSwitch);
+        bool hadMessageEventsSwitch = AppContext.TryGetSwitch(MessageEventsSwitch, out bool originalMessageEventsSwitch);
+        try
+        {
+            Environment.SetEnvironmentVariable("AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING", "true", EnvironmentVariableTarget.Process);
+            Environment.SetEnvironmentVariable("OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT", "true", EnvironmentVariableTarget.Process);
+            Environment.SetEnvironmentVariable("AZURE_EXPERIMENTAL_TRACING_GEN_AI_USE_MESSAGE_EVENTS", "true", EnvironmentVariableTarget.Process);
+            // Re initiate tracing.
+            Assembly assembly = typeof(AgentAdministrationClient).Assembly;
+            Assert.That(assembly, Is.Not.Null);
+            Type openTelemetryScopeType = assembly.GetType("Azure.AI.Projects.Agents.Telemetry.OpenTelemetryScope");
+            Assert.That(openTelemetryScopeType, Is.Not.Null);
+            MethodInfo reinitializeConfigurationMethod = openTelemetryScopeType.GetMethod("ReinitializeConfiguration", BindingFlags.Static | BindingFlags.NonPublic);
+            Assert.That(reinitializeConfigurationMethod, Is.Not.Null);
+            reinitializeConfigurationMethod.Invoke(null, null);
+            // Switch on traces.
+            _tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .AddSource("*")
+                .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("AgentTracingTest"))
+                .AddProcessor(new SimpleActivityExportProcessor(_exporter))
+                .Build();
+            OpenTelemetryScope scope = OpenTelemetryScope.StartCreateAgentVersion(
+                endpoint: new("https://www.microsoftagents.com"),
+                agentName: AGENT_NAME2,
+                content: content
+            );
+            if (string.IsNullOrEmpty(malformedJson))
+            {
+                scope.Dispose();
+                _exporter.ForceFlush();
+                Activity createAgentSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"create_agent {AGENT_NAME2}");
+                Assert.That(createAgentSpan, Is.Not.Null);
+                Assert.That(createAgentSpan.Tags, Does.Contain(new KeyValuePair<string, string>(OpenTelemetryConstants.GenAiAgentType, OpenTelemetryConstants.AgentTypeHosted)));
+                Assert.That(createAgentSpan.Tags, Does.Contain(new KeyValuePair<string, string>(OpenTelemetryConstants.GenAiAgentNameKey, AGENT_NAME2)));
+                Assert.That(createAgentSpan.Tags, Does.Contain(new KeyValuePair<string, string>(OpenTelemetryConstants.GenAiAgentHostedCpu, cpu)));
+                Assert.That(createAgentSpan.Tags, Does.Contain(new KeyValuePair<string, string>(OpenTelemetryConstants.GenAiAgentHostedMemory, memory)));
+                Assert.That(createAgentSpan.Tags, Does.Contain(new KeyValuePair<string, string>(OpenTelemetryConstants.GenAiAgentHostedProtocol, "responses")));
+                Assert.That(createAgentSpan.Tags, Does.Contain(new KeyValuePair<string, string>(OpenTelemetryConstants.GenAiAgentHostedProtocolVersion, "1.0.0")));
+                Assert.That(createAgentSpan.Tags.All(x => x.Key != OpenTelemetryConstants.GenAiAgentHostedImage), Is.True);
+            }
+            else
+            {
+                Assert.That(scope, Is.Null);
+            }
+        }
+        finally
+        {
+            // Set the environment variable back.
+            Environment.SetEnvironmentVariable("AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING", oldTracesEnabledInitialValue, EnvironmentVariableTarget.Process);
+            Environment.SetEnvironmentVariable("OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT", oldContentRecordingEnabledInitialValue, EnvironmentVariableTarget.Process);
+            Environment.SetEnvironmentVariable("AZURE_EXPERIMENTAL_TRACING_GEN_AI_USE_MESSAGE_EVENTS", oldUseMessageEventsInitialValue, EnvironmentVariableTarget.Process);
+            if (hadEnableSwitch)
+            {
+                AppContext.SetSwitch(EnableSwitch, originalEnableSwitch);
+            }
+            if (hadContentSwitch)
+            {
+                AppContext.SetSwitch(ContentSwitch, originalContentSwitch);
+            }
+            if (hadMessageEventsSwitch)
+            {
+                AppContext.SetSwitch(MessageEventsSwitch, originalMessageEventsSwitch);
+            }
+            Assembly assembly = typeof(AgentAdministrationClient).Assembly;
+            Type openTelemetryScopeType = assembly.GetType("Azure.AI.Projects.Agents.Telemetry.OpenTelemetryScope");
+            MethodInfo reinitializeConfigurationMethod = openTelemetryScopeType.GetMethod("ReinitializeConfiguration", BindingFlags.Static | BindingFlags.NonPublic);
+            reinitializeConfigurationMethod.Invoke(null, null);
+            // Cleanup after telemetry test.
+            _tracerProvider?.Dispose();
+            _exporter.Clear();
+        }
     }
 
     #region Helpers

@@ -1,6 +1,16 @@
 # Release History
 
-## 1.0.0-beta.31 (Unreleased)
+## 1.0.0-beta.32 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.31 (2026-11-04)
 
 ### Features Added
 
@@ -13,11 +23,9 @@
   that opt-in. The new public protocol-scoping helpers and per-task activation
   option are experimental (`AAAS003`).
 
-### Breaking Changes
-
 ### Bugs Fixed
 
-### Other Changes
+- Prevented a stale steering nudge from canceling a promoted turn after its pending-input queue has drained. Pending-input publication now follows the same turn as the cancellation signal.
 
 ## 1.0.0-beta.30 (2026-10-15)
 

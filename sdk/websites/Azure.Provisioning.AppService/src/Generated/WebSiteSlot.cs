@@ -28,7 +28,7 @@ namespace Azure.Provisioning.AppService
         private ManagedServiceIdentity _identity;
         private ExtendedAzureLocation _extendedLocation;
         private BicepValue<string> _kind;
-        private ResourceReference<WebSite> _parent;
+        private ProvisioningResourceReference<WebSite> _parent;
 
         /// <summary> Creates a new WebSiteSlot. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -1062,7 +1062,7 @@ namespace Azure.Provisioning.AppService
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _extendedLocation = DefineModelProperty<ExtendedAzureLocation>(nameof(ExtendedLocation), new string[] { "extendedLocation" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<WebSite>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<WebSite>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

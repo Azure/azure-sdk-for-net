@@ -108,7 +108,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<TelephonyBinding> CreateTelephonyBinding(string agentName, CreateTelephonyBindingContent telephonyBinding, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<TelephonyBinding> CreateTelephonyBinding(string agentName, CreateTelephonyBindingRequest telephonyBinding, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = CreateTelephonyBinding(agentName, telephonyBinding, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((TelephonyBinding)result, result.GetRawResponse());
@@ -120,7 +120,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<TelephonyBinding>> CreateTelephonyBindingAsync(string agentName, CreateTelephonyBindingContent telephonyBinding, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<TelephonyBinding>> CreateTelephonyBindingAsync(string agentName, CreateTelephonyBindingRequest telephonyBinding, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = await CreateTelephonyBindingAsync(agentName, telephonyBinding, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((TelephonyBinding)result, result.GetRawResponse());
@@ -982,9 +982,7 @@ namespace Azure.AI.Projects.Agents
         internal virtual ClientResult<TelephonyTransferTargets> ReplaceTelephonyTransferTargets(string agentName, string ifMatch, IEnumerable<TelephonyTransferTarget> transferTargets, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ReplaceTelephonyTransferTargetsRequest spreadModel = new ReplaceTelephonyTransferTargetsRequest(transferTargets?.ToList() as IList<TelephonyTransferTarget> ?? new ChangeTrackingList<TelephonyTransferTarget>(), default);
-            using Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(spreadModel, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create | LifecycleVisibility.Update, "W"));
-            ClientResult result = ReplaceTelephonyTransferTargets(agentName, ifMatch, content, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            ClientResult result = ReplaceTelephonyTransferTargets(agentName, ifMatch, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((TelephonyTransferTargets)result, result.GetRawResponse());
         }
 
@@ -998,9 +996,7 @@ namespace Azure.AI.Projects.Agents
         internal virtual async Task<ClientResult<TelephonyTransferTargets>> ReplaceTelephonyTransferTargetsAsync(string agentName, string ifMatch, IEnumerable<TelephonyTransferTarget> transferTargets, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ReplaceTelephonyTransferTargetsRequest spreadModel = new ReplaceTelephonyTransferTargetsRequest(transferTargets?.ToList() as IList<TelephonyTransferTarget> ?? new ChangeTrackingList<TelephonyTransferTarget>(), default);
-            using Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(spreadModel, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create | LifecycleVisibility.Update, "W"));
-            ClientResult result = await ReplaceTelephonyTransferTargetsAsync(agentName, ifMatch, content, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await ReplaceTelephonyTransferTargetsAsync(agentName, ifMatch, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((TelephonyTransferTargets)result, result.GetRawResponse());
         }
 
@@ -1073,7 +1069,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<TelephonyCallJob> CreateTelephonyCallJob(string agentName, string idempotencyKey, CreateTelephonyCallJobContent body, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual ClientResult<TelephonyCallJob> CreateTelephonyCallJob(string agentName, string idempotencyKey, CreateTelephonyCallJobRequest body, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = CreateTelephonyCallJob(agentName, idempotencyKey, body, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((TelephonyCallJob)result, result.GetRawResponse());
@@ -1086,7 +1082,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<TelephonyCallJob>> CreateTelephonyCallJobAsync(string agentName, string idempotencyKey, CreateTelephonyCallJobContent body, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
+        internal virtual async Task<ClientResult<TelephonyCallJob>> CreateTelephonyCallJobAsync(string agentName, string idempotencyKey, CreateTelephonyCallJobRequest body, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = await CreateTelephonyCallJobAsync(agentName, idempotencyKey, body, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((TelephonyCallJob)result, result.GetRawResponse());

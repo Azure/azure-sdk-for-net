@@ -217,6 +217,52 @@ stimuli:
         config:
           pattern: '(?i)((?:ConfigurationSchema\.json)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:ConfigurationSchema\.json))'
 
+  - name: report-construction-capability-without-configuration-test
+    prompt: >-
+      First invoke the code-review skill. Then use it to review this synthetic
+      Azure SDK PR and return findings only. A dependency bump lets the existing
+      `WidgetCredential` select a user-assigned identity on a new host type through its existing
+      `WidgetIdentityId` selector, and the changelog lists this under Features Added. No
+      `api/*.cs` file changes. New tests construct the credential in code on the new host and
+      assert that the token request carries the selected identity. `WidgetCredential` is also
+      built from an `IConfiguration` `Credential` section; that binding, its tests, and the
+      package's ConfigurationSchema.json are unchanged.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:configuration|IConfiguration)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:configuration|IConfiguration))'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:configuration|IConfiguration)[^\n]*\btests?\b|\btests?\b[^\n]*(?:configuration|IConfiguration))'
+
+  - name: report-new-option-missing-configuration-binding-and-schema
+    prompt: >-
+      First invoke the code-review skill. Then use it to review this synthetic
+      hand-written client-library diff and return findings only. It adds a public
+      `bool WidgetClientOptions.EnableCompression` property and a test that sets it in code. The
+      `WidgetClientOptions(IConfigurationSection)` constructor, `WidgetClientSettings`, the
+      package's configuration tests, and its existing `schema/ConfigurationSchema.json` are
+      unchanged.
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["code-review"]
+      - type: output-not-matches
+        config:
+          pattern: '^\s*No findings\.\s*$'
+      - type: output-matches
+        config:
+          pattern: '(?i)((?:ConfigurationSchema\.json)[^\n]*(🔴|🟡|ℹ️)|(🔴|🟡|ℹ️)[^\n]*(?:ConfigurationSchema\.json))'
+      - type: output-matches
+        config:
+          pattern: '(?i)IConfigurationSection|BindCore|\bbind'
+
   - name: allow-preview-only-member-rename-on-ga-type
     prompt: >-
       First invoke the code-review skill. Review this synthetic PR and return
