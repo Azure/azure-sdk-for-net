@@ -21,6 +21,7 @@ words:
   - includable
   - inpaint
   - inpainting
+  - likert
   - linq
   - logprobs
   - OPENAICUA

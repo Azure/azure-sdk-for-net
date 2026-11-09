@@ -18,6 +18,8 @@ namespace Azure.AI.Projects.Agents.Tests
         internal const string LegacyRealtimeVoiceDefinitionReplacement = "${1}\"sub_protocol\":\"realtime\",";
         internal const string LegacyTelephonyCallJobPathPattern = @"(/agents/[^/?]+/)telephony/call_jobs(?=/|:|\?|$)";
         internal const string LegacyTelephonyCallJobPathReplacement = "${1}telephony_call_jobs";
+        internal const string LegacySkillsPathPattern = @"(\Ahttps?://[^/?#]+/api/projects/[^/?#]+/)skills(?=/|[?#]|$)";
+        internal const string LegacySkillsPathReplacement = "${1}openai/v1/skills";
 
         internal static void ApplyLegacyTelephonyCallJobRecordingRoutes<TEnvironment>(RecordedTestBase<TEnvironment> testBase)
             where TEnvironment : TestEnvironment, new()
@@ -97,6 +99,12 @@ namespace Azure.AI.Projects.Agents.Tests
                 {
                     Regex = LegacyAgentInsightsFeaturePattern,
                     Value = string.Empty
+                }));
+                // Skills moved under /openai/v1; preserve existing recordings without changing live requests.
+                testBase.UriRegexSanitizers.Add(new UriRegexSanitizer(new()
+                {
+                    Regex = LegacySkillsPathPattern,
+                    Value = LegacySkillsPathReplacement
                 }));
             }
 
