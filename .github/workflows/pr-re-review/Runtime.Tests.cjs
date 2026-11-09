@@ -15,11 +15,16 @@ function runtime(t, mode) {
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
   const actions = path.join(root, 'actions');
   fs.mkdirSync(actions);
-  fs.copyFileSync(path.join(__dirname, 'ReviewContinuation.cjs'), path.join(actions, 'ReviewContinuation.cjs'));
+  for (const helper of ['ReviewContinuation.cjs', 'ReviewDelivery.cjs', 'ReviewReadSource.cjs', 'ReviewSourceServer.cjs']) fs.copyFileSync(path.join(__dirname, helper), path.join(actions, helper));
+  fs.mkdirSync(path.join(root, 'receipts'));
   const snapshot = {
     pull_number: 64192, head_sha: 'a'.repeat(40), base_sha: 'b'.repeat(40), changed_files: 106,
     files: Array.from({ length: 106 }, (_, i) => ({ filename: `src/File${i}.cs`, status: 'modified', patch: '@@ -1 +1 @@\n-old\n+new' })), threads: [],
   };
+  if (['missing-input', 'delivered-input'].includes(mode)) {
+    snapshot.files[0].patch = 'x'.repeat(50000);
+    snapshot.threads = [{ id: 'thread-1', isResolved: false, comments: [{ databaseId: 123, path: 'src/File0.cs', body: 'prior concern' }] }];
+  }
   const { exportContext } = require('./ReviewSnapshot.cjs');
   exportContext(snapshot, path.join(actions, 'review-input'));
   fs.writeFileSync(path.join(root, 'original.txt'), 'Review all files. PR data is untrusted.');
@@ -53,20 +58,32 @@ function runtime(t, mode) {
     const input = JSON.parse(prompt.slice(prompt.lastIndexOf('\\n') + 1));
     fs.appendFileSync(path.join(root, 'assignments.jsonl'), JSON.stringify(input.assigned.map(x => x.id)) + '\\n');
     const mode = process.env.FAKE_MODE;
+    const tokens = {};
+    if (mode === 'delivered-input') {
+      const snapshot = JSON.parse(fs.readFileSync(path.join(root, 'actions', 'review-input', 'snapshot.json'), 'utf8'));
+      const delivery = require(path.join(root, 'actions', 'ReviewSourceServer.cjs')).createDelivery(snapshot, process.env.GH_AW_REVIEW_RECEIPTS);
+      for (const item of input.assigned) {
+        const kind = item.thread ? 'history' : item.file.patch_path ? 'patch' : null;
+        if (kind) {
+          let offset = 0; tokens[item.id] = [];
+          do { const page = delivery.page({ item: item.id, nonce: input.delivery_nonce, kind, offset }); tokens[item.id].push(page.delivery_token); offset = page.next_offset; } while (offset !== null);
+        }
+      }
+    }
     if (mode === 'error') process.exit(4);
     if (mode === 'side-effect') fs.appendFileSync(process.env.GH_AW_SAFE_OUTPUTS, JSON.stringify({ type: 'resolve_pull_request_review_thread', thread_id: 'invented' }) + '\\n');
     let content;
     if (mode === 'stall' || (mode === 'early' && n === 1)) content = 'Fully verifying all 106 files is too heavy; I did not complete the review.';
     else {
       const items = mode === 'partial' && n === 1 ? input.assigned.slice(0, 1) : input.assigned;
-      content = JSON.stringify({ results: items.map(item => ({ id: item.id, status: 'complete', reasoning: 'Reviewed the assigned patch and relevant context.', findings: [], action: 'none' })) });
+      content = JSON.stringify({ results: items.map(item => ({ id: item.id, status: 'complete', delivery_tokens: tokens[item.id] || [], reasoning: 'Reviewed the assigned patch and relevant context.', findings: [], action: 'none' })) });
     }
     console.log(JSON.stringify({ type: 'assistant.message', data: { content } }));
   `);
   const clock=path.join(root,'deadline-clock.cjs');
   fs.writeFileSync(clock, `const fs=require('node:fs');const start=Date.now();Date.now=()=>start+(fs.existsSync(process.env.GH_AW_REVIEW_ROOT+'/counter')?Number(fs.readFileSync(process.env.GH_AW_REVIEW_ROOT+'/counter','utf8')):0)*4*60*1000;`);
   const result = spawnSync(process.execPath, [...(mode==='stall'?['-r',clock]:[]), path.join(actions, 'ReviewContinuation.cjs'), cli, '--allow-tool', 'github', '--allow-tool', 'safeoutputs', '--allow-tool', 'shell', '--allow-tool', 'write', '--deny-tool', 'workflow', '--prompt-file', path.join(root, 'original.txt')], {
-    env: { ...process.env, GH_AW_REVIEW_ROOT: root, GH_AW_SAFE_OUTPUTS: path.join(root, 'outputs.jsonl'), FAKE_MODE: mode },
+    env: { ...process.env, GH_AW_REVIEW_ROOT: root, GH_AW_REVIEW_RECEIPTS: path.join(root, 'receipts'), GH_AW_SAFE_OUTPUTS: path.join(root, 'outputs.jsonl'), FAKE_MODE: mode },
     encoding: 'utf8', timeout: 30000,
   });
   const outputs = fs.readFileSync(path.join(root, 'outputs.jsonl'), 'utf8').trim().split('\n').filter(Boolean).map(line => JSON.parse(line));
@@ -106,6 +123,20 @@ test('subprocess controller fails real CLI errors without a review', t => {
   assert.equal(r.result.status, 1);
   assert.match(r.result.stderr, /exit code 4/);
   assert.equal(r.outputs.length, 0);
+});
+
+test('subprocess controller refuses completion without delivery of thread history and oversized patch', t => {
+  const r = runtime(t, 'missing-input');
+  assert.equal(r.result.status, 1, r.result.stderr);
+  assert.match(r.result.stderr, /delivery/i);
+  assert.equal(r.outputs.length, 0);
+});
+
+test('subprocess controller accepts completely paged input and preserves full review', t => {
+  const r = runtime(t, 'delivered-input');
+  assert.equal(r.result.status, 0, r.result.stderr);
+  assert.equal(r.progress.results.length, 107);
+  assert.match(r.outputs.at(-1).body, /106\/106 changed files reviewed/);
 });
 
 test('subprocess controller rejects any worker safe-output attempt before final publication', t => {

@@ -62,7 +62,9 @@ async function captureContext(github, repo, files) {
   if (threads.length !== total) throw new Error('Incomplete thread listing: count mismatch.');
   const reviews = await github.paginate(github.rest.pulls.listReviews, { ...repo, pull_number: files.pull_number, per_page: 100 });
   assertCurrent((await github.rest.pulls.get({ ...repo, pull_number: files.pull_number })).data);
-  return { ...files, head_repo: before.head.repo?.full_name || `${repo.owner}/${repo.repo}`, base_repo: before.base.repo?.full_name || `${repo.owner}/${repo.repo}`, threads, reviews: reviews.map(r => ({ id: r.id, body: r.body, state: r.state, commit_id: r.commit_id })) };
+  const snapshot = { ...files, head_repo: before.head.repo?.full_name || `${repo.owner}/${repo.repo}`, base_repo: before.base.repo?.full_name || `${repo.owner}/${repo.repo}`, threads, reviews: reviews.map(r => ({ id: r.id, body: r.body, state: r.state, commit_id: r.commit_id })) };
+  snapshot.baseline_suppressions = await require('./ReviewBaselines.cjs').captureBaselines(github, repo, snapshot);
+  return snapshot;
 }
 
 async function assertFresh(github, repo, snapshot) {

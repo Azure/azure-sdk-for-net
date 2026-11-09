@@ -200,7 +200,81 @@ test('publication checks actual buffered outputs against captured complete resul
   assert.throws(() => assertPublication(s, progress, { ...output, items: [...output.items, { type: 'resolve_pull_request_review_thread', thread_id: 'invented' }] }, 'success'), /do not match/);
   const sanitized={...output,items:output.items.map(item=>({...item,...(item.body?{body:item.body.replace(/No new findings\./,'Sanitized review text.')}:{})}))};
   assert.doesNotThrow(()=>assertPublication(s,progress,sanitized,'success'));
+  const wrapped = { ...output, items: output.items.map(item => item.type === 'submit_pull_request_review'
+    ? { ...item, body: item.body.replace(/^Coverage: (.*)$/m, '> - **Coverage: $1.**') } : item) };
+  assert.doesNotThrow(() => assertPublication(s, progress, wrapped, 'success'));
+  for (const body of [
+    'Coverage: 0/0 threads fetched, 0/0 unresolved threads verified, 0/0 changed files reviewed',
+    'Coverage: 1/1 threads fetched, 1/1 unresolved threads verified, 0/1 changed files reviewed',
+    'No coverage line',
+    `${output.items.at(-1).body}\nCoverage: 0/0 threads fetched, 0/0 unresolved threads verified, 0/0 changed files reviewed`,
+  ]) {
+    const altered = { ...output, items: output.items.map(item => item.type === 'submit_pull_request_review' ? { ...item, body } : item) };
+    assert.throws(() => assertPublication(s, progress, altered, 'success'), /coverage/i);
+  }
   assert.throws(()=>assertPublication(s,progress,{...output,items:output.items.map(item=>({...item,event:'APPROVE'}))},'success'),/routing/);
+});
+
+test('surfaces added central ApiCompat suppressions even when the worker reports no findings', () => {
+  const s = snapshot(1);
+  s.files[0] = { filename: 'eng/apicompatbaselines/Azure.ResourceManager.Compute.Recommender.xml', status: 'added' };
+  s.baseline_suppressions = [{ path: s.files[0].filename, fields: { DiagnosticId: 'CP0001', Target: 'T:Azure.ResourceManager.Compute.Recommender.ComputeRecommenderDiagnosticData' }, nearby_comment: 'Intentional Diagnostic-to-PlacementScores API renames for API version 2026-10-05-preview.' }];
+  const ledger = complete(makeWorklist(s));
+  const output = buildOutputs(s, ledger).at(-1).body;
+  assert.match(output, /CP0001/);
+  assert.match(output, /ComputeRecommenderDiagnosticData/);
+  assert.match(output, /Intentional Diagnostic-to-PlacementScores/);
+  const progress = { ...ledger, head_sha: s.head_sha, base_sha: s.base_sha,
+    snapshot_sha256: crypto.createHash('sha256').update(JSON.stringify(s)).digest('hex') };
+  const buffered = { items: buildOutputs(s, progress), errors: [] };
+  assert.doesNotThrow(() => assertPublication(s, progress, buffered, 'success'));
+  const altered = { ...buffered, items: buffered.items.map(item => item.type === 'submit_pull_request_review'
+    ? { ...item, body: item.body.replace('CP0001', 'CP0002') } : item) };
+  assert.throws(() => assertPublication(s, progress, altered, 'success'), /suppression/i);
+  const fenced = { ...buffered, items: buffered.items.map(item => item.type === 'submit_pull_request_review'
+    ? { ...item, body: item.body.replace('## New ApiCompat suppressions', '```\n## New ApiCompat suppressions').concat('\n```') } : item) };
+  assert.throws(() => assertPublication(s, progress, fenced, 'success'), /suppression/i);
+  const uncaptured = { ...s }; delete uncaptured.baseline_suppressions;
+  assert.throws(() => buildOutputs(uncaptured, ledger), /missing captured baseline/i);
+});
+
+test('references a prior review inventory instead of presenting it as fresh feedback', () => {
+  const s = snapshot(1);
+  s.files[0] = { filename: 'eng/apicompatbaselines/Azure.Test.xml', status: 'added' };
+  s.baseline_suppressions = [{ path: s.files[0].filename, fields: { DiagnosticId: 'CP0001', Target: 'T:Test' }, nearby_comment: null }];
+  const ledger = complete(makeWorklist(s));
+  const old = buildOutputs(s, ledger).at(-1).body;
+  s.reviews = [{ id: 555, body: old }];
+  s.baseline_suppressions[0].nearby_comment = 'A revised explanation.';
+  assert.match(buildOutputs(s, ledger).at(-1).body, /prior review (?:ID )?555/i);
+  s.reviews = [];
+  s.threads[0].comments[0].path = s.files[0].filename;
+  s.threads[0].comments[0].body = 'Existing feedback: CP00010 T:TestMore';
+  assert.doesNotMatch(buildOutputs(s, ledger).at(-1).body, /prior review comment ID/i);
+  s.threads[0].comments[0].body = 'Existing feedback: `CP0001` and `T:Test`';
+  assert.match(buildOutputs(s, ledger).at(-1).body, /prior review comment ID/i);
+});
+
+test('suppression inventory survives the pinned gh-aw sanitizer for URL-containing comments', { skip: !process.env.GH_AW_TEST_ACTIONS_DIR }, () => {
+  const { sanitizeContent } = require(require('node:path').join(process.env.GH_AW_TEST_ACTIONS_DIR, 'sanitize_content.cjs'));
+  global.core = { info() {}, warning() {}, debug() {} };
+  const s = snapshot(1);
+  s.files[0] = { filename: 'eng/apicompatbaselines/Azure.Test.xml', status: 'added' };
+  s.baseline_suppressions = [{ path: s.files[0].filename, fields: { DiagnosticId: 'CP0015', Target: 'T:Azure.ResourceManager.Hci.HciEdgeDeviceData:[T:System.ClientModel.Primitives.PersistableModelProxyAttribute]' }, nearby_comment: 'See https://example.invalid/reason' }];
+  const progress = { ...complete(makeWorklist(s)), head_sha: s.head_sha, base_sha: s.base_sha, snapshot_sha256: crypto.createHash('sha256').update(JSON.stringify(s)).digest('hex') };
+  const output = { items: buildOutputs(s, progress).map(item => item.body ? { ...item, body: sanitizeContent(item.body) } : item), errors: [] };
+  assert.doesNotThrow(() => assertPublication(s, progress, output, 'success'));
+});
+
+test('publication rejects matching but invented unresolved counts when no threads are unresolved', () => {
+  const s = snapshot(1); s.threads[0].isResolved = true;
+  const progress = { ...complete(makeWorklist(s)), head_sha: s.head_sha, base_sha: s.base_sha,
+    snapshot_sha256: crypto.createHash('sha256').update(JSON.stringify(s)).digest('hex') };
+  const output = { items: buildOutputs(s, progress), errors: [] };
+  assert.doesNotThrow(() => assertPublication(s, progress, output, 'success'));
+  const altered = { ...output, items: output.items.map(item => item.type === 'submit_pull_request_review'
+    ? { ...item, body: item.body.replace('0/0 unresolved', '5/5 unresolved') } : item) };
+  assert.throws(() => assertPublication(s, progress, altered, 'success'), /coverage/i);
 });
 
 test('deleted-file findings use LEFT rather than an invalid RIGHT anchor', async () => {

@@ -22,6 +22,14 @@ test('reads bounded plain text without agent shell or base64 decoding', async ()
   assert.equal(second.content,content.slice(4000,8000)); assert.equal(calls,2);
 });
 
+test('immutable source pages reuse a bounded backend cache', async () => {
+  const cache = new Map(); let calls = 0;
+  const fetcher = async () => { calls++; return raw('x'.repeat(8000)); };
+  await readSource({path:'sdk/Model.cs',offset:0},snapshot,repo,'test-token',fetcher,undefined,cache);
+  await readSource({path:'sdk/Model.cs',offset:4000},snapshot,repo,'test-token',fetcher,undefined,cache);
+  assert.equal(calls,1);
+});
+
 test('source search is literal and source refs are pinned to head/base', async () => {
   const result=await readSource({path:'sdk/Model.cs',ref:snapshot.base_sha,search:'Target'},snapshot,repo,'test-token',async()=>raw('prefix\nTarget method\n'));
   assert.match(result.content,/Target method/);
@@ -59,6 +67,12 @@ test('uses the trusted enterprise API endpoint rather than sending its token to 
   },'https://ghe.example/api/v3');
   assert.equal(result.content,'source');
   await assert.rejects(readSource({path:'sdk/F.cs'},snapshot,repo,'test-token',async()=>raw(''),'http://ghe.example/api/v3'),/endpoint/);
+});
+
+test('binary or invalid UTF-8 source cannot satisfy required delivery', async () => {
+  for (const bytes of [Uint8Array.from([0x61, 0, 0x62]), Uint8Array.from([0xff])]) {
+    await assert.rejects(readSource({path:'sdk/F.cs'},snapshot,repo,'test-token',async()=>new Response(bytes)), /binary|utf-8/i);
+  }
 });
 
 test('read failures and excessive responses fail honestly without leaking credentials', async () => {

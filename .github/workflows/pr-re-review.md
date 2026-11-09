@@ -363,9 +363,10 @@ jobs:
             fs.mkdirSync(reviewRoot, { recursive: true });
             fs.writeFileSync(path.join(reviewRoot, 'snapshot.json'), JSON.stringify(snapshot), { mode: 0o644 });
             exportContext(snapshot, path.join(process.env.RUNNER_TEMP, 'gh-aw', 'actions', 'review-input')); // Read-only in the worker sandbox.
+            fs.mkdirSync(path.join(process.env.RUNNER_TEMP, 'gh-aw', 'safeoutputs', 'review-receipts'), { recursive: true });
             // Custom harnesses are provisioned into gh-aw's trusted action folder;
             // selecting harness.use does not copy a repository script by itself.
-            for (const helper of ['ReviewContinuation.cjs', 'ReviewReadSource.cjs', 'ReviewSourceServer.cjs'])
+            for (const helper of ['ReviewContinuation.cjs', 'ReviewDelivery.cjs', 'ReviewReadSource.cjs', 'ReviewSourceServer.cjs'])
               fs.copyFileSync(path.join(process.env.GITHUB_WORKSPACE, '.github/workflows/pr-re-review', helper),
                 path.join(process.env.RUNNER_TEMP, 'gh-aw', 'actions', helper));
             core.info(`Captured ${manifest.changed_files} changed files and ${snapshot.threads.length} threads for the event head.`);
@@ -400,14 +401,15 @@ mcp-servers:
   reviewsource:
     # Private stdio pipes, not the pinned mcp-scripts HTTP listener.
     container: node:24-alpine@sha256:a34ab6d7f6f4813f4d0c5469d74685604b962fbdbf5793a7bc7b4998ecb867c8
-    args: ["-v", "${RUNNER_TEMP}/gh-aw/actions:/review:ro"]
+    args: ["-v", "${RUNNER_TEMP}/gh-aw/actions:/review:ro", "-v", "${RUNNER_TEMP}/gh-aw/safeoutputs/review-receipts:/receipts:rw"]
     entrypointArgs: ["node", "/review/ReviewSourceServer.cjs"]
     env:
       REVIEW_SNAPSHOT: /review/review-input/snapshot.json
       REVIEW_REPOSITORY: ${{ github.repository }}
       REVIEW_API_URL: ${{ github.api_url }}
       REVIEW_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    allowed: [read-review-source]
+      REVIEW_RECEIPTS: /receipts
+    allowed: [read-review-source, read-review-input]
 
 post-steps:
   - name: Preserve review continuation progress
