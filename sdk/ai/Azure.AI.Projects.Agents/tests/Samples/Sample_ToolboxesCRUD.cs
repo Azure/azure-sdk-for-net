@@ -49,7 +49,7 @@ public class Sample_Toolboxes_CRUD : SamplesBase
             Name = "mcp-tool",
             Description = "Sample MCP tool",
             ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
         };
         ToolboxVersion toolBox1 = await toolboxClient.CreateVersionAsync(
             name: toolboxName,
@@ -135,7 +135,7 @@ public class Sample_Toolboxes_CRUD : SamplesBase
             Name = "mcp-tool",
             Description = "Sample MCP tool",
             ServerUri = new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
-            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval)
+            ToolCallApprovalPolicy = new McpToolCallApprovalPolicy(DefaultMcpToolCallApprovalPolicy.AlwaysRequireApproval)
         };
         ToolboxVersion toolBox1 = toolboxClient.CreateVersion(
             name: toolboxName,

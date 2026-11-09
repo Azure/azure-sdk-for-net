@@ -19,6 +19,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MonitorServerlessSparkCompute. </summary>
         public MonitorServerlessSparkCompute()
         {
+            ComputeType.Assign(MonitorComputeType.ServerlessSpark);
         }
 
         /// <summary> Gets or sets the ComputeIdentity. </summary>
@@ -70,7 +71,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("computeType", new string[] { "computeType" }, defaultValue: "ServerlessSpark");
             _computeIdentity = DefineModelProperty<MonitorComputeIdentityBase>(nameof(ComputeIdentity), new string[] { "computeIdentity" }, isRequired: true);
             _instanceType = DefineProperty<string>(nameof(InstanceType), new string[] { "instanceType" }, isRequired: true);
             _runtimeVersion = DefineProperty<string>(nameof(RuntimeVersion), new string[] { "runtimeVersion" }, isRequired: true);

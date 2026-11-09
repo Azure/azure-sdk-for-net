@@ -1,16 +1,33 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
-trigger: none
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/kubernetesconfiguration/Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
+    - sdk/kubernetesconfiguration/Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
+    - sdk/kubernetesconfiguration/Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
+    - sdk/kubernetesconfiguration/Azure.Provisioning.KubernetesConfiguration.Extensions
+    - sdk/kubernetesconfiguration/Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
+    - sdk/kubernetesconfiguration/Azure.ResourceManager.KubernetesConfiguration.Extensions
+    - sdk/kubernetesconfiguration/Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
+    - sdk/kubernetesconfiguration/Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: kubernetesconfiguration
     LimitForPullRequest: true
     Artifacts:
-    - name: Azure.ResourceManager.KubernetesConfiguration
-      safeName: AzureResourceManagerKubernetesConfiguration
-    - name: Azure.Provisioning.KubernetesConfiguration
-      safeName: AzureProvisioningKubernetesConfiguration
+    - name: Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
+      safeName: AzureProvisioningKubernetesConfigurationPrivateLinkScopes
+    - name: Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
+      safeName: AzureProvisioningKubernetesConfigurationFluxConfigurations
+    - name: Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
+      safeName: AzureProvisioningKubernetesConfigurationExtensionTypes
     - name: Azure.Provisioning.KubernetesConfiguration.Extensions
       safeName: AzureProvisioningKubernetesConfigurationExtensions
     - name: Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes

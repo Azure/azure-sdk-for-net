@@ -22,6 +22,7 @@ namespace Azure.Provisioning.CostManagement
         private SystemData _systemData;
         private AlertProperties _properties;
         private BicepValue<ETag> _eTag;
+        private ProvisioningResourceReference<ProvisionableResource> _scope;
 
         /// <summary> Creates a new CostManagementAlert. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -85,12 +86,27 @@ namespace Azure.Provisioning.CostManagement
             }
         }
 
+        /// <summary> Gets or sets the Scope. </summary>
+        public ProvisionableResource Scope
+        {
+            get
+            {
+                Initialize();
+                return _scope.Value;
+            }
+            set
+            {
+                Initialize();
+                _scope.Value = value;
+            }
+        }
+
         /// <summary> Gets the Definition. </summary>
         public AlertPropertiesDefinition Definition
         {
             get
             {
-                return Properties.Definition;
+                return Properties is null ? default : Properties.Definition;
             }
         }
 
@@ -99,7 +115,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.Description;
+                return Properties is null ? default : Properties.Description;
             }
         }
 
@@ -108,7 +124,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.Source;
+                return Properties is null ? default : Properties.Source;
             }
         }
 
@@ -117,7 +133,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.Details;
+                return Properties is null ? default : Properties.Details;
             }
         }
 
@@ -126,7 +142,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.CostEntityId;
+                return Properties is null ? default : Properties.CostEntityId;
             }
         }
 
@@ -135,7 +151,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
 
@@ -144,7 +160,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 
@@ -153,7 +169,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.CloseOn;
+                return Properties is null ? default : Properties.CloseOn;
             }
         }
 
@@ -162,7 +178,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.ModifiedOn;
+                return Properties is null ? default : Properties.ModifiedOn;
             }
         }
 
@@ -171,7 +187,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.StatusModificationUserName;
+                return Properties is null ? default : Properties.StatusModificationUserName;
             }
         }
 
@@ -180,7 +196,7 @@ namespace Azure.Provisioning.CostManagement
         {
             get
             {
-                return Properties.StatusModifiedOn;
+                return Properties is null ? default : Properties.StatusModifiedOn;
             }
         }
 
@@ -193,6 +209,7 @@ namespace Azure.Provisioning.CostManagement
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<AlertProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "eTag" });
+            _scope = new ProvisioningResourceReference<ProvisionableResource>(DefineProperty<string>(nameof(Scope), new string[] { "scope" }));
             DefineAdditionalProperties();
         }
 

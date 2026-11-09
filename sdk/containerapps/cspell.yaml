@@ -3,5 +3,6 @@ import:
 overrides:
   - filename: '**/sdk/containerapps/**/*.cs'
     words:
+      - azprovision
       - Nacos
       - Resiliencies

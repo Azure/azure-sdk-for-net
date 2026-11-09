@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<WebAppRequestHistoryData, WebAppRequestHistoryResource>(new RequestHistoriesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<WebAppRequestHistoryData, WebAppRequestHistoryResource>(new WebAppRequestHistoryDataAsyncCollectionResultOfT(
                 _requestHistoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<WebAppRequestHistoryData, WebAppRequestHistoryResource>(new RequestHistoriesGetAllCollectionResultOfT(
+            return new PageableWrapper<WebAppRequestHistoryData, WebAppRequestHistoryResource>(new WebAppRequestHistoryDataCollectionResultOfT(
                 _requestHistoriesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

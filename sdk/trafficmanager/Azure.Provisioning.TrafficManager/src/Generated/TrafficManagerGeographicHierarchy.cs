@@ -60,7 +60,7 @@ namespace Azure.Provisioning.TrafficManager
         {
             get
             {
-                return Properties.GeographicHierarchy;
+                return Properties is null ? default : Properties.GeographicHierarchy;
             }
         }
 

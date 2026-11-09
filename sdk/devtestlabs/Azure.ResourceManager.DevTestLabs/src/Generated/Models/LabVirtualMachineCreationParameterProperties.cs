@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="galleryImageReference"> The Microsoft Azure Marketplace image reference of the virtual machine. </param>
         /// <param name="planId"> The id of the plan associated with the virtual machine image. </param>
         /// <param name="networkInterface"> The network interface properties. </param>
-        /// <param name="expireOn"> The expiration date for VM. </param>
+        /// <param name="expiresOn"> The expiration date for VM. </param>
         /// <param name="allowClaim"> Indicates whether another user can take ownership of the virtual machine. </param>
         /// <param name="storageType"> Storage type to use for virtual machine (i.e. Standard, Premium). </param>
         /// <param name="environmentId"> The resource ID of the environment that contains this virtual machine, if any. </param>
         /// <param name="dataDiskParameters"> New or existing data disks to attach to the virtual machine after creation. </param>
         /// <param name="scheduleParameters"> Virtual Machine schedules to be created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LabVirtualMachineCreationParameterProperties(BulkCreationParameters bulkCreationParameters, string notes, string ownerObjectId, string ownerUserPrincipalName, DateTimeOffset? createdOn, string customImageId, string size, string userName, string password, string sshKey, bool? isAuthenticationWithSshKey, string labSubnetName, ResourceIdentifier labVirtualNetworkId, bool? disallowPublicIPAddress, IList<DevTestLabArtifactInstallInfo> artifacts, DevTestLabGalleryImageReference galleryImageReference, string planId, DevTestLabNetworkInterface networkInterface, DateTimeOffset? expireOn, bool? allowClaim, string storageType, string environmentId, IList<DevTestLabDataDiskProperties> dataDiskParameters, IList<DevTestLabScheduleCreationParameter> scheduleParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LabVirtualMachineCreationParameterProperties(BulkCreationParameters bulkCreationParameters, string notes, string ownerObjectId, string ownerUserPrincipalName, DateTimeOffset? createdOn, string customImageId, string size, string userName, string password, string sshKey, bool? isAuthenticationWithSshKey, string labSubnetName, ResourceIdentifier labVirtualNetworkId, bool? disallowPublicIPAddress, IList<DevTestLabArtifactInstallInfo> artifacts, DevTestLabGalleryImageReference galleryImageReference, string planId, DevTestLabNetworkInterface networkInterface, DateTimeOffset? expiresOn, bool? allowClaim, string storageType, string environmentId, IList<DevTestLabDataDiskProperties> dataDiskParameters, IList<DevTestLabScheduleCreationParameter> scheduleParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BulkCreationParameters = bulkCreationParameters;
             Notes = notes;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             GalleryImageReference = galleryImageReference;
             PlanId = planId;
             NetworkInterface = networkInterface;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             AllowClaim = allowClaim;
             StorageType = storageType;
             EnvironmentId = environmentId;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabNetworkInterface NetworkInterface { get; set; }
 
         /// <summary> The expiration date for VM. </summary>
-        public DateTimeOffset? ExpireOn { get; set; }
+        public DateTimeOffset? ExpiresOn { get; set; }
 
         /// <summary> Indicates whether another user can take ownership of the virtual machine. </summary>
         public bool? AllowClaim { get; set; }

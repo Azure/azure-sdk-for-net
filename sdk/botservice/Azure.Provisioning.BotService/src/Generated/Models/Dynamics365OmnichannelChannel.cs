@@ -13,13 +13,13 @@ namespace Azure.Provisioning.BotService
         /// <summary> Creates a new Dynamics365OmnichannelChannel. </summary>
         public Dynamics365OmnichannelChannel()
         {
+            ChannelName.Assign("Omnichannel");
         }
 
         /// <summary> Define all the provisionable properties for Dynamics365OmnichannelChannel. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("channelName", new string[] { "channelName" }, defaultValue: "Omnichannel");
             DefineAdditionalProperties();
         }
 

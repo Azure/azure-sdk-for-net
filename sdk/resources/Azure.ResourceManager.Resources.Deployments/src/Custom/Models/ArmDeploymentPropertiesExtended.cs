@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
@@ -12,9 +12,10 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.Deployments.Models
 {
     [CodeGenSerialization(nameof(Providers), SerializationValueHook = nameof(SerializationProviders), DeserializationValueHook = nameof(DeserializeProviders))]
     [CodeGenSerialization(nameof(Error), SerializationValueHook = nameof(SerializationError), DeserializationValueHook = nameof(DeserializeError))]
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Resources.Models
             List<ResourceProviderData> array = new List<ResourceProviderData>();
             foreach (var item in property.Value.EnumerateArray())
             {
-                array.Add(ModelReaderWriter.Read<ResourceProviderData>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerResourcesContext.Default));
+                array.Add(ModelReaderWriter.Read<ResourceProviderData>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureResourceManagerResourcesDeploymentsContext.Default));
             }
             providers = array;
         }
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return;
             }
-            error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerResourcesContext.Default);
+            error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerResourcesDeploymentsContext.Default);
         }
         // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- //
     }

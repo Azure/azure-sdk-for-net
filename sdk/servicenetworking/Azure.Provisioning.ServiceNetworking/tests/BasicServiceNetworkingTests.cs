@@ -57,10 +57,10 @@ public class BasicServiceNetworkingTests
 
             resource controller 'Microsoft.ServiceNetworking/trafficControllers@2025-01-01' = {
               name: take('controller-${uniqueString(resourceGroup().id)}', 24)
+              location: location
               tags: {
                 environment: 'test'
               }
-              location: location
             }
 
             resource frontend 'Microsoft.ServiceNetworking/trafficControllers/frontends@2025-01-01' = {
@@ -72,13 +72,13 @@ public class BasicServiceNetworkingTests
             resource association 'Microsoft.ServiceNetworking/trafficControllers/associations@2025-01-01' = {
               name: take('association-${uniqueString(resourceGroup().id)}', 24)
               location: location
+              parent: controller
               properties: {
                 associationType: 'subnets'
                 subnet: {
                   id: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myRg/providers/Microsoft.Network/virtualNetworks/myVnet/subnets/mySubnet'
                 }
               }
-              parent: controller
             }
             """);
     }

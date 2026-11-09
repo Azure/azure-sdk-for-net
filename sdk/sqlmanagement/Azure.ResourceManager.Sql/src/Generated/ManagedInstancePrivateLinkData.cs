@@ -32,6 +32,11 @@ namespace Azure.ResourceManager.Sql
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ManagedInstancePrivateLinkData"/>. </summary>
+        public ManagedInstancePrivateLinkData()
+        {
+        }
+
         /// <summary> The private link resource group id. </summary>
         [WirePath("properties")]
         public ManagedInstancePrivateLinkProperties Properties { get; }

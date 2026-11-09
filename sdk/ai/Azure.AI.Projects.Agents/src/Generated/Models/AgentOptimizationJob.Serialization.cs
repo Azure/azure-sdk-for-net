@@ -10,9 +10,14 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Agent optimization job resource — a long-running job that optimizes an agent's configuration (instructions, model, skills, tools) to maximize evaluation scores. On success, the result contains scored candidates. </summary>
+    /// <summary> Agent optimization job resource — a long-running job that produces candidate changes to a Foundry agent configuration. </summary>
     public partial class AgentOptimizationJob : IJsonModel<AgentOptimizationJob>
     {
+        /// <summary> Initializes a new instance of <see cref="AgentOptimizationJob"/> for deserialization. </summary>
+        internal AgentOptimizationJob()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AgentOptimizationJob PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -94,11 +99,6 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(Inputs))
-            {
-                writer.WritePropertyName("inputs"u8);
-                writer.WriteObjectValue(Inputs, options);
-            }
             if (options.Format != "W" && Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
@@ -114,20 +114,34 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error, options);
             }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("display_name"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsDefined(TargetConfiguration))
+            {
+                writer.WritePropertyName("target_configuration"u8);
+                writer.WriteObjectValue(TargetConfiguration, options);
+            }
+            writer.WritePropertyName("optimization_model_configuration"u8);
+            writer.WriteObjectValue(OptimizationModelConfiguration, options);
+            writer.WritePropertyName("optimization_configuration"u8);
+            writer.WriteObjectValue(OptimizationConfiguration, options);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("run_duration_ms"u8);
+                writer.WriteNumberValue(Convert.ToInt32(Math.Round(RunDurationMs.TotalMilliseconds)));
+            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("created_at"u8);
-                writer.WriteNumberValue(CreatedAt, "U");
+                writer.WriteNumberValue(CreatedOn, "U");
             }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("updated_at"u8);
-                writer.WriteNumberValue(UpdatedAt, "U");
-            }
-            if (options.Format != "W" && Optional.IsDefined(Progress))
-            {
-                writer.WritePropertyName("progress"u8);
-                writer.WriteObjectValue(Progress, options);
+                writer.WriteNumberValue(UpdatedOn, "U");
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Warnings))
             {
@@ -187,13 +201,16 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             string id = default;
-            AgentOptimizationJobInputs inputs = default;
             AgentOptimizationJobResult result = default;
             AgentsJobStatus status = default;
             FoundryOpenAIError error = default;
-            DateTimeOffset createdAt = default;
-            DateTimeOffset updatedAt = default;
-            AgentOptimizationJobProgress progress = default;
+            string displayName = default;
+            AgentOptimizationTargetConfiguration targetConfiguration = default;
+            AgentOptimizationModelConfiguration optimizationModelConfiguration = default;
+            AgentOptimizationConfigurationBase optimizationConfiguration = default;
+            TimeSpan runDurationMs = default;
+            DateTimeOffset createdOn = default;
+            DateTimeOffset updatedOn = default;
             IReadOnlyList<string> warnings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -201,15 +218,6 @@ namespace Azure.AI.Projects.Agents
                 if (prop.NameEquals("id"u8))
                 {
                     id = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("inputs"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    inputs = AgentOptimizationJobInputs.DeserializeAgentOptimizationJobInputs(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("result"u8))
@@ -235,23 +243,43 @@ namespace Azure.AI.Projects.Agents
                     error = FoundryOpenAIError.DeserializeFoundryOpenAIError(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("created_at"u8))
+                if (prop.NameEquals("display_name"u8))
                 {
-                    createdAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    displayName = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("updated_at"u8))
-                {
-                    updatedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
-                    continue;
-                }
-                if (prop.NameEquals("progress"u8))
+                if (prop.NameEquals("target_configuration"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    progress = AgentOptimizationJobProgress.DeserializeAgentOptimizationJobProgress(prop.Value, options);
+                    targetConfiguration = AgentOptimizationTargetConfiguration.DeserializeAgentOptimizationTargetConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("optimization_model_configuration"u8))
+                {
+                    optimizationModelConfiguration = AgentOptimizationModelConfiguration.DeserializeAgentOptimizationModelConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("optimization_configuration"u8))
+                {
+                    optimizationConfiguration = AgentOptimizationConfigurationBase.DeserializeAgentOptimizationConfigurationBase(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("run_duration_ms"u8))
+                {
+                    runDurationMs = TimeSpan.FromMilliseconds(prop.Value.GetInt32());
+                    continue;
+                }
+                if (prop.NameEquals("created_at"u8))
+                {
+                    createdOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    continue;
+                }
+                if (prop.NameEquals("updated_at"u8))
+                {
+                    updatedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("warnings"u8))
@@ -277,18 +305,21 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AgentOptimizationJob(
                 id,
-                inputs,
                 result,
                 status,
                 error,
-                createdAt,
-                updatedAt,
-                progress,
+                displayName,
+                targetConfiguration,
+                optimizationModelConfiguration,
+                optimizationConfiguration,
+                runDurationMs,
+                createdOn,
+                updatedOn,
                 warnings ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }

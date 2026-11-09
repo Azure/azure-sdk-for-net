@@ -19,6 +19,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         /// <summary> Creates a new PartitionInstanceCountScalingMechanism. </summary>
         public PartitionInstanceCountScalingMechanism()
         {
+            Kind.Assign(ServiceScalingMechanismKind.ScalePartitionInstanceCount);
         }
 
         /// <summary> Gets or sets the MinInstanceCount. </summary>
@@ -70,7 +71,6 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("kind", new string[] { "kind" }, defaultValue: "ScalePartitionInstanceCount");
             _minInstanceCount = DefineProperty<int>(nameof(MinInstanceCount), new string[] { "minInstanceCount" }, isRequired: true);
             _maxInstanceCount = DefineProperty<int>(nameof(MaxInstanceCount), new string[] { "maxInstanceCount" }, isRequired: true);
             _scaleIncrement = DefineProperty<int>(nameof(ScaleIncrement), new string[] { "scaleIncrement" }, isRequired: true);

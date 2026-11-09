@@ -54,7 +54,13 @@ namespace Azure.ResourceManager.EventGrid
             _domainTopicsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", ResourceType.Namespace, Diagnostics);
             _domainTopicsRestClient = new DomainTopics(_domainTopicsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, domainTopicApiVersion ?? "2025-07-15-preview");
             _eventSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", ResourceType.Namespace, Diagnostics);
-            _eventSubscriptionsRestClient = new EventSubscriptions(_eventSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, domainTopicApiVersion ?? "2025-07-15-preview");
+            _eventSubscriptionsRestClient = new EventSubscriptions(
+                _eventSubscriptionsClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                domainTopicApiVersion ?? "2025-07-15-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

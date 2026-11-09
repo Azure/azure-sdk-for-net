@@ -12,7 +12,7 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// An abstract representation of the details for a run step.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepMessageCreationDetails"/>, <see cref="RunStepToolCallDetails"/>, and <see cref="RunStepActivityDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepActivityDetails"/>, <see cref="RunStepMessageCreationDetails"/>, and <see cref="RunStepToolCallDetails"/>.
     /// </summary>
     public abstract partial class RunStepDetails
     {
@@ -33,6 +33,11 @@ namespace Azure.AI.Agents.Persistent
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RunStepDetails"/>. </summary>
+        protected RunStepDetails() : this(default)
+        {
         }
 
         /// <summary> The object type. </summary>

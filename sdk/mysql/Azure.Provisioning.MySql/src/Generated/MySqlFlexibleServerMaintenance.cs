@@ -21,7 +21,7 @@ namespace Azure.Provisioning.MySql
         private BicepValue<string> _name;
         private SystemData _systemData;
         private MaintenanceProperties _properties;
-        private ResourceReference<MySqlFlexibleServer> _parent;
+        private ProvisioningResourceReference<MySqlFlexibleServer> _parent;
 
         /// <summary> Creates a new MySqlFlexibleServerMaintenance. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -108,39 +108,39 @@ namespace Azure.Provisioning.MySql
             }
         }
 
-        /// <summary> Gets the MaintenanceStartOn. </summary>
-        public BicepValue<DateTimeOffset> MaintenanceStartOn
+        /// <summary> Gets the MaintenanceStartsOn. </summary>
+        public BicepValue<DateTimeOffset> MaintenanceStartsOn
         {
             get
             {
-                return Properties.MaintenanceStartOn;
+                return Properties.MaintenanceStartsOn;
             }
         }
 
-        /// <summary> Gets the MaintenanceEndOn. </summary>
-        public BicepValue<DateTimeOffset> MaintenanceEndOn
+        /// <summary> Gets the MaintenanceEndsOn. </summary>
+        public BicepValue<DateTimeOffset> MaintenanceEndsOn
         {
             get
             {
-                return Properties.MaintenanceEndOn;
+                return Properties.MaintenanceEndsOn;
             }
         }
 
-        /// <summary> Gets the MaintenanceExecutionStartOn. </summary>
-        public BicepValue<DateTimeOffset> MaintenanceExecutionStartOn
+        /// <summary> Gets the MaintenanceExecutionStartsOn. </summary>
+        public BicepValue<DateTimeOffset> MaintenanceExecutionStartsOn
         {
             get
             {
-                return Properties.MaintenanceExecutionStartOn;
+                return Properties.MaintenanceExecutionStartsOn;
             }
         }
 
-        /// <summary> Gets the MaintenanceExecutionEndOn. </summary>
-        public BicepValue<DateTimeOffset> MaintenanceExecutionEndOn
+        /// <summary> Gets the MaintenanceExecutionEndsOn. </summary>
+        public BicepValue<DateTimeOffset> MaintenanceExecutionEndsOn
         {
             get
             {
-                return Properties.MaintenanceExecutionEndOn;
+                return Properties.MaintenanceExecutionEndsOn;
             }
         }
 
@@ -197,7 +197,7 @@ namespace Azure.Provisioning.MySql
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<MaintenanceProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<MySqlFlexibleServer>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<MySqlFlexibleServer>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

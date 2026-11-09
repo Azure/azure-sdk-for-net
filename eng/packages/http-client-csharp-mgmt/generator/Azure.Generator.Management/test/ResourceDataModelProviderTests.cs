@@ -33,6 +33,57 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void ResourceDataPropertiesResolveLastContractAfterNamespaceVisitor()
+        {
+            var dateTime = new InputDateTimeType(
+                DateTimeKnownEncoding.Rfc3339,
+                "utcDateTime",
+                "TypeSpec.utcDateTime",
+                InputPrimitiveType.String);
+            var baseModel = InputFactory.Model(
+                "ResourceBase",
+                clientNamespace: "Azure.ResourceManager.Test",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties: []);
+            var (client, models) = InputResourceData.ClientWithResource(
+                resourceName: "ResponseType",
+                additionalProperties:
+                [
+                    InputFactory.Property("startTime", dateTime, isReadOnly: true),
+                    InputFactory.Property("endTime", dateTime, isReadOnly: true)
+                ],
+                baseModel: baseModel);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => models,
+                clients: () => [client],
+                primaryNamespace: "Azure.ResourceManager.Test",
+                configurationJson: "{ \"package-name\": \"sample-library\", \"model-namespace\": true }",
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", """
+                        namespace Azure.ResourceManager.Test
+                        {
+                            public class ResponseTypeData
+                            {
+                                public System.DateTimeOffset? StartOn { get; }
+                                public System.DateTimeOffset? EndOn { get; }
+                            }
+                        }
+                        """)
+                ]));
+
+            var provider = plugin.Object.TypeFactory.CreateModel(models.Single(m => m.Name == "ResponseType"));
+
+            Assert.That(provider, Is.TypeOf<ResourceDataModelProvider>());
+            Assert.That(provider!.Type.Namespace, Is.EqualTo("Azure.ResourceManager.Test"));
+            Assert.That(provider.LastContractView, Is.Not.Null);
+            Assert.That(provider.Properties.Select(p => p.Name), Does.Contain("StartOn"));
+            Assert.That(provider.Properties.Select(p => p.Name), Does.Contain("EndOn"));
+            Assert.That(provider.Properties.Select(p => p.Name), Does.Not.Contain("StartsOn"));
+            Assert.That(provider.Properties.Select(p => p.Name), Does.Not.Contain("EndsOn"));
+        }
+
+        [Test]
         public void ResourceDataModelUsesTrackedResourceDataBase()
         {
             var trackedResourceModel = InputFactory.Model(

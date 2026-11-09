@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SecurityCenterPricingData, SecurityCenterPricingResource>(new PricingsGetAllAsyncCollectionResultOfT(_pricingsRestClient, Id.ToString(), filter, context, "SecurityCenterPricingCollection.GetAll"), data => new SecurityCenterPricingResource(Client, data));
+            return new AsyncPageableWrapper<SecurityCenterPricingData, SecurityCenterPricingResource>(new SecurityCenterPricingDataAsyncCollectionResultOfT(_pricingsRestClient, Id.ToString(), filter, context, "SecurityCenterPricingCollection.GetAll"), data => new SecurityCenterPricingResource(Client, data));
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SecurityCenterPricingData, SecurityCenterPricingResource>(new PricingsGetAllCollectionResultOfT(_pricingsRestClient, Id.ToString(), filter, context, "SecurityCenterPricingCollection.GetAll"), data => new SecurityCenterPricingResource(Client, data));
+            return new PageableWrapper<SecurityCenterPricingData, SecurityCenterPricingResource>(new SecurityCenterPricingDataCollectionResultOfT(_pricingsRestClient, Id.ToString(), filter, context, "SecurityCenterPricingCollection.GetAll"), data => new SecurityCenterPricingResource(Client, data));
         }
 
         /// <summary>

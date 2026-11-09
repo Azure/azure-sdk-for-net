@@ -11,7 +11,7 @@ namespace Specs.Azure.Core.Traits
 {
     [ModelReaderWriterBuildable(typeof(User))]
     [ModelReaderWriterBuildable(typeof(UserActionParam))]
-    [ModelReaderWriterBuildable(typeof(UserActionResponse))]
+    [ModelReaderWriterBuildable(typeof(UserActionResult))]
     public partial class SpecsAzureCoreTraitsContext : ModelReaderWriterContext
     {
     }

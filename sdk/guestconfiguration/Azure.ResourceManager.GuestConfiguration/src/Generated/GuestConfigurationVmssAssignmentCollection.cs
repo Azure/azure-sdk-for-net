@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVmssAssignmentResource>(new GuestConfigurationAssignmentsVMSSGetAllForVmssAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVmssAssignmentResource>(new GuestConfigurationAssignmentDataAsync3CollectionResultOfT(
                 _guestConfigurationAssignmentsVMSSRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVmssAssignmentResource>(new GuestConfigurationAssignmentsVMSSGetAllForVmssCollectionResultOfT(
+            return new PageableWrapper<GuestConfigurationAssignmentData, GuestConfigurationVmssAssignmentResource>(new GuestConfigurationAssignmentData3CollectionResultOfT(
                 _guestConfigurationAssignmentsVMSSRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

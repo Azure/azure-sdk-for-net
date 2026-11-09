@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.Provisioning.ResourceHealth.csproj" />
+  <Project Path="tests/Azure.Provisioning.ResourceHealth.Tests.csproj" />
+</Solution>

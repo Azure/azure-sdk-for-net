@@ -168,10 +168,10 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CheckDependenciesResult(count, id, references, additionalBinaryDataProperties);
+            return new CheckDependenciesResult(count, id, references ?? new ChangeTrackingList<ServerlessRuntimeDependency>(), additionalBinaryDataProperties);
         }
     }
 }

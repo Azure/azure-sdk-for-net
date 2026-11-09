@@ -17,6 +17,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new WorkloadSqlAutoProtectionIntent. </summary>
         public WorkloadSqlAutoProtectionIntent()
         {
+            ProtectionIntentItemType.Assign(RecoveryServicesBackup.ProtectionIntentItemType.AzureWorkloadSQLAutoProtectionIntent);
         }
 
         /// <summary> Gets or sets the WorkloadItemType. </summary>
@@ -38,7 +39,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("protectionIntentItemType", new string[] { "protectionIntentItemType" }, defaultValue: "AzureWorkloadSQLAutoProtectionIntent");
             _workloadItemType = DefineProperty<WorkloadItemType>(nameof(WorkloadItemType), new string[] { "workloadItemType" });
             DefineAdditionalProperties();
         }

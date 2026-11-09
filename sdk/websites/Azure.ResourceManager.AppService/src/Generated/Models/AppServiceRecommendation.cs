@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
             set
             {
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     Properties = new RecommendationProperties();
                 }
-                Properties.StartOn = value;
+                Properties.StartsOn = value;
             }
         }
 
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
             set
             {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     Properties = new RecommendationProperties();
                 }
-                Properties.EndOn = value;
+                Properties.EndsOn = value;
             }
         }
 
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.NotificationExpirationOn;
+                return Properties is null ? default : Properties.NotificationExpiresOn;
             }
             set
             {
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     Properties = new RecommendationProperties();
                 }
-                Properties.NotificationExpirationOn = value;
+                Properties.NotificationExpiresOn = value;
             }
         }
 

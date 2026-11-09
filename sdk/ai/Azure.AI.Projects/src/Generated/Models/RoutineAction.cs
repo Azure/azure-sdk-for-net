@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Base model for a routine action.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentResponsesApiRoutineAction"/> and <see cref="AgentInvocationsApiRoutineAction"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentInvocationsApiRoutineAction"/> and <see cref="AgentResponsesApiRoutineAction"/>.
     /// </summary>
     [Experimental("AAIP001")]
     public abstract partial class RoutineAction

@@ -4,12 +4,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Projects.Agents;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     /// <summary> The InlineSkillParam. </summary>
-    internal partial class InlineSkillParam : ContainerSkill
+    public partial class InlineSkillParam : ContainerSkill
     {
         /// <summary> Initializes a new instance of <see cref="InlineSkillParam"/>. </summary>
         /// <param name="name"> The name of the skill. </param>

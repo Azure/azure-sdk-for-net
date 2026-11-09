@@ -698,11 +698,11 @@ namespace Azure.Provisioning.MachineLearning
         }
 
         /// <summary> Gets or sets the CollectionsThroughput. </summary>
-        public BicepValue<int> ServiceManagedResourcesCosmosDbCollectionsThroughput
+        public BicepValue<int> ServiceManagedResourcesCosmosDBCollectionsThroughput
         {
             get
             {
-                return Properties is null ? default : Properties.ServiceManagedResourcesCosmosDbCollectionsThroughput;
+                return Properties is null ? default : Properties.ServiceManagedResourcesCosmosDBCollectionsThroughput;
             }
             set
             {
@@ -710,7 +710,7 @@ namespace Azure.Provisioning.MachineLearning
                 {
                     Properties = new WorkspaceProperties();
                 }
-                Properties.ServiceManagedResourcesCosmosDbCollectionsThroughput = value;
+                Properties.ServiceManagedResourcesCosmosDBCollectionsThroughput = value;
             }
         }
 

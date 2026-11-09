@@ -19,24 +19,24 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         /// <summary> Initializes a new instance of <see cref="JitSchedulingPolicy"/>. </summary>
         /// <param name="type"> The type of JIT schedule. </param>
         /// <param name="duration"> The required duration of the JIT request. </param>
-        /// <param name="startOn"> The start time of the request. </param>
-        public JitSchedulingPolicy(JitSchedulingType @type, TimeSpan duration, DateTimeOffset startOn)
+        /// <param name="startsOn"> The start time of the request. </param>
+        public JitSchedulingPolicy(JitSchedulingType @type, TimeSpan duration, DateTimeOffset startsOn)
         {
             Type = @type;
             Duration = duration;
-            StartOn = startOn;
+            StartsOn = startsOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="JitSchedulingPolicy"/>. </summary>
         /// <param name="type"> The type of JIT schedule. </param>
         /// <param name="duration"> The required duration of the JIT request. </param>
-        /// <param name="startOn"> The start time of the request. </param>
+        /// <param name="startsOn"> The start time of the request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JitSchedulingPolicy(JitSchedulingType @type, TimeSpan duration, DateTimeOffset startOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JitSchedulingPolicy(JitSchedulingType @type, TimeSpan duration, DateTimeOffset startsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Duration = duration;
-            StartOn = startOn;
+            StartsOn = startsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.ManagedApplications.Models
         public TimeSpan Duration { get; set; }
 
         /// <summary> The start time of the request. </summary>
-        public DateTimeOffset StartOn { get; set; }
+        public DateTimeOffset StartsOn { get; set; }
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Per-resource override entry for reimage requests. </summary>
+    /// <summary> A reimage configuration override for one virtual machine. </summary>
     public partial class ReimageResourceOverride : IJsonModel<ReimageResourceOverride>
     {
         /// <summary> Initializes a new instance of <see cref="ReimageResourceOverride"/> for deserialization. </summary>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ReimageResourceOverride(resourceId, profile, additionalBinaryDataProperties);

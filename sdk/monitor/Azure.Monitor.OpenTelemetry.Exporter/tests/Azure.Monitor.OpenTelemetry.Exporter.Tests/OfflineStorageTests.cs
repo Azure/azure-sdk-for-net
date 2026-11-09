@@ -41,6 +41,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             ActivitySource.AddActivityListener(listener);
 
             HttpPipelineHelper.MinimumRetryInterval = 6000;
+
+            // These tests assert on exact storage contents, which a background drain would race.
+            TransmitFromStorageHandler.DisableEagerDrainForTesting = true;
         }
 
         [Fact]
@@ -357,13 +360,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             protected override bool OnTryCreateBlob(byte[] buffer, int leasePeriodMilliseconds, out PersistentBlob blob)
             {
                 blob = new MockFileBlob(_mockStorage);
-                return blob.TryWrite(buffer);
+                return blob.TryWrite(new ReadOnlySpan<byte>(buffer));
             }
 
             protected override bool OnTryCreateBlob(byte[] buffer, out PersistentBlob blob)
             {
                 blob = new MockFileBlob(_mockStorage);
-                return blob.TryWrite(buffer);
+                return blob.TryWrite(new ReadOnlySpan<byte>(buffer));
             }
 
             protected override bool OnTryGetBlob(out PersistentBlob blob)

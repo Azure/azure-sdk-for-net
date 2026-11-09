@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Terraform.Models
 {
     /// <summary>
     /// The base export parameter
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ExportQueryTerraform"/>, <see cref="ExportResourceTerraform"/>, and <see cref="ExportResourceGroupTerraform"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ExportQueryTerraform"/>, <see cref="ExportResourceGroupTerraform"/>, and <see cref="ExportResourceTerraform"/>.
     /// </summary>
     public abstract partial class CommonExportProperties
     {

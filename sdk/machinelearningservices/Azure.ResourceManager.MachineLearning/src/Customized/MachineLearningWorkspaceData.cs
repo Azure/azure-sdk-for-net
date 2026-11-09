@@ -43,30 +43,30 @@ namespace Azure.ResourceManager.MachineLearning
         {
             get
             {
-                if (Properties?.Encryption is null)
+                if (Properties?.EncryptionProperty is null)
                 {
                     return default;
                 }
 
-                if (Properties.Encryption.KeyVaultProperties is null)
+                if (Properties.EncryptionProperty.KeyVaultProperties is null)
                 {
                     return default;
                 }
 
-                Azure.ResourceManager.MachineLearning.Models.KeyVaultProperties keyVaultProperties = Properties.Encryption.KeyVaultProperties;
+                Azure.ResourceManager.MachineLearning.Models.MachineLearningKeyVaultProperties keyVaultProperties = Properties.EncryptionProperty.KeyVaultProperties;
                 var legacyKeyVaultProperties = new MachineLearningEncryptionKeyVaultProperties(keyVaultProperties.KeyVaultArmId, keyVaultProperties.KeyIdentifier)
                 {
                     IdentityClientId = keyVaultProperties.IdentityClientId
                 };
-                return new MachineLearningEncryptionSetting(Properties.Encryption.Status, legacyKeyVaultProperties);
+                return new MachineLearningEncryptionSetting(Properties.EncryptionProperty.Status, legacyKeyVaultProperties);
             }
             set
             {
                 Properties ??= new WorkspaceProperties();
-                Properties.Encryption = value is null ? null : new EncryptionProperty(
+                Properties.EncryptionProperty = value is null ? null : new MachineLearningEncryptionProperty(
                     cosmosDBResourceId: default,
                     identity: value.UserAssignedIdentity is null ? null : new IdentityForCmk(value.UserAssignedIdentity.ToString(), additionalBinaryDataProperties: null),
-                    keyVaultProperties: value.KeyVaultProperties is null ? null : new Azure.ResourceManager.MachineLearning.Models.KeyVaultProperties(value.KeyVaultProperties.KeyIdentifier, value.KeyVaultProperties.KeyVaultArmId)
+                    keyVaultProperties: value.KeyVaultProperties is null ? null : new Azure.ResourceManager.MachineLearning.Models.MachineLearningKeyVaultProperties(value.KeyVaultProperties.KeyIdentifier, value.KeyVaultProperties.KeyVaultArmId)
                     {
                         IdentityClientId = value.KeyVaultProperties.IdentityClientId
                     },

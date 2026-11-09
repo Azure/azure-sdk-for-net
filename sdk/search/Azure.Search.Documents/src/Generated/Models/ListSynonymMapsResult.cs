@@ -19,19 +19,24 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="ListSynonymMapsResult"/>. </summary>
         internal ListSynonymMapsResult()
         {
-            SynonymMaps = new ChangeTrackingList<SynonymMap>();
+            Value = new ChangeTrackingList<SynonymMap>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ListSynonymMapsResult"/>. </summary>
-        /// <param name="synonymMaps"> The synonym maps in the Search service. </param>
+        /// <param name="value"> The synonym maps in the Search service. </param>
+        /// <param name="odataNextLink"> The URL that can be used to fetch the next set of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListSynonymMapsResult(IReadOnlyList<SynonymMap> synonymMaps, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListSynonymMapsResult(IReadOnlyList<SynonymMap> value, string odataNextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SynonymMaps = synonymMaps;
+            Value = value;
+            OdataNextLink = odataNextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The synonym maps in the Search service. </summary>
-        public IReadOnlyList<SynonymMap> SynonymMaps { get; }
+        public IReadOnlyList<SynonymMap> Value { get; }
+
+        /// <summary> The URL that can be used to fetch the next set of results. </summary>
+        public string OdataNextLink { get; }
     }
 }

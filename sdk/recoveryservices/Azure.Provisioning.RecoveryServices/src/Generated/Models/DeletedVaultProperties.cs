@@ -15,7 +15,7 @@ namespace Azure.Provisioning.RecoveryServices
     public partial class DeletedVaultProperties : ProvisionableConstruct
     {
         private BicepValue<string> _vaultId;
-        private BicepValue<DateTimeOffset> _vaultDeletionOn;
+        private BicepValue<DateTimeOffset> _vaultDeletedOn;
         private BicepValue<DateTimeOffset> _purgeOn;
 
         /// <summary> Creates a new DeletedVaultProperties. </summary>
@@ -33,13 +33,13 @@ namespace Azure.Provisioning.RecoveryServices
             }
         }
 
-        /// <summary> Gets the VaultDeletionOn. </summary>
-        public BicepValue<DateTimeOffset> VaultDeletionOn
+        /// <summary> Gets the VaultDeletedOn. </summary>
+        public BicepValue<DateTimeOffset> VaultDeletedOn
         {
             get
             {
                 Initialize();
-                return _vaultDeletionOn;
+                return _vaultDeletedOn;
             }
         }
 
@@ -58,7 +58,7 @@ namespace Azure.Provisioning.RecoveryServices
         {
             base.DefineProvisionableProperties();
             _vaultId = DefineProperty<string>(nameof(VaultId), new string[] { "vaultId" }, isOutput: true);
-            _vaultDeletionOn = DefineProperty<DateTimeOffset>(nameof(VaultDeletionOn), new string[] { "vaultDeletionTime" }, isOutput: true, format: "O");
+            _vaultDeletedOn = DefineProperty<DateTimeOffset>(nameof(VaultDeletedOn), new string[] { "vaultDeletionTime" }, isOutput: true, format: "O");
             _purgeOn = DefineProperty<DateTimeOffset>(nameof(PurgeOn), new string[] { "purgeAt" }, isOutput: true, format: "O");
             DefineAdditionalProperties();
         }

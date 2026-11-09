@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CurrentQuotaLimitBaseData, CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBasesGetAllAsyncCollectionResultOfT(_currentQuotaLimitBasesRestClient, Id.ToString(), context, "CurrentQuotaLimitBaseCollection.GetAll"), data => new CurrentQuotaLimitBaseResource(Client, data));
+            return new AsyncPageableWrapper<CurrentQuotaLimitBaseData, CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBaseDataAsyncCollectionResultOfT(_currentQuotaLimitBasesRestClient, Id.ToString(), context, "CurrentQuotaLimitBaseCollection.GetAll"), data => new CurrentQuotaLimitBaseResource(Client, data));
         }
 
         /// <summary>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Quota
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CurrentQuotaLimitBaseData, CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBasesGetAllCollectionResultOfT(_currentQuotaLimitBasesRestClient, Id.ToString(), context, "CurrentQuotaLimitBaseCollection.GetAll"), data => new CurrentQuotaLimitBaseResource(Client, data));
+            return new PageableWrapper<CurrentQuotaLimitBaseData, CurrentQuotaLimitBaseResource>(new CurrentQuotaLimitBaseDataCollectionResultOfT(_currentQuotaLimitBasesRestClient, Id.ToString(), context, "CurrentQuotaLimitBaseCollection.GetAll"), data => new CurrentQuotaLimitBaseResource(Client, data));
         }
 
         /// <summary>

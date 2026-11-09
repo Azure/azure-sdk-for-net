@@ -18,7 +18,7 @@ namespace Azure.Provisioning.DomainRegistration
         public Azure.Provisioning.BicepValue<Azure.Provisioning.DomainRegistration.AppServiceDnsType> DnsType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> DnsZoneId { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.DomainRegistration.DomainNotRenewableReason> DomainNotRenewableReasons { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsAutoRenew { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsDnsRecordManagementReady { get { throw null; } }

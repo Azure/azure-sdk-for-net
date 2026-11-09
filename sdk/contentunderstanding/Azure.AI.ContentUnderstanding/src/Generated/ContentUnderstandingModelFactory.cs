@@ -66,7 +66,7 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary>
         /// Media content base class.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContentUnderstanding.DocumentContent"/> and <see cref="ContentUnderstanding.AudioVisualContent"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContentUnderstanding.AudioVisualContent"/> and <see cref="ContentUnderstanding.DocumentContent"/>.
         /// </summary>
         /// <param name="kind"> Content kind. </param>
         /// <param name="mimeType"> Detected MIME type of the content.  Ex. application/pdf, image/jpeg, etc. </param>
@@ -96,7 +96,7 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary>
         /// Field extracted from the content.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContentUnderstanding.ContentStringField"/>, <see cref="ContentUnderstanding.ContentDateTimeOffsetField"/>, <see cref="ContentUnderstanding.ContentTimeField"/>, <see cref="ContentUnderstanding.ContentNumberField"/>, <see cref="ContentUnderstanding.ContentIntegerField"/>, <see cref="ContentUnderstanding.ContentBooleanField"/>, <see cref="ContentUnderstanding.ContentArrayField"/>, <see cref="ContentUnderstanding.ContentObjectField"/>, and <see cref="ContentUnderstanding.ContentJsonField"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContentUnderstanding.ContentArrayField"/>, <see cref="ContentUnderstanding.ContentBooleanField"/>, <see cref="ContentUnderstanding.ContentDateTimeOffsetField"/>, <see cref="ContentUnderstanding.ContentIntegerField"/>, <see cref="ContentUnderstanding.ContentJsonField"/>, <see cref="ContentUnderstanding.ContentNumberField"/>, <see cref="ContentUnderstanding.ContentObjectField"/>, <see cref="ContentUnderstanding.ContentStringField"/>, and <see cref="ContentUnderstanding.ContentTimeField"/>.
         /// </summary>
         /// <param name="type"> Semantic data type of the field value. </param>
         /// <param name="spans"> Span(s) associated with the field value in the markdown content. </param>

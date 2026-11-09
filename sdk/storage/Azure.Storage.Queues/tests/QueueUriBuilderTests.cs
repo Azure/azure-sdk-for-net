@@ -2,11 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using Azure.Core.TestFramework;
 using Azure.Storage.Queues.Tests;
 using Azure.Storage.Sas;
-using Azure.Storage.Test;
 using NUnit.Framework;
 
 namespace Azure.Storage.Queues.Test
@@ -41,6 +42,28 @@ namespace Azure.Storage.Queues.Test
             Assert.AreEqual("comp=list", queueUriBuilder.Query);
 
             Assert.AreEqual(originalUri, newUri);
+        }
+
+        [Test]
+        public void QueueUriBuilder_UserDelegationSasKeyTimes_RoundTrip()
+        {
+            string skt = "2026-01-01T10:00:00Z";
+            string ske = "2026-01-01T12:00:00Z";
+            string se = "2026-01-01T13:00:00Z";
+            string uriString =
+                "https://account.queue.core.windows.net/queue" +
+                "?skoid=oid&sktid=tid&skt=" + Uri.EscapeDataString(skt) + "&ske=" + Uri.EscapeDataString(ske) + "&sks=b&skv=2022-11-02" +
+                "&sp=r&sr=q&sv=2022-11-02&se=" + Uri.EscapeDataString(se) + "&sig=abc";
+
+            var queueUriBuilder = new QueueUriBuilder(new Uri(uriString));
+
+            Dictionary<string, string> queryParameters = queueUriBuilder.ToUri().Query.TrimStart('?').Split('&')
+                .ToDictionary(
+                    s => s.Split('=')[0],
+                    s => Uri.UnescapeDataString(s.Split('=')[1]));
+
+            Assert.AreEqual(skt, queryParameters[Constants.Sas.Parameters.KeyStart]);
+            Assert.AreEqual(ske, queryParameters[Constants.Sas.Parameters.KeyExpiry]);
         }
 
         [RecordedTest]

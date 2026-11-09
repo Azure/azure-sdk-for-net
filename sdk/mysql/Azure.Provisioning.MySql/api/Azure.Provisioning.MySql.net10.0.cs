@@ -314,10 +314,10 @@ namespace Azure.Provisioning.MySql
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> MaintenanceAvailableScheduleMaxOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> MaintenanceAvailableScheduleMinOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> MaintenanceDescription { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> MaintenanceEndOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> MaintenanceExecutionEndOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> MaintenanceExecutionStartOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> MaintenanceStartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> MaintenanceEndsOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> MaintenanceExecutionEndsOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> MaintenanceExecutionStartsOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> MaintenanceStartsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MySql.MySqlFlexibleServerMaintenanceState> MaintenanceState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> MaintenanceTitle { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MySql.MySqlFlexibleServerMaintenanceType> MaintenanceType { get { throw null; } }

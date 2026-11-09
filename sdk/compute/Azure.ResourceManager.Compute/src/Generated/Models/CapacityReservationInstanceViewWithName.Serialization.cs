@@ -109,6 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             CapacityReservationUtilization utilizationInfo = default;
             IReadOnlyList<InstanceViewStatus> statuses = default;
+            CapacityReservationStateInfo reservationStateInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
             foreach (var prop in element.EnumerateObject())
@@ -136,6 +137,15 @@ namespace Azure.ResourceManager.Compute.Models
                     statuses = array;
                     continue;
                 }
+                if (prop.NameEquals("reservationStateInfo"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    reservationStateInfo = CapacityReservationStateInfo.DeserializeCapacityReservationStateInfo(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("name"u8))
                 {
                     name = prop.Value.GetString();
@@ -143,10 +153,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CapacityReservationInstanceViewWithName(utilizationInfo, statuses ?? new ChangeTrackingList<InstanceViewStatus>(), additionalBinaryDataProperties, name);
+            return new CapacityReservationInstanceViewWithName(utilizationInfo, statuses ?? new ChangeTrackingList<InstanceViewStatus>(), reservationStateInfo, additionalBinaryDataProperties, name);
         }
     }
 }

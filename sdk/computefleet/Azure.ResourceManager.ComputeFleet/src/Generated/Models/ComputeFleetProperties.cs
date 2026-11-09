@@ -48,9 +48,8 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// capacityType is an immutable property. Once set during Fleet creation, it cannot be updated.
         /// Specifying different capacity type for Fleet Regular and Spot priority profiles is not allowed.
         /// </param>
-        /// <param name="zoneAllocationPolicy"> Zone Allocation Policy for Fleet. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IList<ComputeFleetVmSizeProfile> vmSizesProfile, ComputeFleetVmAttributes vmAttributes, AdditionalLocationsProfile additionalLocationsProfile, ComputeFleetComputeProfile computeProfile, DateTimeOffset? createdOn, string uniqueId, ComputeFleetMode? mode, string vmNamePrefix, ComputeFleetCapacityType? capacityType, ComputeFleetZoneAllocationPolicy zoneAllocationPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeFleetProperties(ComputeFleetProvisioningState? provisioningState, SpotPriorityProfile spotPriorityProfile, RegularPriorityProfile regularPriorityProfile, IList<ComputeFleetVmSizeProfile> vmSizesProfile, ComputeFleetVmAttributes vmAttributes, AdditionalLocationsProfile additionalLocationsProfile, ComputeFleetComputeProfile computeProfile, DateTimeOffset? createdOn, string uniqueId, ComputeFleetMode? mode, string vmNamePrefix, ComputeFleetCapacityType? capacityType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             SpotPriorityProfile = spotPriorityProfile;
@@ -64,7 +63,6 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             Mode = mode;
             VmNamePrefix = vmNamePrefix;
             CapacityType = capacityType;
-            ZoneAllocationPolicy = zoneAllocationPolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -107,8 +105,5 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         /// Specifying different capacity type for Fleet Regular and Spot priority profiles is not allowed.
         /// </summary>
         public ComputeFleetCapacityType? CapacityType { get; set; }
-
-        /// <summary> Zone Allocation Policy for Fleet. </summary>
-        public ComputeFleetZoneAllocationPolicy ZoneAllocationPolicy { get; set; }
     }
 }

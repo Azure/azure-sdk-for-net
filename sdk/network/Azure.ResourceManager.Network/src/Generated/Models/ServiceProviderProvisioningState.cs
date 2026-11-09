@@ -23,6 +23,8 @@ namespace Azure.ResourceManager.Network.Models
         private const string ProvisionedValue = "Provisioned";
         /// <summary> Deprovisioning. </summary>
         private const string DeprovisioningValue = "Deprovisioning";
+        /// <summary> DeProvisioned State. </summary>
+        private const string DeProvisionedValue = "DeProvisioned";
 
         /// <summary> Initializes a new instance of <see cref="ServiceProviderProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -45,6 +47,9 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Deprovisioning. </summary>
         public static ServiceProviderProvisioningState Deprovisioning { get; } = new ServiceProviderProvisioningState(DeprovisioningValue);
+
+        /// <summary> DeProvisioned State. </summary>
+        public static ServiceProviderProvisioningState DeProvisioned { get; } = new ServiceProviderProvisioningState(DeProvisionedValue);
 
         /// <summary> Determines if two <see cref="ServiceProviderProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

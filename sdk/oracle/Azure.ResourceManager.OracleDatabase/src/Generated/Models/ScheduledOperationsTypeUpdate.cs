@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         {
             get
             {
-                return ScheduledDay is null ? default : ScheduledDay.Name;
+                return ScheduledDay is null ? (OracleDatabaseDayOfWeekName?)default : ScheduledDay.Name;
             }
             set
             {

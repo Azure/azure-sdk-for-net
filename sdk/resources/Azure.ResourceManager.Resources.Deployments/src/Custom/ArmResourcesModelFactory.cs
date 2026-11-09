@@ -5,7 +5,7 @@
 
 using Microsoft.TypeSpec.Generator.Customizations;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.Deployments.Models
 {
     [CodeGenType("ArmResourcesDeploymentsModelFactory")]
     public static partial class ArmResourcesModelFactory

@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Education
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StudentLabDetailsData, StudentLabDetailsResource>(new StudentLabsGetAllAsyncCollectionResultOfT(_studentLabsRestClient, context, "StudentLabDetailsCollection.GetAll"), data => new StudentLabDetailsResource(Client, data));
+            return new AsyncPageableWrapper<StudentLabDetailsData, StudentLabDetailsResource>(new StudentLabDetailsDataAsyncCollectionResultOfT(_studentLabsRestClient, context, "StudentLabDetailsCollection.GetAll"), data => new StudentLabDetailsResource(Client, data));
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Education
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StudentLabDetailsData, StudentLabDetailsResource>(new StudentLabsGetAllCollectionResultOfT(_studentLabsRestClient, context, "StudentLabDetailsCollection.GetAll"), data => new StudentLabDetailsResource(Client, data));
+            return new PageableWrapper<StudentLabDetailsData, StudentLabDetailsResource>(new StudentLabDetailsDataCollectionResultOfT(_studentLabsRestClient, context, "StudentLabDetailsCollection.GetAll"), data => new StudentLabDetailsResource(Client, data));
         }
 
         /// <summary>

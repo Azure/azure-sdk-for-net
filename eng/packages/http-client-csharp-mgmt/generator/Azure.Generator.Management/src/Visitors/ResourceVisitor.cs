@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Management.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
@@ -14,6 +15,19 @@ namespace Azure.Generator.Management.Visitors;
 
 internal class ResourceVisitor : ScmLibraryVisitor
 {
+    // Azure.Generator's NamespaceVisitor moves every model into the Models namespace during
+    // PreVisitModel. Resource data properties can be materialized before VisitType moves the
+    // provider back, so restore the final namespace before MTG resolves LastContractView.
+    protected override ModelProvider? PreVisitModel(InputModelType model, ModelProvider? type)
+    {
+        if (type is ResourceDataModelProvider resourceData)
+        {
+            resourceData.Update(@namespace: GetResourceNamespace(resourceData));
+        }
+
+        return base.PreVisitModel(model, type);
+    }
+
     // Re-assert the namespace and fix serialization providers' file paths after Azure.Generator's
     // NamespaceVisitor (which runs in VisitType) has had a chance to override them.
     protected override TypeProvider? VisitType(TypeProvider type)
@@ -124,7 +138,7 @@ internal class ResourceVisitor : ScmLibraryVisitor
     {
         if (type is ModelProvider model && ManagementClientGenerator.Instance.OutputLibrary.IsResourceModelType(model.Type))
         {
-            var resourceNamespace = model.CustomCodeView?.Type.Namespace ?? ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace;
+            var resourceNamespace = GetResourceNamespace(model);
             type.Update(@namespace: resourceNamespace);
 
             foreach (var serialization in type.SerializationProviders)
@@ -135,6 +149,9 @@ internal class ResourceVisitor : ScmLibraryVisitor
             }
         }
     }
+
+    private static string GetResourceNamespace(ModelProvider model)
+        => model.CustomCodeView?.Type.Namespace ?? ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace;
 
     private static void UpdateResourceDataParameterType(ParameterProvider parameter)
     {

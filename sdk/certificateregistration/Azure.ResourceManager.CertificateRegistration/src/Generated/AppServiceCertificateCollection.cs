@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppServiceCertificateData, AppServiceCertificateResource>(new AppServiceCertificateResourcesGetCertificatesAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<AppServiceCertificateData, AppServiceCertificateResource>(new AppServiceCertificateDataAsyncCollectionResultOfT(
                 _appServiceCertificateResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.CertificateRegistration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppServiceCertificateData, AppServiceCertificateResource>(new AppServiceCertificateResourcesGetCertificatesCollectionResultOfT(
+            return new PageableWrapper<AppServiceCertificateData, AppServiceCertificateResource>(new AppServiceCertificateDataCollectionResultOfT(
                 _appServiceCertificateResourcesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

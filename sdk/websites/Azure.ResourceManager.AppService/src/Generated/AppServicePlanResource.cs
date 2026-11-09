@@ -50,9 +50,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AppServicePlanResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string appServicePlanApiVersion);
             _appServicePlansClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _appServicePlansRestClient = new AppServicePlans(_appServicePlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appServicePlanApiVersion ?? "2026-03-15");
+            _appServicePlansRestClient = new AppServicePlans(_appServicePlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Web/serverfarms", out string appServicePlansApiVersionOverride) ? appServicePlansApiVersionOverride : "2026-03-15");
             ValidateResourceId(id);
         }
 
@@ -711,7 +710,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebAppServicePlansListCapabilitiesAsyncCollectionResultOfT(
+            return new AppServicePlanResourceGetCapabilitiesAsyncCollectionResultOfT(
                 _appServicePlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -749,7 +748,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new MicrosoftWebAppServicePlansListCapabilitiesCollectionResultOfT(
+            return new AppServicePlanResourceGetCapabilitiesCollectionResultOfT(
                 _appServicePlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -787,7 +786,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServicePlansGetHybridConnectionRelaysAsyncCollectionResultOfT(
+            return new HybridConnectionDataAsyncCollectionResultOfT(
                 _appServicePlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -825,7 +824,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServicePlansGetHybridConnectionRelaysCollectionResultOfT(
+            return new HybridConnectionDataCollectionResultOfT(
                 _appServicePlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -864,7 +863,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServicePlansGetUsagesAsyncCollectionResultOfT(
+            return new CsmUsageQuotaAsync1CollectionResultOfT(
                 _appServicePlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -904,7 +903,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServicePlansGetUsagesCollectionResultOfT(
+            return new CsmUsageQuota1CollectionResultOfT(
                 _appServicePlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -946,7 +945,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServicePlansGetWebAppsAsyncCollectionResultOfT(
+            return new WebSiteDataAsync2CollectionResultOfT(
                 _appServicePlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -990,7 +989,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AppServicePlansGetWebAppsCollectionResultOfT(
+            return new WebSiteData2CollectionResultOfT(
                 _appServicePlansRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

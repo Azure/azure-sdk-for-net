@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<FrontendEndpointData, FrontendEndpointResource>(new FrontendEndpointsGetByFrontDoorAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<FrontendEndpointData, FrontendEndpointResource>(new FrontendEndpointDataAsyncCollectionResultOfT(
                 _frontendEndpointsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<FrontendEndpointData, FrontendEndpointResource>(new FrontendEndpointsGetByFrontDoorCollectionResultOfT(
+            return new PageableWrapper<FrontendEndpointData, FrontendEndpointResource>(new FrontendEndpointDataCollectionResultOfT(
                 _frontendEndpointsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

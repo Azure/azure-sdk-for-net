@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Quota.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<IncomingQuotaTransferData, IncomingQuotaTransferResource>(new IncomingQuotaTransfersGetBySubscriptionAsyncCollectionResultOfT(IncomingQuotaTransfersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableQuotaSubscriptionResource.GetBySubscription"), data => new IncomingQuotaTransferResource(Client, data));
+            return new AsyncPageableWrapper<IncomingQuotaTransferData, IncomingQuotaTransferResource>(new IncomingQuotaTransferDataAsync0CollectionResultOfT(IncomingQuotaTransfersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableQuotaSubscriptionResource.GetBySubscription"), data => new IncomingQuotaTransferResource(Client, data));
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Quota.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<IncomingQuotaTransferData, IncomingQuotaTransferResource>(new IncomingQuotaTransfersGetBySubscriptionCollectionResultOfT(IncomingQuotaTransfersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableQuotaSubscriptionResource.GetBySubscription"), data => new IncomingQuotaTransferResource(Client, data));
+            return new PageableWrapper<IncomingQuotaTransferData, IncomingQuotaTransferResource>(new IncomingQuotaTransferData0CollectionResultOfT(IncomingQuotaTransfersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableQuotaSubscriptionResource.GetBySubscription"), data => new IncomingQuotaTransferResource(Client, data));
         }
     }
 }

@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="updatedOn"> The last time the bookmark was updated. </param>
         /// <param name="updatedBy"> Describes a user that updated the bookmark. </param>
         /// <param name="eventOn"> The bookmark event time. </param>
-        /// <param name="queryStartOn"> The start time for the query. </param>
-        /// <param name="queryEndOn"> The end time for the query. </param>
+        /// <param name="queryStartsOn"> The start time for the query. </param>
+        /// <param name="queryEndsOn"> The end time for the query. </param>
         /// <param name="incidentInfo"> Describes an incident that relates to bookmark. </param>
         /// <param name="entityMappings"> Describes the entity mappings of the bookmark. </param>
         /// <param name="tactics"> A list of relevant mitre attacks. </param>
         /// <param name="techniques"> A list of relevant mitre techniques. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BookmarkProperties(DateTimeOffset? createdOn, SecurityInsightsUserInfo createdBy, string displayName, IList<string> labels, string notes, string query, string queryResult, DateTimeOffset? updatedOn, SecurityInsightsUserInfo updatedBy, DateTimeOffset? eventOn, DateTimeOffset? queryStartOn, DateTimeOffset? queryEndOn, SecurityInsightsBookmarkIncidentInfo incidentInfo, IList<BookmarkEntityMappings> entityMappings, IList<SecurityInsightsAttackTactic> tactics, IList<string> techniques, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BookmarkProperties(DateTimeOffset? createdOn, SecurityInsightsUserInfo createdBy, string displayName, IList<string> labels, string notes, string query, string queryResult, DateTimeOffset? updatedOn, SecurityInsightsUserInfo updatedBy, DateTimeOffset? eventOn, DateTimeOffset? queryStartsOn, DateTimeOffset? queryEndsOn, SecurityInsightsBookmarkIncidentInfo incidentInfo, IList<BookmarkEntityMappings> entityMappings, IList<SecurityInsightsAttackTactic> tactics, IList<string> techniques, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreatedOn = createdOn;
             CreatedBy = createdBy;
@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             UpdatedOn = updatedOn;
             UpdatedBy = updatedBy;
             EventOn = eventOn;
-            QueryStartOn = queryStartOn;
-            QueryEndOn = queryEndOn;
+            QueryStartsOn = queryStartsOn;
+            QueryEndsOn = queryEndsOn;
             IncidentInfo = incidentInfo;
             EntityMappings = entityMappings;
             Tactics = tactics;
@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The start time for the query. </summary>
         [WirePath("queryStartTime")]
-        public DateTimeOffset? QueryStartOn { get; set; }
+        public DateTimeOffset? QueryStartsOn { get; set; }
 
         /// <summary> The end time for the query. </summary>
         [WirePath("queryEndTime")]
-        public DateTimeOffset? QueryEndOn { get; set; }
+        public DateTimeOffset? QueryEndsOn { get; set; }
 
         /// <summary> Describes an incident that relates to bookmark. </summary>
         [WirePath("incidentInfo")]

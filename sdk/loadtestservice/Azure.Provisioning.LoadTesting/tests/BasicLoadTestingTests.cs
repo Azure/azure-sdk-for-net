@@ -44,10 +44,10 @@ public class BasicLoadTestingTests
 
             resource loadTest 'Microsoft.LoadTestService/loadTests@2022-12-01' = {
               name: take('loadtest${uniqueString(resourceGroup().id)}', 24)
+              location: location
               tags: {
                 environment: 'test'
               }
-              location: location
             }
 
             output loadTestName string = loadTest.name

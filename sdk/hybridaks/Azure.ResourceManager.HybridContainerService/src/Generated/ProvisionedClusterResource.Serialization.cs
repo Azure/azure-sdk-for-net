@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
+    /// <summary></summary>
     public partial class ProvisionedClusterResource : IJsonModel<ProvisionedClusterData>
     {
-        private static ProvisionedClusterData s_dataDeserializationInstance;
-        private static ProvisionedClusterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ProvisionedClusterData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ProvisionedClusterData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ProvisionedClusterData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ProvisionedClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ProvisionedClusterData>)Data).Write(writer, options);
 
-        ProvisionedClusterData IJsonModel<ProvisionedClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProvisionedClusterData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ProvisionedClusterData IJsonModel<ProvisionedClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ProvisionedClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProvisionedClusterData>(Data, options, AzureResourceManagerHybridContainerServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ProvisionedClusterData IPersistableModel<ProvisionedClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProvisionedClusterData>(data, options, AzureResourceManagerHybridContainerServiceContext.Default);
 
-        string IPersistableModel<ProvisionedClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProvisionedClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ProvisionedClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

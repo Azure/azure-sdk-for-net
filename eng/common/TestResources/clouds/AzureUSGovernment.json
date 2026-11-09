@@ -4,6 +4,7 @@
     "cognitiveServicesEndpointSuffix": ".cognitiveservices.azure.us",
     "containerRegistryEndpointSuffix": ".azurecr.us",
     "cosmosEndpointSuffix": "cosmos.azure.us",
+    "dataLocation": "usgov",
     "enableStorageVersioning": false,
     "formRecognizerLocation": "usgovvirginia",
     "keyVaultDomainSuffix": ".vault.usgovcloudapi.net",

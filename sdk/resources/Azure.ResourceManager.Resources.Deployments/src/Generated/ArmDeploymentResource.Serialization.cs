@@ -10,7 +10,7 @@ using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Deployments
 {
     /// <summary></summary>
     public partial class ArmDeploymentResource : ArmResource, IJsonModel<ArmDeploymentData>
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.Resources
         ArmDeploymentData IJsonModel<ArmDeploymentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ArmDeploymentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ArmDeploymentData>(Data, options, AzureResourceManagerResourcesContext.Default);
+        BinaryData IPersistableModel<ArmDeploymentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ArmDeploymentData>(Data, options, AzureResourceManagerResourcesDeploymentsContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ArmDeploymentData IPersistableModel<ArmDeploymentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ArmDeploymentData>(data, options, AzureResourceManagerResourcesContext.Default);
+        ArmDeploymentData IPersistableModel<ArmDeploymentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ArmDeploymentData>(data, options, AzureResourceManagerResourcesDeploymentsContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ArmDeploymentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

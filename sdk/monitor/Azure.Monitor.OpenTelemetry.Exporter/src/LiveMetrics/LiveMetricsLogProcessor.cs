@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection;
 using OpenTelemetry;
 using OpenTelemetry.Logs;
-using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection;
-using System;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 {

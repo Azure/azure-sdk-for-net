@@ -93,7 +93,7 @@ namespace Azure.Provisioning.ContainerRegistry
             _versionedKeyIdentifier = DefineProperty<string>(nameof(VersionedKeyIdentifier), new string[] { "versionedKeyIdentifier" }, isOutput: true);
             _identity = DefineProperty<string>(nameof(Identity), new string[] { "identity" });
             _isKeyRotationEnabled = DefineProperty<bool>(nameof(IsKeyRotationEnabled), new string[] { "keyRotationEnabled" }, isOutput: true);
-            _lastKeyRotationTimestamp = DefineProperty<DateTimeOffset>(nameof(LastKeyRotationTimestamp), new string[] { "lastKeyRotationTimestamp" }, isOutput: true);
+            _lastKeyRotationTimestamp = DefineProperty<DateTimeOffset>(nameof(LastKeyRotationTimestamp), new string[] { "lastKeyRotationTimestamp" }, isOutput: true, format: "O");
             DefineAdditionalProperties();
         }
 

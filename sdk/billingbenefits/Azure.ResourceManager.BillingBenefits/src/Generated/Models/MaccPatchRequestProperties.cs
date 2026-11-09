@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <summary> Initializes a new instance of <see cref="MaccPatchRequestProperties"/>. </summary>
         /// <param name="commitment"> Commitment towards the benefit. </param>
-        /// <param name="endOn"> End DateTime in UTC. </param>
+        /// <param name="endsOn"> End DateTime in UTC. </param>
         /// <param name="isAllowContributors"> Setting this to true means multi-entity. </param>
         /// <param name="automaticShortfall"> Represents the enablement status of a feature or settings. </param>
         /// <param name="automaticShortfallSuppressReason"> Optional field to record suppression reason for automatic shortfall. </param>
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="primaryResourceId"> Fully-qualified resource identifier of the primary MACC. Format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BillingBenefits/maccs/{maccName}. </param>
         /// <param name="primaryBillingAccountResourceId"> Fully-qualified billing account resource identifier of the primary MACC. Format must be Azure Resource ID: /providers/Microsoft.Billing/billingAccounts/{acctId:orgId}. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaccPatchRequestProperties(BillingBenefitsCommitment commitment, DateTimeOffset? endOn, bool? isAllowContributors, EnablementMode? automaticShortfall, AutomaticShortfallSuppressReason automaticShortfallSuppressReason, string displayName, MaccMilestoneStatus? status, IList<MaccMilestone> milestones, ResourceIdentifier primaryResourceId, ResourceIdentifier primaryBillingAccountResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaccPatchRequestProperties(BillingBenefitsCommitment commitment, DateTimeOffset? endsOn, bool? isAllowContributors, EnablementMode? automaticShortfall, AutomaticShortfallSuppressReason automaticShortfallSuppressReason, string displayName, MaccMilestoneStatus? status, IList<MaccMilestone> milestones, ResourceIdentifier primaryResourceId, ResourceIdentifier primaryBillingAccountResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Commitment = commitment;
-            EndOn = endOn;
+            EndsOn = endsOn;
             IsAllowContributors = isAllowContributors;
             AutomaticShortfall = automaticShortfall;
             AutomaticShortfallSuppressReason = automaticShortfallSuppressReason;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public BillingBenefitsCommitment Commitment { get; set; }
 
         /// <summary> End DateTime in UTC. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Setting this to true means multi-entity. </summary>
         public bool? IsAllowContributors { get; set; }

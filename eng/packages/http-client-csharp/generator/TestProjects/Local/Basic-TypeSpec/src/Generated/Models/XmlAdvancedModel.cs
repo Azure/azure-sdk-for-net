@@ -34,7 +34,7 @@ namespace BasicTypeSpec
         /// <param name="items"> A wrapped array with custom wrapper name. </param>
         /// <param name="nestedModel"> A nested model property. </param>
         /// <param name="metadata"> A dictionary property. </param>
-        /// <param name="createdAt"> A date-time property. </param>
+        /// <param name="createdOn"> A date-time property. </param>
         /// <param name="duration"> A duration property. </param>
         /// <param name="data"> A bytes property. </param>
         /// <param name="fixedEnum"> A fixed enum property. </param>
@@ -51,7 +51,7 @@ namespace BasicTypeSpec
         /// <param name="dictionaryListFoo"></param>
         /// <param name="listOfDictionaryFoo"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="id"/>, <paramref name="originalName"/>, <paramref name="xmlIdentifier"/>, <paramref name="content"/>, <paramref name="unwrappedStrings"/>, <paramref name="unwrappedCounts"/>, <paramref name="unwrappedItems"/>, <paramref name="wrappedColors"/>, <paramref name="items"/>, <paramref name="nestedModel"/>, <paramref name="metadata"/>, <paramref name="data"/>, <paramref name="label"/>, <paramref name="fooItems"/>, <paramref name="anotherModel"/>, <paramref name="modelsWithNamespaces"/>, <paramref name="unwrappedModelsWithNamespaces"/>, <paramref name="listOfListFoo"/>, <paramref name="dictionaryFoo"/>, <paramref name="dictionaryOfDictionaryFoo"/>, <paramref name="dictionaryListFoo"/> or <paramref name="listOfDictionaryFoo"/> is null. </exception>
-        public XmlAdvancedModel(string name, int age, bool enabled, float score, string nullableString, string id, int version, bool isActive, string originalName, string xmlIdentifier, string content, IEnumerable<string> unwrappedStrings, IEnumerable<int> unwrappedCounts, IEnumerable<XmlItem> unwrappedItems, IEnumerable<string> wrappedColors, IEnumerable<XmlItem> items, XmlNestedModel nestedModel, IDictionary<string, string> metadata, DateTimeOffset createdAt, TimeSpan duration, BinaryData data, StringFixedEnum fixedEnum, StringExtensibleEnum extensibleEnum, string label, int daysUsed, IEnumerable<string> fooItems, XmlNestedModel anotherModel, IEnumerable<XmlModelWithNamespace> modelsWithNamespaces, IEnumerable<XmlModelWithNamespace> unwrappedModelsWithNamespaces, IEnumerable<IList<XmlItem>> listOfListFoo, IDictionary<string, XmlItem> dictionaryFoo, IDictionary<string, IDictionary<string, XmlItem>> dictionaryOfDictionaryFoo, IDictionary<string, IList<XmlItem>> dictionaryListFoo, IEnumerable<IDictionary<string, XmlItem>> listOfDictionaryFoo)
+        public XmlAdvancedModel(string name, int age, bool enabled, float score, string nullableString, string id, int version, bool isActive, string originalName, string xmlIdentifier, string content, IEnumerable<string> unwrappedStrings, IEnumerable<int> unwrappedCounts, IEnumerable<XmlItem> unwrappedItems, IEnumerable<string> wrappedColors, IEnumerable<XmlItem> items, XmlNestedModel nestedModel, IDictionary<string, string> metadata, DateTimeOffset createdOn, TimeSpan duration, BinaryData data, StringFixedEnum fixedEnum, StringExtensibleEnum extensibleEnum, string label, int daysUsed, IEnumerable<string> fooItems, XmlNestedModel anotherModel, IEnumerable<XmlModelWithNamespace> modelsWithNamespaces, IEnumerable<XmlModelWithNamespace> unwrappedModelsWithNamespaces, IEnumerable<IList<XmlItem>> listOfListFoo, IDictionary<string, XmlItem> dictionaryFoo, IDictionary<string, IDictionary<string, XmlItem>> dictionaryOfDictionaryFoo, IDictionary<string, IList<XmlItem>> dictionaryListFoo, IEnumerable<IDictionary<string, XmlItem>> listOfDictionaryFoo)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(id, nameof(id));
@@ -95,7 +95,7 @@ namespace BasicTypeSpec
             Items = items.ToList();
             NestedModel = nestedModel;
             Metadata = metadata;
-            CreatedAt = createdAt;
+            CreatedOn = createdOn;
             Duration = duration;
             Data = data;
             OptionalRecordUnknown = new ChangeTrackingDictionary<string, BinaryData>();
@@ -136,7 +136,7 @@ namespace BasicTypeSpec
         /// <param name="nestedModel"> A nested model property. </param>
         /// <param name="optionalNestedModel"> An optional nested model. </param>
         /// <param name="metadata"> A dictionary property. </param>
-        /// <param name="createdAt"> A date-time property. </param>
+        /// <param name="createdOn"> A date-time property. </param>
         /// <param name="duration"> A duration property. </param>
         /// <param name="data"> A bytes property. </param>
         /// <param name="optionalRecordUnknown"> optional record of unknown. </param>
@@ -155,7 +155,7 @@ namespace BasicTypeSpec
         /// <param name="dictionaryOfDictionaryFoo"></param>
         /// <param name="dictionaryListFoo"></param>
         /// <param name="listOfDictionaryFoo"></param>
-        internal XmlAdvancedModel(string name, int age, bool enabled, float score, string optionalString, int? optionalInt, string nullableString, string id, int version, bool isActive, string originalName, string xmlIdentifier, string content, IList<string> unwrappedStrings, IList<int> unwrappedCounts, IList<XmlItem> unwrappedItems, IList<string> wrappedColors, IList<XmlItem> items, XmlNestedModel nestedModel, XmlNestedModel optionalNestedModel, IDictionary<string, string> metadata, DateTimeOffset createdAt, TimeSpan duration, BinaryData data, IDictionary<string, BinaryData> optionalRecordUnknown, StringFixedEnum fixedEnum, StringExtensibleEnum extensibleEnum, IntFixedEnum? optionalFixedEnum, IntExtensibleEnum? optionalExtensibleEnum, string label, int daysUsed, IList<string> fooItems, XmlNestedModel anotherModel, IList<XmlModelWithNamespace> modelsWithNamespaces, IList<XmlModelWithNamespace> unwrappedModelsWithNamespaces, IList<IList<XmlItem>> listOfListFoo, IDictionary<string, XmlItem> dictionaryFoo, IDictionary<string, IDictionary<string, XmlItem>> dictionaryOfDictionaryFoo, IDictionary<string, IList<XmlItem>> dictionaryListFoo, IList<IDictionary<string, XmlItem>> listOfDictionaryFoo)
+        internal XmlAdvancedModel(string name, int age, bool enabled, float score, string optionalString, int? optionalInt, string nullableString, string id, int version, bool isActive, string originalName, string xmlIdentifier, string content, IList<string> unwrappedStrings, IList<int> unwrappedCounts, IList<XmlItem> unwrappedItems, IList<string> wrappedColors, IList<XmlItem> items, XmlNestedModel nestedModel, XmlNestedModel optionalNestedModel, IDictionary<string, string> metadata, DateTimeOffset createdOn, TimeSpan duration, BinaryData data, IDictionary<string, BinaryData> optionalRecordUnknown, StringFixedEnum fixedEnum, StringExtensibleEnum extensibleEnum, IntFixedEnum? optionalFixedEnum, IntExtensibleEnum? optionalExtensibleEnum, string label, int daysUsed, IList<string> fooItems, XmlNestedModel anotherModel, IList<XmlModelWithNamespace> modelsWithNamespaces, IList<XmlModelWithNamespace> unwrappedModelsWithNamespaces, IList<IList<XmlItem>> listOfListFoo, IDictionary<string, XmlItem> dictionaryFoo, IDictionary<string, IDictionary<string, XmlItem>> dictionaryOfDictionaryFoo, IDictionary<string, IList<XmlItem>> dictionaryListFoo, IList<IDictionary<string, XmlItem>> listOfDictionaryFoo)
         {
             Name = name;
             Age = age;
@@ -178,7 +178,7 @@ namespace BasicTypeSpec
             NestedModel = nestedModel;
             OptionalNestedModel = optionalNestedModel;
             Metadata = metadata;
-            CreatedAt = createdAt;
+            CreatedOn = createdOn;
             Duration = duration;
             Data = data;
             OptionalRecordUnknown = optionalRecordUnknown;
@@ -263,7 +263,7 @@ namespace BasicTypeSpec
         public IDictionary<string, string> Metadata { get; }
 
         /// <summary> A date-time property. </summary>
-        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset CreatedOn { get; set; }
 
         /// <summary> A duration property. </summary>
         public TimeSpan Duration { get; set; }

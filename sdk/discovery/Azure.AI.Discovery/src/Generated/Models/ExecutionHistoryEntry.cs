@@ -18,17 +18,17 @@ namespace Azure.AI.Discovery
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ExecutionHistoryEntry"/>. </summary>
-        /// <param name="createdAt"> Timestamp when the entry was created (ISO 8601 UTC format). </param>
+        /// <param name="createdOn"> Timestamp when the entry was created (ISO 8601 UTC format). </param>
         /// <param name="action"> The action that was performed (controlled vocabulary; semi-open). </param>
         /// <param name="createdBy"> Identifier of who created this entry (GUID for user | resourceId for application | arbitrary string for other types). </param>
         /// <param name="createdByType"> Type of entity that created this entry (User, Application, System, or custom type). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="createdBy"/> is null. </exception>
-        public ExecutionHistoryEntry(DateTimeOffset createdAt, string action, string createdBy, DiscoveryActorType createdByType)
+        public ExecutionHistoryEntry(DateTimeOffset createdOn, string action, string createdBy, DiscoveryActorType createdByType)
         {
             Argument.AssertNotNull(action, nameof(action));
             Argument.AssertNotNull(createdBy, nameof(createdBy));
 
-            CreatedAt = createdAt;
+            CreatedOn = createdOn;
             Action = action;
             CreatedBy = createdBy;
             CreatedByType = createdByType;
@@ -36,7 +36,7 @@ namespace Azure.AI.Discovery
         }
 
         /// <summary> Initializes a new instance of <see cref="ExecutionHistoryEntry"/>. </summary>
-        /// <param name="createdAt"> Timestamp when the entry was created (ISO 8601 UTC format). </param>
+        /// <param name="createdOn"> Timestamp when the entry was created (ISO 8601 UTC format). </param>
         /// <param name="action"> The action that was performed (controlled vocabulary; semi-open). </param>
         /// <param name="createdBy"> Identifier of who created this entry (GUID for user | resourceId for application | arbitrary string for other types). </param>
         /// <param name="createdByType"> Type of entity that created this entry (User, Application, System, or custom type). </param>
@@ -45,9 +45,9 @@ namespace Azure.AI.Discovery
         /// <param name="responseMessageId"> Run or message ID for full details. </param>
         /// <param name="additionalDetails"> Freeform key-value pairs for additional details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExecutionHistoryEntry(DateTimeOffset createdAt, string action, string createdBy, DiscoveryActorType createdByType, string summary, string responseMessageText, string responseMessageId, IDictionary<string, BinaryData> additionalDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExecutionHistoryEntry(DateTimeOffset createdOn, string action, string createdBy, DiscoveryActorType createdByType, string summary, string responseMessageText, string responseMessageId, IDictionary<string, BinaryData> additionalDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            CreatedAt = createdAt;
+            CreatedOn = createdOn;
             Action = action;
             CreatedBy = createdBy;
             CreatedByType = createdByType;
@@ -59,7 +59,7 @@ namespace Azure.AI.Discovery
         }
 
         /// <summary> Timestamp when the entry was created (ISO 8601 UTC format). </summary>
-        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset CreatedOn { get; set; }
 
         /// <summary> The action that was performed (controlled vocabulary; semi-open). </summary>
         public string Action { get; set; }

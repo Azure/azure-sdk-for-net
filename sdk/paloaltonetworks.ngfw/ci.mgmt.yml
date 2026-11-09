@@ -1,4 +1,12 @@
-trigger: none
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/paloaltonetworks.ngfw/Azure.ResourceManager.PaloAltoNetworks.Ngfw
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

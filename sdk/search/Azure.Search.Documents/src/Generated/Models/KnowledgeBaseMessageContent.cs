@@ -12,7 +12,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// Specifies the type of the message content.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseMessageTextContent"/> and <see cref="KnowledgeBaseMessageImageContent"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBaseMessageImageContent"/> and <see cref="KnowledgeBaseMessageTextContent"/>.
     /// </summary>
     public abstract partial class KnowledgeBaseMessageContent
     {

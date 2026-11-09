@@ -9,6 +9,8 @@ using Azure.Core.TestFramework;
 #region Snippet:Azure_Search_Documents_Tests_Samples_Sample12_KnowledgeBase_Namespaces
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
+using Newtonsoft.Json;
+
 #endregion Snippet:Azure_Search_Documents_Tests_Samples_Sample12_KnowledgeBase_Namespaces
 using NUnit.Framework;
 
@@ -76,6 +78,8 @@ namespace Azure.Search.Documents.Tests.Samples
                 {
                     Description = "Knowledge base for hotel information"
                 };
+                knowledgeBase.Tags.Add("environment", "sample");
+                knowledgeBase.Tags.Add("owner", "search-team");
 
                 // Add an Azure OpenAI model for query planning
                 string openAIEndpoint = Environment.GetEnvironmentVariable("OPENAI_ENDPOINT");
@@ -98,11 +102,12 @@ namespace Azure.Search.Documents.Tests.Samples
 #endif
 
                 KnowledgeBase createdBase = await indexClient.CreateKnowledgeBaseAsync(knowledgeBase);
-                Console.WriteLine($"Created knowledge base '{createdBase.Name}' with {createdBase.KnowledgeSources.Count} source(s)");
                 #endregion Snippet:Azure_Search_Documents_Tests_Samples_Sample12_KnowledgeBase_Create
 
                 Assert.AreEqual(testBaseName, createdBase.Name);
                 Assert.AreEqual(1, createdBase.KnowledgeSources.Count);
+                Assert.IsTrue(string.Equals("sample", createdBase.Tags["environment"]));
+                Assert.IsTrue(string.Equals("search-team", createdBase.Tags["owner"]));
             }
             finally
             {
@@ -147,6 +152,10 @@ namespace Azure.Search.Documents.Tests.Samples
             foreach (KnowledgeSourceReference sourceRef in knowledgeBase.KnowledgeSources)
             {
                 Console.WriteLine($"    - {sourceRef.Name}");
+            }
+            foreach (KeyValuePair<string, string> tag in knowledgeBase.Tags)
+            {
+                Console.WriteLine($"  Tag: {tag.Key} = {tag.Value}");
             }
             #endregion Snippet:Azure_Search_Documents_Tests_Samples_Sample12_KnowledgeBase_Get
 
@@ -204,14 +213,18 @@ namespace Azure.Search.Documents.Tests.Samples
             // Get the existing knowledge base
             KnowledgeBase knowledgeBase = await indexClient.GetKnowledgeBaseAsync(knowledgeBaseName);
 
-            // Update its description
+            // Update its description and application metadata.
             knowledgeBase.Description = "Updated description for hotel knowledge base";
+            knowledgeBase.Tags.Add("lifecycle", "updated");
 
             KnowledgeBase updatedBase = await indexClient.CreateOrUpdateKnowledgeBaseAsync(knowledgeBase);
             Console.WriteLine($"Updated knowledge base '{updatedBase.Name}': {updatedBase.Description}");
+            Console.WriteLine($"  Lifecycle tag: {updatedBase.Tags["lifecycle"]}");
             #endregion Snippet:Azure_Search_Documents_Tests_Samples_Sample12_KnowledgeBase_Update
 
             Assert.AreEqual("Updated description for hotel knowledge base", updatedBase.Description);
+            KnowledgeBase persistedBase = await indexClient.GetKnowledgeBaseAsync(knowledgeBaseName);
+            Assert.AreEqual("updated", persistedBase.Tags["lifecycle"]);
         }
 
         [Test]

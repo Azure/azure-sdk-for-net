@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             get
             {
-                return DiscoveryLogs is null ? default : DiscoveryLogs.State;
+                return DiscoveryLogs is null ? (SecurityInsightsDataTypeConnectionState?)default : DiscoveryLogs.State;
             }
             set
             {

@@ -17,6 +17,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new CronTrigger. </summary>
         public CronTrigger()
         {
+            TriggerType.Assign(MachineLearningTriggerType.Cron);
         }
 
         /// <summary> Gets or sets the Expression. </summary>
@@ -38,7 +39,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("triggerType", new string[] { "triggerType" }, defaultValue: "Cron");
             _expression = DefineProperty<string>(nameof(Expression), new string[] { "expression" }, isRequired: true);
             DefineAdditionalProperties();
         }

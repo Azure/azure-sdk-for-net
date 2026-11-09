@@ -5,7 +5,8 @@
 # their meaning are standardized across languages; the values are tunable per repo,
 # so each language can pick a bound appropriate to its build/regeneration cost.
 #
-# maxIterations: maximum number of times the auto-build-repair skill re-invokes
-#   azsdk_customized_code_update (one repair attempt per call) before it commits the
-#   progress made so far and stops. Cross-language default is 3.
+# maxIterations: maximum engine patch attempts reaching regeneration/build
+#   validation, passed as maxAttempts / --max-attempts in ONE customized-update
+#   invocation (1..10). Baseline checks and tool/Exit reminders do not count.
+#   Never commit partial progress while the final build is red. Default is 3.
 maxIterations: 3

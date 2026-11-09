@@ -345,13 +345,13 @@ public class RoutinesTests : ProjectsClientTestBase
         await foreach (ProjectsRoutine routine in projectClient.Routines.GetRoutinesAsync(order: MemoryStoreListOrder.Descending, limit: 1))
         {
             // The routine created no earlier than response and not later than one minute after response.
-            if (routine.CreatedAt >= response.CreatedAt && routine.CreatedAt < response.CreatedAt.AddMinutes(1))
+            if (routine.CreatedOn >= response.CreatedAt && routine.CreatedOn < response.CreatedAt.AddMinutes(1))
             {
                 created = routine;
                 break;
             }
             // If the latest routine was created before the response, our routine was not created.
-            else if (routine.CreatedAt < response.CreatedAt)
+            else if (routine.CreatedOn < response.CreatedAt)
             {
                 break;
             }

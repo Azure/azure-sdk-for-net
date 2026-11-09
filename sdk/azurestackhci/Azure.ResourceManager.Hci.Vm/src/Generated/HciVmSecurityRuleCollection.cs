@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<HciVmSecurityRuleData, HciVmSecurityRuleResource>(new SecurityRulesGetByNetworkSecurityGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<HciVmSecurityRuleData, HciVmSecurityRuleResource>(new HciVmSecurityRuleDataAsyncCollectionResultOfT(
                 _securityRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Hci.Vm
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<HciVmSecurityRuleData, HciVmSecurityRuleResource>(new SecurityRulesGetByNetworkSecurityGroupCollectionResultOfT(
+            return new PageableWrapper<HciVmSecurityRuleData, HciVmSecurityRuleResource>(new HciVmSecurityRuleDataCollectionResultOfT(
                 _securityRulesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -11,7 +11,7 @@ using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> Http Routes configuration, including paths to match on and whether or not rewrites are to be done. </summary>
+    /// <summary> Http Routes, including paths to match on and whether or not rewrites are to be done. </summary>
     public partial class ContainerAppHttpRoute
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

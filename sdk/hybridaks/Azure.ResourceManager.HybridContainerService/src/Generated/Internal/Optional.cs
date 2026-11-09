@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
-    internal static class Optional
+    internal static partial class Optional
     {
         public static bool IsCollectionDefined<T>(IEnumerable<T> collection)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         public static bool IsDefined<T>(T? value)
-        where T : struct
+            where T : struct
         {
             return value.HasValue;
         }
@@ -38,14 +38,30 @@ namespace Azure.ResourceManager.HybridContainerService
             return value != null;
         }
 
+        public static bool IsDefined(string value)
+        {
+            return value != null;
+        }
+
+        public static bool IsDefined<T>(T? value, bool isDefined)
+            where T : struct
+        {
+            return isDefined || IsDefined(value);
+        }
+
+        public static bool IsDefined(object value, bool isDefined)
+        {
+            return isDefined || IsDefined(value);
+        }
+
         public static bool IsDefined(JsonElement value)
         {
             return value.ValueKind != JsonValueKind.Undefined;
         }
 
-        public static bool IsDefined(string value)
+        public static bool IsDefined(JsonElement value, bool isDefined)
         {
-            return value != null;
+            return isDefined || IsDefined(value);
         }
     }
 }

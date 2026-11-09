@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="minThreshold"> The minimum threshold. </param>
         /// <param name="maxThreshold"> The maximum threshold. </param>
         /// <param name="timeWindowSize"> The time window size in iso8601 format. </param>
-        private protected TimeWindowCustomAlertRule(bool isEnabled, string ruleType, int minThreshold, int maxThreshold, TimeSpan timeWindowSize) : base("TimeWindowCustomAlertRule", isEnabled, minThreshold, maxThreshold)
+        private protected TimeWindowCustomAlertRule(bool isEnabled, string ruleType, int minThreshold, int maxThreshold, TimeSpan timeWindowSize) : base(ruleType, isEnabled, minThreshold, maxThreshold)
         {
             TimeWindowSize = timeWindowSize;
         }

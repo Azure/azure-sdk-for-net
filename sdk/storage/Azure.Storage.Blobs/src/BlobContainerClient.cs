@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -365,6 +365,15 @@ namespace Azure.Storage.Blobs
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
+        /// <remarks>
+        /// Session authentication requires the storage account name, which is derived from
+        /// <paramref name="blobContainerUri"/> when possible. Set <see cref="Models.SessionOptions.AccountName"/>
+        /// when using a custom endpoint URL from which the account name cannot be derived.
+        /// If the account name cannot be determined, this constructor throws when
+        /// <see cref="Models.SessionOptions.SessionMode"/> was explicitly set to
+        /// <see cref="Models.SessionMode.Enabled"/>; otherwise session authentication is
+        /// disabled and bearer token authentication is used.
+        /// </remarks>
         public BlobContainerClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
         {
             Errors.VerifyHttpsTokenAuth(blobContainerUri);
@@ -373,7 +382,13 @@ namespace Azure.Storage.Blobs
 
             string audienceScope = string.IsNullOrEmpty(options?.Audience?.ToString()) ? BlobAudience.DefaultAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope();
 
-            _authenticationPolicy = credential.AsPolicy(audienceScope, options);
+            SessionProvider sessionProvider = options?.SessionOptions?.SessionProvider
+                ?? new ContainerSessionProvider(blobContainerUri, credential, options);
+            _authenticationPolicy = new SessionAuthenticationPolicy(
+                endpoint: blobContainerUri,
+                fallbackAuthPolicy: credential.AsPolicy(audienceScope, options),
+                sessionProvider: sessionProvider,
+                sessionOptions: options?.SessionOptions);
             options ??= new BlobClientOptions();
 
             _clientConfiguration = new BlobClientConfiguration(
@@ -1311,6 +1326,16 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
+        ///
+        /// When a container is deleted, a container with the same name can't be created
+        /// for at least 30 seconds.  The container might not be available for more than
+        /// 30 seconds if the service is still processing the request.  While the container
+        /// is being deleted, attempts to create a container of the same name fail with
+        /// status code 409 (Conflict).  The service indicates that the container is being
+        /// deleted.  Operations on blobs within the container, including reads and writes,
+        /// may continue to succeed for up to 30 seconds after the delete request is
+        /// accepted.  After this period, all operations on the container and its blobs
+        /// fail with status code 404 (Not Found).
         /// </remarks>
         public virtual Response Delete(
             BlobRequestConditions conditions = default,
@@ -1345,6 +1370,16 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
+        ///
+        /// When a container is deleted, a container with the same name can't be created
+        /// for at least 30 seconds.  The container might not be available for more than
+        /// 30 seconds if the service is still processing the request.  While the container
+        /// is being deleted, attempts to create a container of the same name fail with
+        /// status code 409 (Conflict).  The service indicates that the container is being
+        /// deleted.  Operations on blobs within the container, including reads and writes,
+        /// may continue to succeed for up to 30 seconds after the delete request is
+        /// accepted.  After this period, all operations on the container and its blobs
+        /// fail with status code 404 (Not Found).
         /// </remarks>
         public virtual async Task<Response> DeleteAsync(
             BlobRequestConditions conditions = default,
@@ -1380,6 +1415,16 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
+        ///
+        /// When a container is deleted, a container with the same name can't be created
+        /// for at least 30 seconds.  The container might not be available for more than
+        /// 30 seconds if the service is still processing the request.  While the container
+        /// is being deleted, attempts to create a container of the same name fail with
+        /// status code 409 (Conflict).  The service indicates that the container is being
+        /// deleted.  Operations on blobs within the container, including reads and writes,
+        /// may continue to succeed for up to 30 seconds after the delete request is
+        /// accepted.  After this period, all operations on the container and its blobs
+        /// fail with status code 404 (Not Found).
         /// </remarks>
         public virtual Response<bool> DeleteIfExists(
             BlobRequestConditions conditions = default,
@@ -1415,6 +1460,16 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
+        ///
+        /// When a container is deleted, a container with the same name can't be created
+        /// for at least 30 seconds.  The container might not be available for more than
+        /// 30 seconds if the service is still processing the request.  While the container
+        /// is being deleted, attempts to create a container of the same name fail with
+        /// status code 409 (Conflict).  The service indicates that the container is being
+        /// deleted.  Operations on blobs within the container, including reads and writes,
+        /// may continue to succeed for up to 30 seconds after the delete request is
+        /// accepted.  After this period, all operations on the container and its blobs
+        /// fail with status code 404 (Not Found).
         /// </remarks>
         public virtual async Task<Response<bool>> DeleteIfExistsAsync(
             BlobRequestConditions conditions = default,
@@ -1561,12 +1616,6 @@ namespace Azure.Storage.Blobs
                 try
                 {
                     scope.Start();
-
-                    if (conditions?.IfMatch != default ||
-                        conditions?.IfNoneMatch != default)
-                    {
-                        throw BlobErrors.BlobConditionsMustBeDefault(nameof(RequestConditions.IfMatch), nameof(RequestConditions.IfNoneMatch));
-                    }
 
                     Response response;
 
@@ -2429,12 +2478,6 @@ namespace Azure.Storage.Blobs
                 {
                     scope.Start();
 
-                    if (conditions?.IfMatch != default ||
-                        conditions?.IfNoneMatch != default)
-                    {
-                        throw BlobErrors.BlobConditionsMustBeDefault(nameof(RequestConditions.IfMatch), nameof(RequestConditions.IfNoneMatch));
-                    }
-
                     List<BlobSignedIdentifier> sanitizedPermissions = null;
                     if (permissions != null)
                     {
@@ -2490,6 +2533,129 @@ namespace Azure.Storage.Blobs
             }
         }
         #endregion SetAccessPolicy
+
+        #region CreateSession
+        /// <summary>
+        /// The <see cref="CreateSession"/> operation
+        /// enables users to create a session scoped to a container.
+        /// </summary>
+        /// <param name="config">
+        /// Specifies the options for creating the session.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{CreateSessionResponse}"/> describing
+        /// the session details that was create.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        internal virtual Response<CreateSessionResponse> CreateSession(
+            CreateSessionConfiguration config,
+            CancellationToken cancellationToken = default)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(BlobContainerClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(config)}: {config}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(CreateSession)}");
+
+                try
+                {
+                    scope.Start();
+                    Response<CreateSessionResponse> response = ContainerRestClient.CreateSession(
+                        createSessionConfiguration: config,
+                        cancellationToken: cancellationToken);
+
+                    return Response.FromValue(
+                        response.Value,
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobContainerClient));
+                    scope.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="CreateSessionAsync"/> operation
+        /// enables users to create a session scoped to a container.
+        /// </summary>
+        /// <param name="config">
+        /// Specifies the options for creating the session.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{CreateSessionResponse}"/> describing
+        /// the session details that was create.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        internal virtual async Task<Response<CreateSessionResponse>> CreateSessionAsync(
+            CreateSessionConfiguration config,
+            CancellationToken cancellationToken = default)
+        {
+            using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
+            {
+                ClientConfiguration.Pipeline.LogMethodEnter(
+                    nameof(BlobContainerClient),
+                    message:
+                    $"{nameof(Uri)}: {Uri}\n" +
+                    $"{nameof(config)}: {config}");
+
+                DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobContainerClient)}.{nameof(CreateSession)}");
+
+                try
+                {
+                    scope.Start();
+                    Response<CreateSessionResponse> response = await ContainerRestClient.CreateSessionAsync(
+                        createSessionConfiguration: config,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
+
+                    return Response.FromValue(
+                        response.Value,
+                        response.GetRawResponse());
+                }
+                catch (Exception ex)
+                {
+                    ClientConfiguration.Pipeline.LogException(ex);
+                    scope.Failed(ex);
+                    throw;
+                }
+                finally
+                {
+                    ClientConfiguration.Pipeline.LogMethodExit(nameof(BlobContainerClient));
+                    scope.Dispose();
+                }
+            }
+        }
+        #endregion CreateSession
 
         #region GetBlobs
         /// <summary>
@@ -2669,7 +2835,7 @@ namespace Azure.Storage.Blobs
         /// single segment of blobs in this container, starting
         /// from the specified <paramref name="marker"/>.  Use an empty
         /// <paramref name="marker"/> to start enumeration from the beginning
-        /// and the <see cref="ListBlobsFlatSegmentResponse.NextMarker"/> if it's not
+        /// and the <see cref="ListBlobsFlatSegmentResult.NextMarker"/> if it's not
         /// empty to make subsequent calls to <see cref="GetBlobsAsync(GetBlobsOptions, CancellationToken)"/>
         /// to continue enumerating the blobs segment by segment. Blobs are
         /// ordered lexicographically by name.
@@ -2684,7 +2850,7 @@ namespace Azure.Storage.Blobs
         /// <param name="marker">
         /// An optional string value that identifies the segment of the list
         /// of blobs to be returned with the next listing operation.  The
-        /// operation returns a non-empty <see cref="ListBlobsFlatSegmentResponse.NextMarker"/>
+        /// operation returns a non-empty <see cref="ListBlobsFlatSegmentResult.NextMarker"/>
         /// if the listing operation did not return all blobs remaining to be
         /// listed with the current segment.  The NextMarker value can
         /// be used as the value for the <paramref name="marker"/> parameter
@@ -2731,7 +2897,7 @@ namespace Azure.Storage.Blobs
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        internal async Task<Response<ListBlobsFlatSegmentResponse>> GetBlobsInternal(
+        internal async Task<Response<ListBlobsFlatSegmentResult>> GetBlobsInternal(
             StorageResponseFormat responseFormat,
             string marker,
             BlobTraits traits,
@@ -2761,7 +2927,7 @@ namespace Azure.Storage.Blobs
 
                     bool useApacheArrow = responseFormat.ResolveAuto() == StorageResponseFormat.Arrow;
 
-                    ListBlobsFlatSegmentResponse listblobFlatResponse;
+                    ListBlobsFlatSegmentResult listblobFlatResponse;
                     Response rawResponse;
 
                     if (useApacheArrow)
@@ -2809,13 +2975,13 @@ namespace Azure.Storage.Blobs
                             var document = XDocument.Load(arrowResponse.Value, LoadOptions.PreserveWhitespace);
                             if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
                             {
-                                listblobFlatResponse = ListBlobsFlatSegmentResponse.DeserializeListBlobsFlatSegmentResponse(enumerationResultsElement, new ModelReaderWriterOptions("W"));
+                                listblobFlatResponse = ListBlobsFlatSegmentResult.DeserializeListBlobsFlatSegmentResult(enumerationResultsElement, new ModelReaderWriterOptions("W"));
                             }
                         }
                     }
                     else
                     {
-                        Response<ListBlobsFlatSegmentResponse> response;
+                        Response<ListBlobsFlatSegmentResult> response;
 
                         if (async)
                         {
@@ -2861,7 +3027,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        private async Task<ListBlobsFlatSegmentResponse> ParseArrowListBlobsFlatResponse(
+        private async Task<ListBlobsFlatSegmentResult> ParseArrowListBlobsFlatResponse(
             Stream arrowStream,
             bool async,
             CancellationToken cancellationToken)
@@ -2872,7 +3038,7 @@ namespace Azure.Storage.Blobs
                 cancellationToken).ConfigureAwait(false);
 
             // Apache Arrow responses only carry the blob segment and next marker.
-            return new ListBlobsFlatSegmentResponse(
+            return new ListBlobsFlatSegmentResult(
                 serviceEndpoint: null,
                 containerName: null,
                 prefix: null,
@@ -2983,7 +3149,7 @@ namespace Azure.Storage.Blobs
                     byte[] contentMD5 = contentMD5Str != null ? Convert.FromBase64String(contentMD5Str) : null;
 
                     var properties = new BlobPropertiesInternal(
-                        creationTime: creationTimeCol?.GetTimestamp(i),
+                        createdOn: creationTimeCol?.GetTimestamp(i),
                         lastModified: lastModifiedCol?.GetTimestamp(i) ?? default,
                         eTag: etagCol?.GetString(i),
                         contentLength: ReadNullableLong(contentLengthCol, i),
@@ -3002,12 +3168,12 @@ namespace Azure.Storage.Blobs
                         copyStatus: ReadEnum(copyStatusCol, i, s => s.ToCopyStatus()),
                         copySource: copySourceCol?.GetString(i),
                         copyProgress: copyProgressCol?.GetString(i),
-                        copyCompletionTime: copyCompletionTimeCol?.GetTimestamp(i),
+                        copyCompletionOn: copyCompletionTimeCol?.GetTimestamp(i),
                         copyStatusDescription: copyStatusDescriptionCol?.GetString(i),
                         serverEncrypted: ReadNullableBool(serverEncryptedCol, i),
                         incrementalCopy: ReadNullableBool(incrementalCopyCol, i),
                         destinationSnapshot: destinationSnapshotCol?.GetString(i),
-                        deletedTime: deletedTimeCol?.GetTimestamp(i),
+                        deletedOn: deletedTimeCol?.GetTimestamp(i),
                         remainingRetentionDays: ReadNullableInt(remainingRetentionDaysCol, i),
                         accessTier: ReadEnum(accessTierCol, i, s => new AccessTier(s)),
                         accessTierInferred: ReadNullableBool(accessTierInferredCol, i),
@@ -3015,7 +3181,7 @@ namespace Azure.Storage.Blobs
                         smartAccessTier: ReadEnum(smartAccessTierCol, i, s => new AccessTier(s)),
                         customerProvidedKeySha256: customerProvidedKeySha256Col?.GetString(i),
                         encryptionScope: encryptionScopeCol?.GetString(i),
-                        accessTierChangeTime: accessTierChangeTimeCol?.GetTimestamp(i),
+                        accessTierChangedOn: accessTierChangeTimeCol?.GetTimestamp(i),
                         tagCount: ReadNullableInt(tagCountCol, i),
                         expiresOn: null,
                         isSealed: ReadNullableBool(sealedCol, i),
@@ -3334,7 +3500,7 @@ namespace Azure.Storage.Blobs
         /// a single segment of blobs in this container, starting
         /// from the specified <paramref name="marker"/>.  Use an empty
         /// <paramref name="marker"/> to start enumeration from the beginning
-        /// and the <see cref="ListBlobsHierarchySegmentResponse.NextMarker"/> if it's not
+        /// and the <see cref="ListBlobsHierarchySegmentResult.NextMarker"/> if it's not
         /// empty to make subsequent calls to <see cref="GetBlobsByHierarchyAsync(GetBlobsByHierarchyOptions, CancellationToken)"/>
         /// to continue enumerating the blobs segment by segment. Blobs are
         /// ordered lexicographically by name.   A <paramref name="delimiter"/>
@@ -3351,7 +3517,7 @@ namespace Azure.Storage.Blobs
         /// <param name="marker">
         /// An optional string value that identifies the segment of the list
         /// of blobs to be returned with the next listing operation.  The
-        /// operation returns a non-empty <see cref="ListBlobsHierarchySegmentResponse.NextMarker"/>
+        /// operation returns a non-empty <see cref="ListBlobsHierarchySegmentResult.NextMarker"/>
         /// if the listing operation did not return all blobs remaining to be
         /// listed with the current segment.  The NextMarker value can
         /// be used as the value for the <paramref name="marker"/> parameter
@@ -3416,7 +3582,7 @@ namespace Azure.Storage.Blobs
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        internal async Task<Response<ListBlobsHierarchySegmentResponse>> GetBlobsByHierarchyInternal(
+        internal async Task<Response<ListBlobsHierarchySegmentResult>> GetBlobsByHierarchyInternal(
             StorageResponseFormat responseFormat,
             string marker,
             string delimiter,
@@ -3448,7 +3614,7 @@ namespace Azure.Storage.Blobs
 
                     bool useApacheArrow = responseFormat.ResolveAuto() == StorageResponseFormat.Arrow;
 
-                    ListBlobsHierarchySegmentResponse listblobHierachyResponse;
+                    ListBlobsHierarchySegmentResult listblobHierachyResponse;
                     Response rawResponse;
 
                     if (useApacheArrow)
@@ -3498,13 +3664,13 @@ namespace Azure.Storage.Blobs
                             var document = XDocument.Load(arrowResponse.Value, LoadOptions.PreserveWhitespace);
                             if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
                             {
-                                listblobHierachyResponse = ListBlobsHierarchySegmentResponse.DeserializeListBlobsHierarchySegmentResponse(enumerationResultsElement, new ModelReaderWriterOptions("W"));
+                                listblobHierachyResponse = ListBlobsHierarchySegmentResult.DeserializeListBlobsHierarchySegmentResult(enumerationResultsElement, new ModelReaderWriterOptions("W"));
                             }
                         }
                     }
                     else
                     {
-                        Response<ListBlobsHierarchySegmentResponse> response;
+                        Response<ListBlobsHierarchySegmentResult> response;
 
                         if (async)
                         {
@@ -3552,7 +3718,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        private async Task<ListBlobsHierarchySegmentResponse> ParseArrowListBlobsHierarchyResponse(
+        private async Task<ListBlobsHierarchySegmentResult> ParseArrowListBlobsHierarchyResponse(
             Stream arrowStream,
             bool async,
             CancellationToken cancellationToken)
@@ -3563,7 +3729,7 @@ namespace Azure.Storage.Blobs
                 cancellationToken).ConfigureAwait(false);
 
             // Apache Arrow responses only carry the blob segment and next marker.
-            return new ListBlobsHierarchySegmentResponse(
+            return new ListBlobsHierarchySegmentResult(
                 serviceEndpoint: null,
                 containerName: null,
                 prefix: null,

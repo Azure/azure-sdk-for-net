@@ -20,6 +20,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new DpmProtectedItem. </summary>
         public DpmProtectedItem()
         {
+            ProtectedItemType.Assign("DPMProtectedItem");
         }
 
         /// <summary> Gets or sets the FriendlyName. </summary>
@@ -86,7 +87,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("protectedItemType", new string[] { "protectedItemType" }, defaultValue: "DPMProtectedItem");
             _friendlyName = DefineProperty<string>(nameof(FriendlyName), new string[] { "friendlyName" });
             _backupEngineName = DefineProperty<string>(nameof(BackupEngineName), new string[] { "backupEngineName" });
             _protectionState = DefineProperty<ProtectedItemState>(nameof(ProtectionState), new string[] { "protectionState" });

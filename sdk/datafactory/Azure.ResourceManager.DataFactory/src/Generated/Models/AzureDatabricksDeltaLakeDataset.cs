@@ -8,12 +8,22 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure Databricks Delta Lake dataset. </summary>
     public partial class AzureDatabricksDeltaLakeDataset : DataFactoryDatasetProperties
     {
+        /// <summary> Initializes a new instance of <see cref="AzureDatabricksDeltaLakeDataset"/>. </summary>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
+        public AzureDatabricksDeltaLakeDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("AzureDatabricksDeltaLakeDataset", linkedServiceName)
+        {
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+
+        }
+
         /// <summary> Initializes a new instance of <see cref="AzureDatabricksDeltaLakeDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>

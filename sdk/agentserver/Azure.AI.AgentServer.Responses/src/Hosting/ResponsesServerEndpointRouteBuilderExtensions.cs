@@ -1,12 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#pragma warning disable AAAS003 // Internal use of the experimental protocol task scope.
+
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Responses.Internal;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Azure.AI.AgentServer.Responses;
 
@@ -52,6 +56,17 @@ public static class ResponsesServerEndpointRouteBuilderExtensions
 
         group.AddEndpointFilter<SessionIdResponseHeaderFilter>();
         group.AddEndpointFilter<ResponsesExceptionFilter>();
+        group.AddEndpointFilter(async (context, next) =>
+        {
+            IServiceProvider provider = context.HttpContext.RequestServices;
+            ResponsesServerOptions options = provider.GetRequiredService<IOptions<ResponsesServerOptions>>().Value;
+            bool enabled = options.ResilientBackground || options.SteerableConversations;
+            using (provider.EnterResilientTaskScope("responses", enabled))
+            {
+                object? result = await next(context);
+                return result is IResult response ? new TaskScopedResult(response, enabled) : result;
+            }
+        });
 
         group.MapPost("/responses", async (HttpContext httpContext, ResponseEndpointHandler handler) =>
         {
@@ -83,6 +98,17 @@ public static class ResponsesServerEndpointRouteBuilderExtensions
         return group;
     }
 
+    private sealed class TaskScopedResult(IResult inner, bool enabled) : IResult
+    {
+        public async Task ExecuteAsync(HttpContext httpContext)
+        {
+            using (httpContext.RequestServices.EnterResilientTaskScope("responses", enabled))
+            {
+                await inner.ExecuteAsync(httpContext);
+            }
+        }
+    }
+
     /// <summary>
     /// Fails loudly at startup when resilient background responses are enabled but the composed
     /// persistence providers cannot survive a process restart. Enabling
@@ -98,6 +124,17 @@ public static class ResponsesServerEndpointRouteBuilderExtensions
         if (options is null || (!options.ResilientBackground && !options.SteerableConversations))
         {
             return;
+        }
+
+        bool resilientTasksEnabled = services
+            .GetRequiredService<Microsoft.Extensions.Options.IOptions<ResilientTaskOptions>>()
+            .Value.Enabled;
+        if (!resilientTasksEnabled)
+        {
+            throw new InvalidOperationException(
+                "ResilientBackground/SteerableConversations requires the Core resilient-task runtime. " +
+                "Ensure AddResponsesServer() is registered before host startup and restore " +
+                "the Core resilient-task runtime if its registration was replaced.");
         }
 
         if (options.ResilientBackground)
@@ -125,18 +162,20 @@ public static class ResponsesServerEndpointRouteBuilderExtensions
         }
 
         // The resilient/steerable request paths run INSIDE a Core @task / @multi_turn_task and
-        // resolve ITaskInvoker per request. AddResponsesServer composes the Core task subsystem
-        // (AddResilientTasks) in both local and hosted environments — independent of how options are set —
-        // so the historical "options enabled via a separate configuration path leaves ITaskInvoker
-        // unregistered" desync can no longer occur. This defensive guard remains as a safety net: if a
-        // consumer somehow removed the task subsystem while a resilient/steerable option is enabled, it
-        // fails loud at startup rather than as a per-request 500.
+        // resolve their TaskDefinition handle by name (keyed DI) per request. AddResponsesServer
+        // composes the Core task subsystem (AddResilientTasks + the two flat task registrations) in
+        // both local and hosted environments — independent of how options are set — so the
+        // historical "options enabled via a separate configuration path leaves the task subsystem
+        // unregistered" desync can no longer occur. This defensive guard remains as a safety net: if
+        // a consumer somehow removed the task subsystem while a resilient/steerable option is
+        // enabled, it fails loud at startup rather than as a per-request 500.
         if ((options.ResilientBackground || options.SteerableConversations)
-            && services.GetService<Core.Tasks.ITaskInvoker>() is null)
+            && services.GetKeyedService<Core.Tasks.TaskDefinition<Internal.Resilience.ResponseTaskInput, Internal.Resilience.ResponseTaskOutput>>(
+                Internal.Resilience.ResponsesResilientTaskHandler.OneShotTaskName) is null)
         {
             throw new InvalidOperationException(
                 "ResilientBackground/SteerableConversations is enabled but the Core resilient-task " +
-                "subsystem (ITaskInvoker) is not registered. AddResponsesServer() composes it for both " +
+                "subsystem is not registered. AddResponsesServer() composes it for both " +
                 "local and hosted hosts; if you removed or replaced the task subsystem registration, restore it " +
                 "or disable the resilient/steerable options.");
         }

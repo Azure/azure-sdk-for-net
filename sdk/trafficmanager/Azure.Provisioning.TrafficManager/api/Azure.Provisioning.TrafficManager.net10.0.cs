@@ -154,12 +154,12 @@ namespace Azure.Provisioning.TrafficManager
     public partial class TrafficManagerHeatMap : Azure.Provisioning.Primitives.ProvisionableResource
     {
         internal TrafficManagerHeatMap() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.TrafficManager.TrafficManagerHeatMapEndpoint> Endpoints { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.TrafficManager.TrafficManagerProfile Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.TrafficManager.TrafficManagerHeatMapTrafficFlow> TrafficFlows { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.TrafficManager.TrafficManagerHeatMap FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }

@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Microsoft.TypeSpec.Generator.Providers;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -25,6 +27,14 @@ namespace Azure.Generator.Management.Tests.Common
                 testsLocation = Path.Combine(testsLocation, segment);
             }
             return Path.Combine(testsLocation, filePath);
+        }
+
+        public static void SetLastContractView(TypeProvider typeProvider, TypeProvider lastContractView)
+        {
+            typeof(TypeProvider).GetField(
+                    "_lastContractView",
+                    BindingFlags.NonPublic | BindingFlags.Instance)!
+                .SetValue(typeProvider, new Lazy<TypeProvider?>(() => lastContractView));
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.FrontDoor
@@ -15,15 +16,28 @@ namespace Azure.Provisioning.FrontDoor
     /// </summary>
     public partial class RouteConfiguration : ProvisionableConstruct
     {
+        private BicepValue<string> _odataType;
+
         /// <summary> Creates a new RouteConfiguration. </summary>
         public RouteConfiguration()
         {
+        }
+
+        /// <summary> Gets the OdataType. </summary>
+        internal BicepValue<string> OdataType
+        {
+            get
+            {
+                Initialize();
+                return _odataType;
+            }
         }
 
         /// <summary> Define all the provisionable properties for RouteConfiguration. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _odataType = DefineProperty<string>(nameof(OdataType), new string[] { "@odata.type" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

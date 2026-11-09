@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
@@ -32,20 +33,30 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             var key = azureMonitorExporterOptions.ConnectionString ?? string.Empty;
 
-            if (!_transmitters.TryGetValue(key, out ITransmitter? transmitter))
+            lock (_lockObj)
             {
-                lock (_lockObj)
+                _transmitters.TryGetValue(key, out ITransmitter? transmitter);
+
+                // An instance whose last reference was released has already torn down its storage
+                // handler and timers, so it cannot serve a provider created later in the process.
+                if (transmitter == null || (transmitter as AzureMonitorTransmitter)?._disposed == true)
                 {
-                    if (!_transmitters.TryGetValue(key, out transmitter))
-                    {
-                        transmitter = new AzureMonitorTransmitter(azureMonitorExporterOptions, platform);
+                    transmitter = new AzureMonitorTransmitter(azureMonitorExporterOptions, platform);
 
-                        _transmitters.Add(key, transmitter);
-                    }
+                    _transmitters[key] = transmitter;
                 }
-            }
+                else if (transmitter is AzureMonitorTransmitter cached && cached.IsAadEnabled != (azureMonitorExporterOptions.Credential != null))
+                {
+                    // Shared by connection string, so this exporter's credential setting is not applied.
+                    AzureMonitorExporterEventSource.Log.CachedTransmitterCredentialMismatch(cached.IsAadEnabled, azureMonitorExporterOptions.Credential != null);
+                }
 
-            return transmitter;
+                // Each exporter handed this instance shares its lifetime, so the instance must
+                // outlive the first of them to be disposed.
+                (transmitter as AzureMonitorTransmitter)?.AddReference();
+
+                return transmitter;
+            }
         }
 
         internal void Set(string connectionString, ITransmitter transmitter)

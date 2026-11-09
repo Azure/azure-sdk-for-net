@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         {
             get
             {
-                return ApplicationTypeVersionsCleanupPolicy is null ? default : ApplicationTypeVersionsCleanupPolicy.MaxUnusedVersionsToKeep;
+                return ApplicationTypeVersionsCleanupPolicy is null ? (int?)default : ApplicationTypeVersionsCleanupPolicy.MaxUnusedVersionsToKeep;
             }
             set
             {

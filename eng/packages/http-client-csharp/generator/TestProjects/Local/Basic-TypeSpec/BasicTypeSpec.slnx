@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="src/BasicTypeSpec.csproj" />
+  <Project Path="tests/BasicTypeSpec.Tests.csproj" />
 </Solution>

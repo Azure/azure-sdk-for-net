@@ -25,16 +25,16 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="displayName"> The name of the metric. </param>
         /// <param name="metric"> The unique metric name. </param>
         /// <param name="labelName"> The customer label that was filtered on, if one was provided. </param>
-        /// <param name="updatedAt"> The last time this asset data was updated on this metric. </param>
+        /// <param name="updatedOn"> The last time this asset data was updated on this metric. </param>
         /// <param name="description"> A description of what the metric represents. </param>
         /// <param name="assets"> The page of assets that match the provided metric. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReportAssetSnapshotResult(string displayName, string metric, string labelName, DateTimeOffset? updatedAt, string description, AssetPageResult assets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReportAssetSnapshotResult(string displayName, string metric, string labelName, DateTimeOffset? updatedOn, string description, AssetPageResult assets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Metric = metric;
             LabelName = labelName;
-            UpdatedAt = updatedAt;
+            UpdatedOn = updatedOn;
             Description = description;
             Assets = assets;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Defender.Easm
         public string LabelName { get; }
 
         /// <summary> The last time this asset data was updated on this metric. </summary>
-        public DateTimeOffset? UpdatedAt { get; }
+        public DateTimeOffset? UpdatedOn { get; }
 
         /// <summary> A description of what the metric represents. </summary>
         public string Description { get; }

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="isPrepareToShipEnabled"> Is Prepare To Ship Enabled on this job. </param>
         /// <param name="status"> Name of the stage which is in progress. </param>
         /// <param name="delayedStage"> Name of the stage where delay might be present. </param>
-        /// <param name="startOn"> Time at which the job was started in UTC ISO 8601 format. </param>
+        /// <param name="startsOn"> Time at which the job was started in UTC ISO 8601 format. </param>
         /// <param name="error"> Top level error for the job. </param>
         /// <param name="details"> Details of a job run. This field will only be sent for expand details filter. </param>
         /// <param name="cancellationReason"> Reason for cancellation. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="isCancellableWithoutFee"> Flag to indicate cancellation of scheduled job. </param>
         /// <param name="areAllDevicesLost"> Flag to indicate if all devices associated with the job are lost. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobProperties(DataBoxJobTransferType transferType, bool? isCancellable, bool? isDeletable, bool? isShippingAddressEditable, ReverseShippingDetailsEditStatus? reverseShippingDetailsUpdate, ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate, bool? isPrepareToShipEnabled, DataBoxStageName? status, DataBoxStageName? delayedStage, DateTimeOffset? startOn, ResponseError error, DataBoxBasicJobDetails details, string cancellationReason, JobDeliveryType? deliveryType, JobDeliveryInfo deliveryInfo, bool? isCancellableWithoutFee, bool? areAllDevicesLost, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobProperties(DataBoxJobTransferType transferType, bool? isCancellable, bool? isDeletable, bool? isShippingAddressEditable, ReverseShippingDetailsEditStatus? reverseShippingDetailsUpdate, ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate, bool? isPrepareToShipEnabled, DataBoxStageName? status, DataBoxStageName? delayedStage, DateTimeOffset? startsOn, ResponseError error, DataBoxBasicJobDetails details, string cancellationReason, JobDeliveryType? deliveryType, JobDeliveryInfo deliveryInfo, bool? isCancellableWithoutFee, bool? areAllDevicesLost, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TransferType = transferType;
             IsCancellable = isCancellable;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBox.Models
             IsPrepareToShipEnabled = isPrepareToShipEnabled;
             Status = status;
             DelayedStage = delayedStage;
-            StartOn = startOn;
+            StartsOn = startsOn;
             Error = error;
             Details = details;
             CancellationReason = cancellationReason;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public DataBoxStageName? DelayedStage { get; }
 
         /// <summary> Time at which the job was started in UTC ISO 8601 format. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> Top level error for the job. </summary>
         public ResponseError Error { get; }

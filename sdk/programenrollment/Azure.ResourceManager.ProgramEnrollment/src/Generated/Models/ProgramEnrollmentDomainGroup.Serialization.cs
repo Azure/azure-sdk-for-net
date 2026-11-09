@@ -203,10 +203,10 @@ namespace Azure.ResourceManager.ProgramEnrollment.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ProgramEnrollmentDomainGroup(domainNames, tenantId, state, failureReason, additionalBinaryDataProperties);
+            return new ProgramEnrollmentDomainGroup(domainNames ?? new ChangeTrackingList<string>(), tenantId, state, failureReason, additionalBinaryDataProperties);
         }
     }
 }

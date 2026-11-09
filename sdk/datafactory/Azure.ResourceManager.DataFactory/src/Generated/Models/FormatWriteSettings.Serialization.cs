@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
     /// Format write settings.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AvroWriteSettings"/>, <see cref="OrcWriteSettings"/>, <see cref="ParquetWriteSettings"/>, <see cref="DelimitedTextWriteSettings"/>, <see cref="JsonWriteSettings"/>, and <see cref="IcebergWriteSettings"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AvroWriteSettings"/>, <see cref="DelimitedTextWriteSettings"/>, <see cref="IcebergWriteSettings"/>, <see cref="JsonWriteSettings"/>, <see cref="OrcWriteSettings"/>, and <see cref="ParquetWriteSettings"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownFormatWriteSettings))]
     public abstract partial class FormatWriteSettings : IJsonModel<FormatWriteSettings>
@@ -124,16 +124,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     case "AvroWriteSettings":
                         return AvroWriteSettings.DeserializeAvroWriteSettings(element, options);
+                    case "DelimitedTextWriteSettings":
+                        return DelimitedTextWriteSettings.DeserializeDelimitedTextWriteSettings(element, options);
+                    case "IcebergWriteSettings":
+                        return IcebergWriteSettings.DeserializeIcebergWriteSettings(element, options);
+                    case "JsonWriteSettings":
+                        return JsonWriteSettings.DeserializeJsonWriteSettings(element, options);
                     case "OrcWriteSettings":
                         return OrcWriteSettings.DeserializeOrcWriteSettings(element, options);
                     case "ParquetWriteSettings":
                         return ParquetWriteSettings.DeserializeParquetWriteSettings(element, options);
-                    case "DelimitedTextWriteSettings":
-                        return DelimitedTextWriteSettings.DeserializeDelimitedTextWriteSettings(element, options);
-                    case "JsonWriteSettings":
-                        return JsonWriteSettings.DeserializeJsonWriteSettings(element, options);
-                    case "IcebergWriteSettings":
-                        return IcebergWriteSettings.DeserializeIcebergWriteSettings(element, options);
                 }
             }
             return UnknownFormatWriteSettings.DeserializeUnknownFormatWriteSettings(element, options);

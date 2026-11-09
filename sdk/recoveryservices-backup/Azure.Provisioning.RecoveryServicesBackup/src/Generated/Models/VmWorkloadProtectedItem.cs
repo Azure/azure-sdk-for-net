@@ -31,6 +31,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new VmWorkloadProtectedItem. </summary>
         public VmWorkloadProtectedItem()
         {
+            ProtectedItemType.Assign("AzureVmWorkloadProtectedItem");
         }
 
         /// <summary> Gets the FriendlyName. </summary>
@@ -237,7 +238,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("protectedItemType", new string[] { "protectedItemType" }, defaultValue: "AzureVmWorkloadProtectedItem");
             _friendlyName = DefineProperty<string>(nameof(FriendlyName), new string[] { "friendlyName" }, isOutput: true);
             _serverName = DefineProperty<string>(nameof(ServerName), new string[] { "serverName" });
             _parentName = DefineProperty<string>(nameof(ParentName), new string[] { "parentName" });

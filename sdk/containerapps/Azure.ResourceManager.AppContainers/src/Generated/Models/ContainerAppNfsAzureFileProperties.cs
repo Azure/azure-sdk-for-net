@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerAppNfsAzureFileProperties"/>. </summary>
-        /// <param name="server"> Server for NFS azure file. </param>
+        /// <param name="server"> Server for NFS azure file. Specify the Azure storage account server address. </param>
         /// <param name="accessMode"> Access mode for storage. </param>
         /// <param name="shareName"> NFS Azure file share name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Server for NFS azure file. </summary>
+        /// <summary> Server for NFS azure file. Specify the Azure storage account server address. </summary>
         [WirePath("server")]
         public string Server { get; set; }
 

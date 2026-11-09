@@ -63,7 +63,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return PrivateEndpoint.Id;
+                return PrivateEndpoint is null ? default : PrivateEndpoint.Id;
             }
         }
 

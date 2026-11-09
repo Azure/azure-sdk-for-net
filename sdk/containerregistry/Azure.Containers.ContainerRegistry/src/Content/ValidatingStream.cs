@@ -11,6 +11,11 @@ namespace Azure.Containers.ContainerRegistry
 {
     internal class ValidatingStream : Stream
     {
+        internal const string ContentEndedEarlyMessage =
+            "The downloaded content ended before the number of bytes specified by the Content-Length header were received.";
+        internal const string ContentExceededLengthMessage =
+            "The downloaded content exceeded the number of bytes specified by the Content-Length header.";
+
         private Stream _stream;
         private SHA256 _sha256;
         private readonly long _contentLength;
@@ -31,13 +36,13 @@ namespace Azure.Containers.ContainerRegistry
 
         public override bool CanRead => _stream.CanRead;
 
-        public override bool CanSeek => _stream.CanSeek;
+        public override bool CanSeek => false;
 
         public override bool CanWrite => _stream.CanWrite;
 
         public override long Length => _stream.Length;
 
-        public override long Position { get => _stream.Position; set => _stream.Position = value; }
+        public override long Position { get => _stream.Position; set => throw new NotSupportedException(); }
 
         public override void Flush() => _stream.Flush();
 
@@ -45,7 +50,7 @@ namespace Azure.Containers.ContainerRegistry
         {
             int length = _stream.Read(buffer, offset, count);
 
-            ProcessIncrement(buffer, offset, length);
+            ProcessIncrement(buffer, offset, count, length);
 
             return length;
         }
@@ -54,29 +59,46 @@ namespace Azure.Containers.ContainerRegistry
         {
             int length = await _stream.ReadAsync(buffer, offset, count, cancellationToken).ConfigureAwait(false);
 
-            ProcessIncrement(buffer, offset, length);
+            ProcessIncrement(buffer, offset, count, length);
 
             return length;
         }
 
-        private void ProcessIncrement(byte[] buffer, int offset, int length)
+        private void ProcessIncrement(byte[] buffer, int offset, int count, int length)
         {
-            if (!_validated)
+            if (count == 0)
             {
-                _received += length;
-                _sha256.TransformBlock(buffer, offset, length, buffer, offset);
+                return;
+            }
 
-                if (_received == _contentLength)
+            if (length == 0)
+            {
+                if (!_validated)
                 {
-                    _sha256.TransformFinalBlock(Array.Empty<byte>(), 0, 0);
-                    string computedDigest = BlobHelper.FormatDigest(_sha256.Hash);
-                    BlobHelper.ValidateDigest(computedDigest, _digest, BlobHelper.ContentDigestDoesntMatchRequestedMessage);
-                    _validated = true;
+                    throw new RequestFailedException(200, ContentEndedEarlyMessage);
                 }
+
+                return;
+            }
+
+            if (_validated || length > _contentLength - _received)
+            {
+                throw new RequestFailedException(200, ContentExceededLengthMessage);
+            }
+
+            _received += length;
+            _sha256.TransformBlock(buffer, offset, length, buffer, offset);
+
+            if (_received == _contentLength)
+            {
+                _sha256.TransformFinalBlock(Array.Empty<byte>(), 0, 0);
+                string computedDigest = BlobHelper.FormatDigest(_sha256.Hash);
+                BlobHelper.ValidateDigest(computedDigest, _digest, BlobHelper.ContentDigestDoesntMatchRequestedMessage);
+                _validated = true;
             }
         }
 
-        public override long Seek(long offset, SeekOrigin origin) => _stream.Seek(offset, origin);
+        public override long Seek(long offset, SeekOrigin origin) => throw new NotSupportedException();
 
         public override void SetLength(long value) => _stream.SetLength(value);
 

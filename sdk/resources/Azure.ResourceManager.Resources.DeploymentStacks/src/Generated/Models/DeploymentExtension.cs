@@ -53,21 +53,5 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
 
         /// <summary> The configuration ID of the extension usage. It uniquely identifies a target the extension deploys to. </summary>
         public string ConfigId { get; set; }
-
-        /// <summary> The configuration used for deployment. The keys of this object should align with the extension config schema. </summary>
-        internal DeploymentExtensionConfig Config { get; set; }
-
-        /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> ConfigAdditionalProperties
-        {
-            get
-            {
-                if (Config is null)
-                {
-                    Config = new DeploymentExtensionConfig();
-                }
-                return Config.AdditionalProperties;
-            }
-        }
     }
 }

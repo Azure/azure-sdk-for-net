@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.HybridContainerService.Models;
@@ -70,18 +69,12 @@ namespace Azure.ResourceManager.HybridContainerService.Tests.Tests
             clusterData.ExtendedLocation.Name = "/subscriptions/0709bd7a-8383-4e1d-98c8-f81d1b3443fc/resourceGroups/hav-ga-rg/providers/Microsoft.ExtendedLocation/customLocations/hav-appl-ga-new-hybridaks-cl";
 
             string sshKeyStr = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCAcY5kdMcyDHffly4RlpAy4WrBvnMEJ45v5AGCQZm0Vv1R5KYYG4+28E+csSdP8GNnxuJWegyqYS9XV0oWxCdN2Wtaqz9QJ2DcFG3panfNn+kWXZtqvf8/lXPEFpX9gmNvAsJYRHBzNnw9/YTbpeHAoQcQniVy616nsxpVyzQVMU2c6SQDapvdot5t9gey9YPhCYxVFZPWmyNL9lSkOAnkGBzDUIr2ne62MGHoyobkPyzPcGIPVV5bDZY2Afw6FvhC+aEZ4k4XRWAOrgRhJyZJe0loC9fc1zpB0LpRA3zaMf+u8hCmnJ8J61xFP4XaG5RJhWOq7syNkc5di3osiuv";
-            var publicKeys = new List<LinuxSshPublicKey>();
-            publicKeys.Add(new LinuxSshPublicKey(sshKeyStr, null));
-            var sshPublicKeys = new LinuxSshConfiguration(publicKeys, null);
-            var linuxProfile = new LinuxProfileProperties(sshPublicKeys, null);
 
             var agentPool = new HybridContainerServiceNamedAgentPoolProfile();
             agentPool.Name = "testnodepool";
             agentPool.Count = 1;
             agentPool.VmSize = "Standard_A4_v2";
             agentPool.OSType = "Linux";
-            var agentPoolProfiles = new List<HybridContainerServiceNamedAgentPoolProfile>();
-            agentPoolProfiles.Add(agentPool);
 
             var kubernetesVersion = "1.27.3";
 
@@ -97,13 +90,16 @@ namespace Azure.ResourceManager.HybridContainerService.Tests.Tests
 
             var storageProfile = new StorageProfile();
 
-            var clusterVmAccessProfile = new ClusterVmAccessProfile();
-
-            var cloudProviderProfile = new ProvisionedClusterCloudProviderProfile();
-            cloudProviderProfile.InfraNetworkProfile = new ProvisionedClusterInfraNetworkProfile(new List<ResourceIdentifier>(), null);
-            cloudProviderProfile.InfraNetworkProfile.VnetSubnetIds.Add(vnet.Value.Data.Id);
-
-            clusterData.Properties = new ProvisionedClusterProperties(linuxProfile, controlPlane, kubernetesVersion, networkProfile, storageProfile, clusterVmAccessProfile, agentPoolProfiles, cloudProviderProfile, null, null, null, null, null);
+            clusterData.Properties = new ProvisionedClusterProperties
+            {
+                ControlPlane = controlPlane,
+                KubernetesVersion = kubernetesVersion,
+                NetworkProfile = networkProfile,
+                StorageProfile = storageProfile
+            };
+            clusterData.Properties.SshPublicKeys.Add(new LinuxSshPublicKey { KeyData = sshKeyStr });
+            clusterData.Properties.AgentPoolProfiles.Add(agentPool);
+            clusterData.Properties.InfraNetworkVnetSubnetIds.Add(vnet.Value.Data.Id);
 
             var cluster = clusterClient.CreateOrUpdate(WaitUntil.Completed, clusterData);
             Assert.AreEqual(cluster.Value.Data.Properties.ProvisioningState, HybridContainerServiceResourceProvisioningState.Succeeded);

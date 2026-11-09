@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<PureStorageAvsVmVolumeData, PureStorageAvsVmVolumeResource>(new AvsVmVolumesGetByAvsVmAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<PureStorageAvsVmVolumeData, PureStorageAvsVmVolumeResource>(new PureStorageAvsVmVolumeDataAsyncCollectionResultOfT(
                 _avsVmVolumesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.PureStorageBlock
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<PureStorageAvsVmVolumeData, PureStorageAvsVmVolumeResource>(new AvsVmVolumesGetByAvsVmCollectionResultOfT(
+            return new PageableWrapper<PureStorageAvsVmVolumeData, PureStorageAvsVmVolumeResource>(new PureStorageAvsVmVolumeDataCollectionResultOfT(
                 _avsVmVolumesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

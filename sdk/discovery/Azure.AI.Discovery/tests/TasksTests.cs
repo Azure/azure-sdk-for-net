@@ -113,7 +113,7 @@ namespace Azure.AI.Discovery.Tests
                 Assert.That(task, Is.Not.Null);
                 Assert.That(task.Title, Is.EqualTo("task-for-get-test"));
                 Assert.That(task.Status, Is.Not.Null);
-                Assert.That(task.CreatedAt, Is.Not.Null);
+                Assert.That(task.CreatedOn, Is.Not.Null);
                 Assert.That(task.AssignedTo, Is.Not.Null);
             }
             finally

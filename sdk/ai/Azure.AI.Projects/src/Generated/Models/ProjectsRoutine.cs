@@ -29,18 +29,18 @@ namespace Azure.AI.Projects
         /// <param name="isEnabled"> Whether the routine is enabled. </param>
         /// <param name="triggers"> The triggers configured for the routine. </param>
         /// <param name="action"> The action executed when the routine fires. </param>
-        /// <param name="createdAt"> The time when the routine was created. </param>
-        /// <param name="updatedAt"> The time when the routine was last updated. </param>
+        /// <param name="createdOn"> The time when the routine was created. </param>
+        /// <param name="updatedOn"> The time when the routine was last updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectsRoutine(string name, string description, bool isEnabled, IDictionary<string, RoutineTrigger> triggers, RoutineAction action, DateTimeOffset? createdAt, DateTimeOffset? updatedAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectsRoutine(string name, string description, bool isEnabled, IDictionary<string, RoutineTrigger> triggers, RoutineAction action, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
             IsEnabled = isEnabled;
             Triggers = triggers;
             Action = action;
-            CreatedAt = createdAt;
-            UpdatedAt = updatedAt;
+            CreatedOn = createdOn;
+            UpdatedOn = updatedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -60,9 +60,9 @@ namespace Azure.AI.Projects
         public RoutineAction Action { get; }
 
         /// <summary> The time when the routine was created. </summary>
-        public DateTimeOffset? CreatedAt { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The time when the routine was last updated. </summary>
-        public DateTimeOffset? UpdatedAt { get; }
+        public DateTimeOffset? UpdatedOn { get; }
     }
 }

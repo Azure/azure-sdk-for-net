@@ -31,31 +31,7 @@ public class ResponseContext
     public string ResponseId { get; }
 
     private readonly CancellationTokenSource _shutdownSignal = new();
-
-    /// <summary>
-    /// Gets or sets whether the host is gracefully shutting down. Setting this to
-    /// <see langword="true"/> also signals <see cref="Shutdown"/>; setting it to
-    /// <see langword="false"/> has no effect (a shutdown signal cannot be withdrawn).
-    /// Handlers can use this (or the awaitable <see cref="Shutdown"/> token) to distinguish
-    /// graceful shutdown from an explicit client cancel or a client disconnect.
-    /// </summary>
-    public bool IsShutdownRequested
-    {
-        get => _shutdownSignal.IsCancellationRequested;
-        set
-        {
-            if (value && !_shutdownSignal.IsCancellationRequested)
-            {
-                try
-                {
-                    _shutdownSignal.Cancel();
-                }
-                catch (ObjectDisposedException)
-                {
-                }
-            }
-        }
-    }
+    private readonly CancellationTokenSource _clientCancellationSignal = new();
 
     /// <summary>
     /// Gets a cancellation token that is signaled when the host begins a graceful shutdown.
@@ -70,6 +46,40 @@ public class ResponseContext
     /// <see cref="IsShutdownRequested"/> (or this token) first and defer for recovery instead.
     /// </summary>
     public virtual CancellationToken Shutdown => _shutdownSignal.Token;
+
+    /// <summary>
+    /// Gets a cancellation token that is signaled when the client explicitly cancels this
+    /// response. Kept separate from <see cref="Shutdown"/> (host shutting down), the handler's
+    /// primary cancellation token, and a raw client disconnect, so a handler can compose or
+    /// link it to react specifically to an explicit client cancel.
+    /// </summary>
+    public virtual CancellationToken ClientCancellation => _clientCancellationSignal.Token;
+
+    /// <summary>
+    /// Signals <see cref="Shutdown"/>. Invoked by the framework when the host begins a graceful
+    /// shutdown. Idempotent; a shutdown signal cannot be withdrawn.
+    /// </summary>
+    internal void SignalShutdown() => Signal(_shutdownSignal);
+
+    /// <summary>
+    /// Signals <see cref="ClientCancellation"/>. Invoked by the framework when the client
+    /// explicitly cancels this response. Idempotent.
+    /// </summary>
+    internal void SignalClientCancellation() => Signal(_clientCancellationSignal);
+
+    private static void Signal(CancellationTokenSource source)
+    {
+        if (!source.IsCancellationRequested)
+        {
+            try
+            {
+                source.Cancel();
+            }
+            catch (ObjectDisposedException)
+            {
+            }
+        }
+    }
 
     /// <summary>
     /// Gets the full raw JSON request body as a <see cref="BinaryData"/>.
@@ -187,11 +197,21 @@ public class ResponseContext
     public virtual int PendingInputCount => 0;
 
     /// <summary>
-    /// Gets whether the client has explicitly cancelled this response. Distinct from
+    /// Gets whether the host is gracefully shutting down. This is a get-only virtual
+    /// passthrough over <see cref="Shutdown"/> (<see cref="CancellationToken.IsCancellationRequested"/>).
+    /// Handlers can use this (or the awaitable <see cref="Shutdown"/> token) to distinguish
+    /// graceful shutdown from an explicit client cancel or a client disconnect.
+    /// </summary>
+    public virtual bool IsShutdownRequested => Shutdown.IsCancellationRequested;
+
+    /// <summary>
+    /// Gets whether the client has explicitly cancelled this response. This is a get-only
+    /// virtual passthrough over <see cref="ClientCancellation"/>
+    /// (<see cref="CancellationToken.IsCancellationRequested"/>). Distinct from
     /// <see cref="IsShutdownRequested"/> (server shutting down) and client disconnect;
     /// handlers can use this to stop work in response to an explicit cancel request.
     /// </summary>
-    public virtual bool ClientCancelled => false;
+    public virtual bool IsClientCancelled => ClientCancellation.IsCancellationRequested;
 
     /// <summary>
     /// Defers the current handler invocation for recovery instead of failing. Used during a

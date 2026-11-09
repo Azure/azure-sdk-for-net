@@ -11,12 +11,15 @@ using Azure.ResourceManager.Enclave;
 
 namespace Azure.ResourceManager.Enclave.Models
 {
-    /// <summary></summary>
+    /// <summary> The policy action for a governed service. </summary>
     public readonly partial struct VirtualEnclaveGovernedServiceItemPolicyAction : IEquatable<VirtualEnclaveGovernedServiceItemPolicyAction>
     {
         private readonly string _value;
+        /// <summary> Audit policy violations without enforcing the policy. </summary>
         private const string AuditOnlyValue = "AuditOnly";
+        /// <summary> Enforce the policy. </summary>
         private const string EnforceValue = "Enforce";
+        /// <summary> Do not apply a policy action. </summary>
         private const string NoneValue = "None";
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveGovernedServiceItemPolicyAction"/>. </summary>
@@ -29,13 +32,13 @@ namespace Azure.ResourceManager.Enclave.Models
             _value = value;
         }
 
-        /// <summary> Gets the AuditOnly. </summary>
+        /// <summary> Audit policy violations without enforcing the policy. </summary>
         public static VirtualEnclaveGovernedServiceItemPolicyAction AuditOnly { get; } = new VirtualEnclaveGovernedServiceItemPolicyAction(AuditOnlyValue);
 
-        /// <summary> Gets the Enforce. </summary>
+        /// <summary> Enforce the policy. </summary>
         public static VirtualEnclaveGovernedServiceItemPolicyAction Enforce { get; } = new VirtualEnclaveGovernedServiceItemPolicyAction(EnforceValue);
 
-        /// <summary> Gets the None. </summary>
+        /// <summary> Do not apply a policy action. </summary>
         public static VirtualEnclaveGovernedServiceItemPolicyAction None { get; } = new VirtualEnclaveGovernedServiceItemPolicyAction(NoneValue);
 
         /// <summary> Determines if two <see cref="VirtualEnclaveGovernedServiceItemPolicyAction"/> values are the same. </summary>

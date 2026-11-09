@@ -31,7 +31,16 @@ namespace Azure.ResourceManager.Automation.Models
         public string Name { get; }
 
         /// <summary> Gets or sets the properties of the webhook. </summary>
-        internal WebhookCreateOrUpdateProperties Properties { get; }
+        internal WebhookCreateOrUpdateProperties Properties { get; } = new WebhookCreateOrUpdateProperties();
+
+        /// <summary> Gets or sets the expiry time. </summary>
+        public DateTimeOffset? ExpiresOn
+        {
+            get
+            {
+                return Properties.ExpiresOn;
+            }
+        }
 
         /// <summary> Gets or sets the parameters of the job. </summary>
         public IDictionary<string, string> Parameters

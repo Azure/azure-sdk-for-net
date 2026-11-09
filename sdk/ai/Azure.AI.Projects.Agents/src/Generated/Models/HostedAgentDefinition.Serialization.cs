@@ -121,6 +121,16 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("telemetry_config"u8);
                 writer.WriteObjectValue(TelemetryConfig, options);
             }
+            if (Optional.IsDefined(SessionConfiguration))
+            {
+                writer.WritePropertyName("session_configuration"u8);
+                writer.WriteObjectValue(SessionConfiguration, options);
+            }
+            if (Optional.IsDefined(EnableMemorySnapshot))
+            {
+                writer.WritePropertyName("enable_memory_snapshot"u8);
+                writer.WriteBooleanValue(EnableMemorySnapshot.Value);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -158,6 +168,8 @@ namespace Azure.AI.Projects.Agents
             IList<ProtocolVersionRecord> versions = default;
             CodeConfiguration codeConfiguration = default;
             TelemetryConfig telemetryConfig = default;
+            SessionConfiguration sessionConfiguration = default;
+            bool? enableMemorySnapshot = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("kind"u8))
@@ -246,9 +258,27 @@ namespace Azure.AI.Projects.Agents
                     telemetryConfig = TelemetryConfig.DeserializeTelemetryConfig(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("session_configuration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sessionConfiguration = SessionConfiguration.DeserializeSessionConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("enable_memory_snapshot"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableMemorySnapshot = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new HostedAgentDefinition(
@@ -261,7 +291,9 @@ namespace Azure.AI.Projects.Agents
                 containerConfiguration,
                 versions ?? new ChangeTrackingList<ProtocolVersionRecord>(),
                 codeConfiguration,
-                telemetryConfig);
+                telemetryConfig,
+                sessionConfiguration,
+                enableMemorySnapshot);
         }
     }
 }

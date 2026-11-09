@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new AvsPrivateCloudPatch(tags ?? new ChangeTrackingDictionary<string, string>(), sku, identity, properties, additionalBinaryDataProperties);

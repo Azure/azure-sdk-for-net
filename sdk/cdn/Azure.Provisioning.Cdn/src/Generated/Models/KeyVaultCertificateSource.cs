@@ -23,6 +23,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new KeyVaultCertificateSource. </summary>
         public KeyVaultCertificateSource()
         {
+            TypeName.Assign(CertificateSourceParametersType.KeyVaultCertificateSourceParameters);
         }
 
         /// <summary> Gets or sets the SubscriptionId. </summary>
@@ -134,7 +135,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("typeName", new string[] { "typeName" }, defaultValue: "KeyVaultCertificateSourceParameters");
             _subscriptionId = DefineProperty<string>(nameof(SubscriptionId), new string[] { "subscriptionId" }, isRequired: true);
             _resourceGroupName = DefineProperty<string>(nameof(ResourceGroupName), new string[] { "resourceGroupName" }, isRequired: true);
             _vaultName = DefineProperty<string>(nameof(VaultName), new string[] { "vaultName" }, isRequired: true);

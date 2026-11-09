@@ -38,7 +38,13 @@ namespace Azure.ResourceManager.StorageActions.Mocking
 
         private ClientDiagnostics StorageTasksClientDiagnostics => _storageTasksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StorageActions.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StorageTasks StorageTasksRestClient => _storageTasksRestClient ??= new StorageTasks(StorageTasksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-01-01");
+        private StorageTasks StorageTasksRestClient => _storageTasksRestClient ??= new StorageTasks(
+            StorageTasksClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2023-01-01",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// Lists all the storage tasks available under the subscription.
@@ -65,7 +71,7 @@ namespace Azure.ResourceManager.StorageActions.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StorageTaskData, StorageTaskResource>(new StorageTasksGetBySubscriptionAsyncCollectionResultOfT(StorageTasksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStorageActionsSubscriptionResource.GetStorageTasks"), data => new StorageTaskResource(Client, data));
+            return new AsyncPageableWrapper<StorageTaskData, StorageTaskResource>(new StorageTaskDataAsync0CollectionResultOfT(StorageTasksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStorageActionsSubscriptionResource.GetStorageTasks"), data => new StorageTaskResource(Client, data));
         }
 
         /// <summary>
@@ -93,7 +99,7 @@ namespace Azure.ResourceManager.StorageActions.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StorageTaskData, StorageTaskResource>(new StorageTasksGetBySubscriptionCollectionResultOfT(StorageTasksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStorageActionsSubscriptionResource.GetStorageTasks"), data => new StorageTaskResource(Client, data));
+            return new PageableWrapper<StorageTaskData, StorageTaskResource>(new StorageTaskData0CollectionResultOfT(StorageTasksRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableStorageActionsSubscriptionResource.GetStorageTasks"), data => new StorageTaskResource(Client, data));
         }
 
         /// <summary>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary>
     /// RegistryEndpoint Trust properties
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RegistryEndpointTrustedSigningKeySecret"/> and <see cref="RegistryEndpointTrustedSigningKeyConfigMap"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RegistryEndpointTrustedSigningKeyConfigMap"/> and <see cref="RegistryEndpointTrustedSigningKeySecret"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownRegistryEndpointTrustedSigningKey))]
     public abstract partial class RegistryEndpointTrustedSigningKey : IJsonModel<RegistryEndpointTrustedSigningKey>
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Secret":
-                        return RegistryEndpointTrustedSigningKeySecret.DeserializeRegistryEndpointTrustedSigningKeySecret(element, options);
                     case "ConfigMap":
                         return RegistryEndpointTrustedSigningKeyConfigMap.DeserializeRegistryEndpointTrustedSigningKeyConfigMap(element, options);
+                    case "Secret":
+                        return RegistryEndpointTrustedSigningKeySecret.DeserializeRegistryEndpointTrustedSigningKeySecret(element, options);
                 }
             }
             return UnknownRegistryEndpointTrustedSigningKey.DeserializeUnknownRegistryEndpointTrustedSigningKey(element, options);

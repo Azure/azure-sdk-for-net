@@ -1,0 +1,4 @@
+﻿<Solution>
+  <Project Path="src/Azure.ResourceManager.CognitiveServices.csproj" />
+  <Project Path="tests/Azure.ResourceManager.CognitiveServices.Tests.csproj" />
+</Solution>

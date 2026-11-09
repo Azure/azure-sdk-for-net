@@ -11,7 +11,7 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Deployments
 {
     internal static partial class ClientPipelineExtensions
     {
@@ -44,11 +44,15 @@ namespace Azure.ResourceManager.Resources
         public static async ValueTask<Response<bool>> ProcessHeadAsBoolMessageAsync(this HttpPipeline pipeline, HttpMessage message, RequestContext context)
         {
             Response response = await pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            if (response.IsError)
+            {
+                return new ErrorResult<bool>(response, new RequestFailedException(response));
+            }
             switch (response.Status)
             {
                 case >= 200 and < 300:
                     return Response.FromValue(true, response);
-                case >= 400 and < 500:
+                case 404:
                     return Response.FromValue(false, response);
                 default:
                     return new ErrorResult<bool>(response, new RequestFailedException(response));
@@ -58,11 +62,15 @@ namespace Azure.ResourceManager.Resources
         public static Response<bool> ProcessHeadAsBoolMessage(this HttpPipeline pipeline, HttpMessage message, RequestContext context)
         {
             Response response = pipeline.ProcessMessage(message, context);
+            if (response.IsError)
+            {
+                return new ErrorResult<bool>(response, new RequestFailedException(response));
+            }
             switch (response.Status)
             {
                 case >= 200 and < 300:
                     return Response.FromValue(true, response);
-                case >= 400 and < 500:
+                case 404:
                     return Response.FromValue(false, response);
                 default:
                     return new ErrorResult<bool>(response, new RequestFailedException(response));

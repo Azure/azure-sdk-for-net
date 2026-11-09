@@ -15,6 +15,7 @@ namespace Azure.Provisioning.BotService
         /// <summary> Creates a new SmsChannel. </summary>
         public SmsChannel()
         {
+            ChannelName.Assign("SmsChannel");
         }
 
         /// <summary> Gets or sets the Properties. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.BotService
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("channelName", new string[] { "channelName" }, defaultValue: "SmsChannel");
             _properties = DefineModelProperty<SmsChannelProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

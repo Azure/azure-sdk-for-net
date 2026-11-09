@@ -28,21 +28,22 @@ namespace Azure.Core.TestFramework
         public void Intercept(IInvocation invocation)
         {
             var type = invocation.Method.ReturnType;
-
-            var isAsyncEnumerable = false;
-            // cspell:ignore iface
-            foreach (var iface in type.GetInterfaces())
-            {
-                if (iface.IsGenericType && iface.GetGenericTypeDefinition() == typeof(IAsyncEnumerable<>))
-                {
-                    isAsyncEnumerable = true;
-                }
-            }
+            Type asyncEnumerableItemType = AsyncEnumerableType.GetItemType(type);
 
             if (invocation.Method.Name.EndsWith("Async") &&
-                !isAsyncEnumerable)
+                asyncEnumerableItemType is null)
             {
                 WrapAsyncResult(invocation, this, ValidateDiagnosticScopeMethodInfo);
+                return;
+            }
+
+            if (asyncEnumerableItemType is not null && AsyncEnumerableType.IsInterface(type))
+            {
+                invocation.Proceed();
+                invocation.ReturnValue = Activator.CreateInstance(
+                    typeof(DiagnosticScopeValidatingEnumerable<>).MakeGenericType(asyncEnumerableItemType),
+                    invocation.ReturnValue,
+                    invocation.Method);
                 return;
             }
 
@@ -176,23 +177,7 @@ namespace Azure.Core.TestFramework
 
         internal static async ValueTask<T> ValidateDiagnosticScope<T>(Func<ValueTask<(T Result, bool SkipChecks)>> action, MethodInfo methodInfo, string source = null)
         {
-            var methodName = methodInfo.Name;
-            source ??= methodName;
-
-            Type declaringType = methodInfo.DeclaringType;
-            var methodNameWithoutSuffix = methodName.EndsWith("Async", StringComparison.OrdinalIgnoreCase) ?
-                methodName.Substring(0, methodName.Length - 5) :
-                methodName;
-
-            // check if this methodInfo is a "Core" method in mgmt plane, if it is, trim the Core suffix from the method name
-            if (methodInfo.IsFamily && methodNameWithoutSuffix.EndsWith("Core"))
-            {
-                methodNameWithoutSuffix = methodNameWithoutSuffix.Substring(0, methodNameWithoutSuffix.Length - 4);
-            }
-
-            var expectedName = declaringType.Name + "." + methodNameWithoutSuffix;
-            var forwardAttribute = methodInfo.GetCustomAttributes(true).FirstOrDefault(a => a.GetType().FullName == "Azure.Core.ForwardsClientCallsAttribute");
-            bool strict = forwardAttribute is null;
+            source ??= methodInfo.Name;
 
             Exception lastException = null;
             bool skipChecks = false;
@@ -221,48 +206,67 @@ namespace Azure.Core.TestFramework
             }
             finally
             {
-                // Remove subscribers before enumerating events.
-                diagnosticListener.Dispose();
-
-                var skipOverrideProperty = forwardAttribute is not null ? forwardAttribute.GetType().GetProperty("SkipChecks") : null;
-                bool skipOverride = skipOverrideProperty is not null ? (bool)skipOverrideProperty.GetValue(forwardAttribute) : false;
-                skipChecks |= skipOverride;
-                if (!skipChecks)
-                {
-                    diagnosticListener.Scopes.ForEach(s => CheckAttributes(s.Activity, strict));
-
-                    if (strict)
-                    {
-                        ClientDiagnosticListener.ProducedDiagnosticScope e = diagnosticListener.Scopes.FirstOrDefault(e => e.Name == expectedName);
-
-                        if (e == default)
-                        {
-                            throw new InvalidOperationException($"Expected diagnostic scope not created {expectedName} {Environment.NewLine}" +
-                                                                $"    created {diagnosticListener.Scopes.Count} scopes [{string.Join(", ", diagnosticListener.Scopes)}] {Environment.NewLine}" +
-                                                                $"    You may have forgotten to add clientDiagnostics.CreateScope(...), set your operationId to {expectedName} in {source} or applied the Azure.Core.ForwardsClientCallsAttribute to {source}.");
-                        }
-
-                        if (lastException != null && !e.IsFailed)
-                        {
-                            throw new InvalidOperationException($"Expected scope {expectedName} to be marked as failed but it succeeded{Environment.NewLine}Exception: {lastException}");
-                        }
-                    }
-                    else
-                    {
-                        // If ForwardsClientCallsAttribute is being used on the method, we don't know what the name of the scope should be because there could be many
-                        // differently named methods sharing the same scope name, but we do know that there should be some scope created other than the Azure.Core scope.
-                        if (!diagnosticListener.Scopes.Any(e => !e.Name.StartsWith("Azure.Core")))
-                        {
-                            throw new InvalidOperationException(
-                                "Expected some diagnostic scopes to be created other than the Azure.Core scopes, but no such scopes were present. " +
-                                $"Ensure that the inner method that client calls are being forwarded to from the '{source}' method has diagnostic scopes " +
-                                "defined by using clientDiagnostics.CreateScope(...).");
-                        }
-                    }
-                }
+                ValidateDiagnosticScopes(diagnosticListener, methodInfo, source, lastException, skipChecks);
             }
 
             return result;
+        }
+
+        private static void ValidateDiagnosticScopes(
+            ClientDiagnosticListener diagnosticListener,
+            MethodInfo methodInfo,
+            string source,
+            Exception lastException,
+            bool skipChecks)
+        {
+            diagnosticListener.Dispose();
+
+            string methodName = methodInfo.Name;
+            Type declaringType = methodInfo.DeclaringType;
+            string methodNameWithoutSuffix = methodName.EndsWith("Async", StringComparison.OrdinalIgnoreCase)
+                ? methodName.Substring(0, methodName.Length - 5)
+                : methodName;
+            if (methodInfo.IsFamily && methodNameWithoutSuffix.EndsWith("Core"))
+            {
+                methodNameWithoutSuffix = methodNameWithoutSuffix.Substring(0, methodNameWithoutSuffix.Length - 4);
+            }
+
+            string expectedName = declaringType.Name + "." + methodNameWithoutSuffix;
+            object forwardAttribute = methodInfo.GetCustomAttributes(true)
+                .FirstOrDefault(a => a.GetType().FullName == "Azure.Core.ForwardsClientCallsAttribute");
+            PropertyInfo skipOverrideProperty = forwardAttribute?.GetType().GetProperty("SkipChecks");
+            skipChecks |= skipOverrideProperty is not null && (bool)skipOverrideProperty.GetValue(forwardAttribute);
+            if (skipChecks)
+            {
+                return;
+            }
+
+            bool strict = forwardAttribute is null;
+            diagnosticListener.Scopes.ForEach(s => CheckAttributes(s.Activity, strict));
+
+            if (strict)
+            {
+                ClientDiagnosticListener.ProducedDiagnosticScope scope = diagnosticListener.Scopes
+                    .FirstOrDefault(e => e.Name == expectedName);
+                if (scope == default)
+                {
+                    throw new InvalidOperationException($"Expected diagnostic scope not created {expectedName} {Environment.NewLine}" +
+                                                        $"    created {diagnosticListener.Scopes.Count} scopes [{string.Join(", ", diagnosticListener.Scopes)}] {Environment.NewLine}" +
+                                                        $"    You may have forgotten to add clientDiagnostics.CreateScope(...), set your operationId to {expectedName} in {source} or applied the Azure.Core.ForwardsClientCallsAttribute to {source}.");
+                }
+
+                if (lastException != null && !scope.IsFailed)
+                {
+                    throw new InvalidOperationException($"Expected scope {expectedName} to be marked as failed but it succeeded{Environment.NewLine}Exception: {lastException}");
+                }
+            }
+            else if (!diagnosticListener.Scopes.Any(e => !e.Name.StartsWith("Azure.Core")))
+            {
+                throw new InvalidOperationException(
+                    "Expected some diagnostic scopes to be created other than the Azure.Core scopes, but no such scopes were present. " +
+                    $"Ensure that the inner method that client calls are being forwarded to from the '{source}' method has diagnostic scopes " +
+                    "defined by using clientDiagnostics.CreateScope(...).");
+            }
         }
 
         private static void CheckAttributes(Activity activity, bool strict)
@@ -366,6 +370,142 @@ namespace Azure.Core.TestFramework
                 }, _methodInfo, $"AsPages() implementation returned from {_methodInfo.Name}"))
                 {
                     yield return enumerator.Current;
+                }
+            }
+        }
+
+        internal sealed class DiagnosticScopeValidatingEnumerable<T> : IAsyncEnumerable<T>
+        {
+            private readonly IAsyncEnumerable<T> _enumerable;
+            private readonly MethodInfo _methodInfo;
+
+            public DiagnosticScopeValidatingEnumerable(
+                IAsyncEnumerable<T> enumerable,
+                MethodInfo methodInfo)
+            {
+                _enumerable = enumerable ?? throw new ArgumentNullException(
+                    nameof(enumerable),
+                    "Operations returning IAsyncEnumerable should never return null.");
+                _methodInfo = methodInfo;
+            }
+
+            public IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
+                => new DiagnosticScopeValidatingEnumerator(
+                    _enumerable,
+                    _methodInfo,
+                    cancellationToken);
+
+            private sealed class DiagnosticScopeValidatingEnumerator : IAsyncEnumerator<T>
+            {
+                private readonly ClientDiagnosticListener _diagnosticListener;
+                private readonly IAsyncEnumerator<T> _enumerator;
+                private readonly MethodInfo _methodInfo;
+                private readonly object _operationToken = new object();
+                private bool _moveNextStarted;
+                private bool _validationCompleted;
+
+                public DiagnosticScopeValidatingEnumerator(
+                    IAsyncEnumerable<T> enumerable,
+                    MethodInfo methodInfo,
+                    CancellationToken cancellationToken)
+                {
+                    _methodInfo = methodInfo;
+
+                    // Bind the listener to this enumerator so interleaved streams on the same async flow do not
+                    // record, or validate, each other's scopes.
+                    _diagnosticListener = new ClientDiagnosticListener(
+                        s => s.StartsWith("Azure."),
+                        asyncLocal: true,
+                        scopeStartCallback: null,
+                        operationToken: _operationToken);
+                    UnsuppressCurrentActivity();
+                    try
+                    {
+                        _enumerator = enumerable.GetAsyncEnumerator(cancellationToken);
+                    }
+                    catch
+                    {
+                        _diagnosticListener.Dispose();
+                        throw;
+                    }
+                }
+
+                public T Current => _enumerator.Current;
+
+                public async ValueTask<bool> MoveNextAsync()
+                {
+                    _moveNextStarted = true;
+
+                    // The iterator body runs lazily, so the activity that hosts its scopes is only
+                    // known here rather than when the enumerator was created.
+                    ClientDiagnosticListener.EnterOperation(_operationToken);
+                    UnsuppressCurrentActivity();
+                    try
+                    {
+                        bool movedNext = await _enumerator.MoveNextAsync();
+                        if (!movedNext)
+                        {
+                            CompleteValidation(null, false);
+                        }
+
+                        return movedNext;
+                    }
+                    catch (Exception ex)
+                    {
+                        CompleteValidation(ex, ex is ArgumentException);
+                        throw;
+                    }
+                }
+
+                public async ValueTask DisposeAsync()
+                {
+                    Exception exception = null;
+                    ClientDiagnosticListener.EnterOperation(_operationToken);
+                    UnsuppressCurrentActivity();
+                    try
+                    {
+                        await _enumerator.DisposeAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        exception = ex;
+                        throw;
+                    }
+                    finally
+                    {
+                        if (_moveNextStarted)
+                        {
+                            CompleteValidation(exception, exception is ArgumentException);
+                        }
+                        else
+                        {
+                            _diagnosticListener.Dispose();
+                        }
+                    }
+                }
+
+                private static void UnsuppressCurrentActivity()
+                {
+                    // Activities may be suppressed if they are called in scope of other activities created by
+                    // other SDK methods. Unsuppress them so all attributes and properties can be checked
+                    // regardless of the test setup.
+                    Activity.Current?.SetCustomProperty("az.sdk.scope", null);
+                }
+
+                private void CompleteValidation(Exception exception, bool skipChecks)
+                {
+                    if (_validationCompleted)
+                    {
+                        return;
+                    }
+
+                    _validationCompleted = true;
+                    ValidateDiagnosticScopes(
+                        _diagnosticListener,
+                        _methodInfo,
+                        _methodInfo.Name,
+                        exception,
+                        skipChecks);
                 }
             }
         }

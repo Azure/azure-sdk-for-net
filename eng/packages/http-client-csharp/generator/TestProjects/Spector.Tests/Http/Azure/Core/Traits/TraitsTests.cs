@@ -22,8 +22,8 @@ namespace TestProjects.Spector.Tests.Http.Azure.Core.Traits
         [SpectorTest]
         public Task Azure_Core_Traits_repeatableAction() => Test(async (host) =>
         {
-            UserActionResponse response = await new TraitsClient(host, null).RepeatableActionAsync(1, new UserActionParam("test"), CancellationToken.None);
-            Assert.AreEqual("test", response.UserActionResult);
+            UserActionResult response = await new TraitsClient(host, null).RepeatableActionAsync(1, new UserActionParam("test"), CancellationToken.None);
+            Assert.AreEqual("test", response.UserActionResultProperty);
         });
     }
 }

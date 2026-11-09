@@ -13,7 +13,7 @@ namespace Azure.AI.Agents.Persistent
 {
     /// <summary>
     /// The abstract base representation of a streaming run step tool call's Code Interpreter tool output.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepDeltaCodeInterpreterLogOutput"/> and <see cref="RunStepDeltaCodeInterpreterImageOutput"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RunStepDeltaCodeInterpreterImageOutput"/> and <see cref="RunStepDeltaCodeInterpreterLogOutput"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownRunStepDeltaCodeInterpreterOutput))]
     public abstract partial class RunStepDeltaCodeInterpreterOutput : IJsonModel<RunStepDeltaCodeInterpreterOutput>
@@ -131,10 +131,10 @@ namespace Azure.AI.Agents.Persistent
             {
                 switch (discriminator.GetString())
                 {
-                    case "logs":
-                        return RunStepDeltaCodeInterpreterLogOutput.DeserializeRunStepDeltaCodeInterpreterLogOutput(element, options);
                     case "image":
                         return RunStepDeltaCodeInterpreterImageOutput.DeserializeRunStepDeltaCodeInterpreterImageOutput(element, options);
+                    case "logs":
+                        return RunStepDeltaCodeInterpreterLogOutput.DeserializeRunStepDeltaCodeInterpreterLogOutput(element, options);
                 }
             }
             return UnknownRunStepDeltaCodeInterpreterOutput.DeserializeUnknownRunStepDeltaCodeInterpreterOutput(element, options);

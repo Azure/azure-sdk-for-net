@@ -19,7 +19,7 @@ namespace Azure.Provisioning.CognitiveServices
         private CognitiveServicesManagedNetworkProvisionStatus _status;
         private BicepValue<CognitiveServicesFirewallSku> _firewallSku;
         private BicepValue<CognitiveServicesManagedNetworkKind> _managedNetworkKind;
-        private BicepValue<string> _firewallPublicIpAddress;
+        private BicepValue<string> _firewallPublicIPAddress;
         private BicepValue<CognitiveServicesManagedNetworkProvisioningState> _provisioningState;
 
         /// <summary> Creates a new CognitiveServicesManagedNetworkConfiguration. </summary>
@@ -112,13 +112,13 @@ namespace Azure.Provisioning.CognitiveServices
             }
         }
 
-        /// <summary> Gets the FirewallPublicIpAddress. </summary>
-        public BicepValue<string> FirewallPublicIpAddress
+        /// <summary> Gets the FirewallPublicIPAddress. </summary>
+        public BicepValue<string> FirewallPublicIPAddress
         {
             get
             {
                 Initialize();
-                return _firewallPublicIpAddress;
+                return _firewallPublicIPAddress;
             }
         }
 
@@ -159,7 +159,7 @@ namespace Azure.Provisioning.CognitiveServices
             _status = DefineModelProperty<CognitiveServicesManagedNetworkProvisionStatus>(nameof(Status), new string[] { "status" });
             _firewallSku = DefineProperty<CognitiveServicesFirewallSku>(nameof(FirewallSku), new string[] { "firewallSku" });
             _managedNetworkKind = DefineProperty<CognitiveServicesManagedNetworkKind>(nameof(ManagedNetworkKind), new string[] { "managedNetworkKind" });
-            _firewallPublicIpAddress = DefineProperty<string>(nameof(FirewallPublicIpAddress), new string[] { "firewallPublicIpAddress" }, isOutput: true);
+            _firewallPublicIPAddress = DefineProperty<string>(nameof(FirewallPublicIPAddress), new string[] { "firewallPublicIpAddress" }, isOutput: true);
             _provisioningState = DefineProperty<CognitiveServicesManagedNetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();
         }

@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.OperationTemplates
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResponse>> CheckGlobalAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckNameAvailabilityResult>> CheckGlobalAsync(this SubscriptionResource subscriptionResource, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.OperationTemplates
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResponse> CheckGlobal(this SubscriptionResource subscriptionResource, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static Response<CheckNameAvailabilityResult> CheckGlobal(this SubscriptionResource subscriptionResource, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.OperationTemplates
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResponse>> CheckLocalAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static async Task<Response<CheckNameAvailabilityResult>> CheckLocalAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.OperationTemplates
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResponse> CheckLocal(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
+        public static Response<CheckNameAvailabilityResult> CheckLocal(this SubscriptionResource subscriptionResource, AzureLocation location, CheckNameAvailabilityRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

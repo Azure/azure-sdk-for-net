@@ -10,7 +10,7 @@ using Azure.Core.Pipeline;
 
 // NOTE: The following customization is intentionally retained for backward compatibility.
 // In previous versions, all What-If operations were implemented as part of ArmDeploymentResource.
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Deployments
 {
     internal partial class ArmDeployments
     {

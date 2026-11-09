@@ -26,6 +26,15 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         {
         }
 
+        /// <summary> Gets an object representing a <see cref="DurableTaskDetectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DurableTaskDetectorResource"/> object. </returns>
+        public virtual DurableTaskDetectorResource GetDurableTaskDetectorResource(ResourceIdentifier id)
+        {
+            DurableTaskDetectorResource.ValidateResourceId(id);
+            return new DurableTaskDetectorResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="DurableTaskSchedulerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DurableTaskSchedulerResource"/> object. </returns>
@@ -62,6 +71,15 @@ namespace Azure.ResourceManager.DurableTask.Mocking
             return new DurableTaskHubResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="TaskQueueResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TaskQueueResource"/> object. </returns>
+        public virtual TaskQueueResource GetTaskQueueResource(ResourceIdentifier id)
+        {
+            TaskQueueResource.ValidateResourceId(id);
+            return new TaskQueueResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="DurableTaskRetentionPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DurableTaskRetentionPolicyResource"/> object. </returns>
@@ -69,6 +87,24 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         {
             DurableTaskRetentionPolicyResource.ValidateResourceId(id);
             return new DurableTaskRetentionPolicyResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="TransparentDataEncryptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TransparentDataEncryptionResource"/> object. </returns>
+        public virtual TransparentDataEncryptionResource GetTransparentDataEncryptionResource(ResourceIdentifier id)
+        {
+            TransparentDataEncryptionResource.ValidateResourceId(id);
+            return new TransparentDataEncryptionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="FailoverInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FailoverInstanceResource"/> object. </returns>
+        public virtual FailoverInstanceResource GetFailoverInstanceResource(ResourceIdentifier id)
+        {
+            FailoverInstanceResource.ValidateResourceId(id);
+            return new FailoverInstanceResource(Client, id);
         }
     }
 }

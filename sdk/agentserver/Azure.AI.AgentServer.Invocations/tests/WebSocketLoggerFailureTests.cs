@@ -53,6 +53,37 @@ public class WebSocketLoggerFailureTests
         });
     }
 
+    [Test]
+    public async Task RawBeginScopeFailurePreservesDirectPathAndNextConnectionRecovers()
+    {
+        var handler = new OutcomeReportingHandler();
+        var logs = new FaultInjectingLoggerProvider(
+            static _ => false,
+            failBeginScope: true);
+        var completion = new RequestCompletionTracker();
+        await using var app = BuildApp(handler, logs, completion);
+        await app.StartAsync().WaitAsync(TestTimeout);
+
+        Assert.That(
+            async () => await ConnectAndReadCloseAsync(app),
+            Throws.Exception);
+        await completion.WaitForCountAsync(1, TestTimeout);
+
+        var secondCloseCode = await ConnectAndReadCloseAsync(app);
+        await completion.WaitForCountAsync(2, TestTimeout);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(secondCloseCode, Is.EqualTo(1002));
+            Assert.That(logs.InjectedFailureCount, Is.EqualTo(1));
+            Assert.That(completion.Exceptions, Has.Count.EqualTo(1));
+            Assert.That(logs.CloseEvents, Has.Count.EqualTo(1));
+            Assert.That(logs.CountException(handler.PrimaryException), Is.EqualTo(1));
+            Assert.That(logs.CountException(handler.CleanupException), Is.EqualTo(1));
+            Assert.That(logs.CountException(handler.CloseException), Is.EqualTo(1));
+        });
+    }
+
     private static void AssertOutcomeObservations(
         OutcomeReportingHandler handler,
         FaultInjectingLoggerProvider logs,
@@ -167,10 +198,16 @@ public class WebSocketLoggerFailureTests
     {
         private readonly ConcurrentQueue<CapturedLogEntry> _entries = new();
         private readonly Func<CapturedLogEntry, bool> _shouldThrow;
+        private readonly bool _failBeginScope;
         private int _injectedFailureCount;
 
-        public FaultInjectingLoggerProvider(Func<CapturedLogEntry, bool> shouldThrow) =>
+        public FaultInjectingLoggerProvider(
+            Func<CapturedLogEntry, bool> shouldThrow,
+            bool failBeginScope = false)
+        {
             _shouldThrow = shouldThrow;
+            _failBeginScope = failBeginScope;
+        }
 
         public int InjectedFailureCount => Volatile.Read(ref _injectedFailureCount);
 
@@ -181,7 +218,9 @@ public class WebSocketLoggerFailureTests
         public int CountException(Exception exception) =>
             _entries.Count(entry => ReferenceEquals(entry.Exception, exception));
 
-        public ILogger CreateLogger(string categoryName) => new FaultInjectingLogger(this);
+        public ILogger CreateLogger(string categoryName) => new FaultInjectingLogger(
+            this,
+            categoryName == typeof(WebSocketEndpointHandler).FullName);
 
         public void Dispose()
         {
@@ -190,8 +229,15 @@ public class WebSocketLoggerFailureTests
         private void Record(CapturedLogEntry entry)
         {
             _entries.Enqueue(entry);
-            if (_shouldThrow(entry) &&
-                Interlocked.CompareExchange(ref _injectedFailureCount, 1, 0) == 0)
+            if (_shouldThrow(entry))
+            {
+                ThrowOnce();
+            }
+        }
+
+        private void ThrowOnce()
+        {
+            if (Interlocked.CompareExchange(ref _injectedFailureCount, 1, 0) == 0)
             {
                 throw new InvalidOperationException("injected logger failure");
             }
@@ -200,10 +246,28 @@ public class WebSocketLoggerFailureTests
         private sealed class FaultInjectingLogger : ILogger
         {
             private readonly FaultInjectingLoggerProvider _owner;
+            private readonly bool _isEndpointLogger;
 
-            public FaultInjectingLogger(FaultInjectingLoggerProvider owner) => _owner = owner;
+            public FaultInjectingLogger(
+                FaultInjectingLoggerProvider owner,
+                bool isEndpointLogger)
+            {
+                _owner = owner;
+                _isEndpointLogger = isEndpointLogger;
+            }
 
-            public IDisposable? BeginScope<TState>(TState state) where TState : notnull => null;
+            public IDisposable? BeginScope<TState>(TState state) where TState : notnull
+            {
+                if (!_isEndpointLogger)
+                {
+                    return null;
+                }
+                if (_owner._failBeginScope)
+                {
+                    _owner.ThrowOnce();
+                }
+                return null;
+            }
 
             public bool IsEnabled(LogLevel logLevel) => true;
 

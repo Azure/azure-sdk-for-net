@@ -141,7 +141,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
             _monthsOfYear = DefineListProperty<BackupMonthOfYear>(nameof(MonthsOfYear), new string[] { "monthsOfYear" });
             _retentionScheduleDaily = DefineModelProperty<DailyRetentionFormat>(nameof(RetentionScheduleDaily), new string[] { "retentionScheduleDaily" });
             _retentionScheduleWeekly = DefineModelProperty<WeeklyRetentionFormat>(nameof(RetentionScheduleWeekly), new string[] { "retentionScheduleWeekly" });
-            _retentionTimes = DefineListProperty<DateTimeOffset>(nameof(RetentionTimes), new string[] { "retentionTimes" });
+            _retentionTimes = DefineListProperty<DateTimeOffset>(nameof(RetentionTimes), new string[] { "retentionTimes" }, format: "O");
             _retentionDuration = DefineModelProperty<RetentionDuration>(nameof(RetentionDuration), new string[] { "retentionDuration" });
             DefineAdditionalProperties();
         }

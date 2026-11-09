@@ -23,7 +23,6 @@ namespace Azure.ResourceManager.Subscription
     [ModelReaderWriterBuildable(typeof(BillingAccountPolicyResource))]
     [ModelReaderWriterBuildable(typeof(CanceledSubscriptionId))]
     [ModelReaderWriterBuildable(typeof(EnabledSubscriptionId))]
-    [ModelReaderWriterBuildable(typeof(PutAliasRequestProperties))]
     [ModelReaderWriterBuildable(typeof(RenamedSubscriptionId))]
     [ModelReaderWriterBuildable(typeof(ServiceTenant))]
     [ModelReaderWriterBuildable(typeof(SubscriptionAliasAdditionalProperties))]

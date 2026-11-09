@@ -53,6 +53,43 @@ namespace Microsoft.Extensions.Azure
             return builder.RegisterClientFactory<ContentSafetyClient, ContentSafetyClientOptions>(configuration);
         }
 
+        /// <summary> Registers a <see cref="ContentProvenanceClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public static IAzureClientBuilder<ContentProvenanceClient, ContentSafetyClientOptions> AddContentProvenanceClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+            where TBuilder : IAzureClientFactoryBuilder
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            return builder.RegisterClientFactory<ContentProvenanceClient, ContentSafetyClientOptions>(options => new ContentProvenanceClient(endpoint, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="ContentProvenanceClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public static IAzureClientBuilder<ContentProvenanceClient, ContentSafetyClientOptions> AddContentProvenanceClient<TBuilder>(this TBuilder builder, Uri endpoint)
+            where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+
+            return builder.RegisterClientFactory<ContentProvenanceClient, ContentSafetyClientOptions>((options, credential) => new ContentProvenanceClient(endpoint, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="ContentProvenanceClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration to use for the client. </param>
+        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        public static IAzureClientBuilder<ContentProvenanceClient, ContentSafetyClientOptions> AddContentProvenanceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+            where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        {
+            return builder.RegisterClientFactory<ContentProvenanceClient, ContentSafetyClientOptions>(configuration);
+        }
+
         /// <summary> Registers a <see cref="BlocklistClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Service endpoint. </param>

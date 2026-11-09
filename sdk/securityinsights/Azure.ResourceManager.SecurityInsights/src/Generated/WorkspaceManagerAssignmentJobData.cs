@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary> The time the job completed. </summary>
         [WirePath("properties.endTime")]
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
         }
 
@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary> The time the job started. </summary>
         [WirePath("properties.startTime")]
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 

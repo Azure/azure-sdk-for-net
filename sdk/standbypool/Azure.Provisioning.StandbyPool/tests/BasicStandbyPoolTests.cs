@@ -56,17 +56,17 @@ public class BasicStandbyPoolTests
 
             resource pool 'Microsoft.StandbyPool/standbyVirtualMachinePools@2025-10-01' = {
               name: take('pool-${uniqueString(resourceGroup().id)}', 24)
-              tags: {
-                environment: 'test'
-              }
               location: location
               properties: {
+                attachedVirtualMachineScaleSetId: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sample-rg/providers/Microsoft.Compute/virtualMachineScaleSets/sample-vmss'
                 elasticityProfile: {
                   maxReadyCapacity: 2
                   minReadyCapacity: 1
                 }
                 virtualMachineState: 'Running'
-                attachedVirtualMachineScaleSetId: '/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/sample-rg/providers/Microsoft.Compute/virtualMachineScaleSets/sample-vmss'
+              }
+              tags: {
+                environment: 'test'
               }
             }
             """);
@@ -193,7 +193,6 @@ public class BasicStandbyPoolTests
               name: '${resourceName}-containerGroup'
               location: location
               properties: {
-                sku: 'Standard'
                 containers: [
                   {
                     name: 'mycontainergroupprofile'
@@ -206,8 +205,8 @@ public class BasicStandbyPoolTests
                       ]
                       resources: {
                         requests: {
-                          memoryInGB: json('1.5')
                           cpu: 1
+                          memoryInGB: json('1.5')
                         }
                       }
                     }
@@ -216,18 +215,20 @@ public class BasicStandbyPoolTests
                 ipAddress: {
                   ports: [
                     {
-                      protocol: 'TCP'
                       port: 8000
+                      protocol: 'TCP'
                     }
                   ]
                   type: 'Public'
                 }
                 osType: 'Linux'
+                sku: 'Standard'
               }
             }
 
             resource virtualNetwork 'Microsoft.Network/virtualNetworks@2022-07-01' = {
               name: '${resourceName}-vnet'
+              location: location
               properties: {
                 addressSpace: {
                   addressPrefixes: [
@@ -243,17 +244,12 @@ public class BasicStandbyPoolTests
                   }
                 ]
               }
-              location: location
             }
 
             resource standbyContainerGroupPool 'Microsoft.StandbyPool/standbyContainerGroupPools@2025-10-01' = {
               name: '${resourceName}-CGPool'
               location: location
               properties: {
-                elasticityProfile: {
-                  maxReadyCapacity: 5
-                  refillPolicy: 'always'
-                }
                 containerGroupProperties: {
                   containerGroupProfile: {
                     id: containerGroupProfile.id
@@ -264,6 +260,10 @@ public class BasicStandbyPoolTests
                       id: virtualNetwork.properties.subnets[0].id
                     }
                   ]
+                }
+                elasticityProfile: {
+                  maxReadyCapacity: 5
+                  refillPolicy: 'always'
                 }
                 zones: [
                   '1'

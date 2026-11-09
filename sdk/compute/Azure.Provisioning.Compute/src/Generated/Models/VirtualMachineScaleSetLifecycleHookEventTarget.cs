@@ -47,7 +47,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Resource.Id;
+                return Resource is null ? default : Resource.Id;
             }
         }
 

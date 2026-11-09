@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary>
     /// The rule criteria that defines the conditions of the alert rule.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/>, <see cref="WebtestLocationAvailabilityCriteria"/>, <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, and <see cref="PromQLCriteria"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MetricAlertMultipleResourceMultipleMetricCriteria"/>, <see cref="MetricAlertSingleResourceMultipleMetricCriteria"/>, <see cref="PromQLCriteria"/>, and <see cref="WebtestLocationAvailabilityCriteria"/>.
     /// </summary>
     public partial class MetricAlertCriteria : IJsonModel<MetricAlertCriteria>
     {
@@ -121,14 +121,14 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria":
-                        return MetricAlertSingleResourceMultipleMetricCriteria.DeserializeMetricAlertSingleResourceMultipleMetricCriteria(element, options);
-                    case "Microsoft.Azure.Monitor.WebtestLocationAvailabilityCriteria":
-                        return WebtestLocationAvailabilityCriteria.DeserializeWebtestLocationAvailabilityCriteria(element, options);
                     case "Microsoft.Azure.Monitor.MultipleResourceMultipleMetricCriteria":
                         return MetricAlertMultipleResourceMultipleMetricCriteria.DeserializeMetricAlertMultipleResourceMultipleMetricCriteria(element, options);
+                    case "Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria":
+                        return MetricAlertSingleResourceMultipleMetricCriteria.DeserializeMetricAlertSingleResourceMultipleMetricCriteria(element, options);
                     case "Microsoft.Azure.Monitor.PromQLCriteria":
                         return PromQLCriteria.DeserializePromQLCriteria(element, options);
+                    case "Microsoft.Azure.Monitor.WebtestLocationAvailabilityCriteria":
+                        return WebtestLocationAvailabilityCriteria.DeserializeWebtestLocationAvailabilityCriteria(element, options);
                 }
             }
             return UnknownMetricAlertCriteria.DeserializeUnknownMetricAlertCriteria(element, options);

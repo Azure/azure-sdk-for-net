@@ -23,18 +23,23 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FileKnowledgeSourceParameters"/>. </summary>
-        /// <param name="ingestionParameters"> Consolidates all general ingestion settings. Only 'minimal' content extraction mode and embeddingModel are supported for file knowledge sources. </param>
+        /// <param name="ingestionParameters"> Consolidates all general ingestion settings for the File knowledge source, including the content extraction mode and an optional embeddingModel. </param>
+        /// <param name="queryHints"> Default hints that guide query planning toward useful filters and boosts for this index-backed knowledge source. Request-time query hints replace these defaults as a complete object. </param>
         /// <param name="createdResources"> Resources created by the file knowledge source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileKnowledgeSourceParameters(KnowledgeSourceIngestionParameters ingestionParameters, CreatedResources createdResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileKnowledgeSourceParameters(KnowledgeSourceIngestionParameters ingestionParameters, SearchIndexKnowledgeSourceQueryHints queryHints, CreatedResources createdResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IngestionParameters = ingestionParameters;
+            QueryHints = queryHints;
             CreatedResources = createdResources;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Consolidates all general ingestion settings. Only 'minimal' content extraction mode and embeddingModel are supported for file knowledge sources. </summary>
+        /// <summary> Consolidates all general ingestion settings for the File knowledge source, including the content extraction mode and an optional embeddingModel. </summary>
         public KnowledgeSourceIngestionParameters IngestionParameters { get; set; }
+
+        /// <summary> Default hints that guide query planning toward useful filters and boosts for this index-backed knowledge source. Request-time query hints replace these defaults as a complete object. </summary>
+        public SearchIndexKnowledgeSourceQueryHints QueryHints { get; set; }
 
         /// <summary> Resources created by the file knowledge source. </summary>
         public CreatedResources CreatedResources { get; }

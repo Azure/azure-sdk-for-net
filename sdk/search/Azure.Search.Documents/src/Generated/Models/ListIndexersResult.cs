@@ -19,19 +19,24 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of <see cref="ListIndexersResult"/>. </summary>
         internal ListIndexersResult()
         {
-            Indexers = new ChangeTrackingList<SearchIndexer>();
+            Value = new ChangeTrackingList<SearchIndexer>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ListIndexersResult"/>. </summary>
-        /// <param name="indexers"> The indexers in the Search service. </param>
+        /// <param name="value"> The indexers in the Search service. </param>
+        /// <param name="odataNextLink"> The URL that can be used to fetch the next set of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ListIndexersResult(IReadOnlyList<SearchIndexer> indexers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ListIndexersResult(IReadOnlyList<SearchIndexer> value, string odataNextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Indexers = indexers;
+            Value = value;
+            OdataNextLink = odataNextLink;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The indexers in the Search service. </summary>
-        public IReadOnlyList<SearchIndexer> Indexers { get; }
+        public IReadOnlyList<SearchIndexer> Value { get; }
+
+        /// <summary> The URL that can be used to fetch the next set of results. </summary>
+        public string OdataNextLink { get; }
     }
 }

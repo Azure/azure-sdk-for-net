@@ -191,12 +191,12 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ObservationResult(
                 name,
-                types,
+                types ?? new ChangeTrackingList<ObservationType>(),
                 priority,
                 cvssScoreV2,
                 cvssScoreV3,

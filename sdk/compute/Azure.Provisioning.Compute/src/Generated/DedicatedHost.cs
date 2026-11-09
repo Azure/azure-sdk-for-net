@@ -23,12 +23,12 @@ namespace Azure.Provisioning.Compute
         private BicepValue<AzureLocation> _location;
         private DedicatedHostProperties _properties;
         private ComputeSku _sku;
-        private ResourceReference<DedicatedHostGroup> _parent;
+        private ProvisioningResourceReference<DedicatedHostGroup> _parent;
 
         /// <summary> Creates a new DedicatedHost. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public DedicatedHost(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/hostGroups/hosts", resourceVersion ?? "2026-03-01")
+        public DedicatedHost(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/hostGroups/hosts", resourceVersion ?? "2026-04-01")
         {
         }
 
@@ -278,7 +278,7 @@ namespace Azure.Provisioning.Compute
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<DedicatedHostProperties>(nameof(Properties), new string[] { "properties" });
             _sku = DefineModelProperty<ComputeSku>(nameof(Sku), new string[] { "sku" }, isRequired: true);
-            _parent = DefineResource<DedicatedHostGroup>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<DedicatedHostGroup>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 
@@ -298,6 +298,8 @@ namespace Azure.Provisioning.Compute
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-04-01". </summary>
+            public static readonly string V2026_04_01 = "2026-04-01";
             /// <summary> API version "2026-03-01". </summary>
             public static readonly string V2026_03_01 = "2026-03-01";
             /// <summary> API version "2025-11-01". </summary>

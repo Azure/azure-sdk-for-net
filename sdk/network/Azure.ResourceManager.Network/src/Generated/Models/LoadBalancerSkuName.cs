@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.Network.Models
         private const string StandardValue = "Standard";
         /// <summary> Gateway. </summary>
         private const string GatewayValue = "Gateway";
+        /// <summary> Service load balancer SKU. </summary>
+        private const string ServiceValue = "Service";
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancerSkuName"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -40,6 +42,9 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Gateway. </summary>
         public static LoadBalancerSkuName Gateway { get; } = new LoadBalancerSkuName(GatewayValue);
+
+        /// <summary> Service load balancer SKU. </summary>
+        public static LoadBalancerSkuName Service { get; } = new LoadBalancerSkuName(ServiceValue);
 
         /// <summary> Determines if two <see cref="LoadBalancerSkuName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

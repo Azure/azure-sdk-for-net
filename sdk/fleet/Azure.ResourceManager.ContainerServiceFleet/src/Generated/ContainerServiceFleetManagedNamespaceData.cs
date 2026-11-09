@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             get
             {
-                return Properties is null ? default : Properties.AdoptionPolicy;
+                return Properties is null ? (ContainerServiceFleetAdoptionPolicy?)default : Properties.AdoptionPolicy;
             }
             set
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         {
             get
             {
-                return Properties is null ? default : Properties.DeletePolicy;
+                return Properties is null ? (ContainerServiceFleetDeletePolicy?)default : Properties.DeletePolicy;
             }
             set
             {

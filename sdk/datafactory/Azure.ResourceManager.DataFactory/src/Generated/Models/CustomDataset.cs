@@ -9,12 +9,22 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> The custom dataset. </summary>
     public partial class CustomDataset : DataFactoryDatasetProperties
     {
+        /// <summary> Initializes a new instance of <see cref="CustomDataset"/>. </summary>
+        /// <param name="linkedServiceName"> Linked service reference. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
+        public CustomDataset(DataFactoryLinkedServiceReference linkedServiceName) : base("CustomDataset", linkedServiceName)
+        {
+            Argument.AssertNotNull(linkedServiceName, nameof(linkedServiceName));
+
+        }
+
         /// <summary> Initializes a new instance of <see cref="CustomDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>

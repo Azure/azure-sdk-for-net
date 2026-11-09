@@ -6,12 +6,19 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The ResourceProviderManagement. </summary>
+    [CodeGenSerialization(nameof(ServiceTreeInfos), "serviceTreeInfos")]
     public partial class ResourceProviderManagement
     {
+        // Preserve the released collection and its wire name. The internal setter keeps the
+        // generator from treating this mutable collection as response-only.
+        /// <summary> The service tree infos. </summary>
+        public IList<ServiceTreeInfo> ServiceTreeInfos { get; internal set; } = new ChangeTrackingList<ServiceTreeInfo>();
+
         /// <summary>
         /// Gets the resource access roles
         /// <para>

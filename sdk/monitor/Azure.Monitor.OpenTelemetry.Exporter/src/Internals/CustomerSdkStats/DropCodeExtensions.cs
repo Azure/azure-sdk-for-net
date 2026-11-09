@@ -20,6 +20,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
             // Items stored for later retry while the transmitter is backing off are a
             // client-side retry; the spec's nearest non-timeout retry bucket is CLIENT_EXCEPTION.
             DropCode.BackOffEnabled => "CLIENT_EXCEPTION",
+            DropCode.ShutdownPersisted => "CLIENT_EXCEPTION",
             _ => "UNKNOWN"
         };
     }

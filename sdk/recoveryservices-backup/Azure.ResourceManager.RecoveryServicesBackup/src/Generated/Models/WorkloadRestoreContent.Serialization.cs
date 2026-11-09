@@ -163,24 +163,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     case "AzureWorkloadPointInTimeRestoreRequest":
                         return WorkloadPointInTimeRestoreContent.DeserializeWorkloadPointInTimeRestoreContent(element, options);
-                    case "AzureWorkloadSAPHanaPointInTimeRestoreRequest":
-                        return WorkloadSapHanaPointInTimeRestoreContent.DeserializeWorkloadSapHanaPointInTimeRestoreContent(element, options);
-                    case "AzureWorkloadSAPHanaRestoreRequest":
-                        return WorkloadSapHanaRestoreContent.DeserializeWorkloadSapHanaRestoreContent(element, options);
                     case "AzureWorkloadSAPAsePointInTimeRestoreRequest":
                         return WorkloadSapAsePointInTimeRestoreContent.DeserializeWorkloadSapAsePointInTimeRestoreContent(element, options);
                     case "AzureWorkloadSAPAseRestoreRequest":
                         return WorkloadSapAseRestoreContent.DeserializeWorkloadSapAseRestoreContent(element, options);
-                    case "AzureWorkloadSQLPointInTimeRestoreRequest":
-                        return WorkloadSqlPointInTimeRestoreContent.DeserializeWorkloadSqlPointInTimeRestoreContent(element, options);
-                    case "AzureWorkloadSQLRestoreRequest":
-                        return WorkloadSqlRestoreContent.DeserializeWorkloadSqlRestoreContent(element, options);
+                    case "AzureWorkloadSAPHanaPointInTimeRestoreRequest":
+                        return WorkloadSapHanaPointInTimeRestoreContent.DeserializeWorkloadSapHanaPointInTimeRestoreContent(element, options);
                     case "AzureWorkloadSAPHanaPointInTimeRestoreWithRehydrateRequest":
                         return WorkloadSapHanaPointInTimeRestoreWithRehydrateContent.DeserializeWorkloadSapHanaPointInTimeRestoreWithRehydrateContent(element, options);
+                    case "AzureWorkloadSAPHanaRestoreRequest":
+                        return WorkloadSapHanaRestoreContent.DeserializeWorkloadSapHanaRestoreContent(element, options);
                     case "AzureWorkloadSAPHanaRestoreWithRehydrateRequest":
                         return WorkloadSapHanaRestoreWithRehydrateContent.DeserializeWorkloadSapHanaRestoreWithRehydrateContent(element, options);
+                    case "AzureWorkloadSQLPointInTimeRestoreRequest":
+                        return WorkloadSqlPointInTimeRestoreContent.DeserializeWorkloadSqlPointInTimeRestoreContent(element, options);
                     case "AzureWorkloadSQLPointInTimeRestoreWithRehydrateRequest":
                         return WorkloadSqlPointInTimeRestoreWithRehydrateContent.DeserializeWorkloadSqlPointInTimeRestoreWithRehydrateContent(element, options);
+                    case "AzureWorkloadSQLRestoreRequest":
+                        return WorkloadSqlRestoreContent.DeserializeWorkloadSqlRestoreContent(element, options);
                     case "AzureWorkloadSQLRestoreWithRehydrateRequest":
                         return WorkloadSqlRestoreWithRehydrateContent.DeserializeWorkloadSqlRestoreWithRehydrateContent(element, options);
                 }

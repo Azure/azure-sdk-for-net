@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
     public static partial class ArmArizeAIObservabilityEvalModelFactory
     {
 
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -48,7 +49,6 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="partnerDescription"> Description of the Organization's purpose. </param>
         /// <param name="singleSignOnProperties"> Single sign-on properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="partnerDescription"/> is null. </exception>
         /// <returns> A new <see cref="Models.ArizeAIObservabilityEvalOrganizationProperties"/> instance for mocking. </returns>
         public static ArizeAIObservabilityEvalOrganizationProperties ArizeAIObservabilityEvalOrganizationProperties(ArizeAIObservabilityEvalMarketplaceDetails marketplace = default, ArizeAIObservabilityEvalUserDetails user = default, ArizeAIObservabilityEvalOfferProvisioningState? provisioningState = default, string partnerDescription = default, ArizeAIObservabilityEvalSingleSignOnPropertiesV2 singleSignOnProperties = default)
         {
@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
                 default);
         }
 
+        /// <summary> Marketplace details for an organization. </summary>
         /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
@@ -70,6 +71,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
             return new ArizeAIObservabilityEvalMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, default);
         }
 
+        /// <summary> Offer details for the marketplace that is selected by the user. </summary>
         /// <param name="publisherId"> Publisher Id for the marketplace offer. </param>
         /// <param name="offerId"> Offer Id for the marketplace offer. </param>
         /// <param name="planId"> Plan Id for the marketplace offer. </param>
@@ -89,6 +91,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
                 default);
         }
 
+        /// <summary> User details for an organization. </summary>
         /// <param name="firstName"> First name of the user. </param>
         /// <param name="lastName"> Last name of the user. </param>
         /// <param name="emailAddress"> Email address of the user. </param>
@@ -106,6 +109,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
                 default);
         }
 
+        /// <summary> Partner's specific Properties. </summary>
         /// <param name="description"> Description of the Organization's purpose. </param>
         /// <returns> A new <see cref="Models.ArizeAIObservabilityEvalOfferPartnerProperties"/> instance for mocking. </returns>
         public static ArizeAIObservabilityEvalOfferPartnerProperties ArizeAIObservabilityEvalOfferPartnerProperties(string description = default)
@@ -113,6 +117,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
             return new ArizeAIObservabilityEvalOfferPartnerProperties(description, default);
         }
 
+        /// <summary> Properties specific to Single Sign On Resource. </summary>
         /// <param name="type"> Type of Single Sign-On mechanism being used. </param>
         /// <param name="state"> State of the Single Sign On for the resource. </param>
         /// <param name="enterpriseAppId"> AAD enterprise application Id used to setup SSO. </param>
@@ -132,6 +137,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
                 default);
         }
 
+        /// <summary> The type used for update operations of the Organization Resource. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Models.ArizeAIObservabilityEvalOrganizationPatch"/> instance for mocking. </returns>

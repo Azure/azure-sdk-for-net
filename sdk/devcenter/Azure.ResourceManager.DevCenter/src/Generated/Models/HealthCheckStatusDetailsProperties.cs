@@ -24,23 +24,23 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HealthCheckStatusDetailsProperties"/>. </summary>
-        /// <param name="startOn"> Start time of last execution of the health checks. </param>
-        /// <param name="endOn"> End time of last execution of the health checks. </param>
+        /// <param name="startsOn"> Start time of last execution of the health checks. </param>
+        /// <param name="endsOn"> End time of last execution of the health checks. </param>
         /// <param name="healthChecks"> Details for each health check item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HealthCheckStatusDetailsProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<DevCenterHealthCheck> healthChecks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HealthCheckStatusDetailsProperties(DateTimeOffset? startsOn, DateTimeOffset? endsOn, IReadOnlyList<DevCenterHealthCheck> healthChecks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             HealthChecks = healthChecks;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Start time of last execution of the health checks. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> End time of last execution of the health checks. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Details for each health check item. </summary>
         public IReadOnlyList<DevCenterHealthCheck> HealthChecks { get; } = new ChangeTrackingList<DevCenterHealthCheck>();

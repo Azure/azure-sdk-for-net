@@ -15,6 +15,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new AccessKeyAuthTypeWorkspaceConnectionProperties. </summary>
         public AccessKeyAuthTypeWorkspaceConnectionProperties()
         {
+            AuthType.Assign(ConnectionAuthType.AccessKey);
         }
 
         /// <summary> Gets or sets the Credentials. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("authType", new string[] { "authType" }, defaultValue: "AccessKey");
             _credentials = DefineModelProperty<WorkspaceConnectionAccessKey>(nameof(Credentials), new string[] { "credentials" });
             DefineAdditionalProperties();
         }

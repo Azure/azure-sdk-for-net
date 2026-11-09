@@ -197,6 +197,54 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        /// <summary> Specifies whether the link operates in single-database or multi-database mode. </summary>
+        [WirePath("properties.linkMode")]
+        public LinkModeType? LinkMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LinkMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DistributedAvailabilityGroupProperties();
+                }
+                Properties.LinkMode = value;
+            }
+        }
+
+        /// <summary> Most recent error code for the distributed availability group. </summary>
+        [WirePath("properties.mostRecentError")]
+        public string MostRecentErrorCode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MostRecentErrorCode;
+            }
+        }
+
+        /// <summary> Time of the most recent error for the distributed availability group. </summary>
+        [WirePath("properties.mostRecentErrorTime")]
+        public DateTimeOffset? MostRecentErrorOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MostRecentErrorOn;
+            }
+        }
+
+        /// <summary> Most recent error message for the distributed availability group. </summary>
+        [WirePath("properties.mostRecentErrorMessage")]
+        public string MostRecentErrorMessage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MostRecentErrorMessage;
+            }
+        }
+
         /// <summary> Databases in the distributed availability group. </summary>
         [WirePath("properties.databases")]
         public IList<DistributedAvailabilityGroupDatabase> Databases

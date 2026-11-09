@@ -13,91 +13,88 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap
 {
-    /// <summary>
-    /// A class representing the SapInstance data model.
-    /// Define the SAP Instance resource.
-    /// </summary>
+    /// <summary> Define the SAP Instance resource. </summary>
     public partial class SapInstanceData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SapInstanceData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public SapInstanceData(AzureLocation location) : base(location)
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="SapInstanceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="systemSid"> This is the SID of SAP System. Keeping this not equal to ID as different landscapes can have repeated System SID IDs. </param>
-        /// <param name="environment"> The Environment; PRD, QA, DEV, etc to which SAP system belongs to. Select from the list of available dropdown values. </param>
-        /// <param name="landscapeSid"> This is the SID of the production system in a landscape.  An SAP system could itself be a production SID or a part of a landscape with a different Production SID. This field can be used to relate non-prod SIDs, other components, SID (WEBDISP) to the prod SID. Enter the value of Production SID. </param>
-        /// <param name="application"> Enter a business function/department identifier to group multiple SIDs. </param>
-        /// <param name="provisioningState"> Defines the provisioning states. </param>
-        /// <param name="errors"> Defines the errors related to SAP Instance resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SapInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string systemSid, SapInstanceEnvironment? environment, string landscapeSid, string application, SapDiscoveryProvisioningState? provisioningState, SapMigrateError errors, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SapInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SAPInstanceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            SystemSid = systemSid;
-            Environment = environment;
-            LandscapeSid = landscapeSid;
-            Application = application;
-            ProvisioningState = provisioningState;
-            Errors = errors;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SapInstanceData"/> for deserialization. </summary>
-        internal SapInstanceData()
-        {
-        }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal SAPInstanceProperties Properties { get; set; }
 
         /// <summary> This is the SID of SAP System. Keeping this not equal to ID as different landscapes can have repeated System SID IDs. </summary>
-        public string SystemSid { get; }
+        public string SystemSid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SystemSid;
+            }
+        }
+
         /// <summary> The Environment; PRD, QA, DEV, etc to which SAP system belongs to. Select from the list of available dropdown values. </summary>
-        public SapInstanceEnvironment? Environment { get; }
+        public SapInstanceEnvironment? Environment
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Environment;
+            }
+        }
+
         /// <summary> This is the SID of the production system in a landscape.  An SAP system could itself be a production SID or a part of a landscape with a different Production SID. This field can be used to relate non-prod SIDs, other components, SID (WEBDISP) to the prod SID. Enter the value of Production SID. </summary>
-        public string LandscapeSid { get; }
+        public string LandscapeSid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LandscapeSid;
+            }
+        }
+
         /// <summary> Enter a business function/department identifier to group multiple SIDs. </summary>
-        public string Application { get; }
+        public string Application
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Application;
+            }
+        }
+
         /// <summary> Defines the provisioning states. </summary>
-        public SapDiscoveryProvisioningState? ProvisioningState { get; }
+        public SapDiscoveryProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Defines the errors related to SAP Instance resource. </summary>
-        public SapMigrateError Errors { get; }
+        public SapMigrateError Errors
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Errors;
+            }
+        }
     }
 }

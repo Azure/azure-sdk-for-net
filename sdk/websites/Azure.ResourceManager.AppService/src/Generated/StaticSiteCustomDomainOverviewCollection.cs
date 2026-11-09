@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<StaticSiteCustomDomainOverviewData, StaticSiteCustomDomainOverviewResource>(new StaticSiteCustomDomainOverviewARMResourcesGetStaticSiteCustomDomainsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<StaticSiteCustomDomainOverviewData, StaticSiteCustomDomainOverviewResource>(new StaticSiteCustomDomainOverviewDataAsyncCollectionResultOfT(
                 _staticSiteCustomDomainOverviewARMResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<StaticSiteCustomDomainOverviewData, StaticSiteCustomDomainOverviewResource>(new StaticSiteCustomDomainOverviewARMResourcesGetStaticSiteCustomDomainsCollectionResultOfT(
+            return new PageableWrapper<StaticSiteCustomDomainOverviewData, StaticSiteCustomDomainOverviewResource>(new StaticSiteCustomDomainOverviewDataCollectionResultOfT(
                 _staticSiteCustomDomainOverviewARMResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpiresOn;
             }
             set
             {
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     Properties = new LabVirtualMachineCreationParameterProperties();
                 }
-                Properties.ExpireOn = value;
+                Properties.ExpiresOn = value;
             }
         }
 

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Dns;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns.Models
 {
@@ -21,19 +20,19 @@ namespace Azure.ResourceManager.Dns.Models
         /// <summary> Initializes a new instance of <see cref="DnsResourceReferenceRequestProperties"/>. </summary>
         public DnsResourceReferenceRequestProperties()
         {
-            TargetResources = new ChangeTrackingList<WritableSubResource>();
+            TargetResourceReferences = new ChangeTrackingList<DnsSubResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsResourceReferenceRequestProperties"/>. </summary>
-        /// <param name="targetResources"> A list of references to azure resources for which referencing dns records need to be queried. </param>
+        /// <param name="targetResourceReferences"> A list of references to azure resources for which referencing dns records need to be queried. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DnsResourceReferenceRequestProperties(IList<WritableSubResource> targetResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DnsResourceReferenceRequestProperties(IList<DnsSubResourceInfo> targetResourceReferences, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            TargetResources = targetResources;
+            TargetResourceReferences = targetResourceReferences;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A list of references to azure resources for which referencing dns records need to be queried. </summary>
-        public IList<WritableSubResource> TargetResources { get; } = new ChangeTrackingList<WritableSubResource>();
+        public IList<DnsSubResourceInfo> TargetResourceReferences { get; } = new ChangeTrackingList<DnsSubResourceInfo>();
     }
 }

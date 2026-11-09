@@ -138,7 +138,10 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        /// <summary> Set of protocol types, default NFSv3, CIFS for SMB protocol. </summary>
+        /// <summary>
+        /// Specify the protocol types for the volume. Supported values are NFSv3, NFSv4.1, and CIFS. For SMB volumes, specify CIFS.
+        /// The value SMB isn't supported in the protocolTypes property. Default: NFSv3
+        /// </summary>
         public IList<string> ProtocolTypes
         {
             get
@@ -464,6 +467,23 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
+        /// <summary> Enables or disables SMB opportunistic lock property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
+        public SmbOplocks? SmbOplocks
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SmbOplocks;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeProperties();
+                }
+                Properties.SmbOplocks = value;
+            }
+        }
+
         /// <summary> Maximum throughput in MiB/s that can be achieved by this volume and this will be accepted as input only for manual qosType volume. </summary>
         public float? ThroughputMibps
         {
@@ -696,6 +716,23 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
+        /// <summary> Async Directory Delete configuration for the volume. </summary>
+        public AsyncDirectoryDelete AsyncDirectoryDelete
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AsyncDirectoryDelete;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeProperties();
+                }
+                Properties.AsyncDirectoryDelete = value;
+            }
+        }
+
         /// <summary> Default user quota for volume in KiBs. If isDefaultQuotaEnabled is set, the minimum value of 4 KiBs applies . </summary>
         public long? DefaultUserQuotaInKiBs
         {
@@ -904,6 +941,23 @@ namespace Azure.ResourceManager.NetApp.Models
                     Properties = new VolumeProperties();
                 }
                 return Properties.ExportRules;
+            }
+        }
+
+        /// <summary> Indicates whether this volume is designated as an origin for cache volumes. </summary>
+        public OriginVolume? GeoNamespaceOriginVolume
+        {
+            get
+            {
+                return Properties is null ? default : Properties.GeoNamespaceOriginVolume;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VolumeProperties();
+                }
+                Properties.GeoNamespaceOriginVolume = value;
             }
         }
     }

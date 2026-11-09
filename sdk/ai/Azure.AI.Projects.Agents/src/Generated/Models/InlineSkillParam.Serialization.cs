@@ -6,12 +6,11 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Agents;
 
-namespace OpenAI
+namespace Azure.AI.Projects.Agents
 {
     /// <summary> The InlineSkillParam. </summary>
-    internal partial class InlineSkillParam : ContainerSkill, IJsonModel<InlineSkillParam>
+    public partial class InlineSkillParam : ContainerSkill, IJsonModel<InlineSkillParam>
     {
         /// <summary> Initializes a new instance of <see cref="InlineSkillParam"/> for deserialization. </summary>
         internal InlineSkillParam()
@@ -139,7 +138,7 @@ namespace OpenAI
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new InlineSkillParam(@type, additionalBinaryDataProperties, name, description, source);

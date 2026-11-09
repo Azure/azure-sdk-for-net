@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             get
             {
-                return Properties is null ? default : Properties.QueryStartOn;
+                return Properties is null ? default : Properties.QueryStartsOn;
             }
             set
             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     Properties = new BookmarkProperties();
                 }
-                Properties.QueryStartOn = value;
+                Properties.QueryStartsOn = value;
             }
         }
 
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.SecurityInsights
         {
             get
             {
-                return Properties is null ? default : Properties.QueryEndOn;
+                return Properties is null ? default : Properties.QueryEndsOn;
             }
             set
             {
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     Properties = new BookmarkProperties();
                 }
-                Properties.QueryEndOn = value;
+                Properties.QueryEndsOn = value;
             }
         }
 

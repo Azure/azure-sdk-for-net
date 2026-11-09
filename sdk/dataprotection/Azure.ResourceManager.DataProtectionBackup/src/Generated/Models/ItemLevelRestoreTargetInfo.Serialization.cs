@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ItemLevelRestoreTargetInfo(
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 recoverySetting,
                 restoreLocation,
                 additionalBinaryDataProperties,
-                restoreCriteria,
+                restoreCriteria ?? new ChangeTrackingList<ItemLevelRestoreCriteria>(),
                 datasourceInfo,
                 datasourceSetInfo,
                 datasourceAuthCredentials);

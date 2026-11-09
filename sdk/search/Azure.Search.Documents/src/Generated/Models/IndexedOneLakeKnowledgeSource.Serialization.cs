@@ -113,7 +113,9 @@ namespace Azure.Search.Documents.Indexes.Models
             string name = default;
             string description = default;
             KnowledgeSourceKind kind = default;
+            KnowledgeSourceResultsProcessing? resultsProcessing = default;
             ETag? eTag = default;
+            bool encryptionKeyIsDefined = false;
             SearchResourceEncryptionKey encryptionKey = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IndexedOneLakeKnowledgeSourceParameters indexedOneLakeParameters = default;
@@ -134,6 +136,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     kind = new KnowledgeSourceKind(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("resultsProcessing"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resultsProcessing = new KnowledgeSourceResultsProcessing(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("@odata.etag"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -145,6 +156,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("encryptionKey"u8))
                 {
+                    encryptionKeyIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         encryptionKey = null;
@@ -160,17 +172,21 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new IndexedOneLakeKnowledgeSource(
                 name,
                 description,
                 kind,
+                resultsProcessing,
                 eTag,
                 encryptionKey,
                 additionalBinaryDataProperties,
-                indexedOneLakeParameters);
+                indexedOneLakeParameters)
+            {
+                _encryptionKeyIsDefined = encryptionKeyIsDefined
+            };
         }
     }
 }

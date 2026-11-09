@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Gets or sets the expiry time. </summary>
         public DateTimeOffset? ExpireOn
         {
-            get => Properties.ExpireOn;
+            get => Properties.ExpiresOn;
             [EditorBrowsable(EditorBrowsableState.Never)]
-            set => Properties.ExpireOn = value;
+            set => Properties.ExpiresOn = value;
         }
 
         /// <summary> Gets or sets the value of the enabled flag of webhook. </summary>

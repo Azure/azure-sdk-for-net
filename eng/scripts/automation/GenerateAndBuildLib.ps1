@@ -1185,11 +1185,37 @@ function UpdateExistingSDKByInputFiles()
 
 }
 
+function Get-TypeSpecEmitterPackageJsonPath {
+    param(
+        [string]$typespecEmitter,
+        [string]$sdkRepoRoot
+    )
+
+    if ([string]::IsNullOrWhiteSpace($typespecEmitter)) {
+        return
+    }
+
+    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+    $configPath = Join-Path $sdkRepoRoot "eng" "tsp-client-config.yaml"
+    $config = ConvertFrom-Yaml (Get-Content $configPath -Raw -ErrorAction Stop)
+    $emitter = $config["supportedEmitters"] | Where-Object { $_["name"] -ceq $typespecEmitter } | Select-Object -First 1
+    if (-not $emitter -or [string]::IsNullOrWhiteSpace($emitter["path"])) {
+        throw "[ERROR] TypeSpec emitter '$typespecEmitter' is not supported. Configure it in '$configPath' with an emitter package JSON path."
+    }
+
+    $packageJsonPath = Join-Path $sdkRepoRoot $emitter["path"]
+    if (-not (Test-Path $packageJsonPath -PathType Leaf)) {
+        throw "[ERROR] Emitter package JSON for '$typespecEmitter' was not found at '$packageJsonPath'."
+    }
+    return $packageJsonPath
+}
+
 function GetSDKProjectFolder()
 {
     param(
         [string]$typespecConfigurationFile,
-        [string]$sdkRepoRoot
+        [string]$sdkRepoRoot,
+        [string]$typespecEmitter
     )
     $tspConfigYaml = Get-Content -Path $typespecConfigurationFile -Raw
 
@@ -1211,6 +1237,12 @@ function GetSDKProjectFolder()
             "@azure-typespec/http-client-csharp",
             "@azure-typespec/http-client-csharp-mgmt"
         )
+        if (-not [string]::IsNullOrWhiteSpace($typespecEmitter)) {
+            $csharpOptionKeys = @($typespecEmitter)
+            if (-not $yml["options"] -or -not $yml["options"][$typespecEmitter]) {
+                throw "[ERROR] Options for TypeSpec emitter '$typespecEmitter' were not found in '$typespecConfigurationFile'."
+            }
+        }
 
         $csharpOpts = $null
         if ($yml["options"]) {

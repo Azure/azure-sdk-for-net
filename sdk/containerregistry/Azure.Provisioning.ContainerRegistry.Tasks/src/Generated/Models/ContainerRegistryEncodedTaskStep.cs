@@ -19,6 +19,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         /// <summary> Creates a new ContainerRegistryEncodedTaskStep. </summary>
         public ContainerRegistryEncodedTaskStep()
         {
+            Type.Assign(StepType.EncodedTask);
         }
 
         /// <summary> Gets or sets the EncodedTaskContent. </summary>
@@ -70,7 +71,6 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "EncodedTask");
             _encodedTaskContent = DefineProperty<string>(nameof(EncodedTaskContent), new string[] { "encodedTaskContent" }, isRequired: true);
             _encodedValuesContent = DefineProperty<string>(nameof(EncodedValuesContent), new string[] { "encodedValuesContent" });
             _values = DefineListProperty<ContainerRegistryTaskSetValue>(nameof(Values), new string[] { "values" });

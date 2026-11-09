@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             get
             {
-                return Properties is null ? default : Properties.AutoProvision;
+                return Properties is null ? (AutoProvisionState?)default : Properties.AutoProvision;
             }
             set
             {

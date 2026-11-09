@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ManagedClusterSnapshotCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ManagedClusterSnapshotResource.ResourceType, out string managedClusterSnapshotApiVersion);
             _managedClusterSnapshotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ManagedClusterSnapshotResource.ResourceType.Namespace, Diagnostics);
-            _managedClusterSnapshotsRestClient = new ManagedClusterSnapshots(_managedClusterSnapshotsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedClusterSnapshotApiVersion ?? "2026-05-02-preview");
+            _managedClusterSnapshotsRestClient = new ManagedClusterSnapshots(_managedClusterSnapshotsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ContainerService/managedclustersnapshots", out string managedClusterSnapshotsApiVersionOverride) ? managedClusterSnapshotsApiVersionOverride : "2026-08-02-preview");
             ValidateResourceId(id);
         }
 
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,7 +177,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,7 +275,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ManagedClusterSnapshotData, ManagedClusterSnapshotResource>(new ManagedClusterSnapshotsGetByResourceGroupAsyncCollectionResultOfT(_managedClusterSnapshotsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ManagedClusterSnapshotCollection.GetAll"), data => new ManagedClusterSnapshotResource(Client, data));
+            return new AsyncPageableWrapper<ManagedClusterSnapshotData, ManagedClusterSnapshotResource>(new ManagedClusterSnapshotDataAsyncCollectionResultOfT(_managedClusterSnapshotsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ManagedClusterSnapshotCollection.GetAll"), data => new ManagedClusterSnapshotResource(Client, data));
         }
 
         /// <summary>
@@ -304,7 +303,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.ContainerService
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ManagedClusterSnapshotData, ManagedClusterSnapshotResource>(new ManagedClusterSnapshotsGetByResourceGroupCollectionResultOfT(_managedClusterSnapshotsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ManagedClusterSnapshotCollection.GetAll"), data => new ManagedClusterSnapshotResource(Client, data));
+            return new PageableWrapper<ManagedClusterSnapshotData, ManagedClusterSnapshotResource>(new ManagedClusterSnapshotDataCollectionResultOfT(_managedClusterSnapshotsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ManagedClusterSnapshotCollection.GetAll"), data => new ManagedClusterSnapshotResource(Client, data));
         }
 
         /// <summary>
@@ -332,7 +331,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -389,7 +388,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -446,7 +445,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -507,7 +506,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-02-preview. </description>
+        /// <description> 2026-08-02-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

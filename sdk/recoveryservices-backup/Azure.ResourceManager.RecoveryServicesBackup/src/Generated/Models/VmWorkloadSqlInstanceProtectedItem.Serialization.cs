@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 throw new FormatException($"The model {nameof(VmWorkloadSqlInstanceProtectedItem)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(ChildDBNames))
+            if (Optional.IsCollectionDefined(ChildDatabaseNameList))
             {
-                writer.WritePropertyName("childDBNames"u8);
+                writer.WritePropertyName("childDatabaseNameList"u8);
                 writer.WriteStartArray();
-                foreach (string item in ChildDBNames)
+                foreach (string item in ChildDatabaseNameList)
                 {
                     if (item == null)
                     {
@@ -141,6 +141,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             bool? isArchiveEnabled = default;
             string policyName = default;
             int? softDeleteRetentionPeriodInDays = default;
+            AzureLocation? sourceLocation = default;
             string vaultId = default;
             BackupSourceSideScanInfo sourceSideScanInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             VmWorkloadProtectedItemExtendedInfo extendedInfo = default;
             IDictionary<string, KpiResourceHealthDetails> kpisHealths = default;
             IList<DistributedNodesInfo> nodesList = default;
-            IList<string> childDBNames = default;
+            IList<string> childDatabaseNameList = default;
             BackupInstanceProtectionReadiness? instanceProtectionReadiness = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -316,6 +317,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     softDeleteRetentionPeriodInDays = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("sourceLocation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceLocation = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("vaultId"u8))
                 {
                     vaultId = prop.Value.GetString();
@@ -442,7 +452,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     nodesList = array;
                     continue;
                 }
-                if (prop.NameEquals("childDBNames"u8))
+                if (prop.NameEquals("childDatabaseNameList"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -460,7 +470,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                             array.Add(item.GetString());
                         }
                     }
-                    childDBNames = array;
+                    childDatabaseNameList = array;
                     continue;
                 }
                 if (prop.NameEquals("instanceProtectionReadiness"u8))
@@ -474,7 +484,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new VmWorkloadSqlInstanceProtectedItem(
@@ -496,6 +506,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 isArchiveEnabled,
                 policyName,
                 softDeleteRetentionPeriodInDays,
+                sourceLocation,
                 vaultId,
                 sourceSideScanInfo,
                 additionalBinaryDataProperties,
@@ -513,7 +524,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 extendedInfo,
                 kpisHealths ?? new ChangeTrackingDictionary<string, KpiResourceHealthDetails>(),
                 nodesList ?? new ChangeTrackingList<DistributedNodesInfo>(),
-                childDBNames ?? new ChangeTrackingList<string>(),
+                childDatabaseNameList ?? new ChangeTrackingList<string>(),
                 instanceProtectionReadiness);
         }
     }

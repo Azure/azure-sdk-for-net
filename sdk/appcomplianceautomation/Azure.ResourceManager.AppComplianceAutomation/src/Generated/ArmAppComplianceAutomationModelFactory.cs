@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmAppComplianceAutomationModelFactory
     {
+        /// <summary> A class represent an AppComplianceAutomation report resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -77,6 +78,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 default);
         }
 
+        /// <summary> Single resource Id's metadata. </summary>
         /// <param name="resourceId"> Resource Id - e.g. "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg1/providers/Microsoft.Compute/virtualMachines/vm1". </param>
         /// <param name="resourceType"> Resource type. e.g. "Microsoft.Compute/virtualMachines". </param>
         /// <param name="resourceKind"> Resource kind. </param>
@@ -94,6 +96,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 default);
         }
 
+        /// <summary> The overview of the compliance result for one report. </summary>
         /// <param name="passedCount"> The count of all passed control. </param>
         /// <param name="failedCount"> The count of all failed control. </param>
         /// <param name="manualCount"> The count of all manual control. </param>
@@ -111,6 +114,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 default);
         }
 
+        /// <summary> The information of 'bring your own storage' account binding to the report. </summary>
         /// <param name="subscriptionId"> The subscription id which 'bring your own storage' account belongs to. </param>
         /// <param name="resourceGroup"> The resourceGroup which 'bring your own storage' account belongs to. </param>
         /// <param name="accountName"> 'bring your own storage' account name. </param>
@@ -121,6 +125,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new ReportStorageInfo(subscriptionId, resourceGroup, accountName, location, default);
         }
 
+        /// <summary> A class represent the certification record synchronized from app compliance. </summary>
         /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
         /// <param name="certificationStatus"> Indicates the status of certification process. </param>
         /// <param name="ingestionStatus"> Indicates the status of compliance process. </param>
@@ -133,6 +138,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new CertSyncRecord(offerGuid, certificationStatus, ingestionStatus, (controls ?? new ChangeTrackingList<ControlSyncRecord>()).ToList(), default);
         }
 
+        /// <summary> A class represent the control record synchronized from app compliance. </summary>
         /// <param name="controlId"> The Id of the control. e.g. "Operational_Security_10". </param>
         /// <param name="controlStatus"> Control status synchronized from app compliance. </param>
         /// <returns> A new <see cref="Models.ControlSyncRecord"/> instance for mocking. </returns>
@@ -141,6 +147,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new ControlSyncRecord(controlId, controlStatus, default);
         }
 
+        /// <summary> A class represent a AppComplianceAutomation report resource update properties. </summary>
         /// <param name="properties"> Report property. </param>
         /// <returns> A new <see cref="Models.AppComplianceReportPatch"/> instance for mocking. </returns>
         public static AppComplianceReportPatch AppComplianceReportPatch(AppComplianceReportPatchProperties properties = default)
@@ -191,6 +198,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 default);
         }
 
+        /// <summary> Synchronize certification record request. </summary>
         /// <param name="certRecord"> certification record to be synchronized. </param>
         /// <returns> A new <see cref="Models.SyncCertRecordContent"/> instance for mocking. </returns>
         public static SyncCertRecordContent SyncCertRecordContent(CertSyncRecord certRecord = default)
@@ -198,6 +206,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new SyncCertRecordContent(certRecord, default);
         }
 
+        /// <summary> Synchronize certification record response. </summary>
         /// <param name="certRecord"> certification record synchronized. </param>
         /// <returns> A new <see cref="Models.SyncCertRecordResult"/> instance for mocking. </returns>
         public static SyncCertRecordResult SyncCertRecordResult(CertSyncRecord certRecord = default)
@@ -205,6 +214,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new SyncCertRecordResult(certRecord, default);
         }
 
+        /// <summary> The check availability request body. </summary>
         /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
         /// <param name="resourceType"> The resource type. </param>
         /// <returns> A new <see cref="Models.AppComplianceReportNameAvailabilityContent"/> instance for mocking. </returns>
@@ -213,6 +223,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new AppComplianceReportNameAvailabilityContent(name, resourceType, default);
         }
 
+        /// <summary> The check availability result. </summary>
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
@@ -222,6 +233,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new AppComplianceReportNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
+        /// <summary> Report fix result. </summary>
         /// <param name="result"> Indicates whether the fix action is Succeeded or Failed. </param>
         /// <param name="reason"> If the report fix action failed, to indicate the detailed failed reason. </param>
         /// <returns> A new <see cref="Models.ReportFixResult"/> instance for mocking. </returns>
@@ -230,6 +242,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new ReportFixResult(result, reason, default);
         }
 
+        /// <summary> Scoping question list. </summary>
         /// <param name="questions"> List of scoping questions. </param>
         /// <returns> A new <see cref="Models.ScopingQuestions"/> instance for mocking. </returns>
         public static ScopingQuestions ScopingQuestions(IEnumerable<ScopingQuestion> questions = default)
@@ -239,6 +252,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new ScopingQuestions((questions ?? new ChangeTrackingList<ScopingQuestion>()).ToList(), default);
         }
 
+        /// <summary> The definition of a scoping question. </summary>
         /// <param name="questionId"> Question id. </param>
         /// <param name="superiorQuestionId"> Superior question id. </param>
         /// <param name="inputType"> Input type of the question answer. </param>
@@ -261,6 +275,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 default);
         }
 
+        /// <summary> Report health status verification result. </summary>
         /// <param name="result"> Indicates whether the report verification action is Succeeded or Failed. </param>
         /// <param name="reason"> If the report verification action failed, to indicate the detailed failed reason. </param>
         /// <returns> A new <see cref="Models.ReportVerificationResult"/> instance for mocking. </returns>
@@ -269,6 +284,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new ReportVerificationResult(result, reason, default);
         }
 
+        /// <summary> A class represent an AppComplianceAutomation webhook resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -286,6 +302,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 default);
         }
 
+        /// <summary> Webhook properties. </summary>
         /// <param name="webhookId"> Webhook id in database. </param>
         /// <param name="status"> Webhook status. </param>
         /// <param name="tenantId"> Tenant id. </param>
@@ -321,6 +338,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 default);
         }
 
+        /// <summary> A class represent a AppComplianceAutomation webhook resource update properties. </summary>
         /// <param name="properties"> Webhook property. </param>
         /// <returns> A new <see cref="Models.AppComplianceReportWebhookPatch"/> instance for mocking. </returns>
         public static AppComplianceReportWebhookPatch AppComplianceReportWebhookPatch(AppComplianceReportWebhookProperties properties = default)
@@ -328,6 +346,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new AppComplianceReportWebhookPatch(properties, default);
         }
 
+        /// <summary> A class represent a AppComplianceAutomation snapshot resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -345,6 +364,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 default);
         }
 
+        /// <summary> Snapshot's properties. </summary>
         /// <param name="snapshotName"> Snapshot name. </param>
         /// <param name="createdOn"> The timestamp of resource creation (UTC). </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
@@ -366,6 +386,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 default);
         }
 
+        /// <summary> A class represent the compliance result. </summary>
         /// <param name="complianceName"> The name of the compliance. e.g. "M365". </param>
         /// <param name="categories"> List of categories. </param>
         /// <returns> A new <see cref="Models.AppComplianceResult"/> instance for mocking. </returns>
@@ -376,6 +397,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new AppComplianceResult(complianceName, (categories ?? new ChangeTrackingList<AppComplianceCategory>()).ToList(), default);
         }
 
+        /// <summary> A class represent the compliance category. </summary>
         /// <param name="categoryName"> The name of the compliance category. e.g. "Operational Security". </param>
         /// <param name="categoryStatus"> Category status. </param>
         /// <param name="controlFamilies"> List of control families. </param>
@@ -387,6 +409,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new AppComplianceCategory(categoryName, categoryStatus, (controlFamilies ?? new ChangeTrackingList<AppComplianceControlFamily>()).ToList(), default);
         }
 
+        /// <summary> A class represent the control family. </summary>
         /// <param name="controlFamilyName"> The name of the control family. e.g. "Malware Protection - Anti-Virus". </param>
         /// <param name="controlFamilyStatus"> The control family status. </param>
         /// <param name="controls"> List of controls. </param>
@@ -398,6 +421,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new AppComplianceControlFamily(controlFamilyName, controlFamilyStatus, (controls ?? new ChangeTrackingList<AppComplianceControl>()).ToList(), default);
         }
 
+        /// <summary> A class represent the control. </summary>
         /// <param name="controlId"> The Id of the control. e.g. "Operational_Security_10". </param>
         /// <param name="controlName"> The name of the control. e.g. "Unsupported OS and Software.". </param>
         /// <param name="controlFullName"> The full name of the control. e.g. "Validate that unsupported operating systems and software components are not in use.". </param>
@@ -421,6 +445,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 default);
         }
 
+        /// <summary> A class represent the customer responsibility. </summary>
         /// <param name="responsibilityId"> The id of the customer responsibility. </param>
         /// <param name="responsibilityTitle"> The title of the customer responsibility. </param>
         /// <param name="responsibilityDescription"> The description of the customer responsibility. </param>
@@ -460,6 +485,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 default);
         }
 
+        /// <summary> A class represent the resource. </summary>
         /// <param name="resourceId"> The Id of the resource. </param>
         /// <param name="accountId"> Account Id. For example - AWS account Id. </param>
         /// <param name="resourceType"> The type of the resource. e.g. "Microsoft.SignalRService/SignalR". </param>
@@ -483,6 +509,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 default);
         }
 
+        /// <summary> A class represent the recommendation. </summary>
         /// <param name="recommendationId"> The Id of the recommendation. </param>
         /// <param name="recommendationShortName"> The short name of the recommendation. e.g. "Invalid TLS config". </param>
         /// <param name="recommendationSolutions"> List of recommendation solutions. </param>
@@ -494,6 +521,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new RecommendationDetails(recommendationId, recommendationShortName, (recommendationSolutions ?? new ChangeTrackingList<RecommendationSolution>()).ToList(), default);
         }
 
+        /// <summary> A class represent the recommendation solution. </summary>
         /// <param name="recommendationSolutionIndex"> The index of the recommendation solution. </param>
         /// <param name="recommendationSolutionContent"> The detail steps of the recommendation solution. </param>
         /// <param name="isRecommendSolution"> Indicates whether this solution is the recommended. </param>
@@ -503,6 +531,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new RecommendationSolution(recommendationSolutionIndex, recommendationSolutionContent, isRecommendSolution, default);
         }
 
+        /// <summary> Snapshot's download request. </summary>
         /// <param name="reportCreatorTenantId"> Tenant id. </param>
         /// <param name="downloadType"> Indicates the download type. </param>
         /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
@@ -525,6 +554,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new AppComplianceDownloadResult((resourceList ?? new ChangeTrackingList<ReportResourceItem>()).ToList(), (complianceReport ?? new ChangeTrackingList<AppComplianceReportItem>()).ToList(), compliancePdfReportSasUri is null ? default : new AppCompliancePdfReport(compliancePdfReportSasUri, default), complianceDetailedPdfReportSasUri is null ? default : new AppComplianceDetailedPdfReport(complianceDetailedPdfReportSasUri, default), default);
         }
 
+        /// <summary> Resource Id. </summary>
         /// <param name="subscriptionId"> The subscription Id of this resource. </param>
         /// <param name="resourceGroup"> The resource group name of this resource. </param>
         /// <param name="resourceType"> The resource type of this resource. e.g. "Microsoft.SignalRService/SignalR". </param>
@@ -535,6 +565,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new ReportResourceItem(subscriptionId, resourceGroup, resourceType, resourceId, default);
         }
 
+        /// <summary> Object that includes all the content for single compliance result. </summary>
         /// <param name="categoryName"> The category name. </param>
         /// <param name="controlFamilyName"> The control family name. </param>
         /// <param name="controlId"> The control Id - e.g. "1". </param>
@@ -566,6 +597,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 default);
         }
 
+        /// <summary> A class represent an AppComplianceAutomation scoping configuration resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -583,6 +615,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 default);
         }
 
+        /// <summary> ScopingConfiguration's properties. </summary>
         /// <param name="answers"> List of scoping question answers. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <returns> A new <see cref="Models.AppComplianceReportScopingConfigurationProperties"/> instance for mocking. </returns>
@@ -593,6 +626,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new AppComplianceReportScopingConfigurationProperties((answers ?? new ChangeTrackingList<ScopingAnswer>()).ToList(), provisioningState, default);
         }
 
+        /// <summary> Scoping answer. </summary>
         /// <param name="questionId"> Question id. </param>
         /// <param name="answers"> Question answer value list. </param>
         /// <returns> A new <see cref="Models.ScopingAnswer"/> instance for mocking. </returns>
@@ -603,6 +637,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new ScopingAnswer(questionId, (answers ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> A class represent an AppComplianceAutomation evidence resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -620,6 +655,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 default);
         }
 
+        /// <summary> Evidence's properties. </summary>
         /// <param name="evidenceType"> Evidence type. </param>
         /// <param name="filePath"> The path of the file in storage. </param>
         /// <param name="extraData"> Extra data considered as evidence. </param>
@@ -639,6 +675,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 default);
         }
 
+        /// <summary> Evidence file's download request. </summary>
         /// <param name="reportCreatorTenantId"> Tenant id. </param>
         /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
         /// <returns> A new <see cref="Models.EvidenceFileDownloadRequestContent"/> instance for mocking. </returns>
@@ -654,6 +691,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new EvidenceFileDownloadResult(evidenceFileUri is null ? default : new EvidenceFileUrlInfo(evidenceFileUri, default), default);
         }
 
+        /// <summary> Get collection count's request object. </summary>
         /// <param name="getCollectionCountRequestType"> The resource type. </param>
         /// <returns> A new <see cref="Models.ReportCollectionGetCountContent"/> instance for mocking. </returns>
         public static ReportCollectionGetCountContent ReportCollectionGetCountContent(string getCollectionCountRequestType = default)
@@ -661,6 +699,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new ReportCollectionGetCountContent(getCollectionCountRequestType, default);
         }
 
+        /// <summary> The get collection count response. </summary>
         /// <param name="count"> The count of the specified resource. </param>
         /// <returns> A new <see cref="Models.ReportCollectionGetCountResult"/> instance for mocking. </returns>
         public static ReportCollectionGetCountResult ReportCollectionGetCountResult(int? count = default)
@@ -668,6 +707,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new ReportCollectionGetCountResult(count, default);
         }
 
+        /// <summary> Get overview status request object. </summary>
         /// <param name="getOverviewStatusRequestType"> The resource type. </param>
         /// <returns> A new <see cref="Models.AppComplianceGetOverviewStatusContent"/> instance for mocking. </returns>
         public static AppComplianceGetOverviewStatusContent AppComplianceGetOverviewStatusContent(string getOverviewStatusRequestType = default)
@@ -675,6 +715,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new AppComplianceGetOverviewStatusContent(getOverviewStatusRequestType, default);
         }
 
+        /// <summary> The get overview status response. </summary>
         /// <param name="statusList"> List of different status items. </param>
         /// <returns> A new <see cref="Models.AppComplianceGetOverviewStatusResult"/> instance for mocking. </returns>
         public static AppComplianceGetOverviewStatusResult AppComplianceGetOverviewStatusResult(IEnumerable<OverviewStatusItem> statusList = default)
@@ -684,6 +725,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new AppComplianceGetOverviewStatusResult((statusList ?? new ChangeTrackingList<OverviewStatusItem>()).ToList(), default);
         }
 
+        /// <summary> Single status. </summary>
         /// <param name="statusName"> Status name - e.g. "Active", "Failed". </param>
         /// <param name="statusValue"> Status value. e.g. "100", or "100%". </param>
         /// <returns> A new <see cref="Models.OverviewStatusItem"/> instance for mocking. </returns>
@@ -692,6 +734,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new OverviewStatusItem(statusName, statusValue, default);
         }
 
+        /// <summary> Parameters for onboard operation. </summary>
         /// <param name="subscriptionIds"> List of subscription ids to be onboarded. </param>
         /// <returns> A new <see cref="Models.AppComplianceOnboardContent"/> instance for mocking. </returns>
         public static AppComplianceOnboardContent AppComplianceOnboardContent(IEnumerable<string> subscriptionIds = default)
@@ -701,6 +744,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new AppComplianceOnboardContent((subscriptionIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Success. The response indicates given subscriptions has been onboarded. </summary>
         /// <param name="subscriptionIds"> List of subscription ids that are onboarded. </param>
         /// <returns> A new <see cref="Models.AppComplianceOnboardResult"/> instance for mocking. </returns>
         public static AppComplianceOnboardResult AppComplianceOnboardResult(IEnumerable<string> subscriptionIds = default)
@@ -710,6 +754,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new AppComplianceOnboardResult((subscriptionIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Trigger evaluation request. </summary>
         /// <param name="resourceIds"> List of resource ids to be evaluated. </param>
         /// <returns> A new <see cref="Models.TriggerEvaluationContent"/> instance for mocking. </returns>
         public static TriggerEvaluationContent TriggerEvaluationContent(IEnumerable<string> resourceIds = default)
@@ -719,6 +764,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new TriggerEvaluationContent((resourceIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Trigger evaluation response. </summary>
         /// <param name="properties"> trigger evaluation property. </param>
         /// <returns> A new <see cref="Models.TriggerEvaluationResult"/> instance for mocking. </returns>
         public static TriggerEvaluationResult TriggerEvaluationResult(TriggerEvaluationProperty properties = default)
@@ -726,6 +772,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new TriggerEvaluationResult(properties, default);
         }
 
+        /// <summary> Trigger evaluation response. </summary>
         /// <param name="triggerOn"> The time when the evaluation is triggered. </param>
         /// <param name="evaluationEndOn"> The time when the evaluation is end. </param>
         /// <param name="resourceIds"> List of resource ids to be evaluated. </param>
@@ -739,6 +786,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new TriggerEvaluationProperty(triggerOn, evaluationEndOn, (resourceIds ?? new ChangeTrackingList<string>()).ToList(), (quickAssessments ?? new ChangeTrackingList<QuickAssessment>()).ToList(), default);
         }
 
+        /// <summary> A class represent the quick assessment. </summary>
         /// <param name="resourceId"> Resource id. </param>
         /// <param name="responsibilityId"> Responsibility id. </param>
         /// <param name="createdOn"> The timestamp of resource creation (UTC). </param>
@@ -760,6 +808,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 default);
         }
 
+        /// <summary> Parameters for listing in use storage accounts operation. If subscription list is null, it will check the user's all subscriptions. </summary>
         /// <param name="subscriptionIds"> List of subscription ids to be query. If the list is null or empty, the API will query all the subscriptions of the user. </param>
         /// <returns> A new <see cref="Models.ReportListInUseStorageAccountsContent"/> instance for mocking. </returns>
         public static ReportListInUseStorageAccountsContent ReportListInUseStorageAccountsContent(IEnumerable<string> subscriptionIds = default)
@@ -769,6 +818,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             return new ReportListInUseStorageAccountsContent((subscriptionIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Parameters for listing in use storage accounts operation. If subscription list is null, it will check the user's all subscriptions. </summary>
         /// <param name="storageAccountList"> The storage account list which in use in related reports. </param>
         /// <returns> A new <see cref="Models.ReportListInUseStorageAccountsResult"/> instance for mocking. </returns>
         public static ReportListInUseStorageAccountsResult ReportListInUseStorageAccountsResult(IEnumerable<ReportStorageInfo> storageAccountList = default)

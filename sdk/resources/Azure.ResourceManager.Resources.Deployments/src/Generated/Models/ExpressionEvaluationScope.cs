@@ -7,9 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Deployments;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.Deployments.Models
 {
     /// <summary> The scope to be used for evaluation of parameters, variables and functions in a nested template. </summary>
     public readonly partial struct ExpressionEvaluationScope : IEquatable<ExpressionEvaluationScope>

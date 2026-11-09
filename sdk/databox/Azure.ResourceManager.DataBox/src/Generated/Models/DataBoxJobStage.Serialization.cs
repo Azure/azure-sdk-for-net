@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    jobStageDetails = BinaryData.FromString(prop.Value.GetRawText());
+                    jobStageDetails = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("delayInformation"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new DataBoxJobStage(

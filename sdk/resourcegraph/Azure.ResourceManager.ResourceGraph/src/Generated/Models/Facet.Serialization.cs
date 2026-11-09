@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 {
     /// <summary>
     /// A facet containing additional statistics on the response of a query. Can be either FacetResult or FacetError.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FacetResult"/> and <see cref="FacetError"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FacetError"/> and <see cref="FacetResult"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownFacet))]
     public abstract partial class Facet : IJsonModel<Facet>
@@ -132,10 +132,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "FacetResult":
-                        return FacetResult.DeserializeFacetResult(element, options);
                     case "FacetError":
                         return FacetError.DeserializeFacetError(element, options);
+                    case "FacetResult":
+                        return FacetResult.DeserializeFacetResult(element, options);
                 }
             }
             return UnknownFacet.DeserializeUnknownFacet(element, options);

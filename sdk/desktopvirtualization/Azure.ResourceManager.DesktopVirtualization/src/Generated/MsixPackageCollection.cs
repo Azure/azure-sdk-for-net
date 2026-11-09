@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<MsixPackageData, MsixPackageResource>(new MSIXPackagesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<MsixPackageData, MsixPackageResource>(new MsixPackageDataAsyncCollectionResultOfT(
                 _msixPackagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<MsixPackageData, MsixPackageResource>(new MSIXPackagesGetAllCollectionResultOfT(
+            return new PageableWrapper<MsixPackageData, MsixPackageResource>(new MsixPackageDataCollectionResultOfT(
                 _msixPackagesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

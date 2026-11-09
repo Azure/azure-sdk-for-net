@@ -40,8 +40,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceGuid"> The resource GUID property of the load balancer resource. </param>
         /// <param name="provisioningState"> The provisioning state of the load balancer resource. </param>
         /// <param name="scope"> Indicates the scope of the load balancer: external (Public) or internal (Private). </param>
+        /// <param name="mode"> The load balancer mode. Set to `Advanced` to enable additional capabilities on a Standard SKU load balancer. Advanced mode must be specified at creation and cannot be changed afterward. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LoadBalancerPropertiesFormat(IList<FrontendIPConfigurationData> frontendIPConfigurations, IList<BackendAddressPoolData> backendAddressPools, IList<LoadBalancingRuleData> loadBalancingRules, IList<ProbeData> probes, IList<InboundNatRuleData> inboundNatRules, IList<LoadBalancerInboundNatPool> inboundNatPools, IList<OutboundRuleData> outboundRules, Guid? resourceGuid, NetworkProvisioningState? provisioningState, LoadBalancerScope? scope, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LoadBalancerPropertiesFormat(IList<FrontendIPConfigurationData> frontendIPConfigurations, IList<BackendAddressPoolData> backendAddressPools, IList<LoadBalancingRuleData> loadBalancingRules, IList<ProbeData> probes, IList<InboundNatRuleData> inboundNatRules, IList<LoadBalancerInboundNatPool> inboundNatPools, IList<OutboundRuleData> outboundRules, Guid? resourceGuid, NetworkProvisioningState? provisioningState, LoadBalancerScope? scope, LoadBalancerMode? mode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FrontendIPConfigurations = frontendIPConfigurations;
             BackendAddressPools = backendAddressPools;
@@ -53,6 +54,7 @@ namespace Azure.ResourceManager.Network.Models
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
             Scope = scope;
+            Mode = mode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -95,5 +97,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Indicates the scope of the load balancer: external (Public) or internal (Private). </summary>
         [WirePath("scope")]
         public LoadBalancerScope? Scope { get; set; }
+
+        /// <summary> The load balancer mode. Set to `Advanced` to enable additional capabilities on a Standard SKU load balancer. Advanced mode must be specified at creation and cannot be changed afterward. </summary>
+        [WirePath("mode")]
+        public LoadBalancerMode? Mode { get; set; }
     }
 }

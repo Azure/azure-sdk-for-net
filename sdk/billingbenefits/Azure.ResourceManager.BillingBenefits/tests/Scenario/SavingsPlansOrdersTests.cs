@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
             Assert.IsNotNull(response2.Value.Data.PlanInformation);
             Assert.IsNotNull(response2.Value.Data.PlanInformation.NextPaymentDueOn);
             Assert.IsNotNull(response2.Value.Data.PlanInformation.PricingCurrencyTotal);
-            Assert.IsNotNull(response2.Value.Data.PlanInformation.StartOn);
+            Assert.IsNotNull(response2.Value.Data.PlanInformation.StartsOn);
             Assert.IsNotNull(response2.Value.Data.PlanInformation.Transactions);
             Assert.Greater(response2.Value.Data.PlanInformation.Transactions.Count, 0);
         }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.BillingBenefits.Tests
             Assert.AreEqual("Compute_Savings_Plan", model.Data.Sku.Name);
             Assert.AreEqual("Compute_Savings_Plan", model.Data.SkuName);
             Assert.NotNull(model.Data.Term);
-            Assert.NotNull(model.Data.BenefitStartOn);
+            Assert.NotNull(model.Data.BenefitStartsOn);
             Assert.IsNotEmpty(model.Data.BillingAccountId);
             Assert.IsNotEmpty(model.Data.BillingProfileId);
             Assert.NotNull(model.Data.SavingsPlans);

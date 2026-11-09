@@ -109,6 +109,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <summary> Entity represents security group in the system. </summary>
         public static SecurityInsightsEntityType SecurityGroup { get; } = new SecurityInsightsEntityType(SecurityGroupValue);
 
+        /// <summary> Entity represents url in the system. </summary>
+        public static SecurityInsightsEntityType Uri { get; } = new SecurityInsightsEntityType(UriValue);
+
         /// <summary> Entity represents IoT device in the system. </summary>
         public static SecurityInsightsEntityType IoTDevice { get; } = new SecurityInsightsEntityType(IoTDeviceValue);
 

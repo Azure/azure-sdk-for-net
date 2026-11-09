@@ -154,10 +154,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RuleBasedBackupPolicy(dataSourceTypes, objectType, additionalBinaryDataProperties, policyRules);
+            return new RuleBasedBackupPolicy(dataSourceTypes ?? new ChangeTrackingList<string>(), objectType, additionalBinaryDataProperties, policyRules ?? new ChangeTrackingList<DataProtectionBasePolicyRule>());
         }
     }
 }

@@ -14,43 +14,66 @@ namespace Azure.Communication.Identity
     public readonly partial struct CommunicationTokenScope : IEquatable<CommunicationTokenScope>
     {
         private readonly string _value;
+        /// <summary> Use this for full access to Chat APIs. </summary>
+        private const string ChatValue = "chat";
+        /// <summary> Use this for full access to Calling APIs. </summary>
+        private const string VoipValue = "voip";
+        /// <summary> Access to Chat APIs but without the authorization to create, delete or update chat threads. </summary>
+        private const string ChatJoinValue = "chat.join";
+        /// <summary> A more limited version of chat.join that doesn't allow to add or remove participants. Use this scope when the token bearer is not fully trusted, for example in guest scenarios. </summary>
+        private const string ChatJoinLimitedValue = "chat.join.limited";
+        /// <summary> Access to Calling APIs but without the authorization to start new calls. </summary>
+        private const string VoipJoinValue = "voip.join";
 
         /// <summary> Initializes a new instance of <see cref="CommunicationTokenScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CommunicationTokenScope(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ChatValue = "chat";
-        private const string VoIPValue = "voip";
-        private const string ChatJoinValue = "chat.join";
-        private const string ChatJoinLimitedValue = "chat.join.limited";
-        private const string VoIPJoinValue = "voip.join";
+            _value = value;
+        }
 
         /// <summary> Use this for full access to Chat APIs. </summary>
         public static CommunicationTokenScope Chat { get; } = new CommunicationTokenScope(ChatValue);
+
         /// <summary> Access to Chat APIs but without the authorization to create, delete or update chat threads. </summary>
         public static CommunicationTokenScope ChatJoin { get; } = new CommunicationTokenScope(ChatJoinValue);
+
         /// <summary> A more limited version of chat.join that doesn't allow to add or remove participants. Use this scope when the token bearer is not fully trusted, for example in guest scenarios. </summary>
         public static CommunicationTokenScope ChatJoinLimited { get; } = new CommunicationTokenScope(ChatJoinLimitedValue);
+
         /// <summary> Determines if two <see cref="CommunicationTokenScope"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CommunicationTokenScope left, CommunicationTokenScope right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CommunicationTokenScope"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CommunicationTokenScope left, CommunicationTokenScope right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CommunicationTokenScope"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CommunicationTokenScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CommunicationTokenScope(string value) => new CommunicationTokenScope(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CommunicationTokenScope"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CommunicationTokenScope?(string value) => value == null ? null : new CommunicationTokenScope(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CommunicationTokenScope other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CommunicationTokenScope other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

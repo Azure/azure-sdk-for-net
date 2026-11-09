@@ -276,77 +276,77 @@ public class BasicFrontDoorTests
               name: frontDoorName
               location: 'global'
               properties: {
+                backendPools: [
+                  {
+                    name: backendPoolName
+                    properties: {
+                      backends: [
+                        {
+                          address: backendAddress
+                          backendHostHeader: backendAddress
+                          enabledState: 'Enabled'
+                          httpPort: 80
+                          httpsPort: 443
+                          priority: 1
+                          weight: 50
+                        }
+                      ]
+                      healthProbeSettings: {
+                        id: resourceId('Microsoft.Network/frontDoors/healthProbeSettings', frontDoorName, healthProbeSettingsName)
+                      }
+                      loadBalancingSettings: {
+                        id: resourceId('Microsoft.Network/frontDoors/loadBalancingSettings', frontDoorName, loadBalancingSettingsName)
+                      }
+                    }
+                  }
+                ]
+                enabledState: 'Enabled'
+                healthProbeSettings: [
+                  {
+                    name: healthProbeSettingsName
+                    properties: {
+                      intervalInSeconds: 120
+                      path: '/'
+                      protocol: 'Http'
+                    }
+                  }
+                ]
+                loadBalancingSettings: [
+                  {
+                    name: loadBalancingSettingsName
+                    properties: {
+                      sampleSize: 4
+                      successfulSamplesRequired: 2
+                    }
+                  }
+                ]
                 routingRules: [
                   {
+                    name: routingRuleName
                     properties: {
+                      acceptedProtocols: [
+                        'Http'
+                        'Https'
+                      ]
+                      enabledState: 'Enabled'
                       frontendEndpoints: [
                         {
                           id: resourceId('Microsoft.Network/frontDoors/frontEndEndpoints', frontDoorName, frontEndEndpointName)
                         }
                       ]
-                      acceptedProtocols: [
-                        'Http'
-                        'Https'
-                      ]
                       patternsToMatch: [
                         '/*'
                       ]
-                      enabledState: 'Enabled'
                       routeConfiguration: {
                         '@odata.type': '#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration'
-                        forwardingProtocol: 'MatchRequest'
                         backendPool: {
                           id: resourceId('Microsoft.Network/frontDoors/backEndPools', frontDoorName, backendPoolName)
                         }
+                        forwardingProtocol: 'MatchRequest'
                       }
                     }
-                    name: routingRuleName
                   }
                 ]
-                loadBalancingSettings: [
-                  {
-                    properties: {
-                      sampleSize: 4
-                      successfulSamplesRequired: 2
-                    }
-                    name: loadBalancingSettingsName
-                  }
-                ]
-                healthProbeSettings: [
-                  {
-                    properties: {
-                      path: '/'
-                      protocol: 'Http'
-                      intervalInSeconds: 120
-                    }
-                    name: healthProbeSettingsName
-                  }
-                ]
-                backendPools: [
-                  {
-                    properties: {
-                      backends: [
-                        {
-                          address: backendAddress
-                          httpPort: 80
-                          httpsPort: 443
-                          enabledState: 'Enabled'
-                          priority: 1
-                          weight: 50
-                          backendHostHeader: backendAddress
-                        }
-                      ]
-                      loadBalancingSettings: {
-                        id: resourceId('Microsoft.Network/frontDoors/loadBalancingSettings', frontDoorName, loadBalancingSettingsName)
-                      }
-                      healthProbeSettings: {
-                        id: resourceId('Microsoft.Network/frontDoors/healthProbeSettings', frontDoorName, healthProbeSettingsName)
-                      }
-                    }
-                    name: backendPoolName
-                  }
-                ]
-                enabledState: 'Enabled'
               }
             }
 
@@ -375,74 +375,74 @@ public class BasicFrontDoorTests
               name: frontDoorName
               location: 'global'
               properties: {
+                backendPools: [
+                  {
+                    name: 'backendPool1'
+                    properties: {
+                      backends: [
+                        {
+                          address: backendAddress
+                          backendHostHeader: backendAddress
+                          enabledState: 'Enabled'
+                          httpPort: 80
+                          httpsPort: 443
+                          priority: 1
+                          weight: 50
+                        }
+                      ]
+                      healthProbeSettings: {
+                        id: resourceId('Microsoft.Network/frontDoors/healthProbeSettings', frontDoorName, 'healthProbeSettings1')
+                      }
+                      loadBalancingSettings: {
+                        id: resourceId('Microsoft.Network/frontDoors/loadBalancingSettings', frontDoorName, 'loadBalancingSettings1')
+                      }
+                    }
+                  }
+                ]
+                enabledState: 'Enabled'
+                healthProbeSettings: [
+                  {
+                    name: 'healthProbeSettings1'
+                    properties: {
+                      intervalInSeconds: 120
+                      path: '/'
+                      protocol: 'Http'
+                    }
+                  }
+                ]
+                loadBalancingSettings: [
+                  {
+                    name: 'loadBalancingSettings1'
+                    properties: {
+                      sampleSize: 4
+                      successfulSamplesRequired: 2
+                    }
+                  }
+                ]
                 routingRules: [
                   {
+                    name: 'httptohttps'
                     properties: {
+                      acceptedProtocols: [
+                        'Http'
+                      ]
+                      enabledState: 'Enabled'
                       frontendEndpoints: [
                         {
                           id: resourceId('Microsoft.Network/frontDoors/frontendEndpoints', frontDoorName, 'frontendEndpoint1')
                         }
                       ]
-                      acceptedProtocols: [
-                        'Http'
-                      ]
                       patternsToMatch: [
                         '/*'
                       ]
-                      enabledState: 'Enabled'
                       routeConfiguration: {
                         '@odata.type': '#Microsoft.Azure.FrontDoor.Models.FrontdoorRedirectConfiguration'
-                        redirectType: 'Moved'
                         redirectProtocol: 'HttpsOnly'
+                        redirectType: 'Moved'
                       }
                     }
-                    name: 'httptohttps'
                   }
                 ]
-                loadBalancingSettings: [
-                  {
-                    properties: {
-                      sampleSize: 4
-                      successfulSamplesRequired: 2
-                    }
-                    name: 'loadBalancingSettings1'
-                  }
-                ]
-                healthProbeSettings: [
-                  {
-                    properties: {
-                      path: '/'
-                      protocol: 'Http'
-                      intervalInSeconds: 120
-                    }
-                    name: 'healthProbeSettings1'
-                  }
-                ]
-                backendPools: [
-                  {
-                    properties: {
-                      backends: [
-                        {
-                          address: backendAddress
-                          httpPort: 80
-                          httpsPort: 443
-                          enabledState: 'Enabled'
-                          priority: 1
-                          weight: 50
-                          backendHostHeader: backendAddress
-                        }
-                      ]
-                      loadBalancingSettings: {
-                        id: resourceId('Microsoft.Network/frontDoors/loadBalancingSettings', frontDoorName, 'loadBalancingSettings1')
-                      }
-                      healthProbeSettings: {
-                        id: resourceId('Microsoft.Network/frontDoors/healthProbeSettings', frontDoorName, 'healthProbeSettings1')
-                      }
-                    }
-                    name: 'backendPool1'
-                  }
-                ]
-                enabledState: 'Enabled'
               }
             }
             """);

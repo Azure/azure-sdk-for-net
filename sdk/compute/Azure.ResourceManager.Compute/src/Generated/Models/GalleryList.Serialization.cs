@@ -182,10 +182,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GalleryList(value, nextLink, securityProfile, additionalBinaryDataProperties);
+            return new GalleryList(value ?? new ChangeTrackingList<GalleryData>(), nextLink, securityProfile, additionalBinaryDataProperties);
         }
     }
 }

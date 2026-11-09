@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
@@ -31,14 +32,16 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="sourceDataFields"> What fields were selected for search. </param>
         /// <param name="searchFields"> What fields were searched against. </param>
         /// <param name="semanticConfigurationName"> What semantic configuration was used from the search index. </param>
+        /// <param name="queryType"> The query syntax used to execute the search. Query hints can cause semantic queries to use full query syntax. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseSearchIndexActivityArguments(string search, string filter, IList<SearchIndexFieldReference> sourceDataFields, IList<SearchIndexFieldReference> searchFields, string semanticConfigurationName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBaseSearchIndexActivityArguments(string search, string filter, IList<SearchIndexFieldReference> sourceDataFields, IList<SearchIndexFieldReference> searchFields, string semanticConfigurationName, SearchQueryType? queryType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Search = search;
             Filter = filter;
             SourceDataFields = sourceDataFields;
             SearchFields = searchFields;
             SemanticConfigurationName = semanticConfigurationName;
+            QueryType = queryType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -56,5 +59,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> What semantic configuration was used from the search index. </summary>
         public string SemanticConfigurationName { get; }
+
+        /// <summary> The query syntax used to execute the search. Query hints can cause semantic queries to use full query syntax. </summary>
+        public SearchQueryType? QueryType { get; }
     }
 }

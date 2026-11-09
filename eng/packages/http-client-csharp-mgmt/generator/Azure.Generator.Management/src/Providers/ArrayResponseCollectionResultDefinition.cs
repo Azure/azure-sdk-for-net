@@ -6,8 +6,10 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -36,8 +38,9 @@ namespace Azure.Generator.Management.Providers
         private readonly CSharpType _itemType;
         private readonly bool _isAsync;
         private readonly IReadOnlyList<ParameterProvider> _constructorParameters;
+        private readonly TypeProvider _backCompatProvider;
         private readonly string _methodName;
-        private readonly string _enclosingTypeName;
+        private readonly string _name;
 
         private readonly FieldProvider _clientField;
         private readonly IReadOnlyList<FieldProvider> _parameterFields;
@@ -48,6 +51,11 @@ namespace Azure.Generator.Management.Providers
             new("continuationToken", $"A continuation token indicating where to resume paging.", new CSharpType(typeof(string)));
         private static readonly ParameterProvider PageSizeHintParameter =
             new("pageSizeHint", $"The number of items per page.", new CSharpType(typeof(int?)));
+        private static readonly ParameterProvider CancellationTokenParameter =
+            new("cancellationToken", $"The cancellation token to use.", typeof(CancellationToken));
+        private static readonly ParameterProvider EnumerationCancellationTokenParameter =
+            new("cancellationToken", $"The cancellation token to use.", typeof(CancellationToken),
+                attributes: [new AttributeStatement(typeof(EnumeratorCancellationAttribute))]);
 
         public ArrayResponseCollectionResultDefinition(
             ClientProvider restClient,
@@ -55,6 +63,7 @@ namespace Azure.Generator.Management.Providers
             CSharpType itemType,
             bool isAsync,
             IReadOnlyList<ParameterProvider> constructorParameters,
+            TypeProvider backCompatProvider,
             string methodName,
             string enclosingTypeName)
         {
@@ -63,8 +72,11 @@ namespace Azure.Generator.Management.Providers
             _itemType = itemType;
             _isAsync = isAsync;
             _constructorParameters = constructorParameters;
+            _backCompatProvider = backCompatProvider;
             _methodName = methodName;
-            _enclosingTypeName = enclosingTypeName;
+            _name = ManagementClientGenerator.Instance.OutputLibrary.GetArrayCollectionResultName(
+                $"{enclosingTypeName}{methodName}", ManagementClientGenerator.Instance.TypeFactory.PrimaryNamespace,
+                backCompatProvider, serviceMethod, isAsync);
 
             _clientField = new FieldProvider(
                 FieldModifiers.Private | FieldModifiers.ReadOnly,
@@ -91,20 +103,7 @@ namespace Azure.Generator.Management.Providers
         protected override string BuildRelativeFilePath() =>
             Path.Combine("src", "Generated", "CollectionResults", $"{Name}.cs");
 
-        protected override string BuildName()
-        {
-            // Prefer CrossLanguageDefinitionId (e.g., "Compute.VirtualMachineExtensionImages.listVersions")
-            // converted to a valid C# identifier. CrossLanguageDefinitionId is stable across @@clientName
-            // customizations and uniquely identifies the operation, which avoids name collisions when
-            // multiple operations on the same enclosing type are surfaced under one user-facing method
-            // name (e.g., a tuple resource collection exposing two list operations both as "GetAll").
-            // Fall back to the enclosing type and method name if the CrossLanguageDefinitionId is not available.
-            var asyncSuffix = _isAsync ? "Async" : string.Empty;
-            var operationIdentifier = !string.IsNullOrEmpty(_serviceMethod.CrossLanguageDefinitionId)
-                ? _serviceMethod.CrossLanguageDefinitionId.ToIdentifierName()
-                : $"{_enclosingTypeName}_{_methodName}".ToIdentifierName();
-            return $"{operationIdentifier}{asyncSuffix}CollectionResultOfT";
-        }
+        protected override string BuildName() => $"{_name}CollectionResultOfT";
 
         protected override TypeSignatureModifiers BuildDeclarationModifiers() =>
             TypeSignatureModifiers.Internal | TypeSignatureModifiers.Partial;
@@ -163,7 +162,9 @@ namespace Azure.Generator.Management.Providers
 
         protected override MethodProvider[] BuildMethods()
         {
-            return [BuildAsPagesMethod(), BuildGetNextResponseMethod(), BuildParseArrayFromResponseMethod()];
+            return _isAsync
+                ? [BuildAsPagesMethod(), BuildAsPagesAsyncMethod(), BuildGetNextResponseMethod(), BuildParseArrayFromResponseMethod()]
+                : [BuildAsPagesMethod(), BuildGetNextResponseMethod(), BuildParseArrayFromResponseMethod()];
         }
 
         private MethodProvider BuildAsPagesMethod()
@@ -171,15 +172,28 @@ namespace Azure.Generator.Management.Providers
             var signature = new MethodSignature(
                 "AsPages",
                 $"Gets the pages of {Name} as an enumerable collection.",
-                _isAsync
-                    ? MethodSignatureModifiers.Async | MethodSignatureModifiers.Public | MethodSignatureModifiers.Override
-                    : MethodSignatureModifiers.Public | MethodSignatureModifiers.Override,
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Override,
                 _isAsync
                     ? new CSharpType(typeof(IAsyncEnumerable<>), new CSharpType(typeof(Page<>), _itemType))
                     : new CSharpType(typeof(IEnumerable<>), new CSharpType(typeof(Page<>), _itemType)),
                 $"The pages of {Name} as an enumerable collection.",
                 [ContinuationTokenParameter, PageSizeHintParameter]);
 
+            return new MethodProvider(signature, _isAsync
+                ? [Return(This.Invoke("AsPagesAsync", [ContinuationTokenParameter, PageSizeHintParameter,
+                    _contextField.NullConditional().Property(nameof(RequestContext.CancellationToken)).NullCoalesce(Default)]))]
+                : BuildAsPagesMethodBody(), this);
+        }
+
+        private MethodProvider BuildAsPagesAsyncMethod()
+        {
+            var signature = new MethodSignature(
+                "AsPagesAsync",
+                null,
+                MethodSignatureModifiers.Private | MethodSignatureModifiers.Async,
+                new CSharpType(typeof(IAsyncEnumerable<>), new CSharpType(typeof(Page<>), _itemType)),
+                null,
+                [ContinuationTokenParameter, PageSizeHintParameter, EnumerationCancellationTokenParameter]);
             return new MethodProvider(signature, BuildAsPagesMethodBody(), this);
         }
 
@@ -188,7 +202,8 @@ namespace Azure.Generator.Management.Providers
             var statements = new List<MethodBodyStatement>
             {
                 Declare("response", new CSharpType(typeof(Response), isNullable: true),
-                    This.Invoke(_isAsync ? "GetNextResponseAsync" : "GetNextResponse", [PageSizeHintParameter, Null], _isAsync),
+                    This.Invoke(_isAsync ? "GetNextResponseAsync" : "GetNextResponse",
+                        _isAsync ? [PageSizeHintParameter, Null, EnumerationCancellationTokenParameter] : [PageSizeHintParameter, Null], _isAsync),
                     out var responseVariable),
                 new IfStatement(responseVariable.Is(Null)) { new YieldBreakStatement() },
                 Declare("result", new CSharpType(typeof(IReadOnlyList<>), _itemType),
@@ -218,7 +233,7 @@ namespace Azure.Generator.Management.Providers
                 modifiers,
                 returnType,
                 null,
-                [PageSizeHintParameter, nextLinkParameter]);
+                _isAsync ? [PageSizeHintParameter, nextLinkParameter, CancellationTokenParameter] : [PageSizeHintParameter, nextLinkParameter]);
 
             return new MethodProvider(signature, BuildGetNextResponseMethodBody(), this);
         }
@@ -228,7 +243,7 @@ namespace Azure.Generator.Management.Providers
             // Since we're generating collection result, we just need to call the Create*Request method on the client
             // The method name is derived from the original convenience method name from the REST client, not the potentially customized _methodName
             // (e.g., operation "listDependencies" -> convenience method "GetDependencies" -> request method "CreateGetDependenciesRequest")
-            var convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, _isAsync);
+            var convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, _isAsync, _backCompatProvider);
             var originalMethodName = convenienceMethod.Signature.Name;
             var baseName = originalMethodName.EndsWith("Async") ? originalMethodName.Substring(0, originalMethodName.Length - 5) : originalMethodName;
             var createRequestMethodName = $"Create{baseName}Request";
@@ -255,13 +270,22 @@ namespace Azure.Generator.Management.Providers
                 scopeVariable.Invoke("Start").Terminate()
             };
 
-            var tryStatements = new List<MethodBodyStatement>
-            {
-                Return(_clientField.Property("Pipeline").Invoke(
-                    _isAsync ? "ProcessMessageAsync" : "ProcessMessage",
-                    [messageVariable, _contextField],
-                    _isAsync))
-            };
+            ValueExpression context = _contextField;
+            var message = messageVariable.ToApi<HttpMessageApi>();
+            var options = context.ToApi<HttpRequestOptionsApi>();
+            var declareErrorOptions = new DeclarationExpression(typeof(ErrorOptions), "errorOptions", out var errorOptions);
+            MethodBodyStatement[] tryStatements = _isAsync
+                ?
+                [
+                    declareErrorOptions.Assign(options.ErrorOptions().NullCoalesce(FrameworkEnumValue(ErrorOptions.Default))).Terminate(),
+                    _clientField.Property("Pipeline").Invoke(nameof(HttpPipeline.SendAsync), [messageVariable, CancellationTokenParameter], true).Terminate(),
+                    new IfStatement(message.Response().IsError().And(new BinaryOperatorExpression("&", errorOptions, options.NoThrow()).NotEqual(options.NoThrow())))
+                    {
+                        Throw(ManagementClientGenerator.Instance.TypeFactory.ClientResponseApi.ToExpression().CreateAsync(message.Response()))
+                    },
+                    Return(message.Response())
+                ]
+                : [Return(_clientField.Property("Pipeline").Invoke("ProcessMessage", [messageVariable, _contextField]))];
 
             var catchBlock = Catch(
                 Declare<Exception>("e", out var exceptionVariable),

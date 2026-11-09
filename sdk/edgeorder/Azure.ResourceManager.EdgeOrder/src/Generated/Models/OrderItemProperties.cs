@@ -34,15 +34,15 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of <see cref="OrderItemProperties"/>. </summary>
         /// <param name="orderItemDetails"> Represents order item details. </param>
         /// <param name="addressDetails"> Represents shipping and return address for order item. </param>
-        /// <param name="startOn"> Start time of order item. </param>
+        /// <param name="startsOn"> Start time of order item. </param>
         /// <param name="orderId"> Id of the order to which order item belongs to. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OrderItemProperties(EdgeOrderItemDetails orderItemDetails, EdgeOrderItemAddressDetails addressDetails, DateTimeOffset? startOn, ResourceIdentifier orderId, EdgeOrderProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OrderItemProperties(EdgeOrderItemDetails orderItemDetails, EdgeOrderItemAddressDetails addressDetails, DateTimeOffset? startsOn, ResourceIdentifier orderId, EdgeOrderProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OrderItemDetails = orderItemDetails;
             AddressDetails = addressDetails;
-            StartOn = startOn;
+            StartsOn = startsOn;
             OrderId = orderId;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         public EdgeOrderItemAddressDetails AddressDetails { get; set; }
 
         /// <summary> Start time of order item. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> Id of the order to which order item belongs to. </summary>
         public ResourceIdentifier OrderId { get; set; }

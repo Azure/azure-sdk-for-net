@@ -24,17 +24,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationResultProperties"/>. </summary>
-        /// <param name="startOn"> The start time of the workflow scope repetition. </param>
-        /// <param name="endOn"> The end time of the workflow scope repetition. </param>
+        /// <param name="startsOn"> The start time of the workflow scope repetition. </param>
+        /// <param name="endsOn"> The end time of the workflow scope repetition. </param>
         /// <param name="correlation"> The correlation properties. </param>
         /// <param name="status"> The status of the workflow scope repetition. </param>
         /// <param name="code"> The workflow scope repetition code. </param>
         /// <param name="error"> Anything. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationResultProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, WebAppRunActionCorrelation correlation, WorkflowStatus? status, string code, BinaryData error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationResultProperties(DateTimeOffset? startsOn, DateTimeOffset? endsOn, WebAppRunActionCorrelation correlation, WorkflowStatus? status, string code, BinaryData error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Correlation = correlation;
             Status = status;
             Code = code;
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The start time of the workflow scope repetition. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> The end time of the workflow scope repetition. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> The correlation properties. </summary>
         [WirePath("correlation")]

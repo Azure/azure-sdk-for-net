@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary>
     /// Describes an automation rule condition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BooleanConditionProperties"/>, <see cref="SecurityInsightsPropertyArrayChangedConditionProperties"/>, <see cref="PropertyArrayConditionProperties"/>, <see cref="SecurityInsightsPropertyChangedConditionProperties"/>, and <see cref="SecurityInsightsPropertyConditionProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BooleanConditionProperties"/>, <see cref="PropertyArrayConditionProperties"/>, <see cref="SecurityInsightsPropertyArrayChangedConditionProperties"/>, <see cref="SecurityInsightsPropertyChangedConditionProperties"/>, and <see cref="SecurityInsightsPropertyConditionProperties"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSecurityInsightsAutomationRuleCondition))]
     public abstract partial class SecurityInsightsAutomationRuleCondition : IJsonModel<SecurityInsightsAutomationRuleCondition>
@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     case "Boolean":
                         return BooleanConditionProperties.DeserializeBooleanConditionProperties(element, options);
-                    case "PropertyArrayChanged":
-                        return SecurityInsightsPropertyArrayChangedConditionProperties.DeserializeSecurityInsightsPropertyArrayChangedConditionProperties(element, options);
                     case "PropertyArray":
                         return PropertyArrayConditionProperties.DeserializePropertyArrayConditionProperties(element, options);
+                    case "PropertyArrayChanged":
+                        return SecurityInsightsPropertyArrayChangedConditionProperties.DeserializeSecurityInsightsPropertyArrayChangedConditionProperties(element, options);
                     case "PropertyChanged":
                         return SecurityInsightsPropertyChangedConditionProperties.DeserializeSecurityInsightsPropertyChangedConditionProperties(element, options);
                     case "Property":

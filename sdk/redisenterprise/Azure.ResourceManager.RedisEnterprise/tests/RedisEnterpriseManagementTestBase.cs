@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
 {
     public class RedisEnterpriseManagementTestBase : ManagementRecordedTestBase<RedisEnterpriseManagementTestEnvironment>
     {
-        protected AzureLocation DefaultLocation => "centraluseuap";
+        protected AzureLocation DefaultLocation => new("eastus2euap");
 
         protected ArmClient Client { get; private set; }
 
@@ -29,19 +29,20 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
         }
 
         [SetUp]
-        public async Task CreateCommonClient()
+        public void CreateCommonClient()
         {
             Client = GetArmClient();
-            DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
+            DefaultSubscription = Client.GetSubscriptionResource(
+                new ResourceIdentifier($"/subscriptions/{TestEnvironment.SubscriptionId}"));
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
+        protected async Task<ResourceGroupResource> CreateResourceGroupAsync(AzureLocation? location = null)
         {
             var resourceGroupName = Recording.GenerateAssetName("testRG-");
             var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 resourceGroupName,
-                new ResourceGroupData(DefaultLocation)
+                new ResourceGroupData(location ?? DefaultLocation)
                 {
                     Tags =
                     {

@@ -69,7 +69,7 @@ namespace Azure.Provisioning.StandbyPool
     {
         public StandbyContainerGroupPoolPrediction() { }
         public Azure.Provisioning.BicepValue<string> ForecastInfo { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ForecastStartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ForecastStartsOn { get { throw null; } }
         public Azure.Provisioning.BicepList<long> ForecastValuesInstancesRequestedCount { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -206,7 +206,7 @@ namespace Azure.Provisioning.StandbyPool
     {
         public StandbyVirtualMachinePoolPrediction() { }
         public Azure.Provisioning.BicepValue<string> ForecastInfo { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ForecastStartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ForecastStartsOn { get { throw null; } }
         public Azure.Provisioning.BicepList<long> ForecastValuesInstancesRequestedCount { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }

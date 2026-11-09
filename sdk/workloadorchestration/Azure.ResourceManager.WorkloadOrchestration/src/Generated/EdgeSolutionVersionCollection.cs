@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<EdgeSolutionVersionData, EdgeSolutionVersionResource>(new SolutionVersionsGetBySolutionAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<EdgeSolutionVersionData, EdgeSolutionVersionResource>(new EdgeSolutionVersionDataAsyncCollectionResultOfT(
                 _solutionVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<EdgeSolutionVersionData, EdgeSolutionVersionResource>(new SolutionVersionsGetBySolutionCollectionResultOfT(
+            return new PageableWrapper<EdgeSolutionVersionData, EdgeSolutionVersionResource>(new EdgeSolutionVersionDataCollectionResultOfT(
                 _solutionVersionsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

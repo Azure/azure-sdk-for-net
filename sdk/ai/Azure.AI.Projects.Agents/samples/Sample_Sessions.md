@@ -126,7 +126,7 @@ List<ProjectAgentSession> sessions = [.. agentsClient.GetSessions(agentName: age
 Console.WriteLine($"Found {sessions.Count} sessions.");
 foreach (ProjectAgentSession item in sessions)
 {
-    Console.WriteLine($"    - Id: {item.AgentSessionId}, last accessed: {item.LastAccessedAt}.");
+    Console.WriteLine($"    - Id: {item.AgentSessionId}, last accessed: {item.LastAccessedOn}.");
 }
 ```
 
@@ -136,7 +136,7 @@ List<ProjectAgentSession> sessions = await agentsClient.GetSessionsAsync(agentNa
 Console.WriteLine($"Found {sessions.Count} sessions.");
 foreach (ProjectAgentSession item in sessions)
 {
-    Console.WriteLine($"    - Id: {item.AgentSessionId}, last accessed: {item.LastAccessedAt}.");
+    Console.WriteLine($"    - Id: {item.AgentSessionId}, last accessed: {item.LastAccessedOn}.");
 }
 ```
 

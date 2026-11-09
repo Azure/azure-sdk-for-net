@@ -203,10 +203,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DeepCreatedOriginGroupProperties(healthProbeSettings, origins, trafficRestorationTimeToHealedOrNewEndpointsInMinutes, responseBasedOriginErrorDetectionSettings, additionalBinaryDataProperties);
+            return new DeepCreatedOriginGroupProperties(healthProbeSettings, origins ?? new ChangeTrackingList<WritableSubResource>(), trafficRestorationTimeToHealedOrNewEndpointsInMinutes, responseBasedOriginErrorDetectionSettings, additionalBinaryDataProperties);
         }
     }
 }

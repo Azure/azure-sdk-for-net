@@ -16,11 +16,22 @@ namespace Azure.Provisioning.MachineLearning
     /// </summary>
     public partial class MachineLearningDataVersionProperties : MachineLearningAssetBase
     {
+        private BicepValue<MachineLearningDataType> _dataType;
         private BicepValue<Uri> _dataUri;
 
         /// <summary> Creates a new MachineLearningDataVersionProperties. </summary>
         public MachineLearningDataVersionProperties()
         {
+        }
+
+        /// <summary> [Required] Specifies the type of data. </summary>
+        internal BicepValue<MachineLearningDataType> DataType
+        {
+            get
+            {
+                Initialize();
+                return _dataType;
+            }
         }
 
         /// <summary> Gets or sets the DataUri. </summary>
@@ -42,6 +53,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _dataType = DefineProperty<MachineLearningDataType>(nameof(DataType), new string[] { "dataType" }, isRequired: true);
             _dataUri = DefineProperty<Uri>(nameof(DataUri), new string[] { "dataUri" }, isRequired: true);
             DefineAdditionalProperties();
         }

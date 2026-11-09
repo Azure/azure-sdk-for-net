@@ -91,7 +91,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Initializes a new instance of ConversationAnalysisAuthoring from a <see cref="ConversationAnalysisAuthoringSettings"/>. </summary>
         /// <param name="settings"> The settings for ConversationAnalysisAuthoring. </param>
         [Experimental("SCME0002")]
-        public ConversationAnalysisAuthoring(ConversationAnalysisAuthoringSettings settings) : this(settings?.Endpoint, settings?.CredentialProvider as TokenCredential, settings?.Options)
+        public ConversationAnalysisAuthoring(ConversationAnalysisAuthoringSettings settings) : this(string.Equals(settings?.Credential?.CredentialSource, "apikeycredential", StringComparison.OrdinalIgnoreCase) ? new AzureKeyCredentialPolicy(new AzureKeyCredential(settings.Credential.Key), AuthorizationHeader) : new BearerTokenAuthenticationPolicy(settings?.CredentialProvider as TokenCredential, AuthorizationScopes), settings?.Endpoint, settings?.Options)
         {
         }
 

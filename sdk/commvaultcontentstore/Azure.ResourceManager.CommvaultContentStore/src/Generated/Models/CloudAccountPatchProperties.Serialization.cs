@@ -74,6 +74,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 throw new FormatException($"The model {nameof(CloudAccountPatchProperties)} does not support writing '{format}' format.");
             }
+            if (Optional.IsDefined(Company))
+            {
+                writer.WritePropertyName("company"u8);
+                writer.WriteObjectValue(Company, options);
+            }
             if (Optional.IsDefined(Marketplace))
             {
                 writer.WritePropertyName("marketplace"u8);
@@ -126,18 +131,28 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 return null;
             }
-            MarketplaceDetails marketplace = default;
-            CommvaultUserDetails user = default;
+            CompanyProfile company = default;
+            CloudAccountMarketplaceUpdate marketplace = default;
+            CloudAccountUserUpdate user = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("company"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    company = CompanyProfile.DeserializeCompanyProfile(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("marketplace"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    marketplace = MarketplaceDetails.DeserializeMarketplaceDetails(prop.Value, options);
+                    marketplace = CloudAccountMarketplaceUpdate.DeserializeCloudAccountMarketplaceUpdate(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("user"u8))
@@ -146,15 +161,15 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    user = CommvaultUserDetails.DeserializeCommvaultUserDetails(prop.Value, options);
+                    user = CloudAccountUserUpdate.DeserializeCloudAccountUserUpdate(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CloudAccountPatchProperties(marketplace, user, additionalBinaryDataProperties);
+            return new CloudAccountPatchProperties(company, marketplace, user, additionalBinaryDataProperties);
         }
     }
 }

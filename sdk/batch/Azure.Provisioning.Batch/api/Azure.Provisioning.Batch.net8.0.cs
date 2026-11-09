@@ -1,5 +1,11 @@
 namespace Azure.Provisioning.Batch
 {
+    public partial class AccessRulePropertiesSubscription : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public AccessRulePropertiesSubscription() { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class AutomaticOSUpgradePolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public AutomaticOSUpgradePolicy() { }
@@ -30,7 +36,7 @@ namespace Azure.Provisioning.Batch
         public Azure.Provisioning.BicepList<string> FullyQualifiedDomainNames { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Batch.NetworkSecurityPerimeter> NetworkSecurityPerimeters { get { throw null; } }
         public Azure.Provisioning.BicepList<string> PhoneNumbers { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.SubResource> Subscriptions { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Batch.AccessRulePropertiesSubscription> Subscriptions { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class BatchAccount : Azure.Provisioning.Primitives.ProvisionableResource
@@ -255,7 +261,7 @@ namespace Azure.Provisioning.Batch
         public Azure.Provisioning.Batch.BatchApplication Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Batch.BatchApplicationPackageState> State { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Uri> StorageUri { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StorageUriExpireOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StorageUriExpiresOn { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -693,7 +699,7 @@ namespace Azure.Provisioning.Batch
         public Azure.Provisioning.BicepList<Azure.Provisioning.Batch.BatchResizeError> Errors { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Batch.BatchNodeDeallocationOption> NodeDeallocationOption { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.TimeSpan> ResizeTimeout { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> TargetDedicatedNodes { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> TargetLowPriorityNodes { get { throw null; } }
         protected override void DefineProvisionableProperties() { }

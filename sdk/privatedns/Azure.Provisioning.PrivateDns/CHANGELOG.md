@@ -1,14 +1,10 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.1.0-beta.1 (2026-09-03)
 
 ### Other Changes
+
+- Migrated generation to the TypeSpec-based provisioning generator.
 
 ## 1.0.0 (2026-03-19)
 

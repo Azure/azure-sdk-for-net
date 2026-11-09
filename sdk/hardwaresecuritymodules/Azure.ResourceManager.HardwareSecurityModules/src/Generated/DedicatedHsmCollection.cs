@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DedicatedHsmCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DedicatedHsmResource.ResourceType, out string dedicatedHsmApiVersion);
             _dedicatedHsmsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", DedicatedHsmResource.ResourceType.Namespace, Diagnostics);
-            _dedicatedHsmsRestClient = new DedicatedHsms(_dedicatedHsmsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dedicatedHsmApiVersion ?? "2025-03-31");
+            _dedicatedHsmsRestClient = new DedicatedHsms(_dedicatedHsmsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HardwareSecurityModules/dedicatedHSMs", out string dedicatedHsmsApiVersionOverride) ? dedicatedHsmsApiVersionOverride : "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +281,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,7 +294,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmsGetByResourceGroupAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmDataAsyncCollectionResultOfT(
                 _dedicatedHsmsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -317,7 +316,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,7 +329,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmsGetByResourceGroupCollectionResultOfT(
+            return new PageableWrapper<DedicatedHsmData, DedicatedHsmResource>(new DedicatedHsmDataCollectionResultOfT(
                 _dedicatedHsmsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -352,7 +351,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -409,7 +408,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -466,7 +465,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -527,7 +526,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-31. </description>
+        /// <description> 2025-12-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

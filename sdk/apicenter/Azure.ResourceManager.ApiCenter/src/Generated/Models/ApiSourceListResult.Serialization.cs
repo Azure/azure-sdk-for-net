@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ApiSourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ApiSourceListResult(value ?? new ChangeTrackingList<ApiSourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

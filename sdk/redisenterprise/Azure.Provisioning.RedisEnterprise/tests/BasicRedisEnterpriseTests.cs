@@ -76,13 +76,14 @@ public class BasicRedisEnterpriseTests
               name: take('redisEnterprise-${uniqueString(resourceGroup().id)}', 60)
               location: location
               sku: {
-                name: 'Enterprise_E10'
                 capacity: 2
+                name: 'Enterprise_E10'
               }
             }
 
             resource redisDatabase 'Microsoft.Cache/redisEnterprise/databases@2022-01-01' = {
               name: 'default'
+              parent: redisEnterprise
               properties: {
                 clusteringPolicy: 'EnterpriseCluster'
                 evictionPolicy: 'NoEviction'
@@ -96,18 +97,17 @@ public class BasicRedisEnterpriseTests
                 ]
                 port: 10000
               }
-              parent: redisEnterprise
             }
 
             resource accessPolicyAssignment 'Microsoft.Cache/redisEnterprise/databases/accessPolicyAssignments@2022-01-01' = {
               name: take('accessPolicyAssignment${uniqueString(resourceGroup().id)}', 60)
+              parent: redisDatabase
               properties: {
                 accessPolicyName: 'default'
                 user: {
                   objectId: principalId
                 }
               }
-              parent: redisDatabase
             }
             """);
     }

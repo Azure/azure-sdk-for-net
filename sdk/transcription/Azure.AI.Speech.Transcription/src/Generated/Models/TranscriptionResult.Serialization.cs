@@ -175,10 +175,10 @@ namespace Azure.AI.Speech.Transcription
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TranscriptionResult(durationMilliseconds, combinedPhrases, phrases, additionalBinaryDataProperties);
+            return new TranscriptionResult(durationMilliseconds, combinedPhrases ?? new ChangeTrackingList<ChannelCombinedPhrases>(), phrases ?? new ChangeTrackingList<TranscribedPhrase>(), additionalBinaryDataProperties);
         }
     }
 }

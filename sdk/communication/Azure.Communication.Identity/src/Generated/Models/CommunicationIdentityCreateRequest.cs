@@ -5,13 +5,16 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
-namespace Azure.Communication.Identity.Models
+namespace Azure.Communication.Identity
 {
-    /// <summary> The CommunicationIdentityCreateRequest. </summary>
     internal partial class CommunicationIdentityCreateRequest
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="CommunicationIdentityCreateRequest"/>. </summary>
         public CommunicationIdentityCreateRequest()
         {
@@ -19,20 +22,19 @@ namespace Azure.Communication.Identity.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CommunicationIdentityCreateRequest"/>. </summary>
-        /// <param name="customId"> Set to tag the identity with your own id, Maximum length is 256 characters. </param>
         /// <param name="createTokenWithScopes"> Also create access token for the created identity. </param>
         /// <param name="expiresInMinutes"> Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used. </param>
-        internal CommunicationIdentityCreateRequest(string customId, IList<CommunicationTokenScope> createTokenWithScopes, int? expiresInMinutes)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CommunicationIdentityCreateRequest(IList<CommunicationTokenScope> createTokenWithScopes, int? expiresInMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            CustomId = customId;
             CreateTokenWithScopes = createTokenWithScopes;
             ExpiresInMinutes = expiresInMinutes;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Set to tag the identity with your own id, Maximum length is 256 characters. </summary>
-        public string CustomId { get; set; }
         /// <summary> Also create access token for the created identity. </summary>
         public IList<CommunicationTokenScope> CreateTokenWithScopes { get; }
+
         /// <summary> Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used. </summary>
         public int? ExpiresInMinutes { get; set; }
     }

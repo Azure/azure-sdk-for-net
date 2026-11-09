@@ -13,7 +13,7 @@ namespace Azure.AI.VoiceLive
 {
     /// <summary>
     /// A voicelive server event.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SessionUpdateError"/>, <see cref="ServerEventWarning"/>, <see cref="SessionUpdateSessionCreated"/>, <see cref="SessionUpdateSessionUpdated"/>, <see cref="SessionUpdateAvatarConnecting"/>, <see cref="SessionUpdateInputAudioBufferCommitted"/>, <see cref="SessionUpdateInputAudioBufferCleared"/>, <see cref="SessionUpdateInputAudioBufferSpeechStarted"/>, <see cref="SessionUpdateInputAudioBufferSpeechStopped"/>, <see cref="SessionUpdateConversationItemCreated"/>, <see cref="SessionUpdateConversationItemInputAudioTranscriptionCompleted"/>, <see cref="SessionUpdateConversationItemInputAudioTranscriptionFailed"/>, <see cref="SessionUpdateConversationItemTruncated"/>, <see cref="SessionUpdateConversationItemDeleted"/>, <see cref="SessionUpdateResponseCreated"/>, <see cref="SessionUpdateResponseDone"/>, <see cref="SessionUpdateResponseOutputItemAdded"/>, <see cref="SessionUpdateResponseOutputItemDone"/>, <see cref="SessionUpdateResponseContentPartAdded"/>, <see cref="SessionUpdateResponseContentPartDone"/>, <see cref="SessionUpdateResponseTextDelta"/>, <see cref="SessionUpdateResponseTextDone"/>, <see cref="SessionUpdateResponseAudioTranscriptDelta"/>, <see cref="SessionUpdateResponseAudioTranscriptDone"/>, <see cref="SessionUpdateResponseAudioDelta"/>, <see cref="SessionUpdateResponseAudioDone"/>, <see cref="SessionUpdateResponseAnimationBlendshapeDelta"/>, <see cref="SessionUpdateResponseAnimationBlendshapeDone"/>, <see cref="SessionUpdateResponseAudioTimestampDelta"/>, <see cref="SessionUpdateResponseAudioTimestampDone"/>, <see cref="SessionUpdateResponseAnimationVisemeDelta"/>, <see cref="SessionUpdateResponseAnimationVisemeDone"/>, <see cref="SessionUpdateConversationItemInputAudioTranscriptionDelta"/>, <see cref="SessionUpdateConversationItemRetrieved"/>, <see cref="SessionUpdateResponseFunctionCallArgumentsDelta"/>, <see cref="SessionUpdateResponseFunctionCallArgumentsDone"/>, <see cref="SessionUpdateMcpListToolsInProgress"/>, <see cref="SessionUpdateMcpListToolsCompleted"/>, <see cref="SessionUpdateMcpListToolsFailed"/>, <see cref="SessionUpdateResponseMcpCallArgumentsDelta"/>, <see cref="SessionUpdateResponseMcpCallArgumentsDone"/>, <see cref="SessionUpdateResponseMcpCallInProgress"/>, <see cref="SessionUpdateResponseMcpCallCompleted"/>, <see cref="SessionUpdateResponseMcpCallFailed"/>, <see cref="ServerEventSessionAvatarSwitchToSpeaking"/>, <see cref="ServerEventSessionAvatarSwitchToIdle"/>, <see cref="ServerEventResponseVideoDelta"/>, <see cref="ServerEventResponseWebSearchCallSearching"/>, <see cref="ServerEventResponseWebSearchCallInProgress"/>, <see cref="ServerEventResponseWebSearchCallCompleted"/>, <see cref="ServerEventResponseFileSearchCallSearching"/>, <see cref="ServerEventResponseFileSearchCallInProgress"/>, <see cref="ServerEventResponseFileSearchCallCompleted"/>, <see cref="ServerEventOutputAudioBufferCleared"/>, <see cref="ServerEventResponseAudioTranscriptAnnotationAdded"/>, and <see cref="ServerEventResponseInvocationDelta"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServerEventOutputAudioBufferCleared"/>, <see cref="ServerEventResponseAudioTranscriptAnnotationAdded"/>, <see cref="ServerEventResponseFileSearchCallCompleted"/>, <see cref="ServerEventResponseFileSearchCallInProgress"/>, <see cref="ServerEventResponseFileSearchCallSearching"/>, <see cref="ServerEventResponseInvocationDelta"/>, <see cref="ServerEventResponseVideoDelta"/>, <see cref="ServerEventResponseWebSearchCallCompleted"/>, <see cref="ServerEventResponseWebSearchCallInProgress"/>, <see cref="ServerEventResponseWebSearchCallSearching"/>, <see cref="ServerEventSessionAvatarSwitchToIdle"/>, <see cref="ServerEventSessionAvatarSwitchToSpeaking"/>, <see cref="ServerEventWarning"/>, <see cref="SessionUpdateAvatarConnecting"/>, <see cref="SessionUpdateConversationItemCreated"/>, <see cref="SessionUpdateConversationItemDeleted"/>, <see cref="SessionUpdateConversationItemInputAudioTranscriptionCompleted"/>, <see cref="SessionUpdateConversationItemInputAudioTranscriptionDelta"/>, <see cref="SessionUpdateConversationItemInputAudioTranscriptionFailed"/>, <see cref="SessionUpdateConversationItemRetrieved"/>, <see cref="SessionUpdateConversationItemTruncated"/>, <see cref="SessionUpdateError"/>, <see cref="SessionUpdateInputAudioBufferCleared"/>, <see cref="SessionUpdateInputAudioBufferCommitted"/>, <see cref="SessionUpdateInputAudioBufferSpeechStarted"/>, <see cref="SessionUpdateInputAudioBufferSpeechStopped"/>, <see cref="SessionUpdateMcpListToolsCompleted"/>, <see cref="SessionUpdateMcpListToolsFailed"/>, <see cref="SessionUpdateMcpListToolsInProgress"/>, <see cref="SessionUpdateResponseAnimationBlendshapeDelta"/>, <see cref="SessionUpdateResponseAnimationBlendshapeDone"/>, <see cref="SessionUpdateResponseAnimationVisemeDelta"/>, <see cref="SessionUpdateResponseAnimationVisemeDone"/>, <see cref="SessionUpdateResponseAudioDelta"/>, <see cref="SessionUpdateResponseAudioDone"/>, <see cref="SessionUpdateResponseAudioTimestampDelta"/>, <see cref="SessionUpdateResponseAudioTimestampDone"/>, <see cref="SessionUpdateResponseAudioTranscriptDelta"/>, <see cref="SessionUpdateResponseAudioTranscriptDone"/>, <see cref="SessionUpdateResponseContentPartAdded"/>, <see cref="SessionUpdateResponseContentPartDone"/>, <see cref="SessionUpdateResponseCreated"/>, <see cref="SessionUpdateResponseDone"/>, <see cref="SessionUpdateResponseFunctionCallArgumentsDelta"/>, <see cref="SessionUpdateResponseFunctionCallArgumentsDone"/>, <see cref="SessionUpdateResponseMcpCallArgumentsDelta"/>, <see cref="SessionUpdateResponseMcpCallArgumentsDone"/>, <see cref="SessionUpdateResponseMcpCallCompleted"/>, <see cref="SessionUpdateResponseMcpCallFailed"/>, <see cref="SessionUpdateResponseMcpCallInProgress"/>, <see cref="SessionUpdateResponseOutputItemAdded"/>, <see cref="SessionUpdateResponseOutputItemDone"/>, <see cref="SessionUpdateResponseTextDelta"/>, <see cref="SessionUpdateResponseTextDone"/>, <see cref="SessionUpdateSessionCreated"/>, and <see cref="SessionUpdateSessionUpdated"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownSessionUpdate))]
     public abstract partial class SessionUpdate : IJsonModel<SessionUpdate>
@@ -134,118 +134,118 @@ namespace Azure.AI.VoiceLive
             {
                 switch (discriminator.GetString())
                 {
-                    case "error":
-                        return SessionUpdateError.DeserializeSessionUpdateError(element, options);
-                    case "warning":
-                        return ServerEventWarning.DeserializeServerEventWarning(element, options);
-                    case "session.created":
-                        return SessionUpdateSessionCreated.DeserializeSessionUpdateSessionCreated(element, options);
-                    case "session.updated":
-                        return SessionUpdateSessionUpdated.DeserializeSessionUpdateSessionUpdated(element, options);
-                    case "session.avatar.connecting":
-                        return SessionUpdateAvatarConnecting.DeserializeSessionUpdateAvatarConnecting(element, options);
-                    case "input_audio_buffer.committed":
-                        return SessionUpdateInputAudioBufferCommitted.DeserializeSessionUpdateInputAudioBufferCommitted(element, options);
-                    case "input_audio_buffer.cleared":
-                        return SessionUpdateInputAudioBufferCleared.DeserializeSessionUpdateInputAudioBufferCleared(element, options);
-                    case "input_audio_buffer.speech_started":
-                        return SessionUpdateInputAudioBufferSpeechStarted.DeserializeSessionUpdateInputAudioBufferSpeechStarted(element, options);
-                    case "input_audio_buffer.speech_stopped":
-                        return SessionUpdateInputAudioBufferSpeechStopped.DeserializeSessionUpdateInputAudioBufferSpeechStopped(element, options);
-                    case "conversation.item.created":
-                        return SessionUpdateConversationItemCreated.DeserializeSessionUpdateConversationItemCreated(element, options);
-                    case "conversation.item.input_audio_transcription.completed":
-                        return SessionUpdateConversationItemInputAudioTranscriptionCompleted.DeserializeSessionUpdateConversationItemInputAudioTranscriptionCompleted(element, options);
-                    case "conversation.item.input_audio_transcription.failed":
-                        return SessionUpdateConversationItemInputAudioTranscriptionFailed.DeserializeSessionUpdateConversationItemInputAudioTranscriptionFailed(element, options);
-                    case "conversation.item.truncated":
-                        return SessionUpdateConversationItemTruncated.DeserializeSessionUpdateConversationItemTruncated(element, options);
-                    case "conversation.item.deleted":
-                        return SessionUpdateConversationItemDeleted.DeserializeSessionUpdateConversationItemDeleted(element, options);
-                    case "response.created":
-                        return SessionUpdateResponseCreated.DeserializeSessionUpdateResponseCreated(element, options);
-                    case "response.done":
-                        return SessionUpdateResponseDone.DeserializeSessionUpdateResponseDone(element, options);
-                    case "response.output_item.added":
-                        return SessionUpdateResponseOutputItemAdded.DeserializeSessionUpdateResponseOutputItemAdded(element, options);
-                    case "response.output_item.done":
-                        return SessionUpdateResponseOutputItemDone.DeserializeSessionUpdateResponseOutputItemDone(element, options);
-                    case "response.content_part.added":
-                        return SessionUpdateResponseContentPartAdded.DeserializeSessionUpdateResponseContentPartAdded(element, options);
-                    case "response.content_part.done":
-                        return SessionUpdateResponseContentPartDone.DeserializeSessionUpdateResponseContentPartDone(element, options);
-                    case "response.text.delta":
-                        return SessionUpdateResponseTextDelta.DeserializeSessionUpdateResponseTextDelta(element, options);
-                    case "response.text.done":
-                        return SessionUpdateResponseTextDone.DeserializeSessionUpdateResponseTextDone(element, options);
-                    case "response.audio_transcript.delta":
-                        return SessionUpdateResponseAudioTranscriptDelta.DeserializeSessionUpdateResponseAudioTranscriptDelta(element, options);
-                    case "response.audio_transcript.done":
-                        return SessionUpdateResponseAudioTranscriptDone.DeserializeSessionUpdateResponseAudioTranscriptDone(element, options);
-                    case "response.audio.delta":
-                        return SessionUpdateResponseAudioDelta.DeserializeSessionUpdateResponseAudioDelta(element, options);
-                    case "response.audio.done":
-                        return SessionUpdateResponseAudioDone.DeserializeSessionUpdateResponseAudioDone(element, options);
-                    case "response.animation_blendshapes.delta":
-                        return SessionUpdateResponseAnimationBlendshapeDelta.DeserializeSessionUpdateResponseAnimationBlendshapeDelta(element, options);
-                    case "response.animation_blendshapes.done":
-                        return SessionUpdateResponseAnimationBlendshapeDone.DeserializeSessionUpdateResponseAnimationBlendshapeDone(element, options);
-                    case "response.audio_timestamp.delta":
-                        return SessionUpdateResponseAudioTimestampDelta.DeserializeSessionUpdateResponseAudioTimestampDelta(element, options);
-                    case "response.audio_timestamp.done":
-                        return SessionUpdateResponseAudioTimestampDone.DeserializeSessionUpdateResponseAudioTimestampDone(element, options);
-                    case "response.animation_viseme.delta":
-                        return SessionUpdateResponseAnimationVisemeDelta.DeserializeSessionUpdateResponseAnimationVisemeDelta(element, options);
-                    case "response.animation_viseme.done":
-                        return SessionUpdateResponseAnimationVisemeDone.DeserializeSessionUpdateResponseAnimationVisemeDone(element, options);
-                    case "conversation.item.input_audio_transcription.delta":
-                        return SessionUpdateConversationItemInputAudioTranscriptionDelta.DeserializeSessionUpdateConversationItemInputAudioTranscriptionDelta(element, options);
-                    case "conversation.item.retrieved":
-                        return SessionUpdateConversationItemRetrieved.DeserializeSessionUpdateConversationItemRetrieved(element, options);
-                    case "response.function_call_arguments.delta":
-                        return SessionUpdateResponseFunctionCallArgumentsDelta.DeserializeSessionUpdateResponseFunctionCallArgumentsDelta(element, options);
-                    case "response.function_call_arguments.done":
-                        return SessionUpdateResponseFunctionCallArgumentsDone.DeserializeSessionUpdateResponseFunctionCallArgumentsDone(element, options);
-                    case "mcp_list_tools.in_progress":
-                        return SessionUpdateMcpListToolsInProgress.DeserializeSessionUpdateMcpListToolsInProgress(element, options);
-                    case "mcp_list_tools.completed":
-                        return SessionUpdateMcpListToolsCompleted.DeserializeSessionUpdateMcpListToolsCompleted(element, options);
-                    case "mcp_list_tools.failed":
-                        return SessionUpdateMcpListToolsFailed.DeserializeSessionUpdateMcpListToolsFailed(element, options);
-                    case "response.mcp_call_arguments.delta":
-                        return SessionUpdateResponseMcpCallArgumentsDelta.DeserializeSessionUpdateResponseMcpCallArgumentsDelta(element, options);
-                    case "response.mcp_call_arguments.done":
-                        return SessionUpdateResponseMcpCallArgumentsDone.DeserializeSessionUpdateResponseMcpCallArgumentsDone(element, options);
-                    case "response.mcp_call.in_progress":
-                        return SessionUpdateResponseMcpCallInProgress.DeserializeSessionUpdateResponseMcpCallInProgress(element, options);
-                    case "response.mcp_call.completed":
-                        return SessionUpdateResponseMcpCallCompleted.DeserializeSessionUpdateResponseMcpCallCompleted(element, options);
-                    case "response.mcp_call.failed":
-                        return SessionUpdateResponseMcpCallFailed.DeserializeSessionUpdateResponseMcpCallFailed(element, options);
-                    case "session.avatar.switch_to_speaking":
-                        return ServerEventSessionAvatarSwitchToSpeaking.DeserializeServerEventSessionAvatarSwitchToSpeaking(element, options);
-                    case "session.avatar.switch_to_idle":
-                        return ServerEventSessionAvatarSwitchToIdle.DeserializeServerEventSessionAvatarSwitchToIdle(element, options);
-                    case "response.video.delta":
-                        return ServerEventResponseVideoDelta.DeserializeServerEventResponseVideoDelta(element, options);
-                    case "response.web_search_call.searching":
-                        return ServerEventResponseWebSearchCallSearching.DeserializeServerEventResponseWebSearchCallSearching(element, options);
-                    case "response.web_search_call.in_progress":
-                        return ServerEventResponseWebSearchCallInProgress.DeserializeServerEventResponseWebSearchCallInProgress(element, options);
-                    case "response.web_search_call.completed":
-                        return ServerEventResponseWebSearchCallCompleted.DeserializeServerEventResponseWebSearchCallCompleted(element, options);
-                    case "response.file_search_call.searching":
-                        return ServerEventResponseFileSearchCallSearching.DeserializeServerEventResponseFileSearchCallSearching(element, options);
-                    case "response.file_search_call.in_progress":
-                        return ServerEventResponseFileSearchCallInProgress.DeserializeServerEventResponseFileSearchCallInProgress(element, options);
-                    case "response.file_search_call.completed":
-                        return ServerEventResponseFileSearchCallCompleted.DeserializeServerEventResponseFileSearchCallCompleted(element, options);
                     case "output_audio_buffer.cleared":
                         return ServerEventOutputAudioBufferCleared.DeserializeServerEventOutputAudioBufferCleared(element, options);
                     case "response.audio_transcript.annotation.added":
                         return ServerEventResponseAudioTranscriptAnnotationAdded.DeserializeServerEventResponseAudioTranscriptAnnotationAdded(element, options);
+                    case "response.file_search_call.completed":
+                        return ServerEventResponseFileSearchCallCompleted.DeserializeServerEventResponseFileSearchCallCompleted(element, options);
+                    case "response.file_search_call.in_progress":
+                        return ServerEventResponseFileSearchCallInProgress.DeserializeServerEventResponseFileSearchCallInProgress(element, options);
+                    case "response.file_search_call.searching":
+                        return ServerEventResponseFileSearchCallSearching.DeserializeServerEventResponseFileSearchCallSearching(element, options);
                     case "response.invocation.delta":
                         return ServerEventResponseInvocationDelta.DeserializeServerEventResponseInvocationDelta(element, options);
+                    case "response.video.delta":
+                        return ServerEventResponseVideoDelta.DeserializeServerEventResponseVideoDelta(element, options);
+                    case "response.web_search_call.completed":
+                        return ServerEventResponseWebSearchCallCompleted.DeserializeServerEventResponseWebSearchCallCompleted(element, options);
+                    case "response.web_search_call.in_progress":
+                        return ServerEventResponseWebSearchCallInProgress.DeserializeServerEventResponseWebSearchCallInProgress(element, options);
+                    case "response.web_search_call.searching":
+                        return ServerEventResponseWebSearchCallSearching.DeserializeServerEventResponseWebSearchCallSearching(element, options);
+                    case "session.avatar.switch_to_idle":
+                        return ServerEventSessionAvatarSwitchToIdle.DeserializeServerEventSessionAvatarSwitchToIdle(element, options);
+                    case "session.avatar.switch_to_speaking":
+                        return ServerEventSessionAvatarSwitchToSpeaking.DeserializeServerEventSessionAvatarSwitchToSpeaking(element, options);
+                    case "warning":
+                        return ServerEventWarning.DeserializeServerEventWarning(element, options);
+                    case "session.avatar.connecting":
+                        return SessionUpdateAvatarConnecting.DeserializeSessionUpdateAvatarConnecting(element, options);
+                    case "conversation.item.created":
+                        return SessionUpdateConversationItemCreated.DeserializeSessionUpdateConversationItemCreated(element, options);
+                    case "conversation.item.deleted":
+                        return SessionUpdateConversationItemDeleted.DeserializeSessionUpdateConversationItemDeleted(element, options);
+                    case "conversation.item.input_audio_transcription.completed":
+                        return SessionUpdateConversationItemInputAudioTranscriptionCompleted.DeserializeSessionUpdateConversationItemInputAudioTranscriptionCompleted(element, options);
+                    case "conversation.item.input_audio_transcription.delta":
+                        return SessionUpdateConversationItemInputAudioTranscriptionDelta.DeserializeSessionUpdateConversationItemInputAudioTranscriptionDelta(element, options);
+                    case "conversation.item.input_audio_transcription.failed":
+                        return SessionUpdateConversationItemInputAudioTranscriptionFailed.DeserializeSessionUpdateConversationItemInputAudioTranscriptionFailed(element, options);
+                    case "conversation.item.retrieved":
+                        return SessionUpdateConversationItemRetrieved.DeserializeSessionUpdateConversationItemRetrieved(element, options);
+                    case "conversation.item.truncated":
+                        return SessionUpdateConversationItemTruncated.DeserializeSessionUpdateConversationItemTruncated(element, options);
+                    case "error":
+                        return SessionUpdateError.DeserializeSessionUpdateError(element, options);
+                    case "input_audio_buffer.cleared":
+                        return SessionUpdateInputAudioBufferCleared.DeserializeSessionUpdateInputAudioBufferCleared(element, options);
+                    case "input_audio_buffer.committed":
+                        return SessionUpdateInputAudioBufferCommitted.DeserializeSessionUpdateInputAudioBufferCommitted(element, options);
+                    case "input_audio_buffer.speech_started":
+                        return SessionUpdateInputAudioBufferSpeechStarted.DeserializeSessionUpdateInputAudioBufferSpeechStarted(element, options);
+                    case "input_audio_buffer.speech_stopped":
+                        return SessionUpdateInputAudioBufferSpeechStopped.DeserializeSessionUpdateInputAudioBufferSpeechStopped(element, options);
+                    case "mcp_list_tools.completed":
+                        return SessionUpdateMcpListToolsCompleted.DeserializeSessionUpdateMcpListToolsCompleted(element, options);
+                    case "mcp_list_tools.failed":
+                        return SessionUpdateMcpListToolsFailed.DeserializeSessionUpdateMcpListToolsFailed(element, options);
+                    case "mcp_list_tools.in_progress":
+                        return SessionUpdateMcpListToolsInProgress.DeserializeSessionUpdateMcpListToolsInProgress(element, options);
+                    case "response.animation_blendshapes.delta":
+                        return SessionUpdateResponseAnimationBlendshapeDelta.DeserializeSessionUpdateResponseAnimationBlendshapeDelta(element, options);
+                    case "response.animation_blendshapes.done":
+                        return SessionUpdateResponseAnimationBlendshapeDone.DeserializeSessionUpdateResponseAnimationBlendshapeDone(element, options);
+                    case "response.animation_viseme.delta":
+                        return SessionUpdateResponseAnimationVisemeDelta.DeserializeSessionUpdateResponseAnimationVisemeDelta(element, options);
+                    case "response.animation_viseme.done":
+                        return SessionUpdateResponseAnimationVisemeDone.DeserializeSessionUpdateResponseAnimationVisemeDone(element, options);
+                    case "response.audio.delta":
+                        return SessionUpdateResponseAudioDelta.DeserializeSessionUpdateResponseAudioDelta(element, options);
+                    case "response.audio.done":
+                        return SessionUpdateResponseAudioDone.DeserializeSessionUpdateResponseAudioDone(element, options);
+                    case "response.audio_timestamp.delta":
+                        return SessionUpdateResponseAudioTimestampDelta.DeserializeSessionUpdateResponseAudioTimestampDelta(element, options);
+                    case "response.audio_timestamp.done":
+                        return SessionUpdateResponseAudioTimestampDone.DeserializeSessionUpdateResponseAudioTimestampDone(element, options);
+                    case "response.audio_transcript.delta":
+                        return SessionUpdateResponseAudioTranscriptDelta.DeserializeSessionUpdateResponseAudioTranscriptDelta(element, options);
+                    case "response.audio_transcript.done":
+                        return SessionUpdateResponseAudioTranscriptDone.DeserializeSessionUpdateResponseAudioTranscriptDone(element, options);
+                    case "response.content_part.added":
+                        return SessionUpdateResponseContentPartAdded.DeserializeSessionUpdateResponseContentPartAdded(element, options);
+                    case "response.content_part.done":
+                        return SessionUpdateResponseContentPartDone.DeserializeSessionUpdateResponseContentPartDone(element, options);
+                    case "response.created":
+                        return SessionUpdateResponseCreated.DeserializeSessionUpdateResponseCreated(element, options);
+                    case "response.done":
+                        return SessionUpdateResponseDone.DeserializeSessionUpdateResponseDone(element, options);
+                    case "response.function_call_arguments.delta":
+                        return SessionUpdateResponseFunctionCallArgumentsDelta.DeserializeSessionUpdateResponseFunctionCallArgumentsDelta(element, options);
+                    case "response.function_call_arguments.done":
+                        return SessionUpdateResponseFunctionCallArgumentsDone.DeserializeSessionUpdateResponseFunctionCallArgumentsDone(element, options);
+                    case "response.mcp_call_arguments.delta":
+                        return SessionUpdateResponseMcpCallArgumentsDelta.DeserializeSessionUpdateResponseMcpCallArgumentsDelta(element, options);
+                    case "response.mcp_call_arguments.done":
+                        return SessionUpdateResponseMcpCallArgumentsDone.DeserializeSessionUpdateResponseMcpCallArgumentsDone(element, options);
+                    case "response.mcp_call.completed":
+                        return SessionUpdateResponseMcpCallCompleted.DeserializeSessionUpdateResponseMcpCallCompleted(element, options);
+                    case "response.mcp_call.failed":
+                        return SessionUpdateResponseMcpCallFailed.DeserializeSessionUpdateResponseMcpCallFailed(element, options);
+                    case "response.mcp_call.in_progress":
+                        return SessionUpdateResponseMcpCallInProgress.DeserializeSessionUpdateResponseMcpCallInProgress(element, options);
+                    case "response.output_item.added":
+                        return SessionUpdateResponseOutputItemAdded.DeserializeSessionUpdateResponseOutputItemAdded(element, options);
+                    case "response.output_item.done":
+                        return SessionUpdateResponseOutputItemDone.DeserializeSessionUpdateResponseOutputItemDone(element, options);
+                    case "response.text.delta":
+                        return SessionUpdateResponseTextDelta.DeserializeSessionUpdateResponseTextDelta(element, options);
+                    case "response.text.done":
+                        return SessionUpdateResponseTextDone.DeserializeSessionUpdateResponseTextDone(element, options);
+                    case "session.created":
+                        return SessionUpdateSessionCreated.DeserializeSessionUpdateSessionCreated(element, options);
+                    case "session.updated":
+                        return SessionUpdateSessionUpdated.DeserializeSessionUpdateSessionUpdated(element, options);
                 }
             }
             return UnknownSessionUpdate.DeserializeUnknownSessionUpdate(element, options);

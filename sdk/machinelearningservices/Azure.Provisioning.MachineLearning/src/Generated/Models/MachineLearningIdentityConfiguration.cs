@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
@@ -15,15 +16,28 @@ namespace Azure.Provisioning.MachineLearning
     /// </summary>
     public partial class MachineLearningIdentityConfiguration : ProvisionableConstruct
     {
+        private BicepValue<IdentityConfigurationType> _identityType;
+
         /// <summary> Creates a new MachineLearningIdentityConfiguration. </summary>
         public MachineLearningIdentityConfiguration()
         {
+        }
+
+        /// <summary> [Required] Specifies the type of identity framework. </summary>
+        internal BicepValue<IdentityConfigurationType> IdentityType
+        {
+            get
+            {
+                Initialize();
+                return _identityType;
+            }
         }
 
         /// <summary> Define all the provisionable properties for MachineLearningIdentityConfiguration. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _identityType = DefineProperty<IdentityConfigurationType>(nameof(IdentityType), new string[] { "identityType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

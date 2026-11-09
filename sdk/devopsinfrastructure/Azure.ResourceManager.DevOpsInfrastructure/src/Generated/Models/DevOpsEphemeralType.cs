@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         private const string CacheDiskValue = "CacheDisk";
         /// <summary> ResourceDisk ephemeral only, requires only that the SKU supports it. </summary>
         private const string ResourceDiskValue = "ResourceDisk";
+        /// <summary> NVMeDisk ephemeral only, requires that the SKU supports the NVMe DiskControllerType. </summary>
+        private const string NVMeDiskValue = "NVMeDisk";
 
         /// <summary> Initializes a new instance of <see cref="DevOpsEphemeralType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -40,6 +42,9 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         /// <summary> ResourceDisk ephemeral only, requires only that the SKU supports it. </summary>
         public static DevOpsEphemeralType ResourceDisk { get; } = new DevOpsEphemeralType(ResourceDiskValue);
+
+        /// <summary> NVMeDisk ephemeral only, requires that the SKU supports the NVMe DiskControllerType. </summary>
+        public static DevOpsEphemeralType NVMeDisk { get; } = new DevOpsEphemeralType(NVMeDiskValue);
 
         /// <summary> Determines if two <see cref="DevOpsEphemeralType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

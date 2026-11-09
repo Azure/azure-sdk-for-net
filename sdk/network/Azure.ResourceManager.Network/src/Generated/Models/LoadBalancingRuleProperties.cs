@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Network.Models
             BackendAddressPools = new ChangeTrackingList<WritableSubResource>();
             Protocol = protocol;
             FrontendPort = frontendPort;
+            _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancingRuleProperties"/>. </summary>
@@ -42,10 +43,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="enableFloatingIP"> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </param>
         /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
         /// <param name="disableOutboundSnat"> Configures SNAT for the VMs in the backend pool to use the publicIP address specified in the frontend of the load balancing rule. </param>
-        /// <param name="enableConnectionTracking"> Defines whether connections between 2 communicating endpoints can be tracked and associated to the same backend VM over its lifetime when using UDP protocol. </param>
+        /// <param name="enableConnectionTracking"> Enables UDP flow tracking for the load balancing rule. This property is retained for rule-level configuration compatibility. When enableConnectionTracking is specified on the associated frontend IP configuration, the frontend setting takes precedence. </param>
         /// <param name="provisioningState"> The provisioning state of the load balancing rule resource. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LoadBalancingRuleProperties(NetworkSubResource frontendIPConfiguration, NetworkSubResource backendAddressPool, IList<WritableSubResource> backendAddressPools, NetworkSubResource probe, LoadBalancingTransportProtocol protocol, LoadDistribution? loadDistribution, int frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, bool? disableOutboundSnat, bool? enableConnectionTracking, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="additionalProperties"></param>
+        internal LoadBalancingRuleProperties(NetworkSubResource frontendIPConfiguration, NetworkSubResource backendAddressPool, IList<WritableSubResource> backendAddressPools, NetworkSubResource probe, LoadBalancingTransportProtocol protocol, LoadDistribution? loadDistribution, int frontendPort, int? backendPort, int? idleTimeoutInMinutes, bool? enableFloatingIP, bool? enableTcpReset, bool? disableOutboundSnat, bool? enableConnectionTracking, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalProperties)
         {
             FrontendIPConfiguration = frontendIPConfiguration;
             BackendAddressPool = backendAddressPool;
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.Network.Models
             DisableOutboundSnat = disableOutboundSnat;
             EnableConnectionTracking = enableConnectionTracking;
             ProvisioningState = provisioningState;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _additionalBinaryDataProperties = additionalProperties;
         }
 
         /// <summary> A reference to frontend IP addresses. </summary>
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> An array of references to pool of DIPs. </summary>
         [WirePath("backendAddressPools")]
-        public IList<WritableSubResource> BackendAddressPools { get; } = new ChangeTrackingList<WritableSubResource>();
+        public IList<WritableSubResource> BackendAddressPools { get; }
 
         /// <summary> The reference to the load balancer probe used by the load balancing rule. </summary>
         [WirePath("probe")]
@@ -112,13 +113,16 @@ namespace Azure.ResourceManager.Network.Models
         [WirePath("disableOutboundSnat")]
         public bool? DisableOutboundSnat { get; set; }
 
-        /// <summary> Defines whether connections between 2 communicating endpoints can be tracked and associated to the same backend VM over its lifetime when using UDP protocol. </summary>
+        /// <summary> Enables UDP flow tracking for the load balancing rule. This property is retained for rule-level configuration compatibility. When enableConnectionTracking is specified on the associated frontend IP configuration, the frontend setting takes precedence. </summary>
         [WirePath("enableConnectionTracking")]
         public bool? EnableConnectionTracking { get; set; }
 
         /// <summary> The provisioning state of the load balancing rule resource. </summary>
         [WirePath("provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
 
         /// <summary> Resource ID. </summary>
         [WirePath("frontendIPConfiguration.id")]

@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Batch
         private PrivateEndpointConnectionProperties _properties;
         private BicepValue<ETag> _eTag;
         private BicepDictionary<string> _tags;
-        private ResourceReference<BatchAccount> _parent;
+        private ProvisioningResourceReference<BatchAccount> _parent;
 
         /// <summary> Creates a new BatchPrivateEndpointConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -117,7 +117,7 @@ namespace Azure.Provisioning.Batch
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -126,7 +126,7 @@ namespace Azure.Provisioning.Batch
         {
             get
             {
-                return Properties.GroupIds;
+                return Properties is null ? default : Properties.GroupIds;
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.Provisioning.Batch
         {
             get
             {
-                return Properties.ConnectionState;
+                return Properties is null ? default : Properties.ConnectionState;
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.Provisioning.Batch
         {
             get
             {
-                return Properties.PrivateEndpointId;
+                return Properties is null ? default : Properties.PrivateEndpointId;
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.Provisioning.Batch
             _properties = DefineModelProperty<PrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _parent = DefineResource<BatchAccount>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<BatchAccount>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

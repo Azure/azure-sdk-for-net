@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Deployments;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.Deployments.Models
 {
     /// <summary> Deployment operation properties. </summary>
     internal partial class WhatIfOperationProperties : IJsonModel<WhatIfOperationProperties>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WhatIfOperationProperties)} does not support writing '{options.Format}' format.");
             }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new WhatIfOperationProperties(changes ?? new ChangeTrackingList<WhatIfChange>(), potentialChanges ?? new ChangeTrackingList<WhatIfChange>(), diagnostics ?? new ChangeTrackingList<DeploymentDiagnosticsDefinition>(), additionalBinaryDataProperties);

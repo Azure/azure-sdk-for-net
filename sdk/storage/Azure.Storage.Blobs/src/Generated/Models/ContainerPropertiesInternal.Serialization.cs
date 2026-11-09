@@ -158,10 +158,10 @@ namespace Azure.Storage.Blobs.Models
                 writer.WriteValue(PreventEncryptionScopeOverride.Value);
                 writer.WriteEndElement();
             }
-            if (Optional.IsDefined(DeletedTime))
+            if (Optional.IsDefined(DeletedOn))
             {
                 writer.WriteStartElement("DeletedTime");
-                writer.WriteStringValue(DeletedTime.Value, "R");
+                writer.WriteStringValue(DeletedOn.Value, "R");
                 writer.WriteEndElement();
             }
             if (Optional.IsDefined(RemainingRetentionDays))
@@ -197,7 +197,7 @@ namespace Azure.Storage.Blobs.Models
             bool? hasLegalHold = default;
             string defaultEncryptionScope = default;
             bool? preventEncryptionScopeOverride = default;
-            DateTimeOffset? deletedTime = default;
+            DateTimeOffset? deletedOn = default;
             int? remainingRetentionDays = default;
             bool? isImmutableStorageWithVersioningEnabled = default;
 
@@ -256,7 +256,7 @@ namespace Azure.Storage.Blobs.Models
                 }
                 if (localName == "DeletedTime")
                 {
-                    deletedTime = child.GetDateTimeOffset("R");
+                    deletedOn = child.GetDateTimeOffset("R");
                     continue;
                 }
                 if (localName == "RemainingRetentionDays")
@@ -281,7 +281,7 @@ namespace Azure.Storage.Blobs.Models
                 hasLegalHold,
                 defaultEncryptionScope,
                 preventEncryptionScopeOverride,
-                deletedTime,
+                deletedOn,
                 remainingRetentionDays,
                 isImmutableStorageWithVersioningEnabled);
         }

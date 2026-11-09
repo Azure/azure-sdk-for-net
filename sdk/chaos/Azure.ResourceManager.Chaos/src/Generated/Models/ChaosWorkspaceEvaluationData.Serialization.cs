@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Chaos.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            ChaosWorkspaceEvaluationProperties properties = default;
+            WorkspaceEvaluationProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,12 +179,12 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    properties = ChaosWorkspaceEvaluationProperties.DeserializeChaosWorkspaceEvaluationProperties(prop.Value, options);
+                    properties = WorkspaceEvaluationProperties.DeserializeWorkspaceEvaluationProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ChaosWorkspaceEvaluationData(

@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="name"> The name of the volume. </param>
         /// <param name="azureFile"> The Azure File volume. </param>
         /// <param name="emptyDir"> The empty directory volume. </param>
-        /// <param name="secret"> The secret volume. </param>
-        /// <param name="secretReference"> The secret reference volume. </param>
+        /// <param name="secret"> Defines files for a secret volume. Dictionary keys are file names and values are Base64-encoded secret data used as file contents. The values are sensitive, and the service does not return the contents of this property in GET responses. </param>
+        /// <param name="secretReference"> Defines files for a secret reference volume. Dictionary keys are file names and values identify entries in the container group's secretReferences collection. This property contains reference names rather than secret values. </param>
         /// <param name="gitRepo"> The git repo volume. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ContainerVolume(string name, ContainerInstanceAzureFileVolume azureFile, BinaryData emptyDir, IDictionary<string, string> secret, IDictionary<string, string> secretReference, ContainerInstanceGitRepoVolume gitRepo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
@@ -83,10 +83,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// </summary>
         public BinaryData EmptyDir { get; set; }
 
-        /// <summary> The secret volume. </summary>
+        /// <summary> Defines files for a secret volume. Dictionary keys are file names and values are Base64-encoded secret data used as file contents. The values are sensitive, and the service does not return the contents of this property in GET responses. </summary>
         public IDictionary<string, string> Secret { get; }
 
-        /// <summary> The secret reference volume. </summary>
+        /// <summary> Defines files for a secret reference volume. Dictionary keys are file names and values identify entries in the container group's secretReferences collection. This property contains reference names rather than secret values. </summary>
         public IDictionary<string, string> SecretReference { get; }
 
         /// <summary> The git repo volume. </summary>

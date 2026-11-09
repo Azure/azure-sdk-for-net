@@ -17,6 +17,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new WorkloadSqlPointInTimeRecoveryPoint. </summary>
         public WorkloadSqlPointInTimeRecoveryPoint()
         {
+            ObjectType.Assign("AzureWorkloadSQLPointInTimeRecoveryPoint");
         }
 
         /// <summary> Gets the TimeRanges. </summary>
@@ -33,7 +34,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("objectType", new string[] { "objectType" }, defaultValue: "AzureWorkloadSQLPointInTimeRecoveryPoint");
             _timeRanges = DefineListProperty<PointInTimeRange>(nameof(TimeRanges), new string[] { "timeRanges" });
             DefineAdditionalProperties();
         }

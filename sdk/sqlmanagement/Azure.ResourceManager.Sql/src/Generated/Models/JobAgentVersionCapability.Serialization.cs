@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new JobAgentVersionCapability(name, supportedEditions ?? new ChangeTrackingList<JobAgentEditionCapability>(), status, reason, additionalBinaryDataProperties);

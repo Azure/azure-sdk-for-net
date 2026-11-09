@@ -83,11 +83,11 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> The starting date and time of the suspension state. </summary>
         [WirePath("suspensionDetails.suspensionStartDate")]
-        public DateTimeOffset? SuspensionStartOn
+        public DateTimeOffset? SuspensionStartsOn
         {
             get
             {
-                return SuspensionDetails is null ? default : SuspensionDetails.SuspensionStartOn;
+                return SuspensionDetails is null ? default : SuspensionDetails.SuspensionStartsOn;
             }
         }
     }

@@ -1,16 +1,30 @@
 # Sample Voice 1: Typed Voice relay
 
-This sample implements the Voice Live Bridge Protocol 1.0 as a typed event relay over the existing `/invocations_ws` endpoint. The handler explicitly acknowledges startup, creates every response and output ID, and owns cancellation for its response tasks.
+This sample implements the Voice Live Bridge Protocol 1.0 as a typed event relay
+over `/voice_conversation_engine` and the existing `/invocations_ws` endpoint. The
+handler explicitly acknowledges startup, creates every response and output ID,
+and owns cancellation for its response tasks.
+
+Caller interruptions arrive as `user.barge_in`, dispatched to `OnUserBargeInAsync` with a `VoiceUserBargeInEvent`. Voice Live senders must use the same event contract. Interruption cancellation and the `heard_text` snapshot are unchanged.
 
 ## Prerequisites
 
+This sample requires `Azure.AI.AgentServer.Invocations` version `1.0.0-beta.8`
+or a compatible later version containing `VoiceUserBargeInEvent` and
+`OnUserBargeInAsync`. Older preview packages do not contain these APIs.
+
+Until a release containing these APIs and the CE route is published, use a
+matching local library build, including its companion Core package, from the
+same SDK checkout. An older package selected by `--prerelease` is not sufficient.
+After a matching release is available, install it explicitly:
+
 ```dotnetcli
-dotnet add package Azure.AI.AgentServer.Invocations --prerelease
+dotnet add package Azure.AI.AgentServer.Invocations --version 1.0.0-beta.8
 ```
 
 ## Declare Voice support
 
-Deploy with the declarations in [`voice-agent.manifest.yaml`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/voice-agent.manifest.yaml):
+For legacy WS integration, keep the declarations in [`voice-agent.manifest.yaml`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/voice-agent.manifest.yaml):
 
 ```yaml
 name: contoso-voice-support
@@ -22,7 +36,38 @@ bridgeProtocolVersion: "1.0"
 
 `bridgeProtocolVersion` selects the exact typed contract. Public Preview supports `1.0`; omitting it preserves the pre-Bridge Voice integration.
 
+### Standalone conversation engine
+
+With a library build containing CE support, keep the same handler and startup
+code, and declare the following in the hosted agent definition instead:
+
+```json
+"protocol_versions": [
+  { "protocol": "voice_conversation_engine", "version": "1.0.0" }
+]
+```
+
+Use `container_protocol_versions` for legacy Agent definitions instead of
+`protocol_versions`. This is a definition fragment, not a replacement for the
+sample manifest. Neither `invocations_ws` nor the legacy Bridge metadata is
+required for CE. If the Agent must also serve legacy WS calls, retain its existing
+WS declaration and metadata.
+
+`AddVoice<THandler>()` and `VoiceServer.Run<THandler>()` expose both container
+routes without a new option. Foundry permits a public protocol invocation only
+when the selected hosted Agent version declares that protocol. The message
+handshake remains `protocol_version="1.0"`; IDs, cancellation, timeouts, history,
+and cleanup remain application-owned. Rebuild the image with the updated library,
+and deploy Foundry CE routing and CE-aware Voice Live before enabling CE. Existing
+legacy deployments can keep their startup code, manifest, and metadata unchanged.
+
 ## Implement the handler
+
+The typed Voice relay is experimental and may change or be removed. To use any of its APIs, suppress the `AAAS001` warning:
+
+```C#
+#pragma warning disable AAAS001
+```
 
 ```C# Snippet:Invocations_SampleVoice1_Handler
 public class VoiceSupportHandler : VoiceHandler
@@ -54,14 +99,18 @@ public class VoiceSupportHandler : VoiceHandler
         CancellationToken cancellationToken)
     {
         var responseId = VoiceIds.CreateResponseId();
-        var generationCancellation =
-            CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-        var generation = new Generation(message.ItemId, generationCancellation);
+        var generationCancellation = new CancellationTokenSource();
+        var generation = new Generation(
+            responseId,
+            message.ItemId,
+            generationCancellation,
+            session.StartTurn(VoiceTurnOrigin.User, inputCount: 1));
         if (!_generations.TryAdd(responseId, generation) ||
             !_inputGenerations.TryAdd(message.ItemId, responseId))
         {
             _generations.TryRemove(responseId, out _);
             generationCancellation.Dispose();
+            generation.Turn.Dispose();
             throw new InvalidOperationException("Could not register the Voice response.");
         }
 
@@ -70,27 +119,39 @@ public class VoiceSupportHandler : VoiceHandler
         {
             await session.SendAsync(
                 new VoiceResponseCreatedMessage(responseId, new[] { message.ItemId }),
-                generationCancellation.Token);
+                cancellationToken);
+            generation.MarkResponseOpened();
+        }
+        catch (OperationCanceledException exception)
+            when (exception.CancellationToken == cancellationToken &&
+                cancellationToken.IsCancellationRequested)
+        {
+            generation.SelectResult(VoiceTurnOutcome.Cancelled);
+            generation.CompleteSelected();
+            RemoveGeneration(responseId);
+            throw;
         }
         catch
         {
+            generation.SelectResult(VoiceTurnOutcome.TransportError);
+            generation.CompleteSelected();
             RemoveGeneration(responseId);
             throw;
         }
 
-        _ = SendResponseAsync(
+        generation.Work = SendResponseAsync(
             session,
             responseId,
             input,
             generation);
     }
 
-    protected override Task OnBargeInAsync(
+    protected override Task OnUserBargeInAsync(
         VoiceSession session,
-        VoiceBargeInEvent bargeIn,
+        VoiceUserBargeInEvent bargeIn,
         CancellationToken cancellationToken)
     {
-        CancelGeneration(bargeIn.ResponseId);
+        CancelGeneration(bargeIn.ResponseId, VoiceTurnOutcome.Cancelled);
         return Task.CompletedTask;
     }
 
@@ -99,7 +160,7 @@ public class VoiceSupportHandler : VoiceHandler
         VoiceResponseCancelledEvent cancelled,
         CancellationToken cancellationToken)
     {
-        CancelGeneration(cancelled.ResponseId);
+        CancelGeneration(cancelled.ResponseId, VoiceTurnOutcome.Cancelled);
         return Task.CompletedTask;
     }
 
@@ -110,7 +171,7 @@ public class VoiceSupportHandler : VoiceHandler
     {
         if (timeout.ResponseId is not null)
         {
-            CancelGeneration(timeout.ResponseId);
+            CancelGeneration(timeout.ResponseId, VoiceTurnOutcome.Timeout);
         }
         else if (timeout.ItemIds is not null)
         {
@@ -118,7 +179,7 @@ public class VoiceSupportHandler : VoiceHandler
             {
                 if (_inputGenerations.TryGetValue(inputItemId, out var responseId))
                 {
-                    CancelGeneration(responseId);
+                    CancelGeneration(responseId, VoiceTurnOutcome.Timeout);
                 }
             }
         }
@@ -130,12 +191,12 @@ public class VoiceSupportHandler : VoiceHandler
         VoiceSessionEndEvent end,
         CancellationToken cancellationToken)
     {
-        CancelAllGenerations();
+        CancelAllGenerations(VoiceTurnOutcome.Cancelled);
         return Task.CompletedTask;
     }
 
     protected override void OnConnectionTerminating(VoiceSession session) =>
-        CancelAllGenerations();
+        CancelAllGenerations(VoiceTurnOutcome.TransportError);
 
     protected virtual Task<string> GenerateAnswerAsync(
         string input,
@@ -152,13 +213,19 @@ public class VoiceSupportHandler : VoiceHandler
         var itemId = VoiceIds.CreateItemId();
         try
         {
-            var answer = await GenerateAnswerAsync(input, cancellationToken);
+            string answer;
+            using (generation.Turn.Activate())
+            {
+                answer = await GenerateAnswerAsync(input, cancellationToken);
+            }
             await session.SendAsync(
                 new VoiceResponseOutputTextDoneMessage(responseId, itemId, answer),
                 cancellationToken);
+            generation.MarkOutputCompleted();
             await session.SendAsync(
                 new VoiceResponseDoneMessage(responseId),
                 cancellationToken);
+            generation.SelectResult(VoiceTurnOutcome.Response);
         }
         catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {
@@ -166,6 +233,7 @@ public class VoiceSupportHandler : VoiceHandler
         }
         catch (Exception exception)
         {
+            generation.SelectResult(VoiceTurnOutcome.Error);
             _logger.LogError(exception, "Voice response {ResponseId} failed", responseId);
             try
             {
@@ -186,16 +254,18 @@ public class VoiceSupportHandler : VoiceHandler
         }
         finally
         {
+            generation.CompleteSelected();
             RemoveGeneration(responseId);
         }
     }
 
-    private void CancelGeneration(string responseId)
+    private void CancelGeneration(string responseId, VoiceTurnOutcome outcome)
     {
         if (_generations.TryRemove(responseId, out var generation))
         {
             _inputGenerations.TryRemove(generation.InputItemId, out _);
-            _ = CancelAndDisposeAsync(generation.Cancellation);
+            generation.SelectResult(outcome);
+            _ = CancelAndDisposeAsync(generation);
         }
     }
 
@@ -204,37 +274,107 @@ public class VoiceSupportHandler : VoiceHandler
         if (_generations.TryRemove(responseId, out var generation))
         {
             _inputGenerations.TryRemove(generation.InputItemId, out _);
-            generation.Cancellation.Dispose();
+            generation.Dispose();
         }
     }
 
-    private void CancelAllGenerations()
+    private void CancelAllGenerations(VoiceTurnOutcome outcome)
     {
         foreach (var responseId in _generations.Keys)
         {
-            CancelGeneration(responseId);
+            CancelGeneration(responseId, outcome);
         }
     }
 
-    private async Task CancelAndDisposeAsync(CancellationTokenSource cancellation)
+    private async Task CancelAndDisposeAsync(Generation generation)
     {
         try
         {
-            await cancellation.CancelAsync();
+            await generation.Cancellation.CancelAsync();
         }
         catch (Exception exception)
         {
             _logger.LogError(exception, "Voice response cancellation failed");
         }
+        try
+        {
+            if (generation.Work is not null)
+            {
+                await generation.Work;
+            }
+        }
+        catch (Exception exception)
+        {
+            _logger.LogError(exception, "Voice response work failed during cancellation");
+        }
         finally
         {
-            cancellation.Dispose();
+            generation.CompleteSelected();
+            generation.Dispose();
         }
     }
 
-    private sealed record Generation(
-        string InputItemId,
-        CancellationTokenSource Cancellation);
+    private sealed class Generation
+    {
+        private VoiceTurnResult? _selectedResult;
+        private Task? _work;
+        private int _outputItemCount;
+        private int _responseOpened;
+
+        public Generation(
+            string responseId,
+            string inputItemId,
+            CancellationTokenSource cancellation,
+            VoiceTurnTrace turn)
+        {
+            ResponseId = responseId;
+            InputItemId = inputItemId;
+            Cancellation = cancellation;
+            Turn = turn;
+        }
+
+        public string ResponseId { get; }
+
+        public string InputItemId { get; }
+
+        public CancellationTokenSource Cancellation { get; }
+
+        public VoiceTurnTrace Turn { get; }
+
+        public Task? Work
+        {
+            get => Volatile.Read(ref _work);
+            set => Volatile.Write(ref _work, value);
+        }
+
+        public void MarkResponseOpened() => Volatile.Write(ref _responseOpened, 1);
+
+        public void MarkOutputCompleted() => Interlocked.Increment(ref _outputItemCount);
+
+        public void SelectResult(VoiceTurnOutcome outcome) =>
+            Interlocked.CompareExchange(
+                ref _selectedResult,
+                new VoiceTurnResult(
+                    outcome,
+                    Volatile.Read(ref _outputItemCount),
+                    Volatile.Read(ref _responseOpened) != 0 ? ResponseId : null),
+                null);
+
+        public void CompleteSelected()
+        {
+            if (Volatile.Read(ref _selectedResult) is { } result)
+            {
+                Turn.Complete(result);
+            }
+        }
+
+        public void Dispose()
+        {
+            CompleteSelected();
+            Cancellation.Dispose();
+            Turn.Dispose();
+        }
+    }
 }
 ```
 

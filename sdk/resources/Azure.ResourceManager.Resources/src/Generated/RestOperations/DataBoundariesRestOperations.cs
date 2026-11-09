@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal Core.HttpMessage CreatePutRequest(DataBoundaryName name, DataBoundaryData data)
+        internal HttpMessage CreatePutRequest(DataBoundaryName name, DataBoundaryData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal Core.HttpMessage CreateGetTenantRequest(DataBoundaryName name)
+        internal HttpMessage CreateGetTenantRequest(DataBoundaryName name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal Core.HttpMessage CreateGetScopeRequest(string scope, DataBoundaryName name)
+        internal HttpMessage CreateGetScopeRequest(string scope, DataBoundaryName name)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

@@ -12,7 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Deployments
 {
     /// <summary></summary>
     internal partial class ArmDeploymentResourceOperationSource : IOperationSource<ArmDeploymentResource>

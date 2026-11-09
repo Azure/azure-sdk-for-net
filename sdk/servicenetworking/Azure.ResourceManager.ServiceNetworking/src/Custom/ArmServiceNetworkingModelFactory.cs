@@ -108,21 +108,22 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         public static TrafficControllerData TrafficControllerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<string> configurationEndpoints, IEnumerable<SubResource> frontends, IEnumerable<SubResource> associations, IEnumerable<SubResource> securityPolicies, ResourceIdentifier wafSecurityPolicyId, ServiceNetworkingProvisioningState? trafficControllerProvisioningState = null)
         {
             return TrafficControllerData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                configurationEndpoints,
-                frontends,
-                associations,
-                securityPolicies,
-                wafSecurityPolicyId != null ? new SecurityPolicyConfigurations()
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                configurationEndpoints: configurationEndpoints,
+                frontends: frontends,
+                associations: associations,
+                securityPolicies: securityPolicies,
+                privateEndpointConnections: null,
+                securityPolicyConfigurations: wafSecurityPolicyId != null ? new SecurityPolicyConfigurations()
                 {
                     WafSecurityPolicyId = wafSecurityPolicyId
                 } : null,
-                trafficControllerProvisioningState);
+                trafficControllerProvisioningState: trafficControllerProvisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ServiceNetworking.ApplicationGatewayForContainersSecurityPolicyData" />. </summary>
@@ -170,7 +171,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="provisioningState"> Provisioning State of Traffic Controller Association Resource. </param>
         /// <returns> A new <see cref="ServiceNetworking.TrafficControllerAssociationData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static TrafficControllerAssociationData TrafficControllerAssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, TrafficControllerAssociationType? associationType = null, ResourceIdentifier subnetId = null, ServiceNetworkingProvisioningState? provisioningState = null)
+        public static TrafficControllerAssociationData TrafficControllerAssociationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, TrafficControllerAssociationType? associationType = null, ResourceIdentifier subnetId = null, ServiceNetworkingProvisioningState? provisioningState = null)
         {
             return new TrafficControllerAssociationData(
                 id,

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Enclave
         {
             TryGetApiVersion(VirtualEnclaveApprovalResource.ResourceType, out string virtualEnclaveApprovalApiVersion);
             _approvalClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Enclave", VirtualEnclaveApprovalResource.ResourceType.Namespace, Diagnostics);
-            _approvalRestClient = new Approval(_approvalClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualEnclaveApprovalApiVersion ?? "2026-03-01-preview");
+            _approvalRestClient = new Approval(_approvalClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualEnclaveApprovalApiVersion ?? "2026-04-01");
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Enclave
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Enclave
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Enclave
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Enclave
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Enclave
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Enclave
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<VirtualEnclaveApprovalData, VirtualEnclaveApprovalResource>(new ApprovalGetByParentAsyncCollectionResultOfT(_approvalRestClient, Id.ToString(), context, "VirtualEnclaveApprovalCollection.GetAll"), data => new VirtualEnclaveApprovalResource(Client, data));
+            return new AsyncPageableWrapper<VirtualEnclaveApprovalData, VirtualEnclaveApprovalResource>(new VirtualEnclaveApprovalDataAsyncCollectionResultOfT(_approvalRestClient, Id.ToString(), context, "VirtualEnclaveApprovalCollection.GetAll"), data => new VirtualEnclaveApprovalResource(Client, data));
         }
 
         /// <summary>
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Enclave
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Enclave
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<VirtualEnclaveApprovalData, VirtualEnclaveApprovalResource>(new ApprovalGetByParentCollectionResultOfT(_approvalRestClient, Id.ToString(), context, "VirtualEnclaveApprovalCollection.GetAll"), data => new VirtualEnclaveApprovalResource(Client, data));
+            return new PageableWrapper<VirtualEnclaveApprovalData, VirtualEnclaveApprovalResource>(new VirtualEnclaveApprovalDataCollectionResultOfT(_approvalRestClient, Id.ToString(), context, "VirtualEnclaveApprovalCollection.GetAll"), data => new VirtualEnclaveApprovalResource(Client, data));
         }
 
         /// <summary>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Enclave
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Enclave
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Enclave
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Enclave
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-04-01. </description>
         /// </item>
         /// </list>
         /// </summary>

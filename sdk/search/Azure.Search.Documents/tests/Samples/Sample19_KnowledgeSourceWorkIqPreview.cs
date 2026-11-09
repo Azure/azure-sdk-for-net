@@ -11,12 +11,13 @@ using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.KnowledgeBases;
 using Azure.Search.Documents.KnowledgeBases.Models;
+using Azure.Search.Documents.Models;
 #endregion Snippet:Azure_Search_Tests_Samples_Sample19_WorkIqKS_Namespaces
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
-    [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_05_01_Preview)]
+    [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_08_01_Preview)]
     public partial class KnowledgeSourceWorkIqPreview : SearchTestBase
     {
         public KnowledgeSourceWorkIqPreview(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -25,6 +26,7 @@ namespace Azure.Search.Documents.Tests.Samples
         }
 
         [Test]
+        [Ignore("Work IQ knowledge requires entra app authentication which requires provisioning a live app. Skipping test for now")]
         [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
         public async Task CreateAndUseWorkIqKnowledgeSource()
         {
@@ -59,13 +61,29 @@ namespace Azure.Search.Documents.Tests.Samples
 #if !SNIPPET
                 knowledgeSourceName = testSourceName;
 #endif
-                WorkIQKnowledgeSource workIqSource = new WorkIQKnowledgeSource(knowledgeSourceName)
+
+                EntraAppAuthentication entraAuthentication = new EntraAppAuthentication(
+                    applicationId: Guid.Parse("00000000-0000-0000-0000-000000000000"),
+                    federatedCredentialId: Guid.Parse("00000000-0000-0000-0000-000000000000"));
+
+                // TenantId is optional when the app and Search service use the same
+                // tenant. Set it explicitly for a cross-tenant app registration.
+                string tenantId = Environment.GetEnvironmentVariable("WORK_IQ_TENANT_ID");
+                if (!string.IsNullOrEmpty(tenantId))
+                {
+                    entraAuthentication.TenantId = Guid.Parse(tenantId);
+                }
+
+                WorkIQKnowledgeSourceParameters workIqParameters = new WorkIQKnowledgeSourceParameters(entraAuthentication);
+
+                WorkIQKnowledgeSource workIqSource = new WorkIQKnowledgeSource(knowledgeSourceName, workIqParameters)
                 {
                     Description = "Work IQ knowledge source for M365 content"
                 };
 
                 KnowledgeSource createdSource = await indexClient.CreateKnowledgeSourceAsync(workIqSource);
                 Console.WriteLine($"Created Work IQ knowledge source '{createdSource.Name}'");
+                Console.WriteLine($"  Tenant: {workIqParameters.EntraAppAuthentication.TenantId?.ToString() ?? "Search service tenant"}");
                 #endregion Snippet:Azure_Search_Tests_Samples_Sample19_WorkIqKS_Create
 
                 Assert.AreEqual(testSourceName, createdSource.Name);
@@ -120,8 +138,8 @@ namespace Azure.Search.Documents.Tests.Samples
                             {
                                 ResourceUri = new Uri(openAIEndpoint),
                                 ApiKey = openAIKey,
-                                DeploymentName = "gpt-5-mini",
-                                ModelName = AzureOpenAIModelName.Gpt5Mini
+                                DeploymentName = "gpt-5.4-mini",
+                                ModelName = AzureOpenAIModelName.Gpt54Mini
                             }));
 #if !SNIPPET
                 }
@@ -158,18 +176,18 @@ namespace Azure.Search.Documents.Tests.Samples
                         IncludeReferenceSourceData = true
                     });
 
-                // Work IQ sources require a query source authorization token.
-                // Obtain an access token scoped to the search service:
-                // az account get-access-token --resource https://search.azure.com/.default
+                // Search query-source authorization enforces Search document access.
+                // It is separate from the Work IQ user assertion.
                 string querySourceAuthorization = Environment.GetEnvironmentVariable("SEARCH_QUERY_SOURCE_AUTH");
-#if !SNIPPET
-                AccessToken token = await TestEnvironment.Credential.GetTokenAsync(
-                    new TokenRequestContext(new[] { "https://search.azure.com/.default" }), CancellationToken.None);
-                querySourceAuthorization = token.Token;
-#endif
+
+                // The Work IQ user assertion represents the user for on-behalf-of
+                // authentication to Work IQ. Do not reuse a Search access token here.
+                string queryWorkIQSourceAuthorization = Environment.GetEnvironmentVariable("WORK_IQ_USER_ASSERTION");
 
                 Response<KnowledgeBaseRetrievalResponse> response = await retrievalClient.RetrieveAsync(
-                    request, querySourceAuthorization);
+                    request,
+                    querySourceAuthorization: querySourceAuthorization,
+                    queryWorkIQSourceAuthorization: queryWorkIQSourceAuthorization);
                 KnowledgeBaseRetrievalResponse retrievalResponse = response.Value;
 
                 foreach (KnowledgeBaseMessage message in retrievalResponse.Response)

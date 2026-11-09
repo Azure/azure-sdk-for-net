@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new SiteConfigSlotResourceOperationGroupGetConfigurationSnapshotInfoSlotAsyncCollectionResultOfT(
+            return new SiteConfigurationSnapshotInfoAsync0CollectionResultOfT(
                 _siteConfigSlotResourceOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.AppService
             {
                 CancellationToken = cancellationToken
             };
-            return new SiteConfigSlotResourceOperationGroupGetConfigurationSnapshotInfoSlotCollectionResultOfT(
+            return new SiteConfigurationSnapshotInfo0CollectionResultOfT(
                 _siteConfigSlotResourceOperationGroupRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

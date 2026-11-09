@@ -19,6 +19,10 @@ namespace Azure.ResourceManager.Avs.Models
         private const string AvailableWindowForMaintenanceWhileRescheduleOperationValue = "AvailableWindowForMaintenance";
         /// <summary> Blocked time range constraint. </summary>
         private const string BlockedWhileRescheduleOperationValue = "Blocked";
+        /// <summary> Defines allowed window for rescheduling. </summary>
+        private const string ReschedulingWindowValue = "ReschedulingWindow";
+        /// <summary> Defines weekend rescheduling restriction. </summary>
+        private const string WeekendReschedulingValue = "WeekendRescheduling";
 
         /// <summary> Initializes a new instance of <see cref="RescheduleOperationConstraintKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,6 +39,12 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary> Blocked time range constraint. </summary>
         public static RescheduleOperationConstraintKind BlockedWhileRescheduleOperation { get; } = new RescheduleOperationConstraintKind(BlockedWhileRescheduleOperationValue);
+
+        /// <summary> Defines allowed window for rescheduling. </summary>
+        public static RescheduleOperationConstraintKind ReschedulingWindow { get; } = new RescheduleOperationConstraintKind(ReschedulingWindowValue);
+
+        /// <summary> Defines weekend rescheduling restriction. </summary>
+        public static RescheduleOperationConstraintKind WeekendRescheduling { get; } = new RescheduleOperationConstraintKind(WeekendReschedulingValue);
 
         /// <summary> Determines if two <see cref="RescheduleOperationConstraintKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

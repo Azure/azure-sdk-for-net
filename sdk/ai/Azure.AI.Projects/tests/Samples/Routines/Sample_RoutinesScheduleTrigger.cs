@@ -69,7 +69,7 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
             await Task.Delay(500);
             await foreach (RoutineRun run in projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name))
             {
-                Console.WriteLine($"    - run ID {run.Id}, status: {run.Status}, trigger type: {run.TriggerType}, triggered at: {run.TriggeredAt?.ToString() ?? "<Not triggered yet>"}, ended at: {run.EndedAt?.ToString() ?? "<Not ended yet>"}");
+                Console.WriteLine($"    - run ID {run.Id}, status: {run.Status}, trigger type: {run.TriggerType}, triggered at: {run.TriggeredOn?.ToString() ?? "<Not triggered yet>"}, ended at: {run.EndedOn?.ToString() ?? "<Not ended yet>"}");
                 if (string.Equals(run.Status, "finished", StringComparison.InvariantCultureIgnoreCase) ||
                     string.Equals(run.Status, "failed", StringComparison.InvariantCultureIgnoreCase) ||
                     string.Equals(run.Status, "killed", StringComparison.InvariantCultureIgnoreCase))
@@ -162,7 +162,7 @@ public class Sample_RoutinesScheduleTrigger : SamplesRoutineBase
             Thread.Sleep(500);
             foreach (RoutineRun run in projectClient.Routines.GetRoutineRuns(routineName: created.Name))
             {
-                Console.WriteLine($"    - run ID {run.Id}, status: {run.Status}, trigger type: {run.TriggerType}, triggered at: {run.TriggeredAt?.ToString() ?? "<Not triggered yet>"}, ended at: {run.EndedAt?.ToString() ?? "<Not ended yet>"}");
+                Console.WriteLine($"    - run ID {run.Id}, status: {run.Status}, trigger type: {run.TriggerType}, triggered at: {run.TriggeredOn?.ToString() ?? "<Not triggered yet>"}, ended at: {run.EndedOn?.ToString() ?? "<Not ended yet>"}");
                 if (string.Equals(run.Status, "finished", StringComparison.InvariantCultureIgnoreCase) ||
                     string.Equals(run.Status, "failed", StringComparison.InvariantCultureIgnoreCase) ||
                     string.Equals(run.Status, "killed", StringComparison.InvariantCultureIgnoreCase))

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,15 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.0 (2026-08-16)
+
+### Features Added
+
+- Added `ChangeEnumerationIntervalDays` to cloud endpoint data and create-or-update content.
+- Added PATCH-based cloud endpoint update operation to support updating the new `ChangeEnumerationIntervalDays` parameter
+- Added sync-session progress, throughput, large-file, and warning details to `ServerEndpointSyncActivityStatus`.
+- Updated the default service API version to `2025-12-01`.
 
 ## 1.3.2 (2026-06-30)
 

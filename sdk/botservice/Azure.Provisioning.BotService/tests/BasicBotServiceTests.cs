@@ -52,19 +52,19 @@ public class BasicBotServiceTests
 
             resource bot 'Microsoft.BotService/botServices@2023-09-15-preview' = {
               name: take('bot-${uniqueString(resourceGroup().id)}', 64)
+              location: location
+              kind: 'bot'
               properties: {
                 displayName: 'sample-bot'
                 endpoint: 'https://example.com/api/messages'
                 msaAppId: '00000000-0000-0000-0000-000000000000'
               }
-              location: location
-              tags: {
-                environment: 'test'
-              }
               sku: {
                 name: 'F0'
               }
-              kind: 'bot'
+              tags: {
+                environment: 'test'
+              }
             }
             """);
     }

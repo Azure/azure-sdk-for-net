@@ -300,7 +300,7 @@ namespace Azure.AI.Discovery
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new RunRequest(
@@ -309,7 +309,7 @@ namespace Azure.AI.Discovery
                 inlineFiles ?? new ChangeTrackingList<InlineFile>(),
                 inputData ?? new ChangeTrackingList<InputDataMount>(),
                 outputData ?? new ChangeTrackingList<OutputDataMount>(),
-                nodePoolIds,
+                nodePoolIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 infraOverrides,
                 environmentVariables ?? new ChangeTrackingList<RunRequestEnvironmentVariable>(),
                 additionalBinaryDataProperties);

@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.PreviewAlertRule.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new RulePreviewResult(dimensionCombination ?? new ChangeTrackingList<RulePreviewDimensionNameAndValue>(), evaluations ?? new ChangeTrackingList<RulePreviewEvaluation>(), additionalBinaryDataProperties);

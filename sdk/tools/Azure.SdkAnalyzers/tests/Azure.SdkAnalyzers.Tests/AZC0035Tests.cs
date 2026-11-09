@@ -18,7 +18,10 @@ namespace Azure.SdkAnalyzers.Tests
         [TestCase("Task<Operation<TestModel>>")]
         [TestCase("Pageable<TestModel>")]
         [TestCase("AsyncPageable<TestModel>")]
+        [TestCase("System.ClientModel.AsyncStreamingResult<TestModel>")]
+        [TestCase("Task<System.ClientModel.AsyncStreamingResult<TestModel>>")]
         [TestCase("System.ClientModel.AsyncStreamingClientResult<TestModel>")]
+        [TestCase("Task<System.ClientModel.AsyncStreamingClientResult<TestModel>>")]
         public async Task AZC0035_ProducedWhenOutputModelMissingFromModelFactory(string returnType)
         {
             string code = $@"
@@ -47,6 +50,10 @@ namespace Azure.Test
             analyzer.TestState.Sources.Add(@"
 namespace System.ClientModel
 {
+    public sealed class AsyncStreamingResult<T>
+    {
+    }
+
     public sealed class AsyncStreamingClientResult<T>
     {
     }
@@ -102,9 +109,11 @@ namespace Azure.Test
         }
 
         [Test]
-        public async Task AZC0035_UnwrapsSseItemInsideAsyncStreamingClientResult()
+        public async Task AZC0035_UnwrapsSseItemInsideAsyncStreamingResult(
+            [Values("AsyncStreamingResult", "AsyncStreamingClientResult")] string resultTypeName,
+            [Values(false, true)] bool wrapInTask)
         {
-            const string code = @"
+            string code = @"
 namespace System.Net.ServerSentEvents
 {
     public sealed class SseItem<T>
@@ -136,6 +145,15 @@ namespace Azure.Test
         }
     }
 }";
+
+            code = code.Replace("AsyncStreamingClientResult", resultTypeName);
+            if (wrapInTask)
+            {
+                code = code.Replace(
+                    $"public System.ClientModel.{resultTypeName}<",
+                    $"public System.Threading.Tasks.Task<System.ClientModel.{resultTypeName}<")
+                    .Replace("SseItem<TestModel>> GetModels()", "SseItem<TestModel>>> GetModels()");
+            }
 
             await Verifier.CreateAnalyzer(code).RunAsync();
         }

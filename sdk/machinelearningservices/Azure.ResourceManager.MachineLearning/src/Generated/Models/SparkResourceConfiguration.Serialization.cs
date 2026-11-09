@@ -74,10 +74,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(SparkResourceConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(InstanceType))
+            if (Optional.IsDefined(InstanceType, _instanceTypeIsDefined))
             {
-                writer.WritePropertyName("instanceType"u8);
-                writer.WriteStringValue(InstanceType);
+                if (InstanceType != null)
+                {
+                    writer.WritePropertyName("instanceType"u8);
+                    writer.WriteStringValue(InstanceType);
+                }
+                else
+                {
+                    writer.WriteNull("instanceType"u8);
+                }
             }
             if (Optional.IsDefined(RuntimeVersion))
             {
@@ -126,6 +133,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool instanceTypeIsDefined = false;
             string instanceType = default;
             string runtimeVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -133,6 +141,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (prop.NameEquals("instanceType"u8))
                 {
+                    instanceTypeIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         instanceType = null;
@@ -148,10 +157,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SparkResourceConfiguration(instanceType, runtimeVersion, additionalBinaryDataProperties);
+            return new SparkResourceConfiguration(instanceType, runtimeVersion, additionalBinaryDataProperties)
+            {
+                _instanceTypeIsDefined = instanceTypeIsDefined
+            };
         }
     }
 }

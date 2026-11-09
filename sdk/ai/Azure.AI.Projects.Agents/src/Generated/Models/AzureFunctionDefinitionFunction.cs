@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -16,12 +17,8 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="AzureFunctionDefinitionFunction"/>. </summary>
         /// <param name="name"> The name of the function to be called. </param>
         /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="parameters"/> is null. </exception>
-        public AzureFunctionDefinitionFunction(string name, BinaryData parameters)
+        internal AzureFunctionDefinitionFunction(string name, BinaryData parameters)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(parameters, nameof(parameters));
-
             Name = name;
             Parameters = parameters;
         }
@@ -40,9 +37,37 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The name of the function to be called. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
 
         /// <summary> A description of what the function does, used by the model to choose when and how to call the function. </summary>
-        public string Description { get; set; }
+        public string Description { get; }
+
+        /// <summary>
+        /// The parameters the functions accepts, described as a JSON Schema object.
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Parameters { get; }
     }
 }

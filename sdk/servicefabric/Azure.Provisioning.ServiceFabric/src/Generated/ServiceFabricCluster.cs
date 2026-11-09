@@ -562,12 +562,12 @@ namespace Azure.Provisioning.ServiceFabric
             }
         }
 
-        /// <summary> Gets or sets the UpgradePauseStartOn. </summary>
-        public BicepValue<DateTimeOffset> UpgradePauseStartOn
+        /// <summary> Gets or sets the UpgradePauseStartsOn. </summary>
+        public BicepValue<DateTimeOffset> UpgradePauseStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.UpgradePauseStartOn;
+                return Properties is null ? default : Properties.UpgradePauseStartsOn;
             }
             set
             {
@@ -575,16 +575,16 @@ namespace Azure.Provisioning.ServiceFabric
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.UpgradePauseStartOn = value;
+                Properties.UpgradePauseStartsOn = value;
             }
         }
 
-        /// <summary> Gets or sets the UpgradePauseEndOn. </summary>
-        public BicepValue<DateTimeOffset> UpgradePauseEndOn
+        /// <summary> Gets or sets the UpgradePauseEndsOn. </summary>
+        public BicepValue<DateTimeOffset> UpgradePauseEndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.UpgradePauseEndOn;
+                return Properties is null ? default : Properties.UpgradePauseEndsOn;
             }
             set
             {
@@ -592,7 +592,7 @@ namespace Azure.Provisioning.ServiceFabric
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.UpgradePauseEndOn = value;
+                Properties.UpgradePauseEndsOn = value;
             }
         }
 

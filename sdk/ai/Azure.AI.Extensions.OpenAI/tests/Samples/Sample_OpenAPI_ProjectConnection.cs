@@ -45,12 +45,14 @@ public class Sample_OpenAPIProjectConnection : ProjectsOpenAITestBase
         AIProjectConnection tripadvisorConnection = await projectClient.Connections.GetConnectionAsync("tripadvisor");
         OpenApiFunctionDefinition toolDefinition = new(
             name: "tripadvisor",
-            specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+            specification: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
             authentication: new OpenApiProjectConnectionAuthenticationDetails(new OpenApiProjectConnectionSecurityScheme(
                 projectConnectionId: tripadvisorConnection.Id
             ))
-        );
-        toolDefinition.Description = "Trip Advisor API to get travel information.";
+        )
+        {
+            Description = "Trip Advisor API to get travel information."
+        };
         OpenApiTool openapiTool = new(toolDefinition);
 
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -100,12 +102,14 @@ public class Sample_OpenAPIProjectConnection : ProjectsOpenAITestBase
         AIProjectConnection tripadvisorConnection = projectClient.Connections.GetConnection("tripadvisor");
         OpenApiFunctionDefinition toolDefinition = new(
             name: "tripadvisor",
-            specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+            specification: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
             authentication: new OpenApiProjectConnectionAuthenticationDetails(new OpenApiProjectConnectionSecurityScheme(
                 projectConnectionId: tripadvisorConnection.Id
             ))
-        );
-        toolDefinition.Description = "Trip Advisor API to get travel information.";
+        )
+        {
+            Description = "Trip Advisor API to get travel information."
+        };
         OpenApiTool openapiTool = new(toolDefinition);
 
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)

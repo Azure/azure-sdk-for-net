@@ -17,7 +17,7 @@ namespace Azure.Provisioning.MachineLearning
         private BicepValue<string> _name;
         private BicepValue<int> _target;
         private BicepValue<int> _published;
-        private BicepValue<string> _hostIp;
+        private BicepValue<string> _hostIP;
 
         /// <summary> Creates a new ContainerEndpoint. </summary>
         public ContainerEndpoint()
@@ -84,18 +84,18 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
-        /// <summary> Gets or sets the HostIp. </summary>
-        public BicepValue<string> HostIp
+        /// <summary> Gets or sets the HostIP. </summary>
+        public BicepValue<string> HostIP
         {
             get
             {
                 Initialize();
-                return _hostIp;
+                return _hostIP;
             }
             set
             {
                 Initialize();
-                _hostIp.Assign(value);
+                _hostIP.Assign(value);
             }
         }
 
@@ -107,7 +107,7 @@ namespace Azure.Provisioning.MachineLearning
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _target = DefineProperty<int>(nameof(Target), new string[] { "target" });
             _published = DefineProperty<int>(nameof(Published), new string[] { "published" });
-            _hostIp = DefineProperty<string>(nameof(HostIp), new string[] { "hostIp" });
+            _hostIP = DefineProperty<string>(nameof(HostIP), new string[] { "hostIp" });
             DefineAdditionalProperties();
         }
 

@@ -9,19 +9,12 @@ namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary>
     /// authentication details for OpenApiFunctionDefinition
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenApiAnonymousAuthenticationDetails"/>, <see cref="OpenApiProjectConnectionAuthenticationDetails"/>, and <see cref="OpenApiManagedAuthenticationDetails"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenApiAnonymousAuthenticationDetails"/>, <see cref="OpenApiManagedAuthenticationDetails"/>, and <see cref="OpenApiProjectConnectionAuthenticationDetails"/>.
     /// </summary>
     public abstract partial class OpenApiAuthenticationDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="OpenApiAuthenticationDetails"/>. </summary>
-        /// <param name="kind"> The type of authentication, must be anonymous/project_connection/managed_identity. </param>
-        private protected OpenApiAuthenticationDetails(OpenApiAuthenticationKind kind)
-        {
-            Kind = kind;
-        }
 
         /// <summary> Initializes a new instance of <see cref="OpenApiAuthenticationDetails"/>. </summary>
         /// <param name="kind"> The type of authentication, must be anonymous/project_connection/managed_identity. </param>
@@ -31,8 +24,5 @@ namespace Azure.AI.Extensions.OpenAI
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The type of authentication, must be anonymous/project_connection/managed_identity. </summary>
-        internal OpenApiAuthenticationKind Kind { get; set; }
     }
 }

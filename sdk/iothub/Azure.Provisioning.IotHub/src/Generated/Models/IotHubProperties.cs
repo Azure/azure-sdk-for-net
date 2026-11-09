@@ -518,7 +518,7 @@ namespace Azure.Provisioning.IotHub
         {
             get
             {
-                return IotHubDetails.GatewayVersion;
+                return IotHubDetails is null ? default : IotHubDetails.GatewayVersion;
             }
         }
 

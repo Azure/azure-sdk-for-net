@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Network;
@@ -85,6 +86,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AddressPrefixV6))
+            {
+                writer.WritePropertyName("addressPrefixV6"u8);
+                writer.WriteStringValue(AddressPrefixV6);
             }
             if (Optional.IsCollectionDefined(BootStrapConfigurationBlobs))
             {
@@ -165,9 +171,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("internetIngressPublicIps"u8);
                 writer.WriteStartArray();
-                foreach (InternetIngressPublicIpsProperties item in InternetIngressPublicIPs)
+                foreach (WritableSubResource item in InternetIngressPublicIPs)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -246,10 +257,30 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(AddressFamily))
+            {
+                writer.WritePropertyName("addressFamily"u8);
+                writer.WriteStartArray();
+                foreach (NetworkIPVersion item in AddressFamily)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
-                writer.WriteStringValue(PrivateIPAddress);
+                writer.WriteStringValue(PrivateIPAddress.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddressV6))
+            {
+                writer.WritePropertyName("privateIpAddressV6"u8);
+                writer.WriteStringValue(PrivateIPAddressV6);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MigrationStatus))
+            {
+                writer.WritePropertyName("migrationStatus"u8);
+                writer.WriteObjectValue(MigrationStatus, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -295,6 +326,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             VirtualApplianceSkuProperties nvaSku = default;
             string addressPrefix = default;
+            string addressPrefixV6 = default;
             IList<string> bootStrapConfigurationBlobs = default;
             NetworkSubResource virtualHub = default;
             IList<string> cloudInitConfigurationBlobs = default;
@@ -304,7 +336,7 @@ namespace Azure.ResourceManager.Network.Models
             IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics = default;
             NetworkVirtualAppliancePropertiesFormatNetworkProfile networkProfile = default;
             IList<VirtualApplianceAdditionalNicProperties> additionalNics = default;
-            IList<InternetIngressPublicIpsProperties> internetIngressPublicIPs = default;
+            IList<WritableSubResource> internetIngressPublicIPs = default;
             IReadOnlyList<WritableSubResource> virtualApplianceSites = default;
             IReadOnlyList<WritableSubResource> virtualApplianceConnections = default;
             IReadOnlyList<WritableSubResource> inboundSecurityRules = default;
@@ -313,7 +345,10 @@ namespace Azure.ResourceManager.Network.Models
             VirtualApplianceDelegationProperties delegation = default;
             PartnerManagedResourceProperties partnerManagedResource = default;
             IList<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations = default;
-            string privateIPAddress = default;
+            IList<NetworkIPVersion> addressFamily = default;
+            IPAddress privateIPAddress = default;
+            string privateIPAddressV6 = default;
+            NetworkVirtualApplianceMigrationStatus migrationStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -329,6 +364,11 @@ namespace Azure.ResourceManager.Network.Models
                 if (prop.NameEquals("addressPrefix"u8))
                 {
                     addressPrefix = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("addressPrefixV6"u8))
+                {
+                    addressPrefixV6 = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("bootStrapConfigurationBlobs"u8))
@@ -444,10 +484,17 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    List<InternetIngressPublicIpsProperties> array = new List<InternetIngressPublicIpsProperties>();
+                    List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(InternetIngressPublicIpsProperties.DeserializeInternetIngressPublicIpsProperties(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerNetworkContext.Default));
+                        }
                     }
                     internetIngressPublicIPs = array;
                     continue;
@@ -561,19 +608,52 @@ namespace Azure.ResourceManager.Network.Models
                     nvaInterfaceConfigurations = array;
                     continue;
                 }
+                if (prop.NameEquals("addressFamily"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<NetworkIPVersion> array = new List<NetworkIPVersion>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new NetworkIPVersion(item.GetString()));
+                    }
+                    addressFamily = array;
+                    continue;
+                }
                 if (prop.NameEquals("privateIpAddress"u8))
                 {
-                    privateIPAddress = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privateIPAddress = IPAddress.Parse(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("privateIpAddressV6"u8))
+                {
+                    privateIPAddressV6 = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("migrationStatus"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    migrationStatus = NetworkVirtualApplianceMigrationStatus.DeserializeNetworkVirtualApplianceMigrationStatus(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new NetworkVirtualAppliancePropertiesFormat(
                 nvaSku,
                 addressPrefix,
+                addressPrefixV6,
                 bootStrapConfigurationBlobs ?? new ChangeTrackingList<string>(),
                 virtualHub,
                 cloudInitConfigurationBlobs ?? new ChangeTrackingList<string>(),
@@ -583,7 +663,7 @@ namespace Azure.ResourceManager.Network.Models
                 virtualApplianceNics ?? new ChangeTrackingList<VirtualApplianceNicProperties>(),
                 networkProfile,
                 additionalNics ?? new ChangeTrackingList<VirtualApplianceAdditionalNicProperties>(),
-                internetIngressPublicIPs ?? new ChangeTrackingList<InternetIngressPublicIpsProperties>(),
+                internetIngressPublicIPs ?? new ChangeTrackingList<WritableSubResource>(),
                 virtualApplianceSites ?? new ChangeTrackingList<WritableSubResource>(),
                 virtualApplianceConnections ?? new ChangeTrackingList<WritableSubResource>(),
                 inboundSecurityRules ?? new ChangeTrackingList<WritableSubResource>(),
@@ -592,7 +672,10 @@ namespace Azure.ResourceManager.Network.Models
                 delegation,
                 partnerManagedResource,
                 nvaInterfaceConfigurations ?? new ChangeTrackingList<NvaInterfaceConfigurationsProperties>(),
+                addressFamily ?? new ChangeTrackingList<NetworkIPVersion>(),
                 privateIPAddress,
+                privateIPAddressV6,
+                migrationStatus,
                 additionalBinaryDataProperties);
         }
     }

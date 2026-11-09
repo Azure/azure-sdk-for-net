@@ -17,20 +17,20 @@ namespace Azure.AI.Language.Conversations.Authoring
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConversationAuthoringTrainingConfigVersion"/>. </summary>
-        /// <param name="modelExpirationDate"> Represents the training config version expiration date. </param>
-        internal ConversationAuthoringTrainingConfigVersion(DateTimeOffset modelExpirationDate)
+        /// <param name="modelExpiresOn"> Represents the training config version expiration date. </param>
+        internal ConversationAuthoringTrainingConfigVersion(DateTimeOffset modelExpiresOn)
         {
-            ModelExpirationDate = modelExpirationDate;
+            ModelExpiresOn = modelExpiresOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="ConversationAuthoringTrainingConfigVersion"/>. </summary>
         /// <param name="trainingConfigVersion"> Represents the version of the config. </param>
-        /// <param name="modelExpirationDate"> Represents the training config version expiration date. </param>
+        /// <param name="modelExpiresOn"> Represents the training config version expiration date. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationAuthoringTrainingConfigVersion(string trainingConfigVersion, DateTimeOffset modelExpirationDate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConversationAuthoringTrainingConfigVersion(string trainingConfigVersion, DateTimeOffset modelExpiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TrainingConfigVersion = trainingConfigVersion;
-            ModelExpirationDate = modelExpirationDate;
+            ModelExpiresOn = modelExpiresOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -38,6 +38,6 @@ namespace Azure.AI.Language.Conversations.Authoring
         public string TrainingConfigVersion { get; }
 
         /// <summary> Represents the training config version expiration date. </summary>
-        public DateTimeOffset ModelExpirationDate { get; }
+        public DateTimeOffset ModelExpiresOn { get; }
     }
 }

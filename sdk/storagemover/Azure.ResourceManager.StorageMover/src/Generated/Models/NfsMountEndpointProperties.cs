@@ -36,11 +36,13 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="host"> The host name or IP address of the server exporting the file system. </param>
         /// <param name="nfsVersion"> The NFS protocol version. </param>
         /// <param name="export"> The directory being exported from the server. </param>
-        internal NfsMountEndpointProperties(EndpointType endpointType, string description, StorageMoverEndpointKind? endpointKind, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string host, NfsVersion? nfsVersion, string export) : base(endpointType, description, endpointKind, provisioningState, additionalBinaryDataProperties)
+        /// <param name="sourceType"> Source type to differentiate NFSMount and FSX-SMB endpoints. Default is NFSMount. </param>
+        internal NfsMountEndpointProperties(EndpointType endpointType, string description, StorageMoverEndpointKind? endpointKind, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, string host, NfsVersion? nfsVersion, string export, NfsMountSourceType? sourceType) : base(endpointType, description, endpointKind, provisioningState, additionalBinaryDataProperties)
         {
             Host = host;
             NfsVersion = nfsVersion;
             Export = export;
+            SourceType = sourceType;
         }
 
         /// <summary> The host name or IP address of the server exporting the file system. </summary>
@@ -51,5 +53,8 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <summary> The directory being exported from the server. </summary>
         public string Export { get; set; }
+
+        /// <summary> Source type to differentiate NFSMount and FSX-SMB endpoints. Default is NFSMount. </summary>
+        public NfsMountSourceType? SourceType { get; set; }
     }
 }

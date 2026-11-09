@@ -37,9 +37,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PublicSharedConfigCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(PublicSharedConfigResource.ResourceType, out string publicSharedConfigApiVersion);
             _publicSharedConfigsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", PublicSharedConfigResource.ResourceType.Namespace, Diagnostics);
-            _publicSharedConfigsRestClient = new PublicSharedConfigs(_publicSharedConfigsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, publicSharedConfigApiVersion ?? "2024-05-01");
+            _publicSharedConfigsRestClient = new PublicSharedConfigs(_publicSharedConfigsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 
@@ -86,7 +85,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicSharedConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), configName, context);
+                using HttpMessage message = _publicSharedConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), configName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SharedConfigData> response = Response.FromValue(SharedConfigData.FromResponse(result), result);
                 if (response.Value == null)
@@ -135,7 +134,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicSharedConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), configName, context);
+                using HttpMessage message = _publicSharedConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), configName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SharedConfigData> response = Response.FromValue(SharedConfigData.FromResponse(result), result);
                 if (response.Value == null)
@@ -184,7 +183,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicSharedConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), configName, context);
+                using HttpMessage message = _publicSharedConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), configName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SharedConfigData> response = default;
@@ -241,7 +240,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicSharedConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), configName, context);
+                using HttpMessage message = _publicSharedConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), configName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SharedConfigData> response = default;
@@ -298,7 +297,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicSharedConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), configName, context);
+                using HttpMessage message = _publicSharedConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), configName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SharedConfigData> response = default;
@@ -359,7 +358,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _publicSharedConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), configName, context);
+                using HttpMessage message = _publicSharedConfigsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), configName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SharedConfigData> response = default;

@@ -24,6 +24,10 @@ namespace Azure.AI.Projects.Agents
             ToolboxToolType.FabricIqPreview => "fabric_iq_preview",
             ToolboxToolType.ToolboxSearch => "toolbox_search",
             ToolboxToolType.ToolboxSearchPreview => "toolbox_search_preview",
+            ToolboxToolType.A2a => "a2a",
+            ToolboxToolType.Shell => "shell",
+            ToolboxToolType.WebIqPreview => "web_iq_preview",
+            ToolboxToolType.BrowserAutomation => "browser_automation",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ToolboxToolType value.")
         };
 
@@ -81,6 +85,22 @@ namespace Azure.AI.Projects.Agents
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "toolbox_search_preview"))
             {
                 return ToolboxToolType.ToolboxSearchPreview;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "a2a"))
+            {
+                return ToolboxToolType.A2a;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "shell"))
+            {
+                return ToolboxToolType.Shell;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "web_iq_preview"))
+            {
+                return ToolboxToolType.WebIqPreview;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "browser_automation"))
+            {
+                return ToolboxToolType.BrowserAutomation;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ToolboxToolType value.");
         }

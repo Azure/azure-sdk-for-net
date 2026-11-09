@@ -143,10 +143,10 @@ namespace Azure.AI.Language.Text.Authoring
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DocumentHealthcareEvalResult(entities, additionalBinaryDataProperties);
+            return new DocumentHealthcareEvalResult(entities ?? new ChangeTrackingList<DocumentEntityRegionEvalResult>(), additionalBinaryDataProperties);
         }
     }
 }

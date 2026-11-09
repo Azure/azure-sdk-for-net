@@ -13,13 +13,13 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new AmlToken. </summary>
         public AmlToken()
         {
+            IdentityType.Assign(IdentityConfigurationType.AMLToken);
         }
 
         /// <summary> Define all the provisionable properties for AmlToken. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("identityType", new string[] { "identityType" }, defaultValue: "AMLToken");
             DefineAdditionalProperties();
         }
 

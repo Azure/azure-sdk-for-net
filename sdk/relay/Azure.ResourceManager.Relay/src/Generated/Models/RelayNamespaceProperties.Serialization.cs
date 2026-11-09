@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Relay;
 
 namespace Azure.ResourceManager.Relay.Models
@@ -119,6 +120,16 @@ namespace Azure.ResourceManager.Relay.Models
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
+            if (Optional.IsDefined(MinimumTlsVersion))
+            {
+                writer.WritePropertyName("minimumTlsVersion"u8);
+                writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
+            }
+            if (Optional.IsDefined(ClusterArmId))
+            {
+                writer.WritePropertyName("clusterArmId"u8);
+                writer.WriteStringValue(ClusterArmId);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -169,6 +180,8 @@ namespace Azure.ResourceManager.Relay.Models
             string metricId = default;
             IList<RelayPrivateEndpointConnectionData> privateEndpointConnections = default;
             RelayPublicNetworkAccess? publicNetworkAccess = default;
+            RelayTlsVersion? minimumTlsVersion = default;
+            ResourceIdentifier clusterArmId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -233,9 +246,27 @@ namespace Azure.ResourceManager.Relay.Models
                     publicNetworkAccess = new RelayPublicNetworkAccess(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("minimumTlsVersion"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minimumTlsVersion = new RelayTlsVersion(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("clusterArmId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clusterArmId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new RelayNamespaceProperties(
@@ -247,6 +278,8 @@ namespace Azure.ResourceManager.Relay.Models
                 metricId,
                 privateEndpointConnections ?? new ChangeTrackingList<RelayPrivateEndpointConnectionData>(),
                 publicNetworkAccess,
+                minimumTlsVersion,
+                clusterArmId,
                 additionalBinaryDataProperties);
         }
     }

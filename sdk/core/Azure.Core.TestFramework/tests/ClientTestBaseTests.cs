@@ -212,6 +212,41 @@ namespace Azure.Core.TestFramework.Tests
         }
 
         [Test]
+        public async Task AsyncPageableMethodsStillUseSyncCounterpart()
+        {
+            var original = new PageableTestClient();
+            PageableTestClient client = InstrumentClient(original);
+
+            List<int> values = await client.GetValuesAsync().ToEnumerableAsync();
+
+            Assert.AreEqual(new[] { 1, 2 }, values);
+            Assert.AreEqual(IsAsync, original.AsyncCalled);
+            Assert.AreEqual(!IsAsync, original.SyncCalled);
+        }
+
+        public class PageableTestClient
+        {
+            public bool AsyncCalled { get; private set; }
+
+            public bool SyncCalled { get; private set; }
+
+            public virtual AsyncPageable<int> GetValuesAsync(CancellationToken cancellationToken = default)
+            {
+                AsyncCalled = true;
+                return AsyncPageable<int>.FromPages(new[] { CreatePage() });
+            }
+
+            public virtual Pageable<int> GetValues(CancellationToken cancellationToken = default)
+            {
+                SyncCalled = true;
+                return Pageable<int>.FromPages(new[] { CreatePage() });
+            }
+
+            private static Page<int> CreatePage()
+                => Page<int>.FromValues(new[] { 1, 2 }, null, new MockResponse(200));
+        }
+
+        [Test]
         [NonParallelizable]
         public async Task TasksValidateOwnScopes()
         {

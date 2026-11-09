@@ -22,7 +22,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     /// <summary>
     /// A class representing a collection of <see cref="SampleDataResource"/> and their operations.
     /// Each <see cref="SampleDataResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get a <see cref="SampleDataCollection"/> instance call the GetSampleDatas method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="SampleDataCollection"/> instance call the GetAllSampleData method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class SampleDataCollection : ArmCollection, IEnumerable<SampleDataResource>, IAsyncEnumerable<SampleDataResource>
     {
@@ -91,7 +91,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sampleDatasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sampleDataName, SampleData.ToRequestContent(data), context);
+                using HttpMessage message = _sampleDatasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sampleDataName, SampleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<SampleDataResource> operation = new TestsArmOperation<SampleDataResource>(
                     new SampleDataResourceOperationSource(Client),
@@ -150,7 +150,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sampleDatasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sampleDataName, SampleData.ToRequestContent(data), context);
+                using HttpMessage message = _sampleDatasRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sampleDataName, SampleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<SampleDataResource> operation = new TestsArmOperation<SampleDataResource>(
                     new SampleDataResourceOperationSource(Client),
@@ -206,7 +206,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sampleDatasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sampleDataName, context);
+                using HttpMessage message = _sampleDatasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sampleDataName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SampleData> response = Response.FromValue(SampleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -255,7 +255,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sampleDatasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sampleDataName, context);
+                using HttpMessage message = _sampleDatasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sampleDataName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SampleData> response = Response.FromValue(SampleData.FromResponse(result), result);
                 if (response.Value == null)
@@ -296,7 +296,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SampleData, SampleDataResource>(new SampleDatasGetAllAsyncCollectionResultOfT(_sampleDatasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SampleDataCollection.GetAll"), data => new SampleDataResource(Client, data));
+            return new AsyncPageableWrapper<SampleData, SampleDataResource>(new SampleDataAsyncCollectionResultOfT(_sampleDatasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SampleDataCollection.GetAll"), data => new SampleDataResource(Client, data));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SampleData, SampleDataResource>(new SampleDatasGetAllCollectionResultOfT(_sampleDatasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SampleDataCollection.GetAll"), data => new SampleDataResource(Client, data));
+            return new PageableWrapper<SampleData, SampleDataResource>(new SampleDataCollectionResultOfT(_sampleDatasRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "SampleDataCollection.GetAll"), data => new SampleDataResource(Client, data));
         }
 
         /// <summary>
@@ -360,7 +360,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sampleDatasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sampleDataName, context);
+                using HttpMessage message = _sampleDatasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sampleDataName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SampleData> response = default;
@@ -417,7 +417,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sampleDatasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sampleDataName, context);
+                using HttpMessage message = _sampleDatasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sampleDataName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SampleData> response = default;
@@ -474,7 +474,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sampleDatasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sampleDataName, context);
+                using HttpMessage message = _sampleDatasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sampleDataName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SampleData> response = default;
@@ -535,7 +535,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sampleDatasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sampleDataName, context);
+                using HttpMessage message = _sampleDatasRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, sampleDataName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SampleData> response = default;

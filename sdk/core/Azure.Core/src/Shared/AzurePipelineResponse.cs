@@ -14,32 +14,55 @@ namespace Azure.Core
 {
     internal sealed class AzurePipelineResponse : PipelineResponse
     {
-        private readonly Response _response;
         private readonly PipelineResponseHeaders _headers;
+        private readonly int _status;
+        private readonly string _reasonPhrase;
+        private Stream? _contentStream;
 
-        internal AzurePipelineResponse(Response response)
+        internal AzurePipelineResponse(HttpMessage message)
         {
-            _response = response;
+            Response response = message.Response;
             _headers = new AzurePipelineResponseHeaders(response.Headers);
+            _status = response.Status;
+            _reasonPhrase = response.ReasonPhrase;
+            _contentStream = message.ExtractResponseContent();
         }
 
-        public override int Status => _response.Status;
+        public override int Status => _status;
 
-        public override string ReasonPhrase => _response.ReasonPhrase;
+        public override string ReasonPhrase => _reasonPhrase;
 
         protected override PipelineResponseHeaders HeadersCore => _headers;
 
         public override Stream? ContentStream
         {
-            get => _response.ContentStream;
-            set => _response.ContentStream = value;
+            get => _contentStream;
+            set => _contentStream = value;
         }
 
-        public override BinaryData Content => _response.Content;
+        public override BinaryData Content
+        {
+            get
+            {
+                if (_contentStream is null)
+                {
+                    return BinaryData.Empty;
+                }
+
+                if (_contentStream is not MemoryStream content)
+                {
+                    throw new InvalidOperationException("The response is not buffered.");
+                }
+
+                return content.TryGetBuffer(out ArraySegment<byte> segment)
+                    ? new BinaryData(segment.AsMemory())
+                    : new BinaryData(content.ToArray());
+            }
+        }
 
         public override BinaryData BufferContent(CancellationToken cancellationToken = default)
         {
-            Stream? responseContentStream = _response.ContentStream;
+            Stream? responseContentStream = ContentStream;
             if (responseContentStream is not MemoryStream)
             {
                 var content = new MemoryStream();
@@ -51,7 +74,7 @@ namespace Azure.Core
                     }
                     content.Position = 0;
                     responseContentStream?.Dispose();
-                    _response.ContentStream = content;
+                    ContentStream = content;
                 }
                 catch
                 {
@@ -60,12 +83,12 @@ namespace Azure.Core
                 }
             }
 
-            return _response.Content;
+            return Content;
         }
 
         public override async ValueTask<BinaryData> BufferContentAsync(CancellationToken cancellationToken = default)
         {
-            Stream? responseContentStream = _response.ContentStream;
+            Stream? responseContentStream = ContentStream;
             if (responseContentStream is not MemoryStream)
             {
                 var content = new MemoryStream();
@@ -77,7 +100,7 @@ namespace Azure.Core
                     }
                     content.Position = 0;
                     responseContentStream?.Dispose();
-                    _response.ContentStream = content;
+                    ContentStream = content;
                 }
                 catch
                 {
@@ -86,10 +109,14 @@ namespace Azure.Core
                 }
             }
 
-            return _response.Content;
+            return Content;
         }
 
-        public override void Dispose() => _response.Dispose();
+        public override void Dispose()
+        {
+            _contentStream?.Dispose();
+            _contentStream = null;
+        }
 
         private static void CopyTo(Stream source, Stream destination, CancellationToken cancellationToken)
         {
@@ -109,24 +136,41 @@ namespace Azure.Core
 
         private sealed class AzurePipelineResponseHeaders : PipelineResponseHeaders
         {
-            private readonly ResponseHeaders _headers;
+            private readonly Dictionary<string, string> _headerValues;
+            private readonly Dictionary<string, IEnumerable<string>> _headerValueCollections;
+            private readonly List<KeyValuePair<string, string>> _headerList;
 
             internal AzurePipelineResponseHeaders(ResponseHeaders headers)
             {
-                _headers = headers;
+                _headerValues = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+                _headerValueCollections = new Dictionary<string, IEnumerable<string>>(StringComparer.OrdinalIgnoreCase);
+                _headerList = new List<KeyValuePair<string, string>>();
+                foreach (HttpHeader header in headers)
+                {
+                    if (!_headerValues.ContainsKey(header.Name))
+                    {
+                        _headerValues.Add(header.Name, header.Value);
+                    }
+                    if (!_headerValueCollections.ContainsKey(header.Name)
+                        && headers.TryGetValues(header.Name, out IEnumerable<string>? values))
+                    {
+                        _headerValueCollections.Add(header.Name, new List<string>(values));
+                    }
+                    _headerList.Add(new KeyValuePair<string, string>(header.Name, header.Value));
+                }
             }
 
             public override bool TryGetValue(string name, out string? value)
-                => _headers.TryGetValue(name, out value);
+                => _headerValues.TryGetValue(name, out value);
 
             public override bool TryGetValues(string name, out IEnumerable<string>? values)
-                => _headers.TryGetValues(name, out values);
+                => _headerValueCollections.TryGetValue(name, out values);
 
             public override IEnumerator<KeyValuePair<string, string>> GetEnumerator()
             {
-                foreach (HttpHeader header in _headers)
+                foreach (KeyValuePair<string, string> header in _headerList)
                 {
-                    yield return new KeyValuePair<string, string>(header.Name, header.Value);
+                    yield return header;
                 }
             }
         }

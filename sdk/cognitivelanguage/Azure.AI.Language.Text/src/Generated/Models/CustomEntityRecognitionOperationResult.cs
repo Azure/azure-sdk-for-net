@@ -14,22 +14,22 @@ namespace Azure.AI.Language.Text
     public partial class CustomEntityRecognitionOperationResult : AnalyzeTextOperationResult
     {
         /// <summary> Initializes a new instance of <see cref="CustomEntityRecognitionOperationResult"/>. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="results"> List of results. </param>
-        internal CustomEntityRecognitionOperationResult(DateTimeOffset lastUpdateDateTime, TextActionState status, CustomEntitiesResult results) : base(lastUpdateDateTime, status, AnalyzeTextOperationResultsKind.CustomEntityRecognitionOperationResults)
+        internal CustomEntityRecognitionOperationResult(DateTimeOffset lastUpdateOn, TextActionState status, CustomEntitiesResult results) : base(lastUpdateOn, status, AnalyzeTextOperationResultsKind.CustomEntityRecognitionOperationResults)
         {
             Results = results;
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomEntityRecognitionOperationResult"/>. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> Kind of the task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="results"> List of results. </param>
-        internal CustomEntityRecognitionOperationResult(DateTimeOffset lastUpdateDateTime, TextActionState status, string taskName, AnalyzeTextOperationResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, CustomEntitiesResult results) : base(lastUpdateDateTime, status, taskName, kind, additionalBinaryDataProperties)
+        internal CustomEntityRecognitionOperationResult(DateTimeOffset lastUpdateOn, TextActionState status, string taskName, AnalyzeTextOperationResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, CustomEntitiesResult results) : base(lastUpdateOn, status, taskName, kind, additionalBinaryDataProperties)
         {
             Results = results;
         }

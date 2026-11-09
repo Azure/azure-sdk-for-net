@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OccurrenceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new OccurrenceListResult(value ?? new ChangeTrackingList<ScheduledActionOccurrenceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

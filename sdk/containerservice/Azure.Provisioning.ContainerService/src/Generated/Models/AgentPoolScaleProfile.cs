@@ -11,9 +11,10 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ContainerService
 {
     /// <summary> Specifications on how to scale a VirtualMachines agent pool. </summary>
-    internal partial class AgentPoolScaleProfile : ProvisionableConstruct
+    public partial class AgentPoolScaleProfile : ProvisionableConstruct
     {
         private BicepList<ManualScaleProfile> _manual;
+        private BicepList<AgentPoolAutoScaleProfile> _autoscale;
 
         /// <summary> Creates a new AgentPoolScaleProfile. </summary>
         public AgentPoolScaleProfile()
@@ -35,11 +36,27 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
+        /// <summary> Gets or sets the Autoscale. </summary>
+        public BicepList<AgentPoolAutoScaleProfile> Autoscale
+        {
+            get
+            {
+                Initialize();
+                return _autoscale;
+            }
+            set
+            {
+                Initialize();
+                _autoscale.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for AgentPoolScaleProfile. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _manual = DefineListProperty<ManualScaleProfile>(nameof(Manual), new string[] { "manual" });
+            _autoscale = DefineListProperty<AgentPoolAutoScaleProfile>(nameof(Autoscale), new string[] { "autoscale" });
             DefineAdditionalProperties();
         }
 

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -122,17 +123,23 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 return null;
             }
             ComputeType computeType = default;
+            AzureLocation location = default;
             CognitiveServicesComputeProvisioningState? provisioningState = default;
             IReadOnlyList<ResponseError> errors = default;
             DateTimeOffset? createdOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<CognitiveServicesComputePool> pools = default;
-            string subnetArmId = default;
+            ResourceIdentifier subnetArmId = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("computeType"u8))
                 {
                     computeType = new ComputeType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -186,21 +193,26 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (prop.NameEquals("subnetArmId"u8))
                 {
-                    subnetArmId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subnetArmId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CognitiveServicesClusterComputeProperties(
                 computeType,
+                location,
                 provisioningState,
                 errors ?? new ChangeTrackingList<ResponseError>(),
                 createdOn,
                 additionalBinaryDataProperties,
-                pools,
+                pools ?? new ChangeTrackingList<CognitiveServicesComputePool>(),
                 subnetArmId);
         }
     }

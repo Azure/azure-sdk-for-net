@@ -14,7 +14,7 @@ namespace Azure.Provisioning.MachineLearning
     /// <summary> The EncryptionProperty. </summary>
     public partial class EncryptionProperty : ProvisionableConstruct
     {
-        private BicepValue<ResourceIdentifier> _cosmosDbResourceId;
+        private BicepValue<ResourceIdentifier> _cosmosDBResourceId;
         private IdentityForCmk _identity;
         private KeyVaultProperties _keyVaultProperties;
         private BicepValue<ResourceIdentifier> _searchAccountResourceId;
@@ -26,18 +26,18 @@ namespace Azure.Provisioning.MachineLearning
         {
         }
 
-        /// <summary> Gets or sets the CosmosDbResourceId. </summary>
-        public BicepValue<ResourceIdentifier> CosmosDbResourceId
+        /// <summary> Gets or sets the CosmosDBResourceId. </summary>
+        public BicepValue<ResourceIdentifier> CosmosDBResourceId
         {
             get
             {
                 Initialize();
-                return _cosmosDbResourceId;
+                return _cosmosDBResourceId;
             }
             set
             {
                 Initialize();
-                _cosmosDbResourceId.Assign(value);
+                _cosmosDBResourceId.Assign(value);
             }
         }
 
@@ -137,7 +137,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _cosmosDbResourceId = DefineProperty<ResourceIdentifier>(nameof(CosmosDbResourceId), new string[] { "cosmosDbResourceId" });
+            _cosmosDBResourceId = DefineProperty<ResourceIdentifier>(nameof(CosmosDBResourceId), new string[] { "cosmosDbResourceId" });
             _identity = DefineModelProperty<IdentityForCmk>(nameof(Identity), new string[] { "identity" });
             _keyVaultProperties = DefineModelProperty<KeyVaultProperties>(nameof(KeyVaultProperties), new string[] { "keyVaultProperties" }, isRequired: true);
             _searchAccountResourceId = DefineProperty<ResourceIdentifier>(nameof(SearchAccountResourceId), new string[] { "searchAccountResourceId" });

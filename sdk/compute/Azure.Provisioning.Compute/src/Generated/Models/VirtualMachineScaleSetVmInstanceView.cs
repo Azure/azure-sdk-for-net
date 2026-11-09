@@ -31,6 +31,7 @@ namespace Azure.Provisioning.Compute
         private BicepValue<string> _osVersion;
         private BicepValue<HyperVGeneration> _hyperVGeneration;
         private InterconnectInstanceView _interconnectInstanceView;
+        private BicepValue<ComputeCapacityReservationType> _capacityReservationType;
 
         /// <summary> Creates a new VirtualMachineScaleSetVmInstanceView. </summary>
         public VirtualMachineScaleSetVmInstanceView()
@@ -207,12 +208,22 @@ namespace Azure.Provisioning.Compute
             }
         }
 
+        /// <summary> Gets the CapacityReservationType. </summary>
+        public BicepValue<ComputeCapacityReservationType> CapacityReservationType
+        {
+            get
+            {
+                Initialize();
+                return _capacityReservationType;
+            }
+        }
+
         /// <summary> Gets the Status. </summary>
         public InstanceViewStatus VmHealthStatus
         {
             get
             {
-                return VmHealth.Status;
+                return VmHealth is null ? default : VmHealth.Status;
             }
         }
 
@@ -221,7 +232,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return InterconnectInstanceView.InterconnectSubgroupId;
+                return InterconnectInstanceView is null ? default : InterconnectInstanceView.InterconnectSubgroupId;
             }
         }
 
@@ -246,6 +257,7 @@ namespace Azure.Provisioning.Compute
             _osVersion = DefineProperty<string>(nameof(OSVersion), new string[] { "osVersion" });
             _hyperVGeneration = DefineProperty<HyperVGeneration>(nameof(HyperVGeneration), new string[] { "hyperVGeneration" });
             _interconnectInstanceView = DefineModelProperty<InterconnectInstanceView>(nameof(InterconnectInstanceView), new string[] { "interconnectInstanceView" }, isOutput: true);
+            _capacityReservationType = DefineProperty<ComputeCapacityReservationType>(nameof(CapacityReservationType), new string[] { "capacityReservationType" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

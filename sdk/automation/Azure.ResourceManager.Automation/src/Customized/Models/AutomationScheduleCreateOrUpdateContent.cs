@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Gets or sets the end time of the schedule. </summary>
         public DateTimeOffset? ExpireOn
         {
-            get => Properties.ExpireOn;
+            get => Properties.ExpiresOn;
             [EditorBrowsable(EditorBrowsableState.Never)]
-            set => Properties.ExpireOn = value;
+            set => Properties.ExpiresOn = value;
         }
 
         /// <summary> Gets or sets the interval of the schedule. </summary>

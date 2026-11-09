@@ -23,6 +23,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningAzureBlobDatastore. </summary>
         public MachineLearningAzureBlobDatastore()
         {
+            DatastoreType.Assign(MachineLearning.DatastoreType.AzureBlob);
         }
 
         /// <summary> Gets or sets the ResourceGroup. </summary>
@@ -134,7 +135,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("datastoreType", new string[] { "datastoreType" }, defaultValue: "AzureBlob");
             _resourceGroup = DefineProperty<string>(nameof(ResourceGroup), new string[] { "resourceGroup" });
             _subscriptionId = DefineProperty<string>(nameof(SubscriptionId), new string[] { "subscriptionId" });
             _accountName = DefineProperty<string>(nameof(AccountName), new string[] { "accountName" });

@@ -89,7 +89,7 @@ namespace Azure.IoT.DeviceUpdate
             writer.WritePropertyName("deploymentId"u8);
             writer.WriteStringValue(DeploymentId);
             writer.WritePropertyName("startDateTime"u8);
-            writer.WriteStringValue(StartDateTime, "O");
+            writer.WriteStringValue(StartsOn, "O");
             writer.WritePropertyName("update"u8);
             writer.WriteObjectValue(Update, options);
             writer.WritePropertyName("groupId"u8);
@@ -177,7 +177,7 @@ namespace Azure.IoT.DeviceUpdate
                 return null;
             }
             string deploymentId = default;
-            DateTimeOffset startDateTime = default;
+            DateTimeOffset startsOn = default;
             UpdateInfo update = default;
             string groupId = default;
             IList<string> deviceClassSubgroups = default;
@@ -196,7 +196,7 @@ namespace Azure.IoT.DeviceUpdate
                 }
                 if (prop.NameEquals("startDateTime"u8))
                 {
-                    startDateTime = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("update"u8))
@@ -277,12 +277,12 @@ namespace Azure.IoT.DeviceUpdate
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new Deployment(
                 deploymentId,
-                startDateTime,
+                startsOn,
                 update,
                 groupId,
                 deviceClassSubgroups ?? new ChangeTrackingList<string>(),

@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CustomizableConnectorUiConfig(
@@ -290,12 +290,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 title,
                 publisher,
                 descriptionMarkdown,
-                graphQueries,
-                dataTypes,
-                connectivityCriteria,
+                graphQueries ?? new ChangeTrackingList<ConnectorGraphQuery>(),
+                dataTypes ?? new ChangeTrackingList<ConnectorDataType>(),
+                connectivityCriteria ?? new ChangeTrackingList<ConnectorConnectivityCriterion>(),
                 availability,
                 permissions,
-                instructionSteps,
+                instructionSteps ?? new ChangeTrackingList<InstructionStep>(),
                 logo,
                 isConnectivityCriteriasMatchSome,
                 additionalBinaryDataProperties);

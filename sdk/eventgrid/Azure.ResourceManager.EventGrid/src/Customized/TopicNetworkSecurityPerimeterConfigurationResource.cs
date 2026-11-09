@@ -15,6 +15,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.EventGrid.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
+using TypeSpecCodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
 
 namespace Azure.ResourceManager.EventGrid
 {
@@ -24,9 +25,9 @@ namespace Azure.ResourceManager.EventGrid
     //   the RESOURCE because the resource id is a composite "{perimeterGuid}.{associationName}"; main's
     //   resource exposes only the parameterless Get()/GetAsync(). These 2-param overloads are extra public
     //   methods absent on main, so they are suppressed here and replaced with parameterless versions below.
-    [CodeGenSuppress("CreateResourceIdentifier", typeof(string), typeof(string), typeof(string), typeof(string))]
-    [CodeGenSuppress("Get", typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetAsync", typeof(string), typeof(string), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("CreateResourceIdentifier", typeof(string), typeof(string), typeof(string), typeof(string))]
+    [TypeSpecCodeGenSuppressAttribute("Get", typeof(string), typeof(string), typeof(CancellationToken))]
+    [TypeSpecCodeGenSuppressAttribute("GetAsync", typeof(string), typeof(string), typeof(CancellationToken))]
     public partial class TopicNetworkSecurityPerimeterConfigurationResource
     {
         /// <summary> Creates a resource identifier for a topic network security perimeter configuration resource. </summary>

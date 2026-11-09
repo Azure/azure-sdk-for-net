@@ -132,7 +132,7 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            SkillInlineContent inlineContent = default;
+            SkillInlineRequest inlineContent = default;
             bool? isDefault = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -143,7 +143,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-                    inlineContent = SkillInlineContent.DeserializeSkillInlineContent(prop.Value, options);
+                    inlineContent = SkillInlineRequest.DeserializeSkillInlineRequest(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("default"u8))
@@ -157,7 +157,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new CreateSkillVersionRequest(inlineContent, isDefault, additionalBinaryDataProperties);

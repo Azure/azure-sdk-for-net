@@ -26,8 +26,9 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="fqdn"> Fully qualified domain name of the host. </param>
         /// <param name="maintenance"> If provided, the host is in maintenance. The value is the reason for maintenance. </param>
         /// <param name="faultDomain"></param>
+        /// <param name="licenses"> The licenses assigned to the host. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GeneralAvsHostProperties(HostKind kind, AvsHostProvisioningState? provisioningState, string displayName, string moRefId, string fqdn, AvsHostMaintenance? maintenance, string faultDomain, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, provisioningState, displayName, moRefId, fqdn, maintenance, faultDomain, additionalBinaryDataProperties)
+        internal GeneralAvsHostProperties(HostKind kind, AvsHostProvisioningState? provisioningState, string displayName, string moRefId, string fqdn, AvsHostMaintenance? maintenance, string faultDomain, IList<HostLicense> licenses, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, provisioningState, displayName, moRefId, fqdn, maintenance, faultDomain, licenses, additionalBinaryDataProperties)
         {
         }
     }

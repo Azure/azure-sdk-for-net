@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Sphere.Models
         private const string CustomerUpdateManifestValue = "CustomerUpdateManifest";
         /// <summary> Recovery manifest image type. </summary>
         private const string RecoveryManifestValue = "RecoveryManifest";
-        /// <summary> manifest set image type. </summary>
+        /// <summary> Manifest set image type. </summary>
         private const string ManifestSetValue = "ManifestSet";
         /// <summary> Other image type. </summary>
         private const string OtherValue = "Other";
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <summary> Recovery manifest image type. </summary>
         public static SphereImageType RecoveryManifest { get; } = new SphereImageType(RecoveryManifestValue);
 
-        /// <summary> manifest set image type. </summary>
+        /// <summary> Manifest set image type. </summary>
         public static SphereImageType ManifestSet { get; } = new SphereImageType(ManifestSetValue);
 
         /// <summary> Other image type. </summary>

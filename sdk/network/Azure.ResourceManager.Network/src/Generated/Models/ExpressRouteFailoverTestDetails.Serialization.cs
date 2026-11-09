@@ -94,15 +94,15 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartTime);
+                writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(EndTime))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndTime);
+                writer.WriteStringValue(EndOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(Connections))
             {
@@ -184,8 +184,8 @@ namespace Azure.ResourceManager.Network.Models
             string peeringLocation = default;
             IReadOnlyList<ExpressRouteFailoverCircuitResourceDetails> circuits = default;
             FailoverTestStatus? status = default;
-            string startTime = default;
-            string endTime = default;
+            DateTimeOffset? startOn = default;
+            DateTimeOffset? endOn = default;
             IReadOnlyList<ExpressRouteFailoverConnectionResourceDetails> connections = default;
             Guid? testGuid = default;
             FailoverTestType? testType = default;
@@ -223,12 +223,20 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    startTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
-                    endTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("connections"u8))
@@ -286,15 +294,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new ExpressRouteFailoverTestDetails(
                 peeringLocation,
                 circuits ?? new ChangeTrackingList<ExpressRouteFailoverCircuitResourceDetails>(),
                 status,
-                startTime,
-                endTime,
+                startOn,
+                endOn,
                 connections ?? new ChangeTrackingList<ExpressRouteFailoverConnectionResourceDetails>(),
                 testGuid,
                 testType,

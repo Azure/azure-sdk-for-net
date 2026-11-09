@@ -18,6 +18,7 @@ namespace Azure.Provisioning.CognitiveServices
         /// <summary> Creates a new CognitiveServicesPrivateEndpointOutboundRule. </summary>
         public CognitiveServicesPrivateEndpointOutboundRule()
         {
+            Type.Assign(RuleType.PrivateEndpoint);
         }
 
         /// <summary> Gets or sets the Destination. </summary>
@@ -54,7 +55,6 @@ namespace Azure.Provisioning.CognitiveServices
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "PrivateEndpoint");
             _destination = DefineModelProperty<CognitiveServicesPrivateEndpointOutboundRuleDestination>(nameof(Destination), new string[] { "destination" });
             _fqdns = DefineListProperty<string>(nameof(Fqdns), new string[] { "fqdns" });
             DefineAdditionalProperties();

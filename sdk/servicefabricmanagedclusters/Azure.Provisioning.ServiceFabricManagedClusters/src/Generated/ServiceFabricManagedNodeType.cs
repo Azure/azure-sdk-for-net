@@ -21,7 +21,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         private ServiceFabricManagedNodeTypeProperties _properties;
         private BicepDictionary<string> _tags;
         private NodeTypeSku _sku;
-        private ResourceReference<ServiceFabricManagedCluster> _parent;
+        private ProvisioningResourceReference<ServiceFabricManagedCluster> _parent;
 
         /// <summary> Creates a new ServiceFabricManagedNodeType. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -1005,12 +1005,12 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
             }
         }
 
-        /// <summary> Gets or sets the EnableResilientEphemeralOsDisk. </summary>
-        public BicepValue<bool> EnableResilientEphemeralOsDisk
+        /// <summary> Gets or sets the EnableResilientEphemeralOSDisk. </summary>
+        public BicepValue<bool> EnableResilientEphemeralOSDisk
         {
             get
             {
-                return Properties is null ? default : Properties.EnableResilientEphemeralOsDisk;
+                return Properties is null ? default : Properties.EnableResilientEphemeralOSDisk;
             }
             set
             {
@@ -1018,7 +1018,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
                 {
                     Properties = new ServiceFabricManagedNodeTypeProperties();
                 }
-                Properties.EnableResilientEphemeralOsDisk = value;
+                Properties.EnableResilientEphemeralOSDisk = value;
             }
         }
 
@@ -1049,7 +1049,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
             _properties = DefineModelProperty<ServiceFabricManagedNodeTypeProperties>(nameof(Properties), new string[] { "properties" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _sku = DefineModelProperty<NodeTypeSku>(nameof(Sku), new string[] { "sku" });
-            _parent = DefineResource<ServiceFabricManagedCluster>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<ServiceFabricManagedCluster>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

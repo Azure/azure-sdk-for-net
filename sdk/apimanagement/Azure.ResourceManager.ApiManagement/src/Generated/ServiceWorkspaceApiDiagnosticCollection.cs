@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DiagnosticContractData, ServiceWorkspaceApiDiagnosticResource>(new WorkspaceApiDiagnosticGetByWorkspaceAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<DiagnosticContractData, ServiceWorkspaceApiDiagnosticResource>(new DiagnosticContractDataAsyncCollectionResultOfT(
                 _workspaceApiDiagnosticRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DiagnosticContractData, ServiceWorkspaceApiDiagnosticResource>(new WorkspaceApiDiagnosticGetByWorkspaceCollectionResultOfT(
+            return new PageableWrapper<DiagnosticContractData, ServiceWorkspaceApiDiagnosticResource>(new DiagnosticContractDataCollectionResultOfT(
                 _workspaceApiDiagnosticRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

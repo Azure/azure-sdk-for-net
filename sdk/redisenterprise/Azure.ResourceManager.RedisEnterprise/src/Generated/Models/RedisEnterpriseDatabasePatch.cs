@@ -222,5 +222,23 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 Properties.AccessKeysAuthentication = value;
             }
         }
+
+        /// <summary> Specifies which keyspace events should trigger notifications. Default is an empty string, meaning this feature is disabled. When enabled, at least 'K' (keyspace events) or 'E' (keyevent events) must be present. For example, 'AKE' enables all standard events. See https://redis.io/docs/latest/develop/use/keyspace-notifications/ for the complete list of event types. </summary>
+        [WirePath("properties.notifyKeyspaceEvents")]
+        public string NotifyKeyspaceEvents
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NotifyKeyspaceEvents;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DatabaseUpdateProperties();
+                }
+                Properties.NotifyKeyspaceEvents = value;
+            }
+        }
     }
 }

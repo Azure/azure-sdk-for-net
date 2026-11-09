@@ -13,13 +13,13 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new VmAppContainerProtectionContainer. </summary>
         public VmAppContainerProtectionContainer()
         {
+            ContainerType.Assign(ProtectableContainerType.VMAppContainer);
         }
 
         /// <summary> Define all the provisionable properties for VmAppContainerProtectionContainer. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("containerType", new string[] { "containerType" }, defaultValue: "VMAppContainer");
             DefineAdditionalProperties();
         }
 

@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ServiceFabricServiceData, ServiceFabricServiceResource>(new ServicesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ServiceFabricServiceData, ServiceFabricServiceResource>(new ServiceFabricServiceDataAsyncCollectionResultOfT(
                 _servicesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ServiceFabricServiceData, ServiceFabricServiceResource>(new ServicesGetAllCollectionResultOfT(
+            return new PageableWrapper<ServiceFabricServiceData, ServiceFabricServiceResource>(new ServiceFabricServiceDataCollectionResultOfT(
                 _servicesRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

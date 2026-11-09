@@ -15,7 +15,7 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Deployments
 {
     internal static partial class ModelSerializationExtensions
     {
@@ -250,6 +250,18 @@ namespace Azure.ResourceManager.Resources
                     break;
                 case int i:
                     writer.WriteNumberValue(i);
+                    break;
+                case short shortValue:
+                    writer.WriteNumberValue(shortValue);
+                    break;
+                case ushort ushortValue:
+                    writer.WriteNumberValue(ushortValue);
+                    break;
+                case uint uintValue:
+                    writer.WriteNumberValue(uintValue);
+                    break;
+                case ulong ulongValue:
+                    writer.WriteNumberValue(ulongValue);
                     break;
                 case decimal d:
                     writer.WriteNumberValue(d);

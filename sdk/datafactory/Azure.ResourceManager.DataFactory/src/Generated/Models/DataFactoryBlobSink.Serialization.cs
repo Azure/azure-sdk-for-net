@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    copyBehavior = BinaryData.FromString(prop.Value.GetRawText());
+                    copyBehavior = prop.Value.GetUtf8Bytes();
                     continue;
                 }
                 if (prop.NameEquals("metadata"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     metadata = array;
                     continue;
                 }
-                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
             }
             return new DataFactoryBlobSink(
                 copySinkType,

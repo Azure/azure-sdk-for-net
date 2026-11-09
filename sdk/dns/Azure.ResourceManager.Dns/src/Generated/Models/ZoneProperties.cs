@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.Dns;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns.Models
 {
@@ -22,8 +21,8 @@ namespace Azure.ResourceManager.Dns.Models
         public ZoneProperties()
         {
             NameServers = new ChangeTrackingList<string>();
-            RegistrationVirtualNetworks = new ChangeTrackingList<WritableSubResource>();
-            ResolutionVirtualNetworks = new ChangeTrackingList<WritableSubResource>();
+            RegistrationVirtualNetworkReferences = new ChangeTrackingList<DnsSubResourceInfo>();
+            ResolutionVirtualNetworkReferences = new ChangeTrackingList<DnsSubResourceInfo>();
             SigningKeys = new ChangeTrackingList<DnsSigningKey>();
         }
 
@@ -33,19 +32,19 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="numberOfRecords"> The current number of record sets in this DNS zone.  This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="nameServers"> The name servers for this DNS zone. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="zoneType"> The type of this DNS zone (Public or Private). </param>
-        /// <param name="registrationVirtualNetworks"> A list of references to virtual networks that register hostnames in this DNS zone. This is a only when ZoneType is Private. </param>
-        /// <param name="resolutionVirtualNetworks"> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </param>
+        /// <param name="registrationVirtualNetworkReferences"> A list of references to virtual networks that register hostnames in this DNS zone. This is a only when ZoneType is Private. </param>
+        /// <param name="resolutionVirtualNetworkReferences"> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </param>
         /// <param name="signingKeys"> The list of signing keys. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ZoneProperties(long? maxNumberOfRecords, long? maxNumberOfRecordsPerRecord, long? numberOfRecords, IReadOnlyList<string> nameServers, DnsZoneType? zoneType, IList<WritableSubResource> registrationVirtualNetworks, IList<WritableSubResource> resolutionVirtualNetworks, IReadOnlyList<DnsSigningKey> signingKeys, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ZoneProperties(long? maxNumberOfRecords, long? maxNumberOfRecordsPerRecord, long? numberOfRecords, IReadOnlyList<string> nameServers, DnsZoneType? zoneType, IList<DnsSubResourceInfo> registrationVirtualNetworkReferences, IList<DnsSubResourceInfo> resolutionVirtualNetworkReferences, IReadOnlyList<DnsSigningKey> signingKeys, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaxNumberOfRecords = maxNumberOfRecords;
             MaxNumberOfRecordsPerRecord = maxNumberOfRecordsPerRecord;
             NumberOfRecords = numberOfRecords;
             NameServers = nameServers;
             ZoneType = zoneType;
-            RegistrationVirtualNetworks = registrationVirtualNetworks;
-            ResolutionVirtualNetworks = resolutionVirtualNetworks;
+            RegistrationVirtualNetworkReferences = registrationVirtualNetworkReferences;
+            ResolutionVirtualNetworkReferences = resolutionVirtualNetworkReferences;
             SigningKeys = signingKeys;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -66,10 +65,10 @@ namespace Azure.ResourceManager.Dns.Models
         public DnsZoneType? ZoneType { get; set; }
 
         /// <summary> A list of references to virtual networks that register hostnames in this DNS zone. This is a only when ZoneType is Private. </summary>
-        public IList<WritableSubResource> RegistrationVirtualNetworks { get; } = new ChangeTrackingList<WritableSubResource>();
+        public IList<DnsSubResourceInfo> RegistrationVirtualNetworkReferences { get; } = new ChangeTrackingList<DnsSubResourceInfo>();
 
         /// <summary> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </summary>
-        public IList<WritableSubResource> ResolutionVirtualNetworks { get; } = new ChangeTrackingList<WritableSubResource>();
+        public IList<DnsSubResourceInfo> ResolutionVirtualNetworkReferences { get; } = new ChangeTrackingList<DnsSubResourceInfo>();
 
         /// <summary> The list of signing keys. </summary>
         public IReadOnlyList<DnsSigningKey> SigningKeys { get; } = new ChangeTrackingList<DnsSigningKey>();

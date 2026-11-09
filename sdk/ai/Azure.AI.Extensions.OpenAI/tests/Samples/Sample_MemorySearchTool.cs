@@ -206,7 +206,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         };
         MemoryStoreSearchResponse resp = projectClient.MemoryStores.SearchMemories(
             memoryStoreName: memoryStore.Name,
-            options: searchOptionscd
+            options: searchOptions
         );
         Console.WriteLine("==The output from memory search tool.==");
         foreach (MemorySearchItem item in resp.Memories)

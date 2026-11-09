@@ -9,32 +9,34 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Azure.Communication.Identity.Models
+namespace Azure.Communication.Identity
 {
-    /// <summary> The CommunicationIdentityAccessTokenRequest. </summary>
     internal partial class CommunicationIdentityAccessTokenRequest
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="CommunicationIdentityAccessTokenRequest"/>. </summary>
         /// <param name="scopes"> List of scopes attached to the token. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> is null. </exception>
         public CommunicationIdentityAccessTokenRequest(IEnumerable<CommunicationTokenScope> scopes)
         {
-            Argument.AssertNotNull(scopes, nameof(scopes));
-
             Scopes = scopes.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="CommunicationIdentityAccessTokenRequest"/>. </summary>
         /// <param name="scopes"> List of scopes attached to the token. </param>
         /// <param name="expiresInMinutes"> Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used. </param>
-        internal CommunicationIdentityAccessTokenRequest(IList<CommunicationTokenScope> scopes, int? expiresInMinutes)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CommunicationIdentityAccessTokenRequest(IList<CommunicationTokenScope> scopes, int? expiresInMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scopes = scopes;
             ExpiresInMinutes = expiresInMinutes;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of scopes attached to the token. </summary>
         public IList<CommunicationTokenScope> Scopes { get; }
+
         /// <summary> Optional custom validity period of the token within [60,1440] minutes range. If not provided, the default value of 1440 minutes (24 hours) will be used. </summary>
         public int? ExpiresInMinutes { get; set; }
     }

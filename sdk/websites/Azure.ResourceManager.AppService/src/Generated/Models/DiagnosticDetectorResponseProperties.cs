@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticDetectorResponseProperties"/>. </summary>
-        /// <param name="startOn"> Start time of the period. </param>
-        /// <param name="endOn"> End time of the period. </param>
+        /// <param name="startsOn"> Start time of the period. </param>
+        /// <param name="endsOn"> End time of the period. </param>
         /// <param name="issueDetected"> Flag representing Issue was detected. </param>
         /// <param name="detectorDefinition"> Detector's definition. </param>
         /// <param name="metrics"> Metrics provided by the detector. </param>
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="data"> Additional Data that detector wants to send. </param>
         /// <param name="responseMetaData"> Meta Data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticDetectorResponseProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, bool? issueDetected, DetectorDefinition detectorDefinition, IList<DiagnosticMetricSet> metrics, IList<DetectorAbnormalTimePeriod> abnormalTimePeriods, IList<IList<AppServiceNameValuePair>> data, DetectorMetadata responseMetaData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiagnosticDetectorResponseProperties(DateTimeOffset? startsOn, DateTimeOffset? endsOn, bool? issueDetected, DetectorDefinition detectorDefinition, IList<DiagnosticMetricSet> metrics, IList<DetectorAbnormalTimePeriod> abnormalTimePeriods, IList<IList<AppServiceNameValuePair>> data, DetectorMetadata responseMetaData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             IssueDetected = issueDetected;
             DetectorDefinition = detectorDefinition;
             Metrics = metrics;
@@ -50,11 +50,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Start time of the period. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> End time of the period. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Flag representing Issue was detected. </summary>
         [WirePath("issueDetected")]

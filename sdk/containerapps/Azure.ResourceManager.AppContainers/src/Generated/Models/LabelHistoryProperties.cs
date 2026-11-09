@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of <see cref="LabelHistoryProperties"/>. </summary>
         internal LabelHistoryProperties()
         {
-            Records = new ChangeTrackingList<LabelHistoryRecordItem>();
+            Records = new ChangeTrackingList<ContainerAppLabelHistoryRecordItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LabelHistoryProperties"/>. </summary>
         /// <param name="records"> List of label history records. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LabelHistoryProperties(IReadOnlyList<LabelHistoryRecordItem> records, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LabelHistoryProperties(IReadOnlyList<ContainerAppLabelHistoryRecordItem> records, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Records = records;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -34,6 +34,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> List of label history records. </summary>
         [WirePath("records")]
-        public IReadOnlyList<LabelHistoryRecordItem> Records { get; } = new ChangeTrackingList<LabelHistoryRecordItem>();
+        public IReadOnlyList<ContainerAppLabelHistoryRecordItem> Records { get; } = new ChangeTrackingList<ContainerAppLabelHistoryRecordItem>();
     }
 }

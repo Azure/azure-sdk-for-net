@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ResourceType, out string containerAppsRevisionFunctionApiVersion);
             _containerAppsRevisionFunctionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _containerAppsRevisionFunctionsRestClient = new ContainerAppsRevisionFunctions(_containerAppsRevisionFunctionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppsRevisionFunctionApiVersion ?? "2025-10-02-preview");
+            _containerAppsRevisionFunctionsRestClient = new ContainerAppsRevisionFunctions(_containerAppsRevisionFunctionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppsRevisionFunctionApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get a specific function of a Container App Revision.
+        /// Gets the details of a specific function in a Container App revision.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get a specific function of a Container App Revision.
+        /// Gets the details of a specific function in a Container App revision.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

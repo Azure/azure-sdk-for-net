@@ -25,25 +25,25 @@ namespace Azure.ResourceManager.TrafficManager.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HeatMapProperties"/>. </summary>
-        /// <param name="startOn"> The beginning of the time window for this HeatMap, inclusive. </param>
-        /// <param name="endOn"> The ending of the time window for this HeatMap, exclusive. </param>
+        /// <param name="startsOn"> The beginning of the time window for this HeatMap, inclusive. </param>
+        /// <param name="endsOn"> The ending of the time window for this HeatMap, exclusive. </param>
         /// <param name="endpoints"> The endpoints used in this HeatMap calculation. </param>
         /// <param name="trafficFlows"> The traffic flows produced in this HeatMap calculation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HeatMapProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, IList<TrafficManagerHeatMapEndpoint> endpoints, IList<TrafficManagerHeatMapTrafficFlow> trafficFlows, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HeatMapProperties(DateTimeOffset? startsOn, DateTimeOffset? endsOn, IList<TrafficManagerHeatMapEndpoint> endpoints, IList<TrafficManagerHeatMapTrafficFlow> trafficFlows, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Endpoints = endpoints;
             TrafficFlows = trafficFlows;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The beginning of the time window for this HeatMap, inclusive. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> The ending of the time window for this HeatMap, exclusive. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> The endpoints used in this HeatMap calculation. </summary>
         public IList<TrafficManagerHeatMapEndpoint> Endpoints { get; } = new ChangeTrackingList<TrafficManagerHeatMapEndpoint>();

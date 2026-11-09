@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
         /// <summary> Initializes a new instance of <see cref="ExtensionTypesList"/>. </summary>
         internal ExtensionTypesList()
         {
-            Value = new ChangeTrackingList<ExtensionTypeData>();
+            Value = new ChangeTrackingList<KubernetesConfigurationExtensionTypeData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtensionTypesList"/>. </summary>
         /// <param name="value"> The ExtensionType items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExtensionTypesList(IReadOnlyList<ExtensionTypeData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExtensionTypesList(IReadOnlyList<KubernetesConfigurationExtensionTypeData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes.Models
         }
 
         /// <summary> The ExtensionType items on this page. </summary>
-        public IReadOnlyList<ExtensionTypeData> Value { get; }
+        public IReadOnlyList<KubernetesConfigurationExtensionTypeData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

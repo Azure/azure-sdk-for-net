@@ -89,6 +89,26 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 writer.WritePropertyName("selectedUserAssignedIdentityResourceId"u8);
                 writer.WriteStringValue(SelectedUserAssignedIdentityResourceId);
             }
+            if (Optional.IsDefined(NamespaceUuid))
+            {
+                writer.WritePropertyName("namespaceUuid"u8);
+                writer.WriteStringValue(NamespaceUuid);
+            }
+            if (Optional.IsDefined(DataAddress))
+            {
+                writer.WritePropertyName("dataAddress"u8);
+                writer.WriteStringValue(DataAddress);
+            }
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
+            if (Optional.IsDefined(LinkingState))
+            {
+                writer.WritePropertyName("linkingState"u8);
+                writer.WriteStringValue(LinkingState.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,6 +154,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             ResourceIdentifier resourceId = default;
             DeviceRegistryNamespaceAuthenticationType authenticationType = default;
             ResourceIdentifier selectedUserAssignedIdentityResourceId = default;
+            string namespaceUuid = default;
+            string dataAddress = default;
+            AzureLocation? location = default;
+            LinkingState? linkingState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -156,12 +180,48 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     selectedUserAssignedIdentityResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("namespaceUuid"u8))
+                {
+                    namespaceUuid = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("dataAddress"u8))
+                {
+                    dataAddress = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("location"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    location = new AzureLocation(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("linkingState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    linkingState = new LinkingState(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DeviceRegistryNamespaceDescription(resourceId, authenticationType, selectedUserAssignedIdentityResourceId, additionalBinaryDataProperties);
+            return new DeviceRegistryNamespaceDescription(
+                resourceId,
+                authenticationType,
+                selectedUserAssignedIdentityResourceId,
+                namespaceUuid,
+                dataAddress,
+                location,
+                linkingState,
+                additionalBinaryDataProperties);
         }
     }
 }

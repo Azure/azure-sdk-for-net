@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="VmWorkloadProtectedItemExtendedInfo"/>. </summary>
         /// <param name="oldestRecoverOn"> The oldest backup copy available for this backup item across all tiers. </param>
-        /// <param name="oldestRecoverOnInVault"> The oldest backup copy available for this backup item in vault tier. </param>
-        /// <param name="oldestRecoverOnInArchive"> The oldest backup copy available for this backup item in archive tier. </param>
-        /// <param name="newestRecoverOnInArchive"> The latest backup copy available for this backup item in archive tier. </param>
+        /// <param name="oldestRecoveryPointInVaultOn"> The oldest backup copy available for this backup item in vault tier. </param>
+        /// <param name="oldestRecoveryPointInArchiveOn"> The oldest backup copy available for this backup item in archive tier. </param>
+        /// <param name="newestRecoveryPointInArchiveOn"> The latest backup copy available for this backup item in archive tier. </param>
         /// <param name="recoveryPointCount"> Number of backup copies available for this backup item. </param>
         /// <param name="policyState"> Indicates consistency of policy object and policy applied to this backup item. </param>
         /// <param name="recoveryModel"> Indicates consistency of policy object and policy applied to this backup item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VmWorkloadProtectedItemExtendedInfo(DateTimeOffset? oldestRecoverOn, DateTimeOffset? oldestRecoverOnInVault, DateTimeOffset? oldestRecoverOnInArchive, DateTimeOffset? newestRecoverOnInArchive, int? recoveryPointCount, string policyState, string recoveryModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VmWorkloadProtectedItemExtendedInfo(DateTimeOffset? oldestRecoverOn, DateTimeOffset? oldestRecoveryPointInVaultOn, DateTimeOffset? oldestRecoveryPointInArchiveOn, DateTimeOffset? newestRecoveryPointInArchiveOn, int? recoveryPointCount, string policyState, string recoveryModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OldestRecoverOn = oldestRecoverOn;
-            OldestRecoverOnInVault = oldestRecoverOnInVault;
-            OldestRecoverOnInArchive = oldestRecoverOnInArchive;
-            NewestRecoverOnInArchive = newestRecoverOnInArchive;
+            OldestRecoveryPointInVaultOn = oldestRecoveryPointInVaultOn;
+            OldestRecoveryPointInArchiveOn = oldestRecoveryPointInArchiveOn;
+            NewestRecoveryPointInArchiveOn = newestRecoveryPointInArchiveOn;
             RecoveryPointCount = recoveryPointCount;
             PolicyState = policyState;
             RecoveryModel = recoveryModel;
@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public DateTimeOffset? OldestRecoverOn { get; set; }
 
         /// <summary> The oldest backup copy available for this backup item in vault tier. </summary>
-        public DateTimeOffset? OldestRecoverOnInVault { get; set; }
+        public DateTimeOffset? OldestRecoveryPointInVaultOn { get; set; }
 
         /// <summary> The oldest backup copy available for this backup item in archive tier. </summary>
-        public DateTimeOffset? OldestRecoverOnInArchive { get; set; }
+        public DateTimeOffset? OldestRecoveryPointInArchiveOn { get; set; }
 
         /// <summary> The latest backup copy available for this backup item in archive tier. </summary>
-        public DateTimeOffset? NewestRecoverOnInArchive { get; set; }
+        public DateTimeOffset? NewestRecoveryPointInArchiveOn { get; set; }
 
         /// <summary> Number of backup copies available for this backup item. </summary>
         public int? RecoveryPointCount { get; set; }

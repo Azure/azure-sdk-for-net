@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Education.Models
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
             writer.WritePropertyName("expirationDate"u8);
-            writer.WriteStringValue(ExpireOn, "O");
+            writer.WriteStringValue(ExpiresOn, "O");
             if (options.Format != "W" && Optional.IsDefined(EffectiveOn))
             {
                 writer.WritePropertyName("effectiveDate"u8);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Education.Models
             string displayName = default;
             EducationAmount budgetPerStudent = default;
             string description = default;
-            DateTimeOffset expireOn = default;
+            DateTimeOffset expiresOn = default;
             DateTimeOffset? effectiveOn = default;
             LabStatus? status = default;
             int? maxStudentCount = default;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Education.Models
                 }
                 if (prop.NameEquals("expirationDate"u8))
                 {
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("effectiveDate"u8))
@@ -244,14 +244,14 @@ namespace Azure.ResourceManager.Education.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
             return new LabProperties(
                 displayName,
                 budgetPerStudent,
                 description,
-                expireOn,
+                expiresOn,
                 effectiveOn,
                 status,
                 maxStudentCount,

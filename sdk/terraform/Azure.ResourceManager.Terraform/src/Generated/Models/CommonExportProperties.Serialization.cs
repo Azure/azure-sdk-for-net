@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Terraform.Models
 {
     /// <summary>
     /// The base export parameter
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ExportQueryTerraform"/>, <see cref="ExportResourceTerraform"/>, and <see cref="ExportResourceGroupTerraform"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ExportQueryTerraform"/>, <see cref="ExportResourceGroupTerraform"/>, and <see cref="ExportResourceTerraform"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownCommonExportProperties))]
     public abstract partial class CommonExportProperties : IJsonModel<CommonExportProperties>
@@ -198,10 +198,10 @@ namespace Azure.ResourceManager.Terraform.Models
                 {
                     case "ExportQuery":
                         return ExportQueryTerraform.DeserializeExportQueryTerraform(element, options);
-                    case "ExportResource":
-                        return ExportResourceTerraform.DeserializeExportResourceTerraform(element, options);
                     case "ExportResourceGroup":
                         return ExportResourceGroupTerraform.DeserializeExportResourceGroupTerraform(element, options);
+                    case "ExportResource":
+                        return ExportResourceTerraform.DeserializeExportResourceTerraform(element, options);
                 }
             }
             return UnknownCommonExportProperties.DeserializeUnknownCommonExportProperties(element, options);

@@ -39,16 +39,16 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <param name="sourceUri"> URI location for the file or url. </param>
         /// <param name="sourceKind"> Supported source types. </param>
         /// <param name="contentStructureKind"> Content structure type for sources. </param>
-        /// <param name="lastUpdatedDateTime"> Date-time when the QnA was last updated. </param>
+        /// <param name="lastUpdatedOn"> Date-time when the QnA was last updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QnaSourceRecord(string displayName, string source, Uri sourceUri, SourceKind sourceKind, SourceContentStructureKind? contentStructureKind, DateTimeOffset? lastUpdatedDateTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QnaSourceRecord(string displayName, string source, Uri sourceUri, SourceKind sourceKind, SourceContentStructureKind? contentStructureKind, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Source = source;
             SourceUri = sourceUri;
             SourceKind = sourceKind;
             ContentStructureKind = contentStructureKind;
-            LastUpdatedDateTime = lastUpdatedDateTime;
+            LastUpdatedOn = lastUpdatedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -71,6 +71,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public SourceContentStructureKind? ContentStructureKind { get; }
 
         /// <summary> Date-time when the QnA was last updated. </summary>
-        public DateTimeOffset? LastUpdatedDateTime { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
     }
 }

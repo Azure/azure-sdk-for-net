@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeviceRegistryNamespaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DeviceRegistryNamespaceResource.ResourceType, out string deviceRegistryNamespaceApiVersion);
             _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistryNamespaceResource.ResourceType.Namespace, Diagnostics);
-            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceRegistryNamespaceApiVersion ?? "2026-03-01-preview");
+            _namespacesRestClient = new Namespaces(_namespacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DeviceRegistry/namespaces", out string namespacesApiVersionOverride) ? namespacesApiVersionOverride : "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -294,7 +293,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DeviceRegistryNamespaceData, DeviceRegistryNamespaceResource>(new NamespacesGetByResourceGroupAsyncCollectionResultOfT(_namespacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DeviceRegistryNamespaceCollection.GetAll"), data => new DeviceRegistryNamespaceResource(Client, data));
+            return new AsyncPageableWrapper<DeviceRegistryNamespaceData, DeviceRegistryNamespaceResource>(new DeviceRegistryNamespaceDataAsyncCollectionResultOfT(_namespacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DeviceRegistryNamespaceCollection.GetAll"), data => new DeviceRegistryNamespaceResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DeviceRegistryNamespaceData, DeviceRegistryNamespaceResource>(new NamespacesGetByResourceGroupCollectionResultOfT(_namespacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DeviceRegistryNamespaceCollection.GetAll"), data => new DeviceRegistryNamespaceResource(Client, data));
+            return new PageableWrapper<DeviceRegistryNamespaceData, DeviceRegistryNamespaceResource>(new DeviceRegistryNamespaceDataCollectionResultOfT(_namespacesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "DeviceRegistryNamespaceCollection.GetAll"), data => new DeviceRegistryNamespaceResource(Client, data));
         }
 
         /// <summary>

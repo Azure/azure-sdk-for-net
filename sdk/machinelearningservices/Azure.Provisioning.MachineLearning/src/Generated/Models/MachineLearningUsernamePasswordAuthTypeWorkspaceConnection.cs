@@ -15,6 +15,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningUsernamePasswordAuthTypeWorkspaceConnection. </summary>
         public MachineLearningUsernamePasswordAuthTypeWorkspaceConnection()
         {
+            AuthType.Assign(ConnectionAuthType.UsernamePassword);
         }
 
         /// <summary> Gets or sets the Credentials. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("authType", new string[] { "authType" }, defaultValue: "UsernamePassword");
             _credentials = DefineModelProperty<MachineLearningWorkspaceConnectionUsernamePassword>(nameof(Credentials), new string[] { "credentials" });
             DefineAdditionalProperties();
         }

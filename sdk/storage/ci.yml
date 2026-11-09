@@ -58,5 +58,8 @@ extends:
     - name: Azure.Storage.Blobs.ChangeFeed
       safeName: AzureStorageBlobsChangeFeed
       skipSmokeTests: true
+    - name: Azure.Storage.Files.Shares.ChangeFeed
+      safeName: AzureStorageFilesSharesChangeFeed
+      skipSmokeTests: true
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml

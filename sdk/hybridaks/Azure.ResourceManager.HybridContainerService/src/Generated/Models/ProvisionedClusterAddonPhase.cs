@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     public readonly partial struct ProvisionedClusterAddonPhase : IEquatable<ProvisionedClusterAddonPhase>
     {
         private readonly string _value;
+        /// <summary> Indicates addon or component is pending. </summary>
+        private const string PendingValue = "pending";
+        /// <summary> Indicates addon or component is provisioning. </summary>
+        private const string ProvisioningValue = "provisioning";
+        /// <summary> Indicates addon or component is provisioning {HelmChartInstalled}. </summary>
+        private const string ProvisioningHelmChartInstalledValue = "provisioning {HelmChartInstalled}";
+        /// <summary> Indicates addon or component is provisioning {MSICertificateDownloaded}. </summary>
+        private const string ProvisioningMSICertificateDownloadedValue = "provisioning {MSICertificateDownloaded}";
+        /// <summary> Indicates addon or component is provisioned. </summary>
+        private const string ProvisionedValue = "provisioned";
+        /// <summary> Indicates addon or component is deleting. </summary>
+        private const string DeletingValue = "deleting";
+        /// <summary> Indicates addon or component is failed. </summary>
+        private const string FailedValue = "failed";
+        /// <summary> Indicates addon or component is upgrading. </summary>
+        private const string UpgradingValue = "upgrading";
 
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterAddonPhase"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ProvisionedClusterAddonPhase(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string PendingValue = "pending";
-        private const string ProvisioningValue = "provisioning";
-        private const string ProvisioningHelmChartInstalledValue = "provisioning {HelmChartInstalled}";
-        private const string ProvisioningMSICertificateDownloadedValue = "provisioning {MSICertificateDownloaded}";
-        private const string ProvisionedValue = "provisioned";
-        private const string DeletingValue = "deleting";
-        private const string FailedValue = "failed";
-        private const string UpgradingValue = "upgrading";
-
-        /// <summary> pending. </summary>
+        /// <summary> Indicates addon or component is pending. </summary>
         public static ProvisionedClusterAddonPhase Pending { get; } = new ProvisionedClusterAddonPhase(PendingValue);
-        /// <summary> provisioning. </summary>
+
+        /// <summary> Indicates addon or component is provisioning. </summary>
         public static ProvisionedClusterAddonPhase Provisioning { get; } = new ProvisionedClusterAddonPhase(ProvisioningValue);
-        /// <summary> provisioning {HelmChartInstalled}. </summary>
+
+        /// <summary> Indicates addon or component is provisioning {HelmChartInstalled}. </summary>
         public static ProvisionedClusterAddonPhase ProvisioningHelmChartInstalled { get; } = new ProvisionedClusterAddonPhase(ProvisioningHelmChartInstalledValue);
-        /// <summary> provisioning {MSICertificateDownloaded}. </summary>
+
+        /// <summary> Indicates addon or component is provisioning {MSICertificateDownloaded}. </summary>
         public static ProvisionedClusterAddonPhase ProvisioningMSICertificateDownloaded { get; } = new ProvisionedClusterAddonPhase(ProvisioningMSICertificateDownloadedValue);
-        /// <summary> provisioned. </summary>
+
+        /// <summary> Indicates addon or component is provisioned. </summary>
         public static ProvisionedClusterAddonPhase Provisioned { get; } = new ProvisionedClusterAddonPhase(ProvisionedValue);
-        /// <summary> deleting. </summary>
+
+        /// <summary> Indicates addon or component is deleting. </summary>
         public static ProvisionedClusterAddonPhase Deleting { get; } = new ProvisionedClusterAddonPhase(DeletingValue);
-        /// <summary> failed. </summary>
+
+        /// <summary> Indicates addon or component is failed. </summary>
         public static ProvisionedClusterAddonPhase Failed { get; } = new ProvisionedClusterAddonPhase(FailedValue);
-        /// <summary> upgrading. </summary>
+
+        /// <summary> Indicates addon or component is upgrading. </summary>
         public static ProvisionedClusterAddonPhase Upgrading { get; } = new ProvisionedClusterAddonPhase(UpgradingValue);
+
         /// <summary> Determines if two <see cref="ProvisionedClusterAddonPhase"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ProvisionedClusterAddonPhase left, ProvisionedClusterAddonPhase right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ProvisionedClusterAddonPhase"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ProvisionedClusterAddonPhase left, ProvisionedClusterAddonPhase right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ProvisionedClusterAddonPhase"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ProvisionedClusterAddonPhase"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ProvisionedClusterAddonPhase(string value) => new ProvisionedClusterAddonPhase(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ProvisionedClusterAddonPhase"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ProvisionedClusterAddonPhase?(string value) => value == null ? null : new ProvisionedClusterAddonPhase(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProvisionedClusterAddonPhase other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ProvisionedClusterAddonPhase other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

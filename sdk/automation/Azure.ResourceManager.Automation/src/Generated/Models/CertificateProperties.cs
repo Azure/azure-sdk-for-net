@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Automation.Models
 
         /// <summary> Initializes a new instance of <see cref="CertificateProperties"/>. </summary>
         /// <param name="thumbprintString"> Gets the thumbprint of the certificate. </param>
-        /// <param name="expireOn"> Gets the expiry time of the certificate. </param>
+        /// <param name="expiresOn"> Gets the expiry time of the certificate. </param>
         /// <param name="isExportable"> Gets the is exportable flag of the certificate. </param>
         /// <param name="createdOn"> Gets the creation time. </param>
         /// <param name="lastModifiedOn"> Gets the last modified time. </param>
         /// <param name="description"> Gets or sets the description. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CertificateProperties(string thumbprintString, DateTimeOffset? expireOn, bool? isExportable, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CertificateProperties(string thumbprintString, DateTimeOffset? expiresOn, bool? isExportable, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ThumbprintString = thumbprintString;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             IsExportable = isExportable;
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Automation.Models
         public string ThumbprintString { get; }
 
         /// <summary> Gets the expiry time of the certificate. </summary>
-        public DateTimeOffset? ExpireOn { get; }
+        public DateTimeOffset? ExpiresOn { get; }
 
         /// <summary> Gets the is exportable flag of the certificate. </summary>
         public bool? IsExportable { get; }

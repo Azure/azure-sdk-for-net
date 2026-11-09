@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppNetwork
         }
 
         /// <summary>
-        /// Get an AppLink.
+        /// Get the details of an Azure Kubernetes Application Network.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableAppNetworkResourceGroupResource.GetAppLinkAsync(string, CancellationToken)"/> instead. </description>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppNetwork
         }
 
         /// <summary>
-        /// Get an AppLink.
+        /// Get the details of an Azure Kubernetes Application Network.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableAppNetworkResourceGroupResource.GetAppLink(string, CancellationToken)"/> instead. </description>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppNetwork
         }
 
         /// <summary>
-        /// List AppLink resources by subscription.
+        /// List Azure Kubernetes Application Network resources by subscription.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableAppNetworkSubscriptionResource.GetAppLinksAsync(CancellationToken)"/> instead. </description>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppNetwork
         }
 
         /// <summary>
-        /// List AppLink resources by subscription.
+        /// List Azure Kubernetes Application Network resources by subscription.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableAppNetworkSubscriptionResource.GetAppLinks(CancellationToken)"/> instead. </description>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.AppNetwork
         }
 
         /// <summary>
-        /// List AvailableVersion resources by location.
+        /// List the Azure Kubernetes Application Network versions available in a location.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableAppNetworkSubscriptionResource.GetAppLinkAvailableVersionsByLocationAsync(AzureLocation, string, CancellationToken)"/> instead. </description>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppNetwork
         }
 
         /// <summary>
-        /// List AvailableVersion resources by location.
+        /// List the Azure Kubernetes Application Network versions available in a location.
         /// <item>
         /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableAppNetworkSubscriptionResource.GetAppLinkAvailableVersionsByLocation(AzureLocation, string, CancellationToken)"/> instead. </description>

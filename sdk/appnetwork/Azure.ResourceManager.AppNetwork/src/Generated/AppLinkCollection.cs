@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.AppNetwork
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AppLinkCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AppLinkResource.ResourceType, out string appLinkApiVersion);
             _appLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppNetwork", AppLinkResource.ResourceType.Namespace, Diagnostics);
-            _appLinksRestClient = new AppLinks(_appLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appLinkApiVersion ?? "2025-08-01-preview");
+            _appLinksRestClient = new AppLinks(_appLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AppLink/appLinks", out string appLinksApiVersionOverride) ? appLinksApiVersionOverride : "2026-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -56,7 +55,7 @@ namespace Azure.ResourceManager.AppNetwork
         }
 
         /// <summary>
-        /// Create an AppLink.
+        /// Create an Azure Kubernetes Application Network resource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.AppNetwork
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.AppNetwork
         }
 
         /// <summary>
-        /// Create an AppLink.
+        /// Create an Azure Kubernetes Application Network resource.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.AppNetwork
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -172,7 +171,7 @@ namespace Azure.ResourceManager.AppNetwork
         }
 
         /// <summary>
-        /// Get an AppLink.
+        /// Get the details of an Azure Kubernetes Application Network.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.AppNetwork
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,7 +220,7 @@ namespace Azure.ResourceManager.AppNetwork
         }
 
         /// <summary>
-        /// Get an AppLink.
+        /// Get the details of an Azure Kubernetes Application Network.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.AppNetwork
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -270,7 +269,7 @@ namespace Azure.ResourceManager.AppNetwork
         }
 
         /// <summary>
-        /// List AppLink resources by resource group.
+        /// List Azure Kubernetes Application Network resources by resource group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -282,7 +281,7 @@ namespace Azure.ResourceManager.AppNetwork
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,11 +293,11 @@ namespace Azure.ResourceManager.AppNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AppLinkData, AppLinkResource>(new AppLinksGetByResourceGroupAsyncCollectionResultOfT(_appLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppLinkCollection.GetAll"), data => new AppLinkResource(Client, data));
+            return new AsyncPageableWrapper<AppLinkData, AppLinkResource>(new AppLinkDataAsyncCollectionResultOfT(_appLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppLinkCollection.GetAll"), data => new AppLinkResource(Client, data));
         }
 
         /// <summary>
-        /// List AppLink resources by resource group.
+        /// List Azure Kubernetes Application Network resources by resource group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -310,7 +309,7 @@ namespace Azure.ResourceManager.AppNetwork
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.AppNetwork
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AppLinkData, AppLinkResource>(new AppLinksGetByResourceGroupCollectionResultOfT(_appLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppLinkCollection.GetAll"), data => new AppLinkResource(Client, data));
+            return new PageableWrapper<AppLinkData, AppLinkResource>(new AppLinkDataCollectionResultOfT(_appLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "AppLinkCollection.GetAll"), data => new AppLinkResource(Client, data));
         }
 
         /// <summary>
@@ -338,7 +337,7 @@ namespace Azure.ResourceManager.AppNetwork
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +394,7 @@ namespace Azure.ResourceManager.AppNetwork
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +451,7 @@ namespace Azure.ResourceManager.AppNetwork
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +512,7 @@ namespace Azure.ResourceManager.AppNetwork
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

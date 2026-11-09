@@ -23,6 +23,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new StorageContainer. </summary>
         public StorageContainer()
         {
+            ContainerType.Assign(ProtectableContainerType.StorageContainer);
         }
 
         /// <summary> Gets or sets the SourceResourceId. </summary>
@@ -119,7 +120,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("containerType", new string[] { "containerType" }, defaultValue: "StorageContainer");
             _sourceResourceId = DefineProperty<ResourceIdentifier>(nameof(SourceResourceId), new string[] { "sourceResourceId" });
             _storageAccountVersion = DefineProperty<string>(nameof(StorageAccountVersion), new string[] { "storageAccountVersion" });
             _resourceGroup = DefineProperty<string>(nameof(ResourceGroup), new string[] { "resourceGroup" });

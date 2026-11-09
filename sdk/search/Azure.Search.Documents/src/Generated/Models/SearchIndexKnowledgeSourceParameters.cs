@@ -35,14 +35,16 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="searchFields"> Used to restrict which fields to search on the search index. </param>
         /// <param name="semanticConfigurationName"> Used to specify a different semantic configuration on the target search index other than the default one. </param>
         /// <param name="baseFilter"> A default filter condition applied to the index at retrieval time (e.g., 'State eq VA'). Can be overridden at query time via knowledge source runtime parameters. </param>
+        /// <param name="queryHints"> Default hints that guide query planning toward useful filters and boosts for this search index knowledge source. Request-time query hints replace these defaults as a complete object. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexKnowledgeSourceParameters(string searchIndexName, IList<SearchIndexFieldReference> sourceDataFields, IList<SearchIndexFieldReference> searchFields, string semanticConfigurationName, string baseFilter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndexKnowledgeSourceParameters(string searchIndexName, IList<SearchIndexFieldReference> sourceDataFields, IList<SearchIndexFieldReference> searchFields, string semanticConfigurationName, string baseFilter, SearchIndexKnowledgeSourceQueryHints queryHints, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SearchIndexName = searchIndexName;
             SourceDataFields = sourceDataFields;
             SearchFields = searchFields;
             SemanticConfigurationName = semanticConfigurationName;
             BaseFilter = baseFilter;
+            QueryHints = queryHints;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -60,5 +62,8 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> A default filter condition applied to the index at retrieval time (e.g., 'State eq VA'). Can be overridden at query time via knowledge source runtime parameters. </summary>
         public string BaseFilter { get; set; }
+
+        /// <summary> Default hints that guide query planning toward useful filters and boosts for this search index knowledge source. Request-time query hints replace these defaults as a complete object. </summary>
+        public SearchIndexKnowledgeSourceQueryHints QueryHints { get; set; }
     }
 }

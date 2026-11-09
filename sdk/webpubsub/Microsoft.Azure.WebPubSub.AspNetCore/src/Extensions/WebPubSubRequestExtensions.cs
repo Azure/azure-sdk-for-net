@@ -105,14 +105,14 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 case RequestType.JoinedGroupEvent:
                     {
                         var content = await new StreamReader(request.Body).ReadToEndAsync().ConfigureAwait(false);
-                        var eventRequest = JsonSerializer.Deserialize(content, WebPubSubCommonJsonSerializerContext.Default.JoinedGroupEventRequest);
-                        return new JoinedGroupEventRequest(context, eventRequest.Group);
+                        var eventRequest = JsonSerializer.Deserialize(content, WebPubSubCommonJsonSerializerContext.Default.GroupJoinedEventRequest);
+                        return new GroupJoinedEventRequest(context, eventRequest.Group);
                     }
                 case RequestType.LeftGroupEvent:
                     {
                         var content = await new StreamReader(request.Body).ReadToEndAsync().ConfigureAwait(false);
-                        var eventRequest = JsonSerializer.Deserialize(content, WebPubSubCommonJsonSerializerContext.Default.LeftGroupEventRequest);
-                        return new LeftGroupEventRequest(context, eventRequest.Group);
+                        var eventRequest = JsonSerializer.Deserialize(content, WebPubSubCommonJsonSerializerContext.Default.GroupLeftEventRequest);
+                        return new GroupLeftEventRequest(context, eventRequest.Group);
                     }
                 default:
                     return null;
