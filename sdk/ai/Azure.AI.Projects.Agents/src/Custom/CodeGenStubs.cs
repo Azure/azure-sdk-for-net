@@ -22,3 +22,7 @@ public partial class ProjectsAgentRecord
 [CodeGenType("AgentVersionStatus")] public partial struct AgentVersionStatus { }
 [CodeGenType("FoundryFeaturesOptInKeys")] internal partial struct FoundryFeaturesOptInKeys { }
 [CodeGenType("AgentObjectVersions")] public partial class AgentObjectVersions { }
+[CodeGenType("VoiceAgentSoundscapeSound")] public partial struct VoiceAgentSoundscapeSound { }
+// TODO: remove this stub when the code will be again generated from feature/foundry-release.
+// This class is obsolete and needs to be removed.
+[CodeGenType("AzureFunctionDefinitionFunction")] internal partial class AzureFunctionDefinitionFunction { }

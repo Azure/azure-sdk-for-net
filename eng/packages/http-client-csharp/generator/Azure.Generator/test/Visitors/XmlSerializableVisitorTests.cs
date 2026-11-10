@@ -12,6 +12,7 @@ using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using NUnit.Framework;
 using System;
+using System.ClientModel.Primitives;
 using System.Linq;
 using System.Xml;
 

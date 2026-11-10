@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-09-01", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Storage
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-06-01");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-09-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Storage
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-06-01");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-09-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/listKeys", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-09-01", true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/regenerateKey", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/listAccountSas", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/listServiceSas", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/failover", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-09-01", true);
             if (failoverType != null)
             {
                 uri.AppendQuery("failoverType", failoverType, true);
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/hnsonmigration", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-09-01", true);
             uri.AppendQuery("requestType", requestType, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/aborthnsonmigration", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/startAccountMigration", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/restoreBlobRanges", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/revokeUserDelegationKeys", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
             uri.AppendPath(accountName, true);
             uri.AppendPath("/reports", false);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-09-01", true);
             if (maxpagesize != null)
             {
                 uri.AppendQuery("$maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.Storage
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-06-01");
+            uri.UpdateQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts") ?? "2026-09-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Storage
             uri.AppendPath(accountName, true);
             uri.AppendPath("/accountMigrations/", false);
             uri.AppendPath(migrationName, true);
-            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts/accountMigrations") ?? "2026-06-01", true);
+            uri.AppendQuery("api-version", _getApiVersion?.Invoke("Microsoft.Storage/storageAccounts/accountMigrations") ?? "2026-09-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// <returns> An object representing collection of DefaultParameterGroups and their operations over a DefaultParameterGroupResource. </returns>
         public virtual DefaultParameterGroupCollection GetDefaultParameterGroups(AzureLocation location)
         {
-            return GetCachedClient(client => new DefaultParameterGroupCollection(client, Id, location));
+            return new DefaultParameterGroupCollection(Client, Id, location);
         }
 
         /// <summary>

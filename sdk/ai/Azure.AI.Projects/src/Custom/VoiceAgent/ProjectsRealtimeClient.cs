@@ -24,6 +24,7 @@ public class ProjectsRealtimeClient : RealtimeClient
     private readonly AuthenticationTokenProvider _tokenProvider;
     private readonly IReadOnlyDictionary<string, object> _tokenProperties;
     private readonly string _apiVersion;
+    private readonly RealtimeClientOptions _options;
 
     /// <summary>
     /// Internal empty constructor for mocking.
@@ -55,6 +56,7 @@ public class ProjectsRealtimeClient : RealtimeClient
         _tokenProvider = tokenProvider;
         _tokenProperties = tokenProperties;
         _apiVersion = apiVersion;
+        _options = preparedOptions;
         ExperimentalHeaders = RealtimeClientHelper.ExperimentalHeaders(experimentalHeaders);
     }
 
@@ -110,13 +112,21 @@ public class ProjectsRealtimeClient : RealtimeClient
             ? RealtimeClientHelper.WithTransportQuery(options?.QueryString, transport)
             : options?.QueryString;
 
-        ProjectsRealtimeSessionClient sessionClient = new(Endpoint, _tokenProvider, model, intent, _tokenProperties, _apiVersion, parentClient: this);
+        VoiceAgentRealtimeTelemetry telemetry = VoiceAgentRealtimeTelemetry.Start(
+            Endpoint, model, queryString, _options.EnableDistributedTracing != false, _options.ClientLoggingOptions?.EnableLogging != false);
+        ProjectsRealtimeSessionClient sessionClient = null;
         try
         {
+            sessionClient = new(Endpoint, _tokenProvider, model, intent, _tokenProperties, _apiVersion, parentClient: this, telemetry: telemetry);
             await sessionClient.ConnectInternalAsync(queryString, options?.Headers, cancellationToken).ConfigureAwait(false);
             RealtimeSessionClient result = sessionClient;
             sessionClient = null;
             return result;
+        }
+        catch (Exception exception)
+        {
+            telemetry?.ConnectionFailed(exception);
+            throw;
         }
         finally
         {

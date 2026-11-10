@@ -140,6 +140,16 @@ namespace Azure.ResourceManager.TestFramework
             // mock the method on MockingExtension
             MockMethodOnMockingExtension(extensionMock, mockingExtensionType, methodOnExtension);
 
+            // Compatibility forwarders can call another overload instead of the matching mockable method.
+            if (extensionMethod.GetCustomAttributesData().Any(a => a.AttributeType.FullName == "Azure.Core.ForwardsClientCallsAttribute"))
+            {
+                foreach (var overload in mockingExtensionType.GetMethods(BindingFlags.Public | BindingFlags.Instance)
+                    .Where(m => m.IsVirtual && m.Name == methodOnExtension.Name && m.ReturnType == methodOnExtension.ReturnType && m != methodOnExtension))
+                {
+                    MockMethodOnMockingExtension(extensionMock, mockingExtensionType, overload);
+                }
+            }
+
             // call the method on the mock result
             var arguments = new List<object>() { mock.Object };
             foreach (var p in extensionMethod.GetParameters().Skip(1))

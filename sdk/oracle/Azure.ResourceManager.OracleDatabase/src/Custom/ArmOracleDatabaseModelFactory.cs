@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -1359,7 +1359,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="gridImageOcid"> Grid Setup will be done using this Grid Image OCID. Can be obtained using giMinorVersions API. </param>
         /// <param name="gridImageType"> The type of Grid Image. </param>
         /// <param name="giVersion"> Oracle Grid Infrastructure (GI) software version. </param>
-        /// <param name="hostname"> The hostname for the  Exadata VM cluster on Exascale Infrastructure. </param>
+        /// <param name="hostname"> The hostname for the Exadata VM cluster on Exascale Infrastructure. </param>
         /// <param name="licenseModel"> The Oracle license model that applies to the Exadata VM cluster on Exascale Infrastructure. The default is LICENSE_INCLUDED. </param>
         /// <param name="memorySizeInGbs"> The memory that you want to be allocated in GBs. Memory is calculated based on 11 GB per VM core reserved. </param>
         /// <param name="nodeCount"> The number of nodes in the Exadata VM cluster on Exascale Infrastructure. </param>
@@ -1415,11 +1415,97 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             throw new NotSupportedException("This method is not supported. Use the new version of this factory method instead.");
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.CloudVmClusterProperties"/>. </summary>
+        // The legacy hostname parameter initializes Hostname, not the distinct HostnameV2 property.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CloudVmClusterProperties CloudVmClusterProperties(string cloudVmClusterOcid = default, long? listenerPort = default, int? nodeCount = default, int? storageSizeInGbs = default, IEnumerable<FileSystemConfigurationDetails> fileSystemConfigurationDetails = default, double? dataStorageSizeInTbs = default, int? dbNodeStorageSizeInGbs = default, int? memorySizeInGbs = default, DateTimeOffset? createdOn = default, string lifecycleDetails = default, string timeZone = default, string zoneOcid = default, string hostname = default, string domain = default, int cpuCoreCount = 0, float? ocpuCount = default, string clusterName = default, int? dataStoragePercentage = default, bool? isLocalBackupEnabled = default, ResourceIdentifier cloudExadataInfrastructureId = default, bool? isSparseDiskgroupEnabled = default, string systemVersion = default, IEnumerable<string> sshPublicKeys = default, OracleLicenseModel? licenseModel = default, CloudVmClusterDiskRedundancy? diskRedundancy = default, IEnumerable<string> scanIPIds = default, IEnumerable<string> vipIds = default, string scanDnsName = default, int? scanListenerPortTcp = default, int? scanListenerPortTcpSsl = default, string scanDnsRecordOcid = default, string shape = default, OracleDatabaseProvisioningState? provisioningState = default, CloudVmClusterLifecycleState? lifecycleState = default, ResourceIdentifier vnetId = default, string giVersion = default, Uri ociUri = default, Uri nsgUri = default, ResourceIdentifier subnetId = default, string backupSubnetCidr = default, IEnumerable<CloudVmClusterNsgCidr> nsgCidrs = default, DiagnosticCollectionConfig dataCollectionOptions = default, string displayName = default, IEnumerable<string> computeNodeOcids = default, ExadataIormConfig iormConfigCache = default, string lastUpdateHistoryEntryOcid = default, IEnumerable<string> dbServerOcids = default, string compartmentOcid = default, string clusterSubnetOcid = default, OracleDatabaseComputeModel? computeModel = default, ResourceIdentifier exascaleDBStorageVaultOcid = default, ExadataVmClusterStorageManagementType? storageManagementType = default)
+        {
+            var model = CloudVmClusterProperties(
+                cloudVmClusterOcid: cloudVmClusterOcid,
+                resourceAnchorId: default,
+                networkAnchorId: default,
+                listenerPort: listenerPort,
+                nodeCount: nodeCount,
+                storageSizeInGbs: storageSizeInGbs,
+                fileSystemConfigurationDetails: fileSystemConfigurationDetails,
+                dataStorageSizeInTbs: dataStorageSizeInTbs,
+                dbNodeStorageSizeInGbs: dbNodeStorageSizeInGbs,
+                memorySizeInGbs: memorySizeInGbs,
+                createdOn: createdOn,
+                lifecycleDetails: lifecycleDetails,
+                timeZone: timeZone,
+                zoneOcid: zoneOcid,
+                hostnameV2: default,
+                domain: domain,
+                cpuCoreCount: cpuCoreCount,
+                ocpuCount: ocpuCount,
+                clusterName: clusterName,
+                dataStoragePercentage: dataStoragePercentage,
+                isLocalBackupEnabled: isLocalBackupEnabled,
+                cloudExadataInfrastructureId: cloudExadataInfrastructureId,
+                isSparseDiskgroupEnabled: isSparseDiskgroupEnabled,
+                systemVersion: systemVersion,
+                sshPublicKeys: sshPublicKeys,
+                licenseModel: licenseModel,
+                diskRedundancy: diskRedundancy,
+                scanIPIds: scanIPIds,
+                vipIds: vipIds,
+                scanDnsName: scanDnsName,
+                scanListenerPortTcp: scanListenerPortTcp,
+                scanListenerPortTcpSsl: scanListenerPortTcpSsl,
+                scanDnsRecordOcid: scanDnsRecordOcid,
+                shape: shape,
+                provisioningState: provisioningState,
+                lifecycleState: lifecycleState,
+                vnetId: vnetId,
+                giVersion: giVersion,
+                ociUri: ociUri,
+                nsgUri: nsgUri,
+                subnetId: subnetId,
+                backupSubnetCidr: backupSubnetCidr,
+                nsgCidrs: nsgCidrs,
+                dataCollectionOptions: dataCollectionOptions,
+                displayName: displayName,
+                computeNodeOcids: computeNodeOcids,
+                iormConfigCache: iormConfigCache,
+                lastUpdateHistoryEntryOcid: lastUpdateHistoryEntryOcid,
+                dbServerOcids: dbServerOcids,
+                compartmentOcid: compartmentOcid,
+                clusterSubnetOcid: clusterSubnetOcid,
+                computeModel: computeModel,
+                exascaleDBStorageVaultOcid: exascaleDBStorageVaultOcid,
+                storageManagementType: storageManagementType);
+            model.Hostname = hostname;
+            return model;
+        }
+
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.OracleDatabase.Models.ExadbVmClusterProperties"/>. </summary>
         [Obsolete("This method is obsolete and will be removed in a future release", false)]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ExadbVmClusterProperties ExadbVmClusterProperties(string ocid = default, string clusterName = default, string backupSubnetCidr = default, Uri nsgUri = default, OracleDatabaseProvisioningState? provisioningState = default, ExadbVmClusterLifecycleState? lifecycleState = default, ResourceIdentifier vnetId = default, ResourceIdentifier subnetId = default, DiagnosticCollectionConfig dataCollectionOptions = default, string displayName = default, string domain = default, int enabledEcpuCount = default, ResourceIdentifier exascaleDBStorageVaultId = default, string gridImageOcid = default, GridImageType? gridImageType = default, string giVersion = default, string hostname = default, OracleLicenseModel? licenseModel = default, int? memorySizeInGbs = default, int nodeCount = default, IEnumerable<CloudVmClusterNsgCidr> nsgCidrs = default, string zoneOcid = default, string privateZoneOcid = default, int? scanListenerPortTcp = default, int? scanListenerPortTcpSsl = default, int? listenerPort = default, string shape = default, IEnumerable<string> sshPublicKeys = default, string systemVersion = default, string timeZone = default, int totalEcpuCount = default, int? vmFileSystemStorageTotalSizeInGbs = default, string lifecycleDetails = default, string scanDnsName = default, IEnumerable<string> scanIPIds = default, string scanDnsRecordId = default, int? snapshotFileSystemStorageTotalSizeInGbs = default, int? totalSizeInGbs = default, IEnumerable<string> vipIds = default, Uri ociUri = default, ExadataIormConfig iormConfigCache = default, string backupSubnetOcid = default, string subnetOcid = default, ExascaleStorageShapeAttribute? shapeAttribute = default)
-            => ExadbVmClusterProperties(ocid, clusterName, backupSubnetCidr, nsgUri, provisioningState, lifecycleState, vnetId, subnetId, dataCollectionOptions, displayName, domain, enabledEcpuCount, exascaleDBStorageVaultId, gridImageOcid, gridImageType, giVersion, hostname, licenseModel, memorySizeInGbs, nodeCount, nsgCidrs, zoneOcid, privateZoneOcid, scanListenerPortTcp, scanListenerPortTcpSsl, listenerPort, shape, sshPublicKeys, systemVersion, timeZone, totalEcpuCount, vmFileSystemStorageTotalSizeInGbs.GetValueOrDefault(), lifecycleDetails, scanDnsName, scanIPIds, scanDnsRecordId, snapshotFileSystemStorageTotalSizeInGbs, totalSizeInGbs, vipIds, ociUri, iormConfigCache, backupSubnetOcid, subnetOcid, shapeAttribute);
+        {
+            // Initialize the legacy property separately rather than forwarding it to HostnameV2.
+            return new ExadbVmClusterProperties(
+                ocid, clusterName, backupSubnetCidr, nsgUri, provisioningState, lifecycleState,
+                vnetId, subnetId, dataCollectionOptions, displayName, domain, enabledEcpuCount,
+                exascaleDBStorageVaultId, gridImageOcid, gridImageType, giVersion, default,
+                licenseModel, memorySizeInGbs, nodeCount,
+                (nsgCidrs ?? new ChangeTrackingList<CloudVmClusterNsgCidr>()).ToList(),
+                zoneOcid, privateZoneOcid, scanListenerPortTcp, scanListenerPortTcpSsl, listenerPort, shape,
+                (sshPublicKeys ?? new ChangeTrackingList<string>()).ToList(),
+                systemVersion, timeZone, totalEcpuCount,
+                new ExadbVmClusterStorageDetails(vmFileSystemStorageTotalSizeInGbs.GetValueOrDefault()),
+                lifecycleDetails, scanDnsName,
+                (scanIPIds ?? new ChangeTrackingList<string>()).ToList(),
+                scanDnsRecordId,
+                snapshotFileSystemStorageTotalSizeInGbs.HasValue ? new ExadbVmClusterStorageDetails(snapshotFileSystemStorageTotalSizeInGbs.Value) : null,
+                totalSizeInGbs.HasValue ? new ExadbVmClusterStorageDetails(totalSizeInGbs.Value) : null,
+                (vipIds ?? new ChangeTrackingList<string>()).ToList(),
+                ociUri, iormConfigCache, backupSubnetOcid, subnetOcid, shapeAttribute, default)
+            {
+                Hostname = hostname
+            };
+        }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.OracleDatabase.Models.ExascaleDBStorageVaultProperties"/>. </summary>
         [Obsolete("This method is obsolete and will be removed in a future release", false)]

@@ -17,6 +17,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<Guid> _resourceGuid;
         private BicepValue<NetworkProvisioningState> _provisioningState;
         private BicepList<DdosDetectionRule> _detectionRules;
+        private BicepList<DdosMitigationRule> _mitigationRules;
         private BicepList<WritableSubResource> _publicIPAddresses;
 
         /// <summary> Creates a new DdosCustomPolicyPropertiesFormat. </summary>
@@ -59,6 +60,21 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the MitigationRules. </summary>
+        public BicepList<DdosMitigationRule> MitigationRules
+        {
+            get
+            {
+                Initialize();
+                return _mitigationRules;
+            }
+            set
+            {
+                Initialize();
+                _mitigationRules.Assign(value);
+            }
+        }
+
         /// <summary> Gets the PublicIPAddresses. </summary>
         public BicepList<WritableSubResource> PublicIPAddresses
         {
@@ -76,6 +92,7 @@ namespace Azure.Provisioning.Network
             _resourceGuid = DefineProperty<Guid>(nameof(ResourceGuid), new string[] { "resourceGuid" }, isOutput: true);
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _detectionRules = DefineListProperty<DdosDetectionRule>(nameof(DetectionRules), new string[] { "detectionRules" });
+            _mitigationRules = DefineListProperty<DdosMitigationRule>(nameof(MitigationRules), new string[] { "mitigationRules" });
             _publicIPAddresses = DefineListProperty<WritableSubResource>(nameof(PublicIPAddresses), new string[] { "publicIPAddresses" }, isOutput: true);
             DefineAdditionalProperties();
         }

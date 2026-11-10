@@ -4,11 +4,11 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Upgraded Microsoft.HorizonDb from 2026-05-01-preview to 2026-10-01-preview
 
 ### Other Changes
+
+- Upgraded Azure.Core from 1.62.0 to 1.64.0
 
 ## 1.0.0-beta.2 (2026-08-27)
 

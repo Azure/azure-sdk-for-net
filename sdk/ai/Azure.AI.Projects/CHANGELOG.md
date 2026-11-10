@@ -1,10 +1,9 @@
 # Release History
 
-## 3.0.0-beta.5 (Unreleased)
+## 3.0.0-beta.7 (Unreleased)
 
 ### Features Added
-
-- Added `ProjectsRealtimeSessionClientOptions.Transport` to select a Voice Agent's WebSocket or WebRTC signaling transport.
+- Uploading of models now can be cancelled.
 
 ### Breaking Changes
 
@@ -12,8 +11,31 @@
 
 ### Other Changes
 
+## 3.0.0-beta.6 (2026-10-30)
+
+### Features Added
+
+- Added opt-in Voice Agent realtime tracing for connections, sessions, responses, tool milestones, audio usage, cancellation, and errors using the existing Foundry GenAI tracing settings. Added correlated, payload-free realtime diagnostic logs.
+- Included first-text/audio latency, reported audio formats and sample rates, session audio totals, consistent session lifecycle events, and bounded opt-in transcript/tool message content in Voice Agent telemetry.
+- Added the `MaxSamples` property to `SimulationSeedDataGenerationJobConfiguration`.
+
+### Breaking Changes
+- `SimulationSeedDataGenerationJobConfiguration` now requires a `maxSamples` constructor argument. Replace parameterless construction with `new SimulationSeedDataGenerationJobConfiguration(maxSamples)`.
+- Added an optional `maxSamples` parameter to `AzureAIProjectsModelFactory.SimulationSeedDataGenerationJobConfiguration`, changing its binary signature. Recompile code that uses this factory.
+
 ### Sample Updates
 
+- Added runnable Voice Agent REST and realtime telemetry samples using the existing Foundry tracing settings, OpenTelemetry console exporter, and correlated realtime diagnostic logs.
+
+## 3.0.0-beta.5 (2026-10-16)
+
+### Features Added
+- Added `ProjectsRealtimeSessionClientOptions.Transport` to select a Voice Agent's WebSocket or WebRTC signaling transport.
+
+### Breaking Changes
+- Removed the `UpdateMemories(string, BinaryContent, RequestOptions)` and `UpdateMemoriesAsync(string, BinaryContent, RequestOptions)` protocol overloads from `AIProjectMemoryStores`. Use the corresponding long-running operation overloads that accept `waitUntilCompleted` instead, passing `false` to return after starting the operation.
+
+### Sample Updates
 - Added runnable Voice Agent WebSocket transport samples for stored text conversations and streamed PCM audio with actual input and output byte counts.
 
 ## 3.0.0-beta.4 (2026-10-12)

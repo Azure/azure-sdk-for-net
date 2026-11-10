@@ -6,6 +6,8 @@ script for azure-sdk-for-net CI check in Unified Pipeline
 .DESCRIPTION
 Automatically generate and verify the SDK for both management-plane and data-plane.
 Unified pipeline will run this script.
+The optional typespecEmitter input selects an emitter registered in eng/tsp-client-config.yaml.
+Missing or empty values preserve the default emitter selection.
 
 .PARAMETER inputJsonFile
 Path to the input json file to contain all the input paramters.
@@ -42,6 +44,7 @@ $repoHttpsUrl = $inputJson.repoHttpsUrl
 $downloadUrlPrefix = $inputJson.installInstructionInput.downloadUrlPrefix
 $autorestConfig = $inputJson.autorestConfig
 $relatedTypeSpecProjectFolder = $inputJson.relatedTypeSpecProjectFolder
+$typespecEmitter = $inputJson.typespecEmitter
 $apiVersion = $inputJson.apiVersion
 $sdkReleaseType = $inputJson.sdkReleaseType
 
@@ -181,6 +184,27 @@ function Update-PackageVersionSuffix {
     }
 }
 
+function Update-MgmtPackageChangelog {
+    param(
+        [object]$generatedPackage
+    )
+
+    if ([string]::IsNullOrWhiteSpace($generatedPackage.packageName) -or
+        [string]::IsNullOrWhiteSpace($generatedPackage.packageFolder) -or
+        -not $generatedPackage.packageName.StartsWith("Azure.ResourceManager.")) {
+        return
+    }
+
+    Write-Host "Start to update changelog for package: $($generatedPackage.packageName)"
+    pwsh -File (Join-Path $PSScriptRoot "Automation-Sdk-UpdateChangelog.ps1") `
+        -PackagePath $generatedPackage.packageFolder `
+        -SdkRepoPath $sdkPath
+
+    if ($LASTEXITCODE -ne 0) {
+        Write-Warning "Failed to generate changelog for package '$($generatedPackage.packageName)'. Continuing without changelog updates."
+    }
+}
+
 $autorestConfigYaml = ""
 if ($autorestConfig) {
     $autorestConfig | Set-Content "config.md"
@@ -251,10 +275,11 @@ if ($inputFileToGen) {
 $exitCode = 0
 # generate sdk from typespec file
 if ($relatedTypeSpecProjectFolder) {
+    $emitterPackageJsonPath = Get-TypeSpecEmitterPackageJsonPath -typespecEmitter $typespecEmitter -sdkRepoRoot $sdkPath
     foreach ($typespecRelativeFolder in $relatedTypeSpecProjectFolder) {
         $typespecFolder = Resolve-Path (Join-Path $swaggerDir $typespecRelativeFolder)
         $tspConfigFile = Resolve-Path (Join-Path $typespecFolder "tspconfig.yaml")
-        $sdkProjectFolder = GetSDKProjectFolder -typespecConfigurationFile $tspConfigFile -sdkRepoRoot $sdkPath
+        $sdkProjectFolder = GetSDKProjectFolder -typespecConfigurationFile $tspConfigFile -sdkRepoRoot $sdkPath -typespecEmitter $typespecEmitter
         $sdkAutorestConfigFile = Join-path $sdkProjectFolder "src" "autorest.md"
         if (Test-Path -Path $sdkAutorestConfigFile) {
             Write-Host "remove $sdkAutorestConfigFile for sdk from typespec."
@@ -290,15 +315,18 @@ if ($relatedTypeSpecProjectFolder) {
         }
         
         # Use tsp-client from pinned version by passing --prefix to use tsp-client from that directory
-        $tspclientCommand = "npm exec --prefix $tspClientDir --no -- tsp-client init --update-if-exists --tsp-config $tspConfigFile --repo $repo --commit $commitid"
+        $tspclientArguments = @("exec", "--prefix", "$tspClientDir", "--no", "--", "tsp-client", "init", "--update-if-exists", "--tsp-config", "$tspConfigFile", "--repo", $repo, "--commit", $commitid)
+        if ($emitterPackageJsonPath) {
+            $tspclientArguments += @("--emitter-package-json-path", $emitterPackageJsonPath)
+        }
         if ($swaggerDir) {
-            $tspclientCommand += " --local-spec-repo $typespecFolder"
+            $tspclientArguments += @("--local-spec-repo", "$typespecFolder")
         }
         if ($apiVersion) {
             Write-Warning "apiVersion '$apiVersion' is not supported for .NET SDK generation. The api-version from tspconfig.yaml will be used instead."
         }
-        Write-Host $tspclientCommand
-        Invoke-Expression $tspclientCommand
+        Write-Host "npm $($tspclientArguments -join ' ')"
+        & npm @tspclientArguments
         
         if ($LASTEXITCODE) {
           # If Process script call fails, then return with failure to CI and don't need to call GeneratePackage
@@ -344,6 +372,11 @@ if ($relatedTypeSpecProjectFolder) {
         }
     }
 }
+
+foreach ($generatedPackage in $generatedSDKPackages) {
+    Update-MgmtPackageChangelog -generatedPackage $generatedPackage
+}
+
 $outputJson = [PSCustomObject]@{
     packages = $generatedSDKPackages
 }

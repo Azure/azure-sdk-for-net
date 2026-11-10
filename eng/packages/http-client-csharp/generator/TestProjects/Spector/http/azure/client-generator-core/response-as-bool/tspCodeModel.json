@@ -69,7 +69,6 @@
                 "$id": "7",
                 "name": "exists",
                 "isExactName": false,
-                "resourceName": "HeadAsBoolean",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -91,6 +90,7 @@
                   }
                 ],
                 "httpMethod": "HEAD",
+                "responseAsBool": true,
                 "uri": "{endpoint}",
                 "path": "/azure/client-generator-core/response-as-bool/exists",
                 "bufferResponse": true,
@@ -126,7 +126,6 @@
                 "$id": "10",
                 "name": "notExists",
                 "isExactName": false,
-                "resourceName": "HeadAsBoolean",
                 "accessibility": "public",
                 "parameters": [],
                 "responses": [
@@ -148,6 +147,7 @@
                   }
                 ],
                 "httpMethod": "HEAD",
+                "responseAsBool": true,
                 "uri": "{endpoint}",
                 "path": "/azure/client-generator-core/response-as-bool/exists/not-exists",
                 "bufferResponse": true,

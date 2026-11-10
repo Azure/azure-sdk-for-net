@@ -27,8 +27,8 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("CreateAgentFromCodeAsync", typeof(string), typeof(string), typeof(AgentFromCodeOptions), typeof(CancellationToken))]
 [CodeGenSuppress("UpdateAgentFromCode", typeof(string), typeof(string), typeof(BinaryContent), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("UpdateAgentFromCodeAsync", typeof(string), typeof(string), typeof(BinaryContent), typeof(string), typeof(RequestOptions))]
-[CodeGenSuppress("UpdateAgentFromCode", typeof(string), typeof(string), typeof(CreateAgentVersionFromCodeContent), typeof(CancellationToken))]
-[CodeGenSuppress("UpdateAgentFromCodeAsync", typeof(string), typeof(string), typeof(CreateAgentVersionFromCodeContent), typeof(CancellationToken))]
+[CodeGenSuppress("UpdateAgentFromCode", typeof(string), typeof(string), typeof(CreateAgentVersionFromCodeRequest), typeof(CancellationToken))]
+[CodeGenSuppress("UpdateAgentFromCodeAsync", typeof(string), typeof(string), typeof(CreateAgentVersionFromCodeRequest), typeof(CancellationToken))]
 [CodeGenSuppress("GetAgents", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetAgentsAsync", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetAgentVersions", typeof(string), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(bool?), typeof(CancellationToken))]
@@ -90,7 +90,7 @@ public partial class AgentAdministrationClient
         Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] {
             new UserAgentPolicy(typeof(InternalProjectsClient).Assembly),
             new BearerTokenPolicy(tokenProvider, _flows),
-            new FoundryFeaturesPolicy("MemoryStores=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview,AgentInsights=V1Preview,DigitalWorker=V1Preview,GitHubCopilot=V1Preview,FineTuningSessions=V1Preview"),
+            new FoundryFeaturesPolicy("MemoryStores=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview,AgentInsights=V1Preview,DigitalWorker=V1Preview,GitHubCopilot=V1Preview,FineTuningSessions=V1Preview,MicrosoftCopilot=V1Preview"),
         }, Array.Empty<PipelinePolicy>());
         _apiVersion = options.Version;
         ClientDiagnostics = new ClientDiagnostics(options, true);

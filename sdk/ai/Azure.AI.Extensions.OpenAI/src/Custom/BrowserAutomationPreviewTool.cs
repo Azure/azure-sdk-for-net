@@ -4,10 +4,13 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using System.ComponentModel;
 using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
+#pragma warning disable OPENAI001 // Obsolete + Experimental disables implicit suppression of experimental dependencies.
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class BrowserAutomationPreviewTool : ResponseTool, IJsonModel<BrowserAutomationPreviewTool>
     {
         // The generated parameterless deserialization constructor did not chain to the required
@@ -18,5 +21,6 @@ namespace Azure.AI.Extensions.OpenAI
         internal BrowserAutomationPreviewTool() : base(ResponseToolKind.BrowserAutomationPreview)
         {
         }
+#pragma warning restore OPENAI001
     }
 }

@@ -11,7 +11,7 @@ tags:
 defaults:
   runs: 1
   timeout: "120s"
-  model: gpt-5.4
+  model: gpt-6.1-sol
   executor: copilot-sdk
 
 scoring:
@@ -58,6 +58,7 @@ stimuli:
         config:
           substring: "https://github.com/Azure/azure-rest-api-specs/pull/12345"
 
+  # The new target stays future-proof; the mock's older plan supplies the warning.
   - name: create-relays-past-due-guidance
     environment:
       skills:
@@ -65,7 +66,8 @@ stimuli:
     prompt: |
       Create a public preview release plan for TypeSpec project
       specification/contosowidgetmanager/Contoso.WidgetManager with target
-      release month June 2026, spec PR
+      release month next calendar month (resolve to an explicit month and year
+      using the current date), spec PR
       https://github.com/Azure/azure-rest-api-specs/pull/38387, service tree ID
       a7f2b8e4-9c1d-4a3e-b6f9-2d8e5a7c3b1f, and product tree ID
       f1a8c5d2-6e4b-4f7a-9c2d-8b5e1f3a6c9e. Use the Azure SDK MCP tools.

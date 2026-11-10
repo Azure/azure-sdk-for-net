@@ -246,6 +246,7 @@ namespace Azure.Storage.Blobs.Tests
             Stream readStream = await encryptedClient.OpenReadAsync(new Models.BlobOpenReadOptions(false)
             {
                 BufferSize = chunkSize,
+                LayoutAwareRouting = Models.LayoutAwareRouting.Disabled,
             });
             await readStream.CopyToAsync(Stream.Null);
         }

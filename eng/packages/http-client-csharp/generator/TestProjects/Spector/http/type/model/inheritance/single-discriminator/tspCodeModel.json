@@ -830,7 +830,6 @@
             "$id": "62",
             "name": "getModel",
             "isExactName": false,
-            "resourceName": "SingleDiscriminator",
             "accessibility": "public",
             "parameters": [
               {
@@ -927,7 +926,6 @@
             "$id": "66",
             "name": "putModel",
             "isExactName": false,
-            "resourceName": "SingleDiscriminator",
             "accessibility": "public",
             "parameters": [
               {
@@ -1063,7 +1061,6 @@
             "$id": "72",
             "name": "getRecursiveModel",
             "isExactName": false,
-            "resourceName": "SingleDiscriminator",
             "accessibility": "public",
             "parameters": [
               {
@@ -1160,7 +1157,6 @@
             "$id": "76",
             "name": "putRecursiveModel",
             "isExactName": false,
-            "resourceName": "SingleDiscriminator",
             "accessibility": "public",
             "parameters": [
               {
@@ -1296,7 +1292,6 @@
             "$id": "82",
             "name": "getMissingDiscriminator",
             "isExactName": false,
-            "resourceName": "SingleDiscriminator",
             "accessibility": "public",
             "parameters": [
               {
@@ -1393,7 +1388,6 @@
             "$id": "86",
             "name": "getWrongDiscriminator",
             "isExactName": false,
-            "resourceName": "SingleDiscriminator",
             "accessibility": "public",
             "parameters": [
               {
@@ -1490,7 +1484,6 @@
             "$id": "90",
             "name": "getLegacyModel",
             "isExactName": false,
-            "resourceName": "SingleDiscriminator",
             "accessibility": "public",
             "parameters": [
               {
@@ -1587,7 +1580,6 @@
             "$id": "94",
             "name": "getNoSubtypesModel",
             "isExactName": false,
-            "resourceName": "SingleDiscriminator",
             "accessibility": "public",
             "parameters": [
               {
@@ -1684,7 +1676,6 @@
             "$id": "98",
             "name": "putNoSubtypesModel",
             "isExactName": false,
-            "resourceName": "SingleDiscriminator",
             "accessibility": "public",
             "parameters": [
               {
