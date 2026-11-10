@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -186,6 +188,38 @@ namespace Azure.AI.Agents.Persistent
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Uploads a file for use by other operations. </summary>
+        /// <param name="body"> Multipart body. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        [Experimental("SCME0004")]
+        public virtual Response<PersistentAgentFileInfo> UploadFile(UploadFileContent body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using MultiPartFormContent content = body.ToMultipartFormContent();
+            using RequestContent requestContent = RequestContent.Create(content);
+            Response result = UploadFile(requestContent, content.MediaType, cancellationToken.ToRequestContext());
+            return Response.FromValue((PersistentAgentFileInfo)result, result);
+        }
+
+        /// <summary> Uploads a file for use by other operations. </summary>
+        /// <param name="body"> Multipart body. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        [Experimental("SCME0004")]
+        public virtual async Task<Response<PersistentAgentFileInfo>> UploadFileAsync(UploadFileContent body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            using MultiPartFormContent content = body.ToMultipartFormContent();
+            using RequestContent requestContent = RequestContent.Create(content);
+            Response result = await UploadFileAsync(requestContent, content.MediaType, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((PersistentAgentFileInfo)result, result);
         }
 
         /// <summary>
