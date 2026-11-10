@@ -112,24 +112,4 @@ public class ResponsesSmokeTests : ProjectsOpenAITestBase
         Assert.That(openAIClient.GetProjectResponsesClientForModel("model").Endpoint, Is.EqualTo(mockOpenAIEndpoint));
         Assert.That(openAIClient.GetProjectResponsesClientForAgent(new AgentReference("agent")).Endpoint, Is.EqualTo(mockOpenAIEndpoint));
     }
-
-    [Test]
-    public async Task TestAsyncEnumerable()
-    {
-        static async IAsyncEnumerable<int> RangeAsync(
-          int start, int count,
-          [EnumeratorCancellation] CancellationToken cancellationToken = default)
-            {
-                for (int i = 0; i < count; i++)
-                {
-                    await Task.Delay(i, cancellationToken);
-                    yield return start + i;
-                }
-            }
-        IEnumerable<int> values = RangeAsync(0, 3).ToEnumerable();
-        Assert.That(values.ToList(), Has.Count.EqualTo(3));
-        Assert.That(values, Does.Contain(0));
-        Assert.That(values, Does.Contain(1));
-        Assert.That(values, Does.Contain(2));
-    }
 }

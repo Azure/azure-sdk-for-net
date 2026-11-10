@@ -1100,7 +1100,7 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
 The Web search tool also can use the custom Bing instances to perform more specific search.
 **Note:** Please do not set `userLocation` parameter in the `CreateWebSearchTool` method as it will result in regular Web search.
 
-```C# Snippet:Sample_CreateAgent_WebSearchCustomStreaming_Sync
+```C# Snippet:Sample_CreateAgent_WebSearchCustomStreaming_Async
 AIProjectConnection bingConnection = projectClient.Connections.GetConnection(connectionName: connectionName);
 WebSearchTool webSearchTool = ResponseTool.CreateWebSearchTool();
 webSearchTool.CustomSearchConfiguration = new(bingConnection.Id, customInstanceName);
@@ -1109,7 +1109,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful agent.",
     Tools = { webSearchTool }
 };
-ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```

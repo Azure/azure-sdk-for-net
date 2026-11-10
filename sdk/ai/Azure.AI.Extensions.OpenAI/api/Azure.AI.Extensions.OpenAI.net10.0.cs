@@ -124,10 +124,6 @@ namespace Azure.AI.Extensions.OpenAI
         public static bool operator !=(Azure.AI.Extensions.OpenAI.AgentWorkflowPreviewActionStatus left, Azure.AI.Extensions.OpenAI.AgentWorkflowPreviewActionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public static partial class AsyncEnumerableExtensions
-    {
-        public static System.Collections.Generic.IEnumerable<TSource> ToEnumerable<TSource>(this System.Collections.Generic.IAsyncEnumerable<TSource> asyncEnumerable) { throw null; }
-    }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public static partial class AutomaticCodeInterpreterToolContainerConfigurationExtensions
     {

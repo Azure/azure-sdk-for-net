@@ -17,24 +17,6 @@ AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenPro
 
 2. `BingGroundingAgentTool` requires an ID of Bing connection. In this example we will use the name of a Bing project connection as found in the "Connections" tab in your Microsoft Foundry project to get connection ID from `AIProjectConnection`. We will use created tool in the constructor of a `DeclarativeAgentDefinition` object.
 
-Synchronous sample:
-```C# Snippet:Sample_CreateAgent_BingGroundingStreaming_Sync
-AIProjectConnection bingConnectionName = projectClient.Connections.GetConnection(connectionName: connectionName);
-BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOptions(
-    searchConfigurations: [new BingGroundingSearchOptions(projectConnectionId: bingConnectionName.Id)]
-    )
-);
-DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
-{
-    Instructions = "You are a helpful agent.",
-    Tools = { bingGroundingAgentTool }
-};
-ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
-    agentName: "myAgent",
-    options: new(agentDefinition));
-```
-
-Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_BingGroundingStreaming_Async
 AIProjectConnection bingConnectionName = projectClient.Connections.GetConnection(connectionName: connectionName);
 BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOptions(
@@ -75,42 +57,6 @@ private static string GetFormattedAnnotation(ResponseItem item)
 
 4. Stream the response.
 
-Synchronous sample:
-```C# Snippet:Sample_StreamResponse_BingGroundingStreaming_Sync
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
-
-string annotation = "";
-string text = "";
-foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync("How does wikipedia explain Euler's Identity?").Result.ToEnumerable())
-{
-    if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
-    {
-        Console.WriteLine($"Stream response created with ID: {createUpdate.Response.Id}");
-    }
-    else if (streamResponse is StreamingResponseOutputTextDeltaUpdate textDelta)
-    {
-        Console.WriteLine($"Delta: {textDelta.Delta}");
-    }
-    else if (streamResponse is StreamingResponseOutputTextDoneUpdate textDoneUpdate)
-    {
-        text = textDoneUpdate.Text;
-    }
-    else if (streamResponse is StreamingResponseOutputItemDoneUpdate itemDoneUpdate)
-    {
-        if (annotation.Length == 0)
-        {
-            annotation = GetFormattedAnnotation(itemDoneUpdate.Item);
-        }
-    }
-    else if (streamResponse is StreamingResponseErrorUpdate errorUpdate)
-    {
-        throw new InvalidOperationException($"The stream has failed: {errorUpdate.Message}");
-    }
-}
-Console.WriteLine($"{text}{annotation}");
-```
-
-Asynchronous sample:
 ```C# Snippet:Sample_StreamResponse_BingGroundingStreaming_Async
 ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 
@@ -148,12 +94,6 @@ Console.WriteLine($"{text}{annotation}");
 
 5. Finally, delete all the resources we have created in this sample.
 
-Synchronous sample:
-```C# Snippet:Sample_Cleanup_BingGroundingStreaming_Sync
-projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-```
-
-Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_BingGroundingStreaming_Async
 await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

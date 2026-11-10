@@ -36,27 +36,6 @@ AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenPro
 
 2. Create an Agent with  `BrowserAutomationPreviewTool`. Use the serverless connection name to get the connection from the project and use the connection ID to create the tool.
 
-Synchronous sample:
-```C# Snippet:Sample_CreateAgent_BrowserAutomotionPreview_Sync
-AIProjectConnection playwrightConnection = projectClient.Connections.GetConnection(playwrightConnectionName);
-BrowserAutomationPreviewTool playwrightTool = new(
-    new BrowserAutomationToolOptions(
-        new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
-    ));
-
-DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
-{
-    Instructions = "You are an Agent helping with browser automation tasks.\n" +
-    "You can answer questions, provide information, and assist with various tasks\n" +
-    "related to web browsing using the Browser Automation tool available to you.",
-    Tools = { playwrightTool }
-};
-ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
-    agentName: "myAgent",
-    options: new(agentDefinition));
-```
-
-Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_BrowserAutomotionPreview_Async
 AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
 BrowserAutomationPreviewTool playwrightTool = new(
@@ -117,30 +96,6 @@ private static void ParseResponse(StreamingResponseUpdate streamResponse)
 
 4. Create the response stream. We also make sure that the agent using tool by setting `ToolChoice = ResponseToolChoice.CreateRequiredChoice()` on the `CreateResponseOptions`.
 
-Synchronous sample:
-```C# Snippet:Sample_CreateResponse_BrowserAutomotionPreview_Sync
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
-CreateResponseOptions responseOptions = new()
-{
-    ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
-    StreamingEnabled = true,
-    InputItems =
-    {
-        ResponseItem.CreateUserMessageItem("Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
-            "To do that, go to the website finance.yahoo.com.\n" +
-            "At the top of the page, you will find a search bar.\n" +
-            "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
-            "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
-            "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
-    }
-};
-foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(responseOptions).Result.ToEnumerable())
-{
-    ParseResponse(update);
-}
-```
-
-Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_BrowserAutomotionPreview_Async
 ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 CreateResponseOptions responseOptions = new()
@@ -165,12 +120,6 @@ await foreach (StreamingResponseUpdate update in await responseClient.CreateResp
 
 9. After the sample is completed, delete the Agent we have created.
 
-Synchronous sample:
-```C# Snippet:Sample_Cleanup_BrowserAutomotionPreview_Sync
-projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-```
-
-Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_BrowserAutomotionPreview_Async
 await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

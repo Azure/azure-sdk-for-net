@@ -98,7 +98,7 @@ public class Sample_ToolBoxSkill : ProjectsOpenAITestBase
         ToolboxVersion toolBox = await toolboxClient.CreateVersionAsync(
             name: "mySkillToolbox",
             tools: [new ToolboxSearchPreviewToolboxTool()],
-            //skills: [reference],
+            skills: [reference],
             description: "Toolbox exposing a shipping-cost skill."
         );
         Console.WriteLine($"Created toolbox {toolBox.Name}, v. {toolBox.Version}.");
@@ -218,7 +218,7 @@ public class Sample_ToolBoxSkill : ProjectsOpenAITestBase
         ToolboxVersion toolBox = toolboxClient.CreateVersion(
             name: "mySkillToolbox",
             tools: [new ToolboxSearchPreviewToolboxTool()],
-            //skills: [reference],
+            skills: [reference],
             description: "Toolbox exposing a shipping-cost skill."
         );
         Console.WriteLine($"Created toolbox {toolBox.Name}, v. {toolBox.Version}.");

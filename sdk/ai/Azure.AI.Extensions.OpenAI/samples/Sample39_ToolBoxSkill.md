@@ -137,7 +137,7 @@ ToolboxSkillReference reference = new(skill.Name)
 ToolboxVersion toolBox = toolboxClient.CreateVersion(
     name: "mySkillToolbox",
     tools: [new ToolboxSearchPreviewToolboxTool()],
-    //skills: [reference],
+    skills: [reference],
     description: "Toolbox exposing a shipping-cost skill."
 );
 Console.WriteLine($"Created toolbox {toolBox.Name}, v. {toolBox.Version}.");
@@ -163,7 +163,7 @@ ToolboxSkillReference reference = new(skill.Name)
 ToolboxVersion toolBox = await toolboxClient.CreateVersionAsync(
     name: "mySkillToolbox",
     tools: [new ToolboxSearchPreviewToolboxTool()],
-    //skills: [reference],
+    skills: [reference],
     description: "Toolbox exposing a shipping-cost skill."
 );
 Console.WriteLine($"Created toolbox {toolBox.Name}, v. {toolBox.Version}.");

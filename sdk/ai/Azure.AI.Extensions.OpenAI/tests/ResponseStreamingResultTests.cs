@@ -32,22 +32,6 @@ namespace Azure.AI.Extensions.OpenAI.Tests
         """;
 
         [Test]
-        public void SyncTypedStreamingSendsOneRequest()
-        {
-            using var handler = new StreamingHandler();
-            using var http = new HttpClient(handler);
-            var client = CreateClient(http);
-            int updates = 0;
-            foreach (StreamingResponseUpdate update in client.CreateResponseStreamingAsync(model: "mock", userInputText: "hello").Result.ToEnumerable())
-            {
-                Assert.That(update, Is.Not.Null);
-                updates++;
-            }
-
-            AssertTypedResult(updates, handler.RequestCount);
-        }
-
-        [Test]
         public async Task AsyncTypedStreamingSendsOneRequest()
         {
             using var handler = new StreamingHandler();

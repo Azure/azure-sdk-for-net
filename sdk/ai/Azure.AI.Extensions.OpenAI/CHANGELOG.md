@@ -17,6 +17,9 @@
 
 ### Other Changes
 
+### Sample Updates
+- Syncronous streaming samples were removed, because streaming in synchronous scenarios is not supported anymore. 
+
 ## 3.0.0-beta.6 (2026-10-30)
 
 ### Features Added
