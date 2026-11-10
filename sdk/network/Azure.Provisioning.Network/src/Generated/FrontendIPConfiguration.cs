@@ -26,7 +26,7 @@ namespace Azure.Provisioning.Network
         /// <summary> Creates a new FrontendIPConfiguration. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public FrontendIPConfiguration(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/loadBalancers/frontendIPConfigurations", resourceVersion ?? "2026-03-01")
+        internal FrontendIPConfiguration(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/loadBalancers/frontendIPConfigurations", resourceVersion ?? "2026-03-01")
         {
         }
 

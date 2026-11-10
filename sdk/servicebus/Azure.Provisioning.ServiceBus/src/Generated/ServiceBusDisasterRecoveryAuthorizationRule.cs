@@ -26,7 +26,7 @@ namespace Azure.Provisioning.ServiceBus
         /// <summary> Creates a new ServiceBusDisasterRecoveryAuthorizationRule. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ServiceBusDisasterRecoveryAuthorizationRule(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs/authorizationRules", resourceVersion ?? "2026-01-01")
+        internal ServiceBusDisasterRecoveryAuthorizationRule(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs/authorizationRules", resourceVersion ?? "2026-01-01")
         {
         }
 

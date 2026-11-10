@@ -27,7 +27,7 @@ namespace Azure.Provisioning.ApiManagement
         /// <summary> Creates a new ApiManagementIssue. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ApiManagementIssue(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ApiManagement/service/issues", resourceVersion ?? "2025-09-01-preview")
+        internal ApiManagementIssue(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ApiManagement/service/issues", resourceVersion ?? "2025-09-01-preview")
         {
         }
 

@@ -34,7 +34,7 @@ namespace Azure.Provisioning.AppContainers
         /// <summary> Creates a new ContainerAppManagedEnvironmentDetectorResourceProperty. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ContainerAppManagedEnvironmentDetectorResourceProperty(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.App/managedEnvironments/detectorProperties", resourceVersion ?? "2026-07-01")
+        internal ContainerAppManagedEnvironmentDetectorResourceProperty(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.App/managedEnvironments/detectorProperties", resourceVersion ?? "2026-07-01")
         {
         }
 

@@ -25,7 +25,7 @@ namespace Azure.Provisioning.AppService
         /// <summary> Creates a new AppServicePlanVirtualNetworkConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public AppServicePlanVirtualNetworkConnection(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Web/serverfarms/virtualNetworkConnections", resourceVersion ?? "2025-03-01")
+        internal AppServicePlanVirtualNetworkConnection(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Web/serverfarms/virtualNetworkConnections", resourceVersion ?? "2025-03-01")
         {
         }
 

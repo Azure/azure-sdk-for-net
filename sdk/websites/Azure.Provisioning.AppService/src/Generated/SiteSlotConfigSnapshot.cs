@@ -26,7 +26,7 @@ namespace Azure.Provisioning.AppService
         /// <summary> Creates a new SiteSlotConfigSnapshot. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public SiteSlotConfigSnapshot(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Web/sites/slots/config/snapshots", resourceVersion ?? "2025-03-01")
+        internal SiteSlotConfigSnapshot(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Web/sites/slots/config/snapshots", resourceVersion ?? "2025-03-01")
         {
         }
 

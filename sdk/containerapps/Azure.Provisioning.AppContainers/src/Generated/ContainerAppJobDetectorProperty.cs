@@ -28,7 +28,7 @@ namespace Azure.Provisioning.AppContainers
         /// <summary> Creates a new ContainerAppJobDetectorProperty. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ContainerAppJobDetectorProperty(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.App/jobs/detectorProperties", resourceVersion ?? "2026-07-01")
+        internal ContainerAppJobDetectorProperty(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.App/jobs/detectorProperties", resourceVersion ?? "2026-07-01")
         {
         }
 

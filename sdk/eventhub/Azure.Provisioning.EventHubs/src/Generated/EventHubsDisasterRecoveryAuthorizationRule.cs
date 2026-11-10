@@ -26,7 +26,7 @@ namespace Azure.Provisioning.EventHubs
         /// <summary> Creates a new EventHubsDisasterRecoveryAuthorizationRule. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public EventHubsDisasterRecoveryAuthorizationRule(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.EventHub/namespaces/disasterRecoveryConfigs/authorizationRules", resourceVersion ?? "2026-01-01")
+        internal EventHubsDisasterRecoveryAuthorizationRule(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.EventHub/namespaces/disasterRecoveryConfigs/authorizationRules", resourceVersion ?? "2026-01-01")
         {
         }
 

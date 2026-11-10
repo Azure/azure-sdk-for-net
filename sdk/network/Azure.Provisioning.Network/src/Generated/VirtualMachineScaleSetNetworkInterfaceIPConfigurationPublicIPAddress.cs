@@ -31,7 +31,7 @@ namespace Azure.Provisioning.Network
         /// <summary> Creates a new VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddress. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddress(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/virtualMachineScaleSets/virtualMachines/networkInterfaces/ipconfigurations/publicipaddresses", resourceVersion ?? "2018-10-01")
+        internal VirtualMachineScaleSetNetworkInterfaceIPConfigurationPublicIPAddress(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Compute/virtualMachineScaleSets/virtualMachines/networkInterfaces/ipconfigurations/publicipaddresses", resourceVersion ?? "2018-10-01")
         {
         }
 

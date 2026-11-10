@@ -29,13 +29,14 @@ namespace Azure.Generator.Provisioning.Tests
             ProvisioningMockHelpers.LoadMockPlugin();
         }
 
-        [Test]
-        public void ProjectionDeserializesEmitterMetadata()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void ProjectionDeserializesEmitterMetadata(bool isDeployableResource)
         {
             var model = CreateModel("TestResourceData");
             var method = CreateMethod(ResourceOperationKind.Create, ResourceScope.Extension);
             using var document = JsonDocument.Parse(
-                """
+                $$"""
                 {
                   "resourceModelId": "Sample.Models.TestResourceData",
                   "resourceName": "TestResource",
@@ -69,6 +70,7 @@ namespace Azure.Generator.Provisioning.Tests
                   "writableScopes": [
                     "Extension"
                   ],
+                  "isDeployableResource": {{JsonSerializer.Serialize(isDeployableResource)}},
                   "isExtensionResource": true
                 }
                 """);
@@ -97,7 +99,15 @@ namespace Azure.Generator.Provisioning.Tests
             }));
             Assert.That(projection.ReadableScopes, Is.EqualTo(new[] { ResourceScope.ResourceGroup }));
             Assert.That(projection.WritableScopes, Is.EqualTo(new[] { ResourceScope.Extension }));
+            // The serialized flag, not the scopes, is authoritative for the consumer.
+            Assert.That(projection.IsDeployableResource, Is.EqualTo(isDeployableResource));
             Assert.That(projection.IsExtensionResource, Is.True);
+
+            RegisterResourceProjections([projection]);
+            var provider = new ProvisioningResourceProvider(projection);
+            var constructor = provider.Constructors.Single();
+            Assert.That(constructor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public), Is.EqualTo(isDeployableResource));
+            Assert.That(constructor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal), Is.EqualTo(!isDeployableResource));
         }
 
         [Test]
@@ -576,7 +586,8 @@ namespace Azure.Generator.Provisioning.Tests
             var childValueInfo = ((IProvisioningPropertyInfo)childProvider).GetProvisioningPropertyInfo(childValueProperty);
 
             Assert.That(ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(childModel), Is.True);
-            Assert.That(childProvider.Constructors.Single().Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public), Is.True);
+            Assert.That(parentProvider.Constructors.Single().Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public), Is.True);
+            Assert.That(childProvider.Constructors.Single().Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal), Is.True);
             Assert.That(childNameInfo, Is.Not.Null);
             Assert.That(childNameInfo!.IsSettable, Is.True);
             Assert.That(childValueInfo, Is.Not.Null);
@@ -586,7 +597,7 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
-        public void SharedResourceModelUsesModelSettableUsage()
+        public void SharedResourceModelKeepsSettersWithoutMakingReadOnlyResourceDeployable()
         {
             var valueProperty = CreateProperty("Value", isRequired: true);
             var sharedModel = CreateModel("Profile", [valueProperty]);
@@ -636,7 +647,11 @@ namespace Azure.Generator.Provisioning.Tests
             Assert.That(writablePropertyInfo!.IsSettable, Is.True);
             Assert.That(readOnlySiblingPropertyInfo, Is.Not.Null);
             Assert.That(readOnlySiblingPropertyInfo!.IsSettable, Is.True);
-            Assert.That(readOnlySiblingProvider.Constructors.Single().Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public), Is.True);
+            Assert.That(writableProvider.Constructors.Single().Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public), Is.True);
+            Assert.That(readOnlySiblingProvider.ResourceProjection!.WritableScopes, Is.Empty);
+            Assert.That(readOnlySiblingProvider.Constructors.Single().Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal), Is.True);
+            Assert.That(readOnlySiblingProvider.Methods.Any(method => method.Signature.Name == "FromExisting"
+                && method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)), Is.True);
         }
 
         [Test]
@@ -952,8 +967,9 @@ namespace Azure.Generator.Provisioning.Tests
             Assert.That(constructor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal), Is.False);
         }
 
-        [Test]
-        public void DerivedReadOnlyResourcePropertiesAreNotSettable()
+        [TestCase(false)]
+        [TestCase(true)]
+        public void DerivedReadOnlyResourceConstructorDoesNotFollowModelSettability(bool hasWritableModelUsage)
         {
             var discriminatorProperty = CreateProperty("Kind", isRequired: true, isDiscriminator: true);
             var baseModel = CreateModel("ReadOnlyWidget", [discriminatorProperty]);
@@ -972,17 +988,31 @@ namespace Azure.Generator.Provisioning.Tests
                 ResourceScope.ResourceGroup,
                 ["2024-01-01"],
                 methods: [CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup)]);
-            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [baseModel, derivedModel]);
-            var baseProvider = CreateResourceProvider(readOnlyResource);
-            RegisterResourceProviders(baseProvider);
+            var parentModel = CreateModel("Parent", [CreateProperty("Widget", type: derivedModel)]);
+            var writableParentResource = CreateMetadata(
+                parentModel,
+                "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/parents/{parentName}",
+                "Microsoft.Test/parents",
+                ResourceScope.ResourceGroup,
+                ["2024-01-01"],
+                methods:
+                [
+                    CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup),
+                    CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup)
+                ]);
+            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [baseModel, derivedModel, parentModel]);
+            CreateAndRegisterResourceProviders(hasWritableModelUsage
+                ? [readOnlyResource, writableParentResource]
+                : [readOnlyResource]);
             var derivedProvider = new ProvisioningResourceProvider(derivedModel);
 
             var propertyInfo = ((IProvisioningPropertyInfo)derivedProvider).GetProvisioningPropertyInfo(derivedProperty);
 
             Assert.That(derivedProvider.Name, Is.EqualTo("DerivedReadOnlyWidget"));
+            Assert.That(derivedProvider.Constructors.Single().Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal), Is.True);
             Assert.That(propertyInfo, Is.Not.Null);
             Assert.That(propertyInfo!.IsOutput, Is.False);
-            Assert.That(propertyInfo.IsSettable, Is.False);
+            Assert.That(propertyInfo.IsSettable, Is.EqualTo(hasWritableModelUsage));
         }
 
         [Test]
@@ -1017,6 +1047,7 @@ namespace Azure.Generator.Provisioning.Tests
             var propertyInfo = ((IProvisioningPropertyInfo)derivedProvider).GetProvisioningPropertyInfo(derivedProperty);
 
             Assert.That(derivedProvider.Name, Is.EqualTo("DerivedWritableWidget"));
+            Assert.That(derivedProvider.Constructors.Single().Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public), Is.True);
             Assert.That(propertyInfo, Is.Not.Null);
             Assert.That(propertyInfo!.IsOutput, Is.False);
             Assert.That(propertyInfo.IsSettable, Is.True);
@@ -1408,6 +1439,7 @@ namespace Azure.Generator.Provisioning.Tests
                 metadata.RbacRoles,
                 readableScopes,
                 writableScopes,
+                writableScopes.Length > 0,
                 readableScopes.Contains(ResourceScope.Extension) || writableScopes.Contains(ResourceScope.Extension));
         }
 
