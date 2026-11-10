@@ -28,6 +28,7 @@ namespace Azure.Generator.Provisioning.Primitives
             IReadOnlyList<ArmResourceRbacRole> rbacRoles,
             IReadOnlyList<ResourceScope> readableScopes,
             IReadOnlyList<ResourceScope> writableScopes,
+            bool isDeployableResource,
             bool isExtensionResource)
         {
             ResourceModel = resourceModel;
@@ -42,6 +43,7 @@ namespace Azure.Generator.Provisioning.Primitives
             RbacRoles = rbacRoles;
             ReadableScopes = readableScopes;
             WritableScopes = writableScopes;
+            IsDeployableResource = isDeployableResource;
             IsExtensionResource = isExtensionResource;
         }
 
@@ -108,6 +110,11 @@ namespace Azure.Generator.Provisioning.Primitives
         internal IReadOnlyList<ResourceScope> WritableScopes { get; }
 
         /// <summary>
+        /// Gets whether the emitter classified this resource as deployable.
+        /// </summary>
+        internal bool IsDeployableResource { get; }
+
+        /// <summary>
         /// Gets whether any readable or writable scope is an external scope.
         /// Structural children inherit that scope through their parent.
         /// </summary>
@@ -165,6 +172,7 @@ namespace Azure.Generator.Provisioning.Primitives
                 rbacRoles,
                 DeserializeScopes(element.GetProperty("readableScopes")),
                 DeserializeScopes(element.GetProperty("writableScopes")),
+                element.GetProperty("isDeployableResource").GetBoolean(),
                 element.GetProperty("isExtensionResource").GetBoolean());
         }
 

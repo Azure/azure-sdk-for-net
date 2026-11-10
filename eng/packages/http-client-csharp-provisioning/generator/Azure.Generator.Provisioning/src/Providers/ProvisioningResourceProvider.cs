@@ -51,7 +51,7 @@ namespace Azure.Generator.Provisioning.Providers
         private readonly string? _defaultApiVersion;
         private readonly bool _hasSettableUsage;
         private bool IsDeployableResource => _resourceProjection is { } projection
-            ? projection.WritableScopes.Count > 0
+            ? projection.IsDeployableResource
             : BaseModelProvider is ProvisioningResourceProvider { IsDeployableResource: true };
         /// <summary>
         /// All collected properties for the resource, including flattened and inherited ones,

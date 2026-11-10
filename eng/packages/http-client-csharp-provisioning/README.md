@@ -12,6 +12,8 @@ PATCH-only resources are referenced through `FromExisting()`. Model settability
 is propagated through writable property paths starting at deployable resources.
 A shared model can therefore retain property setters without making every
 resource that uses it deployable.
+The emitter writes `isDeployableResource` into each tspCodeModel resource
+projection, and the C# generator consumes that flag directly.
 
 ## Architecture
 

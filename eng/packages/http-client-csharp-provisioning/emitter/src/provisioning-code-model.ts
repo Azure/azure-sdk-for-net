@@ -75,6 +75,7 @@ export function updateProvisioningCodeModel(
           rbacRoles: projection.rbacRoles,
           readableScopes: projection.readableScopes,
           writableScopes: projection.writableScopes,
+          isDeployableResource: projection.isDeployableResource,
           isExtensionResource: projection.isExtensionResource
         })),
         modelSettableUsage: Array.from(
@@ -121,7 +122,7 @@ export function buildResourceProjections(
       );
     }
 
-    // Like Bicep, treat the projection as deployable/settable only when at
+    // Like Bicep, treat the projection as deployable only when at
     // least one grouped resource has a Create (PUT) operation. PATCH-only
     // resources remain reachable for existing-resource scenarios.
     const projection = buildResourceProjectionMetadata(resources);

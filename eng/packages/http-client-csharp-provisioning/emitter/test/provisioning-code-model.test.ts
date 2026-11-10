@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-import { deepStrictEqual, strictEqual, throws } from "assert";
+import { deepStrictEqual, ok, strictEqual, throws } from "assert";
 import { CodeModel } from "@typespec/http-client-csharp";
 import { describe, it } from "vitest";
 import {
@@ -283,6 +283,14 @@ describe("resource projection metadata", () => {
       { modelId: nested.crossLanguageDefinitionId, isSettable: true },
       { modelId: output.crossLanguageDefinitionId, isSettable: false }
     ]);
+    const serializedProjections = metadata?.arguments?.resourceProjections;
+    ok(Array.isArray(serializedProjections));
+    deepStrictEqual(
+      serializedProjections.map(
+        (projection) => projection.isDeployableResource
+      ),
+      [true, false]
+    );
   });
 
   it("compares resource and parent paths structurally", () => {

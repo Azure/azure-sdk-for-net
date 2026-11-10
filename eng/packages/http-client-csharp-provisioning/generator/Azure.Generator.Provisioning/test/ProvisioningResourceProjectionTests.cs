@@ -29,13 +29,14 @@ namespace Azure.Generator.Provisioning.Tests
             ProvisioningMockHelpers.LoadMockPlugin();
         }
 
-        [Test]
-        public void ProjectionDeserializesEmitterMetadata()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void ProjectionDeserializesEmitterMetadata(bool isDeployableResource)
         {
             var model = CreateModel("TestResourceData");
             var method = CreateMethod(ResourceOperationKind.Create, ResourceScope.Extension);
             using var document = JsonDocument.Parse(
-                """
+                $$"""
                 {
                   "resourceModelId": "Sample.Models.TestResourceData",
                   "resourceName": "TestResource",
@@ -69,6 +70,7 @@ namespace Azure.Generator.Provisioning.Tests
                   "writableScopes": [
                     "Extension"
                   ],
+                  "isDeployableResource": {{JsonSerializer.Serialize(isDeployableResource)}},
                   "isExtensionResource": true
                 }
                 """);
@@ -97,7 +99,15 @@ namespace Azure.Generator.Provisioning.Tests
             }));
             Assert.That(projection.ReadableScopes, Is.EqualTo(new[] { ResourceScope.ResourceGroup }));
             Assert.That(projection.WritableScopes, Is.EqualTo(new[] { ResourceScope.Extension }));
+            // The serialized flag, not the scopes, is authoritative for the consumer.
+            Assert.That(projection.IsDeployableResource, Is.EqualTo(isDeployableResource));
             Assert.That(projection.IsExtensionResource, Is.True);
+
+            RegisterResourceProjections([projection]);
+            var provider = new ProvisioningResourceProvider(projection);
+            var constructor = provider.Constructors.Single();
+            Assert.That(constructor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public), Is.EqualTo(isDeployableResource));
+            Assert.That(constructor.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Internal), Is.EqualTo(!isDeployableResource));
         }
 
         [Test]
@@ -1429,6 +1439,7 @@ namespace Azure.Generator.Provisioning.Tests
                 metadata.RbacRoles,
                 readableScopes,
                 writableScopes,
+                writableScopes.Length > 0,
                 readableScopes.Contains(ResourceScope.Extension) || writableScopes.Contains(ResourceScope.Extension));
         }
 
