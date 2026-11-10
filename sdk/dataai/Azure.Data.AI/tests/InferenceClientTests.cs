@@ -311,8 +311,10 @@ namespace Azure.Data.AI.Tests
 
             public ApiVersionHandler(string expectedVersion) => _expectedVersion = expectedVersion;
 
+#if NET5_0_OR_GREATER
             protected override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken) =>
                 SendAsync(request, cancellationToken).GetAwaiter().GetResult();
+#endif
 
             protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
             {
