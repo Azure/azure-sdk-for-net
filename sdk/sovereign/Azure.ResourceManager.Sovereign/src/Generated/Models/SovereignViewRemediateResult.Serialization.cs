@@ -7,8 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.ResourceManager.Sovereign;
@@ -128,6 +126,5 @@ namespace Azure.ResourceManager.Sovereign.Models
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSovereignViewRemediateResult(document.RootElement, options);
         }
-
     }
 }
