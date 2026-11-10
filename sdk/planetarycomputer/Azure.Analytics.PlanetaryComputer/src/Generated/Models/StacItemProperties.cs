@@ -20,15 +20,10 @@ namespace Azure.Analytics.PlanetaryComputer
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StacItemProperties"/>. </summary>
-        /// <param name="datetime"> Datetime the asset represents in RFC 3339 format. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="datetime"/> is null. </exception>
-        public StacItemProperties(string datetime)
+        public StacItemProperties()
         {
-            Argument.AssertNotNull(datetime, nameof(datetime));
-
             Instruments = new ChangeTrackingList<string>();
             Providers = new ChangeTrackingList<StacProvider>();
-            Datetime = datetime;
             _additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
@@ -63,6 +58,16 @@ namespace Azure.Analytics.PlanetaryComputer
             StartedOn = startedOn;
             EndedOn = endedOn;
             _additionalBinaryDataProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="StacItemProperties"/>. </summary>
+        /// <param name="datetime"> Datetime the asset represents in RFC 3339 format. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="datetime"/> is null. </exception>
+        public StacItemProperties(string datetime) : this()
+        {
+            Argument.AssertNotNull(datetime, nameof(datetime));
+
+            Datetime = datetime;
         }
 
         /// <summary> Platform that acquired the data. </summary>
