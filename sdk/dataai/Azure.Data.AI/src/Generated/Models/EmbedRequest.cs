@@ -18,18 +18,18 @@ namespace Azure.Data.AI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EmbedRequest"/>. </summary>
-        /// <param name="contents">
+        /// <param name="inputs">
         /// The items to embed, in order: 1 to 32 items. Currently a request can have at most one `text` or `query` item and
         /// at most 8 images. Images can be up to 20 MiB and 50 megapixels each (JPEG, PNG, GIF or WebP), with at most 20 MiB
         /// of images per request. The request body can be up to 30,000,000 bytes.
         /// </param>
-        internal EmbedRequest(IEnumerable<EmbeddingsInputContent> contents)
+        internal EmbedRequest(IEnumerable<EmbeddingsInputContent> inputs)
         {
-            Contents = contents.ToList();
+            Inputs = inputs.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="EmbedRequest"/>. </summary>
-        /// <param name="contents">
+        /// <param name="inputs">
         /// The items to embed, in order: 1 to 32 items. Currently a request can have at most one `text` or `query` item and
         /// at most 8 images. Images can be up to 20 MiB and 50 megapixels each (JPEG, PNG, GIF or WebP), with at most 20 MiB
         /// of images per request. The request body can be up to 30,000,000 bytes.
@@ -56,9 +56,9 @@ namespace Azure.Data.AI
         /// endpoint has a result store, and every other request gets `inline`.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EmbedRequest(IList<EmbeddingsInputContent> contents, string model, string modelVersion, EmbeddingVectorKind? vectorKind, int? dimensions, int? multiDimensions, int? maxVectorCount, EmbeddingOutputDataKind? outputDataKind, EmbeddingEncodingFormat? encodingFormat, EmbeddingDelivery? delivery, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EmbedRequest(IList<EmbeddingsInputContent> inputs, string model, string modelVersion, EmbeddingVectorKind? vectorKind, int? dimensions, int? multiDimensions, int? maxVectorCount, EmbeddingOutputDataKind? outputDataKind, EmbeddingEncodingFormat? encodingFormat, EmbeddingDelivery? delivery, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Contents = contents;
+            Inputs = inputs;
             Model = model;
             ModelVersion = modelVersion;
             VectorKind = vectorKind;
@@ -76,7 +76,7 @@ namespace Azure.Data.AI
         /// at most 8 images. Images can be up to 20 MiB and 50 megapixels each (JPEG, PNG, GIF or WebP), with at most 20 MiB
         /// of images per request. The request body can be up to 30,000,000 bytes.
         /// </summary>
-        public IList<EmbeddingsInputContent> Contents { get; }
+        public IList<EmbeddingsInputContent> Inputs { get; }
 
         /// <summary> The model to use. Defaults to `microsoft-embedding-1-large` (Microsoft Embedding 1-large). </summary>
         public string Model { get; }

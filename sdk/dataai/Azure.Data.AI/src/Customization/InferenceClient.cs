@@ -66,7 +66,7 @@ namespace Azure.Data.AI
         /// property names <c>kind</c> (optional, defaults to text), <c>id</c>, <c>content</c>, <c>url</c> and <c>sasToken</c> (all optional, string values).
         /// Property names are not renamed, so use these exact names. <see cref="EmbeddingsInputContent"/> instances are used as-is.
         /// </summary>
-        /// <param name="contents"> The items to embed. </param>
+        /// <param name="inputs"> The items to embed. </param>
         /// <param name="model"> The model to use. </param>
         /// <param name="modelVersion"> The model version to use. </param>
         /// <param name="vectorKind"> The kind of vectors to return. </param>
@@ -77,16 +77,16 @@ namespace Azure.Data.AI
         /// <param name="encodingFormat"> The encoding format of the returned vectors. </param>
         /// <param name="delivery"> How results are delivered. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="contents"/> or one of its items is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or one of its items is null. </exception>
         /// <exception cref="ArgumentException"> An item is not a JSON object or supplies a <c>kind</c> that is not a non-empty string. A missing <c>kind</c> is allowed. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
 #if NET5_0_OR_GREATER
         [RequiresUnreferencedCode("Serializes arbitrary objects with reflection-based System.Text.Json; members of the item types might be trimmed.")]
         [RequiresDynamicCode("Serializes arbitrary objects with reflection-based System.Text.Json.")]
 #endif
-        public virtual Response<EmbeddingResult> GetEmbeddings(IEnumerable<object> contents, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
+        public virtual Response<EmbeddingResult> GetEmbeddings(IEnumerable<object> inputs, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
         {
-            IEnumerable<EmbeddingsInputContent> items = ConvertToContentItems(contents, nameof(contents));
+            IEnumerable<EmbeddingsInputContent> items = ConvertToContentItems(inputs, nameof(inputs));
             return GetEmbeddings(items, model, modelVersion, vectorKind, dimensions, multiDimensions, maxVectorCount, outputDataKind, encodingFormat, delivery, cancellationToken);
         }
 
@@ -96,7 +96,7 @@ namespace Azure.Data.AI
         /// property names <c>kind</c> (optional, defaults to text), <c>id</c>, <c>content</c>, <c>url</c> and <c>sasToken</c> (all optional, string values).
         /// Property names are not renamed, so use these exact names. <see cref="EmbeddingsInputContent"/> instances are used as-is.
         /// </summary>
-        /// <param name="contents"> The items to embed. </param>
+        /// <param name="inputs"> The items to embed. </param>
         /// <param name="model"> The model to use. </param>
         /// <param name="modelVersion"> The model version to use. </param>
         /// <param name="vectorKind"> The kind of vectors to return. </param>
@@ -107,16 +107,16 @@ namespace Azure.Data.AI
         /// <param name="encodingFormat"> The encoding format of the returned vectors. </param>
         /// <param name="delivery"> How results are delivered. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="contents"/> or one of its items is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or one of its items is null. </exception>
         /// <exception cref="ArgumentException"> An item is not a JSON object or supplies a <c>kind</c> that is not a non-empty string. A missing <c>kind</c> is allowed. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
 #if NET5_0_OR_GREATER
         [RequiresUnreferencedCode("Serializes arbitrary objects with reflection-based System.Text.Json; members of the item types might be trimmed.")]
         [RequiresDynamicCode("Serializes arbitrary objects with reflection-based System.Text.Json.")]
 #endif
-        public virtual async Task<Response<EmbeddingResult>> GetEmbeddingsAsync(IEnumerable<object> contents, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EmbeddingResult>> GetEmbeddingsAsync(IEnumerable<object> inputs, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
         {
-            IEnumerable<EmbeddingsInputContent> items = ConvertToContentItems(contents, nameof(contents));
+            IEnumerable<EmbeddingsInputContent> items = ConvertToContentItems(inputs, nameof(inputs));
             return await GetEmbeddingsAsync(items, model, modelVersion, vectorKind, dimensions, multiDimensions, maxVectorCount, outputDataKind, encodingFormat, delivery, cancellationToken).ConfigureAwait(false);
         }
 
@@ -124,13 +124,13 @@ namespace Azure.Data.AI
         [RequiresUnreferencedCode("Serializes arbitrary objects with reflection-based System.Text.Json; members of the item types might be trimmed.")]
         [RequiresDynamicCode("Serializes arbitrary objects with reflection-based System.Text.Json.")]
 #endif
-        private static List<EmbeddingsInputContent> ConvertToContentItems(IEnumerable<object> contents, string paramName)
+        private static List<EmbeddingsInputContent> ConvertToContentItems(IEnumerable<object> inputs, string paramName)
         {
-            Argument.AssertNotNull(contents, paramName);
+            Argument.AssertNotNull(inputs, paramName);
 
             List<EmbeddingsInputContent> items = new();
             int index = 0;
-            foreach (object item in contents)
+            foreach (object item in inputs)
             {
                 if (item == null)
                 {

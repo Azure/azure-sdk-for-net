@@ -147,7 +147,7 @@ namespace Azure.Data.AI
         /// <param name="model"> The name of the model that produced the vectors. </param>
         /// <param name="modelVersion"> The model version that produced the vectors. Pin it to keep an index stable. </param>
         /// <param name="outputDataKind"> The numeric type of the returned values. </param>
-        /// <param name="data"> One entry per item in `contents`, in request order. Empty when `output` is present. </param>
+        /// <param name="data"> One entry per item in `inputs`, in request order. Empty when `output` is present. </param>
         /// <param name="usage"> Usage for the operation. </param>
         /// <param name="warnings"> Things to know about a successful response, such as truncated items. Omitted when there are none. </param>
         /// <param name="output"> With `delivery: link`: where to read the results. </param>
@@ -331,10 +331,10 @@ namespace Azure.Data.AI
         /// <summary> Something about a successful multimodal embedding response the caller should know. </summary>
         /// <param name="code"> A machine-readable warning code. </param>
         /// <param name="codeNumber"> A stable numeric alias of `code`: `1001` for `EMBEDDING_INPUT_TRUNCATED`, `1002` for `EMBEDDING_SAS_LONG_LIVED`. </param>
-        /// <param name="index"> The zero-based position of the item the warning is about, in `contents` and `data`. </param>
+        /// <param name="index"> The zero-based position of the item the warning is about, in `inputs` and `data`. </param>
         /// <param name="inputTokens"> For `EMBEDDING_INPUT_TRUNCATED`: the item's tokens before truncation. </param>
         /// <param name="tokens"> For `EMBEDDING_INPUT_TRUNCATED`: the tokens embedded. </param>
-        /// <param name="message"> A human-readable description that names the item, for example `contents[1]`. </param>
+        /// <param name="message"> A human-readable description that names the item, for example `inputs[1]`. </param>
         /// <returns> A new <see cref="AI.MultimodalEmbeddingWarning"/> instance for mocking. </returns>
         public static MultimodalEmbeddingWarning MultimodalEmbeddingWarning(EmbeddingWarningCode code = default, int? codeNumber = default, int index = default, long? inputTokens = default, long? tokens = default, string message = default)
         {

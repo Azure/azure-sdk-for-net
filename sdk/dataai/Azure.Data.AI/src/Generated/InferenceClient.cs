@@ -254,7 +254,7 @@ namespace Azure.Data.AI
         /// delegation SAS (Microsoft Entra callers only). Results come back in the response or, with `delivery: link`, as a
         /// time-limited read-only link.
         /// </summary>
-        /// <param name="contents">
+        /// <param name="inputs">
         /// The items to embed, in order: 1 to 32 items. Currently a request can have at most one `text` or `query` item and
         /// at most 8 images. Images can be up to 20 MiB and 50 megapixels each (JPEG, PNG, GIF or WebP), with at most 20 MiB
         /// of images per request. The request body can be up to 30,000,000 bytes.
@@ -281,14 +281,14 @@ namespace Azure.Data.AI
         /// endpoint has a result store, and every other request gets `inline`.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="contents"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<EmbeddingResult> GetEmbeddings(IEnumerable<EmbeddingsInputContent> contents, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
+        public virtual Response<EmbeddingResult> GetEmbeddings(IEnumerable<EmbeddingsInputContent> inputs, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(contents, nameof(contents));
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
             EmbedRequest spreadModel = new EmbedRequest(
-                contents?.ToList() as IList<EmbeddingsInputContent> ?? new ChangeTrackingList<EmbeddingsInputContent>(),
+                inputs?.ToList() as IList<EmbeddingsInputContent> ?? new ChangeTrackingList<EmbeddingsInputContent>(),
                 model,
                 modelVersion,
                 vectorKind,
@@ -309,7 +309,7 @@ namespace Azure.Data.AI
         /// delegation SAS (Microsoft Entra callers only). Results come back in the response or, with `delivery: link`, as a
         /// time-limited read-only link.
         /// </summary>
-        /// <param name="contents">
+        /// <param name="inputs">
         /// The items to embed, in order: 1 to 32 items. Currently a request can have at most one `text` or `query` item and
         /// at most 8 images. Images can be up to 20 MiB and 50 megapixels each (JPEG, PNG, GIF or WebP), with at most 20 MiB
         /// of images per request. The request body can be up to 30,000,000 bytes.
@@ -336,14 +336,14 @@ namespace Azure.Data.AI
         /// endpoint has a result store, and every other request gets `inline`.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="contents"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<EmbeddingResult>> GetEmbeddingsAsync(IEnumerable<EmbeddingsInputContent> contents, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EmbeddingResult>> GetEmbeddingsAsync(IEnumerable<EmbeddingsInputContent> inputs, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(contents, nameof(contents));
+            Argument.AssertNotNull(inputs, nameof(inputs));
 
             EmbedRequest spreadModel = new EmbedRequest(
-                contents?.ToList() as IList<EmbeddingsInputContent> ?? new ChangeTrackingList<EmbeddingsInputContent>(),
+                inputs?.ToList() as IList<EmbeddingsInputContent> ?? new ChangeTrackingList<EmbeddingsInputContent>(),
                 model,
                 modelVersion,
                 vectorKind,

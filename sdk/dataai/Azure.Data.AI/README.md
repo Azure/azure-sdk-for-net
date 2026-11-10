@@ -67,7 +67,7 @@ user-delegation SAS for the image blob.
 
 ```C#
 Response<EmbeddingResult> response = await client.GetEmbeddingsAsync(
-    contents: new object[]
+    inputs: new object[]
     {
         new
         {

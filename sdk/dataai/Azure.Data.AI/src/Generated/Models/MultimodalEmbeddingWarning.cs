@@ -18,8 +18,8 @@ namespace Azure.Data.AI
 
         /// <summary> Initializes a new instance of <see cref="MultimodalEmbeddingWarning"/>. </summary>
         /// <param name="code"> A machine-readable warning code. </param>
-        /// <param name="index"> The zero-based position of the item the warning is about, in `contents` and `data`. </param>
-        /// <param name="message"> A human-readable description that names the item, for example `contents[1]`. </param>
+        /// <param name="index"> The zero-based position of the item the warning is about, in `inputs` and `data`. </param>
+        /// <param name="message"> A human-readable description that names the item, for example `inputs[1]`. </param>
         internal MultimodalEmbeddingWarning(EmbeddingWarningCode code, int index, string message)
         {
             Code = code;
@@ -30,10 +30,10 @@ namespace Azure.Data.AI
         /// <summary> Initializes a new instance of <see cref="MultimodalEmbeddingWarning"/>. </summary>
         /// <param name="code"> A machine-readable warning code. </param>
         /// <param name="codeNumber"> A stable numeric alias of `code`: `1001` for `EMBEDDING_INPUT_TRUNCATED`, `1002` for `EMBEDDING_SAS_LONG_LIVED`. </param>
-        /// <param name="index"> The zero-based position of the item the warning is about, in `contents` and `data`. </param>
+        /// <param name="index"> The zero-based position of the item the warning is about, in `inputs` and `data`. </param>
         /// <param name="inputTokens"> For `EMBEDDING_INPUT_TRUNCATED`: the item's tokens before truncation. </param>
         /// <param name="tokens"> For `EMBEDDING_INPUT_TRUNCATED`: the tokens embedded. </param>
-        /// <param name="message"> A human-readable description that names the item, for example `contents[1]`. </param>
+        /// <param name="message"> A human-readable description that names the item, for example `inputs[1]`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal MultimodalEmbeddingWarning(EmbeddingWarningCode code, int? codeNumber, int index, long? inputTokens, long? tokens, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -52,7 +52,7 @@ namespace Azure.Data.AI
         /// <summary> A stable numeric alias of `code`: `1001` for `EMBEDDING_INPUT_TRUNCATED`, `1002` for `EMBEDDING_SAS_LONG_LIVED`. </summary>
         public int? CodeNumber { get; }
 
-        /// <summary> The zero-based position of the item the warning is about, in `contents` and `data`. </summary>
+        /// <summary> The zero-based position of the item the warning is about, in `inputs` and `data`. </summary>
         public int Index { get; }
 
         /// <summary> For `EMBEDDING_INPUT_TRUNCATED`: the item's tokens before truncation. </summary>
@@ -61,7 +61,7 @@ namespace Azure.Data.AI
         /// <summary> For `EMBEDDING_INPUT_TRUNCATED`: the tokens embedded. </summary>
         public long? Tokens { get; }
 
-        /// <summary> A human-readable description that names the item, for example `contents[1]`. </summary>
+        /// <summary> A human-readable description that names the item, for example `inputs[1]`. </summary>
         public string Message { get; }
     }
 }

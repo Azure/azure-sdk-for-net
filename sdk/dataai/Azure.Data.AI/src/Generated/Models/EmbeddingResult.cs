@@ -21,7 +21,7 @@ namespace Azure.Data.AI
         /// <param name="model"> The name of the model that produced the vectors. </param>
         /// <param name="modelVersion"> The model version that produced the vectors. Pin it to keep an index stable. </param>
         /// <param name="outputDataKind"> The numeric type of the returned values. </param>
-        /// <param name="data"> One entry per item in `contents`, in request order. Empty when `output` is present. </param>
+        /// <param name="data"> One entry per item in `inputs`, in request order. Empty when `output` is present. </param>
         /// <param name="usage"> Usage for the operation. </param>
         internal EmbeddingResult(string model, string modelVersion, EmbeddingOutputDataKind outputDataKind, IEnumerable<EmbeddingItem> data, EmbeddingUsage usage)
         {
@@ -37,7 +37,7 @@ namespace Azure.Data.AI
         /// <param name="model"> The name of the model that produced the vectors. </param>
         /// <param name="modelVersion"> The model version that produced the vectors. Pin it to keep an index stable. </param>
         /// <param name="outputDataKind"> The numeric type of the returned values. </param>
-        /// <param name="data"> One entry per item in `contents`, in request order. Empty when `output` is present. </param>
+        /// <param name="data"> One entry per item in `inputs`, in request order. Empty when `output` is present. </param>
         /// <param name="usage"> Usage for the operation. </param>
         /// <param name="warnings"> Things to know about a successful response, such as truncated items. Omitted when there are none. </param>
         /// <param name="output"> With `delivery: link`: where to read the results. </param>
@@ -63,7 +63,7 @@ namespace Azure.Data.AI
         /// <summary> The numeric type of the returned values. </summary>
         public EmbeddingOutputDataKind OutputDataKind { get; }
 
-        /// <summary> One entry per item in `contents`, in request order. Empty when `output` is present. </summary>
+        /// <summary> One entry per item in `inputs`, in request order. Empty when `output` is present. </summary>
         public IList<EmbeddingItem> Data { get; }
 
         /// <summary> Usage for the operation. </summary>

@@ -89,9 +89,9 @@ namespace Azure.Data.AI
             {
                 throw new FormatException($"The model {nameof(EmbedRequest)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("contents"u8);
+            writer.WritePropertyName("inputs"u8);
             writer.WriteStartArray();
-            foreach (EmbeddingsInputContent item in Contents)
+            foreach (EmbeddingsInputContent item in Inputs)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -183,7 +183,7 @@ namespace Azure.Data.AI
             {
                 return null;
             }
-            IList<EmbeddingsInputContent> contents = default;
+            IList<EmbeddingsInputContent> inputs = default;
             string model = default;
             string modelVersion = default;
             EmbeddingVectorKind? vectorKind = default;
@@ -196,14 +196,14 @@ namespace Azure.Data.AI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("contents"u8))
+                if (prop.NameEquals("inputs"u8))
                 {
                     List<EmbeddingsInputContent> array = new List<EmbeddingsInputContent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(EmbeddingsInputContent.DeserializeEmbeddingsInputContent(item, options));
                     }
-                    contents = array;
+                    inputs = array;
                     continue;
                 }
                 if (prop.NameEquals("model"u8))
@@ -285,7 +285,7 @@ namespace Azure.Data.AI
                 }
             }
             return new EmbedRequest(
-                contents ?? new ChangeTrackingList<EmbeddingsInputContent>(),
+                inputs ?? new ChangeTrackingList<EmbeddingsInputContent>(),
                 model,
                 modelVersion,
                 vectorKind,
