@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Storage;
@@ -40,6 +41,15 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="ImmutabilityPolicyResource"/> object. </returns>
         public virtual ImmutabilityPolicyResource GetImmutabilityPolicyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != ImmutabilityPolicyResource.ResourceType || segments.Length != 15 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Storage", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "storageAccounts", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "blobServices", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[11], "containers", StringComparison.OrdinalIgnoreCase) || segments[12] == "" || !string.Equals(segments[13], "immutabilityPolicies", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[14], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default/containers/{containerName}/immutabilityPolicies/default"), nameof(id));
+            }
             ImmutabilityPolicyResource.ValidateResourceId(id);
             return new ImmutabilityPolicyResource(Client, id);
         }
@@ -49,6 +59,15 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="BlobServiceResource"/> object. </returns>
         public virtual BlobServiceResource GetBlobServiceResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != BlobServiceResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Storage", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "storageAccounts", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "blobServices", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/blobServices/default"), nameof(id));
+            }
             BlobServiceResource.ValidateResourceId(id);
             return new BlobServiceResource(Client, id);
         }
@@ -85,6 +104,15 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="FileServiceResource"/> object. </returns>
         public virtual FileServiceResource GetFileServiceResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != FileServiceResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Storage", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "storageAccounts", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "fileServices", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default"), nameof(id));
+            }
             FileServiceResource.ValidateResourceId(id);
             return new FileServiceResource(Client, id);
         }
@@ -94,6 +122,15 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="FileServiceUsageResource"/> object. </returns>
         public virtual FileServiceUsageResource GetFileServiceUsageResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != FileServiceUsageResource.ResourceType || segments.Length != 13 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Storage", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "storageAccounts", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "fileServices", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[11], "usages", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[12], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/fileServices/default/usages/default"), nameof(id));
+            }
             FileServiceUsageResource.ValidateResourceId(id);
             return new FileServiceUsageResource(Client, id);
         }
@@ -103,6 +140,15 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="QueueServiceResource"/> object. </returns>
         public virtual QueueServiceResource GetQueueServiceResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != QueueServiceResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Storage", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "storageAccounts", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "queueServices", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/queueServices/default"), nameof(id));
+            }
             QueueServiceResource.ValidateResourceId(id);
             return new QueueServiceResource(Client, id);
         }
@@ -121,6 +167,15 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="StorageAccountManagementPolicyResource"/> object. </returns>
         public virtual StorageAccountManagementPolicyResource GetStorageAccountManagementPolicyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != StorageAccountManagementPolicyResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Storage", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "storageAccounts", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "managementPolicies", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/managementPolicies/default"), nameof(id));
+            }
             StorageAccountManagementPolicyResource.ValidateResourceId(id);
             return new StorageAccountManagementPolicyResource(Client, id);
         }
@@ -130,6 +185,15 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="BlobInventoryPolicyResource"/> object. </returns>
         public virtual BlobInventoryPolicyResource GetBlobInventoryPolicyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != BlobInventoryPolicyResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Storage", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "storageAccounts", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "inventoryPolicies", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/inventoryPolicies/default"), nameof(id));
+            }
             BlobInventoryPolicyResource.ValidateResourceId(id);
             return new BlobInventoryPolicyResource(Client, id);
         }
@@ -157,6 +221,15 @@ namespace Azure.ResourceManager.Storage.Mocking
         /// <returns> Returns a <see cref="TableServiceResource"/> object. </returns>
         public virtual TableServiceResource GetTableServiceResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != TableServiceResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Storage", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "storageAccounts", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "tableServices", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/tableServices/default"), nameof(id));
+            }
             TableServiceResource.ValidateResourceId(id);
             return new TableServiceResource(Client, id);
         }
