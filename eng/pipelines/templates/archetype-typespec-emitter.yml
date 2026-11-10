@@ -57,6 +57,11 @@ parameters:
   type: boolean
   default: false
 
+# Git history depth for regeneration jobs. Use 0 when pushing branches based on PR merge refs.
+- name: RegenerationFetchDepth
+  type: number
+  default: 1
+
 # Number of jobs to generate. This is the maximum number of jobs that will be generated. The actual number of jobs will be reduced if it would result in fewer than MinimumPerJob packages per job.
 - name: RegenerationJobCount
   type: number
@@ -400,11 +405,8 @@ extends:
         jobs:
         - job: Initialize
           steps:
-          # Regeneration does not read repository history, so fetch only the
-          # checked-out commit. git-branch-push.ps1's retry path diffs the branch
-          # tip against its parent, which stays inside the depth-1 boundary.
           - checkout: self
-            fetchDepth: 1
+            fetchDepth: ${{ parameters.RegenerationFetchDepth }}
             fetchTags: false
 
           - template: /eng/common/pipelines/templates/steps/login-to-github.yml
@@ -502,7 +504,7 @@ extends:
             emitterNpmrcPath: $(Agent.TempDirectory)/${{ parameters.EmitterPackagePath }}/.npmrc
           steps:
           - checkout: self
-            fetchDepth: 1
+            fetchDepth: ${{ parameters.RegenerationFetchDepth }}
             fetchTags: false
 
           - template: /eng/common/pipelines/templates/steps/login-to-github.yml

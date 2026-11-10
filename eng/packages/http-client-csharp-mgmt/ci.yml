@@ -64,6 +64,8 @@ extends:
     BuildPrereleaseVersion: true
     UploadPlaygroundBundle: true
     UseTypeSpecNext: ${{ parameters.UseTypeSpecNext }}
+    # Full history is required to push regeneration branches based on PR merge refs.
+    RegenerationFetchDepth: 0
     ${{ if eq(variables['System.TeamProject'], 'internal') }}:
       ${{ if eq(variables['Build.Reason'], 'Manual') }}:
         ${{ if eq(variables['Build.SourceBranch'], 'refs/heads/main') }}:
