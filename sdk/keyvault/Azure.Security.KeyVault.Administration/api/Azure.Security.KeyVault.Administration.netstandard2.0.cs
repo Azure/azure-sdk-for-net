@@ -132,7 +132,6 @@ namespace Azure.Security.KeyVault.Administration
         public static Azure.Security.KeyVault.Administration.EkmProxyClientCertificateInfo EkmProxyClientCertificateInfo(System.Collections.Generic.IEnumerable<System.BinaryData> caCertificates = null, string subjectCommonName = null) { throw null; }
         public static Azure.Security.KeyVault.Administration.EkmProxyInfo EkmProxyInfo(string apiVersion = null, string proxyVendor = null, string proxyName = null, string ekmVendor = null, string ekmProduct = null) { throw null; }
         public static Azure.Security.KeyVault.Administration.GetSettingsResult GetSettingsResult(System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Administration.KeyVaultSetting> settings = null) { throw null; }
-        public static Azure.Security.KeyVault.Administration.KeyVaultEkmConnection KeyVaultEkmConnection(string hostName = null, string pathPrefix = null, System.Collections.Generic.IEnumerable<System.BinaryData> serverCaCertificates = null, string serverSubjectCommonName = null) { throw null; }
         public static Azure.Security.KeyVault.Administration.KeyVaultPermission KeyVaultPermission(System.Collections.Generic.IEnumerable<string> actions = null, System.Collections.Generic.IEnumerable<string> notActions = null, System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Administration.KeyVaultDataAction> dataActions = null, System.Collections.Generic.IEnumerable<Azure.Security.KeyVault.Administration.KeyVaultDataAction> notDataActions = null) { throw null; }
         public static Azure.Security.KeyVault.Administration.KeyVaultRoleAssignment KeyVaultRoleAssignment(string id = null, string name = null, string type = null, Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties properties = null) { throw null; }
         public static Azure.Security.KeyVault.Administration.KeyVaultRoleAssignmentProperties KeyVaultRoleAssignmentProperties(Azure.Security.KeyVault.Administration.KeyVaultRoleScope? scope = default(Azure.Security.KeyVault.Administration.KeyVaultRoleScope?), string roleDefinitionId = null, string principalId = null) { throw null; }
@@ -274,6 +273,7 @@ namespace Azure.Security.KeyVault.Administration
     public partial class KeyVaultEkmConnection : System.ClientModel.Primitives.IJsonModel<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.KeyVault.Administration.KeyVaultEkmConnection>
     {
         public KeyVaultEkmConnection(string hostName, System.Collections.Generic.IEnumerable<byte[]> serverCaCertificates) { }
+        public Azure.Security.KeyVault.Administration.Models.EkmConnectivityMode? ConnectivityMode { get { throw null; } set { } }
         public string HostName { get { throw null; } set { } }
         public string PathPrefix { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.BinaryData> ServerCaCertificates { get { throw null; } }
@@ -512,6 +512,26 @@ namespace Azure.Security.KeyVault.Administration
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public bool AsBoolean() { throw null; }
+        public override string ToString() { throw null; }
+    }
+}
+namespace Azure.Security.KeyVault.Administration.Models
+{
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EkmConnectivityMode : System.IEquatable<Azure.Security.KeyVault.Administration.Models.EkmConnectivityMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EkmConnectivityMode(string value) { throw null; }
+        public static Azure.Security.KeyVault.Administration.Models.EkmConnectivityMode PrivateEndpoint { get { throw null; } }
+        public static Azure.Security.KeyVault.Administration.Models.EkmConnectivityMode Public { get { throw null; } }
+        public bool Equals(Azure.Security.KeyVault.Administration.Models.EkmConnectivityMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Security.KeyVault.Administration.Models.EkmConnectivityMode left, Azure.Security.KeyVault.Administration.Models.EkmConnectivityMode right) { throw null; }
+        public static implicit operator Azure.Security.KeyVault.Administration.Models.EkmConnectivityMode (string value) { throw null; }
+        public static implicit operator Azure.Security.KeyVault.Administration.Models.EkmConnectivityMode? (string value) { throw null; }
+        public static bool operator !=(Azure.Security.KeyVault.Administration.Models.EkmConnectivityMode left, Azure.Security.KeyVault.Administration.Models.EkmConnectivityMode right) { throw null; }
         public override string ToString() { throw null; }
     }
 }
