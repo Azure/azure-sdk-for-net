@@ -195,7 +195,7 @@
     <RequiredRunnableTargetFrameworks>$(LtsTargetFramework);net8.0</RequiredRunnableTargetFrameworks>
 
     <!-- The set of all runnable modern target frameworks that have not yet reached end-of-life. -->
-    <AllActiveCurrentTargetFrameworks>$(RequiredRunnableTargetFrameworks);net9.0</AllActiveCurrentTargetFrameworks>
+    <AllActiveCurrentTargetFrameworks>net11.0;$(RequiredRunnableTargetFrameworks);net9.0</AllActiveCurrentTargetFrameworks>
 
     <!--
       The set of frameworks for API Compat checks when the current LTS is being built.  These ensure that
