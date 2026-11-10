@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Commvault.ContentStore/cloudAccounts/", false);
             uri.AppendPath(cloudAccountName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-03-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-11-03", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Commvault.ContentStore/cloudAccounts/", false);
             uri.AppendPath(cloudAccountName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-03-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-11-03", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Commvault.ContentStore/cloudAccounts/", false);
             uri.AppendPath(cloudAccountName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-03-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-11-03", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Commvault.ContentStore/cloudAccounts/", false);
             uri.AppendPath(cloudAccountName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-03-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-11-03", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Commvault.ContentStore/cloudAccounts", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-03-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-11-03", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-03-preview");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-11-03");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Commvault.ContentStore/cloudAccounts", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-03-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-11-03", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-03-preview");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-11-03");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
             return message;
         }
 
-        internal HttpMessage CreateLinkSaaSRequest(Guid subscriptionId, string resourceGroupName, string cloudAccountName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateLinkSaasRequest(Guid subscriptionId, string resourceGroupName, string cloudAccountName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
             uri.AppendPath("/providers/Commvault.ContentStore/cloudAccounts/", false);
             uri.AppendPath(cloudAccountName, true);
             uri.AppendPath("/linkSaaS", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-03-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-11-03", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
             return message;
         }
 
-        internal HttpMessage CreateLatestLinkedSaaSRequest(Guid subscriptionId, string resourceGroupName, string cloudAccountName, RequestContext context)
+        internal HttpMessage CreateGetLatestLinkedSaasRequest(Guid subscriptionId, string resourceGroupName, string cloudAccountName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
             uri.AppendPath("/providers/Commvault.ContentStore/cloudAccounts/", false);
             uri.AppendPath(cloudAccountName, true);
             uri.AppendPath("/latestLinkedSaaS", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-03-preview", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-11-03", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

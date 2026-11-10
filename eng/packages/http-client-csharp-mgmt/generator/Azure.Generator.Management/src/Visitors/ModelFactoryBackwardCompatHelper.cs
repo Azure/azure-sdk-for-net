@@ -237,6 +237,12 @@ namespace Azure.Generator.Management.Visitors
                 {
                     rebuiltArgument = argument.Argument;
                 }
+                else if (constructorParameter.Property?.Body is AutoPropertyBody { InitializationExpression: { } initializationExpression })
+                {
+                    // Required literals are omitted from the factory signature. Preserve the initializer
+                    // used by the upstream factory instead of overwriting it with a default value.
+                    rebuiltArgument = initializationExpression;
+                }
                 else
                 {
                     arguments.Add(GetDefaultArgument(constructorParameter));
@@ -357,6 +363,10 @@ namespace Azure.Generator.Management.Visitors
                     {
                         parameterDescriptions.TryAdd(documentation.Parameter.Name, documentation.Description);
                     }
+                }
+                else if (constructorParameter.Property?.Body is AutoPropertyBody { InitializationExpression: { } initializationExpression })
+                {
+                    arguments.Add(initializationExpression);
                 }
                 else
                 {

@@ -122,7 +122,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _escapedWireVersionReadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _escapedWireVersionReadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<EscapedWireVersionTestData> response = Response.FromValue(EscapedWireVersionTestData.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,7 +170,7 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _escapedWireVersionReadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _escapedWireVersionReadsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<EscapedWireVersionTestData> response = Response.FromValue(EscapedWireVersionTestData.FromResponse(result), result);
                 if (response.Value == null)

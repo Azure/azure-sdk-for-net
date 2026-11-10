@@ -1,12 +1,16 @@
 # Release History
 
-## 12.0.0-beta.1 (Unreleased)
+## 12.0.0-beta.2 (Unreleased)
 
 ### Features Added
-- Initial release of Azure.Storage.Files.Shares.ChangeFeed.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.0.0-beta.1 (2026-11-05)
+
+### Features Added
+- Initial release of Azure.Storage.Files.Shares.ChangeFeed.

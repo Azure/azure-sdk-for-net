@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="isInPlaceRestore"> Check whether inplace or out of place restore. </param>
         /// <param name="vmInfoList"> List of information on VMs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmInfoList"/> is null. </exception>
-        public RestoreProtectionItemContent(bool isInPlaceRestore, IEnumerable<VmInfo> vmInfoList)
+        public RestoreProtectionItemContent(bool isInPlaceRestore, IEnumerable<CommvaultVmRestoreSettings> vmInfoList)
         {
             Argument.AssertNotNull(vmInfoList, nameof(vmInfoList));
 
@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <summary> Initializes a new instance of <see cref="RestoreProtectionItemContent"/>. </summary>
         /// <param name="isInPlaceRestore"> Check whether inplace or out of place restore. </param>
         /// <param name="restoreType"> Type of Restore. </param>
-        /// <param name="toTime"> Time to restore. </param>
+        /// <param name="restorePointTime"> Time to restore. </param>
         /// <param name="vmDestinationInfo"> The vm destination details of the VM. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestoreProtectionItemContent(bool isInPlaceRestore, CommvaultRestoreType? restoreType, string toTime, VmDestinationInfo vmDestinationInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestoreProtectionItemContent(bool isInPlaceRestore, CommvaultRestoreType? restoreType, string restorePointTime, VmDestinationInfo vmDestinationInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsInPlaceRestore = isInPlaceRestore;
             RestoreType = restoreType;
-            ToTime = toTime;
+            RestorePointTime = restorePointTime;
             VmDestinationInfo = vmDestinationInfo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public CommvaultRestoreType? RestoreType { get; set; }
 
         /// <summary> Time to restore. </summary>
-        public string ToTime { get; set; }
+        public string RestorePointTime { get; set; }
 
         /// <summary> The vm destination details of the VM. </summary>
         internal VmDestinationInfo VmDestinationInfo { get; }
 
         /// <summary> List of information on VMs. </summary>
-        public IList<VmInfo> VmInfoList
+        public IList<CommvaultVmRestoreSettings> VmInfoList
         {
             get
             {

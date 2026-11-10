@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Azure Resource Manager client library for managing Azure Network Security resources, including NeuroShield resources, protected resources, findings, mitigations, and summaries.</Description>
+    <AssemblyTitle>Azure Network Security management client library</AssemblyTitle>
+    <Version>1.0.0-beta.2</Version>
+    <PackageTags>Azure.ResourceManager.NetworkSecurity</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared/Core" />
+  </ItemGroup>
+</Project>

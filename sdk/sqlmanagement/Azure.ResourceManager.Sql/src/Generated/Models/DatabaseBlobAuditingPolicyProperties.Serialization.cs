@@ -119,6 +119,21 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("isManagedIdentityInUse"u8);
                 writer.WriteBooleanValue(IsManagedIdentityInUse.Value);
             }
+            if (Optional.IsCollectionDefined(RequiredFields))
+            {
+                writer.WritePropertyName("requiredFields"u8);
+                writer.WriteStartArray();
+                foreach (string item in RequiredFields)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WritePropertyName("state"u8);
             writer.WriteStringValue(State.ToSerialString());
             if (Optional.IsDefined(StorageEndpoint))
@@ -184,6 +199,7 @@ namespace Azure.ResourceManager.Sql.Models
             bool? isAzureMonitorTargetEnabled = default;
             int? queueDelayMs = default;
             bool? isManagedIdentityInUse = default;
+            IList<string> requiredFields = default;
             BlobAuditingPolicyState state = default;
             string storageEndpoint = default;
             string storageAccountAccessKey = default;
@@ -257,6 +273,27 @@ namespace Azure.ResourceManager.Sql.Models
                     isManagedIdentityInUse = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("requiredFields"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    requiredFields = array;
+                    continue;
+                }
                 if (prop.NameEquals("state"u8))
                 {
                     state = prop.Value.GetString().ToBlobAuditingPolicyState();
@@ -293,6 +330,7 @@ namespace Azure.ResourceManager.Sql.Models
                 isAzureMonitorTargetEnabled,
                 queueDelayMs,
                 isManagedIdentityInUse,
+                requiredFields ?? new ChangeTrackingList<string>(),
                 state,
                 storageEndpoint,
                 storageAccountAccessKey,

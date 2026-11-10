@@ -101,21 +101,21 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 writer.WritePropertyName("retentionPeriod"u8);
                 writer.WriteNumberValue(RetentionPeriod.Value);
             }
-            if (Optional.IsDefined(RetentionTime))
+            if (Optional.IsDefined(RetentionInterval))
             {
                 writer.WritePropertyName("retentionTime"u8);
-                writer.WriteStringValue(RetentionTime.Value.ToString());
+                writer.WriteStringValue(RetentionInterval.Value.ToString());
             }
             if (Optional.IsDefined(BackupRuleType))
             {
                 writer.WritePropertyName("backupRuleType"u8);
                 writer.WriteStringValue(BackupRuleType.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(ExtendedRetention))
+            if (Optional.IsCollectionDefined(ExtendedRetentionPolicies))
             {
                 writer.WritePropertyName("extendedRetention"u8);
                 writer.WriteStartArray();
-                foreach (ExtendedRetentionTime item in ExtendedRetention)
+                foreach (CommvaultExtendedRetentionPolicy item in ExtendedRetentionPolicies)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -168,9 +168,9 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             string copyName = default;
             int? copyPrecedence = default;
             int? retentionPeriod = default;
-            CommvaultRetentionTime? retentionTime = default;
-            BackupRuleType? backupRuleType = default;
-            IList<ExtendedRetentionTime> extendedRetention = default;
+            CommvaultRetentionInterval? retentionInterval = default;
+            CommvaultBackupRuleType? backupRuleType = default;
+            IList<CommvaultExtendedRetentionPolicy> extendedRetentionPolicies = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    retentionTime = new CommvaultRetentionTime(prop.Value.GetString());
+                    retentionInterval = new CommvaultRetentionInterval(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("backupRuleType"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    backupRuleType = new BackupRuleType(prop.Value.GetString());
+                    backupRuleType = new CommvaultBackupRuleType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("extendedRetention"u8))
@@ -231,12 +231,12 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    List<ExtendedRetentionTime> array = new List<ExtendedRetentionTime>();
+                    List<CommvaultExtendedRetentionPolicy> array = new List<CommvaultExtendedRetentionPolicy>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ExtendedRetentionTime.DeserializeExtendedRetentionTime(item, options));
+                        array.Add(CommvaultExtendedRetentionPolicy.DeserializeCommvaultExtendedRetentionPolicy(item, options));
                     }
-                    extendedRetention = array;
+                    extendedRetentionPolicies = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -250,9 +250,9 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 copyName,
                 copyPrecedence,
                 retentionPeriod,
-                retentionTime,
+                retentionInterval,
                 backupRuleType,
-                extendedRetention ?? new ChangeTrackingList<ExtendedRetentionTime>(),
+                extendedRetentionPolicies ?? new ChangeTrackingList<CommvaultExtendedRetentionPolicy>(),
                 additionalBinaryDataProperties);
         }
     }

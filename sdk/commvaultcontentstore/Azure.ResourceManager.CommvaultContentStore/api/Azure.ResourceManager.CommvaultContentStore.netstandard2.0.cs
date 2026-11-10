@@ -57,14 +57,14 @@ namespace Azure.ResourceManager.CommvaultContentStore
         public virtual Azure.Response<Azure.ResourceManager.CommvaultContentStore.CommvaultStorageResource> GetCommvaultStorage(string storageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CommvaultContentStore.CommvaultStorageResource>> GetCommvaultStorageAsync(string storageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.CommvaultContentStore.CommvaultStorageCollection GetCommvaultStorages() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaasResult> GetLatestLinkedSaas(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaasResult>> GetLatestLinkedSaasAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CommvaultContentStore.ProtectionGroupResource> GetProtectionGroup(string protectionGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CommvaultContentStore.ProtectionGroupResource>> GetProtectionGroupAsync(string protectionGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.CommvaultContentStore.ProtectionGroupCollection GetProtectionGroups() { throw null; }
         public virtual Azure.ResourceManager.CommvaultContentStore.RoleMappingResource GetRoleMapping() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaaSResult> LatestLinkedSaaS(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaaSResult>> LatestLinkedSaaSAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CommvaultContentStore.CloudAccountResource> LinkSaaS(Azure.WaitUntil waitUntil, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaaSDetails details, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CommvaultContentStore.CloudAccountResource>> LinkSaaSAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaaSDetails details, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CommvaultContentStore.CloudAccountResource> LinkSaas(Azure.WaitUntil waitUntil, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasDetails details, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CommvaultContentStore.CloudAccountResource>> LinkSaasAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasDetails details, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CommvaultContentStore.CloudAccountResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CommvaultContentStore.CloudAccountResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CommvaultContentStore.CloudAccountResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.CommvaultContentStore
     }
     public static partial class CommvaultContentStoreExtensions
     {
-        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CommvaultContentStore.Models.SaaSResourceDetailsData> ActivateResource(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.CommvaultContentStore.Models.ActivateSaaSParameterContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CommvaultContentStore.Models.SaaSResourceDetailsData>> ActivateResourceAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.CommvaultContentStore.Models.ActivateSaaSParameterContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.CommvaultContentStore.Models.CountProtectedItemsResult> CountByProtectionGroups(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.CommvaultContentStore.Models.CountProtectedItemsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CommvaultContentStore.Models.CountProtectedItemsResult>> CountByProtectionGroupsAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.CommvaultContentStore.Models.CountProtectedItemsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CommvaultContentStore.Models.SaasResourceDetailsData> ActivateSaasResource(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasActivationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CommvaultContentStore.Models.SaasResourceDetailsData>> ActivateSaasResourceAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasActivationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.CommvaultContentStore.Models.CountProtectedItemsResult> CountProtectedItems(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.CommvaultContentStore.Models.CountProtectedItemsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CommvaultContentStore.Models.CountProtectedItemsResult>> CountProtectedItemsAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.CommvaultContentStore.Models.CountProtectedItemsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.CommvaultContentStore.CloudAccountResource> GetCloudAccount(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string cloudAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CommvaultContentStore.CloudAccountResource>> GetCloudAccountAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string cloudAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.CloudAccountResource GetCloudAccountResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -185,8 +185,14 @@ namespace Azure.ResourceManager.CommvaultContentStore
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cloudAccountName, string storageName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CommvaultContentStore.CommvaultStorageResource> DisableComplianceLock(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CommvaultContentStore.CommvaultStorageResource>> DisableComplianceLockAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CommvaultContentStore.CommvaultStorageResource> EnableComplianceLock(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CommvaultContentStore.CommvaultStorageResource>> EnableComplianceLockAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CommvaultContentStore.CommvaultStorageResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CommvaultContentStore.CommvaultStorageResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CommvaultContentStore.CommvaultStorageResource> Refresh(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CommvaultContentStore.CommvaultStorageResource>> RefreshAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.CommvaultContentStore.CommvaultStorageData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.CommvaultStorageData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.CommvaultStorageData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CommvaultContentStore.CommvaultStorageData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.CommvaultStorageData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -233,8 +239,8 @@ namespace Azure.ResourceManager.CommvaultContentStore
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cloudAccountName, string protectionGroupName, string protectedItemName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CommvaultContentStore.ProtectedItemResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CommvaultContentStore.ProtectedItemResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.CommvaultContentStore.Models.RestorePoints> GetRestorePoints(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CommvaultContentStore.Models.RestorePoints>> GetRestorePointsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CommvaultContentStore.Models.ProtectedItemRestorePoints> GetRestorePoints(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CommvaultContentStore.Models.ProtectedItemRestorePoints>> GetRestorePointsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.CommvaultContentStore.Models.RestoreProtectionItemResult> Restore(Azure.ResourceManager.CommvaultContentStore.Models.RestoreProtectionItemContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CommvaultContentStore.Models.RestoreProtectionItemResult>> RestoreAsync(Azure.ResourceManager.CommvaultContentStore.Models.RestoreProtectionItemContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         Azure.ResourceManager.CommvaultContentStore.ProtectedItemData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.ProtectedItemData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -360,120 +366,75 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
     public partial class MockableCommvaultContentStoreSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableCommvaultContentStoreSubscriptionResource() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CommvaultContentStore.Models.SaaSResourceDetailsData> ActivateResource(Azure.WaitUntil waitUntil, Azure.ResourceManager.CommvaultContentStore.Models.ActivateSaaSParameterContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CommvaultContentStore.Models.SaaSResourceDetailsData>> ActivateResourceAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CommvaultContentStore.Models.ActivateSaaSParameterContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CommvaultContentStore.Models.SaasResourceDetailsData> ActivateSaasResource(Azure.WaitUntil waitUntil, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasActivationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CommvaultContentStore.Models.SaasResourceDetailsData>> ActivateSaasResourceAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasActivationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.CommvaultContentStore.CloudAccountResource> GetCloudAccounts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CommvaultContentStore.CloudAccountResource> GetCloudAccountsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MockableCommvaultContentStoreTenantResource : Azure.ResourceManager.ArmResource
     {
         protected MockableCommvaultContentStoreTenantResource() { }
-        public virtual Azure.Response<Azure.ResourceManager.CommvaultContentStore.Models.CountProtectedItemsResult> CountByProtectionGroups(Azure.ResourceManager.CommvaultContentStore.Models.CountProtectedItemsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CommvaultContentStore.Models.CountProtectedItemsResult>> CountByProtectionGroupsAsync(Azure.ResourceManager.CommvaultContentStore.Models.CountProtectedItemsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.CommvaultContentStore.Models.CountProtectedItemsResult> CountProtectedItems(Azure.ResourceManager.CommvaultContentStore.Models.CountProtectedItemsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CommvaultContentStore.Models.CountProtectedItemsResult>> CountProtectedItemsAsync(Azure.ResourceManager.CommvaultContentStore.Models.CountProtectedItemsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
-    public partial class ActivateSaaSParameterContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.ActivateSaaSParameterContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ActivateSaaSParameterContent>
-    {
-        public ActivateSaaSParameterContent(string saaSGuid) { }
-        public string SaaSGuid { get { throw null; } }
-        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.ActivateSaaSParameterContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.ActivateSaaSParameterContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.CommvaultContentStore.Models.ActivateSaaSParameterContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.ActivateSaaSParameterContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.ActivateSaaSParameterContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CommvaultContentStore.Models.ActivateSaaSParameterContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ActivateSaaSParameterContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ActivateSaaSParameterContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ActivateSaaSParameterContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public static partial class ArmCommvaultContentStoreModelFactory
     {
-        public static Azure.ResourceManager.CommvaultContentStore.Models.ActivateSaaSParameterContent ActivateSaaSParameterContent(string saaSGuid = null) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.BackupConfig BackupConfig(Azure.ResourceManager.CommvaultContentStore.Models.BackupLevel? backupLevel = default(Azure.ResourceManager.CommvaultContentStore.Models.BackupLevel?), string jobDescription = null, bool shouldCopyImmediately = false, bool shouldRunSnapshotBackup = false, bool shouldNotifyUserOnJobCompletion = false) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.BackupProtectionGroupContent BackupProtectionGroupContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.VmListItem> vmList = null, Azure.ResourceManager.CommvaultContentStore.Models.BackupConfig backupOptions = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.BackupProtectionGroupContent BackupProtectionGroupContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmReference> vmList = null, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupConfiguration backupConfiguration = null) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.Models.BackupProtectionGroupResult BackupProtectionGroupResult(int taskId = 0, System.Collections.Generic.IEnumerable<string> jobIds = null) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.CloudAccountData CloudAccountData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountPatch CloudAccountPatch(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountPatchProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountPatchProperties CloudAccountPatchProperties(Azure.ResourceManager.CommvaultContentStore.Models.MarketplaceDetails marketplace = null, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultUserDetails user = null) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountProperties CloudAccountProperties(Azure.ResourceManager.CommvaultContentStore.Models.MarketplaceDetails marketplace = null, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultUserDetails user = null, Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState?), string ssoUri = null, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityInfo backupAdminOnCcaCreate = null, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityInfo multiPersonAuthorizationOnCcaCreate = null) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupSchedule CommvaultBackupSchedule(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupType backupType = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupType), Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupFrequency? frequency = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupFrequency?), int? runsEvery = default(int?), Azure.ResourceManager.CommvaultContentStore.Models.WeekOfMonth? weekOfMonth = default(Azure.ResourceManager.CommvaultContentStore.Models.WeekOfMonth?), Azure.ResourceManager.CommvaultContentStore.Models.CommvaultDayOfWeek? dayOfWeek = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultDayOfWeek?), Azure.ResourceManager.CommvaultContentStore.Models.MonthOfYear? monthOfYear = default(Azure.ResourceManager.CommvaultContentStore.Models.MonthOfYear?), int? dayOfMonth = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.WeeklyDays> weeklyDays = null, string time = null, string timeZone = null) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityInfo CommvaultEntityInfo(string id = null, string displayName = null, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityType? entityType = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityType?)) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountIdentityPatch CloudAccountIdentityPatch(Azure.ResourceManager.Models.ManagedServiceIdentityType? type = default(Azure.ResourceManager.Models.ManagedServiceIdentityType?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> userAssignedIdentities = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountMarketplacePatch CloudAccountMarketplacePatch(Azure.Core.ResourceIdentifier saasResourceId = null, string subscriptionId = null, Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountOfferDetailsPatch offerDetails = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountOfferDetailsPatch CloudAccountOfferDetailsPatch(string publisherId = null, string offerId = null, string planName = null, string termUnit = null, string termId = null, string planId = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountPatch CloudAccountPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountPatchProperties properties = null, Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountIdentityPatch identity = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountPatchProperties CloudAccountPatchProperties(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultCompanyProfile company = null, Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountMarketplacePatch marketplace = null, Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountUserPatch user = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountProperties CloudAccountProperties(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultMarketplaceDetails marketplace = null, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultUserDetails user = null, Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState?), string ssoUri = null, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultCompanyProfile company = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleAssignment> roleAssignmentsOnCreate = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountUserPatch CloudAccountUserPatch(string userPrincipalName = null, string phoneNumber = null, string firstName = null, string lastName = null, string emailAddress = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupConfiguration CommvaultBackupConfiguration(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupLevel? backupLevel = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupLevel?), string jobDescription = null, bool shouldCopyImmediately = false, bool shouldRunSnapshotBackup = false, bool shouldNotifyUserOnJobCompletion = false) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupSchedule CommvaultBackupSchedule(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupType backupType = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupType), Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupFrequency? frequency = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupFrequency?), int? interval = default(int?), Azure.ResourceManager.CommvaultContentStore.Models.WeekOfMonth? weekOfMonth = default(Azure.ResourceManager.CommvaultContentStore.Models.WeekOfMonth?), Azure.ResourceManager.CommvaultContentStore.Models.CommvaultDayOfWeek? dayOfWeek = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultDayOfWeek?), Azure.ResourceManager.CommvaultContentStore.Models.MonthOfYear? monthOfYear = default(Azure.ResourceManager.CommvaultContentStore.Models.MonthOfYear?), int? dayOfMonth = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultScheduleDayOfWeek> daysOfWeek = null, string time = null, string timeZone = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultCompanyProfile CommvaultCompanyProfile(string jobTitle = null, string companyName = null, string website = null, string street = null, string city = null, string country = null, string postalCode = null, string state = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultExtendedRetentionPolicy CommvaultExtendedRetentionPolicy(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionInterval? retentionInterval = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionInterval?), int? retentionPeriod = default(int?), Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupRuleType? backupRuleType = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupRuleType?)) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultMarketplaceDetails CommvaultMarketplaceDetails(string subscriptionId = null, Azure.ResourceManager.CommvaultContentStore.Models.MarketplaceSubscriptionStatus? subscriptionStatus = default(Azure.ResourceManager.CommvaultContentStore.Models.MarketplaceSubscriptionStatus?), Azure.Core.ResourceIdentifier saasResourceId = null, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultOfferDetails offerDetails = null) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultOfferDetails CommvaultOfferDetails(string publisherId = null, string offerId = null, string planId = null, string planName = null, string termUnit = null, string termId = null) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.CommvaultPlanData CommvaultPlanData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultPlanProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultPlanProperties CommvaultPlanProperties(Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStoragePlan> storagePlans = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupSchedule> schedules = null, int? retentionNumberOfSnapshots = default(int?), Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleAssignment CommvaultRoleAssignment(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleName? roleName = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleName?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityInfo> entities = null) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaaSDetails CommvaultSaaSDetails(Azure.Core.ResourceIdentifier saaSResourceId = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultPlanProperties CommvaultPlanProperties(Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStoragePlan> storagePlans = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupSchedule> schedules = null, int? retentionSnapshotCount = default(int?), Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleAssignment CommvaultRoleAssignment(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleName roleName = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleName), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipal> principals = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipal CommvaultRolePrincipal(string id = null, string displayName = null, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipalType? principalType = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipalType?)) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasActivationContent CommvaultSaasActivationContent(System.Guid saasGuid = default(System.Guid), string publisherId = null, Azure.ResourceManager.CommvaultContentStore.Models.SaasActivationDetails activationDetails = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasDetails CommvaultSaasDetails(Azure.Core.ResourceIdentifier saasResourceId = null) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.CommvaultStorageData CommvaultStorageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStorageProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStoragePlan CommvaultStoragePlan(string name = null, string storagePoolId = null, string copyName = null, int? copyPrecedence = default(int?), int? retentionPeriod = default(int?), Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionTime? retentionTime = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionTime?), Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType? backupRuleType = default(Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.ExtendedRetentionTime> extendedRetention = null) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStorageProperties CommvaultStorageProperties(Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStorageType storageType = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStorageType), Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVendor vendor = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVendor), Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStorageClassType @class = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStorageClassType), Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultUserDetails CommvaultUserDetails(string firstName = null, string lastName = null, string emailAddress = null, string upn = null, string phoneNumber = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStoragePlan CommvaultStoragePlan(string name = null, string storagePoolId = null, string copyName = null, int? copyPrecedence = default(int?), int? retentionPeriod = default(int?), Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionInterval? retentionInterval = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionInterval?), Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupRuleType? backupRuleType = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupRuleType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultExtendedRetentionPolicy> extendedRetentionPolicies = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStorageProperties CommvaultStorageProperties(Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStorageType storageType = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStorageType), Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVendor vendor = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVendor), Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStorageClassType storageClass = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStorageClassType), Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState?), Azure.ResourceManager.CommvaultContentStore.Models.ComplianceLockStatus? complianceLockStatus = default(Azure.ResourceManager.CommvaultContentStore.Models.ComplianceLockStatus?)) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultUserDetails CommvaultUserDetails(string firstName = null, string lastName = null, string emailAddress = null, string userPrincipalName = null, string phoneNumber = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmReference CommvaultVmReference(string vmGuid = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmRestoreSettings CommvaultVmRestoreSettings(string sourceVmGuid = null, string storageAccountId = null, bool? shouldPowerOnVmAfterRestore = default(bool?), string name = null, string resourceGroupName = null, string region = null, string virtualNetworkId = null, string subnetId = null, bool? shouldAttachAndSwapOSDisk = default(bool?), string targetVmGuid = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmTag> tags = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmTag CommvaultVmTag(string name = null, string value = null) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.Models.CountProtectedItemsContent CountProtectedItemsContent(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> resourceIds = null) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.Models.CountProtectedItemsResult CountProtectedItemsResult(string count = null) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.ExtendedRetentionTime ExtendedRetentionTime(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionTime? retentionTime = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionTime?), int? retentionPeriod = default(int?), Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType? backupRuleType = default(Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType?)) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaaSResult LatestLinkedSaaSResult(Azure.Core.ResourceIdentifier saaSResourceId = null, bool? isHiddenSaaS = default(bool?)) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.MarketplaceDetails MarketplaceDetails(string subscriptionId = null, Azure.ResourceManager.CommvaultContentStore.Models.MarketplaceSubscriptionStatus? subscriptionStatus = default(Azure.ResourceManager.CommvaultContentStore.Models.MarketplaceSubscriptionStatus?), Azure.Core.ResourceIdentifier saasResourceId = null, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultOfferDetails offerDetails = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaasResult LatestLinkedSaasResult(Azure.Core.ResourceIdentifier saasResourceId = null, bool? isHiddenSaas = default(bool?)) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.ProtectedItemData ProtectedItemData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CommvaultContentStore.Models.ProtectedItemProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.ProtectedItemProperties ProtectedItemProperties(string resourceName = null, long lastBackUpTime = (long)0, string resourceGroup = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string vmGuid = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.ProtectedItemProperties ProtectedItemProperties(string resourceName = null, long lastBackupTime = (long)0, string resourceGroupName = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string vmGuid = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.ProtectedItemRestorePoints ProtectedItemRestorePoints(System.Collections.Generic.IEnumerable<long> restoreTimes = null) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.ProtectionGroupData ProtectionGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupProperties ProtectionGroupProperties(string plan = null, Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResources resources = null, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultProtectionStatus? protectionStatus = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultProtectionStatus?), int? numberOfProtectedItems = default(int?), long? lastBackUpTime = default(long?), string backupActivityStatus = null, Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResources ProtectionGroupResources(System.Collections.Generic.IEnumerable<string> manual = null, Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResourcesMatchRules matchRules = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupProperties ProtectionGroupProperties(string plan = null, Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResourceSelection resourceSelection = null, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultProtectionStatus protectionStatus = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultProtectionStatus), int protectedItemCount = 0, long lastBackupTime = (long)0, string backupActivityStatus = null, Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResourceSelection ProtectionGroupResourceSelection(System.Collections.Generic.IEnumerable<string> manuallySelectedItems = null, Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResourcesMatchRules matchRules = null) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResourcesMatchRules ProtectionGroupResourcesMatchRules(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupRule> rules = null, Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupMatchType matchType = default(Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupMatchType)) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupRule ProtectionGroupRule(Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupRuleProperty property = default(Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupRuleProperty), Azure.ResourceManager.CommvaultContentStore.Models.CommvaultMatchOperator @operator = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultMatchOperator), string value = null) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.RestorePoints RestorePoints(System.Collections.Generic.IEnumerable<long> restoreTimes = null) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.RestoreProtectionItemContent RestoreProtectionItemContent(bool isInPlaceRestore = false, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRestoreType? restoreType = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRestoreType?), string toTime = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.VmInfo> vmInfoList = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.RestoreProtectionItemContent RestoreProtectionItemContent(bool isInPlaceRestore = false, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRestoreType? restoreType = default(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRestoreType?), string restorePointTime = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmRestoreSettings> vmInfoList = null) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.Models.RestoreProtectionItemResult RestoreProtectionItemResult(int taskId = 0, System.Collections.Generic.IEnumerable<string> jobIds = null) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.RoleMappingData RoleMappingData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CommvaultContentStore.Models.RoleMappingProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.RoleMappingProperties RoleMappingProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleAssignment> roles = null, Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.SaaSResourceDetailsData SaaSResourceDetailsData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier saaSResourceId = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.RoleMappingProperties RoleMappingProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleAssignment> roleAssignments = null, Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.SaasActivationDetails SaasActivationDetails(Azure.Core.ResourceIdentifier saasResourceId = null, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultUserDetails user = null, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultCompanyProfile company = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.SaasResourceDetailsData SaasResourceDetailsData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier saasResourceId = null) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.Models.StopBackupProtectionGroupContent StopBackupProtectionGroupContent(string reason = null, string comment = null) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.VmInfo VmInfo(string sourceVmGuid = null, string storageAccountId = null, bool? shouldPowerOnVmAfterRestore = default(bool?), string name = null, string resourceGroup = null, string region = null, string networkId = null, string subnetId = null, bool? shouldAttachAndSwapOSDisk = default(bool?), string targetVmGuid = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.VmTag> vmTags = null) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.VmListItem VmListItem(string vmGuid = null) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.VmTag VmTag(string name = null, string value = null) { throw null; }
-    }
-    public partial class BackupConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.BackupConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.BackupConfig>
-    {
-        public BackupConfig(string jobDescription, bool shouldCopyImmediately, bool shouldRunSnapshotBackup, bool shouldNotifyUserOnJobCompletion) { }
-        public Azure.ResourceManager.CommvaultContentStore.Models.BackupLevel? BackupLevel { get { throw null; } set { } }
-        public string JobDescription { get { throw null; } }
-        public bool ShouldCopyImmediately { get { throw null; } }
-        public bool ShouldNotifyUserOnJobCompletion { get { throw null; } }
-        public bool ShouldRunSnapshotBackup { get { throw null; } }
-        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.BackupConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.BackupConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.CommvaultContentStore.Models.BackupConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.BackupConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.BackupConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CommvaultContentStore.Models.BackupConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.BackupConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.BackupConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.BackupConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct BackupLevel : System.IEquatable<Azure.ResourceManager.CommvaultContentStore.Models.BackupLevel>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public BackupLevel(string value) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.BackupLevel Differential { get { throw null; } }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.BackupLevel Full { get { throw null; } }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.BackupLevel Incremental { get { throw null; } }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.BackupLevel SyntheticFull { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CommvaultContentStore.Models.BackupLevel other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CommvaultContentStore.Models.BackupLevel left, Azure.ResourceManager.CommvaultContentStore.Models.BackupLevel right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.BackupLevel (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.BackupLevel? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CommvaultContentStore.Models.BackupLevel left, Azure.ResourceManager.CommvaultContentStore.Models.BackupLevel right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class BackupProtectionGroupContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.BackupProtectionGroupContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.BackupProtectionGroupContent>
     {
-        public BackupProtectionGroupContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.VmListItem> vmList, Azure.ResourceManager.CommvaultContentStore.Models.BackupConfig backupOptions) { }
-        public Azure.ResourceManager.CommvaultContentStore.Models.BackupConfig BackupOptions { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.CommvaultContentStore.Models.VmListItem> VmList { get { throw null; } }
+        public BackupProtectionGroupContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmReference> vmList, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupConfiguration backupConfiguration) { }
+        public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupConfiguration BackupConfiguration { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmReference> VmList { get { throw null; } }
         protected virtual Azure.ResourceManager.CommvaultContentStore.Models.BackupProtectionGroupContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.CommvaultContentStore.Models.BackupProtectionGroupContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -499,34 +460,60 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.BackupProtectionGroupResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.BackupProtectionGroupResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct BackupRuleType : System.IEquatable<Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType>
+    public partial class CloudAccountIdentityPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountIdentityPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountIdentityPatch>
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public BackupRuleType(string value) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType AllFulls { get { throw null; } }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType AllJobs { get { throw null; } }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType DailyFulls { get { throw null; } }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType HalfYearlyFulls { get { throw null; } }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType HourlyFulls { get { throw null; } }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType MonthlyFulls { get { throw null; } }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType QuarterlyFulls { get { throw null; } }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType WeeklyFulls { get { throw null; } }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType YearlyFulls { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType left, Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType left, Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType right) { throw null; }
-        public override string ToString() { throw null; }
+        public CloudAccountIdentityPatch() { }
+        public Azure.ResourceManager.Models.ManagedServiceIdentityType? Type { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountIdentityPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountIdentityPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountIdentityPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountIdentityPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountIdentityPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountIdentityPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountIdentityPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountIdentityPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountIdentityPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CloudAccountMarketplacePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountMarketplacePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountMarketplacePatch>
+    {
+        public CloudAccountMarketplacePatch() { }
+        public Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountOfferDetailsPatch OfferDetails { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SaasResourceId { get { throw null; } set { } }
+        public string SubscriptionId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountMarketplacePatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountMarketplacePatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountMarketplacePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountMarketplacePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountMarketplacePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountMarketplacePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountMarketplacePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountMarketplacePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountMarketplacePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CloudAccountOfferDetailsPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountOfferDetailsPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountOfferDetailsPatch>
+    {
+        public CloudAccountOfferDetailsPatch() { }
+        public string OfferId { get { throw null; } set { } }
+        public string PlanId { get { throw null; } set { } }
+        public string PlanName { get { throw null; } set { } }
+        public string PublisherId { get { throw null; } set { } }
+        public string TermId { get { throw null; } set { } }
+        public string TermUnit { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountOfferDetailsPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountOfferDetailsPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountOfferDetailsPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountOfferDetailsPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountOfferDetailsPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountOfferDetailsPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountOfferDetailsPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountOfferDetailsPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountOfferDetailsPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CloudAccountPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountPatch>
     {
         public CloudAccountPatch() { }
-        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountIdentityPatch Identity { get { throw null; } set { } }
         public Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountPatchProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -542,8 +529,9 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
     public partial class CloudAccountPatchProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountPatchProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountPatchProperties>
     {
         public CloudAccountPatchProperties() { }
-        public Azure.ResourceManager.CommvaultContentStore.Models.MarketplaceDetails Marketplace { get { throw null; } set { } }
-        public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultUserDetails User { get { throw null; } set { } }
+        public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultCompanyProfile Company { get { throw null; } set { } }
+        public Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountMarketplacePatch Marketplace { get { throw null; } set { } }
+        public Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountUserPatch User { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountPatchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountPatchProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -556,11 +544,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
     }
     public partial class CloudAccountProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountProperties>
     {
-        public CloudAccountProperties(Azure.ResourceManager.CommvaultContentStore.Models.MarketplaceDetails marketplace, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultUserDetails user) { }
-        public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityInfo BackupAdminOnCcaCreate { get { throw null; } set { } }
-        public Azure.ResourceManager.CommvaultContentStore.Models.MarketplaceDetails Marketplace { get { throw null; } set { } }
-        public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityInfo MultiPersonAuthorizationOnCcaCreate { get { throw null; } set { } }
+        public CloudAccountProperties(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultMarketplaceDetails marketplace, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultUserDetails user) { }
+        public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultCompanyProfile Company { get { throw null; } set { } }
+        public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultMarketplaceDetails Marketplace { get { throw null; } set { } }
         public Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleAssignment> RoleAssignmentsOnCreate { get { throw null; } }
         public string SsoUri { get { throw null; } }
         public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultUserDetails User { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -572,6 +560,42 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CloudAccountUserPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountUserPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountUserPatch>
+    {
+        public CloudAccountUserPatch() { }
+        public string EmailAddress { get { throw null; } set { } }
+        public string FirstName { get { throw null; } set { } }
+        public string LastName { get { throw null; } set { } }
+        public string PhoneNumber { get { throw null; } set { } }
+        public string UserPrincipalName { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountUserPatch JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountUserPatch PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountUserPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountUserPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountUserPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountUserPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountUserPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountUserPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CloudAccountUserPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CommvaultBackupConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupConfiguration>
+    {
+        public CommvaultBackupConfiguration(string jobDescription, bool shouldCopyImmediately, bool shouldRunSnapshotBackup, bool shouldNotifyUserOnJobCompletion) { }
+        public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupLevel? BackupLevel { get { throw null; } set { } }
+        public string JobDescription { get { throw null; } }
+        public bool ShouldCopyImmediately { get { throw null; } }
+        public bool ShouldNotifyUserOnJobCompletion { get { throw null; } }
+        public bool ShouldRunSnapshotBackup { get { throw null; } }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CommvaultBackupFrequency : System.IEquatable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupFrequency>
@@ -593,18 +617,61 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public static bool operator !=(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupFrequency left, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupFrequency right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CommvaultBackupLevel : System.IEquatable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupLevel>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CommvaultBackupLevel(string value) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupLevel Differential { get { throw null; } }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupLevel Full { get { throw null; } }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupLevel Incremental { get { throw null; } }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupLevel SyntheticFull { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupLevel other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupLevel left, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupLevel right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupLevel (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupLevel? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupLevel left, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupLevel right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CommvaultBackupRuleType : System.IEquatable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupRuleType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CommvaultBackupRuleType(string value) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupRuleType AllFullBackups { get { throw null; } }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupRuleType AllJobs { get { throw null; } }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupRuleType DailyFullBackups { get { throw null; } }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupRuleType HalfYearlyFullBackups { get { throw null; } }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupRuleType HourlyFullBackups { get { throw null; } }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupRuleType MonthlyFullBackups { get { throw null; } }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupRuleType QuarterlyFullBackups { get { throw null; } }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupRuleType WeeklyFullBackups { get { throw null; } }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupRuleType YearlyFullBackups { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupRuleType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupRuleType left, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupRuleType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupRuleType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupRuleType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupRuleType left, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupRuleType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class CommvaultBackupSchedule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupSchedule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupSchedule>
     {
         public CommvaultBackupSchedule(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupType backupType) { }
         public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupType BackupType { get { throw null; } set { } }
         public int? DayOfMonth { get { throw null; } set { } }
         public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultDayOfWeek? DayOfWeek { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultScheduleDayOfWeek> DaysOfWeek { get { throw null; } }
         public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupFrequency? Frequency { get { throw null; } set { } }
+        public int? Interval { get { throw null; } set { } }
         public Azure.ResourceManager.CommvaultContentStore.Models.MonthOfYear? MonthOfYear { get { throw null; } set { } }
-        public int? RunsEvery { get { throw null; } set { } }
         public string Time { get { throw null; } set { } }
         public string TimeZone { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.CommvaultContentStore.Models.WeeklyDays> WeeklyDays { get { throw null; } }
         public Azure.ResourceManager.CommvaultContentStore.Models.WeekOfMonth? WeekOfMonth { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupSchedule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -634,6 +701,27 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public static bool operator !=(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupType left, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class CommvaultCompanyProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultCompanyProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultCompanyProfile>
+    {
+        public CommvaultCompanyProfile() { }
+        public string City { get { throw null; } set { } }
+        public string CompanyName { get { throw null; } set { } }
+        public string Country { get { throw null; } set { } }
+        public string JobTitle { get { throw null; } set { } }
+        public string PostalCode { get { throw null; } set { } }
+        public string State { get { throw null; } set { } }
+        public string Street { get { throw null; } set { } }
+        public string Website { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultCompanyProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultCompanyProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CommvaultContentStore.Models.CommvaultCompanyProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultCompanyProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultCompanyProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CommvaultContentStore.Models.CommvaultCompanyProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultCompanyProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultCompanyProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultCompanyProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CommvaultDayOfWeek : System.IEquatable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultDayOfWeek>
     {
@@ -659,38 +747,38 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public static bool operator !=(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultDayOfWeek left, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultDayOfWeek right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CommvaultEntityInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityInfo>
+    public partial class CommvaultExtendedRetentionPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultExtendedRetentionPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultExtendedRetentionPolicy>
     {
-        public CommvaultEntityInfo() { }
-        public string DisplayName { get { throw null; } set { } }
-        public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityType? EntityType { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public CommvaultExtendedRetentionPolicy() { }
+        public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupRuleType? BackupRuleType { get { throw null; } set { } }
+        public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionInterval? RetentionInterval { get { throw null; } set { } }
+        public int? RetentionPeriod { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultExtendedRetentionPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultExtendedRetentionPolicy PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CommvaultContentStore.Models.CommvaultExtendedRetentionPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultExtendedRetentionPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultExtendedRetentionPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CommvaultContentStore.Models.CommvaultExtendedRetentionPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultExtendedRetentionPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultExtendedRetentionPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultExtendedRetentionPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CommvaultEntityType : System.IEquatable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityType>
+    public partial class CommvaultMarketplaceDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultMarketplaceDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultMarketplaceDetails>
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CommvaultEntityType(string value) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityType Group { get { throw null; } }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityType User { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityType other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityType left, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityType left, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityType right) { throw null; }
-        public override string ToString() { throw null; }
+        public CommvaultMarketplaceDetails(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultOfferDetails offerDetails) { }
+        public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultOfferDetails OfferDetails { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SaasResourceId { get { throw null; } set { } }
+        public string SubscriptionId { get { throw null; } set { } }
+        public Azure.ResourceManager.CommvaultContentStore.Models.MarketplaceSubscriptionStatus? SubscriptionStatus { get { throw null; } }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultMarketplaceDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultMarketplaceDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CommvaultContentStore.Models.CommvaultMarketplaceDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultMarketplaceDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultMarketplaceDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CommvaultContentStore.Models.CommvaultMarketplaceDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultMarketplaceDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultMarketplaceDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultMarketplaceDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CommvaultMatchOperator : System.IEquatable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultMatchOperator>
@@ -699,7 +787,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         private readonly int _dummyPrimitive;
         public CommvaultMatchOperator(string value) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultMatchOperator Contains { get { throw null; } }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultMatchOperator DoesNotContains { get { throw null; } }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultMatchOperator DoesNotContain { get { throw null; } }
         public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultMatchOperator DoesNotEqual { get { throw null; } }
         public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultMatchOperator EndsWith { get { throw null; } }
         public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultMatchOperator Equal { get { throw null; } }
@@ -737,7 +825,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public CommvaultPlanProperties(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStoragePlan> storagePlans) { }
         public Azure.Core.AzureLocation Location { get { throw null; } set { } }
         public Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState? ProvisioningState { get { throw null; } }
-        public int? RetentionNumberOfSnapshots { get { throw null; } set { } }
+        public int? RetentionSnapshotCount { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupSchedule> Schedules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStoragePlan> StoragePlans { get { throw null; } }
         protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultPlanProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -790,27 +878,27 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CommvaultRetentionTime : System.IEquatable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionTime>
+    public readonly partial struct CommvaultRetentionInterval : System.IEquatable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionInterval>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public CommvaultRetentionTime(string value) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionTime Monthly { get { throw null; } }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionTime Yearly { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionTime other) { throw null; }
+        public CommvaultRetentionInterval(string value) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionInterval Monthly { get { throw null; } }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionInterval Yearly { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionInterval other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionTime left, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionTime right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionTime (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionTime? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionTime left, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionTime right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionInterval left, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionInterval right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionInterval (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionInterval? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionInterval left, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionInterval right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class CommvaultRoleAssignment : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleAssignment>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleAssignment>
     {
-        public CommvaultRoleAssignment() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultEntityInfo> Entities { get { throw null; } }
-        public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleName? RoleName { get { throw null; } set { } }
+        public CommvaultRoleAssignment(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleName roleName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipal> principals) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipal> Principals { get { throw null; } }
+        public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleName RoleName { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleAssignment JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleAssignment PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -827,11 +915,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public CommvaultRoleName(string value) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleName BackupAdmin { get { throw null; } }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleName BackupAdministrator { get { throw null; } }
         public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleName BackupOperator { get { throw null; } }
         public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleName BackupUser { get { throw null; } }
         public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleName MultiPersonAuthorization { get { throw null; } }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleName SecurityAdmin { get { throw null; } }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleName SecurityAdministrator { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleName other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -841,19 +929,90 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public static bool operator !=(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleName left, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleName right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CommvaultSaaSDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaaSDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaaSDetails>
+    public partial class CommvaultRolePrincipal : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipal>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipal>
     {
-        public CommvaultSaaSDetails() { }
-        public Azure.Core.ResourceIdentifier SaaSResourceId { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaaSDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public CommvaultRolePrincipal() { }
+        public string DisplayName { get { throw null; } set { } }
+        public string Id { get { throw null; } set { } }
+        public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipalType? PrincipalType { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipal JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaaSDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipal PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaaSDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaaSDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaaSDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaaSDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaaSDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaaSDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaaSDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipal System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipal>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipal>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipal System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipal>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipal>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipal>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CommvaultRolePrincipalType : System.IEquatable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipalType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CommvaultRolePrincipalType(string value) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipalType Group { get { throw null; } }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipalType User { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipalType other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipalType left, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipalType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipalType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipalType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipalType left, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRolePrincipalType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class CommvaultSaasActivationContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasActivationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasActivationContent>
+    {
+        public CommvaultSaasActivationContent(System.Guid saasGuid) { }
+        public Azure.ResourceManager.CommvaultContentStore.Models.SaasActivationDetails ActivationDetails { get { throw null; } set { } }
+        public string PublisherId { get { throw null; } set { } }
+        public System.Guid SaasGuid { get { throw null; } }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasActivationContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasActivationContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasActivationContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasActivationContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasActivationContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasActivationContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasActivationContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasActivationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasActivationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CommvaultSaasDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasDetails>
+    {
+        public CommvaultSaasDetails() { }
+        public Azure.Core.ResourceIdentifier SaasResourceId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultSaasDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CommvaultScheduleDayOfWeek : System.IEquatable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultScheduleDayOfWeek>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CommvaultScheduleDayOfWeek(string value) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultScheduleDayOfWeek Friday { get { throw null; } }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultScheduleDayOfWeek Monday { get { throw null; } }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultScheduleDayOfWeek Saturday { get { throw null; } }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultScheduleDayOfWeek Sunday { get { throw null; } }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultScheduleDayOfWeek Thursday { get { throw null; } }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultScheduleDayOfWeek Tuesday { get { throw null; } }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultScheduleDayOfWeek Wednesday { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultScheduleDayOfWeek other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultScheduleDayOfWeek left, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultScheduleDayOfWeek right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.CommvaultScheduleDayOfWeek (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.CommvaultScheduleDayOfWeek? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultScheduleDayOfWeek left, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultScheduleDayOfWeek right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CommvaultStorageClassType : System.IEquatable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStorageClassType>
@@ -861,6 +1020,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public CommvaultStorageClassType(string value) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStorageClassType Cold { get { throw null; } }
         public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStorageClassType Cool { get { throw null; } }
         public static Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStorageClassType Hot { get { throw null; } }
         public bool Equals(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStorageClassType other) { throw null; }
@@ -875,13 +1035,13 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
     public partial class CommvaultStoragePlan : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStoragePlan>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStoragePlan>
     {
         public CommvaultStoragePlan(string name) { }
-        public Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType? BackupRuleType { get { throw null; } set { } }
+        public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultBackupRuleType? BackupRuleType { get { throw null; } set { } }
         public string CopyName { get { throw null; } set { } }
         public int? CopyPrecedence { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.CommvaultContentStore.Models.ExtendedRetentionTime> ExtendedRetention { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultExtendedRetentionPolicy> ExtendedRetentionPolicies { get { throw null; } }
         public string Name { get { throw null; } set { } }
+        public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionInterval? RetentionInterval { get { throw null; } set { } }
         public int? RetentionPeriod { get { throw null; } set { } }
-        public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionTime? RetentionTime { get { throw null; } set { } }
         public string StoragePoolId { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStoragePlan JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -895,10 +1055,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
     }
     public partial class CommvaultStorageProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStorageProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStorageProperties>
     {
-        public CommvaultStorageProperties(Azure.Core.AzureLocation location, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStorageType storageType, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVendor vendor, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStorageClassType @class) { }
-        public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStorageClassType Class { get { throw null; } set { } }
+        public CommvaultStorageProperties(Azure.Core.AzureLocation location, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStorageType storageType, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVendor vendor, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStorageClassType storageClass) { }
+        public Azure.ResourceManager.CommvaultContentStore.Models.ComplianceLockStatus? ComplianceLockStatus { get { throw null; } }
         public Azure.Core.AzureLocation Location { get { throw null; } set { } }
         public Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStorageClassType StorageClass { get { throw null; } set { } }
         public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStorageType StorageType { get { throw null; } set { } }
         public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVendor Vendor { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultStorageProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -934,7 +1095,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public string FirstName { get { throw null; } set { } }
         public string LastName { get { throw null; } set { } }
         public string PhoneNumber { get { throw null; } set { } }
-        public string Upn { get { throw null; } set { } }
+        public string UserPrincipalName { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultUserDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultUserDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -959,6 +1120,77 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVendor (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVendor? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVendor left, Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVendor right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class CommvaultVmReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmReference>
+    {
+        public CommvaultVmReference(string vmGuid) { }
+        public string VmGuid { get { throw null; } }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmReference PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CommvaultVmRestoreSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmRestoreSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmRestoreSettings>
+    {
+        public CommvaultVmRestoreSettings(string sourceVmGuid, string storageAccountId) { }
+        public string Name { get { throw null; } set { } }
+        public string Region { get { throw null; } set { } }
+        public string ResourceGroupName { get { throw null; } set { } }
+        public bool? ShouldAttachAndSwapOSDisk { get { throw null; } set { } }
+        public bool? ShouldPowerOnVmAfterRestore { get { throw null; } set { } }
+        public string SourceVmGuid { get { throw null; } }
+        public string StorageAccountId { get { throw null; } }
+        public string SubnetId { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmTag> Tags { get { throw null; } }
+        public string TargetVmGuid { get { throw null; } set { } }
+        public string VirtualNetworkId { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmRestoreSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmRestoreSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmRestoreSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmRestoreSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmRestoreSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmRestoreSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmRestoreSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmRestoreSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmRestoreSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CommvaultVmTag : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmTag>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmTag>
+    {
+        public CommvaultVmTag(string name, string value) { }
+        public string Name { get { throw null; } }
+        public string Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmTag JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmTag PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmTag System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmTag>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmTag>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmTag System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmTag>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmTag>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmTag>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ComplianceLockStatus : System.IEquatable<Azure.ResourceManager.CommvaultContentStore.Models.ComplianceLockStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ComplianceLockStatus(string value) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.ComplianceLockStatus Disabled { get { throw null; } }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.ComplianceLockStatus DisablementPending { get { throw null; } }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.ComplianceLockStatus Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.CommvaultContentStore.Models.ComplianceLockStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.CommvaultContentStore.Models.ComplianceLockStatus left, Azure.ResourceManager.CommvaultContentStore.Models.ComplianceLockStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.ComplianceLockStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.ComplianceLockStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.CommvaultContentStore.Models.ComplianceLockStatus left, Azure.ResourceManager.CommvaultContentStore.Models.ComplianceLockStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class CountProtectedItemsContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.CountProtectedItemsContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CountProtectedItemsContent>
@@ -989,53 +1221,20 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CountProtectedItemsResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.CountProtectedItemsResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExtendedRetentionTime : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.ExtendedRetentionTime>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ExtendedRetentionTime>
+    public partial class LatestLinkedSaasResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaasResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaasResult>
     {
-        public ExtendedRetentionTime() { }
-        public Azure.ResourceManager.CommvaultContentStore.Models.BackupRuleType? BackupRuleType { get { throw null; } set { } }
-        public int? RetentionPeriod { get { throw null; } set { } }
-        public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRetentionTime? RetentionTime { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.ExtendedRetentionTime JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        internal LatestLinkedSaasResult() { }
+        public bool? IsHiddenSaas { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SaasResourceId { get { throw null; } }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaasResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.ExtendedRetentionTime PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaasResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.CommvaultContentStore.Models.ExtendedRetentionTime System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.ExtendedRetentionTime>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.ExtendedRetentionTime>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CommvaultContentStore.Models.ExtendedRetentionTime System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ExtendedRetentionTime>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ExtendedRetentionTime>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ExtendedRetentionTime>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class LatestLinkedSaaSResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaaSResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaaSResult>
-    {
-        internal LatestLinkedSaaSResult() { }
-        public bool? IsHiddenSaaS { get { throw null; } }
-        public Azure.Core.ResourceIdentifier SaaSResourceId { get { throw null; } }
-        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaaSResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaaSResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaaSResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaaSResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaaSResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaaSResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaaSResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaaSResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaaSResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MarketplaceDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.MarketplaceDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.MarketplaceDetails>
-    {
-        public MarketplaceDetails(Azure.ResourceManager.CommvaultContentStore.Models.CommvaultOfferDetails offerDetails) { }
-        public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultOfferDetails OfferDetails { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier SaasResourceId { get { throw null; } set { } }
-        public string SubscriptionId { get { throw null; } set { } }
-        public Azure.ResourceManager.CommvaultContentStore.Models.MarketplaceSubscriptionStatus? SubscriptionStatus { get { throw null; } }
-        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.MarketplaceDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.MarketplaceDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.CommvaultContentStore.Models.MarketplaceDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.MarketplaceDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.MarketplaceDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CommvaultContentStore.Models.MarketplaceDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.MarketplaceDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.MarketplaceDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.MarketplaceDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaasResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaasResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaasResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaasResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaasResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaasResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.LatestLinkedSaasResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MarketplaceSubscriptionStatus : System.IEquatable<Azure.ResourceManager.CommvaultContentStore.Models.MarketplaceSubscriptionStatus>
@@ -1086,9 +1285,9 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
     public partial class ProtectedItemProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectedItemProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectedItemProperties>
     {
         internal ProtectedItemProperties() { }
-        public long LastBackUpTime { get { throw null; } }
+        public long LastBackupTime { get { throw null; } }
         public Azure.Core.AzureLocation Location { get { throw null; } }
-        public string ResourceGroup { get { throw null; } }
+        public string ResourceGroupName { get { throw null; } }
         public string ResourceName { get { throw null; } }
         public string VmGuid { get { throw null; } }
         protected virtual Azure.ResourceManager.CommvaultContentStore.Models.ProtectedItemProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1100,6 +1299,20 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         Azure.ResourceManager.CommvaultContentStore.Models.ProtectedItemProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectedItemProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectedItemProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectedItemProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ProtectedItemRestorePoints : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectedItemRestorePoints>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectedItemRestorePoints>
+    {
+        internal ProtectedItemRestorePoints() { }
+        public System.Collections.Generic.IReadOnlyList<long> RestoreTimes { get { throw null; } }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.ProtectedItemRestorePoints JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.ProtectedItemRestorePoints PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CommvaultContentStore.Models.ProtectedItemRestorePoints System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectedItemRestorePoints>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectedItemRestorePoints>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CommvaultContentStore.Models.ProtectedItemRestorePoints System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectedItemRestorePoints>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectedItemRestorePoints>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectedItemRestorePoints>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProtectionGroupMatchType : System.IEquatable<Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupMatchType>
@@ -1120,15 +1333,15 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
     }
     public partial class ProtectionGroupProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupProperties>
     {
-        public ProtectionGroupProperties(string plan, Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResources resources) { }
+        public ProtectionGroupProperties(string plan, Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResourceSelection resourceSelection) { }
         public string BackupActivityStatus { get { throw null; } }
         public string DataSourceType { get { throw null; } }
-        public long? LastBackUpTime { get { throw null; } }
-        public int? NumberOfProtectedItems { get { throw null; } }
+        public long LastBackupTime { get { throw null; } }
         public string Plan { get { throw null; } set { } }
-        public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultProtectionStatus? ProtectionStatus { get { throw null; } }
+        public int ProtectedItemCount { get { throw null; } }
+        public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultProtectionStatus ProtectionStatus { get { throw null; } }
         public Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResources Resources { get { throw null; } set { } }
+        public Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResourceSelection ResourceSelection { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1139,20 +1352,20 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ProtectionGroupResources : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResources>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResources>
+    public partial class ProtectionGroupResourceSelection : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResourceSelection>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResourceSelection>
     {
-        public ProtectionGroupResources() { }
-        public System.Collections.Generic.IList<string> Manual { get { throw null; } }
+        public ProtectionGroupResourceSelection() { }
+        public System.Collections.Generic.IList<string> ManuallySelectedItems { get { throw null; } }
         public Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResourcesMatchRules MatchRules { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResources JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResourceSelection JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResources PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResourceSelection PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResources System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResources>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResources>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResources System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResources>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResources>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResources>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResourceSelection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResourceSelection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResourceSelection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResourceSelection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResourceSelection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResourceSelection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResourceSelection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ProtectionGroupResourcesMatchRules : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResourcesMatchRules>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.ProtectionGroupResourcesMatchRules>
     {
@@ -1224,27 +1437,13 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public static bool operator !=(Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState left, Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RestorePoints : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.RestorePoints>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.RestorePoints>
-    {
-        internal RestorePoints() { }
-        public System.Collections.Generic.IReadOnlyList<long> RestoreTimes { get { throw null; } }
-        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.RestorePoints JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.RestorePoints PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.CommvaultContentStore.Models.RestorePoints System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.RestorePoints>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.RestorePoints>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CommvaultContentStore.Models.RestorePoints System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.RestorePoints>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.RestorePoints>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.RestorePoints>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class RestoreProtectionItemContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.RestoreProtectionItemContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.RestoreProtectionItemContent>
     {
-        public RestoreProtectionItemContent(bool isInPlaceRestore, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.VmInfo> vmInfoList) { }
+        public RestoreProtectionItemContent(bool isInPlaceRestore, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmRestoreSettings> vmInfoList) { }
         public bool IsInPlaceRestore { get { throw null; } }
+        public string RestorePointTime { get { throw null; } set { } }
         public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRestoreType? RestoreType { get { throw null; } set { } }
-        public string ToTime { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.CommvaultContentStore.Models.VmInfo> VmInfoList { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultVmRestoreSettings> VmInfoList { get { throw null; } }
         protected virtual Azure.ResourceManager.CommvaultContentStore.Models.RestoreProtectionItemContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.CommvaultContentStore.Models.RestoreProtectionItemContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1274,7 +1473,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
     {
         public RoleMappingProperties() { }
         public Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState? ProvisioningState { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleAssignment> Roles { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleAssignment> RoleAssignments { get { throw null; } }
         protected virtual Azure.ResourceManager.CommvaultContentStore.Models.RoleMappingProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.CommvaultContentStore.Models.RoleMappingProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1285,19 +1484,35 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.RoleMappingProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.RoleMappingProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SaaSResourceDetailsData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.SaaSResourceDetailsData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.SaaSResourceDetailsData>
+    public partial class SaasActivationDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.SaasActivationDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.SaasActivationDetails>
     {
-        internal SaaSResourceDetailsData() { }
-        public Azure.Core.ResourceIdentifier SaaSResourceId { get { throw null; } }
+        public SaasActivationDetails() { }
+        public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultCompanyProfile Company { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SaasResourceId { get { throw null; } set { } }
+        public Azure.ResourceManager.CommvaultContentStore.Models.CommvaultUserDetails User { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.SaasActivationDetails JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.SaasActivationDetails PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CommvaultContentStore.Models.SaasActivationDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.SaasActivationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.SaasActivationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CommvaultContentStore.Models.SaasActivationDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.SaasActivationDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.SaasActivationDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.SaasActivationDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SaasResourceDetailsData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.SaasResourceDetailsData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.SaasResourceDetailsData>
+    {
+        internal SaasResourceDetailsData() { }
+        public Azure.Core.ResourceIdentifier SaasResourceId { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.CommvaultContentStore.Models.SaaSResourceDetailsData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.SaaSResourceDetailsData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.SaaSResourceDetailsData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CommvaultContentStore.Models.SaaSResourceDetailsData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.SaaSResourceDetailsData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.SaaSResourceDetailsData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.SaaSResourceDetailsData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.CommvaultContentStore.Models.SaasResourceDetailsData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.SaasResourceDetailsData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.SaasResourceDetailsData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CommvaultContentStore.Models.SaasResourceDetailsData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.SaasResourceDetailsData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.SaasResourceDetailsData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.SaasResourceDetailsData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class StopBackupProtectionGroupContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.StopBackupProtectionGroupContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.StopBackupProtectionGroupContent>
     {
@@ -1313,81 +1528,6 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         Azure.ResourceManager.CommvaultContentStore.Models.StopBackupProtectionGroupContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.StopBackupProtectionGroupContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.StopBackupProtectionGroupContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.StopBackupProtectionGroupContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class VmInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.VmInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.VmInfo>
-    {
-        public VmInfo(string sourceVmGuid, string storageAccountId) { }
-        public string Name { get { throw null; } set { } }
-        public string NetworkId { get { throw null; } set { } }
-        public string Region { get { throw null; } set { } }
-        public string ResourceGroup { get { throw null; } set { } }
-        public bool? ShouldAttachAndSwapOSDisk { get { throw null; } set { } }
-        public bool? ShouldPowerOnVmAfterRestore { get { throw null; } set { } }
-        public string SourceVmGuid { get { throw null; } }
-        public string StorageAccountId { get { throw null; } }
-        public string SubnetId { get { throw null; } set { } }
-        public string TargetVmGuid { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.CommvaultContentStore.Models.VmTag> VmTags { get { throw null; } }
-        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.VmInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.VmInfo PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.CommvaultContentStore.Models.VmInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.VmInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.VmInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CommvaultContentStore.Models.VmInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.VmInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.VmInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.VmInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class VmListItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.VmListItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.VmListItem>
-    {
-        public VmListItem(string vmGuid) { }
-        public string VmGuid { get { throw null; } }
-        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.VmListItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.VmListItem PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.CommvaultContentStore.Models.VmListItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.VmListItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.VmListItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CommvaultContentStore.Models.VmListItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.VmListItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.VmListItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.VmListItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class VmTag : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.VmTag>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.VmTag>
-    {
-        public VmTag(string name, string value) { }
-        public string Name { get { throw null; } }
-        public string Value { get { throw null; } }
-        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.VmTag JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.CommvaultContentStore.Models.VmTag PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.CommvaultContentStore.Models.VmTag System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.VmTag>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CommvaultContentStore.Models.VmTag>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.CommvaultContentStore.Models.VmTag System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.VmTag>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.VmTag>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CommvaultContentStore.Models.VmTag>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct WeeklyDays : System.IEquatable<Azure.ResourceManager.CommvaultContentStore.Models.WeeklyDays>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public WeeklyDays(string value) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.WeeklyDays Friday { get { throw null; } }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.WeeklyDays Monday { get { throw null; } }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.WeeklyDays Saturday { get { throw null; } }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.WeeklyDays Sunday { get { throw null; } }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.WeeklyDays Thursday { get { throw null; } }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.WeeklyDays Tuesday { get { throw null; } }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.WeeklyDays Wednesday { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.CommvaultContentStore.Models.WeeklyDays other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.CommvaultContentStore.Models.WeeklyDays left, Azure.ResourceManager.CommvaultContentStore.Models.WeeklyDays right) { throw null; }
-        public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.WeeklyDays (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.CommvaultContentStore.Models.WeeklyDays? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.CommvaultContentStore.Models.WeeklyDays left, Azure.ResourceManager.CommvaultContentStore.Models.WeeklyDays right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct WeekOfMonth : System.IEquatable<Azure.ResourceManager.CommvaultContentStore.Models.WeekOfMonth>

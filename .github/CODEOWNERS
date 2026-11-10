@@ -780,6 +780,9 @@
 # ServiceLabel: %NetApp Files %Mgmt
 # ServiceOwners:                                                   @audunn
 
+# PRLabel: %Network
+/sdk/networksecurity/    @Satya-Kotha1008 @thatmattlong
+
 # PRLabel: %Network - CDN
 /sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978
 
