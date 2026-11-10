@@ -26,6 +26,6 @@ namespace Streaming.Sse._Retrieve
 
         public virtual Task<AsyncStreamingResult<SseItem<BinaryData>>> StreamAsync(RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Task<AsyncStreamingResult<SseItem<BinaryData>>> StreamAsync(RetrievalRequest request, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<AsyncStreamingResult<SseItem<BinaryData>>> StreamAsync(RetrievalContent request, CancellationToken cancellationToken = default) => throw null;
     }
 }

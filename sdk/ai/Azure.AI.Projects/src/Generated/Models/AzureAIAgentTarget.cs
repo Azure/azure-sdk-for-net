@@ -17,18 +17,6 @@ namespace Azure.AI.Projects.Evaluation
     public partial class AzureAIAgentTarget : EvaluationTarget
     {
         /// <summary> Initializes a new instance of <see cref="AzureAIAgentTarget"/>. </summary>
-        /// <param name="name"> The name of the Azure AI agent to invoke as the evaluation target. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public AzureAIAgentTarget(string name) : base("azure_ai_agent")
-        {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Name = name;
-            ToolDescriptions = new ChangeTrackingList<ToolDescription>();
-            Tools = new ChangeTrackingList<ResponseTool>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AzureAIAgentTarget"/>. </summary>
         /// <param name="type"> The type of target. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The name of the Azure AI agent to invoke as the evaluation target. </param>
@@ -42,6 +30,16 @@ namespace Azure.AI.Projects.Evaluation
             Version = version;
             ToolDescriptions = toolDescriptions;
             Tools = tools;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureAIAgentTarget"/>. </summary>
+        /// <param name="name"> The name of the Azure AI agent to invoke as the evaluation target. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public AzureAIAgentTarget(string name) : this()
+        {
+            Argument.AssertNotNull(name, nameof(name));
+
+            Name = name;
         }
 
         /// <summary> The name of the Azure AI agent to invoke as the evaluation target. </summary>
