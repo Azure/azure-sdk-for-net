@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DesktopVirtualization;
@@ -157,6 +158,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <returns> Returns a <see cref="ActiveSessionHostConfigurationResource"/> object. </returns>
         public virtual ActiveSessionHostConfigurationResource GetActiveSessionHostConfigurationResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != ActiveSessionHostConfigurationResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.DesktopVirtualization", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "hostPools", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "activeSessionHostConfigurations", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/activeSessionHostConfigurations/default"), nameof(id));
+            }
             ActiveSessionHostConfigurationResource.ValidateResourceId(id);
             return new ActiveSessionHostConfigurationResource(Client, id);
         }
@@ -166,6 +176,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <returns> Returns a <see cref="SessionHostManagementResource"/> object. </returns>
         public virtual SessionHostManagementResource GetSessionHostManagementResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != SessionHostManagementResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.DesktopVirtualization", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "hostPools", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "sessionHostManagements", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostManagements/default"), nameof(id));
+            }
             SessionHostManagementResource.ValidateResourceId(id);
             return new SessionHostManagementResource(Client, id);
         }
@@ -175,6 +194,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         /// <returns> Returns a <see cref="SessionHostConfigurationResource"/> object. </returns>
         public virtual SessionHostConfigurationResource GetSessionHostConfigurationResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != SessionHostConfigurationResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.DesktopVirtualization", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "hostPools", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "sessionHostConfigurations", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHostConfigurations/default"), nameof(id));
+            }
             SessionHostConfigurationResource.ValidateResourceId(id);
             return new SessionHostConfigurationResource(Client, id);
         }

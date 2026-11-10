@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DeviceRegistry;
@@ -67,6 +68,15 @@ namespace Azure.ResourceManager.DeviceRegistry.Mocking
         /// <returns> Returns a <see cref="CredentialResource"/> object. </returns>
         public virtual CredentialResource GetCredentialResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != CredentialResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.DeviceRegistry", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "namespaces", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "credentials", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/credentials/default"), nameof(id));
+            }
             CredentialResource.ValidateResourceId(id);
             return new CredentialResource(Client, id);
         }
