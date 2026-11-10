@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.Compute.Recommender.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="ComputeRecommenderPlacementScoresResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ComputeRecommenderDiagnosticResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ComputeRecommenderPlacementScoresResource"/> object. </returns>
-        public virtual ComputeRecommenderPlacementScoresResource GetComputeRecommenderPlacementScoresResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ComputeRecommenderDiagnosticResource"/> object. </returns>
+        public virtual ComputeRecommenderDiagnosticResource GetComputeRecommenderDiagnosticResource(ResourceIdentifier id)
         {
-            ComputeRecommenderPlacementScoresResource.ValidateResourceId(id);
-            return new ComputeRecommenderPlacementScoresResource(Client, id);
+            ComputeRecommenderDiagnosticResource.ValidateResourceId(id);
+            return new ComputeRecommenderDiagnosticResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ComputePlacementScoresResource"/> along with the instance operations that can be performed on it but with no data. </summary>

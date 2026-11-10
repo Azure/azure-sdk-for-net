@@ -29,21 +29,21 @@ namespace Azure.ResourceManager.Compute.Recommender
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ComputeRecommenderPlacementScoresResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ComputeRecommenderDiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeRecommenderArmClient.GetComputeRecommenderPlacementScoresResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeRecommenderArmClient.GetComputeRecommenderDiagnosticResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ComputeRecommenderPlacementScoresResource"/> object. </returns>
-        public static ComputeRecommenderPlacementScoresResource GetComputeRecommenderPlacementScoresResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ComputeRecommenderDiagnosticResource"/> object. </returns>
+        public static ComputeRecommenderDiagnosticResource GetComputeRecommenderDiagnosticResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableComputeRecommenderArmClient(client).GetComputeRecommenderPlacementScoresResource(id);
+            return GetMockableComputeRecommenderArmClient(client).GetComputeRecommenderDiagnosticResource(id);
         }
 
         /// <summary>
@@ -83,20 +83,20 @@ namespace Azure.ResourceManager.Compute.Recommender
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ComputeRecommenderPlacementScoresResource"/> along with the instance operations that can be performed on it in the <see cref="SubscriptionResource"/>.
+        /// Gets an object representing a <see cref="ComputeRecommenderDiagnosticResource"/> along with the instance operations that can be performed on it in the <see cref="SubscriptionResource"/>.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableComputeRecommenderSubscriptionResource.GetComputeRecommenderPlacementScores()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableComputeRecommenderSubscriptionResource.GetComputeRecommenderDiagnostic()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> Returns a <see cref="ComputeRecommenderPlacementScoresResource"/> object. </returns>
-        public static ComputeRecommenderPlacementScoresResource GetComputeRecommenderPlacementScores(this SubscriptionResource subscriptionResource)
+        /// <returns> Returns a <see cref="ComputeRecommenderDiagnosticResource"/> object. </returns>
+        public static ComputeRecommenderDiagnosticResource GetComputeRecommenderDiagnostic(this SubscriptionResource subscriptionResource)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableComputeRecommenderSubscriptionResource(subscriptionResource).GetComputeRecommenderPlacementScores();
+            return GetMockableComputeRecommenderSubscriptionResource(subscriptionResource).GetComputeRecommenderDiagnostic();
         }
 
         /// <summary>

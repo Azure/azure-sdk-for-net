@@ -100,6 +100,11 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                 writer.WritePropertyName("placementPreference"u8);
                 writer.WriteNumberValue(PlacementPreference.Value);
             }
+            if (Optional.IsDefined(IsQuotaAvailable))
+            {
+                writer.WritePropertyName("isQuotaAvailable"u8);
+                writer.WriteBooleanValue(IsQuotaAvailable.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -147,6 +152,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             string availabilityZone = default;
             string score = default;
             int? placementPreference = default;
+            bool? isQuotaAvailable = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -183,6 +189,16 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                     placementPreference = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("isQuotaAvailable"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        isQuotaAvailable = null;
+                        continue;
+                    }
+                    isQuotaAvailable = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -194,6 +210,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                 availabilityZone,
                 score,
                 placementPreference,
+                isQuotaAvailable,
                 additionalBinaryDataProperties);
         }
     }

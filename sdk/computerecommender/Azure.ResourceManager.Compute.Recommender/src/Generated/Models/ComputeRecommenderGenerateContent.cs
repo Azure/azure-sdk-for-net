@@ -45,11 +45,6 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComputeRecommenderGenerateContent"/>. </summary>
-        public ComputeRecommenderGenerateContent() : this(default)
-        {
-        }
-
         /// <summary> The desired regions. If not set, the location from the request URI is used as the desired location. Each location in this list must be a valid Azure region. </summary>
         public IList<AzureLocation> DesiredLocations { get; }
 

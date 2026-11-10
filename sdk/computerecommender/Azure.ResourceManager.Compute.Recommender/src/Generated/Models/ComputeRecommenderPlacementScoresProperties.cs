@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <summary> Initializes a new instance of <see cref="ComputeRecommenderPlacementScoresProperties"/>. </summary>
         internal ComputeRecommenderPlacementScoresProperties()
         {
-            SupportedResourceTypes = new ChangeTrackingList<string>();
+            ComputeRecommenderDiagnosticSupportedResourceTypes = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeRecommenderPlacementScoresProperties"/>. </summary>
-        /// <param name="supportedResourceTypes"> Describes the supported resource types for placement scoring. </param>
+        /// <param name="computeRecommenderDiagnosticSupportedResourceTypes"> Describes the supported resource types for placement scoring. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeRecommenderPlacementScoresProperties(IList<string> supportedResourceTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeRecommenderPlacementScoresProperties(IList<string> computeRecommenderDiagnosticSupportedResourceTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SupportedResourceTypes = supportedResourceTypes;
+            ComputeRecommenderDiagnosticSupportedResourceTypes = computeRecommenderDiagnosticSupportedResourceTypes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Describes the supported resource types for placement scoring. </summary>
-        public IList<string> SupportedResourceTypes { get; } = new ChangeTrackingList<string>();
+        public IList<string> ComputeRecommenderDiagnosticSupportedResourceTypes { get; } = new ChangeTrackingList<string>();
     }
 }

@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.Compute.Recommender
         internal ComputeRecommenderPlacementScoresProperties Properties { get; }
 
         /// <summary> Describes the supported resource types for placement scoring. </summary>
-        public IList<string> ComputeRecommenderPlacementScoresSupportedResourceTypes
+        public IList<string> ComputeRecommenderDiagnosticSupportedResourceTypes
         {
             get
             {
-                return Properties is null ? default : Properties.SupportedResourceTypes;
+                return Properties is null ? default : Properties.ComputeRecommenderDiagnosticSupportedResourceTypes;
             }
         }
     }

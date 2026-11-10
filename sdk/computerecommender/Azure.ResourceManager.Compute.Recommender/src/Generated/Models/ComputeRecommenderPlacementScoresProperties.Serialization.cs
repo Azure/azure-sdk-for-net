@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             {
                 throw new FormatException($"The model {nameof(ComputeRecommenderPlacementScoresProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(SupportedResourceTypes))
+            if (Optional.IsCollectionDefined(ComputeRecommenderDiagnosticSupportedResourceTypes))
             {
                 writer.WritePropertyName("supportedResourceTypes"u8);
                 writer.WriteStartArray();
-                foreach (string item in SupportedResourceTypes)
+                foreach (string item in ComputeRecommenderDiagnosticSupportedResourceTypes)
                 {
                     if (item == null)
                     {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             {
                 return null;
             }
-            IList<string> supportedResourceTypes = default;
+            IList<string> computeRecommenderDiagnosticSupportedResourceTypes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                             array.Add(item.GetString());
                         }
                     }
-                    supportedResourceTypes = array;
+                    computeRecommenderDiagnosticSupportedResourceTypes = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ComputeRecommenderPlacementScoresProperties(supportedResourceTypes ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new ComputeRecommenderPlacementScoresProperties(computeRecommenderDiagnosticSupportedResourceTypes ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

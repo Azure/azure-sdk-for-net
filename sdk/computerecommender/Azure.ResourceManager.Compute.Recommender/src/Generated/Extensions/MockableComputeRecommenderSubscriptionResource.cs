@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.Compute.Recommender.Mocking
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ComputeRecommenderPlacementScoresResource"/>. </description>
+        /// <description> <see cref="ComputeRecommenderDiagnosticResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <returns> Returns a <see cref="ComputeRecommenderPlacementScoresResource"/> object. </returns>
-        public virtual ComputeRecommenderPlacementScoresResource GetComputeRecommenderPlacementScores()
+        /// <returns> Returns a <see cref="ComputeRecommenderDiagnosticResource"/> object. </returns>
+        public virtual ComputeRecommenderDiagnosticResource GetComputeRecommenderDiagnostic()
         {
-            return new ComputeRecommenderPlacementScoresResource(Client, Id.AppendProviderResource("Microsoft.Compute", "locations", "spot"));
+            return new ComputeRecommenderDiagnosticResource(Client, Id.AppendProviderResource("Microsoft.Compute", "locations", "spot"));
         }
 
         /// <summary>

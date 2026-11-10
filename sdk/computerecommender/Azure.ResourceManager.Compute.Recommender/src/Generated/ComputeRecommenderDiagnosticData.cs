@@ -14,24 +14,24 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute.Recommender
 {
     /// <summary> Contains metadata of the Spot Placement Scores resource. </summary>
-    public partial class ComputeRecommenderPlacementScoresData : ResourceData
+    public partial class ComputeRecommenderDiagnosticData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ComputeRecommenderPlacementScoresData"/>. </summary>
-        internal ComputeRecommenderPlacementScoresData()
+        /// <summary> Initializes a new instance of <see cref="ComputeRecommenderDiagnosticData"/>. </summary>
+        internal ComputeRecommenderDiagnosticData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ComputeRecommenderPlacementScoresData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComputeRecommenderDiagnosticData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Contains additional properties of a placement scores resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeRecommenderPlacementScoresData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ComputeRecommenderPlacementScoresProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal ComputeRecommenderDiagnosticData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ComputeRecommenderPlacementScoresProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.Compute.Recommender
         internal ComputeRecommenderPlacementScoresProperties Properties { get; }
 
         /// <summary> Describes the supported resource types for placement scoring. </summary>
-        public IList<string> ComputeRecommenderPlacementScoresSupportedResourceTypes
+        public IList<string> ComputeRecommenderDiagnosticSupportedResourceTypes
         {
             get
             {
-                return Properties is null ? default : Properties.SupportedResourceTypes;
+                return Properties is null ? default : Properties.ComputeRecommenderDiagnosticSupportedResourceTypes;
             }
         }
     }

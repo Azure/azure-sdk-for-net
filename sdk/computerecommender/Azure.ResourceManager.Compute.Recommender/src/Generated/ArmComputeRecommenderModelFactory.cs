@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="computeRecommenderPlacementScoresSupportedResourceTypes"> Describes the supported resource types for placement scoring. </param>
-        /// <returns> A new <see cref="Recommender.ComputeRecommenderPlacementScoresData"/> instance for mocking. </returns>
-        public static ComputeRecommenderPlacementScoresData ComputeRecommenderPlacementScoresData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> computeRecommenderPlacementScoresSupportedResourceTypes = default)
+        /// <param name="computeRecommenderDiagnosticSupportedResourceTypes"> Describes the supported resource types for placement scoring. </param>
+        /// <returns> A new <see cref="Recommender.ComputeRecommenderDiagnosticData"/> instance for mocking. </returns>
+        public static ComputeRecommenderDiagnosticData ComputeRecommenderDiagnosticData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> computeRecommenderDiagnosticSupportedResourceTypes = default)
         {
-            return new ComputeRecommenderPlacementScoresData(
+            return new ComputeRecommenderDiagnosticData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                computeRecommenderPlacementScoresSupportedResourceTypes is null ? default : new ComputeRecommenderPlacementScoresProperties((computeRecommenderPlacementScoresSupportedResourceTypes ?? new ChangeTrackingList<string>()).ToList(), default),
+                computeRecommenderDiagnosticSupportedResourceTypes is null ? default : new ComputeRecommenderPlacementScoresProperties((computeRecommenderDiagnosticSupportedResourceTypes ?? new ChangeTrackingList<string>()).ToList(), default),
                 default);
         }
 
@@ -79,38 +79,20 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                 default);
         }
 
-        /// <summary> The spot placement score for sku/region/zone combination. </summary>
-        /// <param name="sku"> The resource's CRP virtual machine SKU size. </param>
-        /// <param name="region"> The region. </param>
-        /// <param name="availabilityZone"> The availability zone. </param>
-        /// <param name="score"> A placement score indicating the likelihood of successfully allocating the specified Spot VM(s), as well as the expected lifetimes of the Spot VM(s) after allocation. </param>
-        /// <param name="placementPreference"> Placement preference from 0 to 10 (inclusive). Higher is better. </param>
-        /// <returns> A new <see cref="Models.ComputeRecommenderPlacementScore"/> instance for mocking. </returns>
-        public static ComputeRecommenderPlacementScore ComputeRecommenderPlacementScore(string sku = default, AzureLocation? region = default, string availabilityZone = default, string score = default, int? placementPreference = default)
-        {
-            return new ComputeRecommenderPlacementScore(
-                sku,
-                region,
-                availabilityZone,
-                score,
-                placementPreference,
-                default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="computeRecommenderPlacementScoresSupportedResourceTypes"> Describes the supported resource types for placement scoring. </param>
+        /// <param name="computeRecommenderDiagnosticSupportedResourceTypes"> Describes the supported resource types for placement scoring. </param>
         /// <returns> A new <see cref="Recommender.ComputePlacementScoresData"/> instance for mocking. </returns>
-        public static ComputePlacementScoresData ComputePlacementScoresData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> computeRecommenderPlacementScoresSupportedResourceTypes = default)
+        public static ComputePlacementScoresData ComputePlacementScoresData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> computeRecommenderDiagnosticSupportedResourceTypes = default)
         {
             return new ComputePlacementScoresData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                computeRecommenderPlacementScoresSupportedResourceTypes is null ? default : new ComputeRecommenderPlacementScoresProperties((computeRecommenderPlacementScoresSupportedResourceTypes ?? new ChangeTrackingList<string>()).ToList(), default),
+                computeRecommenderDiagnosticSupportedResourceTypes is null ? default : new ComputeRecommenderPlacementScoresProperties((computeRecommenderDiagnosticSupportedResourceTypes ?? new ChangeTrackingList<string>()).ToList(), default),
                 default);
         }
 

@@ -8,13 +8,6 @@
 - Added regular compute placement scoring through `GetComputePlacementScores`. The new request and result models expose zonal scope as `IsZonal`.
 - Added `ComputeRecommenderPlacementScore.PlacementPreference`.
 
-### Breaking Changes
-
-- Renamed `ComputeRecommenderDiagnosticData` and `ComputeRecommenderDiagnosticResource` to `ComputeRecommenderPlacementScoresData` and `ComputeRecommenderPlacementScoresResource`. The corresponding model factory, extension, and mocking methods now use the `PlacementScores` names.
-- Renamed `ComputeRecommenderDiagnosticSupportedResourceTypes` to `ComputeRecommenderPlacementScoresSupportedResourceTypes`.
-- Removed `ComputeRecommenderPlacementScore.IsQuotaAvailable`.
-- Replaced the `ArmComputeRecommenderModelFactory.ComputeRecommenderPlacementScore` overload accepting `bool? isQuotaAvailable` with an overload accepting `int? placementPreference`.
-
 ### Other Changes
 
 - Upgraded Azure.Core from 1.62.0 to 1.64.0.

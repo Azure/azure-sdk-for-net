@@ -28,14 +28,16 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <param name="availabilityZone"> The availability zone. </param>
         /// <param name="score"> A placement score indicating the likelihood of successfully allocating the specified Spot VM(s), as well as the expected lifetimes of the Spot VM(s) after allocation. </param>
         /// <param name="placementPreference"> Placement preference from 0 to 10 (inclusive). Higher is better. </param>
+        /// <param name="isQuotaAvailable"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeRecommenderPlacementScore(string sku, AzureLocation? region, string availabilityZone, string score, int? placementPreference, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeRecommenderPlacementScore(string sku, AzureLocation? region, string availabilityZone, string score, int? placementPreference, bool? isQuotaAvailable, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sku = sku;
             Region = region;
             AvailabilityZone = availabilityZone;
             Score = score;
             PlacementPreference = placementPreference;
+            IsQuotaAvailable = isQuotaAvailable;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
