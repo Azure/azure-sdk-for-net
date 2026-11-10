@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary>
     /// A class representing a collection of <see cref="TenantAssessmentMetadataResource"/> and their operations.
     /// Each <see cref="TenantAssessmentMetadataResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
-    /// To get a <see cref="TenantAssessmentMetadataCollection"/> instance call the GetTenantAssessmentMetadatas method from an instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="TenantAssessmentMetadataCollection"/> instance call the GetAllTenantAssessmentMetadata method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class TenantAssessmentMetadataCollection : ArmCollection, IEnumerable<TenantAssessmentMetadataResource>, IAsyncEnumerable<TenantAssessmentMetadataResource>
     {

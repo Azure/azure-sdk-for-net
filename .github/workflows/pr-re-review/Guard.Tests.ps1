@@ -8,6 +8,15 @@ BeforeAll {
     $script:GuardDirectory = $PSScriptRoot
     $script:RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..' '..' '..')).Path
     $script:Complete = 'Coverage: 64/64 threads fetched, 14/14 unresolved threads verified, 32/32 changed files reviewed'
+    $script:HeadSha = 'a' * 40
+    $script:GuardEnvironment = @{
+        GITHUB_REPOSITORY = 'Azure/azure-sdk-for-net'
+        PR_NUMBER = '63126'
+        PR_HEAD_SHA = $script:HeadSha
+        PR_UPDATED_AT = '2026-11-03T00:35:00Z'
+        GH_TOKEN = 'token'
+        GITHUB_GRAPHQL_URL = 'https://api.github.com/graphql'
+    }
 
     # Terminal output of run 40400877253: it read one 50-thread page of 64, skipped Steps 2 and 3,
     # and its review still published while every job passed.
@@ -25,6 +34,18 @@ BeforeAll {
         param([object[]]$Items)
 
         return @{ items = $Items; errors = @() }
+    }
+
+    function New-ThreadsPage {
+        param([object[]]$Opened, [int]$TotalCount, [string]$EndCursor, [int]$ChangedFiles = 32, [string]$HeadSha = ('a' * 40))
+
+        $nodes = @(foreach ($entry in $Opened) {
+            $comment = if ($entry -is [System.Collections.IDictionary]) { $entry } else { @{ createdAt = $entry; publishedAt = $entry; pullRequestReview = @{ submittedAt = $entry } } }
+            @{ comments = @{ nodes = @($comment) } }
+        })
+        $threads = @{ totalCount = $TotalCount; pageInfo = @{ hasNextPage = [bool]$EndCursor; endCursor = $EndCursor }; nodes = $nodes }
+        $data = @{ repository = @{ pullRequest = @{ headRefOid = $HeadSha; changedFiles = $ChangedFiles; reviewThreads = $threads } } }
+        return [pscustomobject]@{ Content = ConvertTo-Json -Depth 20 -Compress -InputObject @{ data = $data } }
     }
 
     function Get-YamlBlock {
@@ -199,25 +220,112 @@ Describe 'Assert-PrReReviewOutput' {
     ) {
         { Assert-PrReReviewOutput (ConvertFrom-PrReReviewJson $Json) } | Should -Throw -ExpectedMessage $Message
     }
+
+    It 'accepts totals that match GitHub, including a thread opened during the run' {
+        $expected = @{ AnalyzedHeadSha = $script:HeadSha; HeadSha = $script:HeadSha; ChangedFiles = 32; ThreadsBefore = 63; ThreadsNow = 65 }
+        { Assert-PrReReviewOutput (New-AgentOutput @(New-Review "Done.`n$script:Complete")) -Expected $expected } | Should -Not -Throw
+    }
+
+    It 'rejects a review that reports <Label>' -ForEach @(
+        @{ Label = 'only the 50 threads it fetched when 64 existed before the run'; Line = 'Coverage: 50/50 threads fetched, 14/14 unresolved threads verified, 32/32 changed files reviewed'; Totals = @{ ChangedFiles = 32; ThreadsBefore = 64; ThreadsNow = 64 }; Message = '*review threads*' }
+        @{ Label = 'more threads than exist'; Line = 'Coverage: 64/64 threads fetched, 14/14 unresolved threads verified, 32/32 changed files reviewed'; Totals = @{ ChangedFiles = 32; ThreadsBefore = 60; ThreadsNow = 63 }; Message = '*review threads*' }
+        @{ Label = 'a changed-file total that differs from the reviewed head'; Line = 'Coverage: 64/64 threads fetched, 14/14 unresolved threads verified, 31/31 changed files reviewed'; Totals = @{ ChangedFiles = 32; ThreadsBefore = 64; ThreadsNow = 64 }; Message = '*changed files*' }
+    ) {
+        $expected = $Totals + @{ AnalyzedHeadSha = $script:HeadSha; HeadSha = $script:HeadSha }
+        { Assert-PrReReviewOutput (New-AgentOutput @(New-Review "Done.`n$Line")) -Expected $expected } | Should -Throw -ExpectedMessage $Message
+    }
+
+    It 'does not hold a run to the changed-file total of a head pushed after it' {
+        $expected = @{ AnalyzedHeadSha = $script:HeadSha; HeadSha = 'b' * 40; ChangedFiles = 40; ThreadsBefore = 64; ThreadsNow = 64 }
+        Assert-PrReReviewOutput (New-AgentOutput @(New-Review "Done.`n$script:Complete")) -Expected $expected | Should -BeLike '*not checked*'
+    }
+}
+
+Describe 'Get-PrReReviewTotals' {
+    BeforeAll {
+        Import-Module (Join-Path $PSScriptRoot 'PrReReviewGuard.psm1') -Force
+        $script:TotalsArguments = @{ Repository = 'Azure/azure-sdk-for-net'; Number = 63126; AnalyzedHeadSha = $script:HeadSha; Since = '2026-11-03T00:35:00Z'; Token = 'token' }
+    }
+
+    It 'counts every thread and the threads opened before the run across pages' {
+        Mock -ModuleName PrReReviewGuard Invoke-WebRequest -ParameterFilter { $Body -notmatch '"cursor":"page2"' } {
+            New-ThreadsPage -Opened '2026-11-02T10:00:00Z', '2026-11-03T00:40:00Z' -TotalCount 3 -EndCursor 'page2'
+        }
+        Mock -ModuleName PrReReviewGuard Invoke-WebRequest -ParameterFilter { $Body -match '"cursor":"page2"' } {
+            New-ThreadsPage -Opened '2026-10-28T05:27:31Z' -TotalCount 3
+        }
+
+        $totals = Get-PrReReviewTotals @script:TotalsArguments
+
+        $totals.ThreadsBefore | Should -Be 2
+        $totals.ThreadsNow | Should -Be 3
+        $totals.ChangedFiles | Should -Be 32
+        $totals.HeadSha | Should -BeExactly $script:HeadSha
+        Should -Invoke -ModuleName PrReReviewGuard Invoke-WebRequest -Times 2 -Exactly
+    }
+
+    It 'does not let a thread drafted before the run but submitted after it raise the floor' {
+        Mock -ModuleName PrReReviewGuard Invoke-WebRequest {
+            New-ThreadsPage -TotalCount 3 -Opened @(
+                '2026-11-02T10:00:00Z'
+                @{ createdAt = '2026-11-02T09:00:00Z'; publishedAt = '2026-11-03T00:50:00Z'; pullRequestReview = @{ submittedAt = '2026-11-03T00:50:00Z' } }
+                @{ createdAt = '2026-11-02T09:00:00Z'; publishedAt = '2026-11-02T09:00:00Z'; pullRequestReview = @{ submittedAt = '2026-11-03T00:50:00Z' } }
+            )
+        }
+
+        $totals = Get-PrReReviewTotals @script:TotalsArguments
+
+        $totals.ThreadsBefore | Should -Be 1
+        $totals.ThreadsNow | Should -Be 3
+    }
+
+    It 'fails when GitHub returns <Label>' -ForEach @(
+        @{ Label = 'GraphQL errors'; Content = '{"errors":[{"message":"Bad credentials"}]}'; Message = '*GraphQL returned errors*' }
+        @{ Label = 'no pull request'; Content = '{"data":{"repository":{"pullRequest":null}}}'; Message = '*not found*' }
+    ) {
+        Mock -ModuleName PrReReviewGuard Invoke-WebRequest { [pscustomobject]@{ Content = $Content } }
+        { Get-PrReReviewTotals @script:TotalsArguments } | Should -Throw -ExpectedMessage $Message
+    }
 }
 
 Describe 'Invoke-PrReReviewGuard.ps1' {
     BeforeEach {
-        $script:PreviousAgentOutput = $env:AGENT_OUTPUT
+        $script:SavedEnvironment = @{}
+        foreach ($name in @($script:GuardEnvironment.Keys) + 'AGENT_OUTPUT') {
+            $script:SavedEnvironment[$name] = [Environment]::GetEnvironmentVariable($name)
+        }
     }
 
     AfterEach {
-        $env:AGENT_OUTPUT = $script:PreviousAgentOutput
+        foreach ($entry in $script:SavedEnvironment.GetEnumerator()) {
+            [Environment]::SetEnvironmentVariable($entry.Key, $entry.Value)
+        }
     }
 
     It 'fails when the agent output path is missing' {
         $env:AGENT_OUTPUT = $null
         { & (Join-Path $script:GuardDirectory 'Invoke-PrReReviewGuard.ps1') } | Should -Throw -ExpectedMessage 'Missing AGENT_OUTPUT.'
     }
+
+    It 'fails instead of skipping the totals check when <Name> is missing' -ForEach @(
+        @{ Name = 'GITHUB_REPOSITORY' }
+        @{ Name = 'PR_NUMBER' }
+        @{ Name = 'PR_HEAD_SHA' }
+        @{ Name = 'PR_UPDATED_AT' }
+        @{ Name = 'GH_TOKEN' }
+    ) {
+        $env:AGENT_OUTPUT = Join-Path $TestDrive 'agent_output.json'
+        foreach ($entry in $script:GuardEnvironment.GetEnumerator()) {
+            [Environment]::SetEnvironmentVariable($entry.Key, $entry.Value)
+        }
+        [Environment]::SetEnvironmentVariable($Name, $null)
+        { & (Join-Path $script:GuardDirectory 'Invoke-PrReReviewGuard.ps1') } | Should -Throw -ExpectedMessage "Missing $Name."
+    }
 }
 
 Describe 'Compiled re-review publication guard' {
     BeforeAll {
+        Import-Module (Join-Path $PSScriptRoot 'PrReReviewGuard.psm1') -Force
         $script:Steps = Get-CompiledSteps
         $script:StepNames = [string[]]@($script:Steps | ForEach-Object Name)
 
@@ -235,18 +343,32 @@ Describe 'Compiled re-review publication guard' {
             $guard = Get-Step 'Require complete re-review coverage before publishing'
             Get-StepProperty $guard 'shell' | Should -BeExactly 'pwsh'
             $environment = Get-StepMapping $guard 'env'
-            $environment.Count | Should -Be 1
+            @($environment.Keys | Sort-Object) | Should -Be @('AGENT_OUTPUT', 'GH_TOKEN', 'PR_HEAD_SHA', 'PR_NUMBER', 'PR_UPDATED_AT')
             $environment['AGENT_OUTPUT'] | Should -BeExactly '${{ steps.setup-agent-output-env.outputs.GH_AW_AGENT_OUTPUT }}'
-            $previous = $env:AGENT_OUTPUT
-            $env:AGENT_OUTPUT = $AgentOutputPath
+            $environment['GH_TOKEN'] | Should -BeExactly '${{ github.token }}'
+            $environment['PR_NUMBER'] | Should -BeExactly '${{ github.event.pull_request.number }}'
+            $environment['PR_HEAD_SHA'] | Should -BeExactly '${{ github.event.pull_request.head.sha }}'
+            $environment['PR_UPDATED_AT'] | Should -BeExactly '${{ github.event.pull_request.updated_at }}'
+            $values = $script:GuardEnvironment + @{ AGENT_OUTPUT = $AgentOutputPath }
+            $previous = @{}
+            foreach ($entry in $values.GetEnumerator()) {
+                $previous[$entry.Key] = [Environment]::GetEnvironmentVariable($entry.Key)
+                [Environment]::SetEnvironmentVariable($entry.Key, $entry.Value)
+            }
             Push-Location $script:RepoRoot
             try {
                 & ([scriptblock]::Create((Get-StepProperty $guard 'run')))
             } finally {
                 Pop-Location
-                $env:AGENT_OUTPUT = $previous
+                foreach ($entry in $previous.GetEnumerator()) {
+                    [Environment]::SetEnvironmentVariable($entry.Key, $entry.Value)
+                }
             }
         }
+    }
+
+    BeforeEach {
+        Mock -ModuleName PrReReviewGuard Invoke-WebRequest { New-ThreadsPage -Opened (@('2026-11-01T00:00:00Z') * 64) -TotalCount 64 }
     }
 
     It 'checks out the guard from the trusted PR base without persisting credentials' {
@@ -296,6 +418,14 @@ Describe 'Compiled re-review publication guard' {
         $output = New-AgentOutput @(New-Review "Re-review of head abc1234.`n`n$script:Complete`n`nNo new findings.")
         [IO.File]::WriteAllText($path, (ConvertTo-Json -InputObject $output -Depth 10 -Compress))
         { Invoke-CompiledGuard $path } | Should -Not -Throw
+    }
+
+    It 'blocks a review whose changed-file total does not match GitHub when the compiled step runs the guard' {
+        Mock -ModuleName PrReReviewGuard Invoke-WebRequest { New-ThreadsPage -Opened (@('2026-11-01T00:00:00Z') * 64) -TotalCount 64 -ChangedFiles 33 }
+        $path = Join-Path $TestDrive 'agent_output.json'
+        $output = New-AgentOutput @(New-Review "Re-review of head abc1234.`n`n$script:Complete`n`nNo new findings.")
+        [IO.File]::WriteAllText($path, (ConvertTo-Json -InputObject $output -Depth 10 -Compress))
+        { Invoke-CompiledGuard $path } | Should -Throw -ExpectedMessage '*changed files*'
     }
 }
 

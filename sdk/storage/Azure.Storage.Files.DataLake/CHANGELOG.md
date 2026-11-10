@@ -1,6 +1,16 @@
 # Release History
 
-## 12.29.0-beta.1 (Unreleased)
+## 12.29.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.29.0-beta.1 (2026-11-05)
 
 ### Features Added
 - Added support for Session Authentication for `TokenCredential`-authenticated clients using GET Blob operations. This is currently disabled by default and can be enabled via `DataLakeClientOptions.SessionOptions.SessionMode`.
@@ -22,8 +32,6 @@
   - `DataLakePathClient.GenerateUserDelegationSasUri(...)`
   - `DataLakeServiceClient.GenerateAccountSasUri(...)`
   - `DataLakeSasBuilder`
-
-### Other Changes
 
 ## 12.28.0 (2026-09-28)
 

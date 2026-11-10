@@ -97,6 +97,7 @@ namespace Azure.AI.FormRecognizer.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/64511")]
         public async Task FormTrainingClientThrowsWithNonExistingResourceEndpoint()
         {
             var client = CreateClient();
