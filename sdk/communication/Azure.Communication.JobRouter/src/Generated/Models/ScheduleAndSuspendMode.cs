@@ -14,6 +14,11 @@ namespace Azure.Communication.JobRouter
     public partial class ScheduleAndSuspendMode : JobMatchingMode
     {
         /// <summary> Initializes a new instance of <see cref="ScheduleAndSuspendMode"/>. </summary>
+        internal ScheduleAndSuspendMode() : base(JobMatchingModeKind.ScheduleAndSuspend)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScheduleAndSuspendMode"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of JobMatchingMode. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="scheduleAt"> Requested schedule time. </param>
