@@ -11,23 +11,23 @@ using System.Linq;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary> The RenewLocksRequest. </summary>
-    internal partial class RenewLocksRequest
+    /// <summary> The RenewLocksContent. </summary>
+    internal partial class RenewLocksContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RenewLocksRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RenewLocksContent"/>. </summary>
         /// <param name="lockTokens"> Array of lock tokens. </param>
-        internal RenewLocksRequest(IEnumerable<string> lockTokens)
+        internal RenewLocksContent(IEnumerable<string> lockTokens)
         {
             LockTokens = lockTokens.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RenewLocksRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RenewLocksContent"/>. </summary>
         /// <param name="lockTokens"> Array of lock tokens. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RenewLocksRequest(IList<string> lockTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RenewLocksContent(IList<string> lockTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LockTokens = lockTokens;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
