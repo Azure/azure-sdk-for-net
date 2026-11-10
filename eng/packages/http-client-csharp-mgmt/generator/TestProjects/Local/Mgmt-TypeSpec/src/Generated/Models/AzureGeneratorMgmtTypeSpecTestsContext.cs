@@ -114,6 +114,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(JooResource))]
     [ModelReaderWriterBuildable(typeof(KeyEncryptionKeyIdentity))]
     [ModelReaderWriterBuildable(typeof(LimitJsonObject))]
+    [ModelReaderWriterBuildable(typeof(LocationSingletonData))]
+    [ModelReaderWriterBuildable(typeof(LocationSingletonResource))]
     [ModelReaderWriterBuildable(typeof(MaintenanceWindow))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MarketplaceDetails))]

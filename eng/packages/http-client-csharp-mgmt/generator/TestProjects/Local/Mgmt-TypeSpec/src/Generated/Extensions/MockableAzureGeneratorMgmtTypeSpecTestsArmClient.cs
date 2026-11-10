@@ -83,6 +83,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <returns> Returns a <see cref="FooConfigurationResource"/> object. </returns>
         public virtual FooConfigurationResource GetFooConfigurationResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != FooConfigurationResource.ResourceType || segments.Length != 9 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "MgmtTypeSpec", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "FooSettings", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[8], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/FooSettings/default"), nameof(id));
+            }
             FooConfigurationResource.ValidateResourceId(id);
             return new FooConfigurationResource(Client, id);
         }
@@ -92,6 +101,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <returns> Returns a <see cref="BarSettingsResource"/> object. </returns>
         public virtual BarSettingsResource GetBarSettingsResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != BarSettingsResource.ResourceType || segments.Length != 13 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "MgmtTypeSpec", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "foos", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "bars", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "settings", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[12], "current", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}/settings/current"), nameof(id));
+            }
             BarSettingsResource.ValidateResourceId(id);
             return new BarSettingsResource(Client, id);
         }
@@ -246,6 +264,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         public virtual HciVmInstanceResource GetHciVmInstanceResource(ResourceIdentifier id)
         {
             HciVmInstanceResource.ValidateResourceId(id);
+            if (id != null && id.ResourceType == HciVmInstanceResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new HciVmInstanceResource(Client, id);
         }
 
@@ -837,6 +859,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
             AcronymWidgetResource.ValidateResourceId(id);
             return new AcronymWidgetResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="LocationSingletonResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="LocationSingletonResource"/> object. </returns>
+        public virtual LocationSingletonResource GetLocationSingletonResource(ResourceIdentifier id)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != LocationSingletonResource.ResourceType || segments.Length != 9 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[4], "MgmtTypeSpec", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[5], "locations", StringComparison.OrdinalIgnoreCase) || segments[6] == "" || !string.Equals(segments[6], new AzureLocation(segments[6]).ToString(), StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "locationSingletons", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[8], "current", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/providers/MgmtTypeSpec/locations/{location}/locationSingletons/current"), nameof(id));
+            }
+            LocationSingletonResource.ValidateResourceId(id);
+            return new LocationSingletonResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="BarResource"/> along with the instance operations that can be performed on it but with no data. </summary>
