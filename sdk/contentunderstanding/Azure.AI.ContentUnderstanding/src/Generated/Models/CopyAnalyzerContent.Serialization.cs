@@ -13,67 +13,67 @@ using Azure.Core;
 
 namespace Azure.AI.ContentUnderstanding
 {
-    /// <summary> The CopyAnalyzerRequest. </summary>
-    internal partial class CopyAnalyzerRequest : IJsonModel<CopyAnalyzerRequest>
+    /// <summary> The CopyAnalyzerContent. </summary>
+    internal partial class CopyAnalyzerContent : IJsonModel<CopyAnalyzerContent>
     {
-        /// <summary> Initializes a new instance of <see cref="CopyAnalyzerRequest"/> for deserialization. </summary>
-        internal CopyAnalyzerRequest()
+        /// <summary> Initializes a new instance of <see cref="CopyAnalyzerContent"/> for deserialization. </summary>
+        internal CopyAnalyzerContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CopyAnalyzerRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CopyAnalyzerContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CopyAnalyzerRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CopyAnalyzerContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCopyAnalyzerRequest(document.RootElement, options);
+                        return DeserializeCopyAnalyzerContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CopyAnalyzerRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CopyAnalyzerContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CopyAnalyzerRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CopyAnalyzerContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CopyAnalyzerRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CopyAnalyzerContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CopyAnalyzerRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CopyAnalyzerContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CopyAnalyzerRequest IPersistableModel<CopyAnalyzerRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CopyAnalyzerContent IPersistableModel<CopyAnalyzerContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CopyAnalyzerRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CopyAnalyzerContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="copyAnalyzerRequest"> The <see cref="CopyAnalyzerRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(CopyAnalyzerRequest copyAnalyzerRequest)
+        /// <param name="copyAnalyzerContent"> The <see cref="CopyAnalyzerContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(CopyAnalyzerContent copyAnalyzerContent)
         {
-            if (copyAnalyzerRequest == null)
+            if (copyAnalyzerContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(copyAnalyzerRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(copyAnalyzerContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CopyAnalyzerRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CopyAnalyzerContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -84,10 +84,10 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CopyAnalyzerRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CopyAnalyzerContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CopyAnalyzerRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CopyAnalyzerContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(SourceAzureResourceId))
             {
@@ -120,24 +120,24 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CopyAnalyzerRequest IJsonModel<CopyAnalyzerRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CopyAnalyzerContent IJsonModel<CopyAnalyzerContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CopyAnalyzerRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CopyAnalyzerContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CopyAnalyzerRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CopyAnalyzerContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CopyAnalyzerRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CopyAnalyzerContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCopyAnalyzerRequest(document.RootElement, options);
+            return DeserializeCopyAnalyzerContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CopyAnalyzerRequest DeserializeCopyAnalyzerRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static CopyAnalyzerContent DeserializeCopyAnalyzerContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -169,7 +169,7 @@ namespace Azure.AI.ContentUnderstanding
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CopyAnalyzerRequest(sourceAzureResourceId, sourceRegion, sourceAnalyzerId, additionalBinaryDataProperties);
+            return new CopyAnalyzerContent(sourceAzureResourceId, sourceRegion, sourceAnalyzerId, additionalBinaryDataProperties);
         }
     }
 }
