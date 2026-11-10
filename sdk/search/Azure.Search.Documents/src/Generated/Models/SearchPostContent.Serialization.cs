@@ -14,62 +14,62 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> The SearchPostRequest. </summary>
-    internal partial class SearchPostRequest : IJsonModel<SearchPostRequest>
+    /// <summary> The SearchPostContent. </summary>
+    internal partial class SearchPostContent : IJsonModel<SearchPostContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SearchPostRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SearchPostContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchPostRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchPostContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSearchPostRequest(document.RootElement, options);
+                        return DeserializeSearchPostContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SearchPostRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchPostContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchPostRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchPostContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SearchPostRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchPostContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SearchPostRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SearchPostContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SearchPostRequest IPersistableModel<SearchPostRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SearchPostContent IPersistableModel<SearchPostContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SearchPostRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SearchPostContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="searchPostRequest"> The <see cref="SearchPostRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(SearchPostRequest searchPostRequest)
+        /// <param name="searchPostContent"> The <see cref="SearchPostContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(SearchPostContent searchPostContent)
         {
-            if (searchPostRequest == null)
+            if (searchPostContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(searchPostRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(searchPostContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SearchPostRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SearchPostContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.Search.Documents.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchPostRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchPostContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchPostRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchPostContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(IncludeTotalCount))
             {
@@ -294,24 +294,24 @@ namespace Azure.Search.Documents.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SearchPostRequest IJsonModel<SearchPostRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SearchPostContent IJsonModel<SearchPostContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SearchPostRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SearchPostContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchPostRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchPostContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchPostRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchPostContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSearchPostRequest(document.RootElement, options);
+            return DeserializeSearchPostContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SearchPostRequest DeserializeSearchPostRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static SearchPostContent DeserializeSearchPostContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -657,7 +657,7 @@ namespace Azure.Search.Documents.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SearchPostRequest(
+            return new SearchPostContent(
                 includeTotalCount,
                 facets ?? new ChangeTrackingList<string>(),
                 filter,
