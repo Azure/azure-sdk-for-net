@@ -17,13 +17,6 @@ namespace Azure.AI.Projects.Evaluation
     public partial class AzureAIAgentTarget : EvaluationTarget
     {
         /// <summary> Initializes a new instance of <see cref="AzureAIAgentTarget"/>. </summary>
-        public AzureAIAgentTarget() : base("azure_ai_agent")
-        {
-            ToolDescriptions = new ChangeTrackingList<ToolDescription>();
-            Tools = new ChangeTrackingList<ResponseTool>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AzureAIAgentTarget"/>. </summary>
         /// <param name="type"> The type of target. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The name of the Azure AI agent to invoke as the evaluation target. </param>
