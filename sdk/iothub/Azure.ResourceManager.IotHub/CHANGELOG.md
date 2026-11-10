@@ -4,7 +4,17 @@
 
 ### Features Added
 
+- Upgraded API version from `2026-10-01-preview` to `2026-11-01`.
+
 ### Breaking Changes
+
+The following preview-only features are not available in the stable `2026-11-01` API version and have been removed:
+
+- Removed MQTT v5 support: `IotHubProperties.ConnectionProfile`, `IotHubProperties.MqttV5TopicGroups` and the `IotHubConnectionProfile` and `MqttV5TopicGroup` types.
+- Removed `MessagePayloadFormat` property and `IotHubMessagePayloadFormat` type from all routing endpoint property models (`RoutingCosmosDBSqlApiProperties`, `RoutingEventHubProperties`, `RoutingEventStreamProperties`, `RoutingServiceBusQueueEndpointProperties`, `RoutingServiceBusTopicEndpointProperties`, `RoutingStorageContainerProperties`).
+- Removed `RoutingRuleProperties.DataSchema` property.
+- Removed `IotHubProperties.Encryption`, `IotHubProperties.RootCertificate`, `IotHubProperties.IPVersion` and `IotHubProperties.DeviceStreamsStreamingEndpoints` properties, along with the `IotHubEncryptionProperties`, `IotHubKeyVaultKeyProperties`, `IotHubRootCertificateProperties` and `IotHubIPVersion` types.
+- Removed `IotHubRoutingSource.DigitalTwinChangeEvents` and `IotHubRoutingSource.MqttBrokerMessages` values.
 
 ### Bugs Fixed
 
