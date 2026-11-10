@@ -25,7 +25,7 @@ namespace Azure.Provisioning.Network
         /// <summary> Creates a new OutboundRule. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public OutboundRule(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/loadBalancers/outboundRules", resourceVersion ?? "2026-03-01")
+        internal OutboundRule(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/loadBalancers/outboundRules", resourceVersion ?? "2026-03-01")
         {
         }
 

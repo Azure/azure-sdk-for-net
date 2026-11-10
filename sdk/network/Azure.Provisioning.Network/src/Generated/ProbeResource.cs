@@ -25,7 +25,7 @@ namespace Azure.Provisioning.Network
         /// <summary> Creates a new ProbeResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ProbeResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/loadBalancers/probes", resourceVersion ?? "2026-03-01")
+        internal ProbeResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/loadBalancers/probes", resourceVersion ?? "2026-03-01")
         {
         }
 

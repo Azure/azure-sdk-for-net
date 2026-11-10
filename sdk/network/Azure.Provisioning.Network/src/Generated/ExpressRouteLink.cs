@@ -24,7 +24,7 @@ namespace Azure.Provisioning.Network
         /// <summary> Creates a new ExpressRouteLink. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ExpressRouteLink(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/ExpressRoutePorts/links", resourceVersion ?? "2026-03-01")
+        internal ExpressRouteLink(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/ExpressRoutePorts/links", resourceVersion ?? "2026-03-01")
         {
         }
 

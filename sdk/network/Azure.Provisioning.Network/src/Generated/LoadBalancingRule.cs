@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Network
         /// <summary> Creates a new LoadBalancingRule. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public LoadBalancingRule(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/loadBalancers/loadBalancingRules", resourceVersion ?? "2026-03-01")
+        internal LoadBalancingRule(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/loadBalancers/loadBalancingRules", resourceVersion ?? "2026-03-01")
         {
         }
 
