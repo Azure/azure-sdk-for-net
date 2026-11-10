@@ -124,7 +124,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ClusterData> response = Response.FromValue(ClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -172,7 +172,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ClusterData> response = Response.FromValue(ClusterData.FromResponse(result), result);
                 if (response.Value == null)
@@ -225,7 +225,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _clustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ClusterData.ToRequestContent(data), context);
+                HttpMessage message = _clustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ClusterData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<ClusterResource> operation = new TestsArmOperation<ClusterResource>(
                     new ClusterResourceOperationSource(Client),
@@ -285,7 +285,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _clustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ClusterData.ToRequestContent(data), context);
+                HttpMessage message = _clustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ClusterData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<ClusterResource> operation = new TestsArmOperation<ClusterResource>(
                     new ClusterResourceOperationSource(Client),
@@ -341,7 +341,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _clustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _clustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation operation = new TestsArmOperation(
                     _clustersClientDiagnostics,
@@ -396,7 +396,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _clustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _clustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation operation = new TestsArmOperation(
                     _clustersClientDiagnostics,
@@ -441,7 +441,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ClusterData> response = Response.FromValue(ClusterData.FromResponse(result), result);
                     return Response.FromValue(new ClusterResource(Client, response.Value), response.GetRawResponse());
@@ -489,7 +489,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ClusterData> response = Response.FromValue(ClusterData.FromResponse(result), result);
                     return Response.FromValue(new ClusterResource(Client, response.Value), response.GetRawResponse());
@@ -535,7 +535,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ClusterData> response = Response.FromValue(ClusterData.FromResponse(result), result);
                     return Response.FromValue(new ClusterResource(Client, response.Value), response.GetRawResponse());
@@ -577,7 +577,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ClusterData> response = Response.FromValue(ClusterData.FromResponse(result), result);
                     return Response.FromValue(new ClusterResource(Client, response.Value), response.GetRawResponse());
@@ -619,7 +619,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ClusterData> response = Response.FromValue(ClusterData.FromResponse(result), result);
                     return Response.FromValue(new ClusterResource(Client, response.Value), response.GetRawResponse());
@@ -665,7 +665,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _clustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ClusterData> response = Response.FromValue(ClusterData.FromResponse(result), result);
                     return Response.FromValue(new ClusterResource(Client, response.Value), response.GetRawResponse());
