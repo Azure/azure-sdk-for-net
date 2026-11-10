@@ -10,17 +10,35 @@ namespace Azure.Data.AI.Tests
 {
     public class EmbeddingModelFactoryTests
     {
+        [Test]
+        public void ResultRoundTripPreservesObjectWireConstant()
+        {
+            var result = ModelReaderWriter.Read<MultimodalEmbeddingResult>(
+                BinaryData.FromString("{\"object\":\"list\",\"model\":\"test-model\",\"modelVersion\":\"v1\",\"outputDataKind\":\"float32\",\"data\":[],\"usage\":{\"imageCount\":0}}"),
+                ModelReaderWriterOptions.Json,
+                AzureDataAIContext.Default);
+
+            using JsonDocument json = Serialize(result);
+
+            Assert.That(json.RootElement.GetProperty("object").GetString(), Is.EqualTo("list"));
+            Assert.That(result.OutputDataKind, Is.EqualTo(EmbeddingOutputDataKind.Float32));
+        }
+
         [TestCase(false)]
         [TestCase(true)]
         public void OutputSerializesOptionalFactoryUrl(bool includeUrl)
         {
             Uri url = includeUrl ? new Uri("https://example.blob.core.windows.net/results/output.json") : null;
-            var output = InferenceModelFactory.MultimodalEmbeddingOutput(id: "output-id", uri: url, records: 3);
+            var output = InferenceModelFactory.MultimodalEmbeddingOutput(
+                id: "output-id", uri: url, recordCount: 3, sizeInBytes: 129960);
 
             using JsonDocument json = Serialize(output);
 
             Assert.That(json.RootElement.GetProperty("id").GetString(), Is.EqualTo("output-id"));
             Assert.That(json.RootElement.GetProperty("records").GetInt32(), Is.EqualTo(3));
+            Assert.That(json.RootElement.GetProperty("sizeInBytes").GetInt64(), Is.EqualTo(129960));
+            Assert.That(json.RootElement.TryGetProperty("recordCount", out _), Is.False);
+            Assert.That(json.RootElement.TryGetProperty("bytes", out _), Is.False);
             Assert.That(json.RootElement.GetProperty("url").ValueKind, Is.EqualTo(includeUrl ? JsonValueKind.String : JsonValueKind.Null));
             Assert.That(json.RootElement.GetProperty("url").GetString(), Is.EqualTo(url?.AbsoluteUri));
         }
@@ -31,7 +49,7 @@ namespace Azure.Data.AI.Tests
         {
             var item = kind == null
                 ? InferenceModelFactory.MultimodalEmbeddingItem(index: 1, tokens: 10)
-                : InferenceModelFactory.MultimodalEmbeddingItem(index: 1, type: EmbeddingContentType.Text, tokens: 10, kind: kind);
+                : InferenceModelFactory.MultimodalEmbeddingItem(index: 1, contentKind: EmbeddingContentKind.Text, tokens: 10, kind: kind);
 
             Assert.That(item.Index, Is.EqualTo(1));
             Assert.That(item.Tokens, Is.EqualTo(10));

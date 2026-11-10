@@ -12,22 +12,22 @@ using System.Text.Json;
 
 namespace Azure.Data.AI
 {
-    /// <summary> The result for one item when `vectorType` is `dense_multi`: a dense vector and one vector per token, from one model run. </summary>
+    /// <summary> The result for one item when `vectorKind` is `dense_multi`: a dense vector and one vector per token, from one model run. </summary>
     public partial class MultimodalDenseAndMultiVectorEmbedding : MultimodalEmbeddingItem
     {
         /// <summary> Initializes a new instance of <see cref="MultimodalDenseAndMultiVectorEmbedding"/>. </summary>
         /// <param name="index"> The zero-based position of the item in the request. </param>
-        /// <param name="type"> The item's kind. </param>
+        /// <param name="contentKind"> The item's content kind, as supplied in the request's `kind`. </param>
         /// <param name="shape"> The number of multi-vectors and their number of dimensions: `[vectors, multiDimensions]`. </param>
         /// <param name="embedding">
         /// The dense vector: an array of numbers, or, when `encodingFormat` is `base64`, a base64 string of its little-endian
-        /// `outputDtype` values.
+        /// `outputDataKind` values.
         /// </param>
         /// <param name="multiEmbedding">
         /// The multi-vectors: an array of arrays of numbers, or, when `encodingFormat` is `base64`, one base64 string of all
-        /// their little-endian `outputDtype` values in row-major order. Decode it and reshape it to `shape`.
+        /// their little-endian `outputDataKind` values in row-major order. Decode it and reshape it to `shape`.
         /// </param>
-        internal MultimodalDenseAndMultiVectorEmbedding(int index, EmbeddingContentType @type, IEnumerable<int> shape, BinaryData embedding, BinaryData multiEmbedding) : base(index, @type, EmbeddingVectorType.DenseAndMulti)
+        internal MultimodalDenseAndMultiVectorEmbedding(int index, EmbeddingContentKind contentKind, IEnumerable<int> shape, BinaryData embedding, BinaryData multiEmbedding) : base(index, contentKind, EmbeddingVectorKind.DenseAndMulti)
         {
             Shape = shape.ToList();
             Embedding = embedding;
@@ -37,8 +37,8 @@ namespace Azure.Data.AI
         /// <summary> Initializes a new instance of <see cref="MultimodalDenseAndMultiVectorEmbedding"/>. </summary>
         /// <param name="index"> The zero-based position of the item in the request. </param>
         /// <param name="id"> The item's `id` from the request, if it had one. </param>
-        /// <param name="type"> The item's kind. </param>
-        /// <param name="kind"> The kind of vectors returned, as requested in `vectorType`. </param>
+        /// <param name="contentKind"> The item's content kind, as supplied in the request's `kind`. </param>
+        /// <param name="kind"> The kind of vectors returned, as requested in `vectorKind`. </param>
         /// <param name="width"> For images: the width in pixels. </param>
         /// <param name="height"> For images: the height in pixels. </param>
         /// <param name="format"> For images: the detected image format. </param>
@@ -56,13 +56,13 @@ namespace Azure.Data.AI
         /// <param name="shape"> The number of multi-vectors and their number of dimensions: `[vectors, multiDimensions]`. </param>
         /// <param name="embedding">
         /// The dense vector: an array of numbers, or, when `encodingFormat` is `base64`, a base64 string of its little-endian
-        /// `outputDtype` values.
+        /// `outputDataKind` values.
         /// </param>
         /// <param name="multiEmbedding">
         /// The multi-vectors: an array of arrays of numbers, or, when `encodingFormat` is `base64`, one base64 string of all
-        /// their little-endian `outputDtype` values in row-major order. Decode it and reshape it to `shape`.
+        /// their little-endian `outputDataKind` values in row-major order. Decode it and reshape it to `shape`.
         /// </param>
-        internal MultimodalDenseAndMultiVectorEmbedding(int index, string id, EmbeddingContentType @type, EmbeddingVectorType kind, int? width, int? height, EmbeddingImageFormat? format, long? tokens, long? visualTokens, bool? truncated, long? inputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<int> shape, BinaryData embedding, BinaryData multiEmbedding) : base(index, id, @type, kind, width, height, format, tokens, visualTokens, truncated, inputTokens, additionalBinaryDataProperties)
+        internal MultimodalDenseAndMultiVectorEmbedding(int index, string id, EmbeddingContentKind contentKind, EmbeddingVectorKind kind, int? width, int? height, EmbeddingImageFormat? format, long? tokens, long? visualTokens, bool? truncated, long? inputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<int> shape, BinaryData embedding, BinaryData multiEmbedding) : base(index, id, contentKind, kind, width, height, format, tokens, visualTokens, truncated, inputTokens, additionalBinaryDataProperties)
         {
             Shape = shape;
             Embedding = embedding;
@@ -74,7 +74,7 @@ namespace Azure.Data.AI
 
         /// <summary>
         /// The dense vector: an array of numbers, or, when `encodingFormat` is `base64`, a base64 string of its little-endian
-        /// `outputDtype` values.
+        /// `outputDataKind` values.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
@@ -116,7 +116,7 @@ namespace Azure.Data.AI
 
         /// <summary>
         /// The multi-vectors: an array of arrays of numbers, or, when `encodingFormat` is `base64`, one base64 string of all
-        /// their little-endian `outputDtype` values in row-major order. Decode it and reshape it to `shape`.
+        /// their little-endian `outputDataKind` values in row-major order. Decode it and reshape it to `shape`.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>

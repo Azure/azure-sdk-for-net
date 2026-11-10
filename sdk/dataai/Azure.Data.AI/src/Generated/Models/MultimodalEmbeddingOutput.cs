@@ -27,18 +27,18 @@ namespace Azure.Data.AI
         /// `GET {url}?{sasToken}`.
         /// </param>
         /// <param name="expiresOn"> When `sasToken` stops working. After that, send the request again, or use `delivery: inline`. </param>
-        /// <param name="records"> The number of `data` items in the file. </param>
-        /// <param name="bytes"> The size of the file in bytes. </param>
+        /// <param name="recordCount"> The number of `data` items in the file. </param>
+        /// <param name="sizeInBytes"> The size of the file in bytes. </param>
         /// <param name="sha256"> The lowercase hexadecimal SHA-256 hash of the file. </param>
         /// <param name="contentType"> The media type of the file: `application/json`. </param>
-        internal MultimodalEmbeddingOutput(string id, Uri uri, string sasToken, DateTimeOffset expiresOn, int records, long bytes, string sha256, string contentType)
+        internal MultimodalEmbeddingOutput(string id, Uri uri, string sasToken, DateTimeOffset expiresOn, int recordCount, long sizeInBytes, string sha256, string contentType)
         {
             Id = id;
             Uri = uri;
             SasToken = sasToken;
             ExpiresOn = expiresOn;
-            Records = records;
-            Bytes = bytes;
+            RecordCount = recordCount;
+            SizeInBytes = sizeInBytes;
             Sha256 = sha256;
             ContentType = contentType;
         }
@@ -51,19 +51,19 @@ namespace Azure.Data.AI
         /// `GET {url}?{sasToken}`.
         /// </param>
         /// <param name="expiresOn"> When `sasToken` stops working. After that, send the request again, or use `delivery: inline`. </param>
-        /// <param name="records"> The number of `data` items in the file. </param>
-        /// <param name="bytes"> The size of the file in bytes. </param>
+        /// <param name="recordCount"> The number of `data` items in the file. </param>
+        /// <param name="sizeInBytes"> The size of the file in bytes. </param>
         /// <param name="sha256"> The lowercase hexadecimal SHA-256 hash of the file. </param>
         /// <param name="contentType"> The media type of the file: `application/json`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MultimodalEmbeddingOutput(string id, Uri uri, string sasToken, DateTimeOffset expiresOn, int records, long bytes, string sha256, string contentType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MultimodalEmbeddingOutput(string id, Uri uri, string sasToken, DateTimeOffset expiresOn, int recordCount, long sizeInBytes, string sha256, string contentType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Uri = uri;
             SasToken = sasToken;
             ExpiresOn = expiresOn;
-            Records = records;
-            Bytes = bytes;
+            RecordCount = recordCount;
+            SizeInBytes = sizeInBytes;
             Sha256 = sha256;
             ContentType = contentType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -85,10 +85,10 @@ namespace Azure.Data.AI
         public DateTimeOffset ExpiresOn { get; }
 
         /// <summary> The number of `data` items in the file. </summary>
-        public int Records { get; }
+        public int RecordCount { get; }
 
         /// <summary> The size of the file in bytes. </summary>
-        public long Bytes { get; }
+        public long SizeInBytes { get; }
 
         /// <summary> The lowercase hexadecimal SHA-256 hash of the file. </summary>
         public string Sha256 { get; }

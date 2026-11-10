@@ -36,7 +36,7 @@ namespace Azure.Data.AI
             return message;
         }
 
-        internal HttpMessage CreateMultiModalEmbedRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetMultimodalEmbeddingsRequest(RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

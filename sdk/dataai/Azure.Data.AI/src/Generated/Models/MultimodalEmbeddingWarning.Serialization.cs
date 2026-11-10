@@ -80,10 +80,10 @@ namespace Azure.Data.AI
             }
             writer.WritePropertyName("code"u8);
             writer.WriteStringValue(Code.ToString());
-            if (Optional.IsDefined(Number))
+            if (Optional.IsDefined(CodeNumber))
             {
                 writer.WritePropertyName("number"u8);
-                writer.WriteNumberValue(Number.Value);
+                writer.WriteNumberValue(CodeNumber.Value);
             }
             writer.WritePropertyName("index"u8);
             writer.WriteNumberValue(Index);
@@ -142,7 +142,7 @@ namespace Azure.Data.AI
                 return null;
             }
             EmbeddingWarningCode code = default;
-            int? number = default;
+            int? codeNumber = default;
             int index = default;
             long? inputTokens = default;
             long? tokens = default;
@@ -161,7 +161,7 @@ namespace Azure.Data.AI
                     {
                         continue;
                     }
-                    number = prop.Value.GetInt32();
+                    codeNumber = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("index"u8))
@@ -199,7 +199,7 @@ namespace Azure.Data.AI
             }
             return new MultimodalEmbeddingWarning(
                 code,
-                number,
+                codeNumber,
                 index,
                 inputTokens,
                 tokens,

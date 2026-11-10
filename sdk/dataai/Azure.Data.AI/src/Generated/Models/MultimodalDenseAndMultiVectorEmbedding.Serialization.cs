@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.Data.AI
 {
-    /// <summary> The result for one item when `vectorType` is `dense_multi`: a dense vector and one vector per token, from one model run. </summary>
+    /// <summary> The result for one item when `vectorKind` is `dense_multi`: a dense vector and one vector per token, from one model run. </summary>
     public partial class MultimodalDenseAndMultiVectorEmbedding : MultimodalEmbeddingItem, IJsonModel<MultimodalDenseAndMultiVectorEmbedding>
     {
         /// <summary> Initializes a new instance of <see cref="MultimodalDenseAndMultiVectorEmbedding"/> for deserialization. </summary>
@@ -119,8 +119,8 @@ namespace Azure.Data.AI
             }
             int index = default;
             string id = default;
-            EmbeddingContentType @type = default;
-            EmbeddingVectorType kind = default;
+            EmbeddingContentKind contentKind = default;
+            EmbeddingVectorKind kind = default;
             int? width = default;
             int? height = default;
             EmbeddingImageFormat? format = default;
@@ -144,14 +144,14 @@ namespace Azure.Data.AI
                     id = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("type"u8))
+                if (prop.NameEquals("contentKind"u8))
                 {
-                    @type = new EmbeddingContentType(prop.Value.GetString());
+                    contentKind = new EmbeddingContentKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
                 {
-                    kind = new EmbeddingVectorType(prop.Value.GetString());
+                    kind = new EmbeddingVectorKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("width"u8))
@@ -245,7 +245,7 @@ namespace Azure.Data.AI
             return new MultimodalDenseAndMultiVectorEmbedding(
                 index,
                 id,
-                @type,
+                contentKind,
                 kind,
                 width,
                 height,

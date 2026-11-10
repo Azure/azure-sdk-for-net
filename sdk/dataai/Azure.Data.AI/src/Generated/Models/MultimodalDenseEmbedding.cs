@@ -11,17 +11,17 @@ using System.Text.Json;
 
 namespace Azure.Data.AI
 {
-    /// <summary> The result for one item when `vectorType` is `dense`: one vector. </summary>
+    /// <summary> The result for one item when `vectorKind` is `dense`: one vector. </summary>
     public partial class MultimodalDenseEmbedding : MultimodalEmbeddingItem
     {
         /// <summary> Initializes a new instance of <see cref="MultimodalDenseEmbedding"/>. </summary>
         /// <param name="index"> The zero-based position of the item in the request. </param>
-        /// <param name="type"> The item's kind. </param>
+        /// <param name="contentKind"> The item's content kind, as supplied in the request's `kind`. </param>
         /// <param name="embedding">
         /// The vector: an array of numbers, or, when `encodingFormat` is `base64`, a base64 string of its little-endian
-        /// `outputDtype` values.
+        /// `outputDataKind` values.
         /// </param>
-        internal MultimodalDenseEmbedding(int index, EmbeddingContentType @type, BinaryData embedding) : base(index, @type, EmbeddingVectorType.Dense)
+        internal MultimodalDenseEmbedding(int index, EmbeddingContentKind contentKind, BinaryData embedding) : base(index, contentKind, EmbeddingVectorKind.Dense)
         {
             Embedding = embedding;
         }
@@ -29,8 +29,8 @@ namespace Azure.Data.AI
         /// <summary> Initializes a new instance of <see cref="MultimodalDenseEmbedding"/>. </summary>
         /// <param name="index"> The zero-based position of the item in the request. </param>
         /// <param name="id"> The item's `id` from the request, if it had one. </param>
-        /// <param name="type"> The item's kind. </param>
-        /// <param name="kind"> The kind of vectors returned, as requested in `vectorType`. </param>
+        /// <param name="contentKind"> The item's content kind, as supplied in the request's `kind`. </param>
+        /// <param name="kind"> The kind of vectors returned, as requested in `vectorKind`. </param>
         /// <param name="width"> For images: the width in pixels. </param>
         /// <param name="height"> For images: the height in pixels. </param>
         /// <param name="format"> For images: the detected image format. </param>
@@ -47,16 +47,16 @@ namespace Azure.Data.AI
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="embedding">
         /// The vector: an array of numbers, or, when `encodingFormat` is `base64`, a base64 string of its little-endian
-        /// `outputDtype` values.
+        /// `outputDataKind` values.
         /// </param>
-        internal MultimodalDenseEmbedding(int index, string id, EmbeddingContentType @type, EmbeddingVectorType kind, int? width, int? height, EmbeddingImageFormat? format, long? tokens, long? visualTokens, bool? truncated, long? inputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData embedding) : base(index, id, @type, kind, width, height, format, tokens, visualTokens, truncated, inputTokens, additionalBinaryDataProperties)
+        internal MultimodalDenseEmbedding(int index, string id, EmbeddingContentKind contentKind, EmbeddingVectorKind kind, int? width, int? height, EmbeddingImageFormat? format, long? tokens, long? visualTokens, bool? truncated, long? inputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData embedding) : base(index, id, contentKind, kind, width, height, format, tokens, visualTokens, truncated, inputTokens, additionalBinaryDataProperties)
         {
             Embedding = embedding;
         }
 
         /// <summary>
         /// The vector: an array of numbers, or, when `encodingFormat` is `base64`, a base64 string of its little-endian
-        /// `outputDtype` values.
+        /// `outputDataKind` values.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>

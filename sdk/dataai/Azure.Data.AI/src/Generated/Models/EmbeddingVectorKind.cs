@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Data.AI
 {
     /// <summary> The kind of vectors to return. </summary>
-    public readonly partial struct EmbeddingVectorType : IEquatable<EmbeddingVectorType>
+    public readonly partial struct EmbeddingVectorKind : IEquatable<EmbeddingVectorKind>
     {
         private readonly string _value;
         /// <summary> One vector per item. </summary>
@@ -24,10 +24,10 @@ namespace Azure.Data.AI
         /// </summary>
         private const string DenseAndMultiValue = "dense_multi";
 
-        /// <summary> Initializes a new instance of <see cref="EmbeddingVectorType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmbeddingVectorKind"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EmbeddingVectorType(string value)
+        public EmbeddingVectorKind(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.Data.AI
         }
 
         /// <summary> One vector per item. </summary>
-        public static EmbeddingVectorType Dense { get; } = new EmbeddingVectorType(DenseValue);
+        public static EmbeddingVectorKind Dense { get; } = new EmbeddingVectorKind(DenseValue);
 
         /// <summary> One vector per token, for late-interaction (MaxSim) scoring. </summary>
-        public static EmbeddingVectorType Multi { get; } = new EmbeddingVectorType(MultiValue);
+        public static EmbeddingVectorKind Multi { get; } = new EmbeddingVectorKind(MultiValue);
 
         /// <summary>
         /// Both, from one model run: one dense vector (`dimensions` wide) and one vector per token (`multiDimensions` wide)
         /// for each item.
         /// </summary>
-        public static EmbeddingVectorType DenseAndMulti { get; } = new EmbeddingVectorType(DenseAndMultiValue);
+        public static EmbeddingVectorKind DenseAndMulti { get; } = new EmbeddingVectorKind(DenseAndMultiValue);
 
-        /// <summary> Determines if two <see cref="EmbeddingVectorType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="EmbeddingVectorKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(EmbeddingVectorType left, EmbeddingVectorType right) => left.Equals(right);
+        public static bool operator ==(EmbeddingVectorKind left, EmbeddingVectorKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="EmbeddingVectorType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="EmbeddingVectorKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(EmbeddingVectorType left, EmbeddingVectorType right) => !left.Equals(right);
+        public static bool operator !=(EmbeddingVectorKind left, EmbeddingVectorKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="EmbeddingVectorType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EmbeddingVectorKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EmbeddingVectorType(string value) => new EmbeddingVectorType(value);
+        public static implicit operator EmbeddingVectorKind(string value) => new EmbeddingVectorKind(value);
 
-        /// <summary> Converts a string to a <see cref="EmbeddingVectorType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EmbeddingVectorKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EmbeddingVectorType?(string value) => value == null ? null : new EmbeddingVectorType(value);
+        public static implicit operator EmbeddingVectorKind?(string value) => value == null ? null : new EmbeddingVectorKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is EmbeddingVectorType other && Equals(other);
+        public override bool Equals(object obj) => obj is EmbeddingVectorKind other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(EmbeddingVectorType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EmbeddingVectorKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

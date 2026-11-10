@@ -90,9 +90,9 @@ namespace Azure.Data.AI
             writer.WritePropertyName("expiresAt"u8);
             writer.WriteStringValue(ExpiresOn, "O");
             writer.WritePropertyName("records"u8);
-            writer.WriteNumberValue(Records);
-            writer.WritePropertyName("bytes"u8);
-            writer.WriteNumberValue(Bytes);
+            writer.WriteNumberValue(RecordCount);
+            writer.WritePropertyName("sizeInBytes"u8);
+            writer.WriteNumberValue(SizeInBytes);
             writer.WritePropertyName("sha256"u8);
             writer.WriteStringValue(Sha256);
             writer.WritePropertyName("contentType"u8);
@@ -143,8 +143,8 @@ namespace Azure.Data.AI
             Uri uri = default;
             string sasToken = default;
             DateTimeOffset expiresOn = default;
-            int records = default;
-            long bytes = default;
+            int recordCount = default;
+            long sizeInBytes = default;
             string sha256 = default;
             string contentType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -172,12 +172,12 @@ namespace Azure.Data.AI
                 }
                 if (prop.NameEquals("records"u8))
                 {
-                    records = prop.Value.GetInt32();
+                    recordCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("bytes"u8))
+                if (prop.NameEquals("sizeInBytes"u8))
                 {
-                    bytes = prop.Value.GetInt64();
+                    sizeInBytes = prop.Value.GetInt64();
                     continue;
                 }
                 if (prop.NameEquals("sha256"u8))
@@ -200,8 +200,8 @@ namespace Azure.Data.AI
                 uri,
                 sasToken,
                 expiresOn,
-                records,
-                bytes,
+                recordCount,
+                sizeInBytes,
                 sha256,
                 contentType,
                 additionalBinaryDataProperties);

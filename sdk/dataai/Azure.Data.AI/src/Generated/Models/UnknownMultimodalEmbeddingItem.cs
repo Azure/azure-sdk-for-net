@@ -15,8 +15,8 @@ namespace Azure.Data.AI
         /// <summary> Initializes a new instance of <see cref="UnknownMultimodalEmbeddingItem"/>. </summary>
         /// <param name="index"> The zero-based position of the item in the request. </param>
         /// <param name="id"> The item's `id` from the request, if it had one. </param>
-        /// <param name="type"> The item's kind. </param>
-        /// <param name="kind"> The kind of vectors returned, as requested in `vectorType`. </param>
+        /// <param name="contentKind"> The item's content kind, as supplied in the request's `kind`. </param>
+        /// <param name="kind"> The kind of vectors returned, as requested in `vectorKind`. </param>
         /// <param name="width"> For images: the width in pixels. </param>
         /// <param name="height"> For images: the height in pixels. </param>
         /// <param name="format"> For images: the detected image format. </param>
@@ -31,7 +31,7 @@ namespace Azure.Data.AI
         /// </param>
         /// <param name="inputTokens"> For truncated items only: the item's tokens before truncation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMultimodalEmbeddingItem(int index, string id, EmbeddingContentType @type, EmbeddingVectorType kind, int? width, int? height, EmbeddingImageFormat? format, long? tokens, long? visualTokens, bool? truncated, long? inputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(index, id, @type, kind != default ? kind : "unknown", width, height, format, tokens, visualTokens, truncated, inputTokens, additionalBinaryDataProperties)
+        internal UnknownMultimodalEmbeddingItem(int index, string id, EmbeddingContentKind contentKind, EmbeddingVectorKind kind, int? width, int? height, EmbeddingImageFormat? format, long? tokens, long? visualTokens, bool? truncated, long? inputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(index, id, contentKind, kind != default ? kind : "unknown", width, height, format, tokens, visualTokens, truncated, inputTokens, additionalBinaryDataProperties)
         {
         }
     }

@@ -1,14 +1,21 @@
-# Azure Semantic Reranker client library for .NET
+# Azure Data AI client library for .NET
 
-Azure.Data.AI provides semantic reranking operations for .NET applications.
+Azure.Data.AI provides semantic reranking and multimodal embedding operations for .NET applications.
 
-Version 1.0.0 is the first stable release and targets service API version `2026-10-30`.
+Version `1.1.0-beta.1` is a preview release that defaults to service API version `2026-11-01-preview`.
+For semantic reranking against the stable API, configure `InferenceClientOptions.ServiceVersion.V2026_10_30`.
 
 ## Getting started
 
 ### Install the package
 
 Install the client library for .NET with [NuGet](https://www.nuget.org/):
+
+```dotnetcli
+dotnet add package Azure.Data.AI --prerelease
+```
+
+To select only stable package versions, omit `--prerelease`:
 
 ```dotnetcli
 dotnet add package Azure.Data.AI
@@ -43,6 +50,10 @@ The generated bearer-token policy requests the `https://dbinference.azure.com/.d
 ## Key concepts
 
 Use `InferenceClient.SemanticRerank` or `SemanticRerankAsync` to rerank documents directly.
+
+Use `InferenceClient.GetMultimodalEmbeddings` or `GetMultimodalEmbeddingsAsync` to embed text, queries, or document images.
+Request settings are named method arguments; no request options object is required.
+Embedding model availability and image input support depend on the endpoint.
 
 ## Examples
 

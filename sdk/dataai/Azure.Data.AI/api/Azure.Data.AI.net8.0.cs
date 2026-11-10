@@ -8,11 +8,11 @@ namespace Azure.Data.AI
     }
     public partial class EmbeddingContentItem : System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.EmbeddingContentItem>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.EmbeddingContentItem>
     {
-        public EmbeddingContentItem(Azure.Data.AI.EmbeddingContentType type) { }
+        public EmbeddingContentItem(Azure.Data.AI.EmbeddingContentKind kind) { }
         public string Content { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
+        public Azure.Data.AI.EmbeddingContentKind Kind { get { throw null; } }
         public string SasToken { get { throw null; } set { } }
-        public Azure.Data.AI.EmbeddingContentType Type { get { throw null; } }
         public System.Uri Uri { get { throw null; } set { } }
         protected virtual Azure.Data.AI.EmbeddingContentItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -25,21 +25,21 @@ namespace Azure.Data.AI
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.EmbeddingContentItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EmbeddingContentType : System.IEquatable<Azure.Data.AI.EmbeddingContentType>
+    public readonly partial struct EmbeddingContentKind : System.IEquatable<Azure.Data.AI.EmbeddingContentKind>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public EmbeddingContentType(string value) { throw null; }
-        public static Azure.Data.AI.EmbeddingContentType Image { get { throw null; } }
-        public static Azure.Data.AI.EmbeddingContentType Query { get { throw null; } }
-        public static Azure.Data.AI.EmbeddingContentType Text { get { throw null; } }
-        public bool Equals(Azure.Data.AI.EmbeddingContentType other) { throw null; }
+        public EmbeddingContentKind(string value) { throw null; }
+        public static Azure.Data.AI.EmbeddingContentKind Image { get { throw null; } }
+        public static Azure.Data.AI.EmbeddingContentKind Query { get { throw null; } }
+        public static Azure.Data.AI.EmbeddingContentKind Text { get { throw null; } }
+        public bool Equals(Azure.Data.AI.EmbeddingContentKind other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Data.AI.EmbeddingContentType left, Azure.Data.AI.EmbeddingContentType right) { throw null; }
-        public static implicit operator Azure.Data.AI.EmbeddingContentType (string value) { throw null; }
-        public static implicit operator Azure.Data.AI.EmbeddingContentType? (string value) { throw null; }
-        public static bool operator !=(Azure.Data.AI.EmbeddingContentType left, Azure.Data.AI.EmbeddingContentType right) { throw null; }
+        public static bool operator ==(Azure.Data.AI.EmbeddingContentKind left, Azure.Data.AI.EmbeddingContentKind right) { throw null; }
+        public static implicit operator Azure.Data.AI.EmbeddingContentKind (string value) { throw null; }
+        public static implicit operator Azure.Data.AI.EmbeddingContentKind? (string value) { throw null; }
+        public static bool operator !=(Azure.Data.AI.EmbeddingContentKind left, Azure.Data.AI.EmbeddingContentKind right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -96,38 +96,38 @@ namespace Azure.Data.AI
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EmbeddingOutputDataType : System.IEquatable<Azure.Data.AI.EmbeddingOutputDataType>
+    public readonly partial struct EmbeddingOutputDataKind : System.IEquatable<Azure.Data.AI.EmbeddingOutputDataKind>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public EmbeddingOutputDataType(string value) { throw null; }
-        public static Azure.Data.AI.EmbeddingOutputDataType Float16 { get { throw null; } }
-        public static Azure.Data.AI.EmbeddingOutputDataType Float32 { get { throw null; } }
-        public bool Equals(Azure.Data.AI.EmbeddingOutputDataType other) { throw null; }
+        public EmbeddingOutputDataKind(string value) { throw null; }
+        public static Azure.Data.AI.EmbeddingOutputDataKind Float16 { get { throw null; } }
+        public static Azure.Data.AI.EmbeddingOutputDataKind Float32 { get { throw null; } }
+        public bool Equals(Azure.Data.AI.EmbeddingOutputDataKind other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Data.AI.EmbeddingOutputDataType left, Azure.Data.AI.EmbeddingOutputDataType right) { throw null; }
-        public static implicit operator Azure.Data.AI.EmbeddingOutputDataType (string value) { throw null; }
-        public static implicit operator Azure.Data.AI.EmbeddingOutputDataType? (string value) { throw null; }
-        public static bool operator !=(Azure.Data.AI.EmbeddingOutputDataType left, Azure.Data.AI.EmbeddingOutputDataType right) { throw null; }
+        public static bool operator ==(Azure.Data.AI.EmbeddingOutputDataKind left, Azure.Data.AI.EmbeddingOutputDataKind right) { throw null; }
+        public static implicit operator Azure.Data.AI.EmbeddingOutputDataKind (string value) { throw null; }
+        public static implicit operator Azure.Data.AI.EmbeddingOutputDataKind? (string value) { throw null; }
+        public static bool operator !=(Azure.Data.AI.EmbeddingOutputDataKind left, Azure.Data.AI.EmbeddingOutputDataKind right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EmbeddingVectorType : System.IEquatable<Azure.Data.AI.EmbeddingVectorType>
+    public readonly partial struct EmbeddingVectorKind : System.IEquatable<Azure.Data.AI.EmbeddingVectorKind>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public EmbeddingVectorType(string value) { throw null; }
-        public static Azure.Data.AI.EmbeddingVectorType Dense { get { throw null; } }
-        public static Azure.Data.AI.EmbeddingVectorType DenseAndMulti { get { throw null; } }
-        public static Azure.Data.AI.EmbeddingVectorType Multi { get { throw null; } }
-        public bool Equals(Azure.Data.AI.EmbeddingVectorType other) { throw null; }
+        public EmbeddingVectorKind(string value) { throw null; }
+        public static Azure.Data.AI.EmbeddingVectorKind Dense { get { throw null; } }
+        public static Azure.Data.AI.EmbeddingVectorKind DenseAndMulti { get { throw null; } }
+        public static Azure.Data.AI.EmbeddingVectorKind Multi { get { throw null; } }
+        public bool Equals(Azure.Data.AI.EmbeddingVectorKind other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Data.AI.EmbeddingVectorType left, Azure.Data.AI.EmbeddingVectorType right) { throw null; }
-        public static implicit operator Azure.Data.AI.EmbeddingVectorType (string value) { throw null; }
-        public static implicit operator Azure.Data.AI.EmbeddingVectorType? (string value) { throw null; }
-        public static bool operator !=(Azure.Data.AI.EmbeddingVectorType left, Azure.Data.AI.EmbeddingVectorType right) { throw null; }
+        public static bool operator ==(Azure.Data.AI.EmbeddingVectorKind left, Azure.Data.AI.EmbeddingVectorKind right) { throw null; }
+        public static implicit operator Azure.Data.AI.EmbeddingVectorKind (string value) { throw null; }
+        public static implicit operator Azure.Data.AI.EmbeddingVectorKind? (string value) { throw null; }
+        public static bool operator !=(Azure.Data.AI.EmbeddingVectorKind left, Azure.Data.AI.EmbeddingVectorKind right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -157,12 +157,10 @@ namespace Azure.Data.AI
         public InferenceClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public InferenceClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Data.AI.InferenceClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response MultiModalEmbed(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Data.AI.MultimodalEmbeddingResult> MultiModalEmbed(Azure.Data.AI.MultimodalEmbeddingOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Data.AI.MultimodalEmbeddingResult> MultiModalEmbed(System.Collections.Generic.IEnumerable<Azure.Data.AI.EmbeddingContentItem> contents, string model = null, string modelVersion = null, Azure.Data.AI.EmbeddingVectorType? vectorType = default(Azure.Data.AI.EmbeddingVectorType?), int? dimensions = default(int?), int? multiDimensions = default(int?), int? maxNumVectors = default(int?), Azure.Data.AI.EmbeddingOutputDataType? outputDataType = default(Azure.Data.AI.EmbeddingOutputDataType?), Azure.Data.AI.EmbeddingEncodingFormat? encodingFormat = default(Azure.Data.AI.EmbeddingEncodingFormat?), Azure.Data.AI.EmbeddingDelivery? delivery = default(Azure.Data.AI.EmbeddingDelivery?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> MultiModalEmbedAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AI.MultimodalEmbeddingResult>> MultiModalEmbedAsync(Azure.Data.AI.MultimodalEmbeddingOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AI.MultimodalEmbeddingResult>> MultiModalEmbedAsync(System.Collections.Generic.IEnumerable<Azure.Data.AI.EmbeddingContentItem> contents, string model = null, string modelVersion = null, Azure.Data.AI.EmbeddingVectorType? vectorType = default(Azure.Data.AI.EmbeddingVectorType?), int? dimensions = default(int?), int? multiDimensions = default(int?), int? maxNumVectors = default(int?), Azure.Data.AI.EmbeddingOutputDataType? outputDataType = default(Azure.Data.AI.EmbeddingOutputDataType?), Azure.Data.AI.EmbeddingEncodingFormat? encodingFormat = default(Azure.Data.AI.EmbeddingEncodingFormat?), Azure.Data.AI.EmbeddingDelivery? delivery = default(Azure.Data.AI.EmbeddingDelivery?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetMultimodalEmbeddings(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.Data.AI.MultimodalEmbeddingResult> GetMultimodalEmbeddings(System.Collections.Generic.IEnumerable<Azure.Data.AI.EmbeddingContentItem> contents, string model = null, string modelVersion = null, Azure.Data.AI.EmbeddingVectorKind? vectorKind = default(Azure.Data.AI.EmbeddingVectorKind?), int? dimensions = default(int?), int? multiDimensions = default(int?), int? maxVectorCount = default(int?), Azure.Data.AI.EmbeddingOutputDataKind? outputDataKind = default(Azure.Data.AI.EmbeddingOutputDataKind?), Azure.Data.AI.EmbeddingEncodingFormat? encodingFormat = default(Azure.Data.AI.EmbeddingEncodingFormat?), Azure.Data.AI.EmbeddingDelivery? delivery = default(Azure.Data.AI.EmbeddingDelivery?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetMultimodalEmbeddingsAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AI.MultimodalEmbeddingResult>> GetMultimodalEmbeddingsAsync(System.Collections.Generic.IEnumerable<Azure.Data.AI.EmbeddingContentItem> contents, string model = null, string modelVersion = null, Azure.Data.AI.EmbeddingVectorKind? vectorKind = default(Azure.Data.AI.EmbeddingVectorKind?), int? dimensions = default(int?), int? multiDimensions = default(int?), int? maxVectorCount = default(int?), Azure.Data.AI.EmbeddingOutputDataKind? outputDataKind = default(Azure.Data.AI.EmbeddingOutputDataKind?), Azure.Data.AI.EmbeddingEncodingFormat? encodingFormat = default(Azure.Data.AI.EmbeddingEncodingFormat?), Azure.Data.AI.EmbeddingDelivery? delivery = default(Azure.Data.AI.EmbeddingDelivery?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SemanticRerank(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.Data.AI.SemanticRerankingResult> SemanticRerank(Azure.Data.AI.SemanticRerankingOptions request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SemanticRerankAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -195,16 +193,16 @@ namespace Azure.Data.AI
     }
     public static partial class InferenceModelFactory
     {
-        public static Azure.Data.AI.EmbeddingContentItem EmbeddingContentItem(string id = null, Azure.Data.AI.EmbeddingContentType type = default(Azure.Data.AI.EmbeddingContentType), string content = null, System.Uri uri = null, string sasToken = null) { throw null; }
+        public static Azure.Data.AI.EmbeddingContentItem EmbeddingContentItem(string id = null, Azure.Data.AI.EmbeddingContentKind kind = default(Azure.Data.AI.EmbeddingContentKind), string content = null, System.Uri uri = null, string sasToken = null) { throw null; }
         public static Azure.Data.AI.LatencyResult LatencyResult(System.TimeSpan? dataPreprocessDuration = default(System.TimeSpan?), System.TimeSpan? inferenceDuration = default(System.TimeSpan?), System.TimeSpan? postProcessDuration = default(System.TimeSpan?)) { throw null; }
-        public static Azure.Data.AI.MultimodalDenseAndMultiVectorEmbedding MultimodalDenseAndMultiVectorEmbedding(int index = 0, string id = null, Azure.Data.AI.EmbeddingContentType type = default(Azure.Data.AI.EmbeddingContentType), int? width = default(int?), int? height = default(int?), Azure.Data.AI.EmbeddingImageFormat? format = default(Azure.Data.AI.EmbeddingImageFormat?), long? tokens = default(long?), long? visualTokens = default(long?), bool? truncated = default(bool?), long? inputTokens = default(long?), System.Collections.Generic.IEnumerable<int> shape = null, System.BinaryData embedding = null, System.BinaryData multiEmbedding = null) { throw null; }
-        public static Azure.Data.AI.MultimodalDenseEmbedding MultimodalDenseEmbedding(int index = 0, string id = null, Azure.Data.AI.EmbeddingContentType type = default(Azure.Data.AI.EmbeddingContentType), int? width = default(int?), int? height = default(int?), Azure.Data.AI.EmbeddingImageFormat? format = default(Azure.Data.AI.EmbeddingImageFormat?), long? tokens = default(long?), long? visualTokens = default(long?), bool? truncated = default(bool?), long? inputTokens = default(long?), System.BinaryData embedding = null) { throw null; }
-        public static Azure.Data.AI.MultimodalEmbeddingItem MultimodalEmbeddingItem(int index = 0, string id = null, Azure.Data.AI.EmbeddingContentType type = default(Azure.Data.AI.EmbeddingContentType), string kind = null, int? width = default(int?), int? height = default(int?), Azure.Data.AI.EmbeddingImageFormat? format = default(Azure.Data.AI.EmbeddingImageFormat?), long? tokens = default(long?), long? visualTokens = default(long?), bool? truncated = default(bool?), long? inputTokens = default(long?)) { throw null; }
-        public static Azure.Data.AI.MultimodalEmbeddingOutput MultimodalEmbeddingOutput(string id = null, System.Uri uri = null, string sasToken = null, System.DateTimeOffset expiresOn = default(System.DateTimeOffset), int records = 0, long bytes = (long)0, string sha256 = null, string contentType = null) { throw null; }
-        public static Azure.Data.AI.MultimodalEmbeddingResult MultimodalEmbeddingResult(string model = null, string modelVersion = null, Azure.Data.AI.EmbeddingOutputDataType outputDataType = default(Azure.Data.AI.EmbeddingOutputDataType), System.Collections.Generic.IEnumerable<Azure.Data.AI.MultimodalEmbeddingItem> data = null, Azure.Data.AI.MultimodalEmbeddingUsage usage = null, System.Collections.Generic.IEnumerable<Azure.Data.AI.MultimodalEmbeddingWarning> warnings = null, Azure.Data.AI.MultimodalEmbeddingOutput output = null) { throw null; }
+        public static Azure.Data.AI.MultimodalDenseAndMultiVectorEmbedding MultimodalDenseAndMultiVectorEmbedding(int index = 0, string id = null, Azure.Data.AI.EmbeddingContentKind contentKind = default(Azure.Data.AI.EmbeddingContentKind), int? width = default(int?), int? height = default(int?), Azure.Data.AI.EmbeddingImageFormat? format = default(Azure.Data.AI.EmbeddingImageFormat?), long? tokens = default(long?), long? visualTokens = default(long?), bool? truncated = default(bool?), long? inputTokens = default(long?), System.Collections.Generic.IEnumerable<int> shape = null, System.BinaryData embedding = null, System.BinaryData multiEmbedding = null) { throw null; }
+        public static Azure.Data.AI.MultimodalDenseEmbedding MultimodalDenseEmbedding(int index = 0, string id = null, Azure.Data.AI.EmbeddingContentKind contentKind = default(Azure.Data.AI.EmbeddingContentKind), int? width = default(int?), int? height = default(int?), Azure.Data.AI.EmbeddingImageFormat? format = default(Azure.Data.AI.EmbeddingImageFormat?), long? tokens = default(long?), long? visualTokens = default(long?), bool? truncated = default(bool?), long? inputTokens = default(long?), System.BinaryData embedding = null) { throw null; }
+        public static Azure.Data.AI.MultimodalEmbeddingItem MultimodalEmbeddingItem(int index = 0, string id = null, Azure.Data.AI.EmbeddingContentKind contentKind = default(Azure.Data.AI.EmbeddingContentKind), string kind = null, int? width = default(int?), int? height = default(int?), Azure.Data.AI.EmbeddingImageFormat? format = default(Azure.Data.AI.EmbeddingImageFormat?), long? tokens = default(long?), long? visualTokens = default(long?), bool? truncated = default(bool?), long? inputTokens = default(long?)) { throw null; }
+        public static Azure.Data.AI.MultimodalEmbeddingOutput MultimodalEmbeddingOutput(string id = null, System.Uri uri = null, string sasToken = null, System.DateTimeOffset expiresOn = default(System.DateTimeOffset), int recordCount = 0, long sizeInBytes = (long)0, string sha256 = null, string contentType = null) { throw null; }
+        public static Azure.Data.AI.MultimodalEmbeddingResult MultimodalEmbeddingResult(string model = null, string modelVersion = null, Azure.Data.AI.EmbeddingOutputDataKind outputDataKind = default(Azure.Data.AI.EmbeddingOutputDataKind), System.Collections.Generic.IEnumerable<Azure.Data.AI.MultimodalEmbeddingItem> data = null, Azure.Data.AI.MultimodalEmbeddingUsage usage = null, System.Collections.Generic.IEnumerable<Azure.Data.AI.MultimodalEmbeddingWarning> warnings = null, Azure.Data.AI.MultimodalEmbeddingOutput output = null) { throw null; }
         public static Azure.Data.AI.MultimodalEmbeddingUsage MultimodalEmbeddingUsage(long? promptTokens = default(long?), long? totalTokens = default(long?), long? textTokens = default(long?), int imageCount = 0, long? visualTokens = default(long?)) { throw null; }
-        public static Azure.Data.AI.MultimodalEmbeddingWarning MultimodalEmbeddingWarning(Azure.Data.AI.EmbeddingWarningCode code = default(Azure.Data.AI.EmbeddingWarningCode), int? number = default(int?), int index = 0, long? inputTokens = default(long?), long? tokens = default(long?), string message = null) { throw null; }
-        public static Azure.Data.AI.MultimodalMultiVectorEmbedding MultimodalMultiVectorEmbedding(int index = 0, string id = null, Azure.Data.AI.EmbeddingContentType type = default(Azure.Data.AI.EmbeddingContentType), int? width = default(int?), int? height = default(int?), Azure.Data.AI.EmbeddingImageFormat? format = default(Azure.Data.AI.EmbeddingImageFormat?), long? tokens = default(long?), long? visualTokens = default(long?), bool? truncated = default(bool?), long? inputTokens = default(long?), System.Collections.Generic.IEnumerable<int> shape = null, System.BinaryData multiEmbedding = null) { throw null; }
+        public static Azure.Data.AI.MultimodalEmbeddingWarning MultimodalEmbeddingWarning(Azure.Data.AI.EmbeddingWarningCode code = default(Azure.Data.AI.EmbeddingWarningCode), int? codeNumber = default(int?), int index = 0, long? inputTokens = default(long?), long? tokens = default(long?), string message = null) { throw null; }
+        public static Azure.Data.AI.MultimodalMultiVectorEmbedding MultimodalMultiVectorEmbedding(int index = 0, string id = null, Azure.Data.AI.EmbeddingContentKind contentKind = default(Azure.Data.AI.EmbeddingContentKind), int? width = default(int?), int? height = default(int?), Azure.Data.AI.EmbeddingImageFormat? format = default(Azure.Data.AI.EmbeddingImageFormat?), long? tokens = default(long?), long? visualTokens = default(long?), bool? truncated = default(bool?), long? inputTokens = default(long?), System.Collections.Generic.IEnumerable<int> shape = null, System.BinaryData multiEmbedding = null) { throw null; }
         public static Azure.Data.AI.SemanticRerankingMetadata SemanticRerankingMetadata(Azure.Data.AI.TokenUsageResult tokenUsage = null, Azure.Data.AI.LatencyResult latency = null, string modelName = null, string modelVersion = null) { throw null; }
         public static Azure.Data.AI.SemanticRerankingOptions SemanticRerankingOptions(string query = null, System.Collections.Generic.IEnumerable<string> documents = null, bool? returnDocuments = default(bool?), int? topK = default(int?), int? batchSize = default(int?), bool? sort = default(bool?), Azure.Data.AI.SemanticRerankingDocumentType? documentType = default(Azure.Data.AI.SemanticRerankingDocumentType?), System.Collections.Generic.IEnumerable<string> targetPaths = null, string model = null, bool? returnSentenceScore = default(bool?)) { throw null; }
         public static Azure.Data.AI.SemanticRerankingResult SemanticRerankingResult(System.Collections.Generic.IEnumerable<Azure.Data.AI.SemanticRerankingScore> scores = null, Azure.Data.AI.SemanticRerankingMetadata metadata = null) { throw null; }
@@ -261,6 +259,7 @@ namespace Azure.Data.AI
     public abstract partial class MultimodalEmbeddingItem : System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.MultimodalEmbeddingItem>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.MultimodalEmbeddingItem>
     {
         internal MultimodalEmbeddingItem() { }
+        public Azure.Data.AI.EmbeddingContentKind ContentKind { get { throw null; } }
         public Azure.Data.AI.EmbeddingImageFormat? Format { get { throw null; } }
         public int? Height { get { throw null; } }
         public string Id { get { throw null; } }
@@ -268,7 +267,6 @@ namespace Azure.Data.AI
         public long? InputTokens { get { throw null; } }
         public long? Tokens { get { throw null; } }
         public bool? Truncated { get { throw null; } }
-        public Azure.Data.AI.EmbeddingContentType Type { get { throw null; } }
         public long? VisualTokens { get { throw null; } }
         public int? Width { get { throw null; } }
         protected virtual Azure.Data.AI.MultimodalEmbeddingItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -281,30 +279,16 @@ namespace Azure.Data.AI
         string System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.MultimodalEmbeddingItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.MultimodalEmbeddingItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MultimodalEmbeddingOptions
-    {
-        public MultimodalEmbeddingOptions(System.Collections.Generic.IEnumerable<Azure.Data.AI.EmbeddingContentItem> contents) { }
-        public System.Collections.Generic.IList<Azure.Data.AI.EmbeddingContentItem> Contents { get { throw null; } }
-        public Azure.Data.AI.EmbeddingDelivery? Delivery { get { throw null; } set { } }
-        public int? Dimensions { get { throw null; } set { } }
-        public Azure.Data.AI.EmbeddingEncodingFormat? EncodingFormat { get { throw null; } set { } }
-        public int? MaxNumVectors { get { throw null; } set { } }
-        public string Model { get { throw null; } set { } }
-        public string ModelVersion { get { throw null; } set { } }
-        public int? MultiDimensions { get { throw null; } set { } }
-        public Azure.Data.AI.EmbeddingOutputDataType? OutputDataType { get { throw null; } set { } }
-        public Azure.Data.AI.EmbeddingVectorType? VectorType { get { throw null; } set { } }
-    }
     public partial class MultimodalEmbeddingOutput : System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.MultimodalEmbeddingOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.MultimodalEmbeddingOutput>
     {
         internal MultimodalEmbeddingOutput() { }
-        public long Bytes { get { throw null; } }
         public string ContentType { get { throw null; } }
         public System.DateTimeOffset ExpiresOn { get { throw null; } }
         public string Id { get { throw null; } }
-        public int Records { get { throw null; } }
+        public int RecordCount { get { throw null; } }
         public string SasToken { get { throw null; } }
         public string Sha256 { get { throw null; } }
+        public long SizeInBytes { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
         protected virtual Azure.Data.AI.MultimodalEmbeddingOutput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -322,9 +306,8 @@ namespace Azure.Data.AI
         public System.Collections.Generic.IList<Azure.Data.AI.MultimodalEmbeddingItem> Data { get { throw null; } }
         public string Model { get { throw null; } }
         public string ModelVersion { get { throw null; } }
-        public string Object { get { throw null; } }
         public Azure.Data.AI.MultimodalEmbeddingOutput Output { get { throw null; } }
-        public Azure.Data.AI.EmbeddingOutputDataType OutputDataType { get { throw null; } }
+        public Azure.Data.AI.EmbeddingOutputDataKind OutputDataKind { get { throw null; } }
         public Azure.Data.AI.MultimodalEmbeddingUsage Usage { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Data.AI.MultimodalEmbeddingWarning> Warnings { get { throw null; } }
         protected virtual Azure.Data.AI.MultimodalEmbeddingResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -360,10 +343,10 @@ namespace Azure.Data.AI
     {
         internal MultimodalEmbeddingWarning() { }
         public Azure.Data.AI.EmbeddingWarningCode Code { get { throw null; } }
+        public int? CodeNumber { get { throw null; } }
         public int Index { get { throw null; } }
         public long? InputTokens { get { throw null; } }
         public string Message { get { throw null; } }
-        public int? Number { get { throw null; } }
         public long? Tokens { get { throw null; } }
         protected virtual Azure.Data.AI.MultimodalEmbeddingWarning JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

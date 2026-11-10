@@ -12,18 +12,18 @@ using System.Text.Json;
 
 namespace Azure.Data.AI
 {
-    /// <summary> The result for one item when `vectorType` is `multi`: one vector per token, for late-interaction (MaxSim) scoring. </summary>
+    /// <summary> The result for one item when `vectorKind` is `multi`: one vector per token, for late-interaction (MaxSim) scoring. </summary>
     public partial class MultimodalMultiVectorEmbedding : MultimodalEmbeddingItem
     {
         /// <summary> Initializes a new instance of <see cref="MultimodalMultiVectorEmbedding"/>. </summary>
         /// <param name="index"> The zero-based position of the item in the request. </param>
-        /// <param name="type"> The item's kind. </param>
+        /// <param name="contentKind"> The item's content kind, as supplied in the request's `kind`. </param>
         /// <param name="shape"> The number of vectors and the number of dimensions: `[vectors, dimensions]`. </param>
         /// <param name="multiEmbedding">
         /// The vectors: an array of arrays of numbers, or, when `encodingFormat` is `base64`, one base64 string of all their
-        /// little-endian `outputDtype` values in row-major order. Decode it and reshape it to `shape`.
+        /// little-endian `outputDataKind` values in row-major order. Decode it and reshape it to `shape`.
         /// </param>
-        internal MultimodalMultiVectorEmbedding(int index, EmbeddingContentType @type, IEnumerable<int> shape, BinaryData multiEmbedding) : base(index, @type, EmbeddingVectorType.Multi)
+        internal MultimodalMultiVectorEmbedding(int index, EmbeddingContentKind contentKind, IEnumerable<int> shape, BinaryData multiEmbedding) : base(index, contentKind, EmbeddingVectorKind.Multi)
         {
             Shape = shape.ToList();
             MultiEmbedding = multiEmbedding;
@@ -32,8 +32,8 @@ namespace Azure.Data.AI
         /// <summary> Initializes a new instance of <see cref="MultimodalMultiVectorEmbedding"/>. </summary>
         /// <param name="index"> The zero-based position of the item in the request. </param>
         /// <param name="id"> The item's `id` from the request, if it had one. </param>
-        /// <param name="type"> The item's kind. </param>
-        /// <param name="kind"> The kind of vectors returned, as requested in `vectorType`. </param>
+        /// <param name="contentKind"> The item's content kind, as supplied in the request's `kind`. </param>
+        /// <param name="kind"> The kind of vectors returned, as requested in `vectorKind`. </param>
         /// <param name="width"> For images: the width in pixels. </param>
         /// <param name="height"> For images: the height in pixels. </param>
         /// <param name="format"> For images: the detected image format. </param>
@@ -51,9 +51,9 @@ namespace Azure.Data.AI
         /// <param name="shape"> The number of vectors and the number of dimensions: `[vectors, dimensions]`. </param>
         /// <param name="multiEmbedding">
         /// The vectors: an array of arrays of numbers, or, when `encodingFormat` is `base64`, one base64 string of all their
-        /// little-endian `outputDtype` values in row-major order. Decode it and reshape it to `shape`.
+        /// little-endian `outputDataKind` values in row-major order. Decode it and reshape it to `shape`.
         /// </param>
-        internal MultimodalMultiVectorEmbedding(int index, string id, EmbeddingContentType @type, EmbeddingVectorType kind, int? width, int? height, EmbeddingImageFormat? format, long? tokens, long? visualTokens, bool? truncated, long? inputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<int> shape, BinaryData multiEmbedding) : base(index, id, @type, kind, width, height, format, tokens, visualTokens, truncated, inputTokens, additionalBinaryDataProperties)
+        internal MultimodalMultiVectorEmbedding(int index, string id, EmbeddingContentKind contentKind, EmbeddingVectorKind kind, int? width, int? height, EmbeddingImageFormat? format, long? tokens, long? visualTokens, bool? truncated, long? inputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<int> shape, BinaryData multiEmbedding) : base(index, id, contentKind, kind, width, height, format, tokens, visualTokens, truncated, inputTokens, additionalBinaryDataProperties)
         {
             Shape = shape;
             MultiEmbedding = multiEmbedding;
@@ -64,7 +64,7 @@ namespace Azure.Data.AI
 
         /// <summary>
         /// The vectors: an array of arrays of numbers, or, when `encodingFormat` is `base64`, one base64 string of all their
-        /// little-endian `outputDtype` values in row-major order. Decode it and reshape it to `shape`.
+        /// little-endian `outputDataKind` values in row-major order. Decode it and reshape it to `shape`.
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>

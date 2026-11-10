@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.Data.AI
 {
-    /// <summary> The result for one item when `vectorType` is `multi`: one vector per token, for late-interaction (MaxSim) scoring. </summary>
+    /// <summary> The result for one item when `vectorKind` is `multi`: one vector per token, for late-interaction (MaxSim) scoring. </summary>
     public partial class MultimodalMultiVectorEmbedding : MultimodalEmbeddingItem, IJsonModel<MultimodalMultiVectorEmbedding>
     {
         /// <summary> Initializes a new instance of <see cref="MultimodalMultiVectorEmbedding"/> for deserialization. </summary>
@@ -117,8 +117,8 @@ namespace Azure.Data.AI
             }
             int index = default;
             string id = default;
-            EmbeddingContentType @type = default;
-            EmbeddingVectorType kind = default;
+            EmbeddingContentKind contentKind = default;
+            EmbeddingVectorKind kind = default;
             int? width = default;
             int? height = default;
             EmbeddingImageFormat? format = default;
@@ -141,14 +141,14 @@ namespace Azure.Data.AI
                     id = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("type"u8))
+                if (prop.NameEquals("contentKind"u8))
                 {
-                    @type = new EmbeddingContentType(prop.Value.GetString());
+                    contentKind = new EmbeddingContentKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
                 {
-                    kind = new EmbeddingVectorType(prop.Value.GetString());
+                    kind = new EmbeddingVectorKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("width"u8))
@@ -237,7 +237,7 @@ namespace Azure.Data.AI
             return new MultimodalMultiVectorEmbedding(
                 index,
                 id,
-                @type,
+                contentKind,
                 kind,
                 width,
                 height,

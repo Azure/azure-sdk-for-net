@@ -9,7 +9,7 @@ namespace Azure.Data.AI
     // (Azure.Data.AI -> AIModelFactory), which is too generic. Rename it to align
     // with the InferenceClient surface.
     [CodeGenType("AIModelFactory")]
-    [CodeGenSuppress("MultimodalEmbeddingItem", typeof(int), typeof(string), typeof(EmbeddingContentType), typeof(string), typeof(int?), typeof(int?), typeof(EmbeddingImageFormat?), typeof(long?), typeof(long?), typeof(bool?), typeof(long?))]
+    [CodeGenSuppress("MultimodalEmbeddingItem", typeof(int), typeof(string), typeof(EmbeddingContentKind), typeof(string), typeof(int?), typeof(int?), typeof(EmbeddingImageFormat?), typeof(long?), typeof(long?), typeof(bool?), typeof(long?))]
     public static partial class InferenceModelFactory
     {
         /// <summary>
@@ -19,8 +19,8 @@ namespace Azure.Data.AI
         /// </summary>
         /// <param name="index"> The zero-based position of the item in the request. </param>
         /// <param name="id"> The item's `id` from the request, if it had one. </param>
-        /// <param name="type"> The item's kind. </param>
-        /// <param name="kind"> The kind of vectors returned, as requested in `vectorType`. </param>
+        /// <param name="contentKind"> The item's kind. </param>
+        /// <param name="kind"> The kind of vectors returned, as requested in `vectorKind`. </param>
         /// <param name="width"> For images: the width in pixels. </param>
         /// <param name="height"> For images: the height in pixels. </param>
         /// <param name="format"> For images: the detected image format. </param>
@@ -35,13 +35,13 @@ namespace Azure.Data.AI
         /// </param>
         /// <param name="inputTokens"> For truncated items only: the item's tokens before truncation. </param>
         /// <returns> A new <see cref="AI.MultimodalEmbeddingItem"/> instance for mocking. </returns>
-        public static MultimodalEmbeddingItem MultimodalEmbeddingItem(int index = default, string id = default, EmbeddingContentType @type = default, string kind = default, int? width = default, int? height = default, EmbeddingImageFormat? format = default, long? tokens = default, long? visualTokens = default, bool? truncated = default, long? inputTokens = default)
+        public static MultimodalEmbeddingItem MultimodalEmbeddingItem(int index = default, string id = default, EmbeddingContentKind contentKind = default, string kind = default, int? width = default, int? height = default, EmbeddingImageFormat? format = default, long? tokens = default, long? visualTokens = default, bool? truncated = default, long? inputTokens = default)
         {
             return new UnknownMultimodalEmbeddingItem(
                 index,
                 id,
-                @type,
-                kind == null ? default(EmbeddingVectorType) : new EmbeddingVectorType(kind),
+                contentKind,
+                kind == null ? default(EmbeddingVectorKind) : new EmbeddingVectorKind(kind),
                 width,
                 height,
                 format,

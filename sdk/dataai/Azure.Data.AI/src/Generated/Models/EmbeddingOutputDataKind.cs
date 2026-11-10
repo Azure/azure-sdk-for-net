@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Data.AI
 {
     /// <summary> The numeric type of the returned vector values. </summary>
-    public readonly partial struct EmbeddingOutputDataType : IEquatable<EmbeddingOutputDataType>
+    public readonly partial struct EmbeddingOutputDataKind : IEquatable<EmbeddingOutputDataKind>
     {
         private readonly string _value;
         /// <summary> 32-bit floating point. The default for dense vectors. </summary>
@@ -19,10 +19,10 @@ namespace Azure.Data.AI
         /// <summary> 16-bit floating point. The default for `multi` and `dense_multi`. </summary>
         private const string Float16Value = "float16";
 
-        /// <summary> Initializes a new instance of <see cref="EmbeddingOutputDataType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmbeddingOutputDataKind"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EmbeddingOutputDataType(string value)
+        public EmbeddingOutputDataKind(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -30,35 +30,35 @@ namespace Azure.Data.AI
         }
 
         /// <summary> 32-bit floating point. The default for dense vectors. </summary>
-        public static EmbeddingOutputDataType Float32 { get; } = new EmbeddingOutputDataType(Float32Value);
+        public static EmbeddingOutputDataKind Float32 { get; } = new EmbeddingOutputDataKind(Float32Value);
 
         /// <summary> 16-bit floating point. The default for `multi` and `dense_multi`. </summary>
-        public static EmbeddingOutputDataType Float16 { get; } = new EmbeddingOutputDataType(Float16Value);
+        public static EmbeddingOutputDataKind Float16 { get; } = new EmbeddingOutputDataKind(Float16Value);
 
-        /// <summary> Determines if two <see cref="EmbeddingOutputDataType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="EmbeddingOutputDataKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(EmbeddingOutputDataType left, EmbeddingOutputDataType right) => left.Equals(right);
+        public static bool operator ==(EmbeddingOutputDataKind left, EmbeddingOutputDataKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="EmbeddingOutputDataType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="EmbeddingOutputDataKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(EmbeddingOutputDataType left, EmbeddingOutputDataType right) => !left.Equals(right);
+        public static bool operator !=(EmbeddingOutputDataKind left, EmbeddingOutputDataKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="EmbeddingOutputDataType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EmbeddingOutputDataKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EmbeddingOutputDataType(string value) => new EmbeddingOutputDataType(value);
+        public static implicit operator EmbeddingOutputDataKind(string value) => new EmbeddingOutputDataKind(value);
 
-        /// <summary> Converts a string to a <see cref="EmbeddingOutputDataType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EmbeddingOutputDataKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EmbeddingOutputDataType?(string value) => value == null ? null : new EmbeddingOutputDataType(value);
+        public static implicit operator EmbeddingOutputDataKind?(string value) => value == null ? null : new EmbeddingOutputDataKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is EmbeddingOutputDataType other && Equals(other);
+        public override bool Equals(object obj) => obj is EmbeddingOutputDataKind other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(EmbeddingOutputDataType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EmbeddingOutputDataKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

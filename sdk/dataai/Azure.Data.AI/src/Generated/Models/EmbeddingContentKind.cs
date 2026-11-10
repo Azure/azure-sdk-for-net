@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Data.AI
 {
     /// <summary> The kind of an item to embed. </summary>
-    public readonly partial struct EmbeddingContentType : IEquatable<EmbeddingContentType>
+    public readonly partial struct EmbeddingContentKind : IEquatable<EmbeddingContentKind>
     {
         private readonly string _value;
         /// <summary> A document to index. </summary>
@@ -21,10 +21,10 @@ namespace Azure.Data.AI
         /// <summary> A document image, such as a scanned page. </summary>
         private const string ImageValue = "image";
 
-        /// <summary> Initializes a new instance of <see cref="EmbeddingContentType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmbeddingContentKind"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EmbeddingContentType(string value)
+        public EmbeddingContentKind(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -32,38 +32,38 @@ namespace Azure.Data.AI
         }
 
         /// <summary> A document to index. </summary>
-        public static EmbeddingContentType Text { get; } = new EmbeddingContentType(TextValue);
+        public static EmbeddingContentKind Text { get; } = new EmbeddingContentKind(TextValue);
 
         /// <summary> A search query. Queries are embedded for retrieval against documents and must be sent inline. </summary>
-        public static EmbeddingContentType Query { get; } = new EmbeddingContentType(QueryValue);
+        public static EmbeddingContentKind Query { get; } = new EmbeddingContentKind(QueryValue);
 
         /// <summary> A document image, such as a scanned page. </summary>
-        public static EmbeddingContentType Image { get; } = new EmbeddingContentType(ImageValue);
+        public static EmbeddingContentKind Image { get; } = new EmbeddingContentKind(ImageValue);
 
-        /// <summary> Determines if two <see cref="EmbeddingContentType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="EmbeddingContentKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(EmbeddingContentType left, EmbeddingContentType right) => left.Equals(right);
+        public static bool operator ==(EmbeddingContentKind left, EmbeddingContentKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="EmbeddingContentType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="EmbeddingContentKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(EmbeddingContentType left, EmbeddingContentType right) => !left.Equals(right);
+        public static bool operator !=(EmbeddingContentKind left, EmbeddingContentKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="EmbeddingContentType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EmbeddingContentKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EmbeddingContentType(string value) => new EmbeddingContentType(value);
+        public static implicit operator EmbeddingContentKind(string value) => new EmbeddingContentKind(value);
 
-        /// <summary> Converts a string to a <see cref="EmbeddingContentType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EmbeddingContentKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EmbeddingContentType?(string value) => value == null ? null : new EmbeddingContentType(value);
+        public static implicit operator EmbeddingContentKind?(string value) => value == null ? null : new EmbeddingContentKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is EmbeddingContentType other && Equals(other);
+        public override bool Equals(object obj) => obj is EmbeddingContentKind other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(EmbeddingContentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EmbeddingContentKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

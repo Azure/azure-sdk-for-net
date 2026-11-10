@@ -106,10 +106,10 @@ namespace Azure.Data.AI
                 writer.WritePropertyName("modelVersion"u8);
                 writer.WriteStringValue(ModelVersion);
             }
-            if (Optional.IsDefined(VectorType))
+            if (Optional.IsDefined(VectorKind))
             {
-                writer.WritePropertyName("vectorType"u8);
-                writer.WriteStringValue(VectorType.Value.ToString());
+                writer.WritePropertyName("vectorKind"u8);
+                writer.WriteStringValue(VectorKind.Value.ToString());
             }
             if (Optional.IsDefined(Dimensions))
             {
@@ -121,15 +121,15 @@ namespace Azure.Data.AI
                 writer.WritePropertyName("multiDimensions"u8);
                 writer.WriteNumberValue(MultiDimensions.Value);
             }
-            if (Optional.IsDefined(MaxNumVectors))
+            if (Optional.IsDefined(MaxVectorCount))
             {
                 writer.WritePropertyName("maxNumVectors"u8);
-                writer.WriteNumberValue(MaxNumVectors.Value);
+                writer.WriteNumberValue(MaxVectorCount.Value);
             }
-            if (Optional.IsDefined(OutputDataType))
+            if (Optional.IsDefined(OutputDataKind))
             {
-                writer.WritePropertyName("outputDtype"u8);
-                writer.WriteStringValue(OutputDataType.Value.ToString());
+                writer.WritePropertyName("outputDataKind"u8);
+                writer.WriteStringValue(OutputDataKind.Value.ToString());
             }
             if (Optional.IsDefined(EncodingFormat))
             {
@@ -186,11 +186,11 @@ namespace Azure.Data.AI
             IList<EmbeddingContentItem> contents = default;
             string model = default;
             string modelVersion = default;
-            EmbeddingVectorType? vectorType = default;
+            EmbeddingVectorKind? vectorKind = default;
             int? dimensions = default;
             int? multiDimensions = default;
-            int? maxNumVectors = default;
-            EmbeddingOutputDataType? outputDataType = default;
+            int? maxVectorCount = default;
+            EmbeddingOutputDataKind? outputDataKind = default;
             EmbeddingEncodingFormat? encodingFormat = default;
             EmbeddingDelivery? delivery = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -216,13 +216,13 @@ namespace Azure.Data.AI
                     modelVersion = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("vectorType"u8))
+                if (prop.NameEquals("vectorKind"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vectorType = new EmbeddingVectorType(prop.Value.GetString());
+                    vectorKind = new EmbeddingVectorKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dimensions"u8))
@@ -249,16 +249,16 @@ namespace Azure.Data.AI
                     {
                         continue;
                     }
-                    maxNumVectors = prop.Value.GetInt32();
+                    maxVectorCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("outputDtype"u8))
+                if (prop.NameEquals("outputDataKind"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    outputDataType = new EmbeddingOutputDataType(prop.Value.GetString());
+                    outputDataKind = new EmbeddingOutputDataKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("encodingFormat"u8))
@@ -288,11 +288,11 @@ namespace Azure.Data.AI
                 contents ?? new ChangeTrackingList<EmbeddingContentItem>(),
                 model,
                 modelVersion,
-                vectorType,
+                vectorKind,
                 dimensions,
                 multiDimensions,
-                maxNumVectors,
-                outputDataType,
+                maxVectorCount,
+                outputDataKind,
                 encodingFormat,
                 delivery,
                 additionalBinaryDataProperties);

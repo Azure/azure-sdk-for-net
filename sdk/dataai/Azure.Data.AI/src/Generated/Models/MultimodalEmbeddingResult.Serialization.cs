@@ -86,14 +86,12 @@ namespace Azure.Data.AI
             {
                 throw new FormatException($"The model {nameof(MultimodalEmbeddingResult)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("object"u8);
-            writer.WriteStringValue(Object);
             writer.WritePropertyName("model"u8);
             writer.WriteStringValue(Model);
             writer.WritePropertyName("modelVersion"u8);
             writer.WriteStringValue(ModelVersion);
-            writer.WritePropertyName("outputDtype"u8);
-            writer.WriteStringValue(OutputDataType.ToString());
+            writer.WritePropertyName("outputDataKind"u8);
+            writer.WriteStringValue(OutputDataKind.ToString());
             writer.WritePropertyName("data"u8);
             writer.WriteStartArray();
             foreach (MultimodalEmbeddingItem item in Data)
@@ -160,10 +158,9 @@ namespace Azure.Data.AI
             {
                 return null;
             }
-            string @object = default;
             string model = default;
             string modelVersion = default;
-            EmbeddingOutputDataType outputDataType = default;
+            EmbeddingOutputDataKind outputDataKind = default;
             IList<MultimodalEmbeddingItem> data = default;
             MultimodalEmbeddingUsage usage = default;
             IList<MultimodalEmbeddingWarning> warnings = default;
@@ -171,11 +168,6 @@ namespace Azure.Data.AI
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("object"u8))
-                {
-                    @object = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("model"u8))
                 {
                     model = prop.Value.GetString();
@@ -186,9 +178,9 @@ namespace Azure.Data.AI
                     modelVersion = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("outputDtype"u8))
+                if (prop.NameEquals("outputDataKind"u8))
                 {
-                    outputDataType = new EmbeddingOutputDataType(prop.Value.GetString());
+                    outputDataKind = new EmbeddingOutputDataKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("data"u8))
@@ -235,10 +227,9 @@ namespace Azure.Data.AI
                 }
             }
             return new MultimodalEmbeddingResult(
-                @object,
                 model,
                 modelVersion,
-                outputDataType,
+                outputDataKind,
                 data ?? new ChangeTrackingList<MultimodalEmbeddingItem>(),
                 usage,
                 warnings ?? new ChangeTrackingList<MultimodalEmbeddingWarning>(),

@@ -36,17 +36,17 @@ namespace Azure.Data.AI
         /// </param>
         /// <param name="model"> The model to use. Defaults to `microsoft-embedding-1-large` (Microsoft Embedding 1-large). </param>
         /// <param name="modelVersion"> The model version. Defaults to the latest; the response always names the version used. </param>
-        /// <param name="vectorType"> The kind of vectors to return. Defaults to `dense`. </param>
+        /// <param name="vectorKind"> The kind of vectors to return. Defaults to `dense`. </param>
         /// <param name="dimensions">
         /// The number of dimensions per vector; with `dense_multi`, of the dense vector. Must be a value the model supports for the
-        /// requested vector type; the model's native width is the default.
+        /// requested vector kind; the model's native width is the default.
         /// </param>
         /// <param name="multiDimensions">
         /// For `dense_multi` only: the number of dimensions per multi-vector. Must be a value the model supports for multi-vectors;
         /// the model's native multi-vector width is the default.
         /// </param>
-        /// <param name="maxNumVectors"> For `multi` and `dense_multi` only: the most multi-vectors to return per item. </param>
-        /// <param name="outputDataType">
+        /// <param name="maxVectorCount"> For `multi` and `dense_multi` only: the most multi-vectors to return per item. </param>
+        /// <param name="outputDataKind">
         /// The numeric type of the returned values, for every vector in the response. Defaults to `float32` for `dense` and
         /// `float16` for `multi` and `dense_multi`.
         /// </param>
@@ -56,16 +56,16 @@ namespace Azure.Data.AI
         /// endpoint has a result store, and every other request gets `inline`.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MultiModalEmbedRequest(IList<EmbeddingContentItem> contents, string model, string modelVersion, EmbeddingVectorType? vectorType, int? dimensions, int? multiDimensions, int? maxNumVectors, EmbeddingOutputDataType? outputDataType, EmbeddingEncodingFormat? encodingFormat, EmbeddingDelivery? delivery, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MultiModalEmbedRequest(IList<EmbeddingContentItem> contents, string model, string modelVersion, EmbeddingVectorKind? vectorKind, int? dimensions, int? multiDimensions, int? maxVectorCount, EmbeddingOutputDataKind? outputDataKind, EmbeddingEncodingFormat? encodingFormat, EmbeddingDelivery? delivery, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Contents = contents;
             Model = model;
             ModelVersion = modelVersion;
-            VectorType = vectorType;
+            VectorKind = vectorKind;
             Dimensions = dimensions;
             MultiDimensions = multiDimensions;
-            MaxNumVectors = maxNumVectors;
-            OutputDataType = outputDataType;
+            MaxVectorCount = maxVectorCount;
+            OutputDataKind = outputDataKind;
             EncodingFormat = encodingFormat;
             Delivery = delivery;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -85,11 +85,11 @@ namespace Azure.Data.AI
         public string ModelVersion { get; }
 
         /// <summary> The kind of vectors to return. Defaults to `dense`. </summary>
-        public EmbeddingVectorType? VectorType { get; }
+        public EmbeddingVectorKind? VectorKind { get; }
 
         /// <summary>
         /// The number of dimensions per vector; with `dense_multi`, of the dense vector. Must be a value the model supports for the
-        /// requested vector type; the model's native width is the default.
+        /// requested vector kind; the model's native width is the default.
         /// </summary>
         public int? Dimensions { get; }
 
@@ -100,13 +100,13 @@ namespace Azure.Data.AI
         public int? MultiDimensions { get; }
 
         /// <summary> For `multi` and `dense_multi` only: the most multi-vectors to return per item. </summary>
-        public int? MaxNumVectors { get; }
+        public int? MaxVectorCount { get; }
 
         /// <summary>
         /// The numeric type of the returned values, for every vector in the response. Defaults to `float32` for `dense` and
         /// `float16` for `multi` and `dense_multi`.
         /// </summary>
-        public EmbeddingOutputDataType? OutputDataType { get; }
+        public EmbeddingOutputDataKind? OutputDataKind { get; }
 
         /// <summary> How vectors are encoded in the response. Defaults to `float`. </summary>
         public EmbeddingEncodingFormat? EncodingFormat { get; }

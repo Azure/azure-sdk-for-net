@@ -89,8 +89,8 @@ namespace Azure.Data.AI
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WritePropertyName("contentKind"u8);
+            writer.WriteStringValue(ContentKind.ToString());
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(Width))

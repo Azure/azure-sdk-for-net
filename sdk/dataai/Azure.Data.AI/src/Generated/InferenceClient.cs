@@ -196,15 +196,15 @@ namespace Azure.Data.AI
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response MultiModalEmbed(RequestContent content, RequestContext context = null)
+        public virtual Response GetMultimodalEmbeddings(RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("InferenceClient.MultiModalEmbed");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("InferenceClient.GetMultimodalEmbeddings");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateMultiModalEmbedRequest(content, context);
+                using HttpMessage message = CreateGetMultimodalEmbeddingsRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -230,15 +230,15 @@ namespace Azure.Data.AI
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> MultiModalEmbedAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> GetMultimodalEmbeddingsAsync(RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("InferenceClient.MultiModalEmbed");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("InferenceClient.GetMultimodalEmbeddings");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateMultiModalEmbedRequest(content, context);
+                using HttpMessage message = CreateGetMultimodalEmbeddingsRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -261,17 +261,17 @@ namespace Azure.Data.AI
         /// </param>
         /// <param name="model"> The model to use. Defaults to `microsoft-embedding-1-large` (Microsoft Embedding 1-large). </param>
         /// <param name="modelVersion"> The model version. Defaults to the latest; the response always names the version used. </param>
-        /// <param name="vectorType"> The kind of vectors to return. Defaults to `dense`. </param>
+        /// <param name="vectorKind"> The kind of vectors to return. Defaults to `dense`. </param>
         /// <param name="dimensions">
         /// The number of dimensions per vector; with `dense_multi`, of the dense vector. Must be a value the model supports for the
-        /// requested vector type; the model's native width is the default.
+        /// requested vector kind; the model's native width is the default.
         /// </param>
         /// <param name="multiDimensions">
         /// For `dense_multi` only: the number of dimensions per multi-vector. Must be a value the model supports for multi-vectors;
         /// the model's native multi-vector width is the default.
         /// </param>
-        /// <param name="maxNumVectors"> For `multi` and `dense_multi` only: the most multi-vectors to return per item. </param>
-        /// <param name="outputDataType">
+        /// <param name="maxVectorCount"> For `multi` and `dense_multi` only: the most multi-vectors to return per item. </param>
+        /// <param name="outputDataKind">
         /// The numeric type of the returned values, for every vector in the response. Defaults to `float32` for `dense` and
         /// `float16` for `multi` and `dense_multi`.
         /// </param>
@@ -283,7 +283,7 @@ namespace Azure.Data.AI
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contents"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<MultimodalEmbeddingResult> MultiModalEmbed(IEnumerable<EmbeddingContentItem> contents, string model = default, string modelVersion = default, EmbeddingVectorType? vectorType = default, int? dimensions = default, int? multiDimensions = default, int? maxNumVectors = default, EmbeddingOutputDataType? outputDataType = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
+        public virtual Response<MultimodalEmbeddingResult> GetMultimodalEmbeddings(IEnumerable<EmbeddingContentItem> contents, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(contents, nameof(contents));
 
@@ -291,15 +291,15 @@ namespace Azure.Data.AI
                 contents?.ToList() as IList<EmbeddingContentItem> ?? new ChangeTrackingList<EmbeddingContentItem>(),
                 model,
                 modelVersion,
-                vectorType,
+                vectorKind,
                 dimensions,
                 multiDimensions,
-                maxNumVectors,
-                outputDataType,
+                maxVectorCount,
+                outputDataKind,
                 encodingFormat,
                 delivery,
                 default);
-            Response result = MultiModalEmbed(spreadModel, cancellationToken.ToRequestContext());
+            Response result = GetMultimodalEmbeddings(spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((MultimodalEmbeddingResult)result, result);
         }
 
@@ -316,17 +316,17 @@ namespace Azure.Data.AI
         /// </param>
         /// <param name="model"> The model to use. Defaults to `microsoft-embedding-1-large` (Microsoft Embedding 1-large). </param>
         /// <param name="modelVersion"> The model version. Defaults to the latest; the response always names the version used. </param>
-        /// <param name="vectorType"> The kind of vectors to return. Defaults to `dense`. </param>
+        /// <param name="vectorKind"> The kind of vectors to return. Defaults to `dense`. </param>
         /// <param name="dimensions">
         /// The number of dimensions per vector; with `dense_multi`, of the dense vector. Must be a value the model supports for the
-        /// requested vector type; the model's native width is the default.
+        /// requested vector kind; the model's native width is the default.
         /// </param>
         /// <param name="multiDimensions">
         /// For `dense_multi` only: the number of dimensions per multi-vector. Must be a value the model supports for multi-vectors;
         /// the model's native multi-vector width is the default.
         /// </param>
-        /// <param name="maxNumVectors"> For `multi` and `dense_multi` only: the most multi-vectors to return per item. </param>
-        /// <param name="outputDataType">
+        /// <param name="maxVectorCount"> For `multi` and `dense_multi` only: the most multi-vectors to return per item. </param>
+        /// <param name="outputDataKind">
         /// The numeric type of the returned values, for every vector in the response. Defaults to `float32` for `dense` and
         /// `float16` for `multi` and `dense_multi`.
         /// </param>
@@ -338,7 +338,7 @@ namespace Azure.Data.AI
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contents"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<MultimodalEmbeddingResult>> MultiModalEmbedAsync(IEnumerable<EmbeddingContentItem> contents, string model = default, string modelVersion = default, EmbeddingVectorType? vectorType = default, int? dimensions = default, int? multiDimensions = default, int? maxNumVectors = default, EmbeddingOutputDataType? outputDataType = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MultimodalEmbeddingResult>> GetMultimodalEmbeddingsAsync(IEnumerable<EmbeddingContentItem> contents, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(contents, nameof(contents));
 
@@ -346,15 +346,15 @@ namespace Azure.Data.AI
                 contents?.ToList() as IList<EmbeddingContentItem> ?? new ChangeTrackingList<EmbeddingContentItem>(),
                 model,
                 modelVersion,
-                vectorType,
+                vectorKind,
                 dimensions,
                 multiDimensions,
-                maxNumVectors,
-                outputDataType,
+                maxVectorCount,
+                outputDataKind,
                 encodingFormat,
                 delivery,
                 default);
-            Response result = await MultiModalEmbedAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetMultimodalEmbeddingsAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((MultimodalEmbeddingResult)result, result);
         }
     }

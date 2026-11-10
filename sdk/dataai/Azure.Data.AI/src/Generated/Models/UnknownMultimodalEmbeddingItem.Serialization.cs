@@ -107,8 +107,8 @@ namespace Azure.Data.AI
             }
             int index = default;
             string id = default;
-            EmbeddingContentType @type = default;
-            EmbeddingVectorType kind = default;
+            EmbeddingContentKind contentKind = default;
+            EmbeddingVectorKind kind = default;
             int? width = default;
             int? height = default;
             EmbeddingImageFormat? format = default;
@@ -129,14 +129,14 @@ namespace Azure.Data.AI
                     id = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("type"u8))
+                if (prop.NameEquals("contentKind"u8))
                 {
-                    @type = new EmbeddingContentType(prop.Value.GetString());
+                    contentKind = new EmbeddingContentKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
                 {
-                    kind = new EmbeddingVectorType(prop.Value.GetString());
+                    kind = new EmbeddingVectorKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("width"u8))
@@ -210,7 +210,7 @@ namespace Azure.Data.AI
             return new UnknownMultimodalEmbeddingItem(
                 index,
                 id,
-                @type,
+                contentKind,
                 kind,
                 width,
                 height,

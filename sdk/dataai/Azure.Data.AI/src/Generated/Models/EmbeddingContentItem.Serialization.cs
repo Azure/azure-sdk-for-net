@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.Data.AI
 {
-    /// <summary> One item to embed: its `type`, an optional `id`, and exactly one source: `content`, or `url` with `sasToken`. </summary>
+    /// <summary> One item to embed: its `kind`, an optional `id`, and exactly one source: `content`, or `url` with `sasToken`. </summary>
     public partial class EmbeddingContentItem : IJsonModel<EmbeddingContentItem>
     {
         /// <summary> Initializes a new instance of <see cref="EmbeddingContentItem"/> for deserialization. </summary>
@@ -83,8 +83,8 @@ namespace Azure.Data.AI
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
@@ -143,7 +143,7 @@ namespace Azure.Data.AI
                 return null;
             }
             string id = default;
-            EmbeddingContentType @type = default;
+            EmbeddingContentKind kind = default;
             string content = default;
             Uri uri = default;
             string sasToken = default;
@@ -155,9 +155,9 @@ namespace Azure.Data.AI
                     id = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("type"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    @type = new EmbeddingContentType(prop.Value.GetString());
+                    kind = new EmbeddingContentKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("content"u8))
@@ -186,7 +186,7 @@ namespace Azure.Data.AI
             }
             return new EmbeddingContentItem(
                 id,
-                @type,
+                kind,
                 content,
                 uri,
                 sasToken,
