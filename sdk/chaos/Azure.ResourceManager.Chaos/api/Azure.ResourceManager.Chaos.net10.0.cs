@@ -2932,6 +2932,7 @@ namespace Azure.ResourceManager.Chaos.Models
     {
         internal WorkspaceDiscoveryWarning() { }
         public string Message { get { throw null; } }
+        public Azure.ResourceManager.Chaos.Models.WorkspaceDiscoveryWarningReason Reason { get { throw null; } }
         public Azure.Core.ResourceIdentifier ScopeId { get { throw null; } }
         public string ScopeKind { get { throw null; } }
         protected virtual Azure.ResourceManager.Chaos.Models.WorkspaceDiscoveryWarning JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2943,6 +2944,24 @@ namespace Azure.ResourceManager.Chaos.Models
         Azure.ResourceManager.Chaos.Models.WorkspaceDiscoveryWarning System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.WorkspaceDiscoveryWarning>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.WorkspaceDiscoveryWarning>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.WorkspaceDiscoveryWarning>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WorkspaceDiscoveryWarningReason : System.IEquatable<Azure.ResourceManager.Chaos.Models.WorkspaceDiscoveryWarningReason>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WorkspaceDiscoveryWarningReason(string value) { throw null; }
+        public static Azure.ResourceManager.Chaos.Models.WorkspaceDiscoveryWarningReason AccessIndeterminate { get { throw null; } }
+        public static Azure.ResourceManager.Chaos.Models.WorkspaceDiscoveryWarningReason RbacValidationFailed { get { throw null; } }
+        public static Azure.ResourceManager.Chaos.Models.WorkspaceDiscoveryWarningReason TargetNotFound { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Chaos.Models.WorkspaceDiscoveryWarningReason other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Chaos.Models.WorkspaceDiscoveryWarningReason left, Azure.ResourceManager.Chaos.Models.WorkspaceDiscoveryWarningReason right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Chaos.Models.WorkspaceDiscoveryWarningReason (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.Chaos.Models.WorkspaceDiscoveryWarningReason? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Chaos.Models.WorkspaceDiscoveryWarningReason left, Azure.ResourceManager.Chaos.Models.WorkspaceDiscoveryWarningReason right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class WorkspaceEncryption : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Chaos.Models.WorkspaceEncryption>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Chaos.Models.WorkspaceEncryption>
     {

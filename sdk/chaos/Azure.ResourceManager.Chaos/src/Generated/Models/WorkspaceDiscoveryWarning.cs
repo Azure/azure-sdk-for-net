@@ -46,9 +46,6 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> The source scope kind, such as Subscription, ResourceGroup, ServiceGroup, or Resource. </summary>
         public string ScopeKind { get; }
 
-        /// <summary> The confirmed guidance reason, not a system-verification failure. </summary>
-        internal WorkspaceDiscoveryWarningReason Reason { get; set; }
-
         /// <summary> Human-readable guidance with attribution appropriate to the reason. </summary>
         public string Message { get; }
     }

@@ -12,7 +12,7 @@ using Azure.ResourceManager.Chaos;
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> The confirmed guidance reason. Unknown future reasons preserve the common warning fields and must not be interpreted as a permission denial. </summary>
-    internal readonly partial struct WorkspaceDiscoveryWarningReason : IEquatable<WorkspaceDiscoveryWarningReason>
+    public readonly partial struct WorkspaceDiscoveryWarningReason : IEquatable<WorkspaceDiscoveryWarningReason>
     {
         private readonly string _value;
         /// <summary> The affected resource could not be read because of a confirmed authorization denial. </summary>
@@ -62,13 +62,6 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is WorkspaceDiscoveryWarningReason other && Equals(other);
-
-        /// <inheritdoc/>
-        public bool Equals(WorkspaceDiscoveryWarningReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

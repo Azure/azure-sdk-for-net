@@ -829,23 +829,6 @@ namespace Azure.ResourceManager.Chaos.Models
             return new UnknownWorkspaceDiscoveryWarning(scopeId, scopeKind, reason is null ? default : new WorkspaceDiscoveryWarningReason(reason), message, default);
         }
 
-        /// <summary> Confirmed read-authorization guidance. Permission details are required composition, not an optional shell reused for other causes. </summary>
-        /// <param name="scopeId"> The normalized expanded source scope where the affected obligation was encountered. </param>
-        /// <param name="scopeKind"> The source scope kind, such as Subscription, ResourceGroup, ServiceGroup, or Resource. </param>
-        /// <param name="message"> Human-readable guidance with attribution appropriate to the reason. </param>
-        /// <param name="permission"> The affected resource, required permissions, recommended roles, and optional identity details. </param>
-        /// <returns> A new <see cref="Models.WorkspaceDiscoveryPermissionWarning"/> instance for mocking. </returns>
-        public static WorkspaceDiscoveryPermissionWarning WorkspaceDiscoveryPermissionWarning(ResourceIdentifier scopeId = default, string scopeKind = default, string message = default, PermissionError permission = default)
-        {
-            return new WorkspaceDiscoveryPermissionWarning(
-                scopeId,
-                scopeKind,
-                WorkspaceDiscoveryWarningReason.RbacValidationFailed,
-                message,
-                default,
-                permission);
-        }
-
         /// <summary> Model that represents the permission error. </summary>
         /// <param name="resourceId"> The resource id for the affected resource. </param>
         /// <param name="missingPermissions"> The missing permissions. </param>
@@ -881,40 +864,6 @@ namespace Azure.ResourceManager.Chaos.Models
         public static EntraIdentity EntraIdentity(string objectId = default, string tenantId = default)
         {
             return new EntraIdentity(objectId, tenantId, default);
-        }
-
-        /// <summary> Guidance for a resource or membership confirmed missing. </summary>
-        /// <param name="scopeId"> The normalized expanded source scope where the affected obligation was encountered. </param>
-        /// <param name="scopeKind"> The source scope kind, such as Subscription, ResourceGroup, ServiceGroup, or Resource. </param>
-        /// <param name="message"> Human-readable guidance with attribution appropriate to the reason. </param>
-        /// <param name="resourceId"> The affected resource or member identity. </param>
-        /// <returns> A new <see cref="Models.WorkspaceDiscoveryResourceWarning"/> instance for mocking. </returns>
-        public static WorkspaceDiscoveryResourceWarning WorkspaceDiscoveryResourceWarning(ResourceIdentifier scopeId = default, string scopeKind = default, string message = default, ResourceIdentifier resourceId = default)
-        {
-            return new WorkspaceDiscoveryResourceWarning(
-                scopeId,
-                scopeKind,
-                WorkspaceDiscoveryWarningReason.TargetNotFound,
-                message,
-                default,
-                resourceId);
-        }
-
-        /// <summary> Neutral guidance when access versus absence could not be established. </summary>
-        /// <param name="scopeId"> The normalized expanded source scope where the affected obligation was encountered. </param>
-        /// <param name="scopeKind"> The source scope kind, such as Subscription, ResourceGroup, ServiceGroup, or Resource. </param>
-        /// <param name="message"> Human-readable guidance with attribution appropriate to the reason. </param>
-        /// <param name="resourceId"> The affected resource or member identity. </param>
-        /// <returns> A new <see cref="Models.WorkspaceDiscoveryAccessWarning"/> instance for mocking. </returns>
-        public static WorkspaceDiscoveryAccessWarning WorkspaceDiscoveryAccessWarning(ResourceIdentifier scopeId = default, string scopeKind = default, string message = default, ResourceIdentifier resourceId = default)
-        {
-            return new WorkspaceDiscoveryAccessWarning(
-                scopeId,
-                scopeKind,
-                WorkspaceDiscoveryWarningReason.AccessIndeterminate,
-                message,
-                default,
-                resourceId);
         }
 
         /// <summary> A retained workspace evaluation of published scenario-template versions. </summary>
