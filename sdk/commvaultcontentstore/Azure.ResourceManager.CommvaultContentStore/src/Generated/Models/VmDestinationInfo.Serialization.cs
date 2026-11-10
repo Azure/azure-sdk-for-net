@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             }
             writer.WritePropertyName("vmInfoList"u8);
             writer.WriteStartArray();
-            foreach (VmInfo item in VmInfoList)
+            foreach (CommvaultVirtualMachineRestoreSettings item in VirtualMachines)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -128,18 +128,18 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 return null;
             }
-            IList<VmInfo> vmInfoList = default;
+            IList<CommvaultVirtualMachineRestoreSettings> virtualMachines = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("vmInfoList"u8))
                 {
-                    List<VmInfo> array = new List<VmInfo>();
+                    List<CommvaultVirtualMachineRestoreSettings> array = new List<CommvaultVirtualMachineRestoreSettings>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VmInfo.DeserializeVmInfo(item, options));
+                        array.Add(CommvaultVirtualMachineRestoreSettings.DeserializeCommvaultVirtualMachineRestoreSettings(item, options));
                     }
-                    vmInfoList = array;
+                    virtualMachines = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VmDestinationInfo(vmInfoList ?? new ChangeTrackingList<VmInfo>(), additionalBinaryDataProperties);
+            return new VmDestinationInfo(virtualMachines ?? new ChangeTrackingList<CommvaultVirtualMachineRestoreSettings>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// <param name="content"> The body type of the operation request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<RestoreProtectionItemResult>> RestoreAsync(RestoreProtectionItemContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestoreProtectedItemResult>> RestoreAsync(RestoreProtectedItemContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -426,9 +426,9 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionGroupsRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RestoreProtectionItemContent.ToRequestContent(content), context);
+                HttpMessage message = _protectionGroupsRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RestoreProtectedItemContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RestoreProtectionItemResult> response = Response.FromValue(RestoreProtectionItemResult.FromResponse(result), result);
+                Response<RestoreProtectedItemResult> response = Response.FromValue(RestoreProtectedItemResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// <param name="content"> The body type of the operation request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<RestoreProtectionItemResult> Restore(RestoreProtectionItemContent content, CancellationToken cancellationToken = default)
+        public virtual Response<RestoreProtectedItemResult> Restore(RestoreProtectedItemContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -478,9 +478,9 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _protectionGroupsRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RestoreProtectionItemContent.ToRequestContent(content), context);
+                HttpMessage message = _protectionGroupsRestClient.CreateRestoreRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, RestoreProtectedItemContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<RestoreProtectionItemResult> response = Response.FromValue(RestoreProtectionItemResult.FromResponse(result), result);
+                Response<RestoreProtectedItemResult> response = Response.FromValue(RestoreProtectedItemResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

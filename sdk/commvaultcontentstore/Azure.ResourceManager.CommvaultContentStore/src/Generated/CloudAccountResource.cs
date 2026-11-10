@@ -427,9 +427,9 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LatestLinkedSaaSResult>> LatestLinkedSaaSAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LatestLinkedSaaSResult>> GetLatestLinkedSaaSAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cloudAccountsClientDiagnostics.CreateScope("CloudAccountResource.LatestLinkedSaaS");
+            using DiagnosticScope scope = _cloudAccountsClientDiagnostics.CreateScope("CloudAccountResource.GetLatestLinkedSaaS");
             scope.Start();
             try
             {
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudAccountsRestClient.CreateLatestLinkedSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _cloudAccountsRestClient.CreateGetLatestLinkedSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<LatestLinkedSaaSResult> response = Response.FromValue(LatestLinkedSaaSResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -475,9 +475,9 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LatestLinkedSaaSResult> LatestLinkedSaaS(CancellationToken cancellationToken = default)
+        public virtual Response<LatestLinkedSaaSResult> GetLatestLinkedSaaS(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _cloudAccountsClientDiagnostics.CreateScope("CloudAccountResource.LatestLinkedSaaS");
+            using DiagnosticScope scope = _cloudAccountsClientDiagnostics.CreateScope("CloudAccountResource.GetLatestLinkedSaaS");
             scope.Start();
             try
             {
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _cloudAccountsRestClient.CreateLatestLinkedSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _cloudAccountsRestClient.CreateGetLatestLinkedSaaSRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<LatestLinkedSaaSResult> response = Response.FromValue(LatestLinkedSaaSResult.FromResponse(result), result);
                 if (response.Value == null)

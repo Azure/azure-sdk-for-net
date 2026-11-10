@@ -92,13 +92,13 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             }
             writer.WritePropertyName("vmList"u8);
             writer.WriteStartArray();
-            foreach (VmListItem item in VmList)
+            foreach (CommvaultVirtualMachineReference item in VirtualMachines)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("backupOptions"u8);
-            writer.WriteObjectValue(BackupOptions, options);
+            writer.WriteObjectValue(BackupConfiguration, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -141,24 +141,24 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 return null;
             }
-            IList<VmListItem> vmList = default;
-            BackupConfig backupOptions = default;
+            IList<CommvaultVirtualMachineReference> virtualMachines = default;
+            CommvaultBackupConfiguration backupConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("vmList"u8))
                 {
-                    List<VmListItem> array = new List<VmListItem>();
+                    List<CommvaultVirtualMachineReference> array = new List<CommvaultVirtualMachineReference>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VmListItem.DeserializeVmListItem(item, options));
+                        array.Add(CommvaultVirtualMachineReference.DeserializeCommvaultVirtualMachineReference(item, options));
                     }
-                    vmList = array;
+                    virtualMachines = array;
                     continue;
                 }
                 if (prop.NameEquals("backupOptions"u8))
                 {
-                    backupOptions = BackupConfig.DeserializeBackupConfig(prop.Value, options);
+                    backupConfiguration = CommvaultBackupConfiguration.DeserializeCommvaultBackupConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BackupProtectionGroupContent(vmList ?? new ChangeTrackingList<VmListItem>(), backupOptions, additionalBinaryDataProperties);
+            return new BackupProtectionGroupContent(virtualMachines ?? new ChangeTrackingList<CommvaultVirtualMachineReference>(), backupConfiguration, additionalBinaryDataProperties);
         }
     }
 }

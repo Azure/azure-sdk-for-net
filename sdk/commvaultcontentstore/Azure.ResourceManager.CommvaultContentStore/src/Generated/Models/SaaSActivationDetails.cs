@@ -23,25 +23,25 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SaaSActivationDetails"/>. </summary>
-        /// <param name="saasResourceId"> Optional Marketplace SaaS resource identifier. </param>
+        /// <param name="saaSResourceId"> Optional Marketplace SaaS resource identifier. </param>
         /// <param name="user"> Optional user details. </param>
         /// <param name="company"> Optional company details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SaaSActivationDetails(ResourceIdentifier saasResourceId, CommvaultUserDetails user, CompanyProfile company, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SaaSActivationDetails(ResourceIdentifier saaSResourceId, CommvaultUserDetails user, CommvaultCompanyProfile company, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SaasResourceId = saasResourceId;
+            SaaSResourceId = saaSResourceId;
             User = user;
             Company = company;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Optional Marketplace SaaS resource identifier. </summary>
-        public ResourceIdentifier SaasResourceId { get; set; }
+        public ResourceIdentifier SaaSResourceId { get; set; }
 
         /// <summary> Optional user details. </summary>
         public CommvaultUserDetails User { get; set; }
 
         /// <summary> Optional company details. </summary>
-        public CompanyProfile Company { get; set; }
+        public CommvaultCompanyProfile Company { get; set; }
     }
 }

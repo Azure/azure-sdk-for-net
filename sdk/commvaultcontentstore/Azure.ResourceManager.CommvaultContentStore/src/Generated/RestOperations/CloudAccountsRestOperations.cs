@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
             return message;
         }
 
-        internal HttpMessage CreateLatestLinkedSaaSRequest(Guid subscriptionId, string resourceGroupName, string cloudAccountName, RequestContext context)
+        internal HttpMessage CreateGetLatestLinkedSaaSRequest(Guid subscriptionId, string resourceGroupName, string cloudAccountName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("resourceGroup"u8);
-                writer.WriteStringValue(ResourceGroup);
+                writer.WriteStringValue(ResourceGroupName);
             }
             if (options.Format != "W")
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("vmGuid"u8);
-                writer.WriteStringValue(VmGuid);
+                writer.WriteStringValue(VirtualMachineGuid);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -144,9 +144,9 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             }
             string resourceName = default;
             long lastBackupTime = default;
-            string resourceGroup = default;
+            string resourceGroupName = default;
             AzureLocation location = default;
-            string vmGuid = default;
+            string virtualMachineGuid = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 }
                 if (prop.NameEquals("resourceGroup"u8))
                 {
-                    resourceGroup = prop.Value.GetString();
+                    resourceGroupName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("location"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 }
                 if (prop.NameEquals("vmGuid"u8))
                 {
-                    vmGuid = prop.Value.GetString();
+                    virtualMachineGuid = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -183,9 +183,9 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             return new ProtectedItemProperties(
                 resourceName,
                 lastBackupTime,
-                resourceGroup,
+                resourceGroupName,
                 location,
-                vmGuid,
+                virtualMachineGuid,
                 additionalBinaryDataProperties);
         }
     }

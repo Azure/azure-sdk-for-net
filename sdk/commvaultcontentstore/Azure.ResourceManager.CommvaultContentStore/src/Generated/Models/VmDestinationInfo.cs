@@ -19,25 +19,25 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VmDestinationInfo"/>. </summary>
-        /// <param name="vmInfoList"> List of information on VMs. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmInfoList"/> is null. </exception>
-        public VmDestinationInfo(IEnumerable<VmInfo> vmInfoList)
+        /// <param name="virtualMachines"> List of information on VMs. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachines"/> is null. </exception>
+        public VmDestinationInfo(IEnumerable<CommvaultVirtualMachineRestoreSettings> virtualMachines)
         {
-            Argument.AssertNotNull(vmInfoList, nameof(vmInfoList));
+            Argument.AssertNotNull(virtualMachines, nameof(virtualMachines));
 
-            VmInfoList = vmInfoList.ToList();
+            VirtualMachines = virtualMachines.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="VmDestinationInfo"/>. </summary>
-        /// <param name="vmInfoList"> List of information on VMs. </param>
+        /// <param name="virtualMachines"> List of information on VMs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VmDestinationInfo(IList<VmInfo> vmInfoList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VmDestinationInfo(IList<CommvaultVirtualMachineRestoreSettings> virtualMachines, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            VmInfoList = vmInfoList;
+            VirtualMachines = virtualMachines;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of information on VMs. </summary>
-        public IList<VmInfo> VmInfoList { get; } = new ChangeTrackingList<VmInfo>();
+        public IList<CommvaultVirtualMachineRestoreSettings> VirtualMachines { get; } = new ChangeTrackingList<CommvaultVirtualMachineRestoreSettings>();
     }
 }

@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 throw new FormatException($"The model {nameof(SaaSActivationDetails)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SaasResourceId))
+            if (Optional.IsDefined(SaaSResourceId))
             {
                 writer.WritePropertyName("saasResourceId"u8);
-                writer.WriteStringValue(SaasResourceId);
+                writer.WriteStringValue(SaaSResourceId);
             }
             if (Optional.IsDefined(User))
             {
@@ -132,9 +132,9 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 return null;
             }
-            ResourceIdentifier saasResourceId = default;
+            ResourceIdentifier saaSResourceId = default;
             CommvaultUserDetails user = default;
-            CompanyProfile company = default;
+            CommvaultCompanyProfile company = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    saasResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    saaSResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("user"u8))
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    company = CompanyProfile.DeserializeCompanyProfile(prop.Value, options);
+                    company = CommvaultCompanyProfile.DeserializeCommvaultCompanyProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SaaSActivationDetails(saasResourceId, user, company, additionalBinaryDataProperties);
+            return new SaaSActivationDetails(saaSResourceId, user, company, additionalBinaryDataProperties);
         }
     }
 }

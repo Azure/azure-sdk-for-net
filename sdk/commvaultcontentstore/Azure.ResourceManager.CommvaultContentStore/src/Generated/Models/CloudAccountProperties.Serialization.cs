@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(SsoUri))
+            if (options.Format != "W" && Optional.IsDefined(SingleSignOnUriString))
             {
                 writer.WritePropertyName("ssoUrl"u8);
-                writer.WriteStringValue(SsoUri);
+                writer.WriteStringValue(SingleSignOnUriString);
             }
             if (Optional.IsDefined(Company))
             {
@@ -150,18 +150,18 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 return null;
             }
-            MarketplaceDetails marketplace = default;
+            CommvaultMarketplaceDetails marketplace = default;
             CommvaultUserDetails user = default;
             ResourceProvisioningState? provisioningState = default;
-            string ssoUri = default;
-            CompanyProfile company = default;
+            string singleSignOnUriString = default;
+            CommvaultCompanyProfile company = default;
             IList<CommvaultRoleAssignment> roleAssignmentsOnCreate = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("marketplace"u8))
                 {
-                    marketplace = MarketplaceDetails.DeserializeMarketplaceDetails(prop.Value, options);
+                    marketplace = CommvaultMarketplaceDetails.DeserializeCommvaultMarketplaceDetails(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("user"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 }
                 if (prop.NameEquals("ssoUrl"u8))
                 {
-                    ssoUri = prop.Value.GetString();
+                    singleSignOnUriString = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("company"u8))
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    company = CompanyProfile.DeserializeCompanyProfile(prop.Value, options);
+                    company = CommvaultCompanyProfile.DeserializeCommvaultCompanyProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("roleAssignmentsOnCcaCreate"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 marketplace,
                 user,
                 provisioningState,
-                ssoUri,
+                singleSignOnUriString,
                 company,
                 roleAssignmentsOnCreate ?? new ChangeTrackingList<CommvaultRoleAssignment>(),
                 additionalBinaryDataProperties);
