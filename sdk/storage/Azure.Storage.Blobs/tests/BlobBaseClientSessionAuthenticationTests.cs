@@ -702,6 +702,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [LiveOnly(Reason = "Cannot record tests caching Session authentication")]
         public async Task MixedOperations_Sessions()
         {
             var containerName = GetNewContainerName();
