@@ -12,10 +12,10 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary></summary>
-    public partial class UploadKnowledgeSourceFileMultipartRequest
+    public partial class UploadKnowledgeSourceFileMultipartContent
     {
-        /// <summary> Initializes a new instance of <see cref="UploadKnowledgeSourceFileMultipartRequest"/> for deserialization. </summary>
-        internal UploadKnowledgeSourceFileMultipartRequest()
+        /// <summary> Initializes a new instance of <see cref="UploadKnowledgeSourceFileMultipartContent"/> for deserialization. </summary>
+        internal UploadKnowledgeSourceFileMultipartContent()
         {
         }
 

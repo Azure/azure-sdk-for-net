@@ -11,14 +11,14 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> The SearchPostRequest. </summary>
-    internal partial class SearchPostRequest
+    /// <summary> The SearchPostContent. </summary>
+    internal partial class SearchPostContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchPostRequest"/>. </summary>
-        internal SearchPostRequest()
+        /// <summary> Initializes a new instance of <see cref="SearchPostContent"/>. </summary>
+        internal SearchPostContent()
         {
             Facets = new ChangeTrackingList<string>();
             HighlightFields = new ChangeTrackingList<string>();
@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Models
             VectorQueries = new ChangeTrackingList<VectorQuery>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchPostRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchPostContent"/>. </summary>
         /// <param name="includeTotalCount"> A value that specifies whether to fetch the total count of results. Default is false. Setting this value to true may have a performance impact. Note that the count returned is an approximation. </param>
         /// <param name="facets"> The list of facet expressions to apply to the search query. Each facet expression contains a field name, optionally followed by a comma-separated list of name:value pairs. </param>
         /// <param name="filter"> The OData $filter expression to apply to the search query. </param>
@@ -65,7 +65,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="vectorFilterMode"> Determines whether or not filters are applied before or after the vector search is performed. Default is 'preFilter' for new indexes. </param>
         /// <param name="hybridSearch"> The query parameters to configure hybrid search behaviors. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchPostRequest(bool? includeTotalCount, IList<string> facets, string filter, IList<string> highlightFields, string highlightPostTag, string highlightPreTag, double? minimumCoverage, IList<string> orderBy, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, QueryDebugMode? debug, string searchText, IList<string> searchFields, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, IList<string> @select, int? skip, int? top, string semanticConfigurationName, SemanticErrorMode? semanticErrorHandling, int? semanticMaxWaitInMilliseconds, string semanticQuery, QueryAnswerType? answers, QueryCaptionType? captions, QueryRewritesType? queryRewrites, IList<string> semanticFields, IList<VectorQuery> vectorQueries, VectorFilterMode? vectorFilterMode, HybridSearch hybridSearch, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchPostContent(bool? includeTotalCount, IList<string> facets, string filter, IList<string> highlightFields, string highlightPostTag, string highlightPreTag, double? minimumCoverage, IList<string> orderBy, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, QueryDebugMode? debug, string searchText, IList<string> searchFields, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, IList<string> @select, int? skip, int? top, string semanticConfigurationName, SemanticErrorMode? semanticErrorHandling, int? semanticMaxWaitInMilliseconds, string semanticQuery, QueryAnswerType? answers, QueryCaptionType? captions, QueryRewritesType? queryRewrites, IList<string> semanticFields, IList<VectorQuery> vectorQueries, VectorFilterMode? vectorFilterMode, HybridSearch hybridSearch, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IncludeTotalCount = includeTotalCount;
             Facets = facets;
