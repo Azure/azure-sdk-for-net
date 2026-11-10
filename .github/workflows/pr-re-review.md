@@ -70,6 +70,10 @@ safe-outputs:
       shell: pwsh
       env:
         AGENT_OUTPUT: ${{ steps.setup-agent-output-env.outputs.GH_AW_AGENT_OUTPUT }}
+        GH_TOKEN: ${{ github.token }}
+        PR_NUMBER: ${{ github.event.pull_request.number }}
+        PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        PR_UPDATED_AT: ${{ github.event.pull_request.updated_at }}
       run: ./.github/workflows/pr-re-review/Invoke-PrReReviewGuard.ps1
   jobs:
     unresolve-review-thread:
@@ -364,15 +368,19 @@ For each thread that **is resolved**:
 
 ## Step 3 - Fresh full review pass
 
-Independently review every changed file from Step 1, one file at a time, using the shared rules, exactly as a first-pass review would, to catch anything missed by earlier passes (including commits pushed after the native reviewer's last pass). Before posting any new finding, confirm it is not already covered by an existing open thread (Step 2) or another reviewer's comment.
+Independently review every changed file from Step 1, one file at a time, using the shared rules, exactly as a first-pass review would, to catch anything missed by earlier passes (including commits pushed after the native reviewer's last pass). This overrides the shared skill's guidance to focus a re-review on commits since the previous review: every changed file is in scope, whether or not it changed since then.
+
+A file counts as reviewed only when you have read its entire patch. Never truncate a patch (no character or line limits, slicing, or `head`) and never skip a file by name, path, or type. When a tool saves a response to a file, read that file to its end, in consecutive windows if it is long. When GitHub omits a file's patch, read the file with `get_file_contents` instead.
+
+Before posting any new finding, confirm it is not already covered by an existing open thread (Step 2) or another reviewer's comment.
 
 ## Step 4 - Confirm coverage, then submit one review
 
 Submit a review only when the re-review is complete:
 
-- Step 1 fetched every `get_review_comments` page (until `hasNextPage` was false), every thread's comments, and all `changed_files` files.
+- Step 1 fetched every `get_review_comments` page (until `hasNextPage` was false), every thread's comments, all `changed_files` files, and every `get_reviews` page.
 - Step 2 verified every unresolved thread against current file content.
-- Step 3 reviewed every changed file.
+- Step 3 read the entire patch of every changed file and reviewed it.
 
 If any of these is not true, do not call `submit_pull_request_review`, `create_pull_request_review_comment`, or `noop`; call `report_incomplete` instead. Report incomplete only because of something that happened while you worked: a page failed to load, a tool was unavailable or returned an error, or the 25-minute limit is close while you are still reviewing. An estimate that the pull request is too large to finish is not a reason; keep reviewing until the work is done or one of those happens. In `report_incomplete`, give the counts you completed, list the files you reviewed, and state the work remaining and why. The publishing job blocks any review or inline comment from an incomplete re-review, and the run fails.
 
@@ -382,7 +390,7 @@ When the re-review is complete, submit exactly one `submit_pull_request_review` 
 Coverage: <fetched>/<total> threads fetched, <verified>/<unresolved> unresolved threads verified, <reviewed>/<changed> changed files reviewed
 ```
 
-`<total>` is the `get_review_comments` `totalCount`, `<unresolved>` is the number of threads that were unresolved when you fetched them, and `<changed>` is the pull request's `changed_files`. Publication is blocked unless each count equals its total.
+`<total>` is the `get_review_comments` `totalCount`, `<unresolved>` is the number of threads that were unresolved when you fetched them, and `<changed>` is the pull request's `changed_files`. `<reviewed>` counts only files whose entire patch you read in Step 3. Publication is blocked unless each count equals its total, and the publishing job checks `<total>` and `<changed>` against GitHub.
 
 The rest of the review body should summarize:
 

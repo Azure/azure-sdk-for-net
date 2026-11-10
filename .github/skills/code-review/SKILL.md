@@ -85,6 +85,7 @@ Use the changed paths and symbols to select sections from
 | `.github/CODEOWNERS*`, labels, ownership files | CODEOWNERS and Labels |
 | `api/*.cs`, new or changed `public`/`protected` API | Breaking Changes; Client Design; Naming; Semantic Value Types; Commonly Overlooked; Generated Code |
 | Client or model implementation under `src/**` | Client Design; Naming; Semantic Value Types; Analyzer Warnings and Suppressions; Implementation |
+| Client or credential construction: a new constructor, parameter, options property, or credential type, or new supported values, identity kinds, or hosts — also when only the changelog or PR description shows it | Client Design; Testing |
 | Management library | Applicable sections above; management clauses in Naming and Packaging, Versioning, Dependencies |
 | Tests, test projects, test infrastructure | Analyzer Warnings and Suppressions; Testing |
 | `.csproj`, package versions, references, feeds, CPM files | Shared Configuration; Packaging, Versioning, Dependencies |

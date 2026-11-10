@@ -10,6 +10,21 @@ $script:CoverageTemplate = 'Coverage: <fetched>/<total> threads fetched, <verifi
 $script:CoveragePattern = '^coverage\s*:\s*(?<fetched>[0-9]{1,6})\s*/\s*(?<total>[0-9]{1,6})\s+threads\s+fetched\s*,\s*(?<verified>[0-9]{1,6})\s*/\s*(?<unresolved>[0-9]{1,6})\s+unresolved\s+threads\s+verified\s*,\s*(?<reviewed>[0-9]{1,6})\s*/\s*(?<changed>[0-9]{1,6})\s+changed\s+files\s+reviewed\s*\.?$'
 # The same output types that shared/agent-output-validation.md fails the run on.
 $script:IncompleteTypes = @('report_incomplete', 'missing_tool', 'missing_data')
+$script:TotalsQuery = @'
+query($owner: String!, $repo: String!, $number: Int!, $cursor: String) {
+  repository(owner: $owner, name: $repo) {
+    pullRequest(number: $number) {
+      headRefOid
+      changedFiles
+      reviewThreads(first: 100, after: $cursor) {
+        totalCount
+        pageInfo { hasNextPage endCursor }
+        nodes { comments(first: 1) { nodes { publishedAt pullRequestReview { submittedAt } } } }
+      }
+    }
+  }
+}
+'@
 
 function ConvertFrom-PrReReviewJson {
     param([Parameter(Mandatory)][AllowEmptyString()][string]$Json)
@@ -19,6 +34,61 @@ function ConvertFrom-PrReReviewJson {
 
 function Get-PrReReviewCoverageTemplate {
     return $script:CoverageTemplate
+}
+
+function Get-PrReReviewTotals {
+    param(
+        [Parameter(Mandatory)][ValidatePattern('^[^/]+/[^/]+$')][string]$Repository,
+        [Parameter(Mandatory)][ValidateRange(1, [int]::MaxValue)][int]$Number,
+        [Parameter(Mandatory)][ValidatePattern('^[0-9a-f]{40}$')][string]$AnalyzedHeadSha,
+        [Parameter(Mandatory)][DateTimeOffset]$Since,
+        [Parameter(Mandatory)][string]$Token,
+        [string]$GraphQLUrl = 'https://api.github.com/graphql'
+    )
+
+    $owner, $name = $Repository -split '/', 2
+    $cursor = $null
+    $before = 0
+    for ($page = 1; $page -le 100; $page++) {
+        $body = ConvertTo-Json -Compress -Depth 5 -InputObject @{
+            query = $script:TotalsQuery
+            variables = @{ owner = $owner; repo = $name; number = $Number; cursor = $cursor }
+        }
+        $response = Invoke-WebRequest -Method Post -Uri $GraphQLUrl -Body $body -ContentType 'application/json' -Headers @{ Authorization = "Bearer $Token" } -MaximumRetryCount 3 -RetryIntervalSec 5
+        $result = ConvertFrom-PrReReviewJson $response.Content
+        if ($result.errors) {
+            throw "GitHub GraphQL returned errors: $(ConvertTo-Json -Compress -Depth 10 -InputObject $result.errors)"
+        }
+        $pullRequest = $result.data.repository.pullRequest
+        if ($pullRequest -isnot [System.Collections.IDictionary]) {
+            throw "Pull request #$Number was not found in $Repository."
+        }
+        $threads = $pullRequest.reviewThreads
+        foreach ($thread in $threads.nodes) {
+            # Threads opened after the run started may be missing from the agent's count, so only earlier ones set the floor.
+            # A comment drafted in a pending review stays hidden until the review is submitted, so use the later timestamp.
+            $first = @($thread.comments.nodes)[0]
+            $public = @($first.publishedAt, $first.pullRequestReview.submittedAt) |
+                Where-Object { $_ } |
+                ForEach-Object { [DateTimeOffset]::Parse($_, [Globalization.CultureInfo]::InvariantCulture) } |
+                Sort-Object -Descending |
+                Select-Object -First 1
+            if ($public -and $public -le $Since) {
+                $before++
+            }
+        }
+        if (!$threads.pageInfo.hasNextPage) {
+            return @{
+                AnalyzedHeadSha = $AnalyzedHeadSha
+                HeadSha = $pullRequest.headRefOid
+                ChangedFiles = [int]$pullRequest.changedFiles
+                ThreadsBefore = $before
+                ThreadsNow = [int]$threads.totalCount
+            }
+        }
+        $cursor = $threads.pageInfo.endCursor
+    }
+    throw "Pull request #$Number has more review-thread pages than the guard reads."
 }
 
 function Get-PrReReviewCoverageLine {
@@ -39,7 +109,7 @@ function Get-PrReReviewCoverageLine {
 }
 
 function Assert-PrReReviewOutput {
-    param([AllowNull()]$AgentOutput)
+    param([AllowNull()]$AgentOutput, [System.Collections.IDictionary]$Expected)
 
     if ($AgentOutput -isnot [System.Collections.IDictionary] -or $AgentOutput.items -isnot [array]) {
         throw 'Re-review agent output is malformed.'
@@ -85,7 +155,18 @@ function Assert-PrReReviewOutput {
     if ($counts.fetched -ne $counts.total -or $counts.verified -ne $counts.unresolved -or $counts.reviewed -ne $counts.changed) {
         throw "The re-review is incomplete ($line); the agent must call report_incomplete instead of submitting a review."
     }
+    if ($Expected) {
+        if ($counts.total -lt $Expected.ThreadsBefore -or $counts.total -gt $Expected.ThreadsNow) {
+            throw "The review's Coverage line reports $($counts.total) review threads, but the pull request had $($Expected.ThreadsBefore) when the re-review started and has $($Expected.ThreadsNow) now."
+        }
+        if ($Expected.HeadSha -cne $Expected.AnalyzedHeadSha) {
+            return "Re-review coverage is complete: $line (the head moved to $($Expected.HeadSha), so the changed-file total was not checked)"
+        }
+        if ($counts.changed -ne $Expected.ChangedFiles) {
+            throw "The review's Coverage line reports $($counts.changed) changed files, but the pull request has $($Expected.ChangedFiles) at the reviewed head."
+        }
+    }
     return "Re-review coverage is complete: $line"
 }
 
-Export-ModuleMember -Function ConvertFrom-PrReReviewJson, Get-PrReReviewCoverageTemplate, Assert-PrReReviewOutput
+Export-ModuleMember -Function ConvertFrom-PrReReviewJson, Get-PrReReviewCoverageTemplate, Get-PrReReviewTotals, Assert-PrReReviewOutput

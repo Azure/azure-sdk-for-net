@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Reservations
     /// <summary>
     /// A class representing a collection of <see cref="ReservationQuotaResource"/> and their operations.
     /// Each <see cref="ReservationQuotaResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get a <see cref="ReservationQuotaCollection"/> instance call the GetReservationQuotas method from an instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="ReservationQuotaCollection"/> instance call the GetAllReservationQuota method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class ReservationQuotaCollection : ArmCollection, IEnumerable<ReservationQuotaResource>, IAsyncEnumerable<ReservationQuotaResource>
     {
