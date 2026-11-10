@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Resources.Deployments;
 
 namespace Azure.ResourceManager.Resources.Deployments.Models
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
         /// <param name="identifiers"> The predicted extensible resource identifiers. </param>
         /// <param name="apiVersion"> The predicted API version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentResourceWhatIfPrediction(IList<string> symbolicNamePath, string resourceId, ArmDeploymentExtensionDefinition extension, string resourceType, BinaryData identifiers, string apiVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeploymentResourceWhatIfPrediction(IList<string> symbolicNamePath, ResourceIdentifier resourceId, ArmDeploymentExtensionDefinition extension, string resourceType, BinaryData identifiers, string apiVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SymbolicNamePath = symbolicNamePath;
             ResourceId = resourceId;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
 
         /// <summary> The predicted fully-qualified Azure resource ID. </summary>
         [WirePath("resourceId")]
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
 
         /// <summary> The predicted extension usage. </summary>
         [WirePath("extension")]

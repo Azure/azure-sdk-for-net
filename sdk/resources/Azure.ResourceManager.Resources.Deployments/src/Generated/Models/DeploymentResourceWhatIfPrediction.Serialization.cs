@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Resources.Deployments;
 
 namespace Azure.ResourceManager.Resources.Deployments.Models
@@ -166,7 +167,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                 return null;
             }
             IList<string> symbolicNamePath = default;
-            string resourceId = default;
+            ResourceIdentifier resourceId = default;
             ArmDeploymentExtensionDefinition extension = default;
             string resourceType = default;
             BinaryData identifiers = default;
@@ -193,7 +194,11 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                 }
                 if (prop.NameEquals("resourceId"u8))
                 {
-                    resourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("extension"u8))

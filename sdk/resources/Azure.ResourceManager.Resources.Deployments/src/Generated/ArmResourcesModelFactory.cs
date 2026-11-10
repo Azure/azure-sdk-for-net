@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
         /// <param name="identifiers"> The predicted extensible resource identifiers. </param>
         /// <param name="apiVersion"> The predicted API version. </param>
         /// <returns> A new <see cref="Models.DeploymentResourceWhatIfPrediction"/> instance for mocking. </returns>
-        public static DeploymentResourceWhatIfPrediction DeploymentResourceWhatIfPrediction(IEnumerable<string> symbolicNamePath = default, string resourceId = default, ArmDeploymentExtensionDefinition extension = default, string resourceType = default, BinaryData identifiers = default, string apiVersion = default)
+        public static DeploymentResourceWhatIfPrediction DeploymentResourceWhatIfPrediction(IEnumerable<string> symbolicNamePath = default, ResourceIdentifier resourceId = default, ArmDeploymentExtensionDefinition extension = default, string resourceType = default, BinaryData identifiers = default, string apiVersion = default)
         {
             symbolicNamePath ??= new ChangeTrackingList<string>();
 
