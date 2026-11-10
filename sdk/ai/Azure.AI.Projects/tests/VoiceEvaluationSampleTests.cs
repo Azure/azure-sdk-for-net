@@ -27,6 +27,8 @@ public class VoiceEvaluationSampleTests
     [TestCase(false, "empty")]
     [TestCase(false, "timeout")]
     [TestCase(false, "cancel_error")]
+    [TestCase(false, "output_cancel_between_pages")]
+    [TestCase(false, "output_cancel_last_page")]
     public async Task SampleUsesAudioContractAndAlwaysCleansUp(bool simulation, string outcome)
     {
         List<(string Method, string Path, string Body)> requests = [];
@@ -79,10 +81,17 @@ public class VoiceEvaluationSampleTests
             }
             if (path.EndsWith("/output_items", StringComparison.Ordinal))
             {
+                Assert.That(message.CancellationToken.CanBeCanceled, Is.True);
                 outputPages++;
                 if (outputPages == 2)
                 {
                     Assert.That(message.Request.Uri.Query, Does.Contain("after=item_1"));
+                }
+                if ((outcome == "output_cancel_between_pages" && outputPages == 1) ||
+                    (outcome == "output_cancel_last_page" && outputPages == 2))
+                {
+                    cancellation.Cancel();
+                    Assert.That(message.CancellationToken.IsCancellationRequested, Is.True);
                 }
                 return new MockPipelineResponse(200).WithContent(JsonSerializer.Serialize(new
                 {
@@ -127,7 +136,8 @@ public class VoiceEvaluationSampleTests
                     token.ThrowIfCancellationRequested();
                     pollingDelays++;
                     return Task.CompletedTask;
-                } : null);
+                }
+            : null);
             if (outcome is "timeout" or "cancel_error")
             {
                 cancellation.Cancel();
@@ -148,6 +158,10 @@ public class VoiceEvaluationSampleTests
         else if (outcome == "cancel_error")
         {
             Assert.ThrowsAsync<ClientResultException>(Invoke);
+        }
+        else if (outcome is "output_cancel_between_pages" or "output_cancel_last_page")
+        {
+            Assert.CatchAsync<OperationCanceledException>(Invoke);
         }
         else
         {
@@ -183,7 +197,12 @@ public class VoiceEvaluationSampleTests
         Assert.That(requests.Last().Path, Does.EndWith("/evals/eval_audio"));
         Assert.That(requests.Any(request => request.Path.EndsWith("/cancel", StringComparison.Ordinal)),
             Is.EqualTo(outcome is "timeout" or "cancel_error"));
-        Assert.That(outputPages, Is.EqualTo(outcome is "failed" or "timeout" or "cancel_error" ? 0 : 2));
+        Assert.That(outputPages, Is.EqualTo(outcome switch
+        {
+            "failed" or "timeout" or "cancel_error" => 0,
+            "output_cancel_between_pages" => 1,
+            _ => 2
+        }));
         Assert.That(pollingDelays, Is.EqualTo(outcome == "polling" ? 1 : 0));
     }
 }
