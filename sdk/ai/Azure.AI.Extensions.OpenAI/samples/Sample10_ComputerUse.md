@@ -65,7 +65,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
             BinaryData.FromBytes("""{"type":"computer"}"""u8.ToArray()),
             ModelReaderWriterOptions.Json,
             OpenAIContext.Default
-        )!,
+        ),
     }
 };
 ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
@@ -85,7 +85,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
             BinaryData.FromBytes("""{"type":"computer"}"""u8.ToArray()),
             ModelReaderWriterOptions.Json,
             OpenAIContext.Default
-        )!,
+        ),
     }
 };
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
@@ -106,7 +106,7 @@ private static string ProcessComputerUseCall(ComputerCallResponseItem item, stri
         using JsonDocument doc = JsonDocument.Parse(actionsJson);
         foreach (JsonElement element in doc.RootElement.EnumerateArray())
         {
-            ComputerCallAction? parsed = ModelReaderWriter.Read<ComputerCallAction>(
+            ComputerCallAction parsed = ModelReaderWriter.Read<ComputerCallAction>(
                 BinaryData.FromString(element.GetRawText()),
                 ModelReaderWriterOptions.Json,
                 OpenAIContext.Default);

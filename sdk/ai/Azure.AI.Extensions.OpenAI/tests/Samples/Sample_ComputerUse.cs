@@ -51,7 +51,7 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
             using JsonDocument doc = JsonDocument.Parse(actionsJson);
             foreach (JsonElement element in doc.RootElement.EnumerateArray())
             {
-                ComputerCallAction? parsed = ModelReaderWriter.Read<ComputerCallAction>(
+                ComputerCallAction parsed = ModelReaderWriter.Read<ComputerCallAction>(
                     BinaryData.FromString(element.GetRawText()),
                     ModelReaderWriterOptions.Json,
                     OpenAIContext.Default);
@@ -159,7 +159,7 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
                     BinaryData.FromBytes("""{"type":"computer"}"""u8.ToArray()),
                     ModelReaderWriterOptions.Json,
                     OpenAIContext.Default
-                )!,
+                ),
             }
         };
         ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
@@ -262,7 +262,7 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
                     BinaryData.FromBytes("""{"type":"computer"}"""u8.ToArray()),
                     ModelReaderWriterOptions.Json,
                     OpenAIContext.Default
-                )!,
+                ),
             }
         };
         ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
