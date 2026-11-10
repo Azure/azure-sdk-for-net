@@ -14,6 +14,7 @@ using Azure.AI.Extensions.OpenAI.Telemetry;
 using Microsoft.Extensions.Options;
 using OpenAI;
 using OpenAI.Responses;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace Azure.AI.Extensions.OpenAI;
 
@@ -371,7 +372,7 @@ public partial class ProjectResponsesClient : ResponsesClient
         ApplyClientDefaults(options);
         StreamingTelemetryContext previousContext = _streamingTelemetryContext.Value;
         StreamingTelemetryContext telemetryContext = OpenTelemetryResponseScope.IsEnabled ? StreamingTelemetryContext.Create(options, Endpoint, _defaultModelName) : null;
-
+        using OpenTelemetryResponseScope scope = _streamingTelemetryContext.Value?.CreateScope();
         try
         {
             _streamingTelemetryContext.Value = telemetryContext;
@@ -382,9 +383,7 @@ public partial class ProjectResponsesClient : ResponsesClient
         }
         catch (Exception ex)
         {
-            var scope = telemetryContext?.CreateScope();
             scope?.RecordError(ex);
-            scope?.Dispose();
             throw;
         }
         finally
@@ -405,6 +404,9 @@ public partial class ProjectResponsesClient : ResponsesClient
         Func<Stream, CancellationToken, IAsyncEnumerable<StreamingResponseUpdate>> updateProducer,
         CancellationToken cancellationToken)
     {
+        Argument.AssertNotNull(response, nameof(response));
+        Argument.AssertNotNull(updateProducer, nameof(updateProducer));
+
         StreamingTelemetryContext telemetryContext = _streamingTelemetryContext.Value;
 
         return base.CreateStreamingResult(
