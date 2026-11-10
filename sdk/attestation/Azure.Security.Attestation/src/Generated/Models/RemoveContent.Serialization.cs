@@ -13,67 +13,67 @@ using Azure.Core;
 
 namespace Azure.Security.Attestation
 {
-    /// <summary> The AddRequest. </summary>
-    internal partial class AddRequest : IJsonModel<AddRequest>
+    /// <summary> The RemoveContent. </summary>
+    internal partial class RemoveContent : IJsonModel<RemoveContent>
     {
-        /// <summary> Initializes a new instance of <see cref="AddRequest"/> for deserialization. </summary>
-        internal AddRequest()
+        /// <summary> Initializes a new instance of <see cref="RemoveContent"/> for deserialization. </summary>
+        internal RemoveContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AddRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RemoveContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AddRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RemoveContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAddRequest(document.RootElement, options);
+                        return DeserializeRemoveContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AddRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RemoveContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AddRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RemoveContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSecurityAttestationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AddRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RemoveContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AddRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RemoveContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AddRequest IPersistableModel<AddRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RemoveContent IPersistableModel<RemoveContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AddRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RemoveContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="addRequest"> The <see cref="AddRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(AddRequest addRequest)
+        /// <param name="removeContent"> The <see cref="RemoveContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(RemoveContent removeContent)
         {
-            if (addRequest == null)
+            if (removeContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(addRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(removeContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AddRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RemoveContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -84,13 +84,13 @@ namespace Azure.Security.Attestation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AddRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RemoveContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AddRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RemoveContent)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("policyCertificateToAdd"u8);
-            writer.WriteStringValue(PolicyCertificateToAdd);
+            writer.WritePropertyName("policyCertificateToRemove"u8);
+            writer.WriteStringValue(PolicyCertificateToRemove);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -110,36 +110,36 @@ namespace Azure.Security.Attestation
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AddRequest IJsonModel<AddRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RemoveContent IJsonModel<RemoveContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AddRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RemoveContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AddRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RemoveContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AddRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RemoveContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAddRequest(document.RootElement, options);
+            return DeserializeRemoveContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AddRequest DeserializeAddRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static RemoveContent DeserializeRemoveContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string policyCertificateToAdd = default;
+            string policyCertificateToRemove = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("policyCertificateToAdd"u8))
+                if (prop.NameEquals("policyCertificateToRemove"u8))
                 {
-                    policyCertificateToAdd = prop.Value.GetString();
+                    policyCertificateToRemove = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -147,7 +147,7 @@ namespace Azure.Security.Attestation
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AddRequest(policyCertificateToAdd, additionalBinaryDataProperties);
+            return new RemoveContent(policyCertificateToRemove, additionalBinaryDataProperties);
         }
     }
 }

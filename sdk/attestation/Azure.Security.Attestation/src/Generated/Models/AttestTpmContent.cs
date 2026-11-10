@@ -10,21 +10,21 @@ using System.Collections.Generic;
 
 namespace Azure.Security.Attestation
 {
-    /// <summary> The AttestTpmRequest. </summary>
-    internal partial class AttestTpmRequest
+    /// <summary> The AttestTpmContent. </summary>
+    internal partial class AttestTpmContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AttestTpmRequest"/>. </summary>
-        internal AttestTpmRequest()
+        /// <summary> Initializes a new instance of <see cref="AttestTpmContent"/>. </summary>
+        internal AttestTpmContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AttestTpmRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestTpmContent"/>. </summary>
         /// <param name="data"> Protocol data containing artifacts for attestation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AttestTpmRequest(BinaryData data, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AttestTpmContent(BinaryData data, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Data = data;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
