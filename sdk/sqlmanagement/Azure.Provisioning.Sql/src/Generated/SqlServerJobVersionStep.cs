@@ -25,7 +25,7 @@ namespace Azure.Provisioning.Sql
         /// <summary> Creates a new SqlServerJobVersionStep. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public SqlServerJobVersionStep(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Sql/servers/jobAgents/jobs/versions/steps", resourceVersion ?? "2025-08-01-preview")
+        internal SqlServerJobVersionStep(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Sql/servers/jobAgents/jobs/versions/steps", resourceVersion ?? "2025-08-01-preview")
         {
         }
 

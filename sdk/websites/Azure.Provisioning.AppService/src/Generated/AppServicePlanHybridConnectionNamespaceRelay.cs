@@ -24,7 +24,7 @@ namespace Azure.Provisioning.AppService
         /// <summary> Creates a new AppServicePlanHybridConnectionNamespaceRelay. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public AppServicePlanHybridConnectionNamespaceRelay(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Web/serverfarms/hybridConnectionNamespaces/relays", resourceVersion ?? "2025-03-01")
+        internal AppServicePlanHybridConnectionNamespaceRelay(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Web/serverfarms/hybridConnectionNamespaces/relays", resourceVersion ?? "2025-03-01")
         {
         }
 
