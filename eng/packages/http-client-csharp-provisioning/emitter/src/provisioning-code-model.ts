@@ -22,7 +22,7 @@ const provisioningProviderSchema =
 
 export interface ResourceProjection {
   resourceModel: InputModelType;
-  isSettable: boolean;
+  isDeployableResource: boolean;
   resourceModelId: string;
   resourceName: string;
   resourceType: string;
@@ -128,7 +128,7 @@ export function buildResourceProjections(
     return {
       ...projection,
       resourceModel,
-      isSettable: projection.writableScopes.length > 0,
+      isDeployableResource: projection.writableScopes.length > 0,
       consistentResourceName: getConsistentValue(
         resources.map((resource) => resource.metadata.resourceName),
         undefined
@@ -156,7 +156,10 @@ export function buildResourceProjections(
 
 export function buildResourceProjectionMetadata(
   resources: ArmResourceSchema[]
-): Omit<ResourceProjection, "resourceModel" | "resourceName" | "isSettable"> {
+): Omit<
+  ResourceProjection,
+  "resourceModel" | "resourceName" | "isDeployableResource"
+> {
   const first = resources[0];
   const readableScopes = collectScopes(resources, "Read");
   const writableScopes = collectScopes(resources, "Create");
@@ -354,7 +357,7 @@ function collectReachableTypes(projections: ResourceProjection[]) {
     projectionsByModel.set(projection.resourceModel, modelProjections);
     queue.push({
       type: projection.resourceModel,
-      isSettable: projection.isSettable
+      isSettable: projection.isDeployableResource
     });
   }
 
@@ -372,8 +375,9 @@ function collectReachableTypes(projections: ResourceProjection[]) {
         const resourceProjections = projectionsByModel.get(model);
         const isSettable =
           item.isSettable ||
-          resourceProjections?.some((projection) => projection.isSettable) ===
-            true;
+          resourceProjections?.some(
+            (projection) => projection.isDeployableResource
+          ) === true;
 
         models.add(model);
         modelSettableUsage.set(
