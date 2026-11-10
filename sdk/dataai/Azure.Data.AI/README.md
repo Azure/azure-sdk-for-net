@@ -48,7 +48,6 @@ Pass a `SemanticRerankingContent` instance and read the scores and `Metadata` fr
 the returned `SemanticRerankingResult`. For JSON documents, set `DocumentType` to
 `SemanticRerankingDocumentType.Json` and add up to 100 property paths to the
 `TargetPaths` collection; the client serializes them as a comma-separated string.
-The API contract specifies a maximum of 100 paths.
 
 ## Examples
 
@@ -59,6 +58,8 @@ See [Semantic reranking](https://github.com/Azure/azure-sdk-for-net/blob/main/sd
 Service operations throw `RequestFailedException` when the service returns a non-success status code.
 
 ## Next steps
+
+Explore the [semantic reranking sample](samples/Sample1_SemanticReranking.md) for examples using text and JSON documents.
 
 ## Contributing
 
