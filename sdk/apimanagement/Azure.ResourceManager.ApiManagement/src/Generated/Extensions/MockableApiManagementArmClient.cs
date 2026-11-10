@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ApiManagement;
@@ -220,6 +221,15 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceProductWikiResource"/> object. </returns>
         public virtual ServiceProductWikiResource GetServiceProductWikiResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != ServiceProductWikiResource.ResourceType || segments.Length != 13 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.ApiManagement", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "service", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "products", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "wikis", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[12], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/wikis/default"), nameof(id));
+            }
             ServiceProductWikiResource.ValidateResourceId(id);
             return new ServiceProductWikiResource(Client, id);
         }
@@ -301,6 +311,15 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementPortalSignInSettingResource"/> object. </returns>
         public virtual ApiManagementPortalSignInSettingResource GetApiManagementPortalSignInSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != ApiManagementPortalSignInSettingResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.ApiManagement", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "service", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "portalsettings", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "signin", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/signin"), nameof(id));
+            }
             ApiManagementPortalSignInSettingResource.ValidateResourceId(id);
             return new ApiManagementPortalSignInSettingResource(Client, id);
         }
@@ -310,6 +329,15 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementPortalSignUpSettingResource"/> object. </returns>
         public virtual ApiManagementPortalSignUpSettingResource GetApiManagementPortalSignUpSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != ApiManagementPortalSignUpSettingResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.ApiManagement", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "service", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "portalsettings", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "signup", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/signup"), nameof(id));
+            }
             ApiManagementPortalSignUpSettingResource.ValidateResourceId(id);
             return new ApiManagementPortalSignUpSettingResource(Client, id);
         }
@@ -319,6 +347,15 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ApiManagementPortalDelegationSettingResource"/> object. </returns>
         public virtual ApiManagementPortalDelegationSettingResource GetApiManagementPortalDelegationSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != ApiManagementPortalDelegationSettingResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.ApiManagement", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "service", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "portalsettings", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "delegation", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/portalsettings/delegation"), nameof(id));
+            }
             ApiManagementPortalDelegationSettingResource.ValidateResourceId(id);
             return new ApiManagementPortalDelegationSettingResource(Client, id);
         }
@@ -535,6 +572,15 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         /// <returns> Returns a <see cref="ServiceApiWikiResource"/> object. </returns>
         public virtual ServiceApiWikiResource GetServiceApiWikiResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != ServiceApiWikiResource.ResourceType || segments.Length != 13 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.ApiManagement", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "service", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "apis", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "wikis", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[12], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/wikis/default"), nameof(id));
+            }
             ServiceApiWikiResource.ValidateResourceId(id);
             return new ServiceApiWikiResource(Client, id);
         }

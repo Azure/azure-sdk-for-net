@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Avs;
@@ -103,6 +104,15 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="IscsiPathResource"/> object. </returns>
         public virtual IscsiPathResource GetIscsiPathResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != IscsiPathResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.AVS", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "privateClouds", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "iscsiPaths", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/iscsiPaths/default"), nameof(id));
+            }
             IscsiPathResource.ValidateResourceId(id);
             return new IscsiPathResource(Client, id);
         }
@@ -202,6 +212,15 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <returns> Returns a <see cref="WorkloadNetworkResource"/> object. </returns>
         public virtual WorkloadNetworkResource GetWorkloadNetworkResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != WorkloadNetworkResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.AVS", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "privateClouds", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "workloadNetworks", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default"), nameof(id));
+            }
             WorkloadNetworkResource.ValidateResourceId(id);
             return new WorkloadNetworkResource(Client, id);
         }

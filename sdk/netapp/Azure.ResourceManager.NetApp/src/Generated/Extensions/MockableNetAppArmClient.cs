@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.NetApp;
@@ -202,6 +203,15 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <returns> Returns a <see cref="RegionInfoResource"/> object. </returns>
         public virtual RegionInfoResource GetRegionInfoResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != RegionInfoResource.ResourceType || segments.Length != 9 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[4], "Microsoft.NetApp", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[5], "locations", StringComparison.OrdinalIgnoreCase) || segments[6] == "" || !string.Equals(segments[6], new AzureLocation(segments[6]).ToString(), StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "regionInfos", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[8], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/regionInfos/default"), nameof(id));
+            }
             RegionInfoResource.ValidateResourceId(id);
             return new RegionInfoResource(Client, id);
         }

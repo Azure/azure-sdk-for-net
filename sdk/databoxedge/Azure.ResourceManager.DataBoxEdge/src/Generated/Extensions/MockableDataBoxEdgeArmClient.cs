@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DataBoxEdge;
@@ -31,6 +32,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DataBoxEdgeDeviceNetworkSettingsResource"/> object. </returns>
         public virtual DataBoxEdgeDeviceNetworkSettingsResource GetDataBoxEdgeDeviceNetworkSettingsResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != DataBoxEdgeDeviceNetworkSettingsResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.DataBoxEdge", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "dataBoxEdgeDevices", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "networkSettings", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/networkSettings/default"), nameof(id));
+            }
             DataBoxEdgeDeviceNetworkSettingsResource.ValidateResourceId(id);
             return new DataBoxEdgeDeviceNetworkSettingsResource(Client, id);
         }
@@ -49,6 +59,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DataBoxEdgeDeviceUpdateSummaryResource"/> object. </returns>
         public virtual DataBoxEdgeDeviceUpdateSummaryResource GetDataBoxEdgeDeviceUpdateSummaryResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != DataBoxEdgeDeviceUpdateSummaryResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.DataBoxEdge", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "dataBoxEdgeDevices", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "updateSummary", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/updateSummary/default"), nameof(id));
+            }
             DataBoxEdgeDeviceUpdateSummaryResource.ValidateResourceId(id);
             return new DataBoxEdgeDeviceUpdateSummaryResource(Client, id);
         }
@@ -76,6 +95,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DiagnosticProactiveLogCollectionSettingResource"/> object. </returns>
         public virtual DiagnosticProactiveLogCollectionSettingResource GetDiagnosticProactiveLogCollectionSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != DiagnosticProactiveLogCollectionSettingResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.DataBoxEdge", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "dataBoxEdgeDevices", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "diagnosticProactiveLogCollectionSettings", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/diagnosticProactiveLogCollectionSettings/default"), nameof(id));
+            }
             DiagnosticProactiveLogCollectionSettingResource.ValidateResourceId(id);
             return new DiagnosticProactiveLogCollectionSettingResource(Client, id);
         }
@@ -85,6 +113,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DiagnosticRemoteSupportSettingResource"/> object. </returns>
         public virtual DiagnosticRemoteSupportSettingResource GetDiagnosticRemoteSupportSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != DiagnosticRemoteSupportSettingResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.DataBoxEdge", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "dataBoxEdgeDevices", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "diagnosticRemoteSupportSettings", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/diagnosticRemoteSupportSettings/default"), nameof(id));
+            }
             DiagnosticRemoteSupportSettingResource.ValidateResourceId(id);
             return new DiagnosticRemoteSupportSettingResource(Client, id);
         }
@@ -103,6 +140,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DataBoxEdgeOrderResource"/> object. </returns>
         public virtual DataBoxEdgeOrderResource GetDataBoxEdgeOrderResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != DataBoxEdgeOrderResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.DataBoxEdge", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "dataBoxEdgeDevices", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "orders", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/orders/default"), nameof(id));
+            }
             DataBoxEdgeOrderResource.ValidateResourceId(id);
             return new DataBoxEdgeOrderResource(Client, id);
         }
@@ -184,6 +230,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="DataBoxEdgeDeviceCapacityInfoResource"/> object. </returns>
         public virtual DataBoxEdgeDeviceCapacityInfoResource GetDataBoxEdgeDeviceCapacityInfoResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != DataBoxEdgeDeviceCapacityInfoResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.DataBoxEdge", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "dataBoxEdgeDevices", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "deviceCapacityInfo", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/deviceCapacityInfo/default"), nameof(id));
+            }
             DataBoxEdgeDeviceCapacityInfoResource.ValidateResourceId(id);
             return new DataBoxEdgeDeviceCapacityInfoResource(Client, id);
         }
@@ -193,6 +248,15 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <returns> Returns a <see cref="MonitoringMetricConfigurationResource"/> object. </returns>
         public virtual MonitoringMetricConfigurationResource GetMonitoringMetricConfigurationResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != MonitoringMetricConfigurationResource.ResourceType || segments.Length != 13 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.DataBoxEdge", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "dataBoxEdgeDevices", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "roles", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "monitoringConfig", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[12], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBoxEdge/dataBoxEdgeDevices/{deviceName}/roles/{roleName}/monitoringConfig/default"), nameof(id));
+            }
             MonitoringMetricConfigurationResource.ValidateResourceId(id);
             return new MonitoringMetricConfigurationResource(Client, id);
         }

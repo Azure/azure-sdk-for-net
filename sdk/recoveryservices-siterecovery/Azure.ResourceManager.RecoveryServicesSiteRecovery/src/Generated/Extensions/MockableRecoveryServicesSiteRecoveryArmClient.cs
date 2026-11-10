@@ -99,6 +99,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         public virtual ReplicationEligibilityResultResource GetReplicationEligibilityResultResource(ResourceIdentifier id)
         {
             ReplicationEligibilityResultResource.ValidateResourceId(id);
+            if (id != null && id.ResourceType == ReplicationEligibilityResultResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new ReplicationEligibilityResultResource(Client, id);
         }
 

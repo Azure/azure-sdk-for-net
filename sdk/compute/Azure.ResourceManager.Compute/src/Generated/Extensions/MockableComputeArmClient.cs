@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute;
@@ -40,6 +41,15 @@ namespace Azure.ResourceManager.Compute.Mocking
         /// <returns> Returns a <see cref="VirtualMachineScaleSetRollingUpgradeResource"/> object. </returns>
         public virtual VirtualMachineScaleSetRollingUpgradeResource GetVirtualMachineScaleSetRollingUpgradeResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != VirtualMachineScaleSetRollingUpgradeResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Compute", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "virtualMachineScaleSets", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "rollingUpgrades", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "latest", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/rollingUpgrades/latest"), nameof(id));
+            }
             VirtualMachineScaleSetRollingUpgradeResource.ValidateResourceId(id);
             return new VirtualMachineScaleSetRollingUpgradeResource(Client, id);
         }

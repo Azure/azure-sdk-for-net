@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Monitor.Workspaces;
@@ -76,6 +77,15 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         /// <returns> Returns a <see cref="TraceContainerResource"/> object. </returns>
         public virtual TraceContainerResource GetTraceContainerResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != TraceContainerResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Monitor", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "accounts", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "traceContainers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/accounts/{azureMonitorWorkspaceName}/traceContainers/default"), nameof(id));
+            }
             TraceContainerResource.ValidateResourceId(id);
             return new TraceContainerResource(Client, id);
         }
@@ -85,6 +95,15 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         /// <returns> Returns a <see cref="TraceAssociationAtResourceGroupResource"/> object. </returns>
         public virtual TraceAssociationAtResourceGroupResource GetTraceAssociationAtResourceGroupResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != TraceAssociationAtResourceGroupResource.ResourceType || segments.Length != 9 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Monitor", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "traceAssociations", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[8], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/traceAssociations/default"), nameof(id));
+            }
             TraceAssociationAtResourceGroupResource.ValidateResourceId(id);
             return new TraceAssociationAtResourceGroupResource(Client, id);
         }
@@ -94,6 +113,15 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         /// <returns> Returns a <see cref="TraceAssociationAtSubscriptionResource"/> object. </returns>
         public virtual TraceAssociationAtSubscriptionResource GetTraceAssociationAtSubscriptionResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != TraceAssociationAtSubscriptionResource.ResourceType || segments.Length != 7 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[4], "Microsoft.Monitor", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[5], "traceAssociations", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/providers/Microsoft.Monitor/traceAssociations/default"), nameof(id));
+            }
             TraceAssociationAtSubscriptionResource.ValidateResourceId(id);
             return new TraceAssociationAtSubscriptionResource(Client, id);
         }
@@ -104,6 +132,10 @@ namespace Azure.ResourceManager.Monitor.Workspaces.Mocking
         public virtual TraceAssociationResource GetTraceAssociationResource(ResourceIdentifier id)
         {
             TraceAssociationResource.ValidateResourceId(id);
+            if (id != null && id.ResourceType == TraceAssociationResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new TraceAssociationResource(Client, id);
         }
 

@@ -224,6 +224,15 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <returns> Returns a <see cref="PartnerConfigurationResource"/> object. </returns>
         public virtual PartnerConfigurationResource GetPartnerConfigurationResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != PartnerConfigurationResource.ResourceType || segments.Length != 9 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.EventGrid", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "partnerConfigurations", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[8], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerConfigurations/default"), nameof(id));
+            }
             PartnerConfigurationResource.ValidateResourceId(id);
             return new PartnerConfigurationResource(Client, id);
         }
@@ -288,6 +297,10 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         public virtual ExtensionTopicResource GetExtensionTopicResource(ResourceIdentifier id)
         {
             ExtensionTopicResource.ValidateResourceId(id);
+            if (id != null && id.ResourceType == ExtensionTopicResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new ExtensionTopicResource(Client, id);
         }
 

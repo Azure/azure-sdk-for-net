@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ScVmm;
@@ -86,6 +87,10 @@ namespace Azure.ResourceManager.ScVmm.Mocking
         public virtual ScVmmVirtualMachineInstanceResource GetScVmmVirtualMachineInstanceResource(ResourceIdentifier id)
         {
             ScVmmVirtualMachineInstanceResource.ValidateResourceId(id);
+            if (id != null && id.ResourceType == ScVmmVirtualMachineInstanceResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new ScVmmVirtualMachineInstanceResource(Client, id);
         }
 
@@ -103,6 +108,10 @@ namespace Azure.ResourceManager.ScVmm.Mocking
         public virtual ScVmmHybridIdentityMetadataResource GetScVmmHybridIdentityMetadataResource(ResourceIdentifier id)
         {
             ScVmmHybridIdentityMetadataResource.ValidateResourceId(id);
+            if (id != null && id.ResourceType == ScVmmHybridIdentityMetadataResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new ScVmmHybridIdentityMetadataResource(Client, id);
         }
 
@@ -120,6 +129,10 @@ namespace Azure.ResourceManager.ScVmm.Mocking
         public virtual ScVmmGuestAgentResource GetScVmmGuestAgentResource(ResourceIdentifier id)
         {
             ScVmmGuestAgentResource.ValidateResourceId(id);
+            if (id != null && id.ResourceType == ScVmmGuestAgentResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new ScVmmGuestAgentResource(Client, id);
         }
 

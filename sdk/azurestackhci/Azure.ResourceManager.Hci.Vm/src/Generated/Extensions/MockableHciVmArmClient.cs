@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Hci.Vm;
@@ -104,6 +105,10 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         public virtual HciVmInstanceResource GetHciVmInstanceResource(ResourceIdentifier id)
         {
             HciVmInstanceResource.ValidateResourceId(id);
+            if (id != null && id.ResourceType == HciVmInstanceResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new HciVmInstanceResource(Client, id);
         }
 
@@ -121,6 +126,10 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         public virtual HciVmHybridIdentityMetadataResource GetHciVmHybridIdentityMetadataResource(ResourceIdentifier id)
         {
             HciVmHybridIdentityMetadataResource.ValidateResourceId(id);
+            if (id != null && id.ResourceType == HciVmHybridIdentityMetadataResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new HciVmHybridIdentityMetadataResource(Client, id);
         }
 
@@ -138,6 +147,10 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         public virtual HciVmAttestationStatusResource GetHciVmAttestationStatusResource(ResourceIdentifier id)
         {
             HciVmAttestationStatusResource.ValidateResourceId(id);
+            if (id != null && id.ResourceType == HciVmAttestationStatusResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new HciVmAttestationStatusResource(Client, id);
         }
 
@@ -155,6 +168,10 @@ namespace Azure.ResourceManager.Hci.Vm.Mocking
         public virtual HciVmGuestAgentResource GetHciVmGuestAgentResource(ResourceIdentifier id)
         {
             HciVmGuestAgentResource.ValidateResourceId(id);
+            if (id != null && id.ResourceType == HciVmGuestAgentResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new HciVmGuestAgentResource(Client, id);
         }
 

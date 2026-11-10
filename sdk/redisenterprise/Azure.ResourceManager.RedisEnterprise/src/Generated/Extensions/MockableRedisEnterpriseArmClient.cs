@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.RedisEnterprise;
@@ -49,6 +50,15 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         /// <returns> Returns a <see cref="RedisEnterpriseMigrationResource"/> object. </returns>
         public virtual RedisEnterpriseMigrationResource GetRedisEnterpriseMigrationResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != RedisEnterpriseMigrationResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Cache", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "redisEnterprise", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "migrations", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redisEnterprise/{clusterName}/migrations/default"), nameof(id));
+            }
             RedisEnterpriseMigrationResource.ValidateResourceId(id);
             return new RedisEnterpriseMigrationResource(Client, id);
         }

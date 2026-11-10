@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.TrafficManager;
@@ -40,6 +41,15 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// <returns> Returns a <see cref="TrafficManagerGeographicHierarchyResource"/> object. </returns>
         public virtual TrafficManagerGeographicHierarchyResource GetTrafficManagerGeographicHierarchyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != TrafficManagerGeographicHierarchyResource.ResourceType || segments.Length != 5 || segments[0] != "" || !string.Equals(segments[1], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[2], "Microsoft.Network", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[3], "trafficManagerGeographicHierarchies", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[4], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/providers/Microsoft.Network/trafficManagerGeographicHierarchies/default"), nameof(id));
+            }
             TrafficManagerGeographicHierarchyResource.ValidateResourceId(id);
             return new TrafficManagerGeographicHierarchyResource(Client, id);
         }
@@ -58,6 +68,15 @@ namespace Azure.ResourceManager.TrafficManager.Mocking
         /// <returns> Returns a <see cref="TrafficManagerUserMetricsResource"/> object. </returns>
         public virtual TrafficManagerUserMetricsResource GetTrafficManagerUserMetricsResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != TrafficManagerUserMetricsResource.ResourceType || segments.Length != 7 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[4], "Microsoft.Network", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[5], "trafficManagerUserMetricsKeys", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/providers/Microsoft.Network/trafficManagerUserMetricsKeys/default"), nameof(id));
+            }
             TrafficManagerUserMetricsResource.ValidateResourceId(id);
             return new TrafficManagerUserMetricsResource(Client, id);
         }

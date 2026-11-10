@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         public virtual ProvisionedClusterResource GetProvisionedClusterResource(ResourceIdentifier id)
         {
             ProvisionedClusterResource.ValidateResourceId(id);
+            if (id != null && id.ResourceType == ProvisionedClusterResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new ProvisionedClusterResource(Client, id);
         }
 
@@ -53,6 +57,10 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         public virtual ProvisionedClusterUpgradeProfileResource GetProvisionedClusterUpgradeProfileResource(ResourceIdentifier id)
         {
             ProvisionedClusterUpgradeProfileResource.ValidateResourceId(id);
+            if (id != null && id.ResourceType == ProvisionedClusterUpgradeProfileResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new ProvisionedClusterUpgradeProfileResource(Client, id);
         }
 
@@ -70,6 +78,10 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         public virtual HybridIdentityMetadataResource GetHybridIdentityMetadataResource(ResourceIdentifier id)
         {
             HybridIdentityMetadataResource.ValidateResourceId(id);
+            if (id != null && id.ResourceType == HybridIdentityMetadataResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new HybridIdentityMetadataResource(Client, id);
         }
 
@@ -132,6 +144,10 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         public virtual KubernetesVersionProfileResource GetKubernetesVersionProfileResource(ResourceIdentifier id)
         {
             KubernetesVersionProfileResource.ValidateResourceId(id);
+            if (id != null && id.ResourceType == KubernetesVersionProfileResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new KubernetesVersionProfileResource(Client, id);
         }
 
@@ -149,6 +165,10 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         public virtual HybridContainerServiceVmSkuResource GetHybridContainerServiceVmSkuResource(ResourceIdentifier id)
         {
             HybridContainerServiceVmSkuResource.ValidateResourceId(id);
+            if (id != null && id.ResourceType == HybridContainerServiceVmSkuResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new HybridContainerServiceVmSkuResource(Client, id);
         }
 

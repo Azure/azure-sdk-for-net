@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.EventHubs;
@@ -121,6 +122,15 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <returns> Returns a <see cref="EventHubsUpgradePreferencesResource"/> object. </returns>
         public virtual EventHubsUpgradePreferencesResource GetEventHubsUpgradePreferencesResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != EventHubsUpgradePreferencesResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.EventHub", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "clusters", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "upgradePreferences", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/clusters/{clusterName}/upgradePreferences/default"), nameof(id));
+            }
             EventHubsUpgradePreferencesResource.ValidateResourceId(id);
             return new EventHubsUpgradePreferencesResource(Client, id);
         }
@@ -139,6 +149,15 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         /// <returns> Returns a <see cref="EventHubsNetworkRuleSetResource"/> object. </returns>
         public virtual EventHubsNetworkRuleSetResource GetEventHubsNetworkRuleSetResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != EventHubsNetworkRuleSetResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.EventHub", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "namespaces", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "networkRuleSets", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkRuleSets/default"), nameof(id));
+            }
             EventHubsNetworkRuleSetResource.ValidateResourceId(id);
             return new EventHubsNetworkRuleSetResource(Client, id);
         }

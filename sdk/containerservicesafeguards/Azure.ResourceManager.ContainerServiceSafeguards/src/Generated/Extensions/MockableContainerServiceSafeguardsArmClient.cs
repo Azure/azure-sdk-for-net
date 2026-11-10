@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ContainerServiceSafeguards;
@@ -32,6 +33,10 @@ namespace Azure.ResourceManager.ContainerServiceSafeguards.Mocking
         public virtual DeploymentSafeguardResource GetDeploymentSafeguardResource(ResourceIdentifier id)
         {
             DeploymentSafeguardResource.ValidateResourceId(id);
+            if (id != null && id.ResourceType == DeploymentSafeguardResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new DeploymentSafeguardResource(Client, id);
         }
 

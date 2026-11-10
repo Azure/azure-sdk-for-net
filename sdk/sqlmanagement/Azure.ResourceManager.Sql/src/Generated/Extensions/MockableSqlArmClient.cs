@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Sql;
@@ -985,6 +986,15 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlDatabaseAutomaticTuningResource"/> object. </returns>
         public virtual SqlDatabaseAutomaticTuningResource GetSqlDatabaseAutomaticTuningResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != SqlDatabaseAutomaticTuningResource.ResourceType || segments.Length != 13 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Sql", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "servers", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "databases", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "automaticTuning", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[12], "current", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/automaticTuning/current"), nameof(id));
+            }
             SqlDatabaseAutomaticTuningResource.ValidateResourceId(id);
             return new SqlDatabaseAutomaticTuningResource(Client, id);
         }
@@ -1057,6 +1067,15 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="MaintenanceWindowOptionResource"/> object. </returns>
         public virtual MaintenanceWindowOptionResource GetMaintenanceWindowOptionResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != MaintenanceWindowOptionResource.ResourceType || segments.Length != 13 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Sql", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "servers", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "databases", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "maintenanceWindowOptions", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[12], "current", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindowOptions/current"), nameof(id));
+            }
             MaintenanceWindowOptionResource.ValidateResourceId(id);
             return new MaintenanceWindowOptionResource(Client, id);
         }
@@ -1066,6 +1085,15 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="MaintenanceWindowsResource"/> object. </returns>
         public virtual MaintenanceWindowsResource GetMaintenanceWindowsResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != MaintenanceWindowsResource.ResourceType || segments.Length != 13 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Sql", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "servers", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "databases", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "maintenanceWindows", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[12], "current", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/maintenanceWindows/current"), nameof(id));
+            }
             MaintenanceWindowsResource.ValidateResourceId(id);
             return new MaintenanceWindowsResource(Client, id);
         }
@@ -1147,6 +1175,15 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlServerAutomaticTuningResource"/> object. </returns>
         public virtual SqlServerAutomaticTuningResource GetSqlServerAutomaticTuningResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != SqlServerAutomaticTuningResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Sql", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "servers", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "automaticTuning", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "current", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/automaticTuning/current"), nameof(id));
+            }
             SqlServerAutomaticTuningResource.ValidateResourceId(id);
             return new SqlServerAutomaticTuningResource(Client, id);
         }
@@ -1156,6 +1193,15 @@ namespace Azure.ResourceManager.Sql.Mocking
         /// <returns> Returns a <see cref="SqlAgentConfigurationResource"/> object. </returns>
         public virtual SqlAgentConfigurationResource GetSqlAgentConfigurationResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != SqlAgentConfigurationResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Sql", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "managedInstances", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "sqlAgent", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "current", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/sqlAgent/current"), nameof(id));
+            }
             SqlAgentConfigurationResource.ValidateResourceId(id);
             return new SqlAgentConfigurationResource(Client, id);
         }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.PortalServicesCopilot;
@@ -31,6 +32,15 @@ namespace Azure.ResourceManager.PortalServicesCopilot.Mocking
         /// <returns> Returns a <see cref="PortalServicesCopilotSettingResource"/> object. </returns>
         public virtual PortalServicesCopilotSettingResource GetPortalServicesCopilotSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != PortalServicesCopilotSettingResource.ResourceType || segments.Length != 5 || segments[0] != "" || !string.Equals(segments[1], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[2], "Microsoft.PortalServices", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[3], "copilotSettings", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[4], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/providers/Microsoft.PortalServices/copilotSettings/default"), nameof(id));
+            }
             PortalServicesCopilotSettingResource.ValidateResourceId(id);
             return new PortalServicesCopilotSettingResource(Client, id);
         }

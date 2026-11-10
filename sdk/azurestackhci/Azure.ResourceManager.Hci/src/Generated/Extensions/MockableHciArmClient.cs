@@ -323,6 +323,15 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <returns> Returns a <see cref="HciClusterUpdateSummaryResource"/> object. </returns>
         public virtual HciClusterUpdateSummaryResource GetHciClusterUpdateSummaryResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != HciClusterUpdateSummaryResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.AzureStackHCI", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "clusters", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "updateSummaries", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updateSummaries/default"), nameof(id));
+            }
             HciClusterUpdateSummaryResource.ValidateResourceId(id);
             return new HciClusterUpdateSummaryResource(Client, id);
         }

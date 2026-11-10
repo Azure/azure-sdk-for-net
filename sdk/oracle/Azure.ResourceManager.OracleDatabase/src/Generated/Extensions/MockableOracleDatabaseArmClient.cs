@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.OracleDatabase;
@@ -76,6 +77,15 @@ namespace Azure.ResourceManager.OracleDatabase.Mocking
         /// <returns> Returns a <see cref="OracleSubscriptionResource"/> object. </returns>
         public virtual OracleSubscriptionResource GetOracleSubscriptionResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != OracleSubscriptionResource.ResourceType || segments.Length != 7 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[4], "Oracle.Database", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[5], "oracleSubscriptions", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/providers/Oracle.Database/oracleSubscriptions/default"), nameof(id));
+            }
             OracleSubscriptionResource.ValidateResourceId(id);
             return new OracleSubscriptionResource(Client, id);
         }

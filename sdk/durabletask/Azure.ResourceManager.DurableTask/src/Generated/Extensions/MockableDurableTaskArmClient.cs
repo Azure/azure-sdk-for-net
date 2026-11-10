@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DurableTask;
@@ -85,6 +86,15 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         /// <returns> Returns a <see cref="DurableTaskRetentionPolicyResource"/> object. </returns>
         public virtual DurableTaskRetentionPolicyResource GetDurableTaskRetentionPolicyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != DurableTaskRetentionPolicyResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.DurableTask", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "schedulers", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "retentionPolicies", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}/retentionPolicies/default"), nameof(id));
+            }
             DurableTaskRetentionPolicyResource.ValidateResourceId(id);
             return new DurableTaskRetentionPolicyResource(Client, id);
         }
@@ -94,6 +104,15 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         /// <returns> Returns a <see cref="TransparentDataEncryptionResource"/> object. </returns>
         public virtual TransparentDataEncryptionResource GetTransparentDataEncryptionResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != TransparentDataEncryptionResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.DurableTask", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "schedulers", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "transparentDataEncryptions", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}/transparentDataEncryptions/default"), nameof(id));
+            }
             TransparentDataEncryptionResource.ValidateResourceId(id);
             return new TransparentDataEncryptionResource(Client, id);
         }
@@ -103,6 +122,15 @@ namespace Azure.ResourceManager.DurableTask.Mocking
         /// <returns> Returns a <see cref="FailoverInstanceResource"/> object. </returns>
         public virtual FailoverInstanceResource GetFailoverInstanceResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != FailoverInstanceResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.DurableTask", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "schedulers", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "failoverInstances", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DurableTask/schedulers/{schedulerName}/failoverInstances/default"), nameof(id));
+            }
             FailoverInstanceResource.ValidateResourceId(id);
             return new FailoverInstanceResource(Client, id);
         }

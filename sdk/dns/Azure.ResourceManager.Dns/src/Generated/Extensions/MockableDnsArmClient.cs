@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Dns;
@@ -31,6 +32,15 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <returns> Returns a <see cref="DnssecConfigResource"/> object. </returns>
         public virtual DnssecConfigResource GetDnssecConfigResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != DnssecConfigResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Network", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "dnsZones", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "dnssecConfigs", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/dnssecConfigs/default"), nameof(id));
+            }
             DnssecConfigResource.ValidateResourceId(id);
             return new DnssecConfigResource(Client, id);
         }

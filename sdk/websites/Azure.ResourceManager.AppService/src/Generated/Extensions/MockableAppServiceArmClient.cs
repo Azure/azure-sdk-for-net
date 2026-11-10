@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppService;
@@ -58,6 +59,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="AppServiceEnvironmentAddressResource"/> object. </returns>
         public virtual AppServiceEnvironmentAddressResource GetAppServiceEnvironmentAddressResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != AppServiceEnvironmentAddressResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "hostingEnvironments", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "capacities", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "virtualip", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/capacities/virtualip"), nameof(id));
+            }
             AppServiceEnvironmentAddressResource.ValidateResourceId(id);
             return new AppServiceEnvironmentAddressResource(Client, id);
         }
@@ -67,6 +77,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="CustomDnsSuffixConfigurationResource"/> object. </returns>
         public virtual CustomDnsSuffixConfigurationResource GetCustomDnsSuffixConfigurationResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != CustomDnsSuffixConfigurationResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "hostingEnvironments", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "configurations", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "customdnssuffix", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/configurations/customdnssuffix"), nameof(id));
+            }
             CustomDnsSuffixConfigurationResource.ValidateResourceId(id);
             return new CustomDnsSuffixConfigurationResource(Client, id);
         }
@@ -76,6 +95,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="AseV3NetworkingConfigurationResource"/> object. </returns>
         public virtual AseV3NetworkingConfigurationResource GetAseV3NetworkingConfigurationResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != AseV3NetworkingConfigurationResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "hostingEnvironments", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "configurations", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "networking", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/configurations/networking"), nameof(id));
+            }
             AseV3NetworkingConfigurationResource.ValidateResourceId(id);
             return new AseV3NetworkingConfigurationResource(Client, id);
         }
@@ -85,6 +113,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="HostingEnvironmentMultiRolePoolResource"/> object. </returns>
         public virtual HostingEnvironmentMultiRolePoolResource GetHostingEnvironmentMultiRolePoolResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != HostingEnvironmentMultiRolePoolResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "hostingEnvironments", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "multiRolePools", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/multiRolePools/default"), nameof(id));
+            }
             HostingEnvironmentMultiRolePoolResource.ValidateResourceId(id);
             return new HostingEnvironmentMultiRolePoolResource(Client, id);
         }
@@ -175,6 +212,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="HybridConnectionLimitResource"/> object. </returns>
         public virtual HybridConnectionLimitResource GetHybridConnectionLimitResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != HybridConnectionLimitResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "serverfarms", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "hybridConnectionPlanLimits", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "limit", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionPlanLimits/limit"), nameof(id));
+            }
             HybridConnectionLimitResource.ValidateResourceId(id);
             return new HybridConnectionLimitResource(Client, id);
         }
@@ -382,6 +428,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteResourceHealthMetadataResource"/> object. </returns>
         public virtual WebSiteResourceHealthMetadataResource GetWebSiteResourceHealthMetadataResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != WebSiteResourceHealthMetadataResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "sites", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "resourceHealthMetadata", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/resourceHealthMetadata/default"), nameof(id));
+            }
             WebSiteResourceHealthMetadataResource.ValidateResourceId(id);
             return new WebSiteResourceHealthMetadataResource(Client, id);
         }
@@ -391,6 +446,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSlotResourceHealthMetadataResource"/> object. </returns>
         public virtual WebSiteSlotResourceHealthMetadataResource GetWebSiteSlotResourceHealthMetadataResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != WebSiteSlotResourceHealthMetadataResource.ResourceType || segments.Length != 13 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "sites", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "slots", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "resourceHealthMetadata", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[12], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/resourceHealthMetadata/default"), nameof(id));
+            }
             WebSiteSlotResourceHealthMetadataResource.ValidateResourceId(id);
             return new WebSiteSlotResourceHealthMetadataResource(Client, id);
         }
@@ -409,6 +473,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="PublishingUserResource"/> object. </returns>
         public virtual PublishingUserResource GetPublishingUserResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != PublishingUserResource.ResourceType || segments.Length != 5 || segments[0] != "" || !string.Equals(segments[1], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[2], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[3], "publishingUsers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[4], "web", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/providers/Microsoft.Web/publishingUsers/web"), nameof(id));
+            }
             PublishingUserResource.ValidateResourceId(id);
             return new PublishingUserResource(Client, id);
         }
@@ -544,6 +617,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteFtpPublishingCredentialsPolicyResource"/> object. </returns>
         public virtual WebSiteFtpPublishingCredentialsPolicyResource GetWebSiteFtpPublishingCredentialsPolicyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != WebSiteFtpPublishingCredentialsPolicyResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "sites", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "basicPublishingCredentialsPolicies", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "ftp", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/ftp"), nameof(id));
+            }
             WebSiteFtpPublishingCredentialsPolicyResource.ValidateResourceId(id);
             return new WebSiteFtpPublishingCredentialsPolicyResource(Client, id);
         }
@@ -553,6 +635,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="ScmSiteBasicPublishingCredentialsPolicyResource"/> object. </returns>
         public virtual ScmSiteBasicPublishingCredentialsPolicyResource GetScmSiteBasicPublishingCredentialsPolicyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != ScmSiteBasicPublishingCredentialsPolicyResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "sites", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "basicPublishingCredentialsPolicies", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "scm", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/basicPublishingCredentialsPolicies/scm"), nameof(id));
+            }
             ScmSiteBasicPublishingCredentialsPolicyResource.ValidateResourceId(id);
             return new ScmSiteBasicPublishingCredentialsPolicyResource(Client, id);
         }
@@ -562,6 +653,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSlotFtpPublishingCredentialsPolicyResource"/> object. </returns>
         public virtual WebSiteSlotFtpPublishingCredentialsPolicyResource GetWebSiteSlotFtpPublishingCredentialsPolicyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != WebSiteSlotFtpPublishingCredentialsPolicyResource.ResourceType || segments.Length != 13 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "sites", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "slots", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "basicPublishingCredentialsPolicies", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[12], "ftp", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp"), nameof(id));
+            }
             WebSiteSlotFtpPublishingCredentialsPolicyResource.ValidateResourceId(id);
             return new WebSiteSlotFtpPublishingCredentialsPolicyResource(Client, id);
         }
@@ -571,6 +671,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource"/> object. </returns>
         public virtual ScmSiteSlotBasicPublishingCredentialsPolicyResource GetScmSiteSlotBasicPublishingCredentialsPolicyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != ScmSiteSlotBasicPublishingCredentialsPolicyResource.ResourceType || segments.Length != 13 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "sites", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "slots", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "basicPublishingCredentialsPolicies", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[12], "scm", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm"), nameof(id));
+            }
             ScmSiteSlotBasicPublishingCredentialsPolicyResource.ValidateResourceId(id);
             return new ScmSiteSlotBasicPublishingCredentialsPolicyResource(Client, id);
         }
@@ -580,6 +689,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteAuthSettingsV2Resource"/> object. </returns>
         public virtual WebSiteAuthSettingsV2Resource GetWebSiteAuthSettingsV2Resource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != WebSiteAuthSettingsV2Resource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "sites", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "config", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "authsettingsV2", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/authsettingsV2"), nameof(id));
+            }
             WebSiteAuthSettingsV2Resource.ValidateResourceId(id);
             return new WebSiteAuthSettingsV2Resource(Client, id);
         }
@@ -589,6 +707,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSlotAuthSettingsV2Resource"/> object. </returns>
         public virtual WebSiteSlotAuthSettingsV2Resource GetWebSiteSlotAuthSettingsV2Resource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != WebSiteSlotAuthSettingsV2Resource.ResourceType || segments.Length != 13 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "sites", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "slots", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "config", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[12], "authsettingsV2", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/authsettingsV2"), nameof(id));
+            }
             WebSiteSlotAuthSettingsV2Resource.ValidateResourceId(id);
             return new WebSiteSlotAuthSettingsV2Resource(Client, id);
         }
@@ -634,6 +761,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="LogsSiteConfigResource"/> object. </returns>
         public virtual LogsSiteConfigResource GetLogsSiteConfigResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != LogsSiteConfigResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "sites", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "config", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "logs", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/logs"), nameof(id));
+            }
             LogsSiteConfigResource.ValidateResourceId(id);
             return new LogsSiteConfigResource(Client, id);
         }
@@ -643,6 +779,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="LogsSiteSlotConfigResource"/> object. </returns>
         public virtual LogsSiteSlotConfigResource GetLogsSiteSlotConfigResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != LogsSiteSlotConfigResource.ResourceType || segments.Length != 13 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "sites", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "slots", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "config", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[12], "logs", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/logs"), nameof(id));
+            }
             LogsSiteSlotConfigResource.ValidateResourceId(id);
             return new LogsSiteSlotConfigResource(Client, id);
         }
@@ -652,6 +797,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SlotConfigNamesResource"/> object. </returns>
         public virtual SlotConfigNamesResource GetSlotConfigNamesResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != SlotConfigNamesResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "sites", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "config", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "slotConfigNames", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/slotConfigNames"), nameof(id));
+            }
             SlotConfigNamesResource.ValidateResourceId(id);
             return new SlotConfigNamesResource(Client, id);
         }
@@ -661,6 +815,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteConfigResource"/> object. </returns>
         public virtual WebSiteConfigResource GetWebSiteConfigResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != WebSiteConfigResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "sites", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "config", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "web", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web"), nameof(id));
+            }
             WebSiteConfigResource.ValidateResourceId(id);
             return new WebSiteConfigResource(Client, id);
         }
@@ -679,6 +842,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSlotConfigResource"/> object. </returns>
         public virtual WebSiteSlotConfigResource GetWebSiteSlotConfigResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != WebSiteSlotConfigResource.ResourceType || segments.Length != 13 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "sites", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "slots", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "config", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[12], "web", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/web"), nameof(id));
+            }
             WebSiteSlotConfigResource.ValidateResourceId(id);
             return new WebSiteSlotConfigResource(Client, id);
         }
@@ -769,6 +941,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteExtensionResource"/> object. </returns>
         public virtual SiteExtensionResource GetSiteExtensionResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != SiteExtensionResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "sites", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "extensions", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "MSDeploy", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/extensions/MSDeploy"), nameof(id));
+            }
             SiteExtensionResource.ValidateResourceId(id);
             return new SiteExtensionResource(Client, id);
         }
@@ -778,6 +959,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteInstanceExtensionResource"/> object. </returns>
         public virtual SiteInstanceExtensionResource GetSiteInstanceExtensionResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != SiteInstanceExtensionResource.ResourceType || segments.Length != 13 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "sites", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "instances", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "extensions", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[12], "MSDeploy", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/extensions/MSDeploy"), nameof(id));
+            }
             SiteInstanceExtensionResource.ValidateResourceId(id);
             return new SiteInstanceExtensionResource(Client, id);
         }
@@ -787,6 +977,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotExtensionResource"/> object. </returns>
         public virtual SiteSlotExtensionResource GetSiteSlotExtensionResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != SiteSlotExtensionResource.ResourceType || segments.Length != 13 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "sites", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "slots", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "extensions", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[12], "MSDeploy", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/extensions/MSDeploy"), nameof(id));
+            }
             SiteSlotExtensionResource.ValidateResourceId(id);
             return new SiteSlotExtensionResource(Client, id);
         }
@@ -796,6 +995,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotInstanceExtensionResource"/> object. </returns>
         public virtual SiteSlotInstanceExtensionResource GetSiteSlotInstanceExtensionResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != SiteSlotInstanceExtensionResource.ResourceType || segments.Length != 15 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "sites", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "slots", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "instances", StringComparison.OrdinalIgnoreCase) || segments[12] == "" || !string.Equals(segments[13], "extensions", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[14], "MSDeploy", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/instances/{instanceId}/extensions/MSDeploy"), nameof(id));
+            }
             SiteSlotInstanceExtensionResource.ValidateResourceId(id);
             return new SiteSlotInstanceExtensionResource(Client, id);
         }
@@ -949,6 +1157,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteMigrateMySqlStatusResource"/> object. </returns>
         public virtual SiteMigrateMySqlStatusResource GetSiteMigrateMySqlStatusResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != SiteMigrateMySqlStatusResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "sites", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "migratemysql", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "status", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/migratemysql/status"), nameof(id));
+            }
             SiteMigrateMySqlStatusResource.ValidateResourceId(id);
             return new SiteMigrateMySqlStatusResource(Client, id);
         }
@@ -958,6 +1175,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="MigrateMySqlStatusResource"/> object. </returns>
         public virtual MigrateMySqlStatusResource GetMigrateMySqlStatusResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != MigrateMySqlStatusResource.ResourceType || segments.Length != 13 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "sites", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "slots", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "migratemysql", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[12], "status", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/migratemysql/status"), nameof(id));
+            }
             MigrateMySqlStatusResource.ValidateResourceId(id);
             return new MigrateMySqlStatusResource(Client, id);
         }
@@ -967,6 +1193,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteNetworkConfigResource"/> object. </returns>
         public virtual SiteNetworkConfigResource GetSiteNetworkConfigResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != SiteNetworkConfigResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "sites", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "networkConfig", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "virtualNetwork", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkConfig/virtualNetwork"), nameof(id));
+            }
             SiteNetworkConfigResource.ValidateResourceId(id);
             return new SiteNetworkConfigResource(Client, id);
         }
@@ -976,6 +1211,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="SiteSlotNetworkConfigResource"/> object. </returns>
         public virtual SiteSlotNetworkConfigResource GetSiteSlotNetworkConfigResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != SiteSlotNetworkConfigResource.ResourceType || segments.Length != 13 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "sites", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "slots", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "networkConfig", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[12], "virtualNetwork", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkConfig/virtualNetwork"), nameof(id));
+            }
             SiteSlotNetworkConfigResource.ValidateResourceId(id);
             return new SiteSlotNetworkConfigResource(Client, id);
         }
@@ -1021,6 +1265,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSitePrivateAccessResource"/> object. </returns>
         public virtual WebSitePrivateAccessResource GetWebSitePrivateAccessResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != WebSitePrivateAccessResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "sites", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "privateAccess", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "virtualNetworks", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateAccess/virtualNetworks"), nameof(id));
+            }
             WebSitePrivateAccessResource.ValidateResourceId(id);
             return new WebSitePrivateAccessResource(Client, id);
         }
@@ -1030,6 +1283,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSlotPrivateAccessResource"/> object. </returns>
         public virtual WebSiteSlotPrivateAccessResource GetWebSiteSlotPrivateAccessResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != WebSiteSlotPrivateAccessResource.ResourceType || segments.Length != 13 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "sites", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "slots", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "privateAccess", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[12], "virtualNetworks", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/privateAccess/virtualNetworks"), nameof(id));
+            }
             WebSiteSlotPrivateAccessResource.ValidateResourceId(id);
             return new WebSiteSlotPrivateAccessResource(Client, id);
         }
@@ -1093,6 +1355,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSlotSourceControlResource"/> object. </returns>
         public virtual WebSiteSlotSourceControlResource GetWebSiteSlotSourceControlResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != WebSiteSlotSourceControlResource.ResourceType || segments.Length != 13 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "sites", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "slots", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "sourcecontrols", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[12], "web", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web"), nameof(id));
+            }
             WebSiteSlotSourceControlResource.ValidateResourceId(id);
             return new WebSiteSlotSourceControlResource(Client, id);
         }
@@ -1102,6 +1373,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <returns> Returns a <see cref="WebSiteSourceControlResource"/> object. </returns>
         public virtual WebSiteSourceControlResource GetWebSiteSourceControlResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != WebSiteSourceControlResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Web", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "sites", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "sourcecontrols", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "web", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web"), nameof(id));
+            }
             WebSiteSourceControlResource.ValidateResourceId(id);
             return new WebSiteSourceControlResource(Client, id);
         }

@@ -123,6 +123,10 @@ namespace Azure.ResourceManager.Consumption.Mocking
         public virtual PriceSheetResource GetPriceSheetResource(ResourceIdentifier id)
         {
             PriceSheetResource.ValidateResourceId(id);
+            if (id != null && id.ResourceType == PriceSheetResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new PriceSheetResource(Client, id);
         }
 
@@ -139,6 +143,15 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <returns> Returns a <see cref="PriceSheetResultResource"/> object. </returns>
         public virtual PriceSheetResultResource GetPriceSheetResultResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != PriceSheetResultResource.ResourceType || segments.Length != 7 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[4], "Microsoft.Consumption", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[5], "pricesheets", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/providers/Microsoft.Consumption/pricesheets/default"), nameof(id));
+            }
             PriceSheetResultResource.ValidateResourceId(id);
             return new PriceSheetResultResource(Client, id);
         }
@@ -194,6 +207,10 @@ namespace Azure.ResourceManager.Consumption.Mocking
         public virtual ConsumptionCreditSummaryResource GetConsumptionCreditSummaryResource(ResourceIdentifier id)
         {
             ConsumptionCreditSummaryResource.ValidateResourceId(id);
+            if (id != null && id.ResourceType == ConsumptionCreditSummaryResource.ResourceType && !string.Equals(id.Name, "balanceSummary", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "balanceSummary"), nameof(id));
+            }
             return new ConsumptionCreditSummaryResource(Client, id);
         }
 

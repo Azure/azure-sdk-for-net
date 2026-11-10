@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DevHub;
@@ -31,6 +32,15 @@ namespace Azure.ResourceManager.DevHub.Mocking
         /// <returns> Returns a <see cref="GitHubOAuthResponseResource"/> object. </returns>
         public virtual GitHubOAuthResponseResource GetGitHubOAuthResponseResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != GitHubOAuthResponseResource.ResourceType || segments.Length != 9 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[4], "Microsoft.DevHub", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[5], "locations", StringComparison.OrdinalIgnoreCase) || segments[6] == "" || !string.Equals(segments[7], "githuboauth", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[8], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/providers/Microsoft.DevHub/locations/{location}/githuboauth/default"), nameof(id));
+            }
             GitHubOAuthResponseResource.ValidateResourceId(id);
             return new GitHubOAuthResponseResource(Client, id);
         }
@@ -58,6 +68,15 @@ namespace Azure.ResourceManager.DevHub.Mocking
         /// <returns> Returns a <see cref="AdoOAuthResponseResource"/> object. </returns>
         public virtual AdoOAuthResponseResource GetAdoOAuthResponseResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != AdoOAuthResponseResource.ResourceType || segments.Length != 9 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[4], "Microsoft.DevHub", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[5], "locations", StringComparison.OrdinalIgnoreCase) || segments[6] == "" || !string.Equals(segments[7], "adooauth", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[8], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/providers/Microsoft.DevHub/locations/{location}/adooauth/default"), nameof(id));
+            }
             AdoOAuthResponseResource.ValidateResourceId(id);
             return new AdoOAuthResponseResource(Client, id);
         }
