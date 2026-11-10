@@ -39,5 +39,14 @@ namespace Azure.ResourceManager.Monitor
 
         /// <summary> Resource properties. </summary>
         internal VMInsightsOnboardingStatusProperties Properties { get; }
+
+        /// <summary> Azure Resource Manager identifier of the resource whose onboarding status is being represented. </summary>
+        public ResourceIdentifier ResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ResourceId;
+            }
+        }
     }
 }

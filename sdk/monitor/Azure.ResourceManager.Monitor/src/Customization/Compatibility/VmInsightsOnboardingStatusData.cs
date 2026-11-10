@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
@@ -14,9 +13,6 @@ namespace Azure.ResourceManager.Monitor
     // Preserve the property types shipped in the GA SDK.
     public partial class VmInsightsOnboardingStatusData
     {
-        /// <summary> The resource identifier whose onboarding status is represented. </summary>
-        public ResourceIdentifier ResourceId => Properties?.ResourceId is string resourceId ? new ResourceIdentifier(resourceId) : null;
-
         /// <summary> The onboarding status of the resource. </summary>
         public OnboardingStatus? OnboardingStatus => Properties?.OnboardingStatus.ToString() is null ? (OnboardingStatus?)null : Properties.OnboardingStatus;
 

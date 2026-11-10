@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="resourceId"> Azure Resource Manager identifier of the resource whose onboarding status is being represented. </param>
         /// <param name="onboardingStatus"> The onboarding status for the resource. Note that, a higher level scope, e.g., resource group or subscription, is considered onboarded if at least one resource under it is onboarded. </param>
         /// <param name="dataStatus"> The status of VM Insights data from the resource. When reported as `present` the data array will contain information about the data containers to which data for the specified resource is being routed. </param>
-        internal VMInsightsOnboardingStatusProperties(string resourceId, OnboardingStatus onboardingStatus, DataStatus dataStatus)
+        internal VMInsightsOnboardingStatusProperties(ResourceIdentifier resourceId, OnboardingStatus onboardingStatus, DataStatus dataStatus)
         {
             ResourceId = resourceId;
             OnboardingStatus = onboardingStatus;
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="dataStatus"> The status of VM Insights data from the resource. When reported as `present` the data array will contain information about the data containers to which data for the specified resource is being routed. </param>
         /// <param name="data"> Containers that currently store VM Insights data for the specified resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VMInsightsOnboardingStatusProperties(string resourceId, OnboardingStatus onboardingStatus, DataStatus dataStatus, IList<DataContainer> data, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VMInsightsOnboardingStatusProperties(ResourceIdentifier resourceId, OnboardingStatus onboardingStatus, DataStatus dataStatus, IList<DataContainer> data, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             OnboardingStatus = onboardingStatus;
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Azure Resource Manager identifier of the resource whose onboarding status is being represented. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
 
         /// <summary> The onboarding status for the resource. Note that, a higher level scope, e.g., resource group or subscription, is considered onboarded if at least one resource under it is onboarded. </summary>
         public OnboardingStatus OnboardingStatus { get; }

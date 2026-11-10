@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
@@ -137,7 +138,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 return null;
             }
-            string resourceId = default;
+            ResourceIdentifier resourceId = default;
             OnboardingStatus onboardingStatus = default;
             DataStatus dataStatus = default;
             IList<DataContainer> data = default;
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 if (prop.NameEquals("resourceId"u8))
                 {
-                    resourceId = prop.Value.GetString();
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("onboardingStatus"u8))

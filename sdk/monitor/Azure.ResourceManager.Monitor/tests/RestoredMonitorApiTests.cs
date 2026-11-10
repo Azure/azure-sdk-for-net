@@ -302,10 +302,10 @@ namespace Azure.ResourceManager.Monitor.Tests
         public void VmInsightsFactorySerializesRequiredWireFields(string format)
         {
             var data = ArmMonitorModelFactory.VmInsightsOnboardingStatusData(resourceId: new ResourceIdentifier(Scope), onboardingStatus: OnboardingStatus.Onboarded, dataStatus: DataStatus.Present);
-            var generated = ArmMonitorModelFactory.VmInsightsOnboardingStatusData(null, null, default, null, Scope, OnboardingStatus.Onboarded, DataStatus.Present, Array.Empty<DataContainer>());
+            var positional = ArmMonitorModelFactory.VmInsightsOnboardingStatusData(null, null, default, null, new ResourceIdentifier(Scope), OnboardingStatus.Onboarded, DataStatus.Present, Array.Empty<DataContainer>());
             var options = new ModelReaderWriterOptions(format);
-            Assert.That(generated.ResourceId, Is.EqualTo(new ResourceIdentifier(Scope)));
-            Assert.That(ModelReaderWriter.Write(generated, options).ToString(), Is.EqualTo(ModelReaderWriter.Write(data, options).ToString()));
+            Assert.That(positional.ResourceId, Is.EqualTo(new ResourceIdentifier(Scope)));
+            Assert.That(ModelReaderWriter.Write(positional, options).ToString(), Is.EqualTo(ModelReaderWriter.Write(data, options).ToString()));
             using var json = JsonDocument.Parse(ModelReaderWriter.Write(data, options).ToMemory());
             var properties = json.RootElement.GetProperty("properties");
             Assert.That(properties.GetProperty("resourceId").GetString(), Is.EqualTo(Scope));
@@ -315,6 +315,23 @@ namespace Azure.ResourceManager.Monitor.Tests
             Assert.That(read.ResourceId, Is.EqualTo(new ResourceIdentifier(Scope)));
             Assert.That(read.OnboardingStatus, Is.EqualTo(OnboardingStatus.Onboarded));
             Assert.That(read.DataStatus, Is.EqualTo(DataStatus.Present));
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void VmInsightsResourceIdUsesGeneratedIdentifier(string format)
+        {
+            var resourceId = new ResourceIdentifier(Scope);
+            Assert.That(typeof(VmInsightsOnboardingStatusData).GetProperty(nameof(VmInsightsOnboardingStatusData.ResourceId)).PropertyType, Is.EqualTo(typeof(ResourceIdentifier)));
+            var data = ArmMonitorModelFactory.VmInsightsOnboardingStatusData(resourceId: resourceId, onboardingStatus: OnboardingStatus.Onboarded, dataStatus: DataStatus.Present);
+            var options = new ModelReaderWriterOptions(format);
+            var serialized = ModelReaderWriter.Write(data, options);
+            using var json = JsonDocument.Parse(serialized.ToMemory());
+            var resourceIdJson = json.RootElement.GetProperty("properties").GetProperty("resourceId");
+            Assert.That(resourceIdJson.ValueKind, Is.EqualTo(JsonValueKind.String));
+            Assert.That(resourceIdJson.GetString(), Is.EqualTo(Scope));
+            Assert.That(data.ResourceId, Is.EqualTo(resourceId));
+            Assert.That(ModelReaderWriter.Read<VmInsightsOnboardingStatusData>(serialized, options).ResourceId, Is.EqualTo(resourceId));
         }
 
         [TestCase("J", false)]
@@ -364,6 +381,39 @@ namespace Azure.ResourceManager.Monitor.Tests
             Assert.That(transport.Requests, Has.Count.EqualTo(1));
             Assert.That(transport.Requests[0].Method, Is.EqualTo(RequestMethod.Get));
             Assert.That(transport.Requests[0].Uri.ToUri().AbsolutePath, Is.EqualTo($"{Scope}/providers/Microsoft.Insights/diagnosticSettingsCategories"));
+        }
+
+        [Test]
+        public void DiagnosticCategoryDefaultModelsExposeMutableFlattenedProperties()
+        {
+            Assert.That(typeof(DiagnosticSettingsCategoryData).GetProperty(nameof(DiagnosticSettingsCategoryData.CategoryType)).SetMethod.IsPublic, Is.True);
+            foreach (var category in new[] { new DiagnosticSettingsCategoryData(), ArmMonitorModelFactory.DiagnosticSettingsCategoryData() })
+            {
+                Assert.That(category.CategoryGroups, Is.Not.Null.And.Empty);
+                category.CategoryType = MonitorCategoryType.Logs;
+                category.CategoryGroups.Add("audit");
+                Assert.That(category.CategoryType, Is.EqualTo(MonitorCategoryType.Logs));
+                Assert.That(category.CategoryGroups, Is.EqualTo(new[] { "audit" }));
+            }
+        }
+
+        [TestCase("J", "{}")]
+        [TestCase("W", "{}")]
+        [TestCase("J", "{\"properties\":null}")]
+        [TestCase("W", "{\"properties\":null}")]
+        public void DiagnosticCategoryFlattenedAccessorsInitializeMissingProperties(string format, string json)
+        {
+            var options = new ModelReaderWriterOptions(format);
+            var category = ModelReaderWriter.Read<DiagnosticSettingsCategoryData>(BinaryData.FromString(json), options);
+            var groupsOnly = ModelReaderWriter.Read<DiagnosticSettingsCategoryData>(BinaryData.FromString(json), options);
+            groupsOnly.CategoryGroups.Add("group-only");
+            Assert.That(groupsOnly.CategoryGroups, Is.EqualTo(new[] { "group-only" }));
+            Assert.That(category.CategoryType, Is.Null);
+            category.CategoryType = MonitorCategoryType.Metrics;
+            category.CategoryGroups.Add("audit");
+            var read = ModelReaderWriter.Read<DiagnosticSettingsCategoryData>(ModelReaderWriter.Write(category, options), options);
+            Assert.That(read.CategoryType, Is.EqualTo(MonitorCategoryType.Metrics));
+            Assert.That(read.CategoryGroups, Is.EqualTo(new[] { "audit" }));
         }
 
         [TestCase(false, 0)]

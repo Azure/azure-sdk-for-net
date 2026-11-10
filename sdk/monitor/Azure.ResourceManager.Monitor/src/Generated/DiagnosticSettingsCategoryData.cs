@@ -36,5 +36,35 @@ namespace Azure.ResourceManager.Monitor
         public DiagnosticSettingsCategoryData()
         {
         }
+
+        /// <summary> The type of the diagnostic settings category. </summary>
+        public MonitorCategoryType? CategoryType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CategoryType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticSettingsCategoryProperties();
+                }
+                Properties.CategoryType = value;
+            }
+        }
+
+        /// <summary> the collection of what category groups are supported. </summary>
+        public IList<string> CategoryGroups
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new DiagnosticSettingsCategoryProperties();
+                }
+                return Properties.CategoryGroups;
+            }
+        }
     }
 }

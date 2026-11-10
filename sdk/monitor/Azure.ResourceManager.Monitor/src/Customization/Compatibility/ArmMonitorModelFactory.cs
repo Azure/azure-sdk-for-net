@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="data"> Containers storing VM Insights data. </param>
         /// <returns> A new VM Insights onboarding status data instance. </returns>
         public static Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData VmInsightsOnboardingStatusData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier resourceId = null, OnboardingStatus? onboardingStatus = null, DataStatus? dataStatus = null, IEnumerable<DataContainer> data = null)
-            => new Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData(id, name, resourceType, systemData, new VMInsightsOnboardingStatusProperties(resourceId?.ToString(), onboardingStatus ?? default, dataStatus ?? default, data?.ToList() ?? new List<DataContainer>(), default), default);
+            => new Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData(id, name, resourceType, systemData, new VMInsightsOnboardingStatusProperties(resourceId, onboardingStatus ?? default, dataStatus ?? default, data?.ToList() ?? new List<DataContainer>(), default), default);
     }
 #pragma warning restore CS0618
 }
