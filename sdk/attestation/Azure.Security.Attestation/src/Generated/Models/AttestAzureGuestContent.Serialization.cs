@@ -13,62 +13,62 @@ using Azure.Core;
 
 namespace Azure.Security.Attestation
 {
-    /// <summary> The AttestAzureGuestRequest. </summary>
-    internal partial class AttestAzureGuestRequest : IJsonModel<AttestAzureGuestRequest>
+    /// <summary> The AttestAzureGuestContent. </summary>
+    internal partial class AttestAzureGuestContent : IJsonModel<AttestAzureGuestContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AttestAzureGuestRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AttestAzureGuestContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AttestAzureGuestRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AttestAzureGuestContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAttestAzureGuestRequest(document.RootElement, options);
+                        return DeserializeAttestAzureGuestContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AttestAzureGuestRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttestAzureGuestContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AttestAzureGuestRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AttestAzureGuestContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSecurityAttestationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AttestAzureGuestRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttestAzureGuestContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AttestAzureGuestRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AttestAzureGuestContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AttestAzureGuestRequest IPersistableModel<AttestAzureGuestRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AttestAzureGuestContent IPersistableModel<AttestAzureGuestContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AttestAzureGuestRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AttestAzureGuestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="attestAzureGuestRequest"> The <see cref="AttestAzureGuestRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(AttestAzureGuestRequest attestAzureGuestRequest)
+        /// <param name="attestAzureGuestContent"> The <see cref="AttestAzureGuestContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(AttestAzureGuestContent attestAzureGuestContent)
         {
-            if (attestAzureGuestRequest == null)
+            if (attestAzureGuestContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(attestAzureGuestRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(attestAzureGuestContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AttestAzureGuestRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AttestAzureGuestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -79,10 +79,10 @@ namespace Azure.Security.Attestation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AttestAzureGuestRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AttestAzureGuestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AttestAzureGuestRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AttestAzureGuestContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(AttestationInfo))
             {
@@ -108,24 +108,24 @@ namespace Azure.Security.Attestation
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AttestAzureGuestRequest IJsonModel<AttestAzureGuestRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AttestAzureGuestContent IJsonModel<AttestAzureGuestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AttestAzureGuestRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AttestAzureGuestContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AttestAzureGuestRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AttestAzureGuestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AttestAzureGuestRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AttestAzureGuestContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAttestAzureGuestRequest(document.RootElement, options);
+            return DeserializeAttestAzureGuestContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AttestAzureGuestRequest DeserializeAttestAzureGuestRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static AttestAzureGuestContent DeserializeAttestAzureGuestContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -145,7 +145,7 @@ namespace Azure.Security.Attestation
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AttestAzureGuestRequest(attestationInfo, additionalBinaryDataProperties);
+            return new AttestAzureGuestContent(attestationInfo, additionalBinaryDataProperties);
         }
     }
 }

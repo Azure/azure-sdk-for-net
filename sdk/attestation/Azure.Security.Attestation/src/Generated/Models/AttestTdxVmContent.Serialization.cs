@@ -13,62 +13,62 @@ using Azure.Core;
 
 namespace Azure.Security.Attestation
 {
-    /// <summary> The AttestTdxVmRequest. </summary>
-    internal partial class AttestTdxVmRequest : IJsonModel<AttestTdxVmRequest>
+    /// <summary> The AttestTdxVmContent. </summary>
+    internal partial class AttestTdxVmContent : IJsonModel<AttestTdxVmContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AttestTdxVmRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AttestTdxVmContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AttestTdxVmRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AttestTdxVmContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAttestTdxVmRequest(document.RootElement, options);
+                        return DeserializeAttestTdxVmContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AttestTdxVmRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttestTdxVmContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AttestTdxVmRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AttestTdxVmContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSecurityAttestationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AttestTdxVmRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttestTdxVmContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AttestTdxVmRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AttestTdxVmContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AttestTdxVmRequest IPersistableModel<AttestTdxVmRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AttestTdxVmContent IPersistableModel<AttestTdxVmContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AttestTdxVmRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AttestTdxVmContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="attestTdxVmRequest"> The <see cref="AttestTdxVmRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(AttestTdxVmRequest attestTdxVmRequest)
+        /// <param name="attestTdxVmContent"> The <see cref="AttestTdxVmContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(AttestTdxVmContent attestTdxVmContent)
         {
-            if (attestTdxVmRequest == null)
+            if (attestTdxVmContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(attestTdxVmRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(attestTdxVmContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AttestTdxVmRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AttestTdxVmContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -79,10 +79,10 @@ namespace Azure.Security.Attestation
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AttestTdxVmRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AttestTdxVmContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AttestTdxVmRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AttestTdxVmContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Quote))
             {
@@ -123,24 +123,24 @@ namespace Azure.Security.Attestation
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AttestTdxVmRequest IJsonModel<AttestTdxVmRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AttestTdxVmContent IJsonModel<AttestTdxVmContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AttestTdxVmRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AttestTdxVmContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AttestTdxVmRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AttestTdxVmContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AttestTdxVmRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AttestTdxVmContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAttestTdxVmRequest(document.RootElement, options);
+            return DeserializeAttestTdxVmContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AttestTdxVmRequest DeserializeAttestTdxVmRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static AttestTdxVmContent DeserializeAttestTdxVmContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -190,7 +190,7 @@ namespace Azure.Security.Attestation
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AttestTdxVmRequest(quote, runtimeData, initTimeData, nonce, additionalBinaryDataProperties);
+            return new AttestTdxVmContent(quote, runtimeData, initTimeData, nonce, additionalBinaryDataProperties);
         }
     }
 }

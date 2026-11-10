@@ -10,18 +10,18 @@ using System.Collections.Generic;
 
 namespace Azure.Security.Attestation
 {
-    /// <summary> The AttestTdxVmRequest. </summary>
-    internal partial class AttestTdxVmRequest
+    /// <summary> The AttestTdxVmContent. </summary>
+    internal partial class AttestTdxVmContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AttestTdxVmRequest"/>. </summary>
-        internal AttestTdxVmRequest()
+        /// <summary> Initializes a new instance of <see cref="AttestTdxVmContent"/>. </summary>
+        internal AttestTdxVmContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AttestTdxVmRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestTdxVmContent"/>. </summary>
         /// <param name="quote"> Quote of the TDX virtual machine to be attested. </param>
         /// <param name="runtimeData">
         /// Runtime data provided by the enclave at the time of quote generation. The MAA
@@ -34,7 +34,7 @@ namespace Azure.Security.Attestation
         /// </param>
         /// <param name="nonce"> Nonce for incoming request - emitted in the generated attestation token. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AttestTdxVmRequest(BinaryData quote, RuntimeData runtimeData, InitTimeData initTimeData, string nonce, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AttestTdxVmContent(BinaryData quote, RuntimeData runtimeData, InitTimeData initTimeData, string nonce, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Quote = quote;
             RuntimeData = runtimeData;
