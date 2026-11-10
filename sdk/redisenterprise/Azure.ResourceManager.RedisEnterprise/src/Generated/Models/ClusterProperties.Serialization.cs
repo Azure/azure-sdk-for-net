@@ -13,7 +13,6 @@ using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    /// <summary> Properties of Redis Enterprise clusters, as opposed to general resource properties like location, tags. </summary>
     internal partial class ClusterProperties : IJsonModel<ClusterProperties>
     {
         /// <param name="data"> The data to parse. </param>
