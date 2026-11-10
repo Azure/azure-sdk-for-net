@@ -143,8 +143,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
 
         [RecordedTest]
-
-        [Ignore("MPG migration WIP: query-parameter encoding diff for restorableDatabaseAccounts feed.")]
         public async Task RestorableGremlinDatabaseAccountFeed()
         {
             await RestorableDatabaseAccountFeedTestHelperAsync("Gremlin, Sql", 1);
@@ -255,9 +253,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             int expectedRestorableLocationCount)
         {
             _restorableDatabaseAccount = await GetDatabaseAccount();
-            var restorableAccounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableCosmosDBAccountsAsync().ToEnumerableAsync();
-            Assert.That(restorableAccounts.Any(account => account.Data.AccountName == _restorableDatabaseAccount.Data.Name));
-            RestorableCosmosDBAccountResource restorableAccount = restorableAccounts.Single(account => account.Data.AccountName == _restorableDatabaseAccount.Data.Name);
+            RestorableCosmosDBAccountResource restorableAccount = await FindRestorableDatabaseAccountAsync(
+                (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableCosmosDBAccountsAsync(), _restorableDatabaseAccount.Data.Name);
             ValidateRestorableDatabaseAccount(restorableAccount, sourceApiType, expectedRestorableLocationCount);
         }
 
