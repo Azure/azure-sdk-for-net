@@ -11,7 +11,8 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
     [CodeGenSerialization(nameof(ExtensionConfigPropertyType), "type", SerializationValueHook = nameof(SerializeExtensionConfigPropertyType), DeserializationValueHook = nameof(DeserializeExtensionConfigPropertyType))]
     public partial class ArmDeploymentExtensionConfigItem
     {
-        // Preserve the GA property and older API-version payloads after its removal in 2026-06-01.
+        // API version 2026-06-01 removed "type" from the service model. Keep the SDK 1.0.0
+        // property and its JSON mapping for GA compatibility and older API-version payloads.
         /// <summary> The value type of the extension config property. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [WirePath("type")]

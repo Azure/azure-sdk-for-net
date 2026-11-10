@@ -6,7 +6,8 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Resources.Deployments.Models
 {
-    // Retain the GA type removed from the service specification in API version 2026-06-01.
+    // API version 2026-06-01 removed this enum from the specification, so it is no longer generated.
+    // Retain the type shipped in SDK 1.0.0 to avoid breaking existing callers.
     /// <summary> The value type of an extension config property. </summary>
     public readonly partial struct ExtensionConfigPropertyType : IEquatable<ExtensionConfigPropertyType>
     {
