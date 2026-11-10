@@ -4,24 +4,23 @@
 
 ### Features Added
 
-- Added Agent Insights analysis priorities, generated summaries, and run-input models aligned with the current service contract.
-- Added rubric scoring and safety-generation configuration, model-suggested dimension weights, and endpoint evaluator schema versions.
-- Added evaluator diagnostic history and health metrics, trace/conversation evaluation data sources, conversation-based data generation, and user-conversation simulation configuration.
-- Added optional-model evaluator generation inputs and parameterless daily schedules while retaining the existing explicit-model, weighted-dimension, and explicit-hours constructors.
+- Added typed Agent Insights monitor and run request models, plus overview and overview-source models for monitor summaries.
+- Added `EvaluationDataGenerationJobOutputConfiguration` and `EvaluationRuleActionType` models from the current service contract.
 
 ### Breaking Changes
 
-- `EvaluationsDimension.Weight` is now an optional `int?` property.
+- `EvaluationsDimension.Weight` is now a non-nullable `int` instead of `int?`.
 - `EvaluatorGenerationArtifacts.Reference` now uses `VersionedDatasetReference` instead of the removed `DatasetReference` model, retaining the required dataset version.
-- `AgentInsightMonitors.GetInsights` and `GetInsightsAsync` now accept `categories`, `severities`, and `statuses` collections instead of singular filters.
-- Agent Insights monitor/run creation now uses generated method parameters instead of `AgentInsightMonitorCreate` and `AgentInsightRunCreate`. The retired overview models were removed in favor of monitor summaries.
+- `AgentInsightMonitors.GetInsights` and `GetInsightsAsync` retain their category, severity, and status collections, now serialized to the service's singular `category`, `severity`, and `status` query parameters.
+- Agent Insights monitor creation now accepts `AgentInsightMonitorCreate`, and run creation accepts `AgentInsightRunCreate`. The monitor exposes an `Overview` instead of `Priorities`.
+- The regenerated contract removes the prior Agent Insights diagnostic, priority, generated-summary, and run-input models; evaluator diagnostic-history and health APIs; trace/conversation evaluation data-source and user-conversation simulation APIs; and the `ProjectsMetadata` alias.
 
 ### Bugs Fixed
 
 ### Other Changes
 
 - Agent Insights no longer requires the `AgentInsights=V1Preview` feature header.
-- Regenerated from `feature/foundry-release` at [`298aa64878ea0a8f5eb2f610760a60356c3e58e2`](https://github.com/Azure/azure-rest-api-specs/tree/298aa64878ea0a8f5eb2f610760a60356c3e58e2).
+- Regenerated from `feature/foundry-release` at [`879f4945427593222a5a9ecabefcd8a454e9ed71`](https://github.com/Azure/azure-rest-api-specs/tree/879f4945427593222a5a9ecabefcd8a454e9ed71).
 
 ## 3.0.0-beta.6 (2026-10-30)
 

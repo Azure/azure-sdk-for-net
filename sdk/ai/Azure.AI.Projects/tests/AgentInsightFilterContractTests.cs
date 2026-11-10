@@ -27,9 +27,7 @@ public class AgentInsightFilterContractTests
         => Assert.That(Regex.Replace(value, Utils.ProjectsTestSanitizers.LegacyAgentInsightsFeaturePattern, ""), Is.EqualTo(expected));
 
     [Test]
-    public async Task InsightFiltersUseCurrentCommaDelimitedListParameters(
-        [Values(false, true)] bool isAsync,
-        [Values(false, true)] bool multiple)
+    public async Task InsightCollectionFiltersUseSingularWireParameters([Values(false, true)] bool isAsync)
     {
         MockPipelineTransport transport = new(_ => new MockPipelineResponse(200)
             .WithContent("""{"data":[],"has_more":false}"""))
@@ -37,11 +35,9 @@ public class AgentInsightFilterContractTests
         AIProjectClient project = new(
             new Uri("https://example.services.ai.azure.com/api/projects/project"),
             new FakeTokenProvider(), new() { Transport = transport });
-        string[] categories = multiple ? ["latency", "quality"] : ["latency"];
-        AgentInsightSeverity[] severities = multiple
-            ? [AgentInsightSeverity.High, AgentInsightSeverity.Low] : [AgentInsightSeverity.High];
-        AgentInsightStatus[] statuses = multiple
-            ? [AgentInsightStatus.Active, AgentInsightStatus.Resolved] : [AgentInsightStatus.Active];
+        string[] categories = ["latency", "quality"];
+        AgentInsightSeverity[] severities = [AgentInsightSeverity.High, AgentInsightSeverity.Low];
+        AgentInsightStatus[] statuses = [AgentInsightStatus.Active, AgentInsightStatus.Resolved];
         if (isAsync)
         {
             await foreach (AgentInsight _ in project.AgentInsightMonitors.GetInsightsAsync(
@@ -65,14 +61,14 @@ public class AgentInsightFilterContractTests
         Assert.Multiple(() =>
         {
             Assert.That(request.Uri.AbsolutePath, Does.EndWith("/agent_insight_monitors/monitor%20%2F%3F/insights"));
-            Assert.That(query["categories"], Is.EqualTo(string.Join(",", categories)));
-            Assert.That(query["severities"], Is.EqualTo(multiple ? "high,low" : "high"));
-            Assert.That(query["statuses"], Is.EqualTo(multiple ? "active,resolved" : "active"));
+            Assert.That(query["category"], Is.EqualTo("latency,quality"));
+            Assert.That(query["severity"], Is.EqualTo("high,low"));
+            Assert.That(query["status"], Is.EqualTo("active,resolved"));
             Assert.That(query["include_details"], Is.EqualTo("true"));
             Assert.That(query["limit"], Is.EqualTo("7"));
-            Assert.That(query.ContainsKey("category"), Is.False);
-            Assert.That(query.ContainsKey("severity"), Is.False);
-            Assert.That(query.ContainsKey("status"), Is.False);
+            Assert.That(query.ContainsKey("categories"), Is.False);
+            Assert.That(query.ContainsKey("severities"), Is.False);
+            Assert.That(query.ContainsKey("statuses"), Is.False);
             Assert.That(request.Headers.TryGetValue("Foundry-Features", out string features), Is.True);
             Assert.That(features, Does.Not.Contain("AgentInsights="));
         });

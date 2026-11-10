@@ -22,12 +22,10 @@ namespace Azure.AI.Projects
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. If omitted, sampling is turned off. </param>
         /// <param name="redactPrivateContent"> Whether to redact private content from traces. When omitted or set to true, private content is redacted. Set to false to opt out of redaction. </param>
-        /// <param name="generateTestCaseRubric"> Whether to generate test-case rubric dimensions for each captured turn sample. This is a preview feature requiring the `Foundry-Features: DataGenerationJobs=V1Preview` request header. When true, requires a nonempty `model_options.model`. </param>
-        internal TracesDataGenerationJobConfiguration(DataGenerationJobKind @type, float? trainSplit, DataGenerationModelOptions modelOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? maxSamples, bool? redactPrivateContent, bool? generateTestCaseRubric) : base(@type, trainSplit, modelOptions, additionalBinaryDataProperties)
+        internal TracesDataGenerationJobConfiguration(DataGenerationJobKind @type, float? trainSplit, DataGenerationModelOptions modelOptions, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? maxSamples, bool? redactPrivateContent) : base(@type, trainSplit, modelOptions, additionalBinaryDataProperties)
         {
             MaxSamples = maxSamples;
             RedactPrivateContent = redactPrivateContent;
-            GenerateTestCaseRubric = generateTestCaseRubric;
         }
 
         /// <summary> Maximum number of samples to generate, up to service-defined limits. If omitted, sampling is turned off. </summary>
@@ -35,8 +33,5 @@ namespace Azure.AI.Projects
 
         /// <summary> Whether to redact private content from traces. When omitted or set to true, private content is redacted. Set to false to opt out of redaction. </summary>
         public bool? RedactPrivateContent { get; set; }
-
-        /// <summary> Whether to generate test-case rubric dimensions for each captured turn sample. This is a preview feature requiring the `Foundry-Features: DataGenerationJobs=V1Preview` request header. When true, requires a nonempty `model_options.model`. </summary>
-        public bool? GenerateTestCaseRubric { get; set; }
     }
 }

@@ -306,9 +306,7 @@ namespace Azure.AI.Projects.Evaluation
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(evaluationRule, nameof(evaluationRule));
 
-            using Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(evaluationRule, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create | LifecycleVisibility.Update, "W"));
-            ClientResult result = CreateOrUpdate(id, content, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            ClientResult result = CreateOrUpdate(id, evaluationRule, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((EvaluationRule)result, result.GetRawResponse());
         }
 
@@ -325,21 +323,19 @@ namespace Azure.AI.Projects.Evaluation
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(evaluationRule, nameof(evaluationRule));
 
-            using Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(evaluationRule, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create | LifecycleVisibility.Update, "W"));
-            ClientResult result = await CreateOrUpdateAsync(id, content, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await CreateOrUpdateAsync(id, evaluationRule, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((EvaluationRule)result, result.GetRawResponse());
         }
 
         /// <summary>
-        /// [Protocol Method] Returns the evaluation rules configured for the project, including scheduled trace and dataset evaluations, optionally filtered by action type, agent name, or enabled state.
+        /// [Protocol Method] Returns the evaluation rules configured for the project, optionally filtered by action type, agent name, or enabled state.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="actionType"> Filter by action type. When omitted, rules of all action types are returned. </param>
+        /// <param name="actionType"> Filter by the type of evaluation rule. </param>
         /// <param name="agentName"> Filter by the agent name. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -361,14 +357,14 @@ namespace Azure.AI.Projects.Evaluation
         }
 
         /// <summary>
-        /// [Protocol Method] Returns the evaluation rules configured for the project, including scheduled trace and dataset evaluations, optionally filtered by action type, agent name, or enabled state.
+        /// [Protocol Method] Returns the evaluation rules configured for the project, optionally filtered by action type, agent name, or enabled state.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="actionType"> Filter by action type. When omitted, rules of all action types are returned. </param>
+        /// <param name="actionType"> Filter by the type of evaluation rule. </param>
         /// <param name="agentName"> Filter by the agent name. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -389,8 +385,8 @@ namespace Azure.AI.Projects.Evaluation
             }
         }
 
-        /// <summary> Returns the evaluation rules configured for the project, including scheduled trace and dataset evaluations, optionally filtered by action type, agent name, or enabled state. </summary>
-        /// <param name="actionType"> Filter by action type. When omitted, rules of all action types are returned. </param>
+        /// <summary> Returns the evaluation rules configured for the project, optionally filtered by action type, agent name, or enabled state. </summary>
+        /// <param name="actionType"> Filter by the type of evaluation rule. </param>
         /// <param name="agentName"> Filter by the agent name. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -400,8 +396,8 @@ namespace Azure.AI.Projects.Evaluation
             return new EvaluationRulesGetAllCollectionResultOfT(this, actionType?.ToString(), agentName, enabled, cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> Returns the evaluation rules configured for the project, including scheduled trace and dataset evaluations, optionally filtered by action type, agent name, or enabled state. </summary>
-        /// <param name="actionType"> Filter by action type. When omitted, rules of all action types are returned. </param>
+        /// <summary> Returns the evaluation rules configured for the project, optionally filtered by action type, agent name, or enabled state. </summary>
+        /// <param name="actionType"> Filter by the type of evaluation rule. </param>
         /// <param name="agentName"> Filter by the agent name. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>

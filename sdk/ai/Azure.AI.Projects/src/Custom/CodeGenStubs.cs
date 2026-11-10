@@ -7,8 +7,6 @@ namespace Azure.AI.Projects;
 
 /// <summary> An error reported by Microsoft Foundry. </summary>
 [CodeGenType("Error")] public partial class ProjectsError { }
-/// <summary> String metadata attached to an evaluation data source. </summary>
-[CodeGenType("Metadata")] public partial class ProjectsMetadata { }
 
 // Internal types
 

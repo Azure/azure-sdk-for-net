@@ -42,7 +42,7 @@ namespace Azure.AI.Projects.Agents
         internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
-        /// [Protocol Method] Lists candidates for the given optimization job with cursor pagination. Agent optimization can include the original baseline and multiple generated candidates; prompt and skill optimization generate a single candidate. Evaluated skill jobs also expose the original baseline for reporting through the existing evaluation field; the baseline is not a generated alternative. A generated skill candidate contains zero or more skill outcomes, not one candidate per skill. Each `output.mutations` item identifies a changed attribute by `type`; mutation `value` fields are omitted unless the client passes `expand=mutations`.
+        /// [Protocol Method] Lists candidates for the given optimization job with cursor pagination, including the original baseline and generated candidates. Each `output.mutations` item identifies a changed attribute by `type`; mutation `value` fields are omitted unless the client passes `expand=mutations`.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -89,7 +89,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Lists candidates for the given optimization job with cursor pagination. Agent optimization can include the original baseline and multiple generated candidates; prompt and skill optimization generate a single candidate. Evaluated skill jobs also expose the original baseline for reporting through the existing evaluation field; the baseline is not a generated alternative. A generated skill candidate contains zero or more skill outcomes, not one candidate per skill. Each `output.mutations` item identifies a changed attribute by `type`; mutation `value` fields are omitted unless the client passes `expand=mutations`.
+        /// [Protocol Method] Lists candidates for the given optimization job with cursor pagination, including the original baseline and generated candidates. Each `output.mutations` item identifies a changed attribute by `type`; mutation `value` fields are omitted unless the client passes `expand=mutations`.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -135,7 +135,7 @@ namespace Azure.AI.Projects.Agents
             }
         }
 
-        /// <summary> Lists candidates for the given optimization job with cursor pagination. Agent optimization can include the original baseline and multiple generated candidates; prompt and skill optimization generate a single candidate. Evaluated skill jobs also expose the original baseline for reporting through the existing evaluation field; the baseline is not a generated alternative. A generated skill candidate contains zero or more skill outcomes, not one candidate per skill. Each `output.mutations` item identifies a changed attribute by `type`; mutation `value` fields are omitted unless the client passes `expand=mutations`. </summary>
+        /// <summary> Lists candidates for the given optimization job with cursor pagination, including the original baseline and generated candidates. Each `output.mutations` item identifies a changed attribute by `type`; mutation `value` fields are omitted unless the client passes `expand=mutations`. </summary>
         /// <param name="jobId"> The ID of the parent optimization job. </param>
         /// <param name="expand"> Comma-separated list of expand keys. Pass `mutations` to populate mutation `value` fields; omit to receive mutation items containing only `type`. Additional expand keys may be added in future previews. </param>
         /// <param name="limit">
@@ -164,7 +164,7 @@ namespace Azure.AI.Projects.Agents
                 cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> Lists candidates for the given optimization job with cursor pagination. Agent optimization can include the original baseline and multiple generated candidates; prompt and skill optimization generate a single candidate. Evaluated skill jobs also expose the original baseline for reporting through the existing evaluation field; the baseline is not a generated alternative. A generated skill candidate contains zero or more skill outcomes, not one candidate per skill. Each `output.mutations` item identifies a changed attribute by `type`; mutation `value` fields are omitted unless the client passes `expand=mutations`. </summary>
+        /// <summary> Lists candidates for the given optimization job with cursor pagination, including the original baseline and generated candidates. Each `output.mutations` item identifies a changed attribute by `type`; mutation `value` fields are omitted unless the client passes `expand=mutations`. </summary>
         /// <param name="jobId"> The ID of the parent optimization job. </param>
         /// <param name="expand"> Comma-separated list of expand keys. Pass `mutations` to populate mutation `value` fields; omit to receive mutation items containing only `type`. Additional expand keys may be added in future previews. </param>
         /// <param name="limit">
@@ -194,7 +194,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieves a single candidate. Mutation values are always included. Skill optimization detail includes independent skill results, resolved context, and the persisted execution snapshot when available; these detail fields are omitted from candidate lists.
+        /// [Protocol Method] Retrieves a single candidate. Mutation values are always included.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -228,7 +228,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Retrieves a single candidate. Mutation values are always included. Skill optimization detail includes independent skill results, resolved context, and the persisted execution snapshot when available; these detail fields are omitted from candidate lists.
+        /// [Protocol Method] Retrieves a single candidate. Mutation values are always included.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -261,7 +261,7 @@ namespace Azure.AI.Projects.Agents
             }
         }
 
-        /// <summary> Retrieves a single candidate. Mutation values are always included. Skill optimization detail includes independent skill results, resolved context, and the persisted execution snapshot when available; these detail fields are omitted from candidate lists. </summary>
+        /// <summary> Retrieves a single candidate. Mutation values are always included. </summary>
         /// <param name="jobId"> The ID of the parent optimization job. </param>
         /// <param name="candidateId"> The candidate identifier. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -277,7 +277,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((AgentOptimizationCandidate)result, result.GetRawResponse());
         }
 
-        /// <summary> Retrieves a single candidate. Mutation values are always included. Skill optimization detail includes independent skill results, resolved context, and the persisted execution snapshot when available; these detail fields are omitted from candidate lists. </summary>
+        /// <summary> Retrieves a single candidate. Mutation values are always included. </summary>
         /// <param name="jobId"> The ID of the parent optimization job. </param>
         /// <param name="candidateId"> The candidate identifier. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -294,7 +294,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Promotes a supported completed candidate to the Foundry agent stored in the parent job's target configuration. A skill-optimization candidate must be the evaluated learned candidate for a supported Prompt or Managed target; baseline, unevaluated, agentless, and unsupported-runtime skill candidates cannot be promoted. Skill promotion releases the exact evaluated candidate configuration without regenerating skills. Prompt-agent promotion creates a new agent version. Hosted-agent promotion currently records promotion metadata without deploying a new hosted-agent version.
+        /// [Protocol Method] Promotes a candidate to the Foundry agent stored in the parent job's target configuration. Promotion is unavailable when the job omitted target_configuration. Prompt-agent promotion creates a new agent version. Hosted-agent promotion currently records promotion metadata without deploying a new hosted-agent version.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -328,7 +328,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Promotes a supported completed candidate to the Foundry agent stored in the parent job's target configuration. A skill-optimization candidate must be the evaluated learned candidate for a supported Prompt or Managed target; baseline, unevaluated, agentless, and unsupported-runtime skill candidates cannot be promoted. Skill promotion releases the exact evaluated candidate configuration without regenerating skills. Prompt-agent promotion creates a new agent version. Hosted-agent promotion currently records promotion metadata without deploying a new hosted-agent version.
+        /// [Protocol Method] Promotes a candidate to the Foundry agent stored in the parent job's target configuration. Promotion is unavailable when the job omitted target_configuration. Prompt-agent promotion creates a new agent version. Hosted-agent promotion currently records promotion metadata without deploying a new hosted-agent version.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -361,7 +361,7 @@ namespace Azure.AI.Projects.Agents
             }
         }
 
-        /// <summary> Promotes a supported completed candidate to the Foundry agent stored in the parent job's target configuration. A skill-optimization candidate must be the evaluated learned candidate for a supported Prompt or Managed target; baseline, unevaluated, agentless, and unsupported-runtime skill candidates cannot be promoted. Skill promotion releases the exact evaluated candidate configuration without regenerating skills. Prompt-agent promotion creates a new agent version. Hosted-agent promotion currently records promotion metadata without deploying a new hosted-agent version. </summary>
+        /// <summary> Promotes a candidate to the Foundry agent stored in the parent job's target configuration. Promotion is unavailable when the job omitted target_configuration. Prompt-agent promotion creates a new agent version. Hosted-agent promotion currently records promotion metadata without deploying a new hosted-agent version. </summary>
         /// <param name="jobId"> The ID of the parent optimization job. </param>
         /// <param name="candidateId"> The candidate identifier. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -377,7 +377,7 @@ namespace Azure.AI.Projects.Agents
             return ClientResult.FromValue((AgentOptimizationCandidate)result, result.GetRawResponse());
         }
 
-        /// <summary> Promotes a supported completed candidate to the Foundry agent stored in the parent job's target configuration. A skill-optimization candidate must be the evaluated learned candidate for a supported Prompt or Managed target; baseline, unevaluated, agentless, and unsupported-runtime skill candidates cannot be promoted. Skill promotion releases the exact evaluated candidate configuration without regenerating skills. Prompt-agent promotion creates a new agent version. Hosted-agent promotion currently records promotion metadata without deploying a new hosted-agent version. </summary>
+        /// <summary> Promotes a candidate to the Foundry agent stored in the parent job's target configuration. Promotion is unavailable when the job omitted target_configuration. Prompt-agent promotion creates a new agent version. Hosted-agent promotion currently records promotion metadata without deploying a new hosted-agent version. </summary>
         /// <param name="jobId"> The ID of the parent optimization job. </param>
         /// <param name="candidateId"> The candidate identifier. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>

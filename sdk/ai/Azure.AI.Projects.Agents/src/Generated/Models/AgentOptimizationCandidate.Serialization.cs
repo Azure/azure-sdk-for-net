@@ -92,11 +92,6 @@ namespace Azure.AI.Projects.Agents
             writer.WriteStringValue(Name);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (Optional.IsDefined(Error))
-            {
-                writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error, options);
-            }
             writer.WritePropertyName("started_at"u8);
             writer.WriteNumberValue(StartedOn, "U");
             if (Optional.IsDefined(Output))
@@ -104,30 +99,10 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("output"u8);
                 writer.WriteObjectValue(Output, options);
             }
-            if (Optional.IsDefined(ExecutionSummary))
-            {
-                writer.WritePropertyName("execution_summary"u8);
-                writer.WriteObjectValue(ExecutionSummary, options);
-            }
-            if (Optional.IsDefined(ResolvedContext))
-            {
-                writer.WritePropertyName("resolved_context"u8);
-                writer.WriteObjectValue(ResolvedContext, options);
-            }
             if (Optional.IsDefined(Rationale))
             {
                 writer.WritePropertyName("rationale"u8);
                 writer.WriteStringValue(Rationale);
-            }
-            if (Optional.IsCollectionDefined(Files))
-            {
-                writer.WritePropertyName("files"u8);
-                writer.WriteStartArray();
-                foreach (AgentOptimizationCandidateFile item in Files)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
             }
             if (Optional.IsDefined(AgentVersion))
             {
@@ -190,13 +165,9 @@ namespace Azure.AI.Projects.Agents
             string jobId = default;
             string name = default;
             AgentOptimizationCandidateStatus status = default;
-            FoundryOpenAIError error = default;
             DateTimeOffset startedOn = default;
             AgentOptimizationCandidateOutput output = default;
-            AgentOptimizationSkillExecutionSummary executionSummary = default;
-            AgentOptimizationSkillResolvedContext resolvedContext = default;
             string rationale = default;
-            IList<AgentOptimizationCandidateFile> files = default;
             string agentVersion = default;
             AgentOptimizationCandidateEvaluation evaluation = default;
             AgentOptimizationCandidatePromotionInfo promotion = default;
@@ -223,15 +194,6 @@ namespace Azure.AI.Projects.Agents
                     status = new AgentOptimizationCandidateStatus(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("error"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    error = FoundryOpenAIError.DeserializeFoundryOpenAIError(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("started_at"u8))
                 {
                     startedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
@@ -246,41 +208,9 @@ namespace Azure.AI.Projects.Agents
                     output = AgentOptimizationCandidateOutput.DeserializeAgentOptimizationCandidateOutput(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("execution_summary"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    executionSummary = AgentOptimizationSkillExecutionSummary.DeserializeAgentOptimizationSkillExecutionSummary(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("resolved_context"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resolvedContext = AgentOptimizationSkillResolvedContext.DeserializeAgentOptimizationSkillResolvedContext(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("rationale"u8))
                 {
                     rationale = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("files"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<AgentOptimizationCandidateFile> array = new List<AgentOptimizationCandidateFile>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(AgentOptimizationCandidateFile.DeserializeAgentOptimizationCandidateFile(item, options));
-                    }
-                    files = array;
                     continue;
                 }
                 if (prop.NameEquals("agent_version"u8))
@@ -316,13 +246,9 @@ namespace Azure.AI.Projects.Agents
                 jobId,
                 name,
                 status,
-                error,
                 startedOn,
                 output,
-                executionSummary,
-                resolvedContext,
                 rationale,
-                files ?? new ChangeTrackingList<AgentOptimizationCandidateFile>(),
                 agentVersion,
                 evaluation,
                 promotion,

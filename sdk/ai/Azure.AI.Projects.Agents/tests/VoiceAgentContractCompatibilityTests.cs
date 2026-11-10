@@ -70,8 +70,8 @@ public class VoiceAgentContractCompatibilityTests
         using PipelineMessage create = client.CreateCreateSkillVersionRequest("skill-name", content, null);
         Assert.Multiple(() =>
         {
-            Assert.That(list.Request.Uri.AbsolutePath, Is.EqualTo("/api/projects/project/openai/v1/skills"));
-            Assert.That(create.Request.Uri.AbsolutePath, Is.EqualTo("/api/projects/project/openai/v1/skills/skill-name/versions"));
+            Assert.That(list.Request.Uri.AbsolutePath, Is.EqualTo("/api/projects/project/skills"));
+            Assert.That(create.Request.Uri.AbsolutePath, Is.EqualTo("/api/projects/project/skills/skill-name/versions"));
         });
     }
 
@@ -154,22 +154,18 @@ public class VoiceAgentContractCompatibilityTests
     }
 
     [Test]
-    public void McpToolboxRequestHeaderBindingsRoundTrip()
+    public void McpToolboxHeadersRoundTrip()
     {
         MCPToolboxTool tool = ModelReaderWriter.Read<MCPToolboxTool>(BinaryData.FromString("""
-            {"type":"mcp","server_label":"support","project_connection_id":"support-connection","request_header_bindings":[{"header_name":"X-Request-Id","source":"client_headers","required":true}]}
+            {"type":"mcp","server_label":"support","project_connection_id":"support-connection","headers":{"X-Request-Id":"request-id"}}
             """));
         using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(tool, new("W")));
-        JsonElement binding = document.RootElement.GetProperty("request_header_bindings")[0];
+        JsonElement headers = document.RootElement.GetProperty("headers");
         Assert.Multiple(() =>
         {
-            Assert.That(tool.RequestHeaderBindings, Has.Count.EqualTo(1));
-            Assert.That(tool.RequestHeaderBindings[0].HeaderName, Is.EqualTo("X-Request-Id"));
-            Assert.That(tool.RequestHeaderBindings[0].Source.ToString(), Is.EqualTo("client_headers"));
-            Assert.That(tool.RequestHeaderBindings[0].Required, Is.True);
-            Assert.That(binding.GetProperty("header_name").GetString(), Is.EqualTo("X-Request-Id"));
-            Assert.That(binding.GetProperty("source").GetString(), Is.EqualTo("client_headers"));
-            Assert.That(binding.GetProperty("required").GetBoolean(), Is.True);
+            Assert.That(tool.Headers, Has.Count.EqualTo(1));
+            Assert.That(tool.Headers["X-Request-Id"], Is.EqualTo("request-id"));
+            Assert.That(headers.GetProperty("X-Request-Id").GetString(), Is.EqualTo("request-id"));
         });
     }
 

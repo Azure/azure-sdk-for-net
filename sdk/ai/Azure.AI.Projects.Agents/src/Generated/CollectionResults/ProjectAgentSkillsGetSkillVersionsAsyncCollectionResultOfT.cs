@@ -6,15 +6,15 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Projects.Agents
 {
+    [Experimental("AAIP001")]
     internal partial class ProjectAgentSkillsGetSkillVersionsAsyncCollectionResultOfT : AsyncCollectionResult<SkillVersion>
     {
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         private readonly ProjectAgentSkills _client;
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
         private readonly string _name;
         private readonly int? _limit;
         private readonly string _order;
@@ -24,7 +24,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of ProjectAgentSkillsGetSkillVersionsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ProjectAgentSkills client used to send requests. </param>
-        /// <param name="name"> The public ID of the skill to list versions for. </param>
+        /// <param name="name"> The name of the skill to list versions for. </param>
         /// <param name="limit">
         /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
         /// default is 20.
@@ -44,7 +44,6 @@ namespace Azure.AI.Projects.Agents
         /// subsequent call can include before=obj_foo in order to fetch the previous page of the list.
         /// </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         public ProjectAgentSkillsGetSkillVersionsAsyncCollectionResultOfT(ProjectAgentSkills client, string name, int? limit, string order, string after, string before, RequestOptions options)
         {
             _client = client;
@@ -55,11 +54,9 @@ namespace Azure.AI.Projects.Agents
             _before = before;
             _options = options;
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Gets the raw pages of the collection. </summary>
         /// <returns> The raw pages of the collection. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
         {
             PipelineMessage message = _client.CreateGetSkillVersionsRequest(_name, _limit, _order, _after, _before, _options);
@@ -77,12 +74,10 @@ namespace Azure.AI.Projects.Agents
                 message = _client.CreateGetSkillVersionsRequest(_name, _limit, _order, nextToken, _before, _options);
             }
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Gets the continuation token from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The continuation token for the specified page. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
             string nextPage = ((AgentsPagedResultSkillVersion)page).LastId;
@@ -95,12 +90,10 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         protected override async IAsyncEnumerable<SkillVersion> GetValuesFromPageAsync(ClientResult page)
         {
             foreach (SkillVersion item in ((AgentsPagedResultSkillVersion)page).Data)
@@ -109,11 +102,9 @@ namespace Azure.AI.Projects.Agents
                 await Task.Yield();
             }
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Sends the request in the pipeline message and returns the response. </summary>
         /// <param name="message"> The pipeline message containing the request to send. </param>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         private async ValueTask<ClientResult> GetNextResponseAsync(PipelineMessage message)
         {
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ProjectAgentSkills.GetSkillVersions");
@@ -128,6 +119,5 @@ namespace Azure.AI.Projects.Agents
                 throw;
             }
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
     }
 }

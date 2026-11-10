@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Structured reason why scheduled generation is suspended for a monitor. </summary>
+    [Experimental("AAIP001")]
     public partial class AgentInsightSuspension
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

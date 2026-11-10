@@ -14,7 +14,7 @@ namespace Azure.AI.Projects
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DataGenerationModelOptions"/>. </summary>
-        /// <param name="model"> Base model name used to generate data. For trace and conversation jobs, a nonempty value is required when `generate_test_case_rubric` is true. Conversation jobs also require a nonempty value when `generate_test_case_description` is true. Model options must be omitted for conversation reconstruction when neither description nor rubric generation is enabled. </param>
+        /// <param name="model"> Base model name used to generate data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
         public DataGenerationModelOptions(string model)
         {
@@ -24,7 +24,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Initializes a new instance of <see cref="DataGenerationModelOptions"/>. </summary>
-        /// <param name="model"> Base model name used to generate data. For trace and conversation jobs, a nonempty value is required when `generate_test_case_rubric` is true. Conversation jobs also require a nonempty value when `generate_test_case_description` is true. Model options must be omitted for conversation reconstruction when neither description nor rubric generation is enabled. </param>
+        /// <param name="model"> Base model name used to generate data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal DataGenerationModelOptions(string model, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -32,7 +32,7 @@ namespace Azure.AI.Projects
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Base model name used to generate data. For trace and conversation jobs, a nonempty value is required when `generate_test_case_rubric` is true. Conversation jobs also require a nonempty value when `generate_test_case_description` is true. Model options must be omitted for conversation reconstruction when neither description nor rubric generation is enabled. </summary>
+        /// <summary> Base model name used to generate data. </summary>
         public string Model { get; set; }
     }
 }

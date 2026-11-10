@@ -7,8 +7,8 @@ using System.Threading;
 
 namespace Azure.AI.Projects.Agents;
 
-[CodeGenSuppress("GetAll", typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(AgentOptimizationJobStatus?), typeof(string), typeof(CancellationToken))]
-[CodeGenSuppress("GetAllAsync", typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(AgentOptimizationJobStatus?), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("GetAll", typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(AgentsJobStatus?), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("GetAllAsync", typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(AgentsJobStatus?), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetAll", typeof(int?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetAllAsync", typeof(int?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 public partial class AgentOptimizationJobs
@@ -36,9 +36,9 @@ public partial class AgentOptimizationJobs
     /// <param name="agentName"> Filter to jobs targeting this agent name. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<AgentOptimizationJob> GetAll(int? limit = default, AgentListOrder? order = default, string after = default, string before = default, AgentOptimizationJobStatus? status = default, string agentName = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<AgentOptimizationJob> GetAll(int? limit = default, AgentListOrder? order = default, string after = default, string before = default, AgentsJobStatus? status = default, string agentName = default, CancellationToken cancellationToken = default)
     {
-        status ??= new AgentOptimizationJobStatus("undefined");
+        status ??= new AgentsJobStatus("undefined");
         return new InternalOpenAICollectionResultOfT<AgentOptimizationJob>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
@@ -78,9 +78,9 @@ public partial class AgentOptimizationJobs
     /// <param name="agentName"> Filter to jobs targeting this agent name. </param>
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<AgentOptimizationJob> GetAllAsync(int? limit = default, AgentListOrder? order = default, string after = default, string before = default, AgentOptimizationJobStatus? status = default, string agentName = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<AgentOptimizationJob> GetAllAsync(int? limit = default, AgentListOrder? order = default, string after = default, string before = default, AgentsJobStatus? status = default, string agentName = default, CancellationToken cancellationToken = default)
     {
-        status ??= new AgentOptimizationJobStatus("undefined");
+        status ??= new AgentsJobStatus("undefined");
         return new InternalOpenAIAsyncCollectionResultOfT<AgentOptimizationJob>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)

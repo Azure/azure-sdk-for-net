@@ -79,11 +79,6 @@ namespace Azure.AI.Projects.Evaluation
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("connection_name"u8);
             writer.WriteStringValue(ConnectionName);
-            if (Optional.IsDefined(SchemaVersion))
-            {
-                writer.WritePropertyName("schema_version"u8);
-                writer.WriteStringValue(SchemaVersion.Value.ToString());
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -117,7 +112,6 @@ namespace Azure.AI.Projects.Evaluation
             IDictionary<string, EvaluatorMetric> metrics = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string connectionName = default;
-            EndpointEvaluatorSchemaVersion? schemaVersion = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -162,15 +156,6 @@ namespace Azure.AI.Projects.Evaluation
                     connectionName = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("schema_version"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    schemaVersion = new EndpointEvaluatorSchemaVersion(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -182,8 +167,7 @@ namespace Azure.AI.Projects.Evaluation
                 dataSchema,
                 metrics ?? new ChangeTrackingDictionary<string, EvaluatorMetric>(),
                 additionalBinaryDataProperties,
-                connectionName,
-                schemaVersion);
+                connectionName);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// Base candidate output. Job types define derived output models with their own fields.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentOptimizationAgentCandidateOutput"/>, <see cref="AgentOptimizationPromptCandidateOutput"/>, and <see cref="AgentOptimizationSkillCandidateOutput"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentOptimizationAgentCandidateOutput"/> and <see cref="AgentOptimizationPromptCandidateOutput"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAgentOptimizationCandidateOutput))]
     public abstract partial class AgentOptimizationCandidateOutput : IJsonModel<AgentOptimizationCandidateOutput>
@@ -130,8 +130,6 @@ namespace Azure.AI.Projects.Agents
                         return AgentOptimizationAgentCandidateOutput.DeserializeAgentOptimizationAgentCandidateOutput(element, options);
                     case "prompt_optimization":
                         return AgentOptimizationPromptCandidateOutput.DeserializeAgentOptimizationPromptCandidateOutput(element, options);
-                    case "skill_optimization":
-                        return AgentOptimizationSkillCandidateOutput.DeserializeAgentOptimizationSkillCandidateOutput(element, options);
                 }
             }
             return UnknownAgentOptimizationCandidateOutput.DeserializeUnknownAgentOptimizationCandidateOutput(element, options);

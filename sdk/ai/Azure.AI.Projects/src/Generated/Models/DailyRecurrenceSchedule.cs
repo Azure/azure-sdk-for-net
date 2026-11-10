@@ -4,29 +4,24 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Projects;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Daily recurrence schedule. </summary>
+    [Experimental("AAIP001")]
     public partial class DailyRecurrenceSchedule : RecurrenceSchedule
     {
         /// <summary> Initializes a new instance of <see cref="DailyRecurrenceSchedule"/>. </summary>
-        public DailyRecurrenceSchedule() : base(RecurrenceType.Daily)
-        {
-            Hours = new ChangeTrackingList<int>();
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DailyRecurrenceSchedule"/>. </summary>
         /// <param name="type"> Recurrence type for the recurrence schedule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="hours"> Hours for the recurrence schedule. If omitted, the service uses the current UTC hour when the schedule is created. </param>
+        /// <param name="hours"> Hours for the recurrence schedule. </param>
         internal DailyRecurrenceSchedule(RecurrenceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<int> hours) : base(@type, additionalBinaryDataProperties)
         {
             Hours = hours;
         }
 
-        /// <summary> Hours for the recurrence schedule. If omitted, the service uses the current UTC hour when the schedule is created. </summary>
+        /// <summary> Hours for the recurrence schedule. </summary>
         public IList<int> Hours { get; }
     }
 }

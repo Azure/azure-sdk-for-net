@@ -4,7 +4,6 @@
 
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
@@ -249,7 +248,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateGetInsightsRequest(string monitorId, string after, string before, int? limit, string order, IEnumerable<string> categories, IEnumerable<AgentInsightSeverity> severities, IEnumerable<AgentInsightStatus> statuses, bool? includeDetails, RequestOptions options)
+        internal PipelineMessage CreateGetInsightsRequest(string monitorId, string after, string before, int? limit, string order, string category, string severity, string status, bool? includeDetails, RequestOptions options)
         {
             ClientUriBuilder uri = new ClientUriBuilder();
             uri.Reset(_endpoint);
@@ -272,17 +271,17 @@ namespace Azure.AI.Projects
             {
                 uri.AppendQuery("order", order, true);
             }
-            if (categories != null && !(categories is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            if (category != null)
             {
-                uri.AppendQueryDelimited("categories", categories, ",", escape: true);
+                uri.AppendQuery("category", category, true);
             }
-            if (severities != null && !(severities is ChangeTrackingList<AgentInsightSeverity> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            if (severity != null)
             {
-                uri.AppendQueryDelimited("severities", severities, ",", escape: true);
+                uri.AppendQuery("severity", severity, true);
             }
-            if (statuses != null && !(statuses is ChangeTrackingList<AgentInsightStatus> changeTrackingList1 && changeTrackingList1.IsUndefined))
+            if (status != null)
             {
-                uri.AppendQueryDelimited("statuses", statuses, ",", escape: true);
+                uri.AppendQuery("status", status, true);
             }
             if (includeDetails != null)
             {

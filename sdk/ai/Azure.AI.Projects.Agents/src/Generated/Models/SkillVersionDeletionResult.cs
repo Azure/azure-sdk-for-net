@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents
 {
     /// <summary> A deleted skill version. </summary>
+    [Experimental("AAIP001")]
     public partial class SkillVersionDeletionResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

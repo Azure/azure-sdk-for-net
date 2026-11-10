@@ -4,9 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
@@ -17,56 +14,27 @@ namespace Azure.AI.Projects.Evaluation
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EvaluatorGenerationInputs"/>. </summary>
-        /// <param name="sources"> Source materials for generation. Safety generation requires a nonempty prompt source for the objective and at least one agent or trace source for application context. An arbitrary dataset cannot replace safety application context. Ordinary generation keeps its existing supported sources. </param>
-        /// <param name="evaluatorName"> The evaluator name (immutable identifier). 1-256 characters; allowed characters are ASCII letters, digits, underscore (`_`), period (`.`), tilde (`~`), and hyphen (`-`). The prefix `builtin.` is reserved for system-managed evaluators and is rejected by the service. If an evaluator with this name already exists in the project (and is rubric-subtype), the service creates a new version under the same name and uses the prior version's `dimensions` as context for incremental improvement (foundation of the post-//build adaptive loop). Old versions remain queryable via `get_version(name, version)`. If the existing evaluator is not a rubric-subtype evaluator (built-in, prompt-based, code-based), the request is rejected with `400 Bad Request`. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sources"/> or <paramref name="evaluatorName"/> is null. </exception>
-#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
-        public EvaluatorGenerationInputs(IEnumerable<EvaluatorGenerationJobSource> sources, string evaluatorName)
-        {
-            Argument.AssertNotNull(sources, nameof(sources));
-            Argument.AssertNotNull(evaluatorName, nameof(evaluatorName));
-
-            Sources = sources.ToList();
-            EvaluatorName = evaluatorName;
-            Dimensions = new ChangeTrackingList<EvaluationsDimension>();
-        }
-#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
-
-        /// <summary> Initializes a new instance of <see cref="EvaluatorGenerationInputs"/>. </summary>
-        /// <param name="sources"> Source materials for generation. Safety generation requires a nonempty prompt source for the objective and at least one agent or trace source for application context. An arbitrary dataset cannot replace safety application context. Ordinary generation keeps its existing supported sources. </param>
-        /// <param name="category"> Generation intent. Omission preserves the existing quality path. Explicitly select safety for safety generation and regeneration. Safety output uses Boolean scoring, allowed classifications, and two named violation metrics. </param>
-        /// <param name="model"> The caller's model for quality rubric generation (e.g., 'gpt-4o'). Required by the service when category is quality or omitted. Safety generation and regeneration use centrally managed red teaming simulation capacity, ignore this field when supplied, and do not fall back to caller capacity. Safety rubric scoring separately uses centrally managed red teaming evaluator capacity. </param>
+        /// <param name="sources"> Source materials for generation — agent descriptions, prompts, traces, or datasets. Each entry is an `EvaluatorGenerationJobSource` variant discriminated by `type`. </param>
+        /// <param name="model"> The LLM model to use for rubric generation (e.g., 'gpt-4o'). Required — users must provide their own model rather than relying on service-owned capacity. </param>
         /// <param name="evaluatorName"> The evaluator name (immutable identifier). 1-256 characters; allowed characters are ASCII letters, digits, underscore (`_`), period (`.`), tilde (`~`), and hyphen (`-`). The prefix `builtin.` is reserved for system-managed evaluators and is rejected by the service. If an evaluator with this name already exists in the project (and is rubric-subtype), the service creates a new version under the same name and uses the prior version's `dimensions` as context for incremental improvement (foundation of the post-//build adaptive loop). Old versions remain queryable via `get_version(name, version)`. If the existing evaluator is not a rubric-subtype evaluator (built-in, prompt-based, code-based), the request is rejected with `400 Bad Request`. </param>
         /// <param name="evaluatorDisplayName"> Optional human-friendly display name for the resulting evaluator. Surfaced as `EvaluatorVersion.display_name` on the persisted evaluator. When omitted, the service uses `evaluator_name` as the display name. The `evaluator_` prefix disambiguates this from the immutable `evaluator_name` identifier. </param>
         /// <param name="description"> Optional human-friendly description for the resulting evaluator. Surfaced as `EvaluatorVersion.description` on the persisted evaluator. Typically collected from the UI alongside `evaluator_display_name`. The `evaluator_` prefix disambiguates this from any other description fields on related models. </param>
-        /// <param name="scoring"> Scoring choices for the generated evaluator. For quality, supplied scoring defaults to Likert; omitted weights on first creation yield equal contribution, and regeneration preserves saved choices. Omitting scoring preserves existing quality generation behavior. Safety generation resolves omitted scoring to Boolean and rejects a conflicting supplied mode; its dimensions use allowed rather than weights and its two metric results are not combined. </param>
-        /// <param name="passThreshold"> Optional normalized Likert threshold: omission uses 0.5 for fresh generation and inherits the saved threshold on regeneration. For ordinary Boolean generation, omit this field or set it to 1; other values are rejected and its all-pass threshold is fixed at 1. Safety generation omits this field because its two violation metrics have no overall threshold. </param>
-        /// <param name="dimensions"> Caller-approved dimensions to preserve while generating other checks. Omission preserves prior approved dimensions on regeneration; an explicit list replaces the fixed set. Safety fixed dimensions require an explicit allowed Boolean, omit weights, and preserve classification as part of their policy meaning. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        [Experimental("AAIP001")]
-        internal EvaluatorGenerationInputs(IList<EvaluatorGenerationJobSource> sources, EvaluatorGenerationCategory? category, string model, string evaluatorName, string evaluatorDisplayName, string description, RubricScoring scoring, float? passThreshold, IList<EvaluationsDimension> dimensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluatorGenerationInputs(IList<EvaluatorGenerationJobSource> sources, string model, string evaluatorName, string evaluatorDisplayName, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Sources = sources;
-            Category = category;
             Model = model;
             EvaluatorName = evaluatorName;
             EvaluatorDisplayName = evaluatorDisplayName;
             Description = description;
-            Scoring = scoring;
-            PassThreshold = passThreshold;
-            Dimensions = dimensions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Source materials for generation. Safety generation requires a nonempty prompt source for the objective and at least one agent or trace source for application context. An arbitrary dataset cannot replace safety application context. Ordinary generation keeps its existing supported sources. </summary>
+        /// <summary> Source materials for generation — agent descriptions, prompts, traces, or datasets. Each entry is an `EvaluatorGenerationJobSource` variant discriminated by `type`. </summary>
         public IList<EvaluatorGenerationJobSource> Sources { get; }
 
-        /// <summary> Generation intent. Omission preserves the existing quality path. Explicitly select safety for safety generation and regeneration. Safety output uses Boolean scoring, allowed classifications, and two named violation metrics. </summary>
-        [Experimental("AAIP001")]
-        public EvaluatorGenerationCategory? Category { get; set; }
-
-        /// <summary> The caller's model for quality rubric generation (e.g., 'gpt-4o'). Required by the service when category is quality or omitted. Safety generation and regeneration use centrally managed red teaming simulation capacity, ignore this field when supplied, and do not fall back to caller capacity. Safety rubric scoring separately uses centrally managed red teaming evaluator capacity. </summary>
-        public string Model { get; set; }
+        /// <summary> The LLM model to use for rubric generation (e.g., 'gpt-4o'). Required — users must provide their own model rather than relying on service-owned capacity. </summary>
+        public string Model { get; }
 
         /// <summary> The evaluator name (immutable identifier). 1-256 characters; allowed characters are ASCII letters, digits, underscore (`_`), period (`.`), tilde (`~`), and hyphen (`-`). The prefix `builtin.` is reserved for system-managed evaluators and is rejected by the service. If an evaluator with this name already exists in the project (and is rubric-subtype), the service creates a new version under the same name and uses the prior version's `dimensions` as context for incremental improvement (foundation of the post-//build adaptive loop). Old versions remain queryable via `get_version(name, version)`. If the existing evaluator is not a rubric-subtype evaluator (built-in, prompt-based, code-based), the request is rejected with `400 Bad Request`. </summary>
         public string EvaluatorName { get; }
@@ -76,15 +44,5 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Optional human-friendly description for the resulting evaluator. Surfaced as `EvaluatorVersion.description` on the persisted evaluator. Typically collected from the UI alongside `evaluator_display_name`. The `evaluator_` prefix disambiguates this from any other description fields on related models. </summary>
         public string Description { get; set; }
-
-        /// <summary> Scoring choices for the generated evaluator. For quality, supplied scoring defaults to Likert; omitted weights on first creation yield equal contribution, and regeneration preserves saved choices. Omitting scoring preserves existing quality generation behavior. Safety generation resolves omitted scoring to Boolean and rejects a conflicting supplied mode; its dimensions use allowed rather than weights and its two metric results are not combined. </summary>
-        [Experimental("AAIP001")]
-        public RubricScoring Scoring { get; set; }
-
-        /// <summary> Optional normalized Likert threshold: omission uses 0.5 for fresh generation and inherits the saved threshold on regeneration. For ordinary Boolean generation, omit this field or set it to 1; other values are rejected and its all-pass threshold is fixed at 1. Safety generation omits this field because its two violation metrics have no overall threshold. </summary>
-        public float? PassThreshold { get; set; }
-
-        /// <summary> Caller-approved dimensions to preserve while generating other checks. Omission preserves prior approved dimensions on regeneration; an explicit list replaces the fixed set. Safety fixed dimensions require an explicit allowed Boolean, omit weights, and preserve classification as part of their policy meaning. </summary>
-        public IList<EvaluationsDimension> Dimensions { get; }
     }
 }

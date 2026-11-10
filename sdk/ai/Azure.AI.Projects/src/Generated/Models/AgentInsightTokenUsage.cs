@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Token usage for an Agent Insights run. </summary>
+    [Experimental("AAIP001")]
     public partial class AgentInsightTokenUsage
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

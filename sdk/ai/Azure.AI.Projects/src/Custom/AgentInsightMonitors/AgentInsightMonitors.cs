@@ -5,6 +5,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 using Azure.AI.Projects.Memory;
 
@@ -19,10 +20,10 @@ namespace Azure.AI.Projects;
 [CodeGenSuppress("GetRunsAsync", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(MemoryStoreListOrder?), typeof(ProjectsJobStatus?), typeof(AgentInsightRunTrigger?), typeof(CancellationToken))]
 [CodeGenSuppress("GetRuns", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetRunsAsync", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
-[CodeGenSuppress("GetInsights", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(MemoryStoreListOrder?), typeof(IEnumerable<string>), typeof(IEnumerable<AgentInsightSeverity>), typeof(IEnumerable<AgentInsightStatus>), typeof(bool?), typeof(CancellationToken))]
-[CodeGenSuppress("GetInsightsAsync", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(MemoryStoreListOrder?), typeof(IEnumerable<string>), typeof(IEnumerable<AgentInsightSeverity>), typeof(IEnumerable<AgentInsightStatus>), typeof(bool?), typeof(CancellationToken))]
-[CodeGenSuppress("GetInsights", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(IEnumerable<string>), typeof(IEnumerable<AgentInsightSeverity>), typeof(IEnumerable<AgentInsightStatus>), typeof(bool?), typeof(RequestOptions))]
-[CodeGenSuppress("GetInsightsAsync", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(IEnumerable<string>), typeof(IEnumerable<AgentInsightSeverity>), typeof(IEnumerable<AgentInsightStatus>), typeof(bool?), typeof(RequestOptions))]
+[CodeGenSuppress("GetInsights", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(MemoryStoreListOrder?), typeof(string), typeof(AgentInsightSeverity?), typeof(AgentInsightStatus?), typeof(bool?), typeof(CancellationToken))]
+[CodeGenSuppress("GetInsightsAsync", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(MemoryStoreListOrder?), typeof(string), typeof(AgentInsightSeverity?), typeof(AgentInsightStatus?), typeof(bool?), typeof(CancellationToken))]
+[CodeGenSuppress("GetInsights", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(RequestOptions))]
+[CodeGenSuppress("GetInsightsAsync", typeof(string), typeof(string), typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(string), typeof(bool?), typeof(RequestOptions))]
 public partial class AgentInsightMonitors
 {
     /// <summary> List Agent Insights monitors, optionally filtered by agent name. </summary>
@@ -135,7 +136,17 @@ public partial class AgentInsightMonitors
     /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<AgentInsight> GetInsights(string monitorId, string after = default, string before = default, int? limit = default, MemoryStoreListOrder? order = default, IEnumerable<string> categories = default, IEnumerable<AgentInsightSeverity> severities = default, IEnumerable<AgentInsightStatus> statuses = default, bool? includeDetails = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<AgentInsight> GetInsights(
+        string monitorId,
+        string after = default,
+        string before = default,
+        int? limit = default,
+        MemoryStoreListOrder? order = default,
+        IEnumerable<string> categories = default,
+        IEnumerable<AgentInsightSeverity> severities = default,
+        IEnumerable<AgentInsightStatus> statuses = default,
+        bool? includeDetails = default,
+        CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
 
@@ -146,9 +157,9 @@ public partial class AgentInsightMonitors
             before: before,
             limit: limit,
             order: order?.ToString(),
-            categories: categories,
-            severities: severities,
-            statuses: statuses,
+            category: categories == null ? null : string.Join(",", categories),
+            severity: severities == null ? null : string.Join(",", severities.Select(value => value.ToString())),
+            status: statuses == null ? null : string.Join(",", statuses.Select(value => value.ToString())),
             includeDetails: includeDetails,
             options: cancellationToken.ToRequestOptions());
     }
@@ -167,7 +178,17 @@ public partial class AgentInsightMonitors
     /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual AsyncCollectionResult<AgentInsight> GetInsightsAsync(string monitorId, string after = default, string before = default, int? limit = default, MemoryStoreListOrder? order = default, IEnumerable<string> categories = default, IEnumerable<AgentInsightSeverity> severities = default, IEnumerable<AgentInsightStatus> statuses = default, bool? includeDetails = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<AgentInsight> GetInsightsAsync(
+        string monitorId,
+        string after = default,
+        string before = default,
+        int? limit = default,
+        MemoryStoreListOrder? order = default,
+        IEnumerable<string> categories = default,
+        IEnumerable<AgentInsightSeverity> severities = default,
+        IEnumerable<AgentInsightStatus> statuses = default,
+        bool? includeDetails = default,
+        CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
 
@@ -178,9 +199,9 @@ public partial class AgentInsightMonitors
             before: before,
             limit: limit,
             order: order?.ToString(),
-            categories: categories,
-            severities: severities,
-            statuses: statuses,
+            category: categories == null ? null : string.Join(",", categories),
+            severity: severities == null ? null : string.Join(",", severities.Select(value => value.ToString())),
+            status: statuses == null ? null : string.Join(",", statuses.Select(value => value.ToString())),
             includeDetails: includeDetails,
             options: cancellationToken.ToRequestOptions());
     }

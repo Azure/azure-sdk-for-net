@@ -1016,12 +1016,12 @@ public class AgentsTests : AgentsTestBase
         Assert.That(submittedJob1.Id, Is.EqualTo(prevID));
         // Get
         submittedJob1 = await jobsClient.GetAsync(submittedJob1.Id, cancellationToken: default);
-        while (submittedJob1.Status != AgentOptimizationJobStatus.Failed && submittedJob1.Status != AgentOptimizationJobStatus.Succeeded && submittedJob1.Status != AgentOptimizationJobStatus.Cancelled && submittedJob1.Status != AgentOptimizationJobStatus.Skipped)
+        while (submittedJob1.Status != AgentsJobStatus.Failed && submittedJob1.Status != AgentsJobStatus.Succeeded && submittedJob1.Status != AgentsJobStatus.Cancelled)
         {
             await Delay();
             submittedJob1 = await jobsClient.GetAsync(submittedJob1.Id, cancellationToken: default);
         }
-        Assert.That(submittedJob1.Status, Is.EqualTo(AgentOptimizationJobStatus.Succeeded), submittedJob1.Error?.Message);
+        Assert.That(submittedJob1.Status, Is.EqualTo(AgentsJobStatus.Succeeded), submittedJob1.Error?.Message);
         List<AgentOptimizationCandidate> candidates = await candidatesClient.GetCandidatesAsync(jobId: submittedJob1.Id, expand: [AgentOptimizationCandidateExpand.Mutations]).ToListAsync();
         Assert.That(candidates.Count, Is.GreaterThanOrEqualTo(1));
         // Cancel
@@ -1029,12 +1029,12 @@ public class AgentsTests : AgentsTestBase
         AgentOptimizationJob submittedJob2 = (await jobOperation.UpdateStatusAsync()).ToProjectAgentsResult<AgentOptimizationJob>();
         Assert.That(submittedJob2.Id, Is.Not.EqualTo(submittedJob1.Id));
         AgentOptimizationJob cancelledJob = await jobsClient.CancelAsync(jobId: submittedJob2.Id, cancellationToken: default);
-        while (cancelledJob.Status != AgentOptimizationJobStatus.Failed && cancelledJob.Status != AgentOptimizationJobStatus.Succeeded && cancelledJob.Status != AgentOptimizationJobStatus.Cancelled && cancelledJob.Status != AgentOptimizationJobStatus.Skipped)
+        while (cancelledJob.Status != AgentsJobStatus.Failed && cancelledJob.Status != AgentsJobStatus.Succeeded && cancelledJob.Status != AgentsJobStatus.Cancelled)
         {
             await Delay();
             cancelledJob = (await jobOperation.UpdateStatusAsync()).ToProjectAgentsResult<AgentOptimizationJob>();
         }
-        Assert.That(cancelledJob.Status, Is.EqualTo(AgentOptimizationJobStatus.Cancelled));
+        Assert.That(cancelledJob.Status, Is.EqualTo(AgentsJobStatus.Cancelled));
         // List
         HashSet<string> jobIds = [.. await jobsClient.GetAllAsync().Select(x => x.Id).ToListAsync()];
         Assert.That(jobIds, Does.Contain(submittedJob1.Id));
