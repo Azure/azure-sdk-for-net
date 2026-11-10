@@ -29,13 +29,13 @@ namespace Azure.Data.AI
         /// </param>
         /// <param name="model"> The name of the model used for the semantic reranking operation. </param>
         /// <param name="returnSentenceScore"> Whether to return sentence-level scores in the response. </param>
-        /// <returns> A new <see cref="AI.SemanticRerankingOptions"/> instance for mocking. </returns>
-        public static SemanticRerankingOptions SemanticRerankingOptions(string query = default, IEnumerable<string> documents = default, bool? returnDocuments = default, int? topK = default, int? batchSize = default, bool? sort = default, SemanticRerankingDocumentType? documentType = default, IEnumerable<string> targetPaths = default, string model = default, bool? returnSentenceScore = default)
+        /// <returns> A new <see cref="AI.SemanticRerankingContent"/> instance for mocking. </returns>
+        public static SemanticRerankingContent SemanticRerankingContent(string query = default, IEnumerable<string> documents = default, bool? returnDocuments = default, int? topK = default, int? batchSize = default, bool? sort = default, SemanticRerankingDocumentType? documentType = default, IEnumerable<string> targetPaths = default, string model = default, bool? returnSentenceScore = default)
         {
             documents ??= new ChangeTrackingList<string>();
             targetPaths ??= new ChangeTrackingList<string>();
 
-            return new SemanticRerankingOptions(
+            return new SemanticRerankingContent(
                 query,
                 documents.ToList(),
                 returnDocuments,
@@ -193,7 +193,7 @@ namespace Azure.Data.AI
         public static MultimodalDenseEmbedding MultimodalDenseEmbedding(int index = default, string id = default, EmbeddingContentKind contentKind = default, int? width = default, int? height = default, EmbeddingImageFormat? format = default, long? tokens = default, long? visualTokens = default, bool? truncated = default, long? inputTokens = default, BinaryData embedding = default)
         {
             return new MultimodalDenseEmbedding(
-                EmbeddingDataType.MultimodalDense,
+                EmbeddingDataKind.MultimodalDense,
                 index,
                 id,
                 additionalBinaryDataProperties: null,
@@ -237,7 +237,7 @@ namespace Azure.Data.AI
             shape ??= new ChangeTrackingList<int>();
 
             return new MultimodalMultiVectorEmbedding(
-                EmbeddingDataType.MultimodalMultiVector,
+                EmbeddingDataKind.MultimodalMultiVector,
                 index,
                 id,
                 additionalBinaryDataProperties: null,
@@ -286,7 +286,7 @@ namespace Azure.Data.AI
             shape ??= new ChangeTrackingList<int>();
 
             return new MultimodalDenseAndMultiVectorEmbedding(
-                EmbeddingDataType.MultimodalDenseAndMultiVector,
+                EmbeddingDataKind.MultimodalDenseAndMultiVector,
                 index,
                 id,
                 additionalBinaryDataProperties: null,
@@ -319,7 +319,7 @@ namespace Azure.Data.AI
         public static MultimodalEmbeddingUsage MultimodalEmbeddingUsage(long? promptTokens = default, long? totalTokens = default, long? textTokens = default, int imageCount = default, long? visualTokens = default)
         {
             return new MultimodalEmbeddingUsage(
-                EmbeddingUsageType.Multimodal,
+                EmbeddingUsageKind.Multimodal,
                 promptTokens,
                 totalTokens,
                 additionalBinaryDataProperties: null,

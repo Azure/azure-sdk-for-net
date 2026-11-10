@@ -21,14 +21,14 @@ namespace Azure.Data.AI
         /// The vector: an array of numbers, or, when `encodingFormat` is `base64`, a base64 string of its little-endian
         /// `outputDataKind` values.
         /// </param>
-        internal MultimodalDenseEmbedding(int index, EmbeddingContentKind contentKind, BinaryData embedding) : base(EmbeddingDataType.MultimodalDense, index)
+        internal MultimodalDenseEmbedding(int index, EmbeddingContentKind contentKind, BinaryData embedding) : base(EmbeddingDataKind.MultimodalDense, index)
         {
             ContentKind = contentKind;
             Embedding = embedding;
         }
 
         /// <summary> Initializes a new instance of <see cref="MultimodalDenseEmbedding"/>. </summary>
-        /// <param name="type"> The embedding implementation that produced this item. </param>
+        /// <param name="kind"> The embedding implementation that produced this item. </param>
         /// <param name="index"> The zero-based position of the item in the request. </param>
         /// <param name="id"> The item's `id` from the request, if it had one. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -46,12 +46,12 @@ namespace Azure.Data.AI
         /// `EMBEDDING_INPUT_TRUNCATED` entry for it. Omitted otherwise.
         /// </param>
         /// <param name="inputTokens"> For truncated items only: the item's tokens before truncation. </param>
-        /// <param name="kind"> The kind of vectors returned. </param>
+        /// <param name="vectorKind"> The kind of vectors returned. </param>
         /// <param name="embedding">
         /// The vector: an array of numbers, or, when `encodingFormat` is `base64`, a base64 string of its little-endian
         /// `outputDataKind` values.
         /// </param>
-        internal MultimodalDenseEmbedding(EmbeddingDataType @type, int index, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, EmbeddingContentKind contentKind, int? width, int? height, EmbeddingImageFormat? format, long? tokens, long? visualTokens, bool? truncated, long? inputTokens, EmbeddingVectorKind kind, BinaryData embedding) : base(@type, index, id, additionalBinaryDataProperties)
+        internal MultimodalDenseEmbedding(EmbeddingDataKind kind, int index, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, EmbeddingContentKind contentKind, int? width, int? height, EmbeddingImageFormat? format, long? tokens, long? visualTokens, bool? truncated, long? inputTokens, EmbeddingVectorKind vectorKind, BinaryData embedding) : base(kind, index, id, additionalBinaryDataProperties)
         {
             ContentKind = contentKind;
             Width = width;
@@ -61,7 +61,7 @@ namespace Azure.Data.AI
             VisualTokens = visualTokens;
             Truncated = truncated;
             InputTokens = inputTokens;
-            Kind = kind;
+            VectorKind = vectorKind;
             Embedding = embedding;
         }
 
@@ -96,7 +96,7 @@ namespace Azure.Data.AI
         public long? InputTokens { get; }
 
         /// <summary> The kind of vectors returned. </summary>
-        public EmbeddingVectorKind Kind { get; } = "dense";
+        public EmbeddingVectorKind VectorKind { get; } = "dense";
 
         /// <summary>
         /// The vector: an array of numbers, or, when `encodingFormat` is `base64`, a base64 string of its little-endian

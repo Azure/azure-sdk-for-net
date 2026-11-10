@@ -54,7 +54,7 @@ namespace Azure.Data.AI.Tests
                 options);
 
             await client.SemanticRerankAsync(
-                new SemanticRerankingOptions("query", new[] { "document" }));
+                new SemanticRerankingContent("query", new[] { "document" }));
         }
 
         // InferenceClientSettings and the settings-based constructor are gated behind
@@ -87,7 +87,7 @@ namespace Azure.Data.AI.Tests
             var client = new InferenceClient(settings);
 
             await client.SemanticRerankAsync(
-                new SemanticRerankingOptions("query", new[] { "document" }));
+                new SemanticRerankingContent("query", new[] { "document" }));
         }
 
         [Test]
@@ -143,13 +143,13 @@ namespace Azure.Data.AI.Tests
         public void RequestRequiresQuery()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                new SemanticRerankingOptions(null, new[] { "document" }));
+                new SemanticRerankingContent(null, new[] { "document" }));
         }
 
         [Test]
         public void RequestSerializesSentenceScoreOption()
         {
-            var request = new SemanticRerankingOptions("query", new[] { "document" })
+            var request = new SemanticRerankingContent("query", new[] { "document" })
             {
                 ReturnDocuments = true,
                 ReturnSentenceScore = true

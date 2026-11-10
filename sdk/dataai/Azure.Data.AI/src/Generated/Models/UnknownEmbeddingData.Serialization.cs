@@ -105,15 +105,15 @@ namespace Azure.Data.AI
             {
                 return null;
             }
-            EmbeddingDataType @type = default;
+            EmbeddingDataKind kind = default;
             int index = default;
             string id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("type"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    @type = new EmbeddingDataType(prop.Value.GetString());
+                    kind = new EmbeddingDataKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("index"u8))
@@ -131,7 +131,7 @@ namespace Azure.Data.AI
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UnknownEmbeddingData(@type, index, id, additionalBinaryDataProperties);
+            return new UnknownEmbeddingData(kind, index, id, additionalBinaryDataProperties);
         }
     }
 }

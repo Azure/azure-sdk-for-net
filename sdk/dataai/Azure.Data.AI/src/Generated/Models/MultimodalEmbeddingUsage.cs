@@ -15,13 +15,13 @@ namespace Azure.Data.AI
     {
         /// <summary> Initializes a new instance of <see cref="MultimodalEmbeddingUsage"/>. </summary>
         /// <param name="imageCount"> The number of images embedded. </param>
-        internal MultimodalEmbeddingUsage(int imageCount) : base(EmbeddingUsageType.Multimodal)
+        internal MultimodalEmbeddingUsage(int imageCount) : base(EmbeddingUsageKind.Multimodal)
         {
             ImageCount = imageCount;
         }
 
         /// <summary> Initializes a new instance of <see cref="MultimodalEmbeddingUsage"/>. </summary>
-        /// <param name="type"> The embedding implementation that reported this usage. </param>
+        /// <param name="kind"> The embedding implementation that reported this usage. </param>
         /// <param name="promptTokens"> The number of input tokens. </param>
         /// <param name="totalTokens"> The total number of tokens. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -33,7 +33,7 @@ namespace Azure.Data.AI
         /// </param>
         /// <param name="imageCount"> The number of images embedded. </param>
         /// <param name="visualTokens"> The number of tokens the images produced. </param>
-        internal MultimodalEmbeddingUsage(EmbeddingUsageType @type, long? promptTokens, long? totalTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? textTokens, int imageCount, long? visualTokens) : base(@type, promptTokens, totalTokens, additionalBinaryDataProperties)
+        internal MultimodalEmbeddingUsage(EmbeddingUsageKind kind, long? promptTokens, long? totalTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? textTokens, int imageCount, long? visualTokens) : base(kind, promptTokens, totalTokens, additionalBinaryDataProperties)
         {
             TextTokens = textTokens;
             ImageCount = imageCount;

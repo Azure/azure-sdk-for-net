@@ -116,8 +116,8 @@ namespace Azure.Data.AI
                 writer.WritePropertyName("inputTokens"u8);
                 writer.WriteNumberValue(InputTokens.Value);
             }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            writer.WritePropertyName("vectorKind"u8);
+            writer.WriteStringValue(VectorKind.ToString());
             writer.WritePropertyName("shape"u8);
             writer.WriteStartArray();
             foreach (int item in Shape)
@@ -154,7 +154,7 @@ namespace Azure.Data.AI
             {
                 return null;
             }
-            EmbeddingDataType @type = default;
+            EmbeddingDataKind kind = default;
             int index = default;
             string id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -166,14 +166,14 @@ namespace Azure.Data.AI
             long? visualTokens = default;
             bool? truncated = default;
             long? inputTokens = default;
-            EmbeddingVectorKind kind = default;
+            EmbeddingVectorKind vectorKind = default;
             IList<int> shape = default;
             BinaryData multiEmbedding = default;
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("type"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    @type = new EmbeddingDataType(prop.Value.GetString());
+                    kind = new EmbeddingDataKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("index"u8))
@@ -254,9 +254,9 @@ namespace Azure.Data.AI
                     inputTokens = prop.Value.GetInt64();
                     continue;
                 }
-                if (prop.NameEquals("kind"u8))
+                if (prop.NameEquals("vectorKind"u8))
                 {
-                    kind = new EmbeddingVectorKind(prop.Value.GetString());
+                    vectorKind = new EmbeddingVectorKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("shape"u8))
@@ -280,7 +280,7 @@ namespace Azure.Data.AI
                 }
             }
             return new MultimodalMultiVectorEmbedding(
-                @type,
+                kind,
                 index,
                 id,
                 additionalBinaryDataProperties,
@@ -292,7 +292,7 @@ namespace Azure.Data.AI
                 visualTokens,
                 truncated,
                 inputTokens,
-                kind,
+                vectorKind,
                 shape ?? new ChangeTrackingList<int>(),
                 multiEmbedding);
         }

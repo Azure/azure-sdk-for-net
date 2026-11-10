@@ -81,8 +81,8 @@ namespace Azure.Data.AI
             {
                 throw new FormatException($"The model {nameof(EmbeddingItem)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("index"u8);
             writer.WriteNumberValue(Index);
             if (Optional.IsDefined(Id))
@@ -132,7 +132,7 @@ namespace Azure.Data.AI
             {
                 return null;
             }
-            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
+            if (element.TryGetProperty("kind"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {

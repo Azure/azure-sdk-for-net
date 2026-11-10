@@ -20,29 +20,29 @@ namespace Azure.Data.AI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EmbeddingItem"/>. </summary>
-        /// <param name="type"> The embedding implementation that produced this item. </param>
+        /// <param name="kind"> The embedding implementation that produced this item. </param>
         /// <param name="index"> The zero-based position of the item in the request. </param>
-        private protected EmbeddingItem(EmbeddingDataType @type, int index)
+        private protected EmbeddingItem(EmbeddingDataKind kind, int index)
         {
-            Type = @type;
+            Kind = kind;
             Index = index;
         }
 
         /// <summary> Initializes a new instance of <see cref="EmbeddingItem"/>. </summary>
-        /// <param name="type"> The embedding implementation that produced this item. </param>
+        /// <param name="kind"> The embedding implementation that produced this item. </param>
         /// <param name="index"> The zero-based position of the item in the request. </param>
         /// <param name="id"> The item's `id` from the request, if it had one. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EmbeddingItem(EmbeddingDataType @type, int index, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EmbeddingItem(EmbeddingDataKind kind, int index, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            Kind = kind;
             Index = index;
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The embedding implementation that produced this item. </summary>
-        internal EmbeddingDataType Type { get; set; }
+        internal EmbeddingDataKind Kind { get; set; }
 
         /// <summary> The zero-based position of the item in the request. </summary>
         public int Index { get; }

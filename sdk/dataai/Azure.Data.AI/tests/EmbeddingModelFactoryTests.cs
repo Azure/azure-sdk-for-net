@@ -14,7 +14,7 @@ namespace Azure.Data.AI.Tests
         public void ResultRoundTripPreservesObjectWireConstant()
         {
             var result = ModelReaderWriter.Read<EmbeddingResult>(
-                BinaryData.FromString("{\"object\":\"list\",\"model\":\"test-model\",\"modelVersion\":\"v1\",\"outputDataKind\":\"float32\",\"data\":[],\"usage\":{\"type\":\"multimodal\",\"imageCount\":0}}"),
+                BinaryData.FromString("{\"object\":\"list\",\"model\":\"test-model\",\"modelVersion\":\"v1\",\"outputDataKind\":\"float32\",\"data\":[],\"usage\":{\"kind\":\"multimodal\",\"imageCount\":0}}"),
                 ModelReaderWriterOptions.Json,
                 AzureDataAIContext.Default);
 
@@ -49,33 +49,35 @@ namespace Azure.Data.AI.Tests
         {
             var item = kind == null
                 ? InferenceModelFactory.EmbeddingItem(index: 1, id: "item-1")
-                : InferenceModelFactory.EmbeddingItem(type: kind, index: 1, id: "item-1");
+                : InferenceModelFactory.EmbeddingItem(kind: kind, index: 1, id: "item-1");
 
             Assert.That(item.Index, Is.EqualTo(1));
             Assert.That(item.Id, Is.EqualTo("item-1"));
 
             using JsonDocument json = Serialize(item);
 
-            Assert.That(json.RootElement.GetProperty("type").GetString(), Is.EqualTo(kind ?? "unknown"));
+            Assert.That(json.RootElement.GetProperty("kind").GetString(), Is.EqualTo(kind ?? "unknown"));
+            Assert.That(json.RootElement.TryGetProperty("type", out _), Is.False);
             var roundTrip = ModelReaderWriter.Read<EmbeddingItem>(
                 BinaryData.FromString(json.RootElement.GetRawText()),
                 ModelReaderWriterOptions.Json,
                 AzureDataAIContext.Default);
             using JsonDocument roundTripJson = Serialize(roundTrip);
-            Assert.That(roundTripJson.RootElement.GetProperty("type").GetString(), Is.EqualTo(kind ?? "unknown"));
+            Assert.That(roundTripJson.RootElement.GetProperty("kind").GetString(), Is.EqualTo(kind ?? "unknown"));
             Assert.That(roundTrip.Index, Is.EqualTo(1));
             Assert.That(roundTrip.Id, Is.EqualTo("item-1"));
         }
 
         [TestCase(null)]
         [TestCase("future-usage")]
-        public void BaseUsageFactoryAcceptsOptionalDiscriminator(string type)
+        public void BaseUsageFactoryAcceptsOptionalDiscriminator(string kind)
         {
-            var usage = InferenceModelFactory.EmbeddingUsage(type: type, promptTokens: 3, totalTokens: 5);
+            var usage = InferenceModelFactory.EmbeddingUsage(kind: kind, promptTokens: 3, totalTokens: 5);
 
             using JsonDocument json = Serialize(usage);
 
-            Assert.That(json.RootElement.GetProperty("type").GetString(), Is.EqualTo(type ?? "unknown"));
+            Assert.That(json.RootElement.GetProperty("kind").GetString(), Is.EqualTo(kind ?? "unknown"));
+            Assert.That(json.RootElement.TryGetProperty("type", out _), Is.False);
             Assert.That(json.RootElement.GetProperty("promptTokens").GetInt64(), Is.EqualTo(3));
             Assert.That(json.RootElement.GetProperty("totalTokens").GetInt64(), Is.EqualTo(5));
         }
@@ -84,7 +86,7 @@ namespace Azure.Data.AI.Tests
         public void GenericResultRoundTripsFutureImplementations()
         {
             var result = ModelReaderWriter.Read<EmbeddingResult>(
-                BinaryData.FromString("{\"object\":\"list\",\"model\":\"future-model\",\"modelVersion\":\"v2\",\"outputDataKind\":\"float32\",\"data\":[{\"type\":\"text\",\"index\":0,\"id\":\"text-1\",\"embedding\":[1,2],\"customMetadata\":{\"count\":3}}],\"usage\":{\"type\":\"text\",\"promptTokens\":7,\"totalTokens\":9,\"customCount\":2}}"),
+                BinaryData.FromString("{\"object\":\"list\",\"model\":\"future-model\",\"modelVersion\":\"v2\",\"outputDataKind\":\"float32\",\"data\":[{\"kind\":\"text\",\"index\":0,\"id\":\"text-1\",\"embedding\":[1,2],\"customMetadata\":{\"count\":3}}],\"usage\":{\"kind\":\"text\",\"promptTokens\":7,\"totalTokens\":9,\"customCount\":2}}"),
                 ModelReaderWriterOptions.Json,
                 AzureDataAIContext.Default);
 
@@ -97,11 +99,13 @@ namespace Azure.Data.AI.Tests
 
             using JsonDocument json = Serialize(result);
             JsonElement item = json.RootElement.GetProperty("data")[0];
-            Assert.That(item.GetProperty("type").GetString(), Is.EqualTo("text"));
+            Assert.That(item.GetProperty("kind").GetString(), Is.EqualTo("text"));
+            Assert.That(item.TryGetProperty("type", out _), Is.False);
             Assert.That(item.GetProperty("embedding")[1].GetInt32(), Is.EqualTo(2));
             Assert.That(item.GetProperty("customMetadata").GetProperty("count").GetInt32(), Is.EqualTo(3));
             JsonElement usage = json.RootElement.GetProperty("usage");
-            Assert.That(usage.GetProperty("type").GetString(), Is.EqualTo("text"));
+            Assert.That(usage.GetProperty("kind").GetString(), Is.EqualTo("text"));
+            Assert.That(usage.TryGetProperty("type", out _), Is.False);
             Assert.That(usage.GetProperty("customCount").GetInt32(), Is.EqualTo(2));
         }
 
@@ -114,8 +118,9 @@ namespace Azure.Data.AI.Tests
 
             using JsonDocument json = Serialize(item);
 
-            Assert.That(json.RootElement.GetProperty("kind").GetString(), Is.EqualTo("dense"));
-            Assert.That(json.RootElement.GetProperty("type").GetString(), Is.EqualTo("multimodal_dense"));
+            Assert.That(json.RootElement.GetProperty("vectorKind").GetString(), Is.EqualTo("dense"));
+            Assert.That(json.RootElement.GetProperty("kind").GetString(), Is.EqualTo("multimodal_dense"));
+            Assert.That(json.RootElement.TryGetProperty("type", out _), Is.False);
             AssertPayload(json.RootElement, "embedding", embedding);
         }
 
@@ -128,8 +133,9 @@ namespace Azure.Data.AI.Tests
 
             using JsonDocument json = Serialize(item);
 
-            Assert.That(json.RootElement.GetProperty("kind").GetString(), Is.EqualTo("multi"));
-            Assert.That(json.RootElement.GetProperty("type").GetString(), Is.EqualTo("multimodal_multi"));
+            Assert.That(json.RootElement.GetProperty("vectorKind").GetString(), Is.EqualTo("multi"));
+            Assert.That(json.RootElement.GetProperty("kind").GetString(), Is.EqualTo("multimodal_multi"));
+            Assert.That(json.RootElement.TryGetProperty("type", out _), Is.False);
             AssertPayload(json.RootElement, "multiEmbedding", multiEmbedding);
         }
 
@@ -147,8 +153,9 @@ namespace Azure.Data.AI.Tests
 
             using JsonDocument json = Serialize(item);
 
-            Assert.That(json.RootElement.GetProperty("kind").GetString(), Is.EqualTo("dense_multi"));
-            Assert.That(json.RootElement.GetProperty("type").GetString(), Is.EqualTo("multimodal_dense_multi"));
+            Assert.That(json.RootElement.GetProperty("vectorKind").GetString(), Is.EqualTo("dense_multi"));
+            Assert.That(json.RootElement.GetProperty("kind").GetString(), Is.EqualTo("multimodal_dense_multi"));
+            Assert.That(json.RootElement.TryGetProperty("type", out _), Is.False);
             AssertPayload(json.RootElement, "embedding", embedding);
             AssertPayload(json.RootElement, "multiEmbedding", multiEmbedding);
         }

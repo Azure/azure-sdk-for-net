@@ -20,27 +20,27 @@ namespace Azure.Data.AI
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EmbeddingUsage"/>. </summary>
-        /// <param name="type"> The embedding implementation that reported this usage. </param>
-        private protected EmbeddingUsage(EmbeddingUsageType @type)
+        /// <param name="kind"> The embedding implementation that reported this usage. </param>
+        private protected EmbeddingUsage(EmbeddingUsageKind kind)
         {
-            Type = @type;
+            Kind = kind;
         }
 
         /// <summary> Initializes a new instance of <see cref="EmbeddingUsage"/>. </summary>
-        /// <param name="type"> The embedding implementation that reported this usage. </param>
+        /// <param name="kind"> The embedding implementation that reported this usage. </param>
         /// <param name="promptTokens"> The number of input tokens. </param>
         /// <param name="totalTokens"> The total number of tokens. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EmbeddingUsage(EmbeddingUsageType @type, long? promptTokens, long? totalTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EmbeddingUsage(EmbeddingUsageKind kind, long? promptTokens, long? totalTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            Kind = kind;
             PromptTokens = promptTokens;
             TotalTokens = totalTokens;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The embedding implementation that reported this usage. </summary>
-        internal EmbeddingUsageType Type { get; set; }
+        internal EmbeddingUsageKind Kind { get; set; }
 
         /// <summary> The number of input tokens. </summary>
         public long? PromptTokens { get; }

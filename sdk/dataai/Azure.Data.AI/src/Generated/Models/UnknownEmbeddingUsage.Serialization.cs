@@ -105,15 +105,15 @@ namespace Azure.Data.AI
             {
                 return null;
             }
-            EmbeddingUsageType @type = default;
+            EmbeddingUsageKind kind = default;
             long? promptTokens = default;
             long? totalTokens = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("type"u8))
+                if (prop.NameEquals("kind"u8))
                 {
-                    @type = new EmbeddingUsageType(prop.Value.GetString());
+                    kind = new EmbeddingUsageKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("promptTokens"u8))
@@ -139,7 +139,7 @@ namespace Azure.Data.AI
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UnknownEmbeddingUsage(@type, promptTokens, totalTokens, additionalBinaryDataProperties);
+            return new UnknownEmbeddingUsage(kind, promptTokens, totalTokens, additionalBinaryDataProperties);
         }
     }
 }

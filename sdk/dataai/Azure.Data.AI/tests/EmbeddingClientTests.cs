@@ -89,6 +89,9 @@ namespace Azure.Data.AI.Tests
             Assert.That(result.ModelVersion, Is.EqualTo("v1"));
             Assert.That(result.OutputDataKind, Is.EqualTo(EmbeddingOutputDataKind.Float16));
             Assert.That(result.Usage, Is.TypeOf<MultimodalEmbeddingUsage>());
+            using JsonDocument resultJson = JsonDocument.Parse(
+                ModelReaderWriter.Write(result, ModelReaderWriterOptions.Json, AzureDataAIContext.Default).ToString());
+            Assert.That(resultJson.RootElement.GetProperty("usage").GetProperty("kind").GetString(), Is.EqualTo("multimodal"));
             Assert.That(result.Usage.TotalTokens, Is.EqualTo(2));
             Assert.That(((MultimodalEmbeddingUsage)result.Usage).ImageCount, Is.EqualTo(contents.Length - 1));
             if (kind == "link")
@@ -106,17 +109,20 @@ namespace Azure.Data.AI.Tests
             Assert.That(result.Data, Has.Count.EqualTo(1));
             Assert.That(result.Data[0].Index, Is.EqualTo(0));
             Assert.That(result.Data[0].Id, Is.EqualTo("item-1"));
+            Assert.That(resultJson.RootElement.GetProperty("data")[0].GetProperty("kind").GetString(), Is.EqualTo("multimodal_" + kind));
             switch (kind)
             {
                 case "dense":
                     Assert.That(result.Data[0], Is.TypeOf<MultimodalDenseEmbedding>());
                     Assert.That(((MultimodalDenseEmbedding)result.Data[0]).ContentKind, Is.EqualTo(EmbeddingContentKind.Text));
+                    Assert.That(((MultimodalDenseEmbedding)result.Data[0]).VectorKind, Is.EqualTo(EmbeddingVectorKind.Dense));
                     AssertVector(((MultimodalDenseEmbedding)result.Data[0]).Embedding);
                     break;
                 case "multi":
                     Assert.That(result.Data[0], Is.TypeOf<MultimodalMultiVectorEmbedding>());
                     var multi = (MultimodalMultiVectorEmbedding)result.Data[0];
                     Assert.That(multi.ContentKind, Is.EqualTo(EmbeddingContentKind.Text));
+                    Assert.That(multi.VectorKind, Is.EqualTo(EmbeddingVectorKind.Multi));
                     Assert.That(multi.Shape, Is.EqualTo(new[] { 1, 2 }));
                     AssertVector(multi.MultiEmbedding, multiVector: true);
                     break;
@@ -124,6 +130,7 @@ namespace Azure.Data.AI.Tests
                     Assert.That(result.Data[0], Is.TypeOf<MultimodalDenseAndMultiVectorEmbedding>());
                     var combined = (MultimodalDenseAndMultiVectorEmbedding)result.Data[0];
                     Assert.That(combined.ContentKind, Is.EqualTo(EmbeddingContentKind.Text));
+                    Assert.That(combined.VectorKind, Is.EqualTo(EmbeddingVectorKind.DenseAndMulti));
                     Assert.That(combined.Shape, Is.EqualTo(new[] { 1, 2 }));
                     AssertVector(combined.Embedding);
                     AssertVector(combined.MultiEmbedding, multiVector: true);
@@ -578,8 +585,8 @@ namespace Azure.Data.AI.Tests
                     ["index"] = 0,
                     ["id"] = _contents[0].Id,
                     ["contentKind"] = (_contents[0].Kind ?? EmbeddingContentKind.Text).ToString(),
-                    ["type"] = "multimodal_" + _kind,
-                    ["kind"] = _kind
+                    ["kind"] = "multimodal_" + _kind,
+                    ["vectorKind"] = _kind
                 };
                 if (_kind == "dense" || _kind == "dense_multi")
                 {
@@ -601,8 +608,8 @@ namespace Azure.Data.AI.Tests
                             index = 1,
                             id = _contents[1].Id,
                             contentKind = (_contents[1].Kind ?? EmbeddingContentKind.Text).ToString(),
-                            type = "multimodal_dense",
-                            kind = "dense",
+                            kind = "multimodal_dense",
+                            vectorKind = "dense",
                             embedding = vector
                         });
                     }
@@ -614,7 +621,7 @@ namespace Azure.Data.AI.Tests
                     ["modelVersion"] = _expectedOptions.TryGetValue("modelVersion", out object modelVersion) ? modelVersion : "v1",
                     ["outputDataKind"] = "float16",
                     ["data"] = responseData,
-                    ["usage"] = new { type = "multimodal", totalTokens = 2, imageCount = _contents.Count - 1 }
+                    ["usage"] = new { kind = "multimodal", totalTokens = 2, imageCount = _contents.Count - 1 }
                 };
                 if (_kind == "link")
                 {

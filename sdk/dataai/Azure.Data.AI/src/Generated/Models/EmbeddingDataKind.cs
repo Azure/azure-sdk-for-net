@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Data.AI
 {
     /// <summary> The implementation of an embedding result item. </summary>
-    internal readonly partial struct EmbeddingDataType : IEquatable<EmbeddingDataType>
+    internal readonly partial struct EmbeddingDataKind : IEquatable<EmbeddingDataKind>
     {
         private readonly string _value;
         /// <summary> One dense vector from a multimodal model. </summary>
@@ -21,10 +21,10 @@ namespace Azure.Data.AI
         /// <summary> A dense vector and one vector per token from a multimodal model. </summary>
         private const string MultimodalDenseAndMultiVectorValue = "multimodal_dense_multi";
 
-        /// <summary> Initializes a new instance of <see cref="EmbeddingDataType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmbeddingDataKind"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EmbeddingDataType(string value)
+        public EmbeddingDataKind(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -32,38 +32,38 @@ namespace Azure.Data.AI
         }
 
         /// <summary> One dense vector from a multimodal model. </summary>
-        public static EmbeddingDataType MultimodalDense { get; } = new EmbeddingDataType(MultimodalDenseValue);
+        public static EmbeddingDataKind MultimodalDense { get; } = new EmbeddingDataKind(MultimodalDenseValue);
 
         /// <summary> One vector per token from a multimodal model. </summary>
-        public static EmbeddingDataType MultimodalMultiVector { get; } = new EmbeddingDataType(MultimodalMultiVectorValue);
+        public static EmbeddingDataKind MultimodalMultiVector { get; } = new EmbeddingDataKind(MultimodalMultiVectorValue);
 
         /// <summary> A dense vector and one vector per token from a multimodal model. </summary>
-        public static EmbeddingDataType MultimodalDenseAndMultiVector { get; } = new EmbeddingDataType(MultimodalDenseAndMultiVectorValue);
+        public static EmbeddingDataKind MultimodalDenseAndMultiVector { get; } = new EmbeddingDataKind(MultimodalDenseAndMultiVectorValue);
 
-        /// <summary> Determines if two <see cref="EmbeddingDataType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="EmbeddingDataKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(EmbeddingDataType left, EmbeddingDataType right) => left.Equals(right);
+        public static bool operator ==(EmbeddingDataKind left, EmbeddingDataKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="EmbeddingDataType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="EmbeddingDataKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(EmbeddingDataType left, EmbeddingDataType right) => !left.Equals(right);
+        public static bool operator !=(EmbeddingDataKind left, EmbeddingDataKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="EmbeddingDataType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EmbeddingDataKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EmbeddingDataType(string value) => new EmbeddingDataType(value);
+        public static implicit operator EmbeddingDataKind(string value) => new EmbeddingDataKind(value);
 
-        /// <summary> Converts a string to a <see cref="EmbeddingDataType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EmbeddingDataKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EmbeddingDataType?(string value) => value == null ? null : new EmbeddingDataType(value);
+        public static implicit operator EmbeddingDataKind?(string value) => value == null ? null : new EmbeddingDataKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is EmbeddingDataType other && Equals(other);
+        public override bool Equals(object obj) => obj is EmbeddingDataKind other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(EmbeddingDataType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EmbeddingDataKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -13,11 +13,11 @@ namespace Azure.Data.AI
     internal partial class UnknownEmbeddingUsage : EmbeddingUsage
     {
         /// <summary> Initializes a new instance of <see cref="UnknownEmbeddingUsage"/>. </summary>
-        /// <param name="type"> The embedding implementation that reported this usage. </param>
+        /// <param name="kind"> The embedding implementation that reported this usage. </param>
         /// <param name="promptTokens"> The number of input tokens. </param>
         /// <param name="totalTokens"> The total number of tokens. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownEmbeddingUsage(EmbeddingUsageType @type, long? promptTokens, long? totalTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type != default ? @type : "unknown", promptTokens, totalTokens, additionalBinaryDataProperties)
+        internal UnknownEmbeddingUsage(EmbeddingUsageKind kind, long? promptTokens, long? totalTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind != default ? kind : "unknown", promptTokens, totalTokens, additionalBinaryDataProperties)
         {
         }
     }

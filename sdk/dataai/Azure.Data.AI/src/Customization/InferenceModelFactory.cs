@@ -14,23 +14,23 @@ namespace Azure.Data.AI
     public static partial class InferenceModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Azure.Data.AI.EmbeddingItem"/>. </summary>
-        /// <param name="type"> The discriminator value. </param>
+        /// <param name="kind"> The discriminator value. </param>
         /// <param name="index"> The index of the embedding. </param>
         /// <param name="id"> The embedding identifier. </param>
         /// <returns> A new <see cref="Azure.Data.AI.EmbeddingItem"/> instance for mocking. </returns>
-        public static EmbeddingItem EmbeddingItem(string type = default, int index = default, string id = default)
+        public static EmbeddingItem EmbeddingItem(string kind = default, int index = default, string id = default)
         {
-            return new UnknownEmbeddingData(type == null ? default(EmbeddingDataType) : new EmbeddingDataType(type), index, id, additionalBinaryDataProperties: null);
+            return new UnknownEmbeddingData(kind == null ? default(EmbeddingDataKind) : new EmbeddingDataKind(kind), index, id, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Azure.Data.AI.EmbeddingUsage"/>. </summary>
-        /// <param name="type"> The discriminator value. </param>
+        /// <param name="kind"> The discriminator value. </param>
         /// <param name="promptTokens"> The number of prompt tokens. </param>
         /// <param name="totalTokens"> The total number of tokens. </param>
         /// <returns> A new <see cref="Azure.Data.AI.EmbeddingUsage"/> instance for mocking. </returns>
-        public static EmbeddingUsage EmbeddingUsage(string type = default, long? promptTokens = default, long? totalTokens = default)
+        public static EmbeddingUsage EmbeddingUsage(string kind = default, long? promptTokens = default, long? totalTokens = default)
         {
-            return new UnknownEmbeddingUsage(type == null ? default(EmbeddingUsageType) : new EmbeddingUsageType(type), promptTokens, totalTokens, additionalBinaryDataProperties: null);
+            return new UnknownEmbeddingUsage(kind == null ? default(EmbeddingUsageKind) : new EmbeddingUsageKind(kind), promptTokens, totalTokens, additionalBinaryDataProperties: null);
         }
     }
 }

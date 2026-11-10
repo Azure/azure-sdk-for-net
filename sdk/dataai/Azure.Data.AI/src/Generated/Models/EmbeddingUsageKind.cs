@@ -11,16 +11,16 @@ using System.ComponentModel;
 namespace Azure.Data.AI
 {
     /// <summary> The implementation that reported embedding usage. </summary>
-    internal readonly partial struct EmbeddingUsageType : IEquatable<EmbeddingUsageType>
+    internal readonly partial struct EmbeddingUsageKind : IEquatable<EmbeddingUsageKind>
     {
         private readonly string _value;
         /// <summary> Usage from a multimodal embedding model. </summary>
         private const string MultimodalValue = "multimodal";
 
-        /// <summary> Initializes a new instance of <see cref="EmbeddingUsageType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmbeddingUsageKind"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public EmbeddingUsageType(string value)
+        public EmbeddingUsageKind(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -28,32 +28,32 @@ namespace Azure.Data.AI
         }
 
         /// <summary> Usage from a multimodal embedding model. </summary>
-        public static EmbeddingUsageType Multimodal { get; } = new EmbeddingUsageType(MultimodalValue);
+        public static EmbeddingUsageKind Multimodal { get; } = new EmbeddingUsageKind(MultimodalValue);
 
-        /// <summary> Determines if two <see cref="EmbeddingUsageType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="EmbeddingUsageKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(EmbeddingUsageType left, EmbeddingUsageType right) => left.Equals(right);
+        public static bool operator ==(EmbeddingUsageKind left, EmbeddingUsageKind right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="EmbeddingUsageType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="EmbeddingUsageKind"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(EmbeddingUsageType left, EmbeddingUsageType right) => !left.Equals(right);
+        public static bool operator !=(EmbeddingUsageKind left, EmbeddingUsageKind right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="EmbeddingUsageType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EmbeddingUsageKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EmbeddingUsageType(string value) => new EmbeddingUsageType(value);
+        public static implicit operator EmbeddingUsageKind(string value) => new EmbeddingUsageKind(value);
 
-        /// <summary> Converts a string to a <see cref="EmbeddingUsageType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="EmbeddingUsageKind"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator EmbeddingUsageType?(string value) => value == null ? null : new EmbeddingUsageType(value);
+        public static implicit operator EmbeddingUsageKind?(string value) => value == null ? null : new EmbeddingUsageKind(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is EmbeddingUsageType other && Equals(other);
+        public override bool Equals(object obj) => obj is EmbeddingUsageKind other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(EmbeddingUsageType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(EmbeddingUsageKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

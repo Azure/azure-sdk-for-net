@@ -23,7 +23,7 @@ namespace Azure.Data.AI
         /// The vectors: an array of arrays of numbers, or, when `encodingFormat` is `base64`, one base64 string of all their
         /// little-endian `outputDataKind` values in row-major order. Decode it and reshape it to `shape`.
         /// </param>
-        internal MultimodalMultiVectorEmbedding(int index, EmbeddingContentKind contentKind, IEnumerable<int> shape, BinaryData multiEmbedding) : base(EmbeddingDataType.MultimodalMultiVector, index)
+        internal MultimodalMultiVectorEmbedding(int index, EmbeddingContentKind contentKind, IEnumerable<int> shape, BinaryData multiEmbedding) : base(EmbeddingDataKind.MultimodalMultiVector, index)
         {
             ContentKind = contentKind;
             Shape = shape.ToList();
@@ -31,7 +31,7 @@ namespace Azure.Data.AI
         }
 
         /// <summary> Initializes a new instance of <see cref="MultimodalMultiVectorEmbedding"/>. </summary>
-        /// <param name="type"> The embedding implementation that produced this item. </param>
+        /// <param name="kind"> The embedding implementation that produced this item. </param>
         /// <param name="index"> The zero-based position of the item in the request. </param>
         /// <param name="id"> The item's `id` from the request, if it had one. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -49,13 +49,13 @@ namespace Azure.Data.AI
         /// `EMBEDDING_INPUT_TRUNCATED` entry for it. Omitted otherwise.
         /// </param>
         /// <param name="inputTokens"> For truncated items only: the item's tokens before truncation. </param>
-        /// <param name="kind"> The kind of vectors returned. </param>
+        /// <param name="vectorKind"> The kind of vectors returned. </param>
         /// <param name="shape"> The number of vectors and the number of dimensions: `[vectors, dimensions]`. </param>
         /// <param name="multiEmbedding">
         /// The vectors: an array of arrays of numbers, or, when `encodingFormat` is `base64`, one base64 string of all their
         /// little-endian `outputDataKind` values in row-major order. Decode it and reshape it to `shape`.
         /// </param>
-        internal MultimodalMultiVectorEmbedding(EmbeddingDataType @type, int index, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, EmbeddingContentKind contentKind, int? width, int? height, EmbeddingImageFormat? format, long? tokens, long? visualTokens, bool? truncated, long? inputTokens, EmbeddingVectorKind kind, IList<int> shape, BinaryData multiEmbedding) : base(@type, index, id, additionalBinaryDataProperties)
+        internal MultimodalMultiVectorEmbedding(EmbeddingDataKind kind, int index, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, EmbeddingContentKind contentKind, int? width, int? height, EmbeddingImageFormat? format, long? tokens, long? visualTokens, bool? truncated, long? inputTokens, EmbeddingVectorKind vectorKind, IList<int> shape, BinaryData multiEmbedding) : base(kind, index, id, additionalBinaryDataProperties)
         {
             ContentKind = contentKind;
             Width = width;
@@ -65,7 +65,7 @@ namespace Azure.Data.AI
             VisualTokens = visualTokens;
             Truncated = truncated;
             InputTokens = inputTokens;
-            Kind = kind;
+            VectorKind = vectorKind;
             Shape = shape;
             MultiEmbedding = multiEmbedding;
         }
@@ -101,7 +101,7 @@ namespace Azure.Data.AI
         public long? InputTokens { get; }
 
         /// <summary> The kind of vectors returned. </summary>
-        public EmbeddingVectorKind Kind { get; } = "multi";
+        public EmbeddingVectorKind VectorKind { get; } = "multi";
 
         /// <summary> The number of vectors and the number of dimensions: `[vectors, dimensions]`. </summary>
         public IList<int> Shape { get; }
