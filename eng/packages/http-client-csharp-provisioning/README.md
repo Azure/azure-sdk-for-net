@@ -54,6 +54,10 @@ changelog, and a test project wired to `ProvisioningTestShared` and the provisio
 deployment libraries. Existing SDK documentation, build properties, and test
 projects are preserved. Local fixture build properties are regenerated along with
 their projects. Service CI registration is not part of generator scaffolding.
+Source and test projects follow the existing provisioning project layout, without
+extra documentation-generation properties or conditional test dependencies.
+Test infrastructure references are relative to the test project directory, with
+paths calculated for both SDK packages and local fixtures.
 
 ## Development
 

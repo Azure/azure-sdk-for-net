@@ -54,43 +54,48 @@ namespace Azure.Generator.Provisioning.Tests
                 Assert.That(properties.Element("Description")?.Value,
                     Is.EqualTo($"{PackageName} simplifies declarative resource provisioning in .NET."));
                 Assert.That(properties.Element("Version")?.Value, Is.EqualTo("1.0.0-beta.1"));
-                Assert.That(properties.Element("AssemblyTitle")?.Value, Is.EqualTo($"SDK Code Generation {PackageName}"));
-                Assert.That(properties.Element("PackageTags")?.Value, Is.EqualTo(PackageName));
-                Assert.That(properties.Element("GenerateDocumentationFile")?.Value, Is.EqualTo("true"));
+                Assert.That(properties.Elements().Select(p => p.Name.LocalName),
+                    Is.EqualTo(new[] { "Description", "Version", "TargetFrameworks" }));
+                Assert.That(properties.Element("TargetFrameworks")?.Value, Is.EqualTo("$(RequiredTargetFrameworks)"));
                 Assert.That(project.Descendants("PackageReference").Select(p => p.Attribute("Include")?.Value),
                     Is.EquivalentTo(new[] { "Azure.Provisioning" }));
                 Assert.That(project.Descendants("Compile"), Is.Empty);
             });
         }
 
-        [TestCase("sdk")]
-        [TestCase("eng")]
-        public void TestProjectReferencesProvisioningInfrastructure(string directory)
+        [TestCase("sdk", false)]
+        [TestCase("sdk", true)]
+        [TestCase("eng", false)]
+        [TestCase("eng", true)]
+        public void TestProjectReferencesProvisioningInfrastructure(string directory, bool trailingSeparator)
         {
-            string outputDir = LoadGenerator(directory);
+            string outputDir = LoadGenerator(directory, trailingSeparator);
             var project = new TestableScaffolding().TestProject();
             var references = project.Descendants("ProjectReference")
                 .Select(p => p.Attribute("Include")!.Value)
-                .Where(p => p.StartsWith("$(MSBuildThisFileDirectory)", StringComparison.Ordinal))
                 .Select(p => ResolveTestPath(outputDir, p));
             Assert.Multiple(() =>
             {
                 Assert.That(references, Is.EquivalentTo(new[]
                 {
+                    Path.Combine(_root, "sdk", "core", "Azure.Core.TestFramework", "src", "Azure.Core.TestFramework.csproj"),
+                    Path.Combine(outputDir, "src", $"{PackageName}.csproj"),
                     Path.Combine(_root, "sdk", "provisioning", "Azure.Provisioning", "src", "Azure.Provisioning.csproj"),
                     Path.Combine(_root, "sdk", "provisioning", "Azure.Provisioning.Deployment", "src", "Azure.Provisioning.Deployment.csproj")
                 }));
                 Assert.That(ResolveTestPath(outputDir, project.Descendants("Compile").Single().Attribute("Include")!.Value),
                     Is.EqualTo(Path.Combine(_root, "common", "ProvisioningTestShared", "*.cs")));
                 Assert.That(project.Descendants("ProjectReference").Any(p => p.Attribute("Include")?.Value == $@"..\src\{PackageName}.csproj"), Is.True);
-                Assert.That(project.Descendants("ProjectReference")
-                    .Single(p => p.Attribute("Include")?.Value == "$(AzureCoreTestFramework)")
-                    .Attribute("Condition")?.Value, Is.EqualTo("'$(IsMgmtLibrary)' != 'true'"));
-                Assert.That(project.Descendants("PackageReference").Select(p => p.Attribute("Include")?.Value),
-                    Is.EquivalentTo(new[] { "NUnit", "NUnit3TestAdapter", "Microsoft.NET.Test.Sdk", "Moq" }));
-                Assert.That(project.Descendants("PackageReference").First().Parent!.Attribute("Condition")?.Value,
-                    Is.EqualTo("'$(IsMgmtLibrary)' != 'true' and '$(IsStorageTest)' != 'true'"));
+                Assert.That(project.Descendants("PackageReference"), Is.Empty);
+                Assert.That(project.Descendants().Attributes("Condition"), Is.Empty);
+                Assert.That(project.Descendants("PropertyGroup").Elements().Select(p => p.Name.LocalName),
+                    Is.EqualTo(new[] { "Nullable" }));
                 Assert.That(project.Descendants("Nullable").Single().Value, Is.EqualTo("enable"));
+                if (directory == "sdk")
+                {
+                    Assert.That(project.Descendants("Compile").Single().Attribute("Include")?.Value,
+                        Is.EqualTo(@"..\..\..\..\common\ProvisioningTestShared\*.cs"));
+                }
             });
         }
 
@@ -190,11 +195,15 @@ namespace Azure.Generator.Provisioning.Tests
             });
         }
 
-        private string LoadGenerator(string directory)
+        private string LoadGenerator(string directory, bool trailingSeparator = false)
         {
             string outputDir = directory == "sdk"
                 ? Path.Combine(_root, "sdk", "service", PackageName)
                 : Path.Combine(_root, "eng", "packages", "generator", "TestProjects", "Local", PackageName);
+            if (trailingSeparator)
+            {
+                outputDir += Path.DirectorySeparatorChar;
+            }
             Directory.CreateDirectory(outputDir);
             var generator = ProvisioningMockHelpers.LoadMockPlugin();
             typeof(Configuration).GetField("<OutputDirectory>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic)!
@@ -203,7 +212,7 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         private static string ResolveTestPath(string outputDir, string path)
-            => Path.GetFullPath(Path.Combine(outputDir, "tests", path.Replace("$(MSBuildThisFileDirectory)", "", StringComparison.Ordinal)));
+            => Path.GetFullPath(Path.Combine(outputDir, "tests", path.Replace('\\', Path.DirectorySeparatorChar)));
 
         private const string ExpectedDirectoryBuildProps = """
             <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">

@@ -1,13 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
     <Description>Azure.Provisioning.ProvisioningTypeSpec.Preview simplifies declarative resource provisioning in .NET.</Description>
-    <AssemblyTitle>SDK Code Generation Azure.Provisioning.ProvisioningTypeSpec.Preview</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
-    <PackageTags>Azure.Provisioning.ProvisioningTypeSpec.Preview</PackageTags>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Provisioning" />
   </ItemGroup>
+
 </Project>

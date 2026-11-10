@@ -16,20 +16,21 @@ namespace Azure.Generator.Provisioning.Primitives
         protected override string GetSourceProjectFileContent()
         {
             string packageName = ProvisioningGenerator.Instance.Configuration.PackageName;
-            var writer = new CSharpProjectWriter
-            {
-                Description = $"{packageName} simplifies declarative resource provisioning in .NET.",
-                AssemblyTitle = $"SDK Code Generation {packageName}",
-                Version = "1.0.0-beta.1",
-                PackageTags = ProvisioningGenerator.Instance.TypeFactory.PrimaryNamespace,
-                GenerateDocumentationFile = true,
-            };
-            writer.PackageReferences.Add(new("Azure.Provisioning"));
-            foreach (var include in CompileIncludes)
-            {
-                writer.CompileIncludes.Add(include);
-            }
-            return writer.Write();
+            return $"""
+                <Project Sdk="Microsoft.NET.Sdk">
+
+                  <PropertyGroup>
+                    <Description>{packageName} simplifies declarative resource provisioning in .NET.</Description>
+                    <Version>1.0.0-beta.1</Version>
+                    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+                  </PropertyGroup>
+
+                  <ItemGroup>
+                    <PackageReference Include="Azure.Provisioning" />
+                  </ItemGroup>
+
+                </Project>
+                """ + "\n";
         }
 
         protected override IReadOnlyList<CSharpProjectCompileInclude> BuildCompileIncludes()
@@ -57,27 +58,35 @@ namespace Azure.Generator.Provisioning.Primitives
             return $"""
                 <Project Sdk="Microsoft.NET.Sdk">
                   <PropertyGroup>
-                    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-                    <IsTestProject>true</IsTestProject>
                     <Nullable>enable</Nullable>
                   </PropertyGroup>
                   <ItemGroup>
-                    <ProjectReference Include="$(AzureCoreTestFramework)" Condition="'$(IsMgmtLibrary)' != 'true'" />
-                    <ProjectReference Include="{GetCompileInclude("Azure.Provisioning.csproj", "sdk/provisioning/Azure.Provisioning/src/")}" />
-                    <ProjectReference Include="..\src\{packageName}.csproj" />
-                    <ProjectReference Include="{GetCompileInclude("Azure.Provisioning.Deployment.csproj", "sdk/provisioning/Azure.Provisioning.Deployment/src/")}" />
+                    <Compile Include="{GetTestInclude("common/ProvisioningTestShared/*.cs")}" LinkBase="Shared\ProvisioningTestShared" />
                   </ItemGroup>
                   <ItemGroup>
-                    <Compile Include="{GetCompileInclude("*.cs", "common/ProvisioningTestShared/")}" LinkBase="Shared/ProvisioningTestShared" />
-                  </ItemGroup>
-                  <ItemGroup Condition="'$(IsMgmtLibrary)' != 'true' and '$(IsStorageTest)' != 'true'">
-                    <PackageReference Include="NUnit" />
-                    <PackageReference Include="NUnit3TestAdapter" />
-                    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-                    <PackageReference Include="Moq" />
+                    <ProjectReference Include="{GetTestInclude("sdk/core/Azure.Core.TestFramework/src/Azure.Core.TestFramework.csproj")}" />
+                    <ProjectReference Include="{GetTestInclude("sdk/provisioning/Azure.Provisioning/src/Azure.Provisioning.csproj")}" />
+                    <ProjectReference Include="..\src\{packageName}.csproj" />
+                    <ProjectReference Include="{GetTestInclude("sdk/provisioning/Azure.Provisioning.Deployment/src/Azure.Provisioning.Deployment.csproj")}" />
                   </ItemGroup>
                 </Project>
                 """ + "\n";
+        }
+
+        private static string GetTestInclude(string repositoryPath)
+        {
+            string outputDir = ProvisioningGenerator.Instance.Configuration.OutputDirectory;
+            var directory = new DirectoryInfo(outputDir);
+            while (directory.Name != "sdk" && directory.Name != "eng")
+            {
+                directory = directory.Parent ?? throw new InvalidOperationException(
+                    $"Cannot locate the repository root above '{outputDir}'.");
+            }
+
+            string repoRoot = directory.Parent?.FullName ?? throw new InvalidOperationException(
+                $"Cannot locate the repository root above '{outputDir}'.");
+            return Path.GetRelativePath(Path.Combine(outputDir, "tests"),
+                Path.Combine(repoRoot, repositoryPath.Replace('/', Path.DirectorySeparatorChar))).Replace('/', '\\');
         }
 
         protected override async Task WriteAdditionalFiles()
