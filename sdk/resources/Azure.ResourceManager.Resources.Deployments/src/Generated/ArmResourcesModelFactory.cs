@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -151,10 +152,11 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
         /// <param name="alias"> The alias of the extension as defined in the deployment template. </param>
         /// <param name="name"> The extension name. </param>
         /// <param name="version"> The extension version. </param>
-        /// <param name="configId"> The extension configuration ID. It uniquely identifies a deployment control plane within an extension. </param>
+        /// <param name="configId"> The extension configuration ID. It uniquely identifies a deployment target within an extension. </param>
+        /// <param name="configHash"> The extension configuration hash. Can be used to distinguish different configurations that have the same config ID. </param>
         /// <param name="config"> The extension configuration. </param>
         /// <returns> A new <see cref="Models.ArmDeploymentExtensionDefinition"/> instance for mocking. </returns>
-        public static ArmDeploymentExtensionDefinition ArmDeploymentExtensionDefinition(string @alias = default, string name = default, string version = default, string configId = default, IReadOnlyDictionary<string, ArmDeploymentExtensionConfigItem> config = default)
+        public static ArmDeploymentExtensionDefinition ArmDeploymentExtensionDefinition(string @alias = default, string name = default, string version = default, string configId = default, string configHash = default, IReadOnlyDictionary<string, ArmDeploymentExtensionConfigItem> config = default)
         {
             config ??= new ChangeTrackingDictionary<string, ArmDeploymentExtensionConfigItem>();
 
@@ -163,18 +165,9 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                 name,
                 version,
                 configId,
+                configHash,
                 config ?? new ChangeTrackingDictionary<string, ArmDeploymentExtensionConfigItem>(),
                 default);
-        }
-
-        /// <summary> The ArmDeploymentExtensionConfigItem. </summary>
-        /// <param name="extensionConfigPropertyType"> The value type of the extension config property. </param>
-        /// <param name="value"> The value of the extension config property. </param>
-        /// <param name="keyVaultReference"> The Azure Key Vault reference used to retrieve the secret value of the extension config property. </param>
-        /// <returns> A new <see cref="Models.ArmDeploymentExtensionConfigItem"/> instance for mocking. </returns>
-        public static ArmDeploymentExtensionConfigItem ArmDeploymentExtensionConfigItem(ExtensionConfigPropertyType? extensionConfigPropertyType = default, BinaryData value = default, KeyVaultParameterReference keyVaultReference = default)
-        {
-            return new ArmDeploymentExtensionConfigItem(extensionConfigPropertyType, value, keyVaultReference, default);
         }
 
         /// <param name="keyVaultId"> Azure Key Vault resource id. </param>
@@ -203,15 +196,19 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="identifiers"> The extensible resource identifiers. </param>
         /// <param name="apiVersion"> The API version the resource was deployed with. </param>
+        /// <param name="symbolicNamePath"> The symbolic name path to the resource in the deployment template, including nested deployment(s) and extension if applicable. </param>
         /// <returns> A new <see cref="Models.ArmResourceReference"/> instance for mocking. </returns>
-        public static ArmResourceReference ArmResourceReference(ResourceIdentifier id = default, ArmDeploymentExtensionDefinition extension = default, string resourceType = default, BinaryData identifiers = default, string apiVersion = default)
+        public static ArmResourceReference ArmResourceReference(ResourceIdentifier id = default, ArmDeploymentExtensionDefinition extension = default, string resourceType = default, BinaryData identifiers = default, string apiVersion = default, IEnumerable<string> symbolicNamePath = default)
         {
+            symbolicNamePath ??= new ChangeTrackingList<string>();
+
             return new ArmResourceReference(
                 id,
                 extension,
                 resourceType,
                 identifiers,
                 apiVersion,
+                (symbolicNamePath ?? new ChangeTrackingList<string>()).ToList(),
                 default);
         }
 
@@ -411,9 +408,12 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
         /// <param name="identifiers"> The extensible resource identifiers. </param>
         /// <param name="apiVersion"> The API version the resource was deployed with. </param>
         /// <param name="symbolicName"> The symbolic name of the resource as defined in the deployment template. </param>
+        /// <param name="symbolicNamePath"> The symbolic name path to the resource in the deployment template, including nested deployment(s) and extension if applicable. </param>
         /// <returns> A new <see cref="Models.TargetResource"/> instance for mocking. </returns>
-        public static TargetResource TargetResource(string id = default, string resourceName = default, ResourceType? resourceType = default, ArmDeploymentExtensionDefinition extension = default, BinaryData identifiers = default, string apiVersion = default, string symbolicName = default)
+        public static TargetResource TargetResource(string id = default, string resourceName = default, ResourceType? resourceType = default, ArmDeploymentExtensionDefinition extension = default, BinaryData identifiers = default, string apiVersion = default, string symbolicName = default, IEnumerable<string> symbolicNamePath = default)
         {
+            symbolicNamePath ??= new ChangeTrackingList<string>();
+
             return new TargetResource(
                 id,
                 resourceName,
@@ -422,6 +422,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                 identifiers,
                 apiVersion,
                 symbolicName,
+                (symbolicNamePath ?? new ChangeTrackingList<string>()).ToList(),
                 default);
         }
 
@@ -447,13 +448,15 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
         /// <param name="expressionEvaluationScope"> The scope to be used for evaluation of parameters, variables and functions in a nested template. </param>
         /// <param name="validationLevel"> The validation level of the deployment. </param>
         /// <param name="whatIfResultFormat"> The format of the What-If results. </param>
+        /// <param name="resourcePredictions"> Resource predictions that can be utilized by what-if to produce potential modification changes. </param>
         /// <returns> A new <see cref="Models.ArmDeploymentWhatIfProperties"/> instance for mocking. </returns>
-        public static ArmDeploymentWhatIfProperties ArmDeploymentWhatIfProperties(BinaryData template = default, ArmDeploymentTemplateLink templateLink = default, IDictionary<string, ArmDeploymentParameterValue> deploymentParameters = default, IDictionary<string, ArmDeploymentExternalInput> externalInputs = default, IDictionary<string, ArmDeploymentExternalInputDefinition> externalInputDefinitions = default, ArmDeploymentParametersLink parametersLink = default, IDictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>> extensionConfigs = default, ArmDeploymentMode mode = default, string debugSettingDetailLevel = default, ErrorDeployment errorDeployment = default, ExpressionEvaluationScope? expressionEvaluationScope = default, ValidationLevel? validationLevel = default, WhatIfResultFormat? whatIfResultFormat = default)
+        public static ArmDeploymentWhatIfProperties ArmDeploymentWhatIfProperties(BinaryData template = default, ArmDeploymentTemplateLink templateLink = default, IDictionary<string, ArmDeploymentParameterValue> deploymentParameters = default, IDictionary<string, ArmDeploymentExternalInput> externalInputs = default, IDictionary<string, ArmDeploymentExternalInputDefinition> externalInputDefinitions = default, ArmDeploymentParametersLink parametersLink = default, IDictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>> extensionConfigs = default, ArmDeploymentMode mode = default, string debugSettingDetailLevel = default, ErrorDeployment errorDeployment = default, ExpressionEvaluationScope? expressionEvaluationScope = default, ValidationLevel? validationLevel = default, WhatIfResultFormat? whatIfResultFormat = default, IEnumerable<DeploymentResourceWhatIfPrediction> resourcePredictions = default)
         {
             deploymentParameters ??= new ChangeTrackingDictionary<string, ArmDeploymentParameterValue>();
             externalInputs ??= new ChangeTrackingDictionary<string, ArmDeploymentExternalInput>();
             externalInputDefinitions ??= new ChangeTrackingDictionary<string, ArmDeploymentExternalInputDefinition>();
             extensionConfigs ??= new ChangeTrackingDictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>>();
+            resourcePredictions ??= new ChangeTrackingList<DeploymentResourceWhatIfPrediction>();
 
             return new ArmDeploymentWhatIfProperties(
                 template,
@@ -469,7 +472,30 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
                 expressionEvaluationScope is null ? default : new ExpressionEvaluationOptions(expressionEvaluationScope, default),
                 validationLevel,
                 default,
-                whatIfResultFormat is null ? default : new ArmDeploymentWhatIfSettings(whatIfResultFormat, default));
+                whatIfResultFormat is null ? default : new ArmDeploymentWhatIfSettings(whatIfResultFormat, default),
+                (resourcePredictions ?? new ChangeTrackingList<DeploymentResourceWhatIfPrediction>()).ToList());
+        }
+
+        /// <summary> A prediction for a deployment resource by its symbolic name path. </summary>
+        /// <param name="symbolicNamePath"> The symbolic name path to the resource in the deployment template, including nested deployment(s) and extension if applicable. </param>
+        /// <param name="resourceId"> The predicted fully-qualified Azure resource ID. </param>
+        /// <param name="extension"> The predicted extension usage. </param>
+        /// <param name="resourceType"> The predicted resource type. </param>
+        /// <param name="identifiers"> The predicted extensible resource identifiers. </param>
+        /// <param name="apiVersion"> The predicted API version. </param>
+        /// <returns> A new <see cref="Models.DeploymentResourceWhatIfPrediction"/> instance for mocking. </returns>
+        public static DeploymentResourceWhatIfPrediction DeploymentResourceWhatIfPrediction(IEnumerable<string> symbolicNamePath = default, string resourceId = default, ArmDeploymentExtensionDefinition extension = default, string resourceType = default, BinaryData identifiers = default, string apiVersion = default)
+        {
+            symbolicNamePath ??= new ChangeTrackingList<string>();
+
+            return new DeploymentResourceWhatIfPrediction(
+                (symbolicNamePath ?? new ChangeTrackingList<string>()).ToList(),
+                resourceId,
+                extension,
+                resourceType,
+                identifiers,
+                apiVersion,
+                default);
         }
 
         /// <param name="status"> Status of the What-If operation. </param>
@@ -481,36 +507,6 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
         public static WhatIfOperationResult WhatIfOperationResult(string status = default, IEnumerable<WhatIfChange> changes = default, IEnumerable<WhatIfChange> potentialChanges = default, IEnumerable<DeploymentDiagnosticsDefinition> diagnostics = default, ResponseError error = default)
         {
             return new WhatIfOperationResult(status, changes is null && potentialChanges is null && diagnostics is null ? default : new WhatIfOperationProperties((changes ?? new ChangeTrackingList<WhatIfChange>()).ToList(), (potentialChanges ?? new ChangeTrackingList<WhatIfChange>()).ToList(), (diagnostics ?? new ChangeTrackingList<DeploymentDiagnosticsDefinition>()).ToList(), default), error, default);
-        }
-
-        /// <summary> Information about a single resource change predicted by What-If operation. </summary>
-        /// <param name="resourceId"> Resource ID. </param>
-        /// <param name="deploymentId"> The resource id of the Deployment responsible for this change. </param>
-        /// <param name="symbolicName"> The symbolic name of the resource responsible for this change. </param>
-        /// <param name="identifiers"> A subset of properties that uniquely identify a Bicep extensible resource because it lacks a resource id like an Azure resource has. </param>
-        /// <param name="extension"> The extension the resource was deployed with. </param>
-        /// <param name="changeType"> Type of change that will be made to the resource when the deployment is executed. </param>
-        /// <param name="unsupportedReason"> The explanation about why the resource is unsupported by What-If. </param>
-        /// <param name="before"> The snapshot of the resource before the deployment is executed. </param>
-        /// <param name="after"> The predicted snapshot of the resource after the deployment is executed. </param>
-        /// <param name="delta"> The predicted changes to resource properties. </param>
-        /// <returns> A new <see cref="Models.WhatIfChange"/> instance for mocking. </returns>
-        public static WhatIfChange WhatIfChange(string resourceId = default, string deploymentId = default, string symbolicName = default, BinaryData identifiers = default, ArmDeploymentExtensionDefinition extension = default, WhatIfChangeType changeType = default, string unsupportedReason = default, BinaryData before = default, BinaryData after = default, IEnumerable<WhatIfPropertyChange> delta = default)
-        {
-            delta ??= new ChangeTrackingList<WhatIfPropertyChange>();
-
-            return new WhatIfChange(
-                resourceId,
-                deploymentId,
-                symbolicName,
-                identifiers,
-                extension,
-                changeType,
-                unsupportedReason,
-                before,
-                after,
-                (delta ?? new ChangeTrackingList<WhatIfPropertyChange>()).ToList(),
-                default);
         }
 
         /// <summary> The predicted change to the resource property. </summary>
@@ -540,6 +536,136 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
         public static TemplateHashResult TemplateHashResult(string minifiedTemplate = default, string templateHash = default)
         {
             return new TemplateHashResult(minifiedTemplate, templateHash, default);
+        }
+
+        /// <summary> The ArmDeploymentExtensionDefinition. </summary>
+        /// <param name="alias"> The alias of the extension as defined in the deployment template. </param>
+        /// <param name="name"> The extension name. </param>
+        /// <param name="version"> The extension version. </param>
+        /// <param name="configId"> The extension configuration ID. It uniquely identifies a deployment target within an extension. </param>
+        /// <param name="config"> The extension configuration. </param>
+        /// <returns> A new <see cref="Models.ArmDeploymentExtensionDefinition"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ArmDeploymentExtensionDefinition ArmDeploymentExtensionDefinition(string @alias, string name, string version, string configId, IReadOnlyDictionary<string, ArmDeploymentExtensionConfigItem> config)
+        {
+            return new ArmDeploymentExtensionDefinition(
+                @alias,
+                name,
+                version,
+                configId,
+                default,
+                config ?? new ChangeTrackingDictionary<string, ArmDeploymentExtensionConfigItem>(),
+                default);
+        }
+
+        /// <summary> The resource Id model. </summary>
+        /// <param name="id"> The fully qualified Azure resource ID. </param>
+        /// <param name="extension"> The extension the resource was deployed with. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="identifiers"> The extensible resource identifiers. </param>
+        /// <param name="apiVersion"> The API version the resource was deployed with. </param>
+        /// <returns> A new <see cref="Models.ArmResourceReference"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ArmResourceReference ArmResourceReference(ResourceIdentifier id, ArmDeploymentExtensionDefinition extension, string resourceType, BinaryData identifiers, string apiVersion)
+        {
+            return new ArmResourceReference(
+                id,
+                extension,
+                resourceType,
+                identifiers,
+                apiVersion,
+                default,
+                default);
+        }
+
+        /// <summary> Target resource. </summary>
+        /// <param name="id"> The Azure resource ID of the resource. </param>
+        /// <param name="resourceName"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. </param>
+        /// <param name="extension"> The extension the resource was deployed with. </param>
+        /// <param name="identifiers"> The extensible resource identifiers. </param>
+        /// <param name="apiVersion"> The API version the resource was deployed with. </param>
+        /// <param name="symbolicName"> The symbolic name of the resource as defined in the deployment template. </param>
+        /// <returns> A new <see cref="Models.TargetResource"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static TargetResource TargetResource(string id, string resourceName, ResourceType? resourceType, ArmDeploymentExtensionDefinition extension, BinaryData identifiers, string apiVersion, string symbolicName)
+        {
+            return new TargetResource(
+                id,
+                resourceName,
+                resourceType,
+                extension,
+                identifiers,
+                apiVersion,
+                symbolicName,
+                default,
+                default);
+        }
+
+        /// <summary> Deployment What-if properties. </summary>
+        /// <param name="template"> The template content. You use this element when you want to pass the template syntax directly in the request rather than link to an existing template. It can be a JObject or well-formed JSON string. Use either the templateLink property or the template property, but not both. </param>
+        /// <param name="templateLink"> The URI of the template. Use either the templateLink property or the template property, but not both. </param>
+        /// <param name="deploymentParameters"> Name and value pairs that define the deployment parameters for the template. You use this element when you want to provide the parameter values directly in the request rather than link to an existing parameter file. Use either the parametersLink property or the parameters property, but not both. It can be a JObject or a well formed JSON string. </param>
+        /// <param name="externalInputs"> External input values, used by external tooling for parameter evaluation. </param>
+        /// <param name="externalInputDefinitions"> External input definitions, used by external tooling to define expected external input values. </param>
+        /// <param name="parametersLink"> The URI of parameters file. You use this element to link to an existing parameters file. Use either the parametersLink property or the parameters property, but not both. </param>
+        /// <param name="extensionConfigs"> The configurations to use for deployment extensions. The keys of this object are deployment extension aliases as defined in the deployment template. </param>
+        /// <param name="mode"> The mode that is used to deploy resources. This value can be either Incremental or Complete. In Incremental mode, resources are deployed without deleting existing resources that are not included in the template. In Complete mode, resources are deployed and existing resources in the resource group that are not included in the template are deleted. Be careful when using Complete mode as you may unintentionally delete resources. </param>
+        /// <param name="debugSettingDetailLevel"> Specifies the type of information to log for debugging. The permitted values are none, requestContent, responseContent, or both requestContent and responseContent separated by a comma. The default is none. When setting this value, carefully consider the type of information you are passing in during deployment. By logging information about the request or response, you could potentially expose sensitive data that is retrieved through the deployment operations. </param>
+        /// <param name="errorDeployment"> The deployment on error behavior. </param>
+        /// <param name="expressionEvaluationScope"> The scope to be used for evaluation of parameters, variables and functions in a nested template. </param>
+        /// <param name="validationLevel"> The validation level of the deployment. </param>
+        /// <param name="whatIfResultFormat"> The format of the What-If results. </param>
+        /// <returns> A new <see cref="Models.ArmDeploymentWhatIfProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ArmDeploymentWhatIfProperties ArmDeploymentWhatIfProperties(BinaryData template, ArmDeploymentTemplateLink templateLink, IDictionary<string, ArmDeploymentParameterValue> deploymentParameters, IDictionary<string, ArmDeploymentExternalInput> externalInputs, IDictionary<string, ArmDeploymentExternalInputDefinition> externalInputDefinitions, ArmDeploymentParametersLink parametersLink, IDictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>> extensionConfigs, ArmDeploymentMode mode, string debugSettingDetailLevel, ErrorDeployment errorDeployment, ExpressionEvaluationScope? expressionEvaluationScope, ValidationLevel? validationLevel, WhatIfResultFormat? whatIfResultFormat)
+        {
+            return new ArmDeploymentWhatIfProperties(
+                template,
+                templateLink,
+                deploymentParameters ?? new ChangeTrackingDictionary<string, ArmDeploymentParameterValue>(),
+                externalInputs ?? new ChangeTrackingDictionary<string, ArmDeploymentExternalInput>(),
+                externalInputDefinitions ?? new ChangeTrackingDictionary<string, ArmDeploymentExternalInputDefinition>(),
+                parametersLink,
+                extensionConfigs ?? new ChangeTrackingDictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>>(),
+                mode,
+                debugSettingDetailLevel is null ? default : new DebugSetting(debugSettingDetailLevel, default),
+                errorDeployment,
+                expressionEvaluationScope is null ? default : new ExpressionEvaluationOptions(expressionEvaluationScope, default),
+                validationLevel,
+                default,
+                whatIfResultFormat is null ? default : new ArmDeploymentWhatIfSettings(whatIfResultFormat, default),
+                default);
+        }
+
+        /// <summary> Information about a single resource change predicted by What-If operation. </summary>
+        /// <param name="resourceId"> The fully-qualified ARM resource ID for this change. </param>
+        /// <param name="deploymentId"> The resource id of the Deployment responsible for this change. </param>
+        /// <param name="symbolicName"> The symbolic name of the resource responsible for this change. </param>
+        /// <param name="identifiers"> A subset of properties that uniquely identify a Bicep extensible resource because it lacks a resource id like an Azure resource has. </param>
+        /// <param name="extension"> The extension the resource was deployed with. </param>
+        /// <param name="changeType"> Type of change that will be made to the resource when the deployment is executed. </param>
+        /// <param name="unsupportedReason"> The explanation about why the resource is unsupported by What-If. </param>
+        /// <param name="before"> The snapshot of the resource before the deployment is executed. </param>
+        /// <param name="after"> The predicted snapshot of the resource after the deployment is executed. </param>
+        /// <param name="delta"> The predicted changes to resource properties. </param>
+        /// <returns> A new <see cref="Models.WhatIfChange"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static WhatIfChange WhatIfChange(string resourceId, string deploymentId, string symbolicName, BinaryData identifiers, ArmDeploymentExtensionDefinition extension, WhatIfChangeType changeType, string unsupportedReason, BinaryData before, BinaryData after, IEnumerable<WhatIfPropertyChange> delta)
+        {
+            return new WhatIfChange(
+                resourceId,
+                deploymentId,
+                symbolicName,
+                default,
+                identifiers,
+                extension,
+                changeType,
+                unsupportedReason,
+                before,
+                after,
+                (delta ?? new ChangeTrackingList<WhatIfPropertyChange>()).ToList(),
+                default);
         }
     }
 }

@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Updated to support API version `2026-06-01`.
+
 ### Breaking Changes
 
 ### Bugs Fixed
