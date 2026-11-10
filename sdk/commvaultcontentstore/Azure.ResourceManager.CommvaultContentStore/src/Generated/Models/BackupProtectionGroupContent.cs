@@ -19,31 +19,31 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BackupProtectionGroupContent"/>. </summary>
-        /// <param name="virtualMachines"> The vm list details. </param>
+        /// <param name="vmList"> The vm list details. </param>
         /// <param name="backupConfiguration"> The backup options for the VM backup. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachines"/> or <paramref name="backupConfiguration"/> is null. </exception>
-        public BackupProtectionGroupContent(IEnumerable<CommvaultVirtualMachineReference> virtualMachines, CommvaultBackupConfiguration backupConfiguration)
+        /// <exception cref="ArgumentNullException"> <paramref name="vmList"/> or <paramref name="backupConfiguration"/> is null. </exception>
+        public BackupProtectionGroupContent(IEnumerable<CommvaultVmReference> vmList, CommvaultBackupConfiguration backupConfiguration)
         {
-            Argument.AssertNotNull(virtualMachines, nameof(virtualMachines));
+            Argument.AssertNotNull(vmList, nameof(vmList));
             Argument.AssertNotNull(backupConfiguration, nameof(backupConfiguration));
 
-            VirtualMachines = virtualMachines.ToList();
+            VmList = vmList.ToList();
             BackupConfiguration = backupConfiguration;
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupProtectionGroupContent"/>. </summary>
-        /// <param name="virtualMachines"> The vm list details. </param>
+        /// <param name="vmList"> The vm list details. </param>
         /// <param name="backupConfiguration"> The backup options for the VM backup. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupProtectionGroupContent(IList<CommvaultVirtualMachineReference> virtualMachines, CommvaultBackupConfiguration backupConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupProtectionGroupContent(IList<CommvaultVmReference> vmList, CommvaultBackupConfiguration backupConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            VirtualMachines = virtualMachines;
+            VmList = vmList;
             BackupConfiguration = backupConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The vm list details. </summary>
-        public IList<CommvaultVirtualMachineReference> VirtualMachines { get; }
+        public IList<CommvaultVmReference> VmList { get; }
 
         /// <summary> The backup options for the VM backup. </summary>
         public CommvaultBackupConfiguration BackupConfiguration { get; }

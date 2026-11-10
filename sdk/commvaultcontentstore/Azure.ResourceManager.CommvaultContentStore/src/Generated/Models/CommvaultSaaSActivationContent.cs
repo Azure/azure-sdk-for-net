@@ -11,38 +11,38 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> SaaS guid for Activate and Validate SaaS Resource. </summary>
-    public partial class CommvaultSaaSActivationContent
+    public partial class CommvaultSaasActivationContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CommvaultSaaSActivationContent"/>. </summary>
-        /// <param name="saaSGuid"> SaaS guid for Activate and Validate SaaS Resource. </param>
-        public CommvaultSaaSActivationContent(Guid saaSGuid)
+        /// <summary> Initializes a new instance of <see cref="CommvaultSaasActivationContent"/>. </summary>
+        /// <param name="saasGuid"> SaaS guid for Activate and Validate SaaS Resource. </param>
+        public CommvaultSaasActivationContent(Guid saasGuid)
         {
-            SaaSGuid = saaSGuid;
+            SaasGuid = saasGuid;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CommvaultSaaSActivationContent"/>. </summary>
-        /// <param name="saaSGuid"> SaaS guid for Activate and Validate SaaS Resource. </param>
+        /// <summary> Initializes a new instance of <see cref="CommvaultSaasActivationContent"/>. </summary>
+        /// <param name="saasGuid"> SaaS guid for Activate and Validate SaaS Resource. </param>
         /// <param name="publisherId"> Optional publisher identifier. </param>
         /// <param name="activationDetails"> Optional activation request parameters containing user and company details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommvaultSaaSActivationContent(Guid saaSGuid, string publisherId, SaaSActivationDetails activationDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommvaultSaasActivationContent(Guid saasGuid, string publisherId, SaasActivationDetails activationDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SaaSGuid = saaSGuid;
+            SaasGuid = saasGuid;
             PublisherId = publisherId;
             ActivationDetails = activationDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> SaaS guid for Activate and Validate SaaS Resource. </summary>
-        public Guid SaaSGuid { get; }
+        public Guid SaasGuid { get; }
 
         /// <summary> Optional publisher identifier. </summary>
         public string PublisherId { get; set; }
 
         /// <summary> Optional activation request parameters containing user and company details. </summary>
-        public SaaSActivationDetails ActivationDetails { get; set; }
+        public SaasActivationDetails ActivationDetails { get; set; }
     }
 }

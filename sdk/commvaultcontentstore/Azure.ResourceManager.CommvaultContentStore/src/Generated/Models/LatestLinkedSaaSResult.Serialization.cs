@@ -16,58 +16,58 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> Response of get latest linked SaaS resource operation. </summary>
-    public partial class LatestLinkedSaaSResult : IJsonModel<LatestLinkedSaaSResult>
+    public partial class LatestLinkedSaasResult : IJsonModel<LatestLinkedSaasResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LatestLinkedSaaSResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual LatestLinkedSaasResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LatestLinkedSaaSResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LatestLinkedSaasResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLatestLinkedSaaSResult(document.RootElement, options);
+                        return DeserializeLatestLinkedSaasResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LatestLinkedSaaSResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LatestLinkedSaasResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LatestLinkedSaaSResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LatestLinkedSaasResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCommvaultContentStoreContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LatestLinkedSaaSResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LatestLinkedSaasResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LatestLinkedSaaSResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<LatestLinkedSaasResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LatestLinkedSaaSResult IPersistableModel<LatestLinkedSaaSResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        LatestLinkedSaasResult IPersistableModel<LatestLinkedSaasResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LatestLinkedSaaSResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LatestLinkedSaasResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LatestLinkedSaaSResult"/> from. </param>
-        internal static LatestLinkedSaaSResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LatestLinkedSaasResult"/> from. </param>
+        internal static LatestLinkedSaasResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeLatestLinkedSaaSResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeLatestLinkedSaasResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LatestLinkedSaaSResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LatestLinkedSaasResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -78,20 +78,20 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LatestLinkedSaaSResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LatestLinkedSaasResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LatestLinkedSaaSResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LatestLinkedSaasResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SaaSResourceId))
+            if (Optional.IsDefined(SaasResourceId))
             {
                 writer.WritePropertyName("saaSResourceId"u8);
-                writer.WriteStringValue(SaaSResourceId);
+                writer.WriteStringValue(SaasResourceId);
             }
-            if (Optional.IsDefined(IsHiddenSaaS))
+            if (Optional.IsDefined(IsHiddenSaas))
             {
                 writer.WritePropertyName("isHiddenSaaS"u8);
-                writer.WriteBooleanValue(IsHiddenSaaS.Value);
+                writer.WriteBooleanValue(IsHiddenSaas.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -112,31 +112,31 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LatestLinkedSaaSResult IJsonModel<LatestLinkedSaaSResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        LatestLinkedSaasResult IJsonModel<LatestLinkedSaasResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual LatestLinkedSaaSResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual LatestLinkedSaasResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LatestLinkedSaaSResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LatestLinkedSaasResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LatestLinkedSaaSResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LatestLinkedSaasResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLatestLinkedSaaSResult(document.RootElement, options);
+            return DeserializeLatestLinkedSaasResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LatestLinkedSaaSResult DeserializeLatestLinkedSaaSResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static LatestLinkedSaasResult DeserializeLatestLinkedSaasResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier saaSResourceId = default;
-            bool? isHiddenSaaS = default;
+            ResourceIdentifier saasResourceId = default;
+            bool? isHiddenSaas = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    saaSResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    saasResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("isHiddenSaaS"u8))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    isHiddenSaaS = prop.Value.GetBoolean();
+                    isHiddenSaas = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LatestLinkedSaaSResult(saaSResourceId, isHiddenSaaS, additionalBinaryDataProperties);
+            return new LatestLinkedSaasResult(saasResourceId, isHiddenSaas, additionalBinaryDataProperties);
         }
     }
 }

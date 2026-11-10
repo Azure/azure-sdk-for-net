@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             }
             writer.WritePropertyName("vmList"u8);
             writer.WriteStartArray();
-            foreach (CommvaultVirtualMachineReference item in VirtualMachines)
+            foreach (CommvaultVmReference item in VmList)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,19 +141,19 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 return null;
             }
-            IList<CommvaultVirtualMachineReference> virtualMachines = default;
+            IList<CommvaultVmReference> vmList = default;
             CommvaultBackupConfiguration backupConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("vmList"u8))
                 {
-                    List<CommvaultVirtualMachineReference> array = new List<CommvaultVirtualMachineReference>();
+                    List<CommvaultVmReference> array = new List<CommvaultVmReference>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CommvaultVirtualMachineReference.DeserializeCommvaultVirtualMachineReference(item, options));
+                        array.Add(CommvaultVmReference.DeserializeCommvaultVmReference(item, options));
                     }
-                    virtualMachines = array;
+                    vmList = array;
                     continue;
                 }
                 if (prop.NameEquals("backupOptions"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BackupProtectionGroupContent(virtualMachines ?? new ChangeTrackingList<CommvaultVirtualMachineReference>(), backupConfiguration, additionalBinaryDataProperties);
+            return new BackupProtectionGroupContent(vmList ?? new ChangeTrackingList<CommvaultVmReference>(), backupConfiguration, additionalBinaryDataProperties);
         }
     }
 }

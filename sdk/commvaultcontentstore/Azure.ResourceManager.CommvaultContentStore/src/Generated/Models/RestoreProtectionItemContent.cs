@@ -12,35 +12,35 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> The properties of RestoreProtectionItemRequest. </summary>
-    public partial class RestoreProtectedItemContent
+    public partial class RestoreProtectionItemContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RestoreProtectedItemContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreProtectionItemContent"/>. </summary>
         /// <param name="isInPlaceRestore"> Check whether inplace or out of place restore. </param>
-        /// <param name="virtualMachines"> List of information on VMs. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachines"/> is null. </exception>
-        public RestoreProtectedItemContent(bool isInPlaceRestore, IEnumerable<CommvaultVirtualMachineRestoreSettings> virtualMachines)
+        /// <param name="vmInfoList"> List of information on VMs. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmInfoList"/> is null. </exception>
+        public RestoreProtectionItemContent(bool isInPlaceRestore, IEnumerable<CommvaultVmRestoreSettings> vmInfoList)
         {
-            Argument.AssertNotNull(virtualMachines, nameof(virtualMachines));
+            Argument.AssertNotNull(vmInfoList, nameof(vmInfoList));
 
             IsInPlaceRestore = isInPlaceRestore;
-            VirtualMachineDestination = new VmDestinationInfo(virtualMachines);
+            VmDestinationInfo = new VmDestinationInfo(vmInfoList);
         }
 
-        /// <summary> Initializes a new instance of <see cref="RestoreProtectedItemContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreProtectionItemContent"/>. </summary>
         /// <param name="isInPlaceRestore"> Check whether inplace or out of place restore. </param>
         /// <param name="restoreType"> Type of Restore. </param>
         /// <param name="restorePointTime"> Time to restore. </param>
-        /// <param name="virtualMachineDestination"> The vm destination details of the VM. </param>
+        /// <param name="vmDestinationInfo"> The vm destination details of the VM. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RestoreProtectedItemContent(bool isInPlaceRestore, CommvaultRestoreType? restoreType, string restorePointTime, VmDestinationInfo virtualMachineDestination, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RestoreProtectionItemContent(bool isInPlaceRestore, CommvaultRestoreType? restoreType, string restorePointTime, VmDestinationInfo vmDestinationInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsInPlaceRestore = isInPlaceRestore;
             RestoreType = restoreType;
             RestorePointTime = restorePointTime;
-            VirtualMachineDestination = virtualMachineDestination;
+            VmDestinationInfo = vmDestinationInfo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public string RestorePointTime { get; set; }
 
         /// <summary> The vm destination details of the VM. </summary>
-        internal VmDestinationInfo VirtualMachineDestination { get; }
+        internal VmDestinationInfo VmDestinationInfo { get; }
 
         /// <summary> List of information on VMs. </summary>
-        public IList<CommvaultVirtualMachineRestoreSettings> VirtualMachines
+        public IList<CommvaultVmRestoreSettings> VmInfoList
         {
             get
             {
-                return VirtualMachineDestination is null ? default : VirtualMachineDestination.VirtualMachines;
+                return VmDestinationInfo is null ? default : VmDestinationInfo.VmInfoList;
             }
         }
     }

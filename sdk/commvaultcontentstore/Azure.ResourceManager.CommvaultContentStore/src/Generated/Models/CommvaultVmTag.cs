@@ -12,16 +12,16 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> The properties of VMTag for Restore Request. </summary>
-    public partial class CommvaultVirtualMachineTag
+    public partial class CommvaultVmTag
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CommvaultVirtualMachineTag"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommvaultVmTag"/>. </summary>
         /// <param name="name"> The name of VM tag. </param>
         /// <param name="value"> The value of VM tag. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="value"/> is null. </exception>
-        public CommvaultVirtualMachineTag(string name, string value)
+        public CommvaultVmTag(string name, string value)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(value, nameof(value));
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CommvaultVirtualMachineTag"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommvaultVmTag"/>. </summary>
         /// <param name="name"> The name of VM tag. </param>
         /// <param name="value"> The value of VM tag. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommvaultVirtualMachineTag(string name, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommvaultVmTag(string name, string value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Value = value;

@@ -15,61 +15,61 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> SaaS-related data properties. </summary>
-    public partial class CommvaultSaaSDetails : IJsonModel<CommvaultSaaSDetails>
+    public partial class CommvaultSaasDetails : IJsonModel<CommvaultSaasDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CommvaultSaaSDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CommvaultSaasDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommvaultSaaSDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultSaasDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCommvaultSaaSDetails(document.RootElement, options);
+                        return DeserializeCommvaultSaasDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommvaultSaaSDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommvaultSaasDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommvaultSaaSDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultSaasDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCommvaultContentStoreContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CommvaultSaaSDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommvaultSaasDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CommvaultSaaSDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CommvaultSaasDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CommvaultSaaSDetails IPersistableModel<CommvaultSaaSDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CommvaultSaasDetails IPersistableModel<CommvaultSaasDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CommvaultSaaSDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CommvaultSaasDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="commvaultSaaSDetails"> The <see cref="CommvaultSaaSDetails"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(CommvaultSaaSDetails commvaultSaaSDetails)
+        /// <param name="commvaultSaasDetails"> The <see cref="CommvaultSaasDetails"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(CommvaultSaasDetails commvaultSaasDetails)
         {
-            if (commvaultSaaSDetails == null)
+            if (commvaultSaasDetails == null)
             {
                 return null;
             }
-            return RequestContent.Create(commvaultSaaSDetails, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(commvaultSaasDetails, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CommvaultSaaSDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CommvaultSaasDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,15 +80,15 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommvaultSaaSDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultSaasDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommvaultSaaSDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CommvaultSaasDetails)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SaaSResourceId))
+            if (Optional.IsDefined(SaasResourceId))
             {
                 writer.WritePropertyName("saaSResourceId"u8);
-                writer.WriteStringValue(SaaSResourceId);
+                writer.WriteStringValue(SaasResourceId);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -109,30 +109,30 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CommvaultSaaSDetails IJsonModel<CommvaultSaaSDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CommvaultSaasDetails IJsonModel<CommvaultSaasDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CommvaultSaaSDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CommvaultSaasDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommvaultSaaSDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultSaasDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommvaultSaaSDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CommvaultSaasDetails)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCommvaultSaaSDetails(document.RootElement, options);
+            return DeserializeCommvaultSaasDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CommvaultSaaSDetails DeserializeCommvaultSaaSDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static CommvaultSaasDetails DeserializeCommvaultSaasDetails(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier saaSResourceId = default;
+            ResourceIdentifier saasResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    saaSResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    saasResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CommvaultSaaSDetails(saaSResourceId, additionalBinaryDataProperties);
+            return new CommvaultSaasDetails(saasResourceId, additionalBinaryDataProperties);
         }
     }
 }

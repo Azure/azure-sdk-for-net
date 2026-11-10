@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// Resolve the token to get the SaaS resource ID and activate the SaaS resource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCommvaultContentStoreSubscriptionResource.ActivateSaaSResourceAsync(WaitUntil, CommvaultSaaSActivationContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCommvaultContentStoreSubscriptionResource.ActivateSaasResourceAsync(WaitUntil, CommvaultSaasActivationContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -255,18 +255,18 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<ArmOperation<SaaSResourceDetailsData>> ActivateSaaSResourceAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, CommvaultSaaSActivationContent content, CancellationToken cancellationToken = default)
+        public static async Task<ArmOperation<SaasResourceDetailsData>> ActivateSaasResourceAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, CommvaultSaasActivationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableCommvaultContentStoreSubscriptionResource(subscriptionResource).ActivateSaaSResourceAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCommvaultContentStoreSubscriptionResource(subscriptionResource).ActivateSaasResourceAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Resolve the token to get the SaaS resource ID and activate the SaaS resource
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCommvaultContentStoreSubscriptionResource.ActivateSaaSResource(WaitUntil, CommvaultSaaSActivationContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCommvaultContentStoreSubscriptionResource.ActivateSaasResource(WaitUntil, CommvaultSaasActivationContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -274,11 +274,11 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static ArmOperation<SaaSResourceDetailsData> ActivateSaaSResource(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, CommvaultSaaSActivationContent content, CancellationToken cancellationToken = default)
+        public static ArmOperation<SaasResourceDetailsData> ActivateSaasResource(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, CommvaultSaasActivationContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableCommvaultContentStoreSubscriptionResource(subscriptionResource).ActivateSaaSResource(waitUntil, content, cancellationToken);
+            return GetMockableCommvaultContentStoreSubscriptionResource(subscriptionResource).ActivateSaasResource(waitUntil, content, cancellationToken);
         }
 
         /// <summary>

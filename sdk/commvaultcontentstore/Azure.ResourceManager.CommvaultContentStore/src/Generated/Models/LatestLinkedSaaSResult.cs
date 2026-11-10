@@ -12,31 +12,31 @@ using Azure.Core;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> Response of get latest linked SaaS resource operation. </summary>
-    public partial class LatestLinkedSaaSResult
+    public partial class LatestLinkedSaasResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LatestLinkedSaaSResult"/>. </summary>
-        internal LatestLinkedSaaSResult()
+        /// <summary> Initializes a new instance of <see cref="LatestLinkedSaasResult"/>. </summary>
+        internal LatestLinkedSaasResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LatestLinkedSaaSResult"/>. </summary>
-        /// <param name="saaSResourceId"> SaaS resource id. </param>
-        /// <param name="isHiddenSaaS"> Flag indicating if the SaaS resource is hidden. </param>
+        /// <summary> Initializes a new instance of <see cref="LatestLinkedSaasResult"/>. </summary>
+        /// <param name="saasResourceId"> SaaS resource id. </param>
+        /// <param name="isHiddenSaas"> Flag indicating if the SaaS resource is hidden. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LatestLinkedSaaSResult(ResourceIdentifier saaSResourceId, bool? isHiddenSaaS, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LatestLinkedSaasResult(ResourceIdentifier saasResourceId, bool? isHiddenSaas, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SaaSResourceId = saaSResourceId;
-            IsHiddenSaaS = isHiddenSaaS;
+            SaasResourceId = saasResourceId;
+            IsHiddenSaas = isHiddenSaas;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> SaaS resource id. </summary>
-        public ResourceIdentifier SaaSResourceId { get; }
+        public ResourceIdentifier SaasResourceId { get; }
 
         /// <summary> Flag indicating if the SaaS resource is hidden. </summary>
-        public bool? IsHiddenSaaS { get; }
+        public bool? IsHiddenSaas { get; }
     }
 }

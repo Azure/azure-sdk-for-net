@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("vmGuid"u8);
-                writer.WriteStringValue(VirtualMachineGuid);
+                writer.WriteStringValue(VmGuid);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             long lastBackupTime = default;
             string resourceGroupName = default;
             AzureLocation location = default;
-            string virtualMachineGuid = default;
+            string vmGuid = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 }
                 if (prop.NameEquals("vmGuid"u8))
                 {
-                    virtualMachineGuid = prop.Value.GetString();
+                    vmGuid = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 lastBackupTime,
                 resourceGroupName,
                 location,
-                virtualMachineGuid,
+                vmGuid,
                 additionalBinaryDataProperties);
         }
     }

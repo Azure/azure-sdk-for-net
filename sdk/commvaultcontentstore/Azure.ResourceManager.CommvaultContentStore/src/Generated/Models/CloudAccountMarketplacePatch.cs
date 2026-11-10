@@ -23,20 +23,20 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudAccountMarketplacePatch"/>. </summary>
-        /// <param name="saaSResourceId"> Marketplace SaaS Resource Id. </param>
+        /// <param name="saasResourceId"> Marketplace SaaS Resource Id. </param>
         /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CloudAccountMarketplacePatch(ResourceIdentifier saaSResourceId, string subscriptionId, CloudAccountOfferDetailsPatch offerDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CloudAccountMarketplacePatch(ResourceIdentifier saasResourceId, string subscriptionId, CloudAccountOfferDetailsPatch offerDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SaaSResourceId = saaSResourceId;
+            SaasResourceId = saasResourceId;
             SubscriptionId = subscriptionId;
             OfferDetails = offerDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Marketplace SaaS Resource Id. </summary>
-        public ResourceIdentifier SaaSResourceId { get; set; }
+        public ResourceIdentifier SaasResourceId { get; set; }
 
         /// <summary> Azure subscription id for the the marketplace offer is purchased from. </summary>
         public string SubscriptionId { get; set; }

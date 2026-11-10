@@ -12,31 +12,31 @@ using Azure.Core;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> Optional activate SaaS request parameters. </summary>
-    public partial class SaaSActivationDetails
+    public partial class SaasActivationDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SaaSActivationDetails"/>. </summary>
-        public SaaSActivationDetails()
+        /// <summary> Initializes a new instance of <see cref="SaasActivationDetails"/>. </summary>
+        public SaasActivationDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SaaSActivationDetails"/>. </summary>
-        /// <param name="saaSResourceId"> Optional Marketplace SaaS resource identifier. </param>
+        /// <summary> Initializes a new instance of <see cref="SaasActivationDetails"/>. </summary>
+        /// <param name="saasResourceId"> Optional Marketplace SaaS resource identifier. </param>
         /// <param name="user"> Optional user details. </param>
         /// <param name="company"> Optional company details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SaaSActivationDetails(ResourceIdentifier saaSResourceId, CommvaultUserDetails user, CommvaultCompanyProfile company, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SaasActivationDetails(ResourceIdentifier saasResourceId, CommvaultUserDetails user, CommvaultCompanyProfile company, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SaaSResourceId = saaSResourceId;
+            SaasResourceId = saasResourceId;
             User = user;
             Company = company;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Optional Marketplace SaaS resource identifier. </summary>
-        public ResourceIdentifier SaaSResourceId { get; set; }
+        public ResourceIdentifier SaasResourceId { get; set; }
 
         /// <summary> Optional user details. </summary>
         public CommvaultUserDetails User { get; set; }

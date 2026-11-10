@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 writer.WritePropertyName("subscriptionStatus"u8);
                 writer.WriteStringValue(SubscriptionStatus.Value.ToString());
             }
-            if (Optional.IsDefined(SaaSResourceId))
+            if (Optional.IsDefined(SaasResourceId))
             {
                 writer.WritePropertyName("saasResourceId"u8);
-                writer.WriteStringValue(SaaSResourceId);
+                writer.WriteStringValue(SaasResourceId);
             }
             writer.WritePropertyName("offerDetails"u8);
             writer.WriteObjectValue(OfferDetails, options);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             }
             string subscriptionId = default;
             MarketplaceSubscriptionStatus? subscriptionStatus = default;
-            ResourceIdentifier saaSResourceId = default;
+            ResourceIdentifier saasResourceId = default;
             CommvaultOfferDetails offerDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    saaSResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    saasResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("offerDetails"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CommvaultMarketplaceDetails(subscriptionId, subscriptionStatus, saaSResourceId, offerDetails, additionalBinaryDataProperties);
+            return new CommvaultMarketplaceDetails(subscriptionId, subscriptionStatus, saasResourceId, offerDetails, additionalBinaryDataProperties);
         }
     }
 }

@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <summary> Initializes a new instance of <see cref="CommvaultMarketplaceDetails"/>. </summary>
         /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
-        /// <param name="saaSResourceId"> Marketplace SaaS Resource Id. </param>
+        /// <param name="saasResourceId"> Marketplace SaaS Resource Id. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommvaultMarketplaceDetails(string subscriptionId, MarketplaceSubscriptionStatus? subscriptionStatus, ResourceIdentifier saaSResourceId, CommvaultOfferDetails offerDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommvaultMarketplaceDetails(string subscriptionId, MarketplaceSubscriptionStatus? subscriptionStatus, ResourceIdentifier saasResourceId, CommvaultOfferDetails offerDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubscriptionId = subscriptionId;
             SubscriptionStatus = subscriptionStatus;
-            SaaSResourceId = saaSResourceId;
+            SaasResourceId = saasResourceId;
             OfferDetails = offerDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public MarketplaceSubscriptionStatus? SubscriptionStatus { get; }
 
         /// <summary> Marketplace SaaS Resource Id. </summary>
-        public ResourceIdentifier SaaSResourceId { get; set; }
+        public ResourceIdentifier SaasResourceId { get; set; }
 
         /// <summary> Offer details for the marketplace that is selected by the user. </summary>
         public CommvaultOfferDetails OfferDetails { get; set; }

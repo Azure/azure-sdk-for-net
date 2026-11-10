@@ -12,62 +12,62 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> The properties of information of a VM. </summary>
-    public partial class CommvaultVirtualMachineRestoreSettings
+    public partial class CommvaultVmRestoreSettings
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CommvaultVirtualMachineRestoreSettings"/>. </summary>
-        /// <param name="sourceVirtualMachineGuid"> The GUID of VM to be restored. </param>
+        /// <summary> Initializes a new instance of <see cref="CommvaultVmRestoreSettings"/>. </summary>
+        /// <param name="sourceVmGuid"> The GUID of VM to be restored. </param>
         /// <param name="storageAccountId"> The storage account to be used for restore. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceVirtualMachineGuid"/> or <paramref name="storageAccountId"/> is null. </exception>
-        public CommvaultVirtualMachineRestoreSettings(string sourceVirtualMachineGuid, string storageAccountId)
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceVmGuid"/> or <paramref name="storageAccountId"/> is null. </exception>
+        public CommvaultVmRestoreSettings(string sourceVmGuid, string storageAccountId)
         {
-            Argument.AssertNotNull(sourceVirtualMachineGuid, nameof(sourceVirtualMachineGuid));
+            Argument.AssertNotNull(sourceVmGuid, nameof(sourceVmGuid));
             Argument.AssertNotNull(storageAccountId, nameof(storageAccountId));
 
-            SourceVirtualMachineGuid = sourceVirtualMachineGuid;
+            SourceVmGuid = sourceVmGuid;
             StorageAccountId = storageAccountId;
-            Tags = new ChangeTrackingList<CommvaultVirtualMachineTag>();
+            Tags = new ChangeTrackingList<CommvaultVmTag>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CommvaultVirtualMachineRestoreSettings"/>. </summary>
-        /// <param name="sourceVirtualMachineGuid"> The GUID of VM to be restored. </param>
+        /// <summary> Initializes a new instance of <see cref="CommvaultVmRestoreSettings"/>. </summary>
+        /// <param name="sourceVmGuid"> The GUID of VM to be restored. </param>
         /// <param name="storageAccountId"> The storage account to be used for restore. </param>
-        /// <param name="shouldPowerOnVirtualMachineAfterRestore"> The identifier to check if VM needs to be powered on. </param>
+        /// <param name="shouldPowerOnVmAfterRestore"> The identifier to check if VM needs to be powered on. </param>
         /// <param name="name"> The name of the VM. </param>
         /// <param name="resourceGroupName"> The resource group of the VM. </param>
         /// <param name="region"> The region of the VM. </param>
         /// <param name="virtualNetworkId"> The network Id of the VM. </param>
         /// <param name="subnetId"> The subnet Id of the VM. </param>
         /// <param name="shouldAttachAndSwapOSDisk"> The identifier to check if to attach and swap disk of the VM. </param>
-        /// <param name="targetVirtualMachineGuid"> The GUID of target VM used in DISK ATTACH. </param>
+        /// <param name="targetVmGuid"> The GUID of target VM used in DISK ATTACH. </param>
         /// <param name="tags"> The vmTag of the VM. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommvaultVirtualMachineRestoreSettings(string sourceVirtualMachineGuid, string storageAccountId, bool? shouldPowerOnVirtualMachineAfterRestore, string name, string resourceGroupName, string region, string virtualNetworkId, string subnetId, bool? shouldAttachAndSwapOSDisk, string targetVirtualMachineGuid, IList<CommvaultVirtualMachineTag> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommvaultVmRestoreSettings(string sourceVmGuid, string storageAccountId, bool? shouldPowerOnVmAfterRestore, string name, string resourceGroupName, string region, string virtualNetworkId, string subnetId, bool? shouldAttachAndSwapOSDisk, string targetVmGuid, IList<CommvaultVmTag> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SourceVirtualMachineGuid = sourceVirtualMachineGuid;
+            SourceVmGuid = sourceVmGuid;
             StorageAccountId = storageAccountId;
-            ShouldPowerOnVirtualMachineAfterRestore = shouldPowerOnVirtualMachineAfterRestore;
+            ShouldPowerOnVmAfterRestore = shouldPowerOnVmAfterRestore;
             Name = name;
             ResourceGroupName = resourceGroupName;
             Region = region;
             VirtualNetworkId = virtualNetworkId;
             SubnetId = subnetId;
             ShouldAttachAndSwapOSDisk = shouldAttachAndSwapOSDisk;
-            TargetVirtualMachineGuid = targetVirtualMachineGuid;
+            TargetVmGuid = targetVmGuid;
             Tags = tags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The GUID of VM to be restored. </summary>
-        public string SourceVirtualMachineGuid { get; }
+        public string SourceVmGuid { get; }
 
         /// <summary> The storage account to be used for restore. </summary>
         public string StorageAccountId { get; }
 
         /// <summary> The identifier to check if VM needs to be powered on. </summary>
-        public bool? ShouldPowerOnVirtualMachineAfterRestore { get; set; }
+        public bool? ShouldPowerOnVmAfterRestore { get; set; }
 
         /// <summary> The name of the VM. </summary>
         public string Name { get; set; }
@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public bool? ShouldAttachAndSwapOSDisk { get; set; }
 
         /// <summary> The GUID of target VM used in DISK ATTACH. </summary>
-        public string TargetVirtualMachineGuid { get; set; }
+        public string TargetVmGuid { get; set; }
 
         /// <summary> The vmTag of the VM. </summary>
-        public IList<CommvaultVirtualMachineTag> Tags { get; }
+        public IList<CommvaultVmTag> Tags { get; }
     }
 }

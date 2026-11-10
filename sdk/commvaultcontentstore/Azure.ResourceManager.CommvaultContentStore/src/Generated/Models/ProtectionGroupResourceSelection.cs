@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="manuallySelectedItems"> The items to be protected under Protection Group. </param>
         /// <param name="matchRules"> Rules to match resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProtectionGroupResourceSelection(IList<string> manuallySelectedItems, ProtectionGroupResourceMatchCriteria matchRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProtectionGroupResourceSelection(IList<string> manuallySelectedItems, ProtectionGroupResourcesMatchRules matchRules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManuallySelectedItems = manuallySelectedItems;
             MatchRules = matchRules;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public IList<string> ManuallySelectedItems { get; }
 
         /// <summary> Rules to match resources. </summary>
-        public ProtectionGroupResourceMatchCriteria MatchRules { get; set; }
+        public ProtectionGroupResourcesMatchRules MatchRules { get; set; }
     }
 }

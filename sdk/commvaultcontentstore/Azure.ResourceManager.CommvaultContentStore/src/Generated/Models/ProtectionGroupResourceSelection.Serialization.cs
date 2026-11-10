@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 return null;
             }
             IList<string> manuallySelectedItems = default;
-            ProtectionGroupResourceMatchCriteria matchRules = default;
+            ProtectionGroupResourcesMatchRules matchRules = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    matchRules = ProtectionGroupResourceMatchCriteria.DeserializeProtectionGroupResourceMatchCriteria(prop.Value, options);
+                    matchRules = ProtectionGroupResourcesMatchRules.DeserializeProtectionGroupResourcesMatchRules(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

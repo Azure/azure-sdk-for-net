@@ -13,30 +13,30 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> Marketplace SaaS resource details. </summary>
-    public partial class SaaSResourceDetailsData : ResourceData
+    public partial class SaasResourceDetailsData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SaaSResourceDetailsData"/>. </summary>
-        internal SaaSResourceDetailsData()
+        /// <summary> Initializes a new instance of <see cref="SaasResourceDetailsData"/>. </summary>
+        internal SaasResourceDetailsData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SaaSResourceDetailsData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SaasResourceDetailsData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="saaSResourceId"> Id of the Marketplace SaaS Resource. </param>
+        /// <param name="saasResourceId"> Id of the Marketplace SaaS Resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SaaSResourceDetailsData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier saaSResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal SaasResourceDetailsData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier saasResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            SaaSResourceId = saaSResourceId;
+            SaasResourceId = saasResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Id of the Marketplace SaaS Resource. </summary>
-        public ResourceIdentifier SaaSResourceId { get; }
+        public ResourceIdentifier SaasResourceId { get; }
     }
 }

@@ -14,56 +14,56 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> The VM list item for backup. </summary>
-    public partial class CommvaultVirtualMachineReference : IJsonModel<CommvaultVirtualMachineReference>
+    public partial class CommvaultVmReference : IJsonModel<CommvaultVmReference>
     {
-        /// <summary> Initializes a new instance of <see cref="CommvaultVirtualMachineReference"/> for deserialization. </summary>
-        internal CommvaultVirtualMachineReference()
+        /// <summary> Initializes a new instance of <see cref="CommvaultVmReference"/> for deserialization. </summary>
+        internal CommvaultVmReference()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CommvaultVirtualMachineReference PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CommvaultVmReference PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommvaultVirtualMachineReference>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultVmReference>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCommvaultVirtualMachineReference(document.RootElement, options);
+                        return DeserializeCommvaultVmReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommvaultVirtualMachineReference)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommvaultVmReference)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommvaultVirtualMachineReference>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultVmReference>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCommvaultContentStoreContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CommvaultVirtualMachineReference)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommvaultVmReference)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CommvaultVirtualMachineReference>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CommvaultVmReference>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CommvaultVirtualMachineReference IPersistableModel<CommvaultVirtualMachineReference>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CommvaultVmReference IPersistableModel<CommvaultVmReference>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CommvaultVirtualMachineReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CommvaultVmReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CommvaultVirtualMachineReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CommvaultVmReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,13 +74,13 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommvaultVirtualMachineReference>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultVmReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommvaultVirtualMachineReference)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CommvaultVmReference)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("vmGuid"u8);
-            writer.WriteStringValue(VirtualMachineGuid);
+            writer.WriteStringValue(VmGuid);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -100,36 +100,36 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CommvaultVirtualMachineReference IJsonModel<CommvaultVirtualMachineReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CommvaultVmReference IJsonModel<CommvaultVmReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CommvaultVirtualMachineReference JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CommvaultVmReference JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommvaultVirtualMachineReference>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultVmReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommvaultVirtualMachineReference)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CommvaultVmReference)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCommvaultVirtualMachineReference(document.RootElement, options);
+            return DeserializeCommvaultVmReference(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CommvaultVirtualMachineReference DeserializeCommvaultVirtualMachineReference(JsonElement element, ModelReaderWriterOptions options)
+        internal static CommvaultVmReference DeserializeCommvaultVmReference(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string virtualMachineGuid = default;
+            string vmGuid = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("vmGuid"u8))
                 {
-                    virtualMachineGuid = prop.Value.GetString();
+                    vmGuid = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CommvaultVirtualMachineReference(virtualMachineGuid, additionalBinaryDataProperties);
+            return new CommvaultVmReference(vmGuid, additionalBinaryDataProperties);
         }
     }
 }

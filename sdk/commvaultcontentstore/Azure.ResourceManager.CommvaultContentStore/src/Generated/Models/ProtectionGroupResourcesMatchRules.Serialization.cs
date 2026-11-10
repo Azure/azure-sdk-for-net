@@ -13,57 +13,57 @@ using Azure.ResourceManager.CommvaultContentStore;
 
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
-    /// <summary> Rules that select resources to protect in a protection group. </summary>
-    public partial class ProtectionGroupResourceMatchCriteria : IJsonModel<ProtectionGroupResourceMatchCriteria>
+    /// <summary> The ProtectionGroupResourcesMatchRules. </summary>
+    public partial class ProtectionGroupResourcesMatchRules : IJsonModel<ProtectionGroupResourcesMatchRules>
     {
-        /// <summary> Initializes a new instance of <see cref="ProtectionGroupResourceMatchCriteria"/> for deserialization. </summary>
-        internal ProtectionGroupResourceMatchCriteria()
+        /// <summary> Initializes a new instance of <see cref="ProtectionGroupResourcesMatchRules"/> for deserialization. </summary>
+        internal ProtectionGroupResourcesMatchRules()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProtectionGroupResourceMatchCriteria PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ProtectionGroupResourcesMatchRules PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProtectionGroupResourceMatchCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectionGroupResourcesMatchRules>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeProtectionGroupResourceMatchCriteria(document.RootElement, options);
+                        return DeserializeProtectionGroupResourcesMatchRules(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProtectionGroupResourceMatchCriteria)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtectionGroupResourcesMatchRules)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProtectionGroupResourceMatchCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectionGroupResourcesMatchRules>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCommvaultContentStoreContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ProtectionGroupResourceMatchCriteria)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtectionGroupResourcesMatchRules)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProtectionGroupResourceMatchCriteria>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ProtectionGroupResourcesMatchRules>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProtectionGroupResourceMatchCriteria IPersistableModel<ProtectionGroupResourceMatchCriteria>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ProtectionGroupResourcesMatchRules IPersistableModel<ProtectionGroupResourcesMatchRules>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProtectionGroupResourceMatchCriteria>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ProtectionGroupResourcesMatchRules>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ProtectionGroupResourceMatchCriteria>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProtectionGroupResourcesMatchRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProtectionGroupResourceMatchCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectionGroupResourcesMatchRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProtectionGroupResourceMatchCriteria)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtectionGroupResourcesMatchRules)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("rules"u8);
             writer.WriteStartArray();
@@ -107,24 +107,24 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProtectionGroupResourceMatchCriteria IJsonModel<ProtectionGroupResourceMatchCriteria>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ProtectionGroupResourcesMatchRules IJsonModel<ProtectionGroupResourcesMatchRules>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProtectionGroupResourceMatchCriteria JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ProtectionGroupResourcesMatchRules JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProtectionGroupResourceMatchCriteria>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProtectionGroupResourcesMatchRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProtectionGroupResourceMatchCriteria)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtectionGroupResourcesMatchRules)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProtectionGroupResourceMatchCriteria(document.RootElement, options);
+            return DeserializeProtectionGroupResourcesMatchRules(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProtectionGroupResourceMatchCriteria DeserializeProtectionGroupResourceMatchCriteria(JsonElement element, ModelReaderWriterOptions options)
+        internal static ProtectionGroupResourcesMatchRules DeserializeProtectionGroupResourcesMatchRules(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ProtectionGroupResourceMatchCriteria(rules ?? new ChangeTrackingList<ProtectionGroupRule>(), matchType, additionalBinaryDataProperties);
+            return new ProtectionGroupResourcesMatchRules(rules ?? new ChangeTrackingList<ProtectionGroupRule>(), matchType, additionalBinaryDataProperties);
         }
     }
 }

@@ -12,26 +12,26 @@ using Azure.Core;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> SaaS-related data properties. </summary>
-    public partial class CommvaultSaaSDetails
+    public partial class CommvaultSaasDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CommvaultSaaSDetails"/>. </summary>
-        public CommvaultSaaSDetails()
+        /// <summary> Initializes a new instance of <see cref="CommvaultSaasDetails"/>. </summary>
+        public CommvaultSaasDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CommvaultSaaSDetails"/>. </summary>
-        /// <param name="saaSResourceId"> SaaS resource id. </param>
+        /// <summary> Initializes a new instance of <see cref="CommvaultSaasDetails"/>. </summary>
+        /// <param name="saasResourceId"> SaaS resource id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommvaultSaaSDetails(ResourceIdentifier saaSResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommvaultSaasDetails(ResourceIdentifier saasResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            SaaSResourceId = saaSResourceId;
+            SaasResourceId = saasResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> SaaS resource id. </summary>
-        public ResourceIdentifier SaaSResourceId { get; set; }
+        public ResourceIdentifier SaasResourceId { get; set; }
     }
 }

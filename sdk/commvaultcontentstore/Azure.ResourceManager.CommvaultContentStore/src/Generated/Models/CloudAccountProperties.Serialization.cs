@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(SingleSignOnUriString))
+            if (options.Format != "W" && Optional.IsDefined(SsoUri))
             {
                 writer.WritePropertyName("ssoUrl"u8);
-                writer.WriteStringValue(SingleSignOnUriString);
+                writer.WriteStringValue(SsoUri);
             }
             if (Optional.IsDefined(Company))
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             CommvaultMarketplaceDetails marketplace = default;
             CommvaultUserDetails user = default;
             ResourceProvisioningState? provisioningState = default;
-            string singleSignOnUriString = default;
+            string ssoUri = default;
             CommvaultCompanyProfile company = default;
             IList<CommvaultRoleAssignment> roleAssignmentsOnCreate = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 }
                 if (prop.NameEquals("ssoUrl"u8))
                 {
-                    singleSignOnUriString = prop.Value.GetString();
+                    ssoUri = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("company"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 marketplace,
                 user,
                 provisioningState,
-                singleSignOnUriString,
+                ssoUri,
                 company,
                 roleAssignmentsOnCreate ?? new ChangeTrackingList<CommvaultRoleAssignment>(),
                 additionalBinaryDataProperties);

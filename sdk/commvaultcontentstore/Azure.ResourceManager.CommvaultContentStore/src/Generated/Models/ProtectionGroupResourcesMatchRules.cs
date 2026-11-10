@@ -12,17 +12,17 @@ using Azure.ResourceManager.CommvaultContentStore;
 
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
-    /// <summary> Rules that select resources to protect in a protection group. </summary>
-    public partial class ProtectionGroupResourceMatchCriteria
+    /// <summary> The ProtectionGroupResourcesMatchRules. </summary>
+    public partial class ProtectionGroupResourcesMatchRules
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProtectionGroupResourceMatchCriteria"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectionGroupResourcesMatchRules"/>. </summary>
         /// <param name="rules"> rules to match. </param>
         /// <param name="matchType"> match Type all or any. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="rules"/> is null. </exception>
-        public ProtectionGroupResourceMatchCriteria(IEnumerable<ProtectionGroupRule> rules, ProtectionGroupMatchType matchType)
+        public ProtectionGroupResourcesMatchRules(IEnumerable<ProtectionGroupRule> rules, ProtectionGroupMatchType matchType)
         {
             Argument.AssertNotNull(rules, nameof(rules));
 
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             MatchType = matchType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProtectionGroupResourceMatchCriteria"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProtectionGroupResourcesMatchRules"/>. </summary>
         /// <param name="rules"> rules to match. </param>
         /// <param name="matchType"> match Type all or any. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProtectionGroupResourceMatchCriteria(IList<ProtectionGroupRule> rules, ProtectionGroupMatchType matchType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProtectionGroupResourcesMatchRules(IList<ProtectionGroupRule> rules, ProtectionGroupMatchType matchType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Rules = rules;
             MatchType = matchType;

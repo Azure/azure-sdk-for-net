@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 throw new FormatException($"The model {nameof(CloudAccountMarketplacePatch)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SaaSResourceId))
+            if (Optional.IsDefined(SaasResourceId))
             {
                 writer.WritePropertyName("saasResourceId"u8);
-                writer.WriteStringValue(SaaSResourceId);
+                writer.WriteStringValue(SaasResourceId);
             }
             if (Optional.IsDefined(SubscriptionId))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 return null;
             }
-            ResourceIdentifier saaSResourceId = default;
+            ResourceIdentifier saasResourceId = default;
             string subscriptionId = default;
             CloudAccountOfferDetailsPatch offerDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    saaSResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    saasResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("subscriptionId"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CloudAccountMarketplacePatch(saaSResourceId, subscriptionId, offerDetails, additionalBinaryDataProperties);
+            return new CloudAccountMarketplacePatch(saasResourceId, subscriptionId, offerDetails, additionalBinaryDataProperties);
         }
     }
 }

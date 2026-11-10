@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="lastBackupTime"> The Commvault Protected Item backup time. </param>
         /// <param name="resourceGroupName"> The resource group of the protected item. </param>
         /// <param name="location"> The location of the protected item. </param>
-        /// <param name="virtualMachineGuid"> The GUID of VM. </param>
+        /// <param name="vmGuid"> The GUID of VM. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProtectedItemProperties(string resourceName, long lastBackupTime, string resourceGroupName, AzureLocation location, string virtualMachineGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProtectedItemProperties(string resourceName, long lastBackupTime, string resourceGroupName, AzureLocation location, string vmGuid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceName = resourceName;
             LastBackupTime = lastBackupTime;
             ResourceGroupName = resourceGroupName;
             Location = location;
-            VirtualMachineGuid = virtualMachineGuid;
+            VmGuid = vmGuid;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public AzureLocation Location { get; }
 
         /// <summary> The GUID of VM. </summary>
-        public string VirtualMachineGuid { get; }
+        public string VmGuid { get; }
     }
 }

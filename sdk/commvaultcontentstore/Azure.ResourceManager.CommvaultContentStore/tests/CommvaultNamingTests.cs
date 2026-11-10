@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Tests
         public void BackupUsesExistingWireNames()
         {
             var backup = new BackupProtectionGroupContent(
-                new[] { new CommvaultVirtualMachineReference("vm-guid") },
+                new[] { new CommvaultVmReference("vm-guid") },
                 new CommvaultBackupConfiguration("nightly", true, false, true)
                 {
                     BackupLevel = CommvaultBackupLevel.SyntheticFull
@@ -40,13 +40,13 @@ namespace Azure.ResourceManager.CommvaultContentStore.Tests
         [Test]
         public void RestoreVirtualMachinesRoundTripUsingExistingWireNames()
         {
-            var restore = new RestoreProtectedItemContent(false, new[]
+            var restore = new RestoreProtectionItemContent(false, new[]
             {
-                new CommvaultVirtualMachineRestoreSettings("source-vm", "storage")
+                new CommvaultVmRestoreSettings("source-vm", "storage")
                 {
                     ResourceGroupName = "target-rg",
                     VirtualNetworkId = "target-network",
-                    ShouldPowerOnVirtualMachineAfterRestore = true
+                    ShouldPowerOnVmAfterRestore = true
                 }
             });
             BinaryData data = ModelReaderWriter.Write(restore, WireOptions, AzureResourceManagerCommvaultContentStoreContext.Default);
@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Tests
             Assert.That(vm.GetProperty("networkId").GetString(), Is.EqualTo("target-network"));
             Assert.That(vm.GetProperty("powerOnVmAfterRestore").GetBoolean(), Is.True);
 
-            RestoreProtectedItemContent result = ModelReaderWriter.Read<RestoreProtectedItemContent>(
+            RestoreProtectionItemContent result = ModelReaderWriter.Read<RestoreProtectionItemContent>(
                 data, WireOptions, AzureResourceManagerCommvaultContentStoreContext.Default);
-            Assert.That(result.VirtualMachines, Has.Count.EqualTo(1));
-            Assert.That(result.VirtualMachines[0].SourceVirtualMachineGuid, Is.EqualTo("source-vm"));
-            Assert.That(result.VirtualMachines[0].VirtualNetworkId, Is.EqualTo("target-network"));
+            Assert.That(result.VmInfoList, Has.Count.EqualTo(1));
+            Assert.That(result.VmInfoList[0].SourceVmGuid, Is.EqualTo("source-vm"));
+            Assert.That(result.VmInfoList[0].VirtualNetworkId, Is.EqualTo("target-network"));
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Tests
             var selection = new ProtectionGroupResourceSelection
             {
                 ManuallySelectedItems = { "vm-one" },
-                MatchRules = new ProtectionGroupResourceMatchCriteria(
+                MatchRules = new ProtectionGroupResourcesMatchRules(
                     new[] { new ProtectionGroupRule(ProtectionGroupRuleProperty.Name, CommvaultMatchOperator.DoesNotContain, "test") },
                     ProtectionGroupMatchType.Any)
             };
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Tests
             var properties = ModelReaderWriter.Read<CloudAccountProperties>(
                 BinaryData.FromString($$$"""{"ssoUrl":"{{{value}}}","marketplace":{"offerDetails":{}},"user":{}}"""),
                 ModelReaderWriterOptions.Json, AzureResourceManagerCommvaultContentStoreContext.Default);
-            Assert.That(properties.SingleSignOnUriString, Is.EqualTo(value));
+            Assert.That(properties.SsoUri, Is.EqualTo(value));
 
             using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(
                 properties, ModelReaderWriterOptions.Json, AzureResourceManagerCommvaultContentStoreContext.Default));
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Tests
 
         [TestCase(false)]
         [TestCase(true)]
-        public async Task GetLatestLinkedSaaSUsesExistingPostRoute(bool isAsync)
+        public async Task GetLatestLinkedSaasUsesExistingPostRoute(bool isAsync)
         {
             const string subscriptionId = "00000000-0000-0000-0000-000000000000";
             const string accountId = "/subscriptions/" + subscriptionId + "/resourceGroups/rg/providers/Commvault.ContentStore/cloudAccounts/account";
@@ -152,15 +152,15 @@ namespace Azure.ResourceManager.CommvaultContentStore.Tests
             var client = new ArmClient(new MockCredential(), subscriptionId, new ArmClientOptions { Transport = transport });
             CloudAccountResource account = client.GetCloudAccountResource(new ResourceIdentifier(accountId));
 
-            Response<LatestLinkedSaaSResult> response = isAsync
-                ? await account.GetLatestLinkedSaaSAsync()
-                : account.GetLatestLinkedSaaS();
+            Response<LatestLinkedSaasResult> response = isAsync
+                ? await account.GetLatestLinkedSaasAsync()
+                : account.GetLatestLinkedSaas();
 
             Assert.That(transport.SingleRequest.Method, Is.EqualTo(RequestMethod.Post));
             Assert.That(transport.SingleRequest.Uri.ToString(), Is.EqualTo(
                 $"https://management.azure.com{accountId}/latestLinkedSaaS?api-version=2026-11-03"));
-            Assert.That(response.Value.SaaSResourceId.ToString(), Is.EqualTo(saasId));
-            Assert.That(response.Value.IsHiddenSaaS, Is.True);
+            Assert.That(response.Value.SaasResourceId.ToString(), Is.EqualTo(saasId));
+            Assert.That(response.Value.IsHiddenSaas, Is.True);
         }
 
         private static JsonDocument Serialize<T>(T model) where T : IPersistableModel<T>

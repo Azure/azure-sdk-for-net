@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="singleSignOnUriString"> SSO URL for the Commvault Cloud Account. </param>
+        /// <param name="ssoUri"> SSO URL for the Commvault Cloud Account. </param>
         /// <param name="company"> Optional company details for the cloud account. </param>
         /// <param name="roleAssignmentsOnCreate"> Role assignments to provision during CCA creation. Each entry maps a Commvault role to its assigned Entra principals. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CloudAccountProperties(CommvaultMarketplaceDetails marketplace, CommvaultUserDetails user, ResourceProvisioningState? provisioningState, string singleSignOnUriString, CommvaultCompanyProfile company, IList<CommvaultRoleAssignment> roleAssignmentsOnCreate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CloudAccountProperties(CommvaultMarketplaceDetails marketplace, CommvaultUserDetails user, ResourceProvisioningState? provisioningState, string ssoUri, CommvaultCompanyProfile company, IList<CommvaultRoleAssignment> roleAssignmentsOnCreate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Marketplace = marketplace;
             User = user;
             ProvisioningState = provisioningState;
-            SingleSignOnUriString = singleSignOnUriString;
+            SsoUri = ssoUri;
             Company = company;
             RoleAssignmentsOnCreate = roleAssignmentsOnCreate;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public ResourceProvisioningState? ProvisioningState { get; }
 
         /// <summary> SSO URL for the Commvault Cloud Account. </summary>
-        public string SingleSignOnUriString { get; }
+        public string SsoUri { get; }
 
         /// <summary> Optional company details for the cloud account. </summary>
         public CommvaultCompanyProfile Company { get; set; }

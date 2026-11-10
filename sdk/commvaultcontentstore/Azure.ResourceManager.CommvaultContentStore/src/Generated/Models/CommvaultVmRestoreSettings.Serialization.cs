@@ -14,56 +14,56 @@ using Azure.ResourceManager.CommvaultContentStore;
 namespace Azure.ResourceManager.CommvaultContentStore.Models
 {
     /// <summary> The properties of information of a VM. </summary>
-    public partial class CommvaultVirtualMachineRestoreSettings : IJsonModel<CommvaultVirtualMachineRestoreSettings>
+    public partial class CommvaultVmRestoreSettings : IJsonModel<CommvaultVmRestoreSettings>
     {
-        /// <summary> Initializes a new instance of <see cref="CommvaultVirtualMachineRestoreSettings"/> for deserialization. </summary>
-        internal CommvaultVirtualMachineRestoreSettings()
+        /// <summary> Initializes a new instance of <see cref="CommvaultVmRestoreSettings"/> for deserialization. </summary>
+        internal CommvaultVmRestoreSettings()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CommvaultVirtualMachineRestoreSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CommvaultVmRestoreSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommvaultVirtualMachineRestoreSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultVmRestoreSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCommvaultVirtualMachineRestoreSettings(document.RootElement, options);
+                        return DeserializeCommvaultVmRestoreSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommvaultVirtualMachineRestoreSettings)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommvaultVmRestoreSettings)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommvaultVirtualMachineRestoreSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultVmRestoreSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCommvaultContentStoreContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CommvaultVirtualMachineRestoreSettings)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommvaultVmRestoreSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CommvaultVirtualMachineRestoreSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CommvaultVmRestoreSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CommvaultVirtualMachineRestoreSettings IPersistableModel<CommvaultVirtualMachineRestoreSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CommvaultVmRestoreSettings IPersistableModel<CommvaultVmRestoreSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CommvaultVirtualMachineRestoreSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CommvaultVmRestoreSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CommvaultVirtualMachineRestoreSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CommvaultVmRestoreSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,19 +74,19 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommvaultVirtualMachineRestoreSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultVmRestoreSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommvaultVirtualMachineRestoreSettings)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CommvaultVmRestoreSettings)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("sourceVmGuid"u8);
-            writer.WriteStringValue(SourceVirtualMachineGuid);
+            writer.WriteStringValue(SourceVmGuid);
             writer.WritePropertyName("storageAccountId"u8);
             writer.WriteStringValue(StorageAccountId);
-            if (Optional.IsDefined(ShouldPowerOnVirtualMachineAfterRestore))
+            if (Optional.IsDefined(ShouldPowerOnVmAfterRestore))
             {
                 writer.WritePropertyName("powerOnVmAfterRestore"u8);
-                writer.WriteBooleanValue(ShouldPowerOnVirtualMachineAfterRestore.Value);
+                writer.WriteBooleanValue(ShouldPowerOnVmAfterRestore.Value);
             }
             if (Optional.IsDefined(Name))
             {
@@ -118,16 +118,16 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 writer.WritePropertyName("attachAndSwapOsDisk"u8);
                 writer.WriteBooleanValue(ShouldAttachAndSwapOSDisk.Value);
             }
-            if (Optional.IsDefined(TargetVirtualMachineGuid))
+            if (Optional.IsDefined(TargetVmGuid))
             {
                 writer.WritePropertyName("targetVmGuid"u8);
-                writer.WriteStringValue(TargetVirtualMachineGuid);
+                writer.WriteStringValue(TargetVmGuid);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("vmtags"u8);
                 writer.WriteStartArray();
-                foreach (CommvaultVirtualMachineTag item in Tags)
+                foreach (CommvaultVmTag item in Tags)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -152,46 +152,46 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CommvaultVirtualMachineRestoreSettings IJsonModel<CommvaultVirtualMachineRestoreSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CommvaultVmRestoreSettings IJsonModel<CommvaultVmRestoreSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CommvaultVirtualMachineRestoreSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CommvaultVmRestoreSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CommvaultVirtualMachineRestoreSettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommvaultVmRestoreSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommvaultVirtualMachineRestoreSettings)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CommvaultVmRestoreSettings)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCommvaultVirtualMachineRestoreSettings(document.RootElement, options);
+            return DeserializeCommvaultVmRestoreSettings(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CommvaultVirtualMachineRestoreSettings DeserializeCommvaultVirtualMachineRestoreSettings(JsonElement element, ModelReaderWriterOptions options)
+        internal static CommvaultVmRestoreSettings DeserializeCommvaultVmRestoreSettings(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string sourceVirtualMachineGuid = default;
+            string sourceVmGuid = default;
             string storageAccountId = default;
-            bool? shouldPowerOnVirtualMachineAfterRestore = default;
+            bool? shouldPowerOnVmAfterRestore = default;
             string name = default;
             string resourceGroupName = default;
             string region = default;
             string virtualNetworkId = default;
             string subnetId = default;
             bool? shouldAttachAndSwapOSDisk = default;
-            string targetVirtualMachineGuid = default;
-            IList<CommvaultVirtualMachineTag> tags = default;
+            string targetVmGuid = default;
+            IList<CommvaultVmTag> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("sourceVmGuid"u8))
                 {
-                    sourceVirtualMachineGuid = prop.Value.GetString();
+                    sourceVmGuid = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("storageAccountId"u8))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    shouldPowerOnVirtualMachineAfterRestore = prop.Value.GetBoolean();
+                    shouldPowerOnVmAfterRestore = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 }
                 if (prop.NameEquals("targetVmGuid"u8))
                 {
-                    targetVirtualMachineGuid = prop.Value.GetString();
+                    targetVmGuid = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("vmtags"u8))
@@ -253,10 +253,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    List<CommvaultVirtualMachineTag> array = new List<CommvaultVirtualMachineTag>();
+                    List<CommvaultVmTag> array = new List<CommvaultVmTag>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CommvaultVirtualMachineTag.DeserializeCommvaultVirtualMachineTag(item, options));
+                        array.Add(CommvaultVmTag.DeserializeCommvaultVmTag(item, options));
                     }
                     tags = array;
                     continue;
@@ -266,18 +266,18 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CommvaultVirtualMachineRestoreSettings(
-                sourceVirtualMachineGuid,
+            return new CommvaultVmRestoreSettings(
+                sourceVmGuid,
                 storageAccountId,
-                shouldPowerOnVirtualMachineAfterRestore,
+                shouldPowerOnVmAfterRestore,
                 name,
                 resourceGroupName,
                 region,
                 virtualNetworkId,
                 subnetId,
                 shouldAttachAndSwapOSDisk,
-                targetVirtualMachineGuid,
-                tags ?? new ChangeTrackingList<CommvaultVirtualMachineTag>(),
+                targetVmGuid,
+                tags ?? new ChangeTrackingList<CommvaultVmTag>(),
                 additionalBinaryDataProperties);
         }
     }
