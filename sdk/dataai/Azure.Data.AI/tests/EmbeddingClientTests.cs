@@ -17,15 +17,23 @@ namespace Azure.Data.AI.Tests
 {
     public class EmbeddingClientTests
     {
-        [TestCase(false, "dense")]
-        [TestCase(true, "dense")]
-        [TestCase(false, "multi")]
-        [TestCase(true, "multi")]
-        [TestCase(false, "dense_multi")]
-        [TestCase(true, "dense_multi")]
-        [TestCase(false, "link")]
-        [TestCase(true, "link")]
-        public async Task FlattenedCallsSerializeRequestAndDeserializeResponse(bool async, string kind)
+        [TestCase(false, "dense", false)]
+        [TestCase(true, "dense", false)]
+        [TestCase(false, "multi", false)]
+        [TestCase(true, "multi", false)]
+        [TestCase(false, "dense_multi", false)]
+        [TestCase(true, "dense_multi", false)]
+        [TestCase(false, "link", false)]
+        [TestCase(true, "link", false)]
+        [TestCase(false, "dense", true)]
+        [TestCase(true, "dense", true)]
+        [TestCase(false, "multi", true)]
+        [TestCase(true, "multi", true)]
+        [TestCase(false, "dense_multi", true)]
+        [TestCase(true, "dense_multi", true)]
+        [TestCase(false, "link", true)]
+        [TestCase(true, "link", true)]
+        public async Task FlattenedCallsSerializeRequestAndDeserializeResponse(bool async, string kind, bool anonymous)
         {
             var contents = new[] { new EmbeddingContentItem(EmbeddingContentKind.Text) { Id = "item-1", Content = "document" } };
             EmbeddingVectorKind vectorKind = kind == "link" ? EmbeddingVectorKind.Dense : new EmbeddingVectorKind(kind);
@@ -47,15 +55,32 @@ namespace Azure.Data.AI.Tests
             using var httpClient = new HttpClient(handler);
             var client = CreateClient(httpClient);
 
-            Response<MultimodalEmbeddingResult> response = async
-                ? await client.GetMultimodalEmbeddingsAsync(contents, model: "test-model", modelVersion: "v1",
-                    vectorKind: vectorKind, dimensions: 2, multiDimensions: multiDimensions,
-                    maxVectorCount: maxVectorCount, outputDataKind: EmbeddingOutputDataKind.Float16,
-                    encodingFormat: EmbeddingEncodingFormat.Float, delivery: delivery)
-                : client.GetMultimodalEmbeddings(contents, model: "test-model", modelVersion: "v1",
-                    vectorKind: vectorKind, dimensions: 2, multiDimensions: multiDimensions,
-                    maxVectorCount: maxVectorCount, outputDataKind: EmbeddingOutputDataKind.Float16,
-                    encodingFormat: EmbeddingEncodingFormat.Float, delivery: delivery);
+            Response<MultimodalEmbeddingResult> response;
+            if (anonymous)
+            {
+                var inputs = new object[] { new { kind = "text", id = "item-1", content = "document" } };
+                response = async
+                    ? await client.GetMultimodalEmbeddingsAsync(inputs, model: "test-model", modelVersion: "v1",
+                        vectorKind: vectorKind, dimensions: 2, multiDimensions: multiDimensions,
+                        maxVectorCount: maxVectorCount, outputDataKind: EmbeddingOutputDataKind.Float16,
+                        encodingFormat: EmbeddingEncodingFormat.Float, delivery: delivery)
+                    : client.GetMultimodalEmbeddings(inputs, model: "test-model", modelVersion: "v1",
+                        vectorKind: vectorKind, dimensions: 2, multiDimensions: multiDimensions,
+                        maxVectorCount: maxVectorCount, outputDataKind: EmbeddingOutputDataKind.Float16,
+                        encodingFormat: EmbeddingEncodingFormat.Float, delivery: delivery);
+            }
+            else
+            {
+                response = async
+                    ? await client.GetMultimodalEmbeddingsAsync(contents, model: "test-model", modelVersion: "v1",
+                        vectorKind: vectorKind, dimensions: 2, multiDimensions: multiDimensions,
+                        maxVectorCount: maxVectorCount, outputDataKind: EmbeddingOutputDataKind.Float16,
+                        encodingFormat: EmbeddingEncodingFormat.Float, delivery: delivery)
+                    : client.GetMultimodalEmbeddings(contents, model: "test-model", modelVersion: "v1",
+                        vectorKind: vectorKind, dimensions: 2, multiDimensions: multiDimensions,
+                        maxVectorCount: maxVectorCount, outputDataKind: EmbeddingOutputDataKind.Float16,
+                        encodingFormat: EmbeddingEncodingFormat.Float, delivery: delivery);
+            }
 
             Assert.That(handler.RequestCount, Is.EqualTo(1));
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200));
@@ -150,11 +175,15 @@ namespace Azure.Data.AI.Tests
             Assert.That(response.Value.Data[1], Is.TypeOf<MultimodalDenseEmbedding>());
         }
 
-        [TestCase(false, 2560)]
-        [TestCase(true, 2560)]
-        [TestCase(false, null)]
-        [TestCase(true, null)]
-        public async Task FlattenedCallsAcceptQueryAndImageWithModelSettings(bool async, int? dimensions)
+        [TestCase(false, 2560, false)]
+        [TestCase(true, 2560, false)]
+        [TestCase(false, null, false)]
+        [TestCase(true, null, false)]
+        [TestCase(false, 2560, true)]
+        [TestCase(true, 2560, true)]
+        [TestCase(false, null, true)]
+        [TestCase(true, null, true)]
+        public async Task FlattenedCallsAcceptQueryAndImageWithModelSettings(bool async, int? dimensions, bool anonymous)
         {
             var contents = new[]
             {
@@ -180,19 +209,47 @@ namespace Azure.Data.AI.Tests
             using var httpClient = new HttpClient(handler);
             var client = CreateClient(httpClient, useTokenCredential: true);
 
-            Response<MultimodalEmbeddingResult> response = async
-                ? await client.GetMultimodalEmbeddingsAsync(
-                    contents: contents,
-                    model: "microsoft-embedding-1-large",
-                    modelVersion: "test-model-version",
-                    dimensions: dimensions,
-                    delivery: EmbeddingDelivery.Inline)
-                : client.GetMultimodalEmbeddings(
-                    contents: contents,
-                    model: "microsoft-embedding-1-large",
-                    modelVersion: "test-model-version",
-                    dimensions: dimensions,
-                    delivery: EmbeddingDelivery.Inline);
+            Response<MultimodalEmbeddingResult> response;
+            if (anonymous)
+            {
+                response = async
+                    ? await client.GetMultimodalEmbeddingsAsync(
+                        contents: new object[]
+                        {
+                            new { id = "map-question", kind = "query", content = "Which walking route follows the lake?" },
+                            new { id = "trail-map", kind = "image", url = contents[1].Uri.AbsoluteUri, sasToken = "fake-sas" }
+                        },
+                        model: "microsoft-embedding-1-large",
+                        modelVersion: "test-model-version",
+                        dimensions: dimensions,
+                        delivery: EmbeddingDelivery.Inline)
+                    : client.GetMultimodalEmbeddings(
+                        contents: new object[]
+                        {
+                            new { id = "map-question", kind = "query", content = "Which walking route follows the lake?" },
+                            new { id = "trail-map", kind = "image", url = contents[1].Uri.AbsoluteUri, sasToken = "fake-sas" }
+                        },
+                        model: "microsoft-embedding-1-large",
+                        modelVersion: "test-model-version",
+                        dimensions: dimensions,
+                        delivery: EmbeddingDelivery.Inline);
+            }
+            else
+            {
+                response = async
+                    ? await client.GetMultimodalEmbeddingsAsync(
+                        contents: contents,
+                        model: "microsoft-embedding-1-large",
+                        modelVersion: "test-model-version",
+                        dimensions: dimensions,
+                        delivery: EmbeddingDelivery.Inline)
+                    : client.GetMultimodalEmbeddings(
+                        contents: contents,
+                        model: "microsoft-embedding-1-large",
+                        modelVersion: "test-model-version",
+                        dimensions: dimensions,
+                        delivery: EmbeddingDelivery.Inline);
+            }
 
             Assert.That(handler.RequestCount, Is.EqualTo(1));
             Assert.That(response.Value.Model, Is.EqualTo("microsoft-embedding-1-large"));
@@ -207,6 +264,74 @@ namespace Azure.Data.AI.Tests
                 Assert.That(item.ContentKind, Is.EqualTo(contents[index].Kind));
                 Assert.That(item, Is.TypeOf<MultimodalDenseEmbedding>());
                 AssertVector(((MultimodalDenseEmbedding)item).Embedding, dimensions: dimensions ?? 2);
+            }
+        }
+
+        [TestCase(false, false)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(true, true)]
+        public async Task ObjectCallsAcceptDictionaryOrJsonAndTypedItems(bool async, bool jsonElement)
+        {
+            var query = new Dictionary<string, object>
+            {
+                ["id"] = "item-1",
+                ["kind"] = "query",
+                ["content"] = "document"
+            };
+            using JsonDocument json = JsonDocument.Parse(BinaryData.FromObjectAsJson(query));
+            var expected = new[]
+            {
+                new EmbeddingContentItem(EmbeddingContentKind.Query) { Id = "item-1", Content = "document" },
+                new EmbeddingContentItem(EmbeddingContentKind.Image)
+                {
+                    Id = "item-2",
+                    Uri = new Uri("https://example.blob.core.windows.net/images/input.png"),
+                    SasToken = "fake-sas"
+                }
+            };
+            var contents = new object[] { jsonElement ? (object)json.RootElement : query, expected[1] };
+            using var handler = new EmbeddingHandler(expected, "dense", useTokenCredential: true);
+            using var httpClient = new HttpClient(handler);
+            var client = CreateClient(httpClient, useTokenCredential: true);
+
+            Response<MultimodalEmbeddingResult> response = async
+                ? await client.GetMultimodalEmbeddingsAsync(contents)
+                : client.GetMultimodalEmbeddings(contents);
+
+            Assert.That(handler.RequestCount, Is.EqualTo(1));
+            Assert.That(response.Value.Data, Has.Count.EqualTo(2));
+            Assert.That(response.Value.Data[0].ContentKind, Is.EqualTo(EmbeddingContentKind.Query));
+            Assert.That(response.Value.Data[1].ContentKind, Is.EqualTo(EmbeddingContentKind.Image));
+        }
+
+        [TestCaseSource(nameof(InvalidAnonymousContents))]
+        public void ObjectCallsRejectInvalidContentsBeforeSending(bool async, object[] contents, Type exceptionType)
+        {
+            using var handler = new EmbeddingHandler(Array.Empty<EmbeddingContentItem>(), "dense");
+            using var httpClient = new HttpClient(handler);
+            var client = CreateClient(httpClient);
+
+            Exception error = async
+                ? Assert.ThrowsAsync(exceptionType, () => client.GetMultimodalEmbeddingsAsync(contents))
+                : Assert.Throws(exceptionType, () => client.GetMultimodalEmbeddings(contents));
+
+            Assert.That(((ArgumentException)error).ParamName, Is.EqualTo("contents"));
+            Assert.That(handler.RequestCount, Is.Zero);
+        }
+
+        private static IEnumerable<TestCaseData> InvalidAnonymousContents()
+        {
+            foreach (bool async in new[] { false, true })
+            {
+                yield return new TestCaseData(async, null, typeof(ArgumentNullException));
+                yield return new TestCaseData(async, new object[] { null }, typeof(ArgumentNullException));
+                yield return new TestCaseData(async, new object[] { 1 }, typeof(ArgumentException));
+                yield return new TestCaseData(async, new object[] { new { content = "document" } }, typeof(ArgumentException));
+                yield return new TestCaseData(async, new object[] { new { kind = (string)null } }, typeof(ArgumentException));
+                yield return new TestCaseData(async, new object[] { new { kind = "" } }, typeof(ArgumentException));
+                yield return new TestCaseData(async, new object[] { new { kind = 1 } }, typeof(ArgumentException));
+                yield return new TestCaseData(async, new object[] { new { kind = "text", content = 1 } }, typeof(ArgumentException));
             }
         }
 
@@ -239,9 +364,11 @@ namespace Azure.Data.AI.Tests
             }
         }
 
-        [TestCase(false)]
-        [TestCase(true)]
-        public void FlattenedCallsHonorCancellation(bool async)
+        [TestCase(false, false)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(true, true)]
+        public void FlattenedCallsHonorCancellation(bool async, bool anonymous)
         {
             var contents = new[]
             {
@@ -253,7 +380,19 @@ namespace Azure.Data.AI.Tests
             using var cancellation = new CancellationTokenSource();
             cancellation.Cancel();
 
-            if (async)
+            if (anonymous)
+            {
+                var inputs = new object[] { new { id = "item-1", kind = "text", content = "document" } };
+                if (async)
+                {
+                    Assert.CatchAsync<OperationCanceledException>(() => client.GetMultimodalEmbeddingsAsync(inputs, cancellationToken: cancellation.Token));
+                }
+                else
+                {
+                    Assert.Catch<OperationCanceledException>(() => client.GetMultimodalEmbeddings(inputs, cancellationToken: cancellation.Token));
+                }
+            }
+            else if (async)
             {
                 Assert.CatchAsync<OperationCanceledException>(() => client.GetMultimodalEmbeddingsAsync(contents, cancellationToken: cancellation.Token));
             }

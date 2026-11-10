@@ -7,12 +7,11 @@
 - Added multimodal embedding operations for text, queries, and document images, with dense, multi-vector, and combined results.
 - Added inline and link delivery, output encoding and numeric precision selection, and embedding usage and warnings.
 - Added flattened `GetMultimodalEmbeddings` and `GetMultimodalEmbeddingsAsync` methods; callers pass request settings directly rather than creating a request options object.
+- Added .NET overloads that accept anonymous objects or dictionaries as embedding inputs and return typed results, without requiring `EmbeddingContentItem` instances.
 
 ### Breaking Changes
 
 - The default service API version is now `2026-11-01-preview`. Select `InferenceClientOptions.ServiceVersion.V2026_10_30` explicitly to continue using the stable semantic reranking API.
-- Renamed `SemanticRerankingInferenceContent` to `SemanticRerankingOptions`, `SemanticRerankingInferenceResult` to `SemanticRerankingResult`, and the previous `SemanticRerankingResult` response envelope to `SemanticRerankingOperationResult`.
-- Renamed `MetaResult` and `Meta` to `SemanticRerankingMetadata` and `Metadata`. Renamed the latency members `DataPreprocessTime`, `InferenceTime`, and `PostProcessTime` to `DataPreprocessDuration`, `InferenceDuration`, and `PostProcessDuration`.
 
 ## 1.0.0 (2026-10-30)
 

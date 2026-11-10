@@ -57,6 +57,44 @@ Embedding model availability and image input support depend on the endpoint.
 
 ## Examples
 
+### Multimodal embeddings with anonymous inputs
+
+The .NET overloads accept anonymous objects or dictionaries using the JSON property names
+`kind`, `id`, `content`, `url`, and `sasToken`. Settings stay as named arguments and the response is typed.
+For image inputs, authenticate `client` with Microsoft Entra ID and provide a caller-signed
+user-delegation SAS for the image blob.
+
+```C#
+Response<MultimodalEmbeddingResult> response = await client.GetMultimodalEmbeddingsAsync(
+    contents: new object[]
+    {
+        new
+        {
+            id = "map-question",
+            kind = "query",
+            content = "Which walking route follows the lake?"
+        },
+        new
+        {
+            id = "trail-map",
+            kind = "image",
+            url = imageBlobUrl,
+            sasToken = imageSasToken
+        }
+    },
+    model: "microsoft-embedding-1-large",
+    modelVersion: "<supported-model-version>",
+    dimensions: 2560,
+    delivery: EmbeddingDelivery.Inline);
+
+MultimodalEmbeddingResult result = response.Value;
+```
+
+Use a model version and dimension supported by your endpoint. Omit `dimensions` to use the
+model's native width. Each input produces a separate embedding, not a fused query/image embedding.
+Anonymous inputs use reflection-based JSON serialization; trimmed or Native AOT applications
+should use the existing typed `EmbeddingContentItem` overloads instead.
+
 See [Semantic reranking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/dataai/Azure.Data.AI/samples/Sample1_SemanticReranking.md).
 
 ## Troubleshooting
