@@ -780,7 +780,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
                    "Be direct and efficient. When you reach the search results page, read and describe the actual search result titles and descriptions you can see.",
     Tools = {
         ModelReaderWriter.Read<ResponseTool>(
-            BinaryData.FromBytes("""{"type":"computer"}"""u8.ToArray()),
+            BinaryData.FromString("""{"type":"computer"}"""),
             ModelReaderWriterOptions.Json,
             OpenAIContext.Default
         ),
@@ -839,22 +839,11 @@ private static string ProcessComputerUseCall(ComputerCallResponseItem item, stri
 {
     string currentScreenshot = oldScreenshot;
     List<ComputerCallAction> actions = [];
-    if (item.Patch.TryGetJson("$.actions"u8, out ReadOnlyMemory<byte> actionsJson))
+    for (int i = 0; item.Patch.TryGetJson(Encoding.UTF8.GetBytes($"$.actions[{i}]"), out ReadOnlyMemory<byte> actionJson); i++)
     {
-        using JsonDocument doc = JsonDocument.Parse(actionsJson);
-        foreach (JsonElement element in doc.RootElement.EnumerateArray())
-        {
-            ComputerCallAction parsed = ModelReaderWriter.Read<ComputerCallAction>(
-                BinaryData.FromString(element.GetRawText()),
-                ModelReaderWriterOptions.Json,
-                OpenAIContext.Default);
-            if (parsed is not null)
-            {
-                actions.Add(parsed);
-            }
-        }
+        actions.Add(ModelReaderWriter.Read<ComputerCallAction>(BinaryData.FromBytes(actionJson), ModelReaderWriterOptions.Json, OpenAIContext.Default));
     }
-    else if (item.Action is not null)
+    if (actions.Count == 0 && item.Action is not null)
     {
         actions.Add(item.Action);
     }
@@ -868,10 +857,8 @@ private static string ProcessComputerUseCall(ComputerCallResponseItem item, stri
                 currentScreenshot = "search_typed";
                 break;
             case ComputerCallActionKind.KeyPress:
-                HashSet<string> codes = [.. action.KeyPressKeyCodes];
-                if (codes.Contains("Return") || codes.Contains("ENTER"))
+                if (action.KeyPressKeyCodes.Contains("Return") || action.KeyPressKeyCodes.Contains("ENTER"))
                 {
-                    // If we have typed the value to the search field, go to search results.
                     if (string.Equals(currentScreenshot, "search_typed"))
                     {
                         Console.WriteLine("  -> Detected ENTER key press, when search field was populated, displaying results.");
@@ -884,7 +871,7 @@ private static string ProcessComputerUseCall(ComputerCallResponseItem item, stri
                 }
                 else
                 {
-                    Console.WriteLine($"  Key press: {action.KeyPressKeyCodes.Aggregate("", (agg, next) => agg + "+" + next)} - Simulating key combination");
+                    Console.WriteLine($"  Key press: {string.Join("+", action.KeyPressKeyCodes)} - Simulating key combination");
                 }
                 break;
             case ComputerCallActionKind.Click:
@@ -900,8 +887,7 @@ private static string ProcessComputerUseCall(ComputerCallResponseItem item, stri
                 }
                 break;
             case ComputerCallActionKind.Drag:
-                string pathStr = action.DragPath.ToArray().Select(p => $"{p.X}, {p.Y}").Aggregate("", (agg, next) => $"{agg} -> {next}");
-                Console.WriteLine($"  Drag path: {pathStr} - Simulating drag operation");
+                Console.WriteLine($"  Drag path: {string.Join(" -> ", action.DragPath.Select(p => $"{p.X}, {p.Y}"))} - Simulating drag operation");
                 break;
             case ComputerCallActionKind.Scroll:
                 Console.WriteLine($"  Scroll at ({action.ScrollCoordinates.Value.X}, {action.ScrollCoordinates.Value.Y}) - Simulating scroll action");
