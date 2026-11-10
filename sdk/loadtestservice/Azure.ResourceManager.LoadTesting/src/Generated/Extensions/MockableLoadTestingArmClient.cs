@@ -143,6 +143,15 @@ namespace Azure.ResourceManager.LoadTesting.Mocking
         /// <returns> Returns a <see cref="MaxMonthlyVirtualUserHoursResource"/> object. </returns>
         public virtual MaxMonthlyVirtualUserHoursResource GetMaxMonthlyVirtualUserHoursResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != MaxMonthlyVirtualUserHoursResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.LoadTestService", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "loadTests", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "limits", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "maxMonthlyVirtualUserHours", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}/limits/maxMonthlyVirtualUserHours"), nameof(id));
+            }
             MaxMonthlyVirtualUserHoursResource.ValidateResourceId(id);
             return new MaxMonthlyVirtualUserHoursResource(Client, id);
         }
