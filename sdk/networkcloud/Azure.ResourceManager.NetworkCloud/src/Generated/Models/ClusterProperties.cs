@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="clusterManagerId"> The resource ID of the cluster manager that manages this cluster. This is set by the Cluster Manager when the cluster is created. </param>
         /// <param name="detailedStatus"> The current detailed status of the cluster. </param>
         /// <param name="detailedStatusMessage"> The descriptive message about the detailed status. </param>
-        /// <param name="edgeManagementServiceCaCertificate"> The CA certificate of the edge management service. </param>
+        /// <param name="edgeManagementServiceCACertificate"> The CA certificate of the edge management service. </param>
         /// <param name="hybridAksExtendedLocation"> Field Deprecated. This field will not be populated in an upcoming version. The extended location (custom location) that represents the Hybrid AKS control plane location. This extended location is used when creating provisioned clusters (Hybrid AKS clusters). </param>
         /// <param name="lastSuccessfulVersionUpdateOn"> The date and time of the end of the last successful version update for the cluster. </param>
         /// <param name="managedCredentials"> The list of credentials that are managed for the cluster and can be rotated on-demand. </param>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="workloadResourceIds"> The list of workload resource IDs that are hosted within this cluster. </param>
         /// <param name="provisioningState"> The provisioning state of the cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterProperties(NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, AnalyticsOutputSettings analyticsOutputSettings, ResourceIdentifier analyticsWorkspaceId, string clusterLocation, ServicePrincipalInformation clusterServicePrincipal, ClusterType clusterType, string clusterVersion, CommandOutputSettings commandOutputSettings, ValidationThreshold computeDeploymentThreshold, IList<NetworkCloudRackDefinition> computeRackDefinitions, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, ResourceIdentifier networkFabricId, RuntimeProtectionConfiguration runtimeProtectionConfiguration, ClusterSecretArchive secretArchive, SecretArchiveSettings secretArchiveSettings, ClusterUpdateStrategy updateStrategy, VulnerabilityScanningSettings vulnerabilityScanningSettings, IReadOnlyList<NetworkCloudActionState> actionStates, IReadOnlyList<ClusterAvailableUpgradeVersion> availableUpgradeVersions, ClusterCapacity clusterCapacity, ClusterConnectionStatus? clusterConnectionStatus, Resources.Models.ExtendedLocation clusterExtendedLocation, ClusterManagerConnectionStatus? clusterManagerConnectionStatus, ResourceIdentifier clusterManagerId, ClusterDetailedStatus? detailedStatus, string detailedStatusMessage, NetworkCloudCertificateInfo edgeManagementServiceCaCertificate, Resources.Models.ExtendedLocation hybridAksExtendedLocation, DateTimeOffset? lastSuccessfulVersionUpdateOn, IReadOnlyList<string> managedCredentials, long? manualActionCount, DateTimeOffset? supportExpiresOn, IReadOnlyList<ResourceIdentifier> workloadResourceIds, ClusterProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterProperties(NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, AnalyticsOutputSettings analyticsOutputSettings, ResourceIdentifier analyticsWorkspaceId, string clusterLocation, ServicePrincipalInformation clusterServicePrincipal, ClusterType clusterType, string clusterVersion, CommandOutputSettings commandOutputSettings, ValidationThreshold computeDeploymentThreshold, IList<NetworkCloudRackDefinition> computeRackDefinitions, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, ResourceIdentifier networkFabricId, RuntimeProtectionConfiguration runtimeProtectionConfiguration, ClusterSecretArchive secretArchive, SecretArchiveSettings secretArchiveSettings, ClusterUpdateStrategy updateStrategy, VulnerabilityScanningSettings vulnerabilityScanningSettings, IReadOnlyList<NetworkCloudActionState> actionStates, IReadOnlyList<ClusterAvailableUpgradeVersion> availableUpgradeVersions, ClusterCapacity clusterCapacity, ClusterConnectionStatus? clusterConnectionStatus, Resources.Models.ExtendedLocation clusterExtendedLocation, ClusterManagerConnectionStatus? clusterManagerConnectionStatus, ResourceIdentifier clusterManagerId, ClusterDetailedStatus? detailedStatus, string detailedStatusMessage, NetworkCloudCertificateInfo edgeManagementServiceCACertificate, Resources.Models.ExtendedLocation hybridAksExtendedLocation, DateTimeOffset? lastSuccessfulVersionUpdateOn, IReadOnlyList<string> managedCredentials, long? manualActionCount, DateTimeOffset? supportExpiresOn, IReadOnlyList<ResourceIdentifier> workloadResourceIds, ClusterProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AggregatorOrSingleRackDefinition = aggregatorOrSingleRackDefinition;
             AnalyticsOutputSettings = analyticsOutputSettings;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             ClusterManagerId = clusterManagerId;
             DetailedStatus = detailedStatus;
             DetailedStatusMessage = detailedStatusMessage;
-            EdgeManagementServiceCaCertificate = edgeManagementServiceCaCertificate;
+            EdgeManagementServiceCACertificate = edgeManagementServiceCACertificate;
             HybridAksExtendedLocation = hybridAksExtendedLocation;
             LastSuccessfulVersionUpdateOn = lastSuccessfulVersionUpdateOn;
             ManagedCredentials = managedCredentials;
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public string DetailedStatusMessage { get; }
 
         /// <summary> The CA certificate of the edge management service. </summary>
-        public NetworkCloudCertificateInfo EdgeManagementServiceCaCertificate { get; }
+        public NetworkCloudCertificateInfo EdgeManagementServiceCACertificate { get; }
 
         /// <summary> Field Deprecated. This field will not be populated in an upcoming version. The extended location (custom location) that represents the Hybrid AKS control plane location. This extended location is used when creating provisioned clusters (Hybrid AKS clusters). </summary>
         public Resources.Models.ExtendedLocation HybridAksExtendedLocation { get; }

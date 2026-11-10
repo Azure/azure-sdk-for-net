@@ -45,22 +45,5 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> The list of cluster manager properties to patch. </summary>
         internal ClusterManagerPatchProperties Properties { get; set; }
-
-        /// <summary> The relative ordering group used to apply software updates to associated clusters. The minimum accepted value is 1; the service enforces the upper bound currently in effect, which may change over time. </summary>
-        public int? ClusterManagerPatchRolloutRing
-        {
-            get
-            {
-                return Properties is null ? default : Properties.RolloutRing;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterManagerPatchProperties();
-                }
-                Properties.RolloutRing = value;
-            }
-        }
     }
 }

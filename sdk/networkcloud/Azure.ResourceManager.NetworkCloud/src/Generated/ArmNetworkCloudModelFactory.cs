@@ -726,17 +726,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return new ManagedResourceGroupConfiguration(location, name, default);
         }
 
-        /// <param name="identity"> The identity for the resource. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="clusterManagerPatchRolloutRing"> The relative ordering group used to apply software updates to associated clusters. The minimum accepted value is 1; the service enforces the upper bound currently in effect, which may change over time. </param>
-        /// <returns> A new <see cref="Models.NetworkCloudClusterManagerPatch"/> instance for mocking. </returns>
-        public static NetworkCloudClusterManagerPatch NetworkCloudClusterManagerPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, int? clusterManagerPatchRolloutRing = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new NetworkCloudClusterManagerPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), clusterManagerPatchRolloutRing is null ? default : new ClusterManagerPatchProperties(clusterManagerPatchRolloutRing, default), default);
-        }
-
         /// <summary> ClusterManagerUpdateRelayPrivateEndpointConnectionParameters represents the body of the request to approve or reject the relay private endpoint connection for the private relay managed by a cluster manager. </summary>
         /// <param name="connectionState"> The state to set for the private endpoint connection. </param>
         /// <param name="description"> The description to associate with the private endpoint connection. </param>
@@ -778,7 +767,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="clusterManagerId"> The resource ID of the cluster manager that manages this cluster. This is set by the Cluster Manager when the cluster is created. </param>
         /// <param name="detailedStatus"> The current detailed status of the cluster. </param>
         /// <param name="detailedStatusMessage"> The descriptive message about the detailed status. </param>
-        /// <param name="edgeManagementServiceCaCertificate"> The CA certificate of the edge management service. </param>
+        /// <param name="edgeManagementServiceCACertificate"> The CA certificate of the edge management service. </param>
         /// <param name="hybridAksExtendedLocation"> Field Deprecated. This field will not be populated in an upcoming version. The extended location (custom location) that represents the Hybrid AKS control plane location. This extended location is used when creating provisioned clusters (Hybrid AKS clusters). </param>
         /// <param name="lastSuccessfulVersionUpdateOn"> The date and time of the end of the last successful version update for the cluster. </param>
         /// <param name="managedCredentials"> The list of credentials that are managed for the cluster and can be rotated on-demand. </param>
@@ -792,7 +781,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="kind"> The type (kind) of the cluster. When specified, the value must exactly match the kind configured on the cluster manager that manages the cluster. If omitted, the service will default the value to the kind value of the cluster manager. </param>
         /// <returns> A new <see cref="NetworkCloud.NetworkCloudClusterData"/> instance for mocking. </returns>
-        public static NetworkCloudClusterData NetworkCloudClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition = default, AnalyticsOutputSettings analyticsOutputSettings = default, ResourceIdentifier analyticsWorkspaceId = default, string clusterLocation = default, ServicePrincipalInformation clusterServicePrincipal = default, ClusterType clusterType = default, string clusterVersion = default, CommandOutputSettings commandOutputSettings = default, ValidationThreshold computeDeploymentThreshold = default, IEnumerable<NetworkCloudRackDefinition> computeRackDefinitions = default, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default, ResourceIdentifier networkFabricId = default, RuntimeProtectionConfiguration runtimeProtectionConfiguration = default, ClusterSecretArchive secretArchive = default, SecretArchiveSettings secretArchiveSettings = default, ClusterUpdateStrategy updateStrategy = default, IEnumerable<NetworkCloudActionState> actionStates = default, IEnumerable<ClusterAvailableUpgradeVersion> availableUpgradeVersions = default, ClusterCapacity clusterCapacity = default, ClusterConnectionStatus? clusterConnectionStatus = default, Resources.Models.ExtendedLocation clusterExtendedLocation = default, ClusterManagerConnectionStatus? clusterManagerConnectionStatus = default, ResourceIdentifier clusterManagerId = default, ClusterDetailedStatus? detailedStatus = default, string detailedStatusMessage = default, NetworkCloudCertificateInfo edgeManagementServiceCaCertificate = default, Resources.Models.ExtendedLocation hybridAksExtendedLocation = default, DateTimeOffset? lastSuccessfulVersionUpdateOn = default, IEnumerable<string> managedCredentials = default, long? manualActionCount = default, DateTimeOffset? supportExpireOn = default, IEnumerable<ResourceIdentifier> workloadResourceIds = default, ClusterProvisioningState? provisioningState = default, VulnerabilityScanningSettingsContainerScan? vulnerabilityScanningContainerScan = default, ETag? eTag = default, ExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default, NetworkCloudDeploymentType? kind = default)
+        public static NetworkCloudClusterData NetworkCloudClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition = default, AnalyticsOutputSettings analyticsOutputSettings = default, ResourceIdentifier analyticsWorkspaceId = default, string clusterLocation = default, ServicePrincipalInformation clusterServicePrincipal = default, ClusterType clusterType = default, string clusterVersion = default, CommandOutputSettings commandOutputSettings = default, ValidationThreshold computeDeploymentThreshold = default, IEnumerable<NetworkCloudRackDefinition> computeRackDefinitions = default, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = default, ResourceIdentifier networkFabricId = default, RuntimeProtectionConfiguration runtimeProtectionConfiguration = default, ClusterSecretArchive secretArchive = default, SecretArchiveSettings secretArchiveSettings = default, ClusterUpdateStrategy updateStrategy = default, IEnumerable<NetworkCloudActionState> actionStates = default, IEnumerable<ClusterAvailableUpgradeVersion> availableUpgradeVersions = default, ClusterCapacity clusterCapacity = default, ClusterConnectionStatus? clusterConnectionStatus = default, Resources.Models.ExtendedLocation clusterExtendedLocation = default, ClusterManagerConnectionStatus? clusterManagerConnectionStatus = default, ResourceIdentifier clusterManagerId = default, ClusterDetailedStatus? detailedStatus = default, string detailedStatusMessage = default, NetworkCloudCertificateInfo edgeManagementServiceCACertificate = default, Resources.Models.ExtendedLocation hybridAksExtendedLocation = default, DateTimeOffset? lastSuccessfulVersionUpdateOn = default, IEnumerable<string> managedCredentials = default, long? manualActionCount = default, DateTimeOffset? supportExpireOn = default, IEnumerable<ResourceIdentifier> workloadResourceIds = default, ClusterProvisioningState? provisioningState = default, VulnerabilityScanningSettingsContainerScan? vulnerabilityScanningContainerScan = default, ETag? eTag = default, ExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default, NetworkCloudDeploymentType? kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -830,7 +819,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     clusterManagerId,
                     detailedStatus,
                     detailedStatusMessage,
-                    edgeManagementServiceCaCertificate,
+                    edgeManagementServiceCACertificate,
                     hybridAksExtendedLocation,
                     lastSuccessfulVersionUpdateOn,
                     (managedCredentials ?? new ChangeTrackingList<string>()).ToList(),

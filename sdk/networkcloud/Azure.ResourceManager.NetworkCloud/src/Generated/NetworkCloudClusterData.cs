@@ -423,11 +423,11 @@ namespace Azure.ResourceManager.NetworkCloud
         }
 
         /// <summary> The CA certificate of the edge management service. </summary>
-        public NetworkCloudCertificateInfo EdgeManagementServiceCaCertificate
+        public NetworkCloudCertificateInfo EdgeManagementServiceCACertificate
         {
             get
             {
-                return Properties is null ? default : Properties.EdgeManagementServiceCaCertificate;
+                return Properties is null ? default : Properties.EdgeManagementServiceCACertificate;
             }
         }
 
