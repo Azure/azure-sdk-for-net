@@ -81,6 +81,35 @@ namespace Azure.ResourceManager.Compute.Recommender.Tests
             AssertRequests(transport, id, "2026-10-05-preview");
         }
 
+        [Test]
+        public void RegularResourceRejectsSpotIdentifier()
+        {
+            var client = new ArmClient(new MockCredential(), SubscriptionId, new ArmClientOptions { Transport = new MockTransport() });
+            ResourceIdentifier spotId = ComputeRecommenderDiagnosticResource.CreateResourceIdentifier(SubscriptionId, AzureLocation.EastUS);
+
+            Assert.Throws<ArgumentException>(() => client.GetComputePlacementScoresResource(spotId));
+        }
+
+        [Test]
+        public void RegularResourceAcceptsCaseInsensitiveSingletonNameAndRejectsOtherTypes()
+        {
+            var client = new ArmClient(new MockCredential(), SubscriptionId, new ArmClientOptions { Transport = new MockTransport() });
+            var regularId = new ResourceIdentifier($"/subscriptions/{SubscriptionId}/providers/Microsoft.Compute/locations/eastus/placementScores/REGULAR");
+            var wrongTypeId = new ResourceIdentifier($"/subscriptions/{SubscriptionId}/resourceGroups/example");
+
+            Assert.AreEqual(regularId, client.GetComputePlacementScoresResource(regularId).Id);
+            Assert.Throws<ArgumentException>(() => client.GetComputePlacementScoresResource(wrongTypeId));
+        }
+
+        [TestCase("/subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/example/providers/Microsoft.Compute/locations/eastus/placementScores/regular")]
+        [TestCase("/providers/Microsoft.Compute/locations/eastus/placementScores/regular")]
+        public void RegularResourceRejectsOtherScopes(string id)
+        {
+            var client = new ArmClient(new MockCredential(), SubscriptionId, new ArmClientOptions { Transport = new MockTransport() });
+
+            Assert.Throws<ArgumentException>(() => client.GetComputePlacementScoresResource(new ResourceIdentifier(id)));
+        }
+
         private static void AssertRequests(MockTransport transport, ResourceIdentifier id, string apiVersion)
         {
             Assert.AreEqual(2, transport.Requests.Count);

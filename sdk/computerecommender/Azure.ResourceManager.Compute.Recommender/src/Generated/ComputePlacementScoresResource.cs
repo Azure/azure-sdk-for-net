@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -79,16 +78,6 @@ namespace Azure.ResourceManager.Compute.Recommender
         {
             string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/regular";
             return new ResourceIdentifier(resourceId);
-        }
-
-        /// <param name="id"></param>
-        [Conditional("DEBUG")]
-        internal static void ValidateResourceId(ResourceIdentifier id)
-        {
-            if (id.ResourceType != ResourceType)
-            {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-            }
         }
 
         /// <summary>

@@ -85,6 +85,61 @@ namespace Azure.ResourceManager.Compute.Recommender.Tests
             Assert.AreEqual(0, latest.PlacementPreference);
         }
 
+        [TestCase("J")]
+        [TestCase("W")]
+        public void RegularMetadataCollectionIsEmptyWhenPropertiesAreAbsent(string format)
+        {
+            var options = new ModelReaderWriterOptions(format);
+            var fromWire = ModelReaderWriter.Read<ComputePlacementScoresData>(BinaryData.FromString("{}"), options);
+            var fromFactory = ArmComputeRecommenderModelFactory.ComputePlacementScoresData();
+
+            Assert.IsNotNull(fromWire.ComputeRecommenderDiagnosticSupportedResourceTypes);
+            Assert.IsEmpty(fromWire.ComputeRecommenderDiagnosticSupportedResourceTypes);
+            Assert.IsNotNull(fromFactory.ComputeRecommenderDiagnosticSupportedResourceTypes);
+            Assert.IsEmpty(fromFactory.ComputeRecommenderDiagnosticSupportedResourceTypes);
+            using JsonDocument json = JsonDocument.Parse(ModelReaderWriter.Write(fromWire, options));
+            Assert.IsFalse(json.RootElement.TryGetProperty("properties", out _));
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void RegularMetadataCollectionRetainsMutationsWhenPropertiesAreAbsent(string format)
+        {
+            var options = new ModelReaderWriterOptions(format);
+            var data = ModelReaderWriter.Read<ComputePlacementScoresData>(BinaryData.FromString("{\"properties\":null}"), options);
+            var resourceTypes = data.ComputeRecommenderDiagnosticSupportedResourceTypes;
+            Assert.AreSame(resourceTypes, data.ComputeRecommenderDiagnosticSupportedResourceTypes);
+            resourceTypes.Add("Microsoft.Compute/virtualMachines");
+
+            var persisted = ModelReaderWriter.Read<ComputePlacementScoresData>(ModelReaderWriter.Write(data, options), options);
+            CollectionAssert.AreEqual(resourceTypes, persisted.ComputeRecommenderDiagnosticSupportedResourceTypes);
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void RegularMetadataPreservesExistingProperties(string format)
+        {
+            var options = new ModelReaderWriterOptions(format);
+            var data = ModelReaderWriter.Read<ComputePlacementScoresData>(
+                BinaryData.FromString("{\"properties\":{\"supportedResourceTypes\":[\"Microsoft.Compute/virtualMachines\"]}}"), options);
+
+            CollectionAssert.AreEqual(new[] { "Microsoft.Compute/virtualMachines" }, data.ComputeRecommenderDiagnosticSupportedResourceTypes);
+            var persisted = ModelReaderWriter.Read<ComputePlacementScoresData>(ModelReaderWriter.Write(data, options), options);
+            CollectionAssert.AreEqual(data.ComputeRecommenderDiagnosticSupportedResourceTypes, persisted.ComputeRecommenderDiagnosticSupportedResourceTypes);
+        }
+
+        [Test]
+        public void RegularMetadataPreservesUnknownPropertiesInJson()
+        {
+            var options = new ModelReaderWriterOptions("J");
+            var data = ModelReaderWriter.Read<ComputePlacementScoresData>(
+                BinaryData.FromString("{\"properties\":{\"supportedResourceTypes\":[\"Microsoft.Compute/virtualMachines\"],\"futureProperty\":true},\"futureRootProperty\":42}"), options);
+
+            using JsonDocument json = JsonDocument.Parse(ModelReaderWriter.Write(data, options));
+            Assert.IsTrue(json.RootElement.GetProperty("properties").GetProperty("futureProperty").GetBoolean());
+            Assert.AreEqual(42, json.RootElement.GetProperty("futureRootProperty").GetInt32());
+        }
+
         [Test]
         public void DiagnosticFactoryPreservesOptionalArgumentsAndSupportedResourceTypes()
         {
