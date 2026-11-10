@@ -104,6 +104,7 @@ namespace Azure.Developer.LoadTesting
     public partial class DailyRecurrence : Azure.Developer.LoadTesting.LoadTestingRecurrence, System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.DailyRecurrence>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.DailyRecurrence>
     {
         public DailyRecurrence() { }
+        public DailyRecurrence(int interval) { }
         public int Interval { get { throw null; } set { } }
         protected override Azure.Developer.LoadTesting.LoadTestingRecurrence JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -225,6 +226,7 @@ namespace Azure.Developer.LoadTesting
     public partial class HourlyRecurrence : Azure.Developer.LoadTesting.LoadTestingRecurrence, System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.HourlyRecurrence>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.HourlyRecurrence>
     {
         public HourlyRecurrence() { }
+        public HourlyRecurrence(int interval) { }
         public int Interval { get { throw null; } set { } }
         protected override Azure.Developer.LoadTesting.LoadTestingRecurrence JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -923,6 +925,7 @@ namespace Azure.Developer.LoadTesting
     public partial class MonthlyRecurrenceByWeekDays : Azure.Developer.LoadTesting.LoadTestingRecurrence, System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.MonthlyRecurrenceByWeekDays>
     {
         public MonthlyRecurrenceByWeekDays() { }
+        public MonthlyRecurrenceByWeekDays(int index, int interval) { }
         public int Index { get { throw null; } set { } }
         public int Interval { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Developer.LoadTesting.WeekDays> WeekDaysInMonth { get { throw null; } }
@@ -1258,6 +1261,7 @@ namespace Azure.Developer.LoadTesting
     public partial class RecurrenceWithCron : Azure.Developer.LoadTesting.LoadTestingRecurrence, System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.RecurrenceWithCron>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.RecurrenceWithCron>
     {
         public RecurrenceWithCron() { }
+        public RecurrenceWithCron(string cronExpression) { }
         public string CronExpression { get { throw null; } set { } }
         protected override Azure.Developer.LoadTesting.LoadTestingRecurrence JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1325,6 +1329,7 @@ namespace Azure.Developer.LoadTesting
     public partial class ScheduleTestsTrigger : Azure.Developer.LoadTesting.LoadTestingTrigger, System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.ScheduleTestsTrigger>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.ScheduleTestsTrigger>
     {
         public ScheduleTestsTrigger() { }
+        public ScheduleTestsTrigger(string displayName, System.Collections.Generic.IEnumerable<string> testIds) { }
         public Azure.Developer.LoadTesting.LoadTestingRecurrence Recurrence { get { throw null; } set { } }
         public Azure.Developer.LoadTesting.RecurrenceStatus RecurrenceStatus { get { throw null; } }
         public System.DateTimeOffset? StartsOn { get { throw null; } set { } }
@@ -1386,6 +1391,7 @@ namespace Azure.Developer.LoadTesting
     public partial class TestAppComponents : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestAppComponents>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestAppComponents>
     {
         public TestAppComponents() { }
+        public TestAppComponents(System.Collections.Generic.IDictionary<string, Azure.Developer.LoadTesting.LoadTestingAppComponent> components) { }
         public System.Collections.Generic.IDictionary<string, Azure.Developer.LoadTesting.LoadTestingAppComponent> Components { get { throw null; } }
         public string CreatedBy { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -1579,6 +1585,7 @@ namespace Azure.Developer.LoadTesting
     public partial class TestRunAppComponents : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestRunAppComponents>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestRunAppComponents>
     {
         public TestRunAppComponents() { }
+        public TestRunAppComponents(System.Collections.Generic.IDictionary<string, Azure.Developer.LoadTesting.LoadTestingAppComponent> components) { }
         public System.Collections.Generic.IDictionary<string, Azure.Developer.LoadTesting.LoadTestingAppComponent> Components { get { throw null; } }
         public string CreatedBy { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -1872,6 +1879,7 @@ namespace Azure.Developer.LoadTesting
     public partial class TestServerMetricsConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestServerMetricsConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestServerMetricsConfiguration>
     {
         public TestServerMetricsConfiguration() { }
+        public TestServerMetricsConfiguration(System.Collections.Generic.IDictionary<string, Azure.Developer.LoadTesting.ResourceMetric> metrics) { }
         public string CreatedBy { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string LastModifiedBy { get { throw null; } }
@@ -1905,6 +1913,7 @@ namespace Azure.Developer.LoadTesting
     public partial class TestsNotificationRule : Azure.Developer.LoadTesting.NotificationRule, System.ClientModel.Primitives.IJsonModel<Azure.Developer.LoadTesting.TestsNotificationRule>, System.ClientModel.Primitives.IPersistableModel<Azure.Developer.LoadTesting.TestsNotificationRule>
     {
         public TestsNotificationRule() { }
+        public TestsNotificationRule(string displayName, System.Collections.Generic.IEnumerable<string> actionGroupIds, System.Collections.Generic.IDictionary<string, Azure.Developer.LoadTesting.TestsNotificationEventFilter> eventFilters) { }
         public System.Collections.Generic.IDictionary<string, Azure.Developer.LoadTesting.TestsNotificationEventFilter> EventFilters { get { throw null; } }
         public System.Collections.Generic.IList<string> TestIds { get { throw null; } }
         protected override Azure.Developer.LoadTesting.NotificationRule JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

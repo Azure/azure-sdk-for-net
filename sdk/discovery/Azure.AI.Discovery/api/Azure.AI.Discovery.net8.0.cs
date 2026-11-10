@@ -613,6 +613,7 @@ namespace Azure.AI.Discovery
     public partial class KnowledgeBase : System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.KnowledgeBase>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBase>
     {
         public KnowledgeBase() { }
+        public KnowledgeBase(string description, string copilotInstruction) { }
         public string BookshelfName { get { throw null; } }
         public string CopilotInstruction { get { throw null; } set { } }
         public string CreatedBy { get { throw null; } }
@@ -1087,6 +1088,7 @@ namespace Azure.AI.Discovery
     public partial class TaskAssignee : System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.TaskAssignee>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.TaskAssignee>
     {
         public TaskAssignee() { }
+        public TaskAssignee(string id, Azure.AI.Discovery.DiscoveryActorType type) { }
         public string Id { get { throw null; } set { } }
         public Azure.AI.Discovery.DiscoveryActorType Type { get { throw null; } set { } }
         protected virtual Azure.AI.Discovery.TaskAssignee JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
