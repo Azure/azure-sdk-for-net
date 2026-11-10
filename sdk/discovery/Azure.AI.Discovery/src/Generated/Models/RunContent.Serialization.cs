@@ -13,67 +13,67 @@ using Azure.Core;
 
 namespace Azure.AI.Discovery
 {
-    /// <summary> The RunRequest. </summary>
-    internal partial class RunRequest : IJsonModel<RunRequest>
+    /// <summary> The RunContent. </summary>
+    internal partial class RunContent : IJsonModel<RunContent>
     {
-        /// <summary> Initializes a new instance of <see cref="RunRequest"/> for deserialization. </summary>
-        internal RunRequest()
+        /// <summary> Initializes a new instance of <see cref="RunContent"/> for deserialization. </summary>
+        internal RunContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RunRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RunContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RunContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRunRequest(document.RootElement, options);
+                        return DeserializeRunContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RunRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RunContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIDiscoveryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RunRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RunRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RunContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RunRequest IPersistableModel<RunRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RunContent IPersistableModel<RunContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RunRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RunContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="runRequest"> The <see cref="RunRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(RunRequest runRequest)
+        /// <param name="runContent"> The <see cref="RunContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(RunContent runContent)
         {
-            if (runRequest == null)
+            if (runContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(runRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(runContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RunRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RunContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -84,10 +84,10 @@ namespace Azure.AI.Discovery
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RunContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RunContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("toolId"u8);
             writer.WriteStringValue(ToolId);
@@ -172,24 +172,24 @@ namespace Azure.AI.Discovery
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RunRequest IJsonModel<RunRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RunContent IJsonModel<RunContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RunRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RunContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RunRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RunContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RunContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRunRequest(document.RootElement, options);
+            return DeserializeRunContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RunRequest DeserializeRunRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static RunContent DeserializeRunContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -303,7 +303,7 @@ namespace Azure.AI.Discovery
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RunRequest(
+            return new RunContent(
                 toolId,
                 command,
                 inlineFiles ?? new ChangeTrackingList<InlineFile>(),

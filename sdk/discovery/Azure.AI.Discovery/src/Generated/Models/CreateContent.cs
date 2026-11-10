@@ -10,25 +10,25 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Discovery
 {
-    /// <summary> The CreateRequest. </summary>
-    internal partial class CreateRequest
+    /// <summary> The CreateContent. </summary>
+    internal partial class CreateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CreateRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateContent"/>. </summary>
         /// <param name="projectName"> The name of the associated Project. </param>
-        internal CreateRequest(string projectName)
+        internal CreateContent(string projectName)
         {
             ProjectName = projectName;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CreateContent"/>. </summary>
         /// <param name="projectName"> The name of the associated Project. </param>
         /// <param name="investigationName"> The Name of the associated Investigation. </param>
         /// <param name="displayName"> The title. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CreateRequest(string projectName, string investigationName, string displayName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CreateContent(string projectName, string investigationName, string displayName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProjectName = projectName;
             InvestigationName = investigationName;
