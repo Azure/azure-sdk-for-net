@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <summary> The operator contains. </summary>
         private const string ContainsValue = "contains";
         /// <summary> The operator does not contains. </summary>
-        private const string DoesNotContainsValue = "doesNotContains";
+        private const string DoesNotContainValue = "doesNotContains";
         /// <summary> The operator does not equal. </summary>
         private const string DoesNotEqualValue = "doesNotEqual";
         /// <summary> The operator starts with. </summary>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public static CommvaultMatchOperator Contains { get; } = new CommvaultMatchOperator(ContainsValue);
 
         /// <summary> The operator does not contains. </summary>
-        public static CommvaultMatchOperator DoesNotContains { get; } = new CommvaultMatchOperator(DoesNotContainsValue);
+        public static CommvaultMatchOperator DoesNotContain { get; } = new CommvaultMatchOperator(DoesNotContainValue);
 
         /// <summary> The operator does not equal. </summary>
         public static CommvaultMatchOperator DoesNotEqual { get; } = new CommvaultMatchOperator(DoesNotEqualValue);
