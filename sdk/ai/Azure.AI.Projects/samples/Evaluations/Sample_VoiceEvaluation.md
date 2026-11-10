@@ -218,7 +218,7 @@ internal static async Task<IReadOnlyList<string>> RunEvaluationAsync(
         {
             throw new InvalidOperationException($"Evaluation run {status}: {GetErrorMessageOrEmpty(run)}");
         }
-        IReadOnlyList<string> results = await GetResultsListAsync(client, evaluationId, runId);
+        IReadOnlyList<string> results = await GetResultsListAsync(client, evaluationId, runId, timeout.Token);
         foreach (string item in results)
         {
             Console.WriteLine(item);
