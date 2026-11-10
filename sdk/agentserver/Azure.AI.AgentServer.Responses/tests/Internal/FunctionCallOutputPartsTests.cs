@@ -129,6 +129,16 @@ public class FunctionCallOutputPartsTests
     }
 
     [Test]
+    public void WireFormatTranslation_ToItemField_PreservesParts()
+    {
+        var item = ModelJson.Read<ResponseItem>(BinaryData.FromString(Item))!;
+
+        var field = item.Translate().To<ItemFieldFunctionToolCallOutput>();
+
+        Assert.That(JsonNode.DeepEquals(JsonNode.Parse(field.Output.ToString()), JsonNode.Parse(Parts)), Is.True, field.Output.ToString());
+    }
+
+    [Test]
     public void Flatten_WithoutFunctionCallOutput_ReturnsNullAndKeepsPayload()
     {
         var data = BinaryData.FromString("""{ "type": "message", "output": [ 1 ] }""");
