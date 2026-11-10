@@ -35,7 +35,7 @@ namespace Azure.Provisioning.CognitiveServices
         /// <summary> Creates a new CognitiveServicesDeletedAccount. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public CognitiveServicesDeletedAccount(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.CognitiveServices/locations/resourceGroups/deletedAccounts", resourceVersion ?? "2026-05-01")
+        internal CognitiveServicesDeletedAccount(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.CognitiveServices/locations/resourceGroups/deletedAccounts", resourceVersion ?? "2026-05-01")
         {
         }
 

@@ -27,7 +27,7 @@ namespace Azure.Provisioning.ApiManagement
         /// <summary> Creates a new ApiManagementUserSubscription. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ApiManagementUserSubscription(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ApiManagement/service/users/subscriptions", resourceVersion ?? "2025-09-01-preview")
+        internal ApiManagementUserSubscription(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ApiManagement/service/users/subscriptions", resourceVersion ?? "2025-09-01-preview")
         {
         }
 

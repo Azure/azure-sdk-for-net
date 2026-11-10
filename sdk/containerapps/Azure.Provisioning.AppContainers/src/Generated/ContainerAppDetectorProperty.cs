@@ -33,7 +33,7 @@ namespace Azure.Provisioning.AppContainers
         /// <summary> Creates a new ContainerAppDetectorProperty. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ContainerAppDetectorProperty(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.App/containerApps/detectorProperties", resourceVersion ?? "2026-07-01")
+        internal ContainerAppDetectorProperty(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.App/containerApps/detectorProperties", resourceVersion ?? "2026-07-01")
         {
         }
 

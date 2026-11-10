@@ -31,7 +31,7 @@ namespace Azure.Provisioning.ApplicationInsights
         /// <summary> Creates a new ApplicationInsightsWorkbookRevision. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ApplicationInsightsWorkbookRevision(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Insights/workbooks/revisions", resourceVersion ?? "2023-06-01")
+        internal ApplicationInsightsWorkbookRevision(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Insights/workbooks/revisions", resourceVersion ?? "2023-06-01")
         {
         }
 
