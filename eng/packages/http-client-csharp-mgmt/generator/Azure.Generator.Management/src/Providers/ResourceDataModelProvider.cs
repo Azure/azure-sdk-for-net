@@ -1,10 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.TypeSpec.Generator.Input;
+using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Providers;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Azure.Generator.Management.Providers
 {
@@ -34,6 +38,13 @@ namespace Azure.Generator.Management.Providers
         // Preserve the original input model so later visitors can distinguish output-only resource data
         // from input-capable request models after the provider has been converted to a C# type.
         internal InputModelType InputModel { get; }
+
+        protected override IReadOnlyList<ConstructorProvider> BuildConstructorsForBackCompatibility(IEnumerable<ConstructorProvider> originalConstructors)
+        {
+            var original = originalConstructors.ToArray();
+            return ConstructorProviderHelpers.RestoreValueTypeNullabilityOverloads(
+                this, original, base.BuildConstructorsForBackCompatibility(original));
+        }
 
         protected override string BuildName()
         {

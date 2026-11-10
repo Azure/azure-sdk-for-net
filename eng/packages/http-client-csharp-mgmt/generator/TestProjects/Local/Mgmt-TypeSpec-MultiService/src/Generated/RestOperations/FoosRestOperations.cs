@@ -160,7 +160,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
             return message;
         }
 
-        internal HttpMessage CreateGetPropertiesRequest(Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context)
+        internal HttpMessage CreateListPropertiesRequest(Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

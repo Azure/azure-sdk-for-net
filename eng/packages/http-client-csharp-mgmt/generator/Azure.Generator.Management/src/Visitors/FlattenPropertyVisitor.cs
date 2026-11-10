@@ -793,10 +793,8 @@ namespace Azure.Generator.Management.Visitors
 
         private static void PreserveConstructorParameterType(ModelProvider model, PropertyProvider flattenedProperty, PropertyProvider innerProperty, bool lifted)
         {
-            // Constructor restoration clones AsParameter, not the historical parameter. Keep
-            // its exact value-type nullability independently of the property's wrapper lifting.
-            // Mixed T/T? overloads cannot share one type; keep the representable
-            // signature without inventing a mapping for the other overload.
+            // Keep constructor parameter nullability independent of the property's wrapper lifting.
+            // Mixed T/T? overloads are restored separately after upstream compatibility processing.
             var parameter = flattenedProperty.AsParameter;
             var previousTypes = model.LastContractView?.Constructors
                 .Where(c => IsPublicApi(c.Signature.Modifiers)

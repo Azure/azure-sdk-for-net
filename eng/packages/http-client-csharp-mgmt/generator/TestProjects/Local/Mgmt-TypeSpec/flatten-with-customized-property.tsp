@@ -35,7 +35,7 @@ union FlattenChannel {
  * Also marked with @useSystemTextJsonConverter so the generated JsonConverter.Read
  * is verified to call the dynamic-model deserialization overload that takes the raw payload.
  */
-@TypeSpec.HttpClient.CSharp.dynamicModel
+@dynamicModel("csharp")
 @useSystemTextJsonConverter("csharp")
 model MultiFlattenProperties {
   /** Required property that will be customized via [CodeGenMember] to change its position. */
