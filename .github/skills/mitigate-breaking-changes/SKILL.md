@@ -38,6 +38,20 @@ standalone detector, then run ordinary builds, analyzers, and tests separately.
 Do not treat a missing GA baseline, stale artifact, or detector failure as a
 compatibility pass. Never add suppressions without explicit owner approval.
 
+## Combined Management Packages
+
+Regeneration of a combined ARM management package covers the full service set
+projected into that package. Changing `api-version` selects an API version; it
+does not exclude services, and there is no supported quick switch to regenerate
+only one service while omitting newly reintroduced services.
+
+Treat conflicts from reintroduced services as package-wide compatibility work.
+Do not recommend C#-only omission or internalization tricks to hide those
+services. Remove obsolete compatibility placeholders only after verifying that
+the conflicting APIs never shipped in a GA package; if they did ship, preserve
+compatibility. Suggest intentionally redesigning or splitting the package only
+when that is the user's goal, not as a workaround for one regeneration.
+
 ## SDK-Side Customizations (in SDK repo)
 
 Use **Custom/*.cs** or **Customization/*.cs** partial classes (follow the package's existing structure) for .NET-side fixes.
