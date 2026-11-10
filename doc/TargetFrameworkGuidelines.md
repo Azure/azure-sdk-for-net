@@ -10,12 +10,10 @@ this document takes precedence for this repository.
 
 ## Background
 
-.NET ships a major version every November. Even-numbered versions are long-term
-support (LTS, 3 years) and odd-numbered versions are standard-term support (STS,
-2 years), per the
-[.NET support policy](https://dotnet.microsoft.com/platform/support/policy/dotnet-core).
-As a result, older versions reach end of support only when an STS ships: .NET 8
-and .NET 9 both reach end of support as .NET 11 ships.
+.NET ships a new major version every November as either a long-term support
+(LTS) or a standard-term support (STS) release. The
+[.NET support policy](https://dotnet.microsoft.com/platform/support/policy/dotnet-core)
+lists each release's type and end-of-support date.
 
 ## Package targets
 
@@ -56,8 +54,8 @@ matrix covers the same set.
   ships.
 - ✅ **DO** remove versions that have reached end of support in the same change.
 
-Core packages keep shipping the previous LTS, and any older STS targets, for a
-year after those versions leave the test targets. That gap is expected.
+Core packages can keep shipping a target after its version leaves the test
+targets, until the next LTS ships. That gap is expected.
 
 ## Timeline
 
