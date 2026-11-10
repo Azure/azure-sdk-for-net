@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Dynatrace;
@@ -31,6 +32,15 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
         /// <returns> Returns a <see cref="DynatraceMonitoredSubscriptionResource"/> object. </returns>
         public virtual DynatraceMonitoredSubscriptionResource GetDynatraceMonitoredSubscriptionResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != DynatraceMonitoredSubscriptionResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Dynatrace.Observability", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "monitors", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "monitoredSubscriptions", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Dynatrace.Observability/monitors/{monitorName}/monitoredSubscriptions/default"), nameof(id));
+            }
             DynatraceMonitoredSubscriptionResource.ValidateResourceId(id);
             return new DynatraceMonitoredSubscriptionResource(Client, id);
         }
