@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 throw new FormatException($"The model {nameof(Retention)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(NumberOfSnapshots))
+            if (Optional.IsDefined(SnapshotCount))
             {
                 writer.WritePropertyName("numberOfSnapshots"u8);
-                writer.WriteNumberValue(NumberOfSnapshots.Value);
+                writer.WriteNumberValue(SnapshotCount.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             {
                 return null;
             }
-            int? numberOfSnapshots = default;
+            int? snapshotCount = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     {
                         continue;
                     }
-                    numberOfSnapshots = prop.Value.GetInt32();
+                    snapshotCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new Retention(numberOfSnapshots, additionalBinaryDataProperties);
+            return new Retention(snapshotCount, additionalBinaryDataProperties);
         }
     }
 }

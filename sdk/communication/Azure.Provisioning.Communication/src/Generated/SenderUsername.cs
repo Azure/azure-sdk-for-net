@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Communication
         private BicepValue<string> _name;
         private SystemData _systemData;
         private SenderUsernameProperties _properties;
-        private ResourceReference<CommunicationDomain> _parent;
+        private ProvisioningResourceReference<CommunicationDomain> _parent;
 
         /// <summary> Creates a new SenderUsername. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -162,7 +162,7 @@ namespace Azure.Provisioning.Communication
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SenderUsernameProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<CommunicationDomain>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<CommunicationDomain>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

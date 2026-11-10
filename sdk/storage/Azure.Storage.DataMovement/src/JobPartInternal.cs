@@ -597,6 +597,12 @@ namespace Azure.Storage.DataMovement
             {
                 if (_failureType == JobPartFailureType.None)
                 {
+                    if (string.IsNullOrEmpty(exceptionMessage))
+                    {
+                        _failureType = JobPartFailureType.Other;
+                        return;
+                    }
+
                     foreach (string errorMessage in DataMovementConstants.ErrorCode.CannotOverwrite)
                     {
                         if (exceptionMessage.Contains(errorMessage))

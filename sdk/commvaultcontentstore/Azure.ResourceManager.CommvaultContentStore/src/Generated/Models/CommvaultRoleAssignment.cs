@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.ResourceManager.CommvaultContentStore;
 
 namespace Azure.ResourceManager.CommvaultContentStore.Models
@@ -18,26 +19,32 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CommvaultRoleAssignment"/>. </summary>
-        public CommvaultRoleAssignment()
+        /// <param name="roleName"> The name of the Commvault role. </param>
+        /// <param name="principals"> The Entra entities (users or groups) assigned to this role. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="principals"/> is null. </exception>
+        public CommvaultRoleAssignment(CommvaultRoleName roleName, IEnumerable<CommvaultRolePrincipal> principals)
         {
-            Entities = new ChangeTrackingList<CommvaultEntityInfo>();
+            Argument.AssertNotNull(principals, nameof(principals));
+
+            RoleName = roleName;
+            Principals = principals.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="CommvaultRoleAssignment"/>. </summary>
         /// <param name="roleName"> The name of the Commvault role. </param>
-        /// <param name="entities"> The Entra entities (users or groups) assigned to this role. </param>
+        /// <param name="principals"> The Entra entities (users or groups) assigned to this role. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommvaultRoleAssignment(CommvaultRoleName? roleName, IList<CommvaultEntityInfo> entities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommvaultRoleAssignment(CommvaultRoleName roleName, IList<CommvaultRolePrincipal> principals, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RoleName = roleName;
-            Entities = entities;
+            Principals = principals;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the Commvault role. </summary>
-        public CommvaultRoleName? RoleName { get; set; }
+        public CommvaultRoleName RoleName { get; set; }
 
         /// <summary> The Entra entities (users or groups) assigned to this role. </summary>
-        public IList<CommvaultEntityInfo> Entities { get; }
+        public IList<CommvaultRolePrincipal> Principals { get; }
     }
 }

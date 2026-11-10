@@ -26,7 +26,7 @@ namespace Azure.Provisioning.Network
         private SystemData _systemData;
         private VirtualNetworkApplianceCapabilityProperties _properties;
         private BicepValue<VirtualNetworkApplianceCapabilityKind> _kind;
-        private ResourceReference<VirtualNetworkAppliance> _parent;
+        private ProvisioningResourceReference<VirtualNetworkAppliance> _parent;
 
         /// <summary> Creates a new VirtualNetworkApplianceCapability. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -119,7 +119,7 @@ namespace Azure.Provisioning.Network
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<VirtualNetworkApplianceCapabilityProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<VirtualNetworkApplianceCapabilityKind>(nameof(Kind), new string[] { "kind" }, isRequired: true);
-            _parent = DefineResource<VirtualNetworkAppliance>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<VirtualNetworkAppliance>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

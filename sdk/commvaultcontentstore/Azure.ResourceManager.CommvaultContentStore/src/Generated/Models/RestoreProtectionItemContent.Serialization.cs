@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 writer.WritePropertyName("restoreType"u8);
                 writer.WriteStringValue(RestoreType.Value.ToString());
             }
-            if (Optional.IsDefined(ToTime))
+            if (Optional.IsDefined(RestorePointTime))
             {
                 writer.WritePropertyName("toTime"u8);
-                writer.WriteStringValue(ToTime);
+                writer.WriteStringValue(RestorePointTime);
             }
             writer.WritePropertyName("vmDestinationInfo"u8);
             writer.WriteObjectValue(VmDestinationInfo, options);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             }
             bool isInPlaceRestore = default;
             CommvaultRestoreType? restoreType = default;
-            string toTime = default;
+            string restorePointTime = default;
             VmDestinationInfo vmDestinationInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 }
                 if (prop.NameEquals("toTime"u8))
                 {
-                    toTime = prop.Value.GetString();
+                    restorePointTime = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("vmDestinationInfo"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RestoreProtectionItemContent(isInPlaceRestore, restoreType, toTime, vmDestinationInfo, additionalBinaryDataProperties);
+            return new RestoreProtectionItemContent(isInPlaceRestore, restoreType, restorePointTime, vmDestinationInfo, additionalBinaryDataProperties);
         }
     }
 }

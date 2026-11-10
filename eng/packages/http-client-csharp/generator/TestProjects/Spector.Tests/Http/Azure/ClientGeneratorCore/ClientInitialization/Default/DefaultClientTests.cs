@@ -37,7 +37,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientInitia
 
             await client.WithQueryAsync("us-west", "test-id");
 
-            await client.WithBodyAsync("us-west", new WithBodyRequest("test-name"));
+            await client.WithBodyAsync("us-west", new WithBodyContent("test-name"));
         });
 
         [SpectorTest]

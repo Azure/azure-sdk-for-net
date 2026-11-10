@@ -20,7 +20,7 @@ namespace Azure.Provisioning.CognitiveServices
         private BicepValue<string> _name;
         private SystemData _systemData;
         private CognitiveServicesCapabilityHostProperties _properties;
-        private ResourceReference<CognitiveServicesAccount> _parent;
+        private ProvisioningResourceReference<CognitiveServicesAccount> _parent;
 
         /// <summary> Creates a new CognitiveServicesCapabilityHost. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -102,7 +102,7 @@ namespace Azure.Provisioning.CognitiveServices
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<CognitiveServicesCapabilityHostProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
-            _parent = DefineResource<CognitiveServicesAccount>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<CognitiveServicesAccount>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

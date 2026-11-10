@@ -15,7 +15,7 @@ namespace _Type.Model.Visibility
 
         public string ReadProp => throw null;
 
-        public int? QueryProp
+        public int QueryProp
         {
             get => throw null;
             set => throw null;
@@ -25,7 +25,7 @@ namespace _Type.Model.Visibility
 
         public IList<int> UpdateProp => throw null;
 
-        public bool? DeleteProp
+        public bool DeleteProp
         {
             get => throw null;
             set => throw null;

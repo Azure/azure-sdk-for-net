@@ -5,8 +5,13 @@
 ### Features Added
 
 ### Breaking Changes
+- `AzureFunctionDefinitionFunction` was removed, please use the same class from `Azure.AI.Extensions.OpenAI`.
+- Renamed `GenerateVoiceAgentRequest` to `GenerateVoiceAgentContent` and `UpdateToolboxRequest` to `UpdateToolboxContent`.
+- Removed the `AgentCard(string, IEnumerable<AgentCardSkill>)` and `VersionSelector(IEnumerable<VersionSelectionRule>)` constructors. Use the parameterless constructors and set `Version`/`Skills` and `VersionSelectionRules` with initializers.
+- `TelephonyTransferTarget` constructor no longer takes `name`; set the `Name` property instead.
 
 ### Bugs Fixed
+- Fixed the cancellation of `ToolboxRecord` update.
 
 ### Other Changes
 

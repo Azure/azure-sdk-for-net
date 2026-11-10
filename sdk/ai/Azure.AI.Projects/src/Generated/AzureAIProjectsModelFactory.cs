@@ -762,11 +762,11 @@ namespace Azure.AI.Projects
 
         /// <summary> Request to fetch credentials for a model asset. </summary>
         /// <param name="blobUri"> Blob URI of the model asset to fetch credentials for. </param>
-        /// <returns> A new <see cref="Projects.ModelCredentialRequest"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Projects.ModelCredentialContent"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ModelCredentialRequest ModelCredentialRequest(Uri blobUri = default)
+        public static ModelCredentialContent ModelCredentialContent(Uri blobUri = default)
         {
-            return new ModelCredentialRequest(blobUri, additionalBinaryDataProperties: null);
+            return new ModelCredentialContent(blobUri, additionalBinaryDataProperties: null);
         }
 
         /// <summary>

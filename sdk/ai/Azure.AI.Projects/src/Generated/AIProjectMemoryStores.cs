@@ -120,9 +120,7 @@ namespace Azure.AI.Projects.Memory
             Argument.AssertNotNull(definition, nameof(definition));
 
             InternalCreateMemoryStoreRequest spreadModel = new InternalCreateMemoryStoreRequest(name, description, metadata ?? new ChangeTrackingDictionary<string, string>(), definition, default);
-            using Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(spreadModel, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
-            ClientResult result = CreateMemoryStore(content, cancellationToken.ToRequestOptions());
+            ClientResult result = CreateMemoryStore(spreadModel, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
         }
 
@@ -141,9 +139,7 @@ namespace Azure.AI.Projects.Memory
             Argument.AssertNotNull(definition, nameof(definition));
 
             InternalCreateMemoryStoreRequest spreadModel = new InternalCreateMemoryStoreRequest(name, description, metadata ?? new ChangeTrackingDictionary<string, string>(), definition, default);
-            using Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(spreadModel, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
-            ClientResult result = await CreateMemoryStoreAsync(content, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await CreateMemoryStoreAsync(spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((MemoryStore)result, result.GetRawResponse());
         }
 
@@ -848,7 +844,7 @@ namespace Azure.AI.Projects.Memory
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(content, nameof(content));
 
-            CreateMemoryRequest spreadModel = new CreateMemoryRequest(scope, content, kind, default);
+            CreateMemoryContent spreadModel = new CreateMemoryContent(scope, content, kind, default);
             ClientResult result = CreateMemory(name, spreadModel, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((MemoryItem)result, result.GetRawResponse());
         }
@@ -868,7 +864,7 @@ namespace Azure.AI.Projects.Memory
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(content, nameof(content));
 
-            CreateMemoryRequest spreadModel = new CreateMemoryRequest(scope, content, kind, default);
+            CreateMemoryContent spreadModel = new CreateMemoryContent(scope, content, kind, default);
             ClientResult result = await CreateMemoryAsync(name, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((MemoryItem)result, result.GetRawResponse());
         }
@@ -959,7 +955,7 @@ namespace Azure.AI.Projects.Memory
             Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
             Argument.AssertNotNullOrEmpty(content, nameof(content));
 
-            UpdateMemoryRequest spreadModel = new UpdateMemoryRequest(content, default);
+            UpdateMemoryContent spreadModel = new UpdateMemoryContent(content, default);
             ClientResult result = UpdateMemory(name, memoryId, spreadModel, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((MemoryItem)result, result.GetRawResponse());
         }
@@ -978,7 +974,7 @@ namespace Azure.AI.Projects.Memory
             Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
             Argument.AssertNotNullOrEmpty(content, nameof(content));
 
-            UpdateMemoryRequest spreadModel = new UpdateMemoryRequest(content, default);
+            UpdateMemoryContent spreadModel = new UpdateMemoryContent(content, default);
             ClientResult result = await UpdateMemoryAsync(name, memoryId, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((MemoryItem)result, result.GetRawResponse());
         }

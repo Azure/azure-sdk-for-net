@@ -243,82 +243,6 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
-        /// [Protocol Method] Creates a new agent version from code. Uploads the code zip and creates a new version
-        /// for an existing agent. The SHA-256 hex digest of the zip is provided in the
-        /// `x-ms-code-zip-sha256` header for integrity and dedup.
-        /// The request body is multipart/form-data with a JSON metadata part and a binary code part (part order is irrelevant).
-        /// Maximum upload size is 250 MB.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName">
-        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
-        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
-        /// </param>
-        /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult CreateAgentVersionFromCode(string agentName, string codeZipSha256, BinaryContent content, string contentType, RequestOptions options = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.CreateAgentVersionFromCode");
-            scope.Start();
-            try
-            {
-                using PipelineMessage message = CreateCreateAgentVersionFromCodeRequest(agentName, codeZipSha256, content, contentType, options);
-                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Creates a new agent version from code. Uploads the code zip and creates a new version
-        /// for an existing agent. The SHA-256 hex digest of the zip is provided in the
-        /// `x-ms-code-zip-sha256` header for integrity and dedup.
-        /// The request body is multipart/form-data with a JSON metadata part and a binary code part (part order is irrelevant).
-        /// Maximum upload size is 250 MB.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="agentName">
-        /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.
-        /// <list type="bullet"><item><description>Must start and end with alphanumeric characters,</description></item><item><description>Can contain hyphens in the middle</description></item><item><description>Must not exceed 63 characters.</description></item></list>
-        /// </param>
-        /// <param name="codeZipSha256"> SHA-256 hex digest of the uploaded code zip. Used for change detection (dedup) and integrity verification. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> CreateAgentVersionFromCodeAsync(string agentName, string codeZipSha256, BinaryContent content, string contentType, RequestOptions options = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentAdministrationClient.CreateAgentVersionFromCode");
-            scope.Start();
-            try
-            {
-                using PipelineMessage message = CreateCreateAgentVersionFromCodeRequest(agentName, codeZipSha256, content, contentType, options);
-                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Creates a new agent version from code. Uploads the code zip and creates a new version
         /// for an existing agent. The SHA-256 hex digest of the zip is provided in the
         /// `x-ms-code-zip-sha256` header for integrity and dedup.
@@ -336,7 +260,7 @@ namespace Azure.AI.Projects.Agents
         [Experimental("SCME0004")]
         internal virtual ClientResult<ProjectsAgentVersion> CreateAgentVersionFromCode(string agentName, string codeZipSha256, CreateAgentVersionFromCodeContent content, CancellationToken cancellationToken = default)
         {
-            using MultiPartFormContent content0 = content.ToMultipartFormContent(new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            using MultiPartFormContent content0 = content.ToMultipartFormContent();
             ClientResult result = CreateAgentVersionFromCode(agentName, codeZipSha256, content0, content0.MediaType, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((ProjectsAgentVersion)result, result.GetRawResponse());
         }
@@ -359,7 +283,7 @@ namespace Azure.AI.Projects.Agents
         [Experimental("SCME0004")]
         internal virtual async Task<ClientResult<ProjectsAgentVersion>> CreateAgentVersionFromCodeAsync(string agentName, string codeZipSha256, CreateAgentVersionFromCodeContent content, CancellationToken cancellationToken = default)
         {
-            using MultiPartFormContent content0 = content.ToMultipartFormContent(new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
+            using MultiPartFormContent content0 = content.ToMultipartFormContent();
             ClientResult result = await CreateAgentVersionFromCodeAsync(agentName, codeZipSha256, content0, content0.MediaType, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((ProjectsAgentVersion)result, result.GetRawResponse());
         }

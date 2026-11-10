@@ -71,29 +71,14 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(AzureAISearchIndex)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create))
+            writer.WritePropertyName("connectionName"u8);
+            writer.WriteStringValue(ConnectionName);
+            writer.WritePropertyName("indexName"u8);
+            writer.WriteStringValue(IndexName);
+            if (Optional.IsDefined(FieldMapping))
             {
-                if (Optional.IsDefined(ConnectionName))
-                {
-                    writer.WritePropertyName("connectionName"u8);
-                    writer.WriteStringValue(ConnectionName);
-                }
-            }
-            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create))
-            {
-                if (Optional.IsDefined(IndexName))
-                {
-                    writer.WritePropertyName("indexName"u8);
-                    writer.WriteStringValue(IndexName);
-                }
-            }
-            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create))
-            {
-                if (Optional.IsDefined(FieldMapping))
-                {
-                    writer.WritePropertyName("fieldMapping"u8);
-                    writer.WriteObjectValue(FieldMapping, options);
-                }
+                writer.WritePropertyName("fieldMapping"u8);
+                writer.WriteObjectValue(FieldMapping, options);
             }
         }
 

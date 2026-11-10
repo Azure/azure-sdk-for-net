@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _name;
         private SystemData _systemData;
         private StaticCidrProperties _properties;
-        private ResourceReference<IpamPool> _parent;
+        private ProvisioningResourceReference<IpamPool> _parent;
 
         /// <summary> Creates a new StaticCidr. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -102,7 +102,7 @@ namespace Azure.Provisioning.Network
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<StaticCidrProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<IpamPool>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<IpamPool>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

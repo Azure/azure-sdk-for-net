@@ -14,11 +14,6 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> Evaluation Taxonomy Definition. </summary>
     public partial class EvaluationTaxonomy : IJsonModel<EvaluationTaxonomy>
     {
-        /// <summary> Initializes a new instance of <see cref="EvaluationTaxonomy"/> for deserialization. </summary>
-        internal EvaluationTaxonomy()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual EvaluationTaxonomy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -110,32 +105,26 @@ namespace Azure.AI.Projects.Evaluation
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create | LifecycleVisibility.Update))
+            if (Optional.IsDefined(Description))
             {
-                if (Optional.IsDefined(Description))
-                {
-                    writer.WritePropertyName("description"u8);
-                    writer.WriteStringValue(Description);
-                }
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
             }
-            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create | LifecycleVisibility.Update))
+            if (Optional.IsCollectionDefined(Tags))
             {
-                if (Optional.IsCollectionDefined(Tags))
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
                 {
-                    writer.WritePropertyName("tags"u8);
-                    writer.WriteStartObject();
-                    foreach (var item in Tags)
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
                     {
-                        writer.WritePropertyName(item.Key);
-                        if (item.Value == null)
-                        {
-                            writer.WriteNullValue();
-                            continue;
-                        }
-                        writer.WriteStringValue(item.Value);
+                        writer.WriteNullValue();
+                        continue;
                     }
-                    writer.WriteEndObject();
+                    writer.WriteStringValue(item.Value);
                 }
+                writer.WriteEndObject();
             }
             writer.WritePropertyName("taxonomyInput"u8);
             writer.WriteObjectValue(TaxonomyInput, options);

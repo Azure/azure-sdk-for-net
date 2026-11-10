@@ -25,7 +25,6 @@ using OpenAI.Conversations;
 using OpenAI.Files;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
-using OpenTelemetry.Trace;
 
 namespace Azure.AI.Projects.Tests;
 #pragma warning disable OPENAICUA001
@@ -1647,7 +1646,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(agentVersion.Status, Is.EqualTo(AgentVersionStatus.Active));
         AgentEndpointConfiguration config = new()
         {
-            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+            VersionSelector = new() { VersionSelectionRules = { new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100) } },
             ProtocolConfiguration = new()
             {
                 Responses = new()
@@ -1716,7 +1715,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(agentVersion.Status, Is.EqualTo(AgentVersionStatus.Active));
         AgentEndpointConfiguration config = new()
         {
-            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+            VersionSelector = new() { VersionSelectionRules = { new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100) } },
             ProtocolConfiguration = new()
             {
                 Responses = new()
@@ -1808,7 +1807,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(agentVersion.Status, Is.EqualTo(AgentVersionStatus.Active));
         AgentEndpointConfiguration config = new()
         {
-            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+            VersionSelector = new() { VersionSelectionRules = { new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100) } },
             ProtocolConfiguration = new()
             {
                 Responses = new()

@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Storage
         private BicepValue<string> _name;
         private SystemData _systemData;
         private QueueProperties _queueProperties;
-        private ResourceReference<QueueService> _parent;
+        private ProvisioningResourceReference<QueueService> _parent;
 
         /// <summary> Creates a new StorageQueue. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -132,7 +132,7 @@ namespace Azure.Provisioning.Storage
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _queueProperties = DefineModelProperty<QueueProperties>(nameof(QueueProperties), new string[] { "properties" });
-            _parent = DefineResource<QueueService>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<QueueService>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

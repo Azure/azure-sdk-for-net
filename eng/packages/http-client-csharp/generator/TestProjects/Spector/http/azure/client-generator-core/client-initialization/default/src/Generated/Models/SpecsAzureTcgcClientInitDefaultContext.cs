@@ -12,7 +12,7 @@ namespace Specs.Azure.Tcgc.ClientInit.Default
 {
     [ModelReaderWriterBuildable(typeof(BlobProperties))]
     [ModelReaderWriterBuildable(typeof(Input))]
-    [ModelReaderWriterBuildable(typeof(WithBodyRequest))]
+    [ModelReaderWriterBuildable(typeof(WithBodyContent))]
     public partial class SpecsAzureTcgcClientInitDefaultContext : ModelReaderWriterContext
     {
     }

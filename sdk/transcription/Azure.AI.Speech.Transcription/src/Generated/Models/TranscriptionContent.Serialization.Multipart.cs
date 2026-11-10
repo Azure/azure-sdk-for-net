@@ -3,7 +3,6 @@
 #nullable disable
 
 using System.ClientModel;
-using System.ClientModel.Primitives;
 
 #pragma warning disable SCME0004 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 namespace Azure.AI.Speech.Transcription
@@ -16,13 +15,11 @@ namespace Azure.AI.Speech.Transcription
         }
 
         /// <summary></summary>
-        /// <param name="options"></param>
-        internal MultiPartFormContent ToMultipartFormContent(ModelReaderWriterOptions options = null)
+        internal MultiPartFormContent ToMultipartFormContent()
         {
-            options = options ?? ModelSerializationExtensions.WireOptions;
             MultiPartFormContent content = new MultiPartFormContent();
 
-            content.Add<TranscriptionOptions>("definition", Options, AzureAISpeechTranscriptionContext.Default, options, "application/json");
+            content.Add<TranscriptionOptions>("definition", Options, AzureAISpeechTranscriptionContext.Default, ModelSerializationExtensions.WireOptions, "application/json");
             if (Optional.IsDefined(Audio))
             {
                 content.Add("audio", Audio);

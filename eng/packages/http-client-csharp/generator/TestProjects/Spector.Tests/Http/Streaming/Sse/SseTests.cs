@@ -58,7 +58,7 @@ namespace TestProjects.Spector.Tests.Http.Streaming.Sse
         {
             var client = new SseClient(host, null).GetRetrieveClient();
             await using var response = await client.StreamAsync(
-                new RetrievalRequest("what is typespec?"));
+                new RetrievalContent("what is typespec?"));
             var events = new List<(string Type, string Value)>();
             await foreach (var item in response)
             {

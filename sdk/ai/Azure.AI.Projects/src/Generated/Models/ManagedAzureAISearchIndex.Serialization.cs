@@ -71,14 +71,8 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(ManagedAzureAISearchIndex)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create))
-            {
-                if (Optional.IsDefined(VectorStoreId))
-                {
-                    writer.WritePropertyName("vectorStoreId"u8);
-                    writer.WriteStringValue(VectorStoreId);
-                }
-            }
+            writer.WritePropertyName("vectorStoreId"u8);
+            writer.WriteStringValue(VectorStoreId);
         }
 
         /// <param name="reader"> The JSON reader. </param>

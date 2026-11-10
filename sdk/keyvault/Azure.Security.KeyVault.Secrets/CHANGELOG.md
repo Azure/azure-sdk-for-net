@@ -10,7 +10,7 @@
 
 ### Other Changes
 
-- Updated the `Azure.Core` dependency to `1.65.0-beta.1`.
+- Updated the `Azure.Core` dependency to `1.65.0`, which includes the MSAL `4.92.0` update.
 
 ## 4.12.0 (2026-10-27)
 

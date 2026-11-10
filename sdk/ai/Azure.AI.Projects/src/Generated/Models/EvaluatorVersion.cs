@@ -16,14 +16,10 @@ namespace Azure.AI.Projects.Evaluation
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EvaluatorVersion"/>. </summary>
-        /// <param name="categories"> The categories of the evaluator. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="categories"/> is null. </exception>
-        public EvaluatorVersion(IEnumerable<EvaluatorCategory> categories)
+        public EvaluatorVersion()
         {
-            Argument.AssertNotNull(categories, nameof(categories));
-
             Metadata = new ChangeTrackingDictionary<string, string>();
-            Categories = categories.ToList();
+            Categories = new ChangeTrackingList<EvaluatorCategory>();
             SupportedEvaluationLevels = new ChangeTrackingList<ProjectsEvaluationLevel>();
             Warnings = new ChangeTrackingList<GenerationWarningType>();
             Tags = new ChangeTrackingDictionary<string, string>();
@@ -74,12 +70,14 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="evaluatorType"> The type of the evaluator. </param>
         /// <param name="categories"> The categories of the evaluator. </param>
         /// <param name="definition"> Definition of the evaluator. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="definition"/> is null. </exception>
-        public EvaluatorVersion(EvaluatorType evaluatorType, IEnumerable<EvaluatorCategory> categories, EvaluatorDefinition definition) : this(categories)
+        /// <exception cref="ArgumentNullException"> <paramref name="categories"/> or <paramref name="definition"/> is null. </exception>
+        public EvaluatorVersion(EvaluatorType evaluatorType, IEnumerable<EvaluatorCategory> categories, EvaluatorDefinition definition) : this()
         {
+            Argument.AssertNotNull(categories, nameof(categories));
             Argument.AssertNotNull(definition, nameof(definition));
 
             EvaluatorType = evaluatorType;
+            Categories = categories.ToList();
             Definition = definition;
         }
 
