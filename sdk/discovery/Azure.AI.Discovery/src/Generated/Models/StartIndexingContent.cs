@@ -10,22 +10,22 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Discovery
 {
-    /// <summary> The StartIndexingRequest. </summary>
-    internal partial class StartIndexingRequest
+    /// <summary> The StartIndexingContent. </summary>
+    internal partial class StartIndexingContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StartIndexingRequest"/>. </summary>
-        internal StartIndexingRequest()
+        /// <summary> Initializes a new instance of <see cref="StartIndexingContent"/>. </summary>
+        internal StartIndexingContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StartIndexingRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartIndexingContent"/>. </summary>
         /// <param name="nodePoolId"> Node pool ID. </param>
         /// <param name="projectId"> Project ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StartIndexingRequest(string nodePoolId, string projectId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StartIndexingContent(string nodePoolId, string projectId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NodePoolId = nodePoolId;
             ProjectId = projectId;

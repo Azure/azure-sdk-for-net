@@ -12,16 +12,16 @@ using Azure.Core;
 
 namespace Azure.AI.Discovery
 {
-    /// <summary> The RunRequest. </summary>
-    internal partial class RunRequest
+    /// <summary> The RunContent. </summary>
+    internal partial class RunContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RunRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunContent"/>. </summary>
         /// <param name="toolId"> ID of the tool to execute. </param>
         /// <param name="nodePoolIds"> IDs of NodePools to use for this run. </param>
-        internal RunRequest(ResourceIdentifier toolId, IEnumerable<ResourceIdentifier> nodePoolIds)
+        internal RunContent(ResourceIdentifier toolId, IEnumerable<ResourceIdentifier> nodePoolIds)
         {
             ToolId = toolId;
             InlineFiles = new ChangeTrackingList<InlineFile>();
@@ -31,7 +31,7 @@ namespace Azure.AI.Discovery
             EnvironmentVariables = new ChangeTrackingList<RunRequestEnvironmentVariable>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RunRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RunContent"/>. </summary>
         /// <param name="toolId"> ID of the tool to execute. </param>
         /// <param name="command">
         /// Command to pass to tool container entrypoint.
@@ -58,7 +58,7 @@ namespace Azure.AI.Discovery
         /// <param name="infraOverrides"> Override the infrastructure requirements in the tool definitions. </param>
         /// <param name="environmentVariables"> Optional environment variables to set in the tool container. This must not contain any secrets. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RunRequest(ResourceIdentifier toolId, string command, IList<InlineFile> inlineFiles, IList<InputDataMount> inputData, IList<OutputDataMount> outputData, IList<ResourceIdentifier> nodePoolIds, InfrastructureOverrides infraOverrides, IList<RunRequestEnvironmentVariable> environmentVariables, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RunContent(ResourceIdentifier toolId, string command, IList<InlineFile> inlineFiles, IList<InputDataMount> inputData, IList<OutputDataMount> outputData, IList<ResourceIdentifier> nodePoolIds, InfrastructureOverrides infraOverrides, IList<RunRequestEnvironmentVariable> environmentVariables, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ToolId = toolId;
             Command = command;
