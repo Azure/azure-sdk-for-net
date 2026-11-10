@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Initializes a new instance of <see cref="ClusterProperties"/>. </summary>
         public ClusterProperties()
         {
+            FirewallRules = new ChangeTrackingList<FirewallRule>();
             PrivateEndpointConnections = new ChangeTrackingList<RedisEnterprisePrivateEndpointConnectionData>();
         }
 
@@ -28,6 +29,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="minimumTlsVersion"> The minimum TLS version for the cluster to support, e.g. '1.2'. Newer versions can be added in the future. Note that TLS 1.0 and TLS 1.1 are now completely obsolete -- you cannot use them. They are mentioned only for the sake of consistency with old API versions. </param>
         /// <param name="encryption"> Encryption-at-rest configuration for the cluster. </param>
         /// <param name="maintenanceConfiguration"> Cluster-level maintenance configuration. </param>
+        /// <param name="firewallRules">
+        /// The complete set of firewall rules for an Azure Managed Redis (AMR) cluster. At most 250 rules are supported, and non-empty rules require publicNetworkAccess to be Enabled.
+        /// On PUT, the supplied array replaces all existing rules. Omitting this property or supplying an empty array clears all rules.
+        /// On PATCH, omitting this property preserves existing rules. A supplied array replaces all existing rules; rules absent from it are deleted. Supplying an empty array clears all rules.
+        /// Disabling publicNetworkAccess also clears existing rules. With publicNetworkAccess Enabled, an empty rule set allows all public traffic; it does not deny all traffic.
+        /// Firewall rule changes cannot be combined with scaling or encryption changes in the same update request.
+        /// </param>
         /// <param name="hostName"> DNS name of the cluster endpoint. </param>
         /// <param name="provisioningState"> Current provisioning status of the cluster. </param>
         /// <param name="redundancyMode"> Explains the current redundancy strategy of the cluster, which affects the expected SLA. </param>
@@ -36,12 +44,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the specified Redis Enterprise cluster. </param>
         /// <param name="migratedEndpoint"> The endpoint of the source resource that is currently pointing to this resource as a result of an ACR/ACRE to AMR migration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterProperties(RedisEnterpriseHighAvailability? highAvailability, RedisEnterpriseTlsVersion? minimumTlsVersion, ClusterPropertiesEncryption encryption, MaintenanceConfiguration maintenanceConfiguration, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseRedundancyMode? redundancyMode, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections, string migratedEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterProperties(RedisEnterpriseHighAvailability? highAvailability, RedisEnterpriseTlsVersion? minimumTlsVersion, ClusterPropertiesEncryption encryption, MaintenanceConfiguration maintenanceConfiguration, IList<FirewallRule> firewallRules, string hostName, RedisEnterpriseProvisioningStatus? provisioningState, RedisEnterpriseRedundancyMode? redundancyMode, RedisEnterpriseClusterResourceState? resourceState, string redisVersion, IReadOnlyList<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections, string migratedEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HighAvailability = highAvailability;
             MinimumTlsVersion = minimumTlsVersion;
             Encryption = encryption;
             MaintenanceConfiguration = maintenanceConfiguration;
+            FirewallRules = firewallRules;
             HostName = hostName;
             ProvisioningState = provisioningState;
             RedundancyMode = redundancyMode;
@@ -67,6 +76,16 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Cluster-level maintenance configuration. </summary>
         [WirePath("maintenanceConfiguration")]
         internal MaintenanceConfiguration MaintenanceConfiguration { get; set; }
+
+        /// <summary>
+        /// The complete set of firewall rules for an Azure Managed Redis (AMR) cluster. At most 250 rules are supported, and non-empty rules require publicNetworkAccess to be Enabled.
+        /// On PUT, the supplied array replaces all existing rules. Omitting this property or supplying an empty array clears all rules.
+        /// On PATCH, omitting this property preserves existing rules. A supplied array replaces all existing rules; rules absent from it are deleted. Supplying an empty array clears all rules.
+        /// Disabling publicNetworkAccess also clears existing rules. With publicNetworkAccess Enabled, an empty rule set allows all public traffic; it does not deny all traffic.
+        /// Firewall rule changes cannot be combined with scaling or encryption changes in the same update request.
+        /// </summary>
+        [WirePath("firewallRules")]
+        public IList<FirewallRule> FirewallRules { get; } = new ChangeTrackingList<FirewallRule>();
 
         /// <summary> DNS name of the cluster endpoint. </summary>
         [WirePath("hostName")]

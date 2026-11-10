@@ -94,6 +94,16 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 writer.WritePropertyName("maintenanceConfiguration"u8);
                 writer.WriteObjectValue(MaintenanceConfiguration, options);
             }
+            if (Optional.IsCollectionDefined(FirewallRules))
+            {
+                writer.WritePropertyName("firewallRules"u8);
+                writer.WriteStartArray();
+                foreach (FirewallRule item in FirewallRules)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsDefined(HostName))
             {
                 writer.WritePropertyName("hostName"u8);
@@ -180,6 +190,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             RedisEnterpriseTlsVersion? minimumTlsVersion = default;
             ClusterPropertiesEncryption encryption = default;
             MaintenanceConfiguration maintenanceConfiguration = default;
+            IList<FirewallRule> firewallRules = default;
             string hostName = default;
             RedisEnterpriseProvisioningStatus? provisioningState = default;
             RedisEnterpriseRedundancyMode? redundancyMode = default;
@@ -224,6 +235,20 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                         continue;
                     }
                     maintenanceConfiguration = MaintenanceConfiguration.DeserializeMaintenanceConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("firewallRules"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<FirewallRule> array = new List<FirewallRule>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(FirewallRule.DeserializeFirewallRule(item, options));
+                    }
+                    firewallRules = array;
                     continue;
                 }
                 if (prop.NameEquals("hostName"u8))
@@ -292,6 +317,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 minimumTlsVersion,
                 encryption,
                 maintenanceConfiguration,
+                firewallRules ?? new ChangeTrackingList<FirewallRule>(),
                 hostName,
                 provisioningState,
                 redundancyMode,
