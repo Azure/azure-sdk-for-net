@@ -8,20 +8,18 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.ComputeFleet;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
     /// <summary> A Launch mode Fleet's virtual machine. </summary>
-    public partial class ComputeFleetVirtualMachine : ResourceData, IJsonModel<ComputeFleetVirtualMachine>
+    public partial class ComputeFleetVirtualMachine : IJsonModel<ComputeFleetVirtualMachine>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ComputeFleetVirtualMachine PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVirtualMachine>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -54,7 +52,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeFleetVirtualMachine IPersistableModel<ComputeFleetVirtualMachine>.Create(BinaryData data, ModelReaderWriterOptions options) => (ComputeFleetVirtualMachine)PersistableModelCreateCore(data, options);
+        ComputeFleetVirtualMachine IPersistableModel<ComputeFleetVirtualMachine>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ComputeFleetVirtualMachine>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -70,14 +68,28 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVirtualMachine>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ComputeFleetVirtualMachine)} does not support writing '{format}' format.");
             }
-            base.JsonModelWriteCore(writer, options);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type);
+            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("operationStatus"u8);
@@ -122,11 +134,11 @@ namespace Azure.ResourceManager.ComputeFleet.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ComputeFleetVirtualMachine IJsonModel<ComputeFleetVirtualMachine>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ComputeFleetVirtualMachine)JsonModelCreateCore(ref reader, options);
+        ComputeFleetVirtualMachine IJsonModel<ComputeFleetVirtualMachine>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ComputeFleetVirtualMachine JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<ComputeFleetVirtualMachine>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -145,10 +157,9 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             {
                 return null;
             }
-            ResourceIdentifier id = default;
             string name = default;
-            ResourceType resourceType = default;
-            SystemData systemData = default;
+            ResourceIdentifier id = default;
+            string @type = default;
             ComputeFleetVmOperationStatus operationStatus = default;
             ComputeFleetApiError error = default;
             string vmSize = default;
@@ -157,36 +168,19 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(prop.Value.GetString());
-                    continue;
-                }
                 if (prop.NameEquals("name"u8))
                 {
                     name = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("type"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resourceType = new ResourceType(prop.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("systemData"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeFleetContext.Default);
+                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("operationStatus"u8))
@@ -224,10 +218,9 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 }
             }
             return new ComputeFleetVirtualMachine(
-                id,
                 name,
-                resourceType,
-                systemData,
+                id,
+                @type,
                 operationStatus,
                 error,
                 vmSize,
