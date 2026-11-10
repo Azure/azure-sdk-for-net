@@ -32,7 +32,7 @@ namespace Azure.Data.AI
         /// an `EMBEDDING_INPUT_TRUNCATED` warning. For `image`, only where the endpoint accepts inline images (off by
         /// default): a `data:image/...;base64,` URI or raw base64. The service never fetches URLs in `content`.
         /// </param>
-        /// <param name="url">
+        /// <param name="uri">
         /// For `text` and `image` items, from Microsoft Entra callers, where enabled: the Azure Blob Storage URL of the blob
         /// to embed, `https://{account}.blob.core.windows.net/{container}/{blob}`, with no query string. This is how images
         /// are sent by default. Text blobs are read as UTF-8, currently up to 1 MiB. Queries must be sent inline.
@@ -44,12 +44,12 @@ namespace Azure.Data.AI
         /// it for one read and never stores, logs or returns it.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EmbeddingContentItem(string id, EmbeddingContentType @type, string content, Uri url, string sasToken, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EmbeddingContentItem(string id, EmbeddingContentType @type, string content, Uri uri, string sasToken, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Type = @type;
             Content = content;
-            Url = url;
+            Uri = uri;
             SasToken = sasToken;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -73,7 +73,7 @@ namespace Azure.Data.AI
         /// to embed, `https://{account}.blob.core.windows.net/{container}/{blob}`, with no query string. This is how images
         /// are sent by default. Text blobs are read as UTF-8, currently up to 1 MiB. Queries must be sent inline.
         /// </summary>
-        public Uri Url { get; set; }
+        public Uri Uri { get; set; }
 
         /// <summary>
         /// Required with `url`: a user delegation SAS for that one blob (its query string, with or without a leading `?`):

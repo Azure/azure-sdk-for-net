@@ -5,7 +5,10 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.TypeSpec.Generator.Customizations;
@@ -54,6 +57,75 @@ namespace Azure.Data.AI
                 + $"authentication or {nameof(InferenceClientSettings.Credential)}.{nameof(CredentialSettings.Key)} for API key authentication.",
                 nameof(settings));
         }
+
+        /// <summary> Generates embeddings for multimodal content using the supplied options. </summary>
+        /// <param name="options"> The multimodal embedding options. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual Response<MultimodalEmbeddingResult> MultiModalEmbed(MultimodalEmbeddingOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return MultiModalEmbed(options.Contents, options.Model, options.ModelVersion, options.VectorType, options.Dimensions, options.MultiDimensions, options.MaxNumVectors, options.OutputDataType, options.EncodingFormat, options.Delivery, cancellationToken);
+        }
+
+        /// <summary> Generates embeddings for multimodal content using the supplied options. </summary>
+        /// <param name="options"> The multimodal embedding options. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public virtual async Task<Response<MultimodalEmbeddingResult>> MultiModalEmbedAsync(MultimodalEmbeddingOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return await MultiModalEmbedAsync(options.Contents, options.Model, options.ModelVersion, options.VectorType, options.Dimensions, options.MultiDimensions, options.MaxNumVectors, options.OutputDataType, options.EncodingFormat, options.Delivery, cancellationToken).ConfigureAwait(false);
+        }
     }
+
+#pragma warning disable SA1402 // Options type intentionally lives beside the client customization
+
+    /// <summary> Options for a multimodal embedding request. </summary>
+    public partial class MultimodalEmbeddingOptions
+    {
+        /// <summary> Initializes a new instance of <see cref="MultimodalEmbeddingOptions"/>. </summary>
+        /// <param name="contents"> The content items to embed. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="contents"/> is null. </exception>
+        public MultimodalEmbeddingOptions(IEnumerable<EmbeddingContentItem> contents)
+        {
+            Argument.AssertNotNull(contents, nameof(contents));
+
+            Contents = new List<EmbeddingContentItem>(contents);
+        }
+
+        /// <summary> The content items to embed. </summary>
+        public IList<EmbeddingContentItem> Contents { get; }
+
+        /// <summary> The model to use. </summary>
+        public string Model { get; set; }
+
+        /// <summary> The model version. </summary>
+        public string ModelVersion { get; set; }
+
+        /// <summary> The type of vectors to return. </summary>
+        public EmbeddingVectorType? VectorType { get; set; }
+
+        /// <summary> The number of dimensions of the dense vectors. </summary>
+        public int? Dimensions { get; set; }
+
+        /// <summary> The number of dimensions of the multi-vectors. </summary>
+        public int? MultiDimensions { get; set; }
+
+        /// <summary> The maximum number of vectors to return. </summary>
+        public int? MaxNumVectors { get; set; }
+
+        /// <summary> The data type of the output embeddings. </summary>
+        public EmbeddingOutputDataType? OutputDataType { get; set; }
+
+        /// <summary> The encoding format of the output embeddings. </summary>
+        public EmbeddingEncodingFormat? EncodingFormat { get; set; }
+
+        /// <summary> How the embeddings are delivered. </summary>
+        public EmbeddingDelivery? Delivery { get; set; }
+    }
+#pragma warning restore SA1402
 #pragma warning restore SCME0002
 }

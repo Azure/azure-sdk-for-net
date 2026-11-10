@@ -21,7 +21,7 @@ namespace Azure.Data.AI
 
         /// <summary> Initializes a new instance of <see cref="MultimodalEmbeddingOutput"/>. </summary>
         /// <param name="id"> The result's identifier, for support requests. </param>
-        /// <param name="url"> The result file's URL, without a query string. Read it with `sasToken`. </param>
+        /// <param name="uri"> The result file's URL, without a query string. Read it with `sasToken`. </param>
         /// <param name="sasToken">
         /// A read-only SAS for the result file only, valid until `expiresAt` (at most 15 minutes). Read the file with
         /// `GET {url}?{sasToken}`.
@@ -31,10 +31,10 @@ namespace Azure.Data.AI
         /// <param name="bytes"> The size of the file in bytes. </param>
         /// <param name="sha256"> The lowercase hexadecimal SHA-256 hash of the file. </param>
         /// <param name="contentType"> The media type of the file: `application/json`. </param>
-        internal MultimodalEmbeddingOutput(string id, Uri url, string sasToken, DateTimeOffset expiresOn, int records, long bytes, string sha256, string contentType)
+        internal MultimodalEmbeddingOutput(string id, Uri uri, string sasToken, DateTimeOffset expiresOn, int records, long bytes, string sha256, string contentType)
         {
             Id = id;
-            Url = url;
+            Uri = uri;
             SasToken = sasToken;
             ExpiresOn = expiresOn;
             Records = records;
@@ -45,7 +45,7 @@ namespace Azure.Data.AI
 
         /// <summary> Initializes a new instance of <see cref="MultimodalEmbeddingOutput"/>. </summary>
         /// <param name="id"> The result's identifier, for support requests. </param>
-        /// <param name="url"> The result file's URL, without a query string. Read it with `sasToken`. </param>
+        /// <param name="uri"> The result file's URL, without a query string. Read it with `sasToken`. </param>
         /// <param name="sasToken">
         /// A read-only SAS for the result file only, valid until `expiresAt` (at most 15 minutes). Read the file with
         /// `GET {url}?{sasToken}`.
@@ -56,10 +56,10 @@ namespace Azure.Data.AI
         /// <param name="sha256"> The lowercase hexadecimal SHA-256 hash of the file. </param>
         /// <param name="contentType"> The media type of the file: `application/json`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MultimodalEmbeddingOutput(string id, Uri url, string sasToken, DateTimeOffset expiresOn, int records, long bytes, string sha256, string contentType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MultimodalEmbeddingOutput(string id, Uri uri, string sasToken, DateTimeOffset expiresOn, int records, long bytes, string sha256, string contentType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
-            Url = url;
+            Uri = uri;
             SasToken = sasToken;
             ExpiresOn = expiresOn;
             Records = records;
@@ -73,7 +73,7 @@ namespace Azure.Data.AI
         public string Id { get; }
 
         /// <summary> The result file's URL, without a query string. Read it with `sasToken`. </summary>
-        public Uri Url { get; }
+        public Uri Uri { get; }
 
         /// <summary>
         /// A read-only SAS for the result file only, valid until `expiresAt` (at most 15 minutes). Read the file with

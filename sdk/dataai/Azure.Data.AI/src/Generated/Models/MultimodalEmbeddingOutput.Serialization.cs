@@ -84,7 +84,7 @@ namespace Azure.Data.AI
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("url"u8);
-            WriteUrlValue(writer, options);
+            WriteUriValue(writer, options);
             writer.WritePropertyName("sasToken"u8);
             writer.WriteStringValue(SasToken);
             writer.WritePropertyName("expiresAt"u8);
@@ -140,7 +140,7 @@ namespace Azure.Data.AI
                 return null;
             }
             string id = default;
-            Uri url = default;
+            Uri uri = default;
             string sasToken = default;
             DateTimeOffset expiresOn = default;
             int records = default;
@@ -157,7 +157,7 @@ namespace Azure.Data.AI
                 }
                 if (prop.NameEquals("url"u8))
                 {
-                    url = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("sasToken"u8))
@@ -197,7 +197,7 @@ namespace Azure.Data.AI
             }
             return new MultimodalEmbeddingOutput(
                 id,
-                url,
+                uri,
                 sasToken,
                 expiresOn,
                 records,

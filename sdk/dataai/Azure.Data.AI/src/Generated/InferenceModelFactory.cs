@@ -120,7 +120,7 @@ namespace Azure.Data.AI
         /// an `EMBEDDING_INPUT_TRUNCATED` warning. For `image`, only where the endpoint accepts inline images (off by
         /// default): a `data:image/...;base64,` URI or raw base64. The service never fetches URLs in `content`.
         /// </param>
-        /// <param name="url">
+        /// <param name="uri">
         /// For `text` and `image` items, from Microsoft Entra callers, where enabled: the Azure Blob Storage URL of the blob
         /// to embed, `https://{account}.blob.core.windows.net/{container}/{blob}`, with no query string. This is how images
         /// are sent by default. Text blobs are read as UTF-8, currently up to 1 MiB. Queries must be sent inline.
@@ -132,13 +132,13 @@ namespace Azure.Data.AI
         /// it for one read and never stores, logs or returns it.
         /// </param>
         /// <returns> A new <see cref="AI.EmbeddingContentItem"/> instance for mocking. </returns>
-        public static EmbeddingContentItem EmbeddingContentItem(string id = default, EmbeddingContentType @type = default, string content = default, Uri url = default, string sasToken = default)
+        public static EmbeddingContentItem EmbeddingContentItem(string id = default, EmbeddingContentType @type = default, string content = default, Uri uri = default, string sasToken = default)
         {
             return new EmbeddingContentItem(
                 id,
                 @type,
                 content,
-                url,
+                uri,
                 sasToken,
                 additionalBinaryDataProperties: null);
         }
@@ -350,7 +350,7 @@ namespace Azure.Data.AI
         /// `data`), readable with `sasToken` until `expiresAt`.
         /// </summary>
         /// <param name="id"> The result's identifier, for support requests. </param>
-        /// <param name="url"> The result file's URL, without a query string. Read it with `sasToken`. </param>
+        /// <param name="uri"> The result file's URL, without a query string. Read it with `sasToken`. </param>
         /// <param name="sasToken">
         /// A read-only SAS for the result file only, valid until `expiresAt` (at most 15 minutes). Read the file with
         /// `GET {url}?{sasToken}`.
@@ -361,11 +361,11 @@ namespace Azure.Data.AI
         /// <param name="sha256"> The lowercase hexadecimal SHA-256 hash of the file. </param>
         /// <param name="contentType"> The media type of the file: `application/json`. </param>
         /// <returns> A new <see cref="AI.MultimodalEmbeddingOutput"/> instance for mocking. </returns>
-        public static MultimodalEmbeddingOutput MultimodalEmbeddingOutput(string id = default, Uri url = default, string sasToken = default, DateTimeOffset expiresOn = default, int records = default, long bytes = default, string sha256 = default, string contentType = default)
+        public static MultimodalEmbeddingOutput MultimodalEmbeddingOutput(string id = default, Uri uri = default, string sasToken = default, DateTimeOffset expiresOn = default, int records = default, long bytes = default, string sha256 = default, string contentType = default)
         {
             return new MultimodalEmbeddingOutput(
                 id,
-                url,
+                uri,
                 sasToken,
                 expiresOn,
                 records,

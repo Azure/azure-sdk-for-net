@@ -90,10 +90,10 @@ namespace Azure.Data.AI
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Optional.IsDefined(Url))
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Url.AbsoluteUri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(SasToken))
             {
@@ -145,7 +145,7 @@ namespace Azure.Data.AI
             string id = default;
             EmbeddingContentType @type = default;
             string content = default;
-            Uri url = default;
+            Uri uri = default;
             string sasToken = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -171,7 +171,7 @@ namespace Azure.Data.AI
                     {
                         continue;
                     }
-                    url = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("sasToken"u8))
@@ -188,7 +188,7 @@ namespace Azure.Data.AI
                 id,
                 @type,
                 content,
-                url,
+                uri,
                 sasToken,
                 additionalBinaryDataProperties);
         }

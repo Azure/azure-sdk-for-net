@@ -7,18 +7,18 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Data.AI
 {
-    // Url can be absent; write JSON null instead of dereferencing it.
-    [CodeGenSerialization(nameof(Url), SerializationValueHook = nameof(WriteUrlValue))]
+    // Uri can be absent; write JSON null instead of dereferencing it.
+    [CodeGenSerialization(nameof(Uri), SerializationValueHook = nameof(WriteUriValue))]
     public partial class MultimodalEmbeddingOutput
     {
-        private void WriteUrlValue(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        private void WriteUriValue(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            if (Url == null)
+            if (Uri == null)
             {
                 writer.WriteNullValue();
                 return;
             }
-            writer.WriteStringValue(Url.AbsoluteUri);
+            writer.WriteStringValue(Uri.AbsoluteUri);
         }
     }
 }
