@@ -13,7 +13,7 @@ using LiftrBase;
 
 namespace MgmtTypeSpec;
 
-@TypeSpec.HttpClient.CSharp.dynamicModel
+@dynamicModel("csharp")
 @resource("foos")
 model Foo is TrackedResource<FooProperties, false> {
   ...ResourceNameParameter<Foo, SegmentName = "foos">;

@@ -10149,8 +10149,10 @@
           "arguments": {}
         },
         {
-          "name": "TypeSpec.HttpClient.CSharp.@dynamicModel",
-          "arguments": {}
+          "name": "Azure.ClientGenerator.Core.@dynamicModel",
+          "arguments": {
+            "scope": "csharp"
+          }
         },
         {
           "name": "Azure.ClientGenerator.Core.@clientOption",
@@ -24397,8 +24399,10 @@
                 }
               },
               {
-                "name": "TypeSpec.HttpClient.CSharp.@dynamicModel",
-                "arguments": {}
+                "name": "Azure.ClientGenerator.Core.@dynamicModel",
+                "arguments": {
+                  "scope": "csharp"
+                }
               }
             ],
             "serializationOptions": {

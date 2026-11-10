@@ -9,6 +9,7 @@ using System;
 using System.Buffers;
 using System.Buffers.Text;
 using System.ClientModel.Primitives;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -307,7 +308,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     }
                     writer.WriteEndObject();
                     break;
-                case IEnumerable<object> objectEnumerable:
+                case IEnumerable objectEnumerable:
                     writer.WriteStartArray();
                     foreach (var item in objectEnumerable)
                     {
@@ -409,7 +410,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 return false;
             }
 
-            return Utf8Parser.TryParse(indexSlice.Slice(0, indexEnd + 1), out index, out bytesConsumed);
+            if (!Utf8Parser.TryParse(indexSlice.Slice(0, indexEnd + 1), out index, out bytesConsumed))
+            {
+                return false;
+            }
+
+            bytesConsumed += 2;
+            return true;
         }
 
         public static ReadOnlySpan<byte> GetRemainder(this ReadOnlySpan<byte> jsonPath, int index)

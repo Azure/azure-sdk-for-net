@@ -469,10 +469,68 @@ namespace Azure.Generator.Mgmt.Tests
                 .Where(c => c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public)
                     && c.Signature.Parameters.Count == 2).ToArray();
             Assert.That(constructors.Any(c => c.Signature.Parameters[1].Type.Equals(new CSharpType(typeof(long?)))), Is.EqualTo(resolution is not ("partial-custom" or "baseline-nullable")));
-            Assert.That(constructors.Any(c => c.Signature.Parameters[1].Type.Equals(new CSharpType(typeof(long)))), Is.EqualTo(resolution is "custom" or "partial-custom" or "baseline-nullable"));
-            // A second T/T? signature may still be missing; this is tracked separately from
-            // restoring the signature that can be represented by the flattened property.
+            Assert.That(constructors.Any(c => c.Signature.Parameters[1].Type.Equals(new CSharpType(typeof(long)))), Is.EqualTo(resolution is not "baseline"));
+            if (resolution == "none")
+            {
+                var type = Compile(plugin.Object).GetType("Samples.Models.CapacityModel")!;
+                foreach (object? value in new object?[] { null, 31L })
+                {
+                    var instance = type.GetConstructor([typeof(string), typeof(long?)])!.Invoke(["westus", value]);
+                    Assert.That(type.GetProperty(name)!.GetValue(instance), Is.EqualTo(value));
+                }
+                var nonNullableInstance = type.GetConstructor([typeof(string), typeof(long)])!.Invoke(["westus", 31L]);
+                Assert.That(type.GetProperty(name)!.GetValue(nonNullableInstance), Is.EqualTo(31L));
+            }
             Assert.That(Encoding.UTF8.GetString(diagnostics.ToArray()), Does.Not.Contain("\"severity\":\"error\""));
+        }
+
+        [Test]
+        public void MixedHistoricalConstructorNullabilityRestoresCrossedSignatures([Values] bool nullableFirst)
+        {
+            var inner = InputFactory.Model("CapacityProperties", properties:
+            [
+                InputFactory.Property("size", InputPrimitiveType.Int64),
+                InputFactory.Property("count", InputPrimitiveType.Int32)
+            ]);
+            var wrapper = InputFactory.Property("capacity", inner);
+            Flatten(wrapper);
+            var input = InputFactory.Model("CapacityModel", properties:
+            [
+                InputFactory.Property("location", InputPrimitiveType.String, isRequired: true),
+                wrapper
+            ]);
+            const string nullableSizeConstructor = "public CapacityModel(string location, long? size, int count) { }";
+            const string nullableCountConstructor = "public CapacityModel(string location, long size, int? count) { }";
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [input, inner],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", $$"""
+                    namespace Samples.Models
+                    {
+                        public partial class CapacityModel
+                        {
+                            {{(nullableFirst ? nullableSizeConstructor : nullableCountConstructor)}}
+                            {{(nullableFirst ? nullableCountConstructor : nullableSizeConstructor)}}
+                            public string Location { get; set; }
+                            public long? Size { get; set; }
+                            public int? Count { get; set; }
+                        }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(model);
+            var type = Compile(plugin.Object).GetType("Samples.Models.CapacityModel")!;
+
+            var nullableSize = type.GetConstructor([typeof(string), typeof(long?), typeof(int)])!.Invoke(["westus", null, 5]);
+            Assert.That(type.GetProperty("Size")!.GetValue(nullableSize), Is.Null);
+            Assert.That(type.GetProperty("Count")!.GetValue(nullableSize), Is.EqualTo(5));
+            var nullableCount = type.GetConstructor([typeof(string), typeof(long), typeof(int?)])!.Invoke(["westus", 31L, null]);
+            Assert.That(type.GetProperty("Size")!.GetValue(nullableCount), Is.EqualTo(31L));
+            Assert.That(type.GetProperty("Count")!.GetValue(nullableCount), Is.Null);
+            Assert.That(type.GetConstructor([typeof(string), typeof(long?), typeof(int?)]), Is.Null);
         }
 
         [Test]
