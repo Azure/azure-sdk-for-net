@@ -80,22 +80,21 @@ public class Sample_ToolBoxSkill : ProjectsOpenAITestBase
         }
         catch { }
         #region Snippet:Sample_CreateToolbox_ToolBoxSkill_Async
-        // TODO: Uncomment after the bootstrap.
-        //SkillVersion skill = await skillsClient.CreateSkillVersionAsync(
-        //    name: "shipping-cost-skill",
-        //    inlineContent: new SkillInlineRequest(
-        //        description: "Compute shipping cost for a package given weight and destination.",
-        //        instructions: "You are a shipping cost calculator. When asked to compute " +
-        //          "shipping cost, use this formula: cost (USD) = 5 + 2 * weight_kg " +
-        //          "for domestic destinations, and cost (USD) = 15 + 4 * weight_kg " +
-        //          "for international destinations. Always state the formula you used."
-        //    )
-        //);
-        //Console.WriteLine($"Created skill {skill.Name}, v. {skill.Version}.");
-        //ToolboxSkillReference reference = new(skill.Name)
-        //{
-        //    Version = skill.Version
-        //};
+        SkillVersion skill = await skillsClient.CreateSkillVersionAsync(
+            name: "shipping-cost-skill",
+            inlineContent: new SkillInlineRequest(
+                description: "Compute shipping cost for a package given weight and destination.",
+                instructions: "You are a shipping cost calculator. When asked to compute " +
+                  "shipping cost, use this formula: cost (USD) = 5 + 2 * weight_kg " +
+                  "for domestic destinations, and cost (USD) = 15 + 4 * weight_kg " +
+                  "for international destinations. Always state the formula you used."
+            )
+        );
+        Console.WriteLine($"Created skill {skill.Name}, v. {skill.Version}.");
+        ToolboxSkillReference reference = new(skill.Name)
+        {
+            Version = skill.Version
+        };
         ToolboxVersion toolBox = await toolboxClient.CreateVersionAsync(
             name: "mySkillToolbox",
             tools: [new ToolboxSearchPreviewToolboxTool()],
@@ -171,8 +170,7 @@ public class Sample_ToolBoxSkill : ProjectsOpenAITestBase
         #region Snippet:DeleteToolBoxSkill_ToolBoxSkill_Async
         // await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name, force: true);
         await toolboxClient.DeleteAsync(name: toolBox.Name);
-        // TODO: Uncomment after the bootstrap.
-        //await skillsClient.DeleteSkillAsync(name: skill.Name);
+        await skillsClient.DeleteSkillAsync(name: skill.Name);
         #endregion
     }
 
@@ -202,22 +200,21 @@ public class Sample_ToolBoxSkill : ProjectsOpenAITestBase
         }
         catch { }
         #region Snippet:Sample_CreateToolbox_ToolBoxSkill_Sync
-        // TODO: Uncomment after the bootstrap.
-        //SkillVersion skill = skillsClient.CreateSkillVersion(
-        //    name: "shipping-cost-skill",
-        //    inlineContent: new SkillInlineRequest(
-        //        description: "Compute shipping cost for a package given weight and destination.",
-        //        instructions: "You are a shipping cost calculator. When asked to compute " +
-        //          "shipping cost, use this formula: cost (USD) = 5 + 2 * weight_kg " +
-        //          "for domestic destinations, and cost (USD) = 15 + 4 * weight_kg " +
-        //          "for international destinations. Always state the formula you used."
-        //    )
-        //);
-        //Console.WriteLine($"Created skill {skill.Name}, v. {skill.Version}.");
-        //ToolboxSkillReference reference = new(skill.Name)
-        //{
-        //    Version = skill.Version
-        //};
+        SkillVersion skill = skillsClient.CreateSkillVersion(
+            name: "shipping-cost-skill",
+            inlineContent: new SkillInlineRequest(
+                description: "Compute shipping cost for a package given weight and destination.",
+                instructions: "You are a shipping cost calculator. When asked to compute " +
+                  "shipping cost, use this formula: cost (USD) = 5 + 2 * weight_kg " +
+                  "for domestic destinations, and cost (USD) = 15 + 4 * weight_kg " +
+                  "for international destinations. Always state the formula you used."
+            )
+        );
+        Console.WriteLine($"Created skill {skill.Name}, v. {skill.Version}.");
+        ToolboxSkillReference reference = new(skill.Name)
+        {
+            Version = skill.Version
+        };
         ToolboxVersion toolBox = toolboxClient.CreateVersion(
             name: "mySkillToolbox",
             tools: [new ToolboxSearchPreviewToolboxTool()],
@@ -294,8 +291,7 @@ public class Sample_ToolBoxSkill : ProjectsOpenAITestBase
         #region Snippet:DeleteToolBoxSkill_ToolBoxSkill_Sync
         // projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name, force: true);
         toolboxClient.Delete(name: toolBox.Name);
-        // TODO: Uncomment after the bootstrap.
-        //skillsClient.DeleteSkill(name: skill.Name);
+        skillsClient.DeleteSkill(name: skill.Name);
         #endregion
     }
 
