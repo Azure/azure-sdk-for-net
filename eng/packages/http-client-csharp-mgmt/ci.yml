@@ -7,6 +7,9 @@ trigger:
       - eng/packages/http-client-csharp-mgmt
       - eng/pipelines/templates/archetype-typespec-emitter.yml
       - eng/scripts/typespec
+      - eng/scripts/tests/Validate-EmitterDependencies.tests.ps1
+      - eng/http-client-csharp-emitter-package.json
+      - eng/azure-typespec-http-client-csharp-emitter-package.json
 pr:
   branches:
     include:
@@ -19,6 +22,9 @@ pr:
       - eng/packages/http-client-csharp-mgmt
       - eng/pipelines/templates/archetype-typespec-emitter.yml
       - eng/scripts/typespec
+      - eng/scripts/tests/Validate-EmitterDependencies.tests.ps1
+      - eng/http-client-csharp-emitter-package.json
+      - eng/azure-typespec-http-client-csharp-emitter-package.json
 
 parameters:
   - name: UseTypeSpecNext
