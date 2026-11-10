@@ -86,16 +86,6 @@ namespace Azure.ResourceManager.Monitor.Models
             => new Azure.ResourceManager.Monitor.DiagnosticSettingsCategoryData(id, name, resourceType, systemData, new DiagnosticSettingsCategoryProperties(categoryType, categoryGroups?.ToList() ?? new List<string>(), default), default);
 
         /// <summary>
-        /// Initializes a new instance of <see cref="Azure.ResourceManager.Monitor.DiagnosticSettingData"/>.
-        /// </summary>
-        /// <remarks>This API is no longer supported.</remarks>
-        // Current TypeSpec models only the singleton service diagnostic setting, so the old arbitrary-name DiagnosticSettingData shape has no generated factory to delegate to.
-        [Obsolete("This API is no longer supported.", false)]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Azure.ResourceManager.Monitor.DiagnosticSettingData DiagnosticSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier storageAccountId, ResourceIdentifier serviceBusRuleId, ResourceIdentifier eventHubAuthorizationRuleId, string eventHubName, IEnumerable<MetricSettings> metrics, IEnumerable<LogSettings> logs, ResourceIdentifier workspaceId, ResourceIdentifier marketplacePartnerId, string logAnalyticsDestinationType)
-            => throw new NotSupportedException("This API is no longer supported.");
-
-        /// <summary>
         /// Initializes a new instance of <see cref="AlertRulePatch"/>.
         /// </summary>
         /// <remarks>This API is no longer supported.</remarks>

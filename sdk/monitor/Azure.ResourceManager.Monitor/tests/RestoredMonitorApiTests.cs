@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -16,6 +17,191 @@ namespace Azure.ResourceManager.Monitor.Tests
     {
         private const string Scope = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.Compute/virtualMachines/vm";
         private const string WorkspaceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.OperationalInsights/workspaces/workspace";
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void DiagnosticSettingFactoryPreservesPayload(string format)
+        {
+            var id = DiagnosticSettingResource.CreateResourceIdentifier(Scope, "setting");
+            var data = ArmMonitorModelFactory.DiagnosticSettingData(
+                id: id,
+                eventHubName: "events",
+                workspaceId: new ResourceIdentifier(WorkspaceId),
+                metrics: new[] { new MetricSettings(true) },
+                logs: new[] { new LogSettings(true) });
+            var options = new ModelReaderWriterOptions(format);
+            var serialized = ModelReaderWriter.Write(data, options);
+            using var json = JsonDocument.Parse(serialized.ToMemory());
+            var properties = json.RootElement.GetProperty("properties");
+            Assert.That(properties.GetProperty("eventHubName").GetString(), Is.EqualTo("events"));
+            Assert.That(properties.GetProperty("workspaceId").GetString(), Is.EqualTo(WorkspaceId));
+            Assert.That(properties.GetProperty("metrics")[0].GetProperty("enabled").GetBoolean(), Is.True);
+            Assert.That(properties.GetProperty("logs")[0].GetProperty("enabled").GetBoolean(), Is.True);
+
+            var deserialized = ModelReaderWriter.Read<DiagnosticSettingData>(serialized, options);
+            Assert.That(deserialized.EventHubName, Is.EqualTo("events"));
+            Assert.That(deserialized.WorkspaceId, Is.EqualTo(new ResourceIdentifier(WorkspaceId)));
+            Assert.That(deserialized.Metrics, Has.Count.EqualTo(1));
+            Assert.That(deserialized.Logs, Has.Count.EqualTo(1));
+            Assert.That(ArmMonitorModelFactory.DiagnosticSettingData().Metrics, Is.Empty);
+            Assert.That(ArmMonitorModelFactory.DiagnosticSettingData().Logs, Is.Empty);
+            Assert.That(Attribute.IsDefined(typeof(DiagnosticSettingData), typeof(ObsoleteAttribute)), Is.False);
+            Assert.That(Attribute.IsDefined(typeof(DiagnosticSettingResource), typeof(ObsoleteAttribute)), Is.False);
+            Assert.That(Attribute.IsDefined(typeof(DiagnosticSettingCollection), typeof(ObsoleteAttribute)), Is.False);
+        }
+
+        [TestCase(false, 0)]
+        [TestCase(true, 0)]
+        [TestCase(false, 1)]
+        [TestCase(true, 1)]
+        [TestCase(false, 2)]
+        [TestCase(true, 2)]
+        public async Task DiagnosticSettingEntryPointsCallTheService(bool async, int entryPoint)
+        {
+            var id = DiagnosticSettingResource.CreateResourceIdentifier(Scope, "setting");
+            var responseJson = $"{{\"id\":\"{id}\",\"name\":\"setting\",\"type\":\"Microsoft.Insights/diagnosticSettings\",\"properties\":{{\"eventHubName\":\"events\",\"workspaceId\":\"{WorkspaceId}\"}}}}";
+            var transport = new MockTransport(new MockResponse(200).SetContent(responseJson));
+            var client = new ArmClient(new MockCredential(), defaultSubscriptionId: null, options: new ArmClientOptions { Transport = transport });
+
+            Response<DiagnosticSettingResource> response;
+            if (entryPoint == 0)
+            {
+                var resource = client.GetDiagnosticSettingResource(id);
+                Assert.That(resource.HasData, Is.False);
+                response = async ? await resource.GetAsync() : resource.Get();
+            }
+            else if (entryPoint == 1)
+            {
+                var collection = client.GetDiagnosticSettings(new ResourceIdentifier(Scope));
+                response = async ? await collection.GetAsync("setting") : collection.Get("setting");
+            }
+            else
+            {
+                var scope = new ResourceIdentifier(Scope);
+                response = async ? await client.GetDiagnosticSettingAsync(scope, "setting") : client.GetDiagnosticSetting(scope, "setting");
+            }
+
+            Assert.That(response.Value.HasData, Is.True);
+            Assert.That(response.Value.Data.EventHubName, Is.EqualTo("events"));
+            Assert.That(response.Value.Data.WorkspaceId, Is.EqualTo(new ResourceIdentifier(WorkspaceId)));
+            Assert.That(transport.Requests, Has.Count.EqualTo(1));
+            Assert.That(transport.Requests[0].Method, Is.EqualTo(RequestMethod.Get));
+            Assert.That(transport.Requests[0].Uri.ToUri().AbsolutePath, Is.EqualTo(id.ToString()));
+        }
+
+        [TestCase(false, false)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(true, true)]
+        public async Task DiagnosticSettingCreateOrUpdateCallsTheService(bool async, bool update)
+        {
+            var id = DiagnosticSettingResource.CreateResourceIdentifier(Scope, "setting");
+            var responseJson = $"{{\"id\":\"{id}\",\"name\":\"setting\",\"type\":\"Microsoft.Insights/diagnosticSettings\",\"properties\":{{\"eventHubName\":\"events\"}}}}";
+            var transport = new MockTransport(new MockResponse(200).SetContent(responseJson));
+            var client = new ArmClient(new MockCredential(), defaultSubscriptionId: null, options: new ArmClientOptions { Transport = transport });
+            var data = new DiagnosticSettingData { EventHubName = "events" };
+            ArmOperation<DiagnosticSettingResource> operation;
+            if (update)
+            {
+                var resource = client.GetDiagnosticSettingResource(id);
+                operation = async ? await resource.UpdateAsync(WaitUntil.Completed, data) : resource.Update(WaitUntil.Completed, data);
+            }
+            else
+            {
+                var collection = client.GetDiagnosticSettings(new ResourceIdentifier(Scope));
+                operation = async ? await collection.CreateOrUpdateAsync(WaitUntil.Completed, "setting", data) : collection.CreateOrUpdate(WaitUntil.Completed, "setting", data);
+            }
+
+            Assert.That(operation.HasCompleted, Is.True);
+            Assert.That(operation.Value.Data.EventHubName, Is.EqualTo("events"));
+            Assert.That(transport.Requests, Has.Count.EqualTo(1));
+            Assert.That(transport.Requests[0].Method, Is.EqualTo(RequestMethod.Put));
+            Assert.That(transport.Requests[0].Uri.ToUri().AbsolutePath, Is.EqualTo(id.ToString()));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task DiagnosticSettingDeleteCallsTheService(bool async)
+        {
+            var id = DiagnosticSettingResource.CreateResourceIdentifier(Scope, "setting");
+            var transport = new MockTransport(new MockResponse(204));
+            var client = new ArmClient(new MockCredential(), defaultSubscriptionId: null, options: new ArmClientOptions { Transport = transport });
+            var resource = client.GetDiagnosticSettingResource(id);
+            var operation = async ? await resource.DeleteAsync(WaitUntil.Completed) : resource.Delete(WaitUntil.Completed);
+
+            Assert.That(operation.HasCompleted, Is.True);
+            Assert.That(transport.Requests, Has.Count.EqualTo(1));
+            Assert.That(transport.Requests[0].Method, Is.EqualTo(RequestMethod.Delete));
+            Assert.That(transport.Requests[0].Uri.ToUri().AbsolutePath, Is.EqualTo(id.ToString()));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task DiagnosticSettingCollectionFollowsNextLink(bool async)
+        {
+            var firstId = DiagnosticSettingResource.CreateResourceIdentifier(Scope, "first");
+            var secondId = DiagnosticSettingResource.CreateResourceIdentifier(Scope, "second");
+            var nextLink = $"https://management.azure.com{Scope}/providers/Microsoft.Insights/diagnosticSettings?api-version=2021-05-01-preview&$skiptoken=next";
+            var firstPage = $"{{\"value\":[{{\"id\":\"{firstId}\",\"name\":\"first\",\"type\":\"Microsoft.Insights/diagnosticSettings\",\"properties\":{{\"eventHubName\":\"events\"}}}}],\"nextLink\":\"{nextLink}\"}}";
+            var secondPage = $"{{\"value\":[{{\"id\":\"{secondId}\",\"name\":\"second\",\"type\":\"Microsoft.Insights/diagnosticSettings\",\"properties\":{{\"eventHubName\":\"events\"}}}}]}}";
+            var transport = new MockTransport(new MockResponse(200).SetContent(firstPage), new MockResponse(200).SetContent(secondPage));
+            var client = new ArmClient(new MockCredential(), defaultSubscriptionId: null, options: new ArmClientOptions { Transport = transport });
+            var collection = client.GetDiagnosticSettings(new ResourceIdentifier(Scope));
+            var ids = new List<ResourceIdentifier>();
+            if (async)
+            {
+                await foreach (var resource in collection.GetAllAsync())
+                {
+                    ids.Add(resource.Id);
+                }
+            }
+            else
+            {
+                foreach (var resource in collection.GetAll())
+                {
+                    ids.Add(resource.Id);
+                }
+            }
+
+            Assert.That(ids, Is.EqualTo(new[] { firstId, secondId }));
+            Assert.That(transport.Requests, Has.Count.EqualTo(2));
+            Assert.That(transport.Requests[0].Method, Is.EqualTo(RequestMethod.Get));
+            Assert.That(transport.Requests[0].Uri.ToUri().AbsolutePath, Is.EqualTo($"{Scope}/providers/Microsoft.Insights/diagnosticSettings"));
+            Assert.That(transport.Requests[1].Method, Is.EqualTo(RequestMethod.Get));
+            Assert.That(transport.Requests[1].Uri.ToUri().AbsoluteUri, Is.EqualTo(nextLink));
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void ActivityLogAlertRetainsConstructorAndConditionSetter(string format)
+        {
+            var data = new ActivityLogAlertData(AzureLocation.EastUS);
+            Assert.That(data, Is.InstanceOf<Azure.ResourceManager.Models.TrackedResourceData>());
+            Assert.That(data.Location, Is.EqualTo(AzureLocation.EastUS));
+            Assert.That(data.ConditionAllOf, Is.Empty);
+            var conditions = new List<ActivityLogAlertAnyOfOrLeafCondition>
+            {
+                new ActivityLogAlertAnyOfOrLeafCondition { Field = "category", EqualsValue = "Administrative" }
+            };
+            data.ConditionAllOf = conditions;
+            var assignedConditions = data.ConditionAllOf;
+            Assert.That(assignedConditions, Is.EqualTo(conditions));
+            Assert.That(assignedConditions, Is.Not.SameAs(conditions));
+            conditions.Clear();
+            Assert.That(assignedConditions, Has.Count.EqualTo(1));
+            Assert.Throws<ArgumentNullException>(() => data.ConditionAllOf = null);
+            Assert.That(data.ConditionAllOf, Is.SameAs(assignedConditions));
+
+            var options = new ModelReaderWriterOptions(format);
+            var serialized = ModelReaderWriter.Write(data, options);
+            using var json = JsonDocument.Parse(serialized.ToMemory());
+            var allOf = json.RootElement.GetProperty("properties").GetProperty("condition").GetProperty("allOf");
+            Assert.That(allOf.GetArrayLength(), Is.EqualTo(1));
+            Assert.That(allOf[0].GetProperty("field").GetString(), Is.EqualTo("category"));
+            var deserialized = ModelReaderWriter.Read<ActivityLogAlertData>(serialized, options);
+            Assert.That(deserialized.ConditionAllOf, Has.Count.EqualTo(1));
+            Assert.That(deserialized.ConditionAllOf[0].EqualsValue, Is.EqualTo("Administrative"));
+        }
 
         [TestCase("J")]
         [TestCase("W")]

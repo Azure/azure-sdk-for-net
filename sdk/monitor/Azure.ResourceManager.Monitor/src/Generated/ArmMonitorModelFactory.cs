@@ -3513,6 +3513,41 @@ namespace Azure.ResourceManager.Monitor.Models
             return new DataContainerWorkspace(id, location, customerId is null ? default : new WorkspaceInfoProperties(customerId, default), default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="storageAccountId"> The resource ID of the storage account to which you would like to send Diagnostic Logs. </param>
+        /// <param name="serviceBusRuleId"> The service bus rule Id of the diagnostic setting. This is here to maintain backwards compatibility. </param>
+        /// <param name="eventHubAuthorizationRuleId"> The resource Id for the event hub authorization rule. </param>
+        /// <param name="eventHubName"> The name of the event hub. If none is specified, the default event hub will be selected. </param>
+        /// <param name="metrics"> The list of metric settings. </param>
+        /// <param name="logs"> The list of logs settings. </param>
+        /// <param name="workspaceId"> The full ARM resource ID of the Log Analytics workspace to which you would like to send Diagnostic Logs. Example: /subscriptions/4b9e8510-67ab-4e9a-95a9-e2f1e570ea9c/resourceGroups/insights-integration/providers/Microsoft.OperationalInsights/workspaces/viruela2. </param>
+        /// <param name="marketplacePartnerId"> The full ARM resource ID of the Marketplace resource to which you would like to send Diagnostic Logs. </param>
+        /// <param name="logAnalyticsDestinationType"> A string indicating whether the export to Log Analytics should use the default destination type, i.e. AzureDiagnostics, or use a destination type constructed as follows: &lt;normalized service identity&gt;_&lt;normalized category name&gt;. Possible values are: Dedicated and null (null is default.). </param>
+        /// <returns> A new <see cref="Monitor.DiagnosticSettingData"/> instance for mocking. </returns>
+        public static DiagnosticSettingData DiagnosticSettingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier storageAccountId = default, ResourceIdentifier serviceBusRuleId = default, ResourceIdentifier eventHubAuthorizationRuleId = default, string eventHubName = default, IEnumerable<MetricSettings> metrics = default, IEnumerable<LogSettings> logs = default, ResourceIdentifier workspaceId = default, ResourceIdentifier marketplacePartnerId = default, string logAnalyticsDestinationType = default)
+        {
+            return new DiagnosticSettingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                storageAccountId is null && serviceBusRuleId is null && eventHubAuthorizationRuleId is null && eventHubName is null && metrics is null && logs is null && workspaceId is null && marketplacePartnerId is null && logAnalyticsDestinationType is null ? default : new DiagnosticSettings(
+                    storageAccountId,
+                    serviceBusRuleId,
+                    eventHubAuthorizationRuleId,
+                    eventHubName,
+                    (metrics ?? new ChangeTrackingList<MetricSettings>()).ToList(),
+                    (logs ?? new ChangeTrackingList<LogSettings>()).ToList(),
+                    workspaceId,
+                    marketplacePartnerId,
+                    logAnalyticsDestinationType,
+                    default),
+                default);
+        }
+
         /// <summary> The autoscale setting resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>

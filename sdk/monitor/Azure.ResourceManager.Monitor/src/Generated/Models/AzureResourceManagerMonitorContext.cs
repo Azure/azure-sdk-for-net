@@ -73,12 +73,8 @@ namespace Azure.ResourceManager.Monitor
     [ModelReaderWriterBuildable(typeof(DataSourcesSpec))]
     [ModelReaderWriterBuildable(typeof(DataStreamDeclaration))]
     [ModelReaderWriterBuildable(typeof(DestinationsSpec))]
-#pragma warning disable CS0618 // global::Azure.ResourceManager.Monitor.DiagnosticSettingData is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(DiagnosticSettingData))]
-#pragma warning restore CS0618 // global::Azure.ResourceManager.Monitor.DiagnosticSettingData is obsolete and may be removed in future versions.
-#pragma warning disable CS0618 // global::Azure.ResourceManager.Monitor.DiagnosticSettingResource is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(DiagnosticSettingResource))]
-#pragma warning restore CS0618 // global::Azure.ResourceManager.Monitor.DiagnosticSettingResource is obsolete and may be removed in future versions.
     [ModelReaderWriterBuildable(typeof(DiagnosticSettingsCategoryData))]
     [ModelReaderWriterBuildable(typeof(DiagnosticSettingsCategoryResource))]
     [ModelReaderWriterBuildable(typeof(DynamicMetricCriteria))]

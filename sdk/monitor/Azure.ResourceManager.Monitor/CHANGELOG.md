@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Restored generated diagnostic setting operations, model serialization, and model factory support instead of throwing compatibility stubs.
+
 ### Other Changes
 
 ## 1.4.0-beta.5 (2026-06-13)
