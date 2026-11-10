@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Recommender
     [ModelReaderWriterBuildable(typeof(ComputeSkuMixPlacementResource))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SkuMixPlacementCapacityProfile))]
-    [ModelReaderWriterBuildable(typeof(SkuMixPlacementVMSize))]
+    [ModelReaderWriterBuildable(typeof(SkuMixPlacementVmSize))]
     [ModelReaderWriterBuildable(typeof(SkuMixPlacementZoneAllocationPolicy))]
     [ModelReaderWriterBuildable(typeof(SkuMixPlacementZonePreference))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

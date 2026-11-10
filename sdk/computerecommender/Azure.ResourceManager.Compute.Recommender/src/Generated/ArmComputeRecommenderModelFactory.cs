@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <param name="capacityProfile"> All capacity-related properties. </param>
         /// <param name="instanceDescriptionVmSizes"> The list of VM sizes to consider for placement. </param>
         /// <returns> A new <see cref="Models.ComputeSkuMixPlacementGenerateContent"/> instance for mocking. </returns>
-        public static ComputeSkuMixPlacementGenerateContent ComputeSkuMixPlacementGenerateContent(IEnumerable<string> zones = default, SkuMixPlacementCapacityProfile capacityProfile = default, IEnumerable<SkuMixPlacementVMSize> instanceDescriptionVmSizes = default)
+        public static ComputeSkuMixPlacementGenerateContent ComputeSkuMixPlacementGenerateContent(IEnumerable<string> zones = default, SkuMixPlacementCapacityProfile capacityProfile = default, IEnumerable<SkuMixPlacementVmSize> instanceDescriptionVmSizes = default)
         {
             zones ??= new ChangeTrackingList<string>();
 
-            return new ComputeSkuMixPlacementGenerateContent((zones ?? new ChangeTrackingList<string>()).ToList(), capacityProfile, instanceDescriptionVmSizes is null ? default : new SkuMixPlacementInstanceDescription((instanceDescriptionVmSizes ?? new ChangeTrackingList<SkuMixPlacementVMSize>()).ToList(), default), default);
+            return new ComputeSkuMixPlacementGenerateContent((zones ?? new ChangeTrackingList<string>()).ToList(), capacityProfile, instanceDescriptionVmSizes is null ? default : new SkuMixPlacementInstanceDescription((instanceDescriptionVmSizes ?? new ChangeTrackingList<SkuMixPlacementVmSize>()).ToList(), default), default);
         }
 
         /// <param name="capacity"> The capacity to run the workload. For VMs: [1..10,000]. For vCPUs: [1..100,000]. </param>
@@ -205,10 +205,10 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <summary> A VM size with optional rank for prioritization. </summary>
         /// <param name="name"> SKU name (e.g. Standard_D2s_v3). </param>
         /// <param name="rank"> Rank of the VM size. Lower = higher priority (starting at 0). Only valid with Prioritized strategy. </param>
-        /// <returns> A new <see cref="Models.SkuMixPlacementVMSize"/> instance for mocking. </returns>
-        public static SkuMixPlacementVMSize SkuMixPlacementVMSize(string name = default, int? rank = default)
+        /// <returns> A new <see cref="Models.SkuMixPlacementVmSize"/> instance for mocking. </returns>
+        public static SkuMixPlacementVmSize SkuMixPlacementVmSize(string name = default, int? rank = default)
         {
-            return new SkuMixPlacementVMSize(name, rank, default);
+            return new SkuMixPlacementVmSize(name, rank, default);
         }
 
         /// <summary> Sku Mix Placement API response. </summary>

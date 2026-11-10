@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute.Recommender.Models;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Recommender.Tests
@@ -51,18 +52,22 @@ namespace Azure.ResourceManager.Compute.Recommender.Tests
             AssertRequests(transport, id, apiVersion);
         }
 
-        [TestCase(false)]
-        [TestCase(true)]
-        public async Task RegularOperationsUseRegularPlacementPath(bool async)
+        [TestCase("eastus", false)]
+        [TestCase("eastus", true)]
+        [TestCase("westeurope", false)]
+        [TestCase("westeurope", true)]
+        public async Task RegularOperationsUseRegularPlacementPath(string location, bool async)
         {
-            ResourceIdentifier id = ComputePlacementScoresResource.CreateResourceIdentifier(SubscriptionId, AzureLocation.EastUS);
+            ResourceIdentifier id = new ResourceIdentifier($"/subscriptions/{SubscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/regular");
             var metadataResponse = new MockResponse(200);
             metadataResponse.SetContent("{\"id\":\"" + id + "\",\"name\":\"regular\",\"type\":\"Microsoft.Compute/locations/placementScores\",\"properties\":{\"supportedResourceTypes\":[\"Microsoft.Compute/virtualMachines\"]}}");
             var generateResponse = new MockResponse(200);
             generateResponse.SetContent("{\"availabilityZones\":true,\"placementScores\":[{\"sku\":\"Standard_D2s_v5\",\"score\":\"High\",\"placementPreference\":8}]}");
             var transport = new MockTransport(metadataResponse, generateResponse);
             var client = new ArmClient(new MockCredential(), SubscriptionId, new ArmClientOptions { Transport = transport });
-            ComputePlacementScoresResource resource = client.GetComputePlacementScoresResource(id);
+            SubscriptionResource subscription = client.GetSubscriptionResource(SubscriptionResource.CreateResourceIdentifier(SubscriptionId));
+            ComputePlacementScoresResource resource = subscription.GetComputePlacementScores(new AzureLocation(location));
+            Assert.AreEqual(id, resource.Id);
 
             var metadata = async ? await resource.GetAsync() : resource.Get();
             Assert.AreEqual(id, metadata.Value.Id);

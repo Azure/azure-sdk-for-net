@@ -55,33 +55,6 @@ namespace Azure.ResourceManager.Compute.Recommender.Mocking
         }
 
         /// <summary>
-        /// Gets Compute Placement Scores metadata.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/regular. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ComputePlacementScores_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-10-05-preview. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ComputePlacementScoresResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <returns> Returns a <see cref="ComputePlacementScoresResource"/> object. </returns>
-        public virtual ComputePlacementScoresResource GetComputePlacementScores()
-        {
-            return new ComputePlacementScoresResource(Client, Id.AppendProviderResource("Microsoft.Compute", "locations", "regular"));
-        }
-
-        /// <summary>
         /// Gets SkuMixPlacement scoring metadata.
         /// <list type="bullet">
         /// <item>

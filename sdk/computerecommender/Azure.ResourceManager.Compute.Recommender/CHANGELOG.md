@@ -5,8 +5,12 @@
 ### Features Added
 
 - Upgraded API version to `2026-10-05-preview`.
-- Added regular compute placement scoring through `GetComputePlacementScores`. The new request and result models expose zonal scope as `IsZonal`.
+- Added regular compute placement scoring through `GetComputePlacementScores(AzureLocation)`, which requires the scoring location. The new request and result models expose zonal scope as `IsZonal`.
 - Added `ComputeRecommenderPlacementScore.PlacementPreference`.
+
+### Breaking Changes
+
+- Renamed the preview model `SkuMixPlacementVMSize` to `SkuMixPlacementVmSize` to follow .NET acronym naming conventions.
 
 ### Other Changes
 
