@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Agents.Persistent
@@ -1714,6 +1716,17 @@ namespace Azure.AI.Agents.Persistent
                 status,
                 statusDetails,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The UploadFileContent. </summary>
+        /// <param name="data"> The file data, in bytes. </param>
+        /// <param name="purpose"> The intended purpose of the uploaded file. Use `assistants` for Agents and Message files, `vision` for Agents image file inputs, `batch` for Batch API, and `fine-tune` for Fine-tuning. </param>
+        /// <param name="filename"> The name of the file. </param>
+        /// <returns> A new <see cref="Persistent.UploadFileContent"/> instance for mocking. </returns>
+        [Experimental("SCME0004")]
+        public static UploadFileContent UploadFileContent(FileBinaryContent data = default, PersistentAgentFilePurpose purpose = default, string filename = default)
+        {
+            return new UploadFileContent(data, purpose, filename);
         }
 
         /// <summary> A vector store is a collection of processed files can be used by the `file_search` tool. </summary>
