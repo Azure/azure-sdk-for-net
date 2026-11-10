@@ -1,14 +1,14 @@
 # Emitter Version Dashboard
 
-> **Auto-generated** by `Emitter_Version_Dashboard` on 2026-11-10 02:39:18 UTC.
+> **Auto-generated** by `Emitter_Version_Dashboard` on 2026-11-10 20:05:49 UTC.
 > Run that script to refresh this file after dependency version changes.
 
 ## Latest Published Version Chain
 
 ```
-@typespec/http-client-csharp (alpha.20261109.2)
+@typespec/http-client-csharp (alpha.20261109.5)
   └─ @azure-typespec/http-client-csharp (alpha.20261106.3)
-       └─ @azure-typespec/http-client-csharp-mgmt (alpha.20261109.1)
+       └─ @azure-typespec/http-client-csharp-mgmt (alpha.20261109.5)
             └─ @azure-typespec/http-client-csharp-provisioning (alpha.20261106.1)
 ```
 
@@ -16,9 +16,9 @@
 
 | Emitter | Depends On | Dependency Version | Latest on npm | Dependency Commit |
 |---|---|---|---|---|
-| `@azure-typespec/http-client-csharp` | `@typespec/http-client-csharp` | 1.0.0-alpha.20261109.5 | 1.0.0-alpha.20261109.2 | [acc0e2b](https://github.com/microsoft/typespec/commit/acc0e2b59ec60051487d51289b7aed4c59bb37ee) |
+| `@azure-typespec/http-client-csharp` | `@typespec/http-client-csharp` | 1.0.0-alpha.20261110.2 | 1.0.0-alpha.20261109.5 | [fdb4293](https://github.com/microsoft/typespec/commit/fdb429345cccc58bf532ac50d2a2e70ecae336a7) |
 | `@azure-typespec/http-client-csharp-mgmt` | `@azure-typespec/http-client-csharp` | 1.0.0-alpha.20261023.4 | 1.0.0-alpha.20261106.3 | [069157e](https://github.com/Azure/azure-sdk-for-net/commit/069157e5b18b91081781e39a0a106e264c0c945c) |
-| `@azure-typespec/http-client-csharp-provisioning` | `@azure-typespec/http-client-csharp-mgmt` | 1.0.0-alpha.20261026.6 | 1.0.0-alpha.20261109.1 | [6a07a90](https://github.com/Azure/azure-sdk-for-net/commit/6a07a90a3a2b9871d5ebe94577e92687397e86a3) |
+| `@azure-typespec/http-client-csharp-provisioning` | `@azure-typespec/http-client-csharp-mgmt` | 1.0.0-alpha.20261026.6 | 1.0.0-alpha.20261109.5 | [6a07a90](https://github.com/Azure/azure-sdk-for-net/commit/6a07a90a3a2b9871d5ebe94577e92687397e86a3) |
 
 ## Source Files
 
