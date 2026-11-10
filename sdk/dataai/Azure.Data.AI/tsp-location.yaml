@@ -1,5 +1,5 @@
 directory: specification/inferenceservice/data-plane/InferenceService
-commit: 7b9f1ff0714627e3680552703174ffe11538d5c5
+commit: b615ebb10cc5cad4dcdcd9ca00cbe1c52b702aae
 repo: Azure/azure-rest-api-specs
 additionalDirectories:
 

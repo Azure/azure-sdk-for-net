@@ -16,6 +16,7 @@ dotnet add package Azure.Data.AI
 
 ### Prerequisites
 
+- `Azure.Core` version 1.64.0 or later. This dependency is installed automatically; if your application references `Azure.Core` directly or pins it through central package management, update that reference to at least 1.64.0.
 - You must have a [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
 - A Semantic Reranker endpoint.
 - Either an API key or a Microsoft Entra identity assigned the **Semantic Reranker User** role on the `Microsoft.InferenceService/inferenceAccounts` resource.
@@ -43,6 +44,11 @@ The generated bearer-token policy requests the `https://dbinference.azure.com/.d
 ## Key concepts
 
 Use `InferenceClient.SemanticRerank` or `SemanticRerankAsync` to rerank documents directly.
+Pass a `SemanticRerankingContent` instance and read the scores and `Metadata` from
+the returned `SemanticRerankingResult`. For JSON documents, set `DocumentType` to
+`SemanticRerankingDocumentType.Json` and add up to 100 property paths to the
+`TargetPaths` collection; the client serializes them as a comma-separated string.
+The API contract specifies a maximum of 100 paths.
 
 ## Examples
 
