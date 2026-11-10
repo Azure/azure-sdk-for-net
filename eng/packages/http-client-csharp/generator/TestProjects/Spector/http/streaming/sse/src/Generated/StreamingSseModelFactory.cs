@@ -15,7 +15,7 @@ namespace Streaming.Sse
     {
         public static Info Info(string desc = default) => throw null;
 
-        public static RetrievalRequest RetrievalRequest(string query = default) => throw null;
+        public static RetrievalContent RetrievalContent(string query = default) => throw null;
 
         public static ProtocolInfo ProtocolInfo(string message = default) => throw null;
     }
