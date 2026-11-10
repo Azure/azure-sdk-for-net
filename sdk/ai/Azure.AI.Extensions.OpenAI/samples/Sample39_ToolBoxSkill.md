@@ -121,7 +121,7 @@ Synchronous sample:
 ```C# Snippet:Sample_CreateToolbox_ToolBoxSkill_Sync
 SkillVersion skill = skillsClient.CreateSkillVersion(
     name: "shipping-cost-skill",
-    inlineContent: new SkillInlineContent(
+    inlineContent: new SkillInlineRequest(
         description: "Compute shipping cost for a package given weight and destination.",
         instructions: "You are a shipping cost calculator. When asked to compute " +
           "shipping cost, use this formula: cost (USD) = 5 + 2 * weight_kg " +
@@ -147,7 +147,7 @@ Asynchronous sample:
 ```C# Snippet:Sample_CreateToolbox_ToolBoxSkill_Async
 SkillVersion skill = await skillsClient.CreateSkillVersionAsync(
     name: "shipping-cost-skill",
-    inlineContent: new SkillInlineContent(
+    inlineContent: new SkillInlineRequest(
         description: "Compute shipping cost for a package given weight and destination.",
         instructions: "You are a shipping cost calculator. When asked to compute " +
           "shipping cost, use this formula: cost (USD) = 5 + 2 * weight_kg " +

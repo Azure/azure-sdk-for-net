@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Cdn
         private BicepValue<string> _name;
         private SystemData _systemData;
         private FrontDoorOriginProperties _properties;
-        private ResourceReference<FrontDoorOriginGroup> _parent;
+        private ProvisioningResourceReference<FrontDoorOriginGroup> _parent;
 
         /// <summary> Creates a new FrontDoorOrigin. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -311,7 +311,7 @@ namespace Azure.Provisioning.Cdn
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<FrontDoorOriginProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<FrontDoorOriginGroup>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<FrontDoorOriginGroup>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

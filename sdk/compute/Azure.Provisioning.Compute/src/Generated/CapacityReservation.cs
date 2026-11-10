@@ -24,7 +24,7 @@ namespace Azure.Provisioning.Compute
         private CapacityReservationProperties _properties;
         private ComputeSku _sku;
         private BicepList<string> _zones;
-        private ResourceReference<CapacityReservationGroup> _parent;
+        private ProvisioningResourceReference<CapacityReservationGroup> _parent;
 
         /// <summary> Creates a new CapacityReservation. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -274,7 +274,7 @@ namespace Azure.Provisioning.Compute
             _properties = DefineModelProperty<CapacityReservationProperties>(nameof(Properties), new string[] { "properties" });
             _sku = DefineModelProperty<ComputeSku>(nameof(Sku), new string[] { "sku" }, isRequired: true);
             _zones = DefineListProperty<string>(nameof(Zones), new string[] { "zones" });
-            _parent = DefineResource<CapacityReservationGroup>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<CapacityReservationGroup>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

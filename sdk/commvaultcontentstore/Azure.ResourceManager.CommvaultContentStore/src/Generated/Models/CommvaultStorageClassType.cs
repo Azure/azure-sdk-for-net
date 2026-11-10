@@ -15,8 +15,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
     public readonly partial struct CommvaultStorageClassType : IEquatable<CommvaultStorageClassType>
     {
         private readonly string _value;
-        /// <summary> Cold storage class. </summary>
-        private const string CoolValue = "COLD";
+        /// <summary> Cold storage class. Requests that use COLD are rejected during validation; use COOL for the infrequent-access tier. </summary>
+        private const string ColdValue = "COLD";
+        /// <summary> Cool (infrequent-access) storage class. </summary>
+        private const string CoolValue = "COOL";
         /// <summary> Hot storage class. </summary>
         private const string HotValue = "HOT";
 
@@ -30,7 +32,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
             _value = value;
         }
 
-        /// <summary> Cold storage class. </summary>
+        /// <summary> Cold storage class. Requests that use COLD are rejected during validation; use COOL for the infrequent-access tier. </summary>
+        public static CommvaultStorageClassType Cold { get; } = new CommvaultStorageClassType(ColdValue);
+
+        /// <summary> Cool (infrequent-access) storage class. </summary>
         public static CommvaultStorageClassType Cool { get; } = new CommvaultStorageClassType(CoolValue);
 
         /// <summary> Hot storage class. </summary>
