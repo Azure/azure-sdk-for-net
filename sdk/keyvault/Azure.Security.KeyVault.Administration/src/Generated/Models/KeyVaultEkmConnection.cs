@@ -17,6 +17,12 @@ namespace Azure.Security.KeyVault.Administration
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultEkmConnection"/>. </summary>
+        public KeyVaultEkmConnection()
+        {
+            ServerCaCertificates = new ChangeTrackingList<BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KeyVaultEkmConnection"/>. </summary>
         /// <param name="hostName"> EKM proxy FQDN (Fully Qualified Domain Name). Only allowed characters are a-z, A-Z, 0-9, hyphen (-), dot (.), and colon (:). </param>
         /// <param name="pathPrefix"> Optional path prefix for the EKM proxy (if any). </param>
         /// <param name="serverCaCertificates"> The root CA certificate chain that issued the proxy server's certificate. An array of certificates in the certificate chain, each in DER format and base64 encoded. </param>
