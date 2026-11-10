@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -177,7 +176,7 @@ namespace Azure.ResourceManager.OperationTemplates
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerOperationTemplatesContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerOperationTemplatesContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))

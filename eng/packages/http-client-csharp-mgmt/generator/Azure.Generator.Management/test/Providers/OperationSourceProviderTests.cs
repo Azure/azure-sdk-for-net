@@ -377,6 +377,8 @@ namespace Azure.Generator.Management.Tests.Providers
                     $"{(isAsync ? "CreateResultAsync" : "CreateResult")} should pass the generated ModelReaderWriterContext to ModelReaderWriter.Read.");
                 Assert.That(body, Does.Contain("ModelSerializationExtensions.WireOptions"),
                     $"{(isAsync ? "CreateResultAsync" : "CreateResult")} should pass WireOptions to ModelReaderWriter.Read.");
+                Assert.That(body, Does.Contain("document.RootElement.GetUtf8Bytes()"));
+                Assert.That(body, Does.Not.Contain("GetRawText"));
                 Assert.That(body, Does.Not.Contain("DeserializeOperationStatusResult"),
                     $"{(isAsync ? "CreateResultAsync" : "CreateResult")} must not call the inaccessible internal Deserialize factory.");
             }

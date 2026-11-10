@@ -16,7 +16,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -186,16 +185,9 @@ namespace Azure.Generator.Management.Providers
 
             if (_resultType.IsFrameworkType)
             {
-                // new BinaryData(Encoding.UTF8.GetBytes(document.RootElement.GetRawText()))
-                var binaryData = New.Instance(
-                    typeof(BinaryData),
-                    Static(typeof(Encoding)).Property(nameof(Encoding.UTF8)).Invoke(
-                        nameof(Encoding.UTF8.GetBytes),
-                        rootElement.Invoke(nameof(JsonElement.GetRawText))));
-
                 return Static(typeof(ModelReaderWriter)).Invoke(
                     nameof(ModelReaderWriter.Read),
-                    [binaryData, wireOptions, ModelReaderWriterContextSnippets.Default],
+                    [rootElement.As<JsonElement>().GetUtf8Bytes(), wireOptions, ModelReaderWriterContextSnippets.Default],
                     [_resultType],
                     false);
             }

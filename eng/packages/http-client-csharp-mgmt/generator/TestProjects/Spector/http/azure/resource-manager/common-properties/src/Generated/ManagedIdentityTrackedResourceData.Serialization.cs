@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -189,7 +188,7 @@ namespace Azure.ResourceManager.CommonProperties
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerCommonPropertiesContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerCommonPropertiesContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.CommonProperties
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerCommonPropertiesContext.Default);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(prop.Value.GetUtf8Bytes(), options.Format == "W" ? ModelSerializationExtensions.WireV3Options : ModelSerializationExtensions.JsonV3Options, AzureResourceManagerCommonPropertiesContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

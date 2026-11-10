@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.ClientModel.Snippets;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -192,9 +193,7 @@ namespace Azure.Generator.Management.Snippets
             return ManagementClientGenerator.Instance.TypeFactory.DeserializeJsonValue(
                 type,
                 element.As<JsonElement>(),
-                Static(typeof(BinaryData)).Invoke(
-                    nameof(BinaryData.FromString),
-                    element.Invoke(nameof(JsonElement.GetRawText))).As<BinaryData>(),
+                element.As<JsonElement>().GetUtf8Bytes(),
                 ModelSerializationExtensionsSnippets.Wire,
                 SerializationFormat.Default);
         }

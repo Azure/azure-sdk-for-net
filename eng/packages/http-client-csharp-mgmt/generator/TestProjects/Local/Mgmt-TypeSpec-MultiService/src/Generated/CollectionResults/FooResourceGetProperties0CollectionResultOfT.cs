@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -87,7 +86,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
             List<FooProperties> result = new List<FooProperties>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(ModelReaderWriter.Read<FooProperties>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecMultiServiceTestsContext.Default));
+                result.Add(ModelReaderWriter.Read<FooProperties>(element.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecMultiServiceTestsContext.Default));
             }
             return result;
         }

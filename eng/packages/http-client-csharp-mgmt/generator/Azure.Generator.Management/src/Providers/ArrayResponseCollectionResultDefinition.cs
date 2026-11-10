@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,6 +15,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.ClientModel.Snippets;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
@@ -342,17 +342,13 @@ namespace Azure.Generator.Management.Providers
                     isAsync: false,
                     out var elementVariable)
                 {
-                    // result.Add(ModelReaderWriter.Read<T>(new BinaryData(element.GetRawText()), ModelSerializationExtensions.WireOptions, {Context}.Default));
-                    // Use Literal code for the context reference since it's a generated type
                     resultVariable.Invoke("Add",
                         new ValueExpression[]
                         {
                             Static(new CSharpType(typeof(ModelReaderWriter))).Invoke("Read",
                                 new ValueExpression[]
                                 {
-                                    New.Instance(typeof(BinaryData),
-                                        Static(typeof(Encoding)).Property("UTF8").Invoke("GetBytes",
-                                            elementVariable.Invoke("GetRawText"))),
+                                    elementVariable.As<JsonElement>().GetUtf8Bytes(),
                                     Static<ModelSerializationExtensionsDefinition>().Property("WireOptions"),
                                     Static(ManagementClientGenerator.Instance.OutputLibrary.ModelReaderWriterContextType).Property("Default")
                                 },

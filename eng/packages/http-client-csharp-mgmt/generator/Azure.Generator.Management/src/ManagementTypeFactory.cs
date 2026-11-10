@@ -20,7 +20,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -300,14 +299,7 @@ namespace Azure.Generator.Management
 
                 IReadOnlyList<ValueExpression> readBody =
                 [
-                    New.Instance(
-                    typeof(BinaryData),
-                    [
-                        new MemberExpression(typeof(Encoding), nameof(Encoding.UTF8)).Invoke(nameof(UTF8Encoding.GetBytes),
-                            [
-                                element.GetRawText()
-                            ])
-                    ]),
+                    element.GetUtf8Bytes(),
                     wireOptions
                 ];
 

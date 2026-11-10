@@ -74,6 +74,9 @@ internal class ArrayCollectionResultPlanTests
             var helper = new ArrayResponseCollectionResultDefinition(client, arrayMethod, itemType, isAsync, [], owner, emittedName, owner.Name);
             Assert.That(names, Does.Contain(helper.Name));
             Assert.That(helper.Type.Namespace, Is.EqualTo(plugin.TypeFactory.PrimaryNamespace));
+            var parseBody = helper.Methods.Single(m => m.Signature.Name == "ParseArrayFromResponse").BodyStatements!.ToDisplayString();
+            Assert.That(parseBody, Does.Contain("element.GetUtf8Bytes()"));
+            Assert.That(parseBody, Does.Not.Contain("GetRawText"));
         }
     }
 

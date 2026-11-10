@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Generator.MgmtTypeSpec.Tests;
@@ -164,7 +163,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                         }
                         else
                         {
-                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default));
+                            array.Add(ModelReaderWriter.Read<SubResource>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default));
                         }
                     }
                     value = array;

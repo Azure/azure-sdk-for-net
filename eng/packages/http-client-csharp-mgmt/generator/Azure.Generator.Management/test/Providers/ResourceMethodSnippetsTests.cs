@@ -50,6 +50,8 @@ namespace Azure.Generator.Management.Tests.Providers
                 "Each known-management-type element should be deserialized via ModelReaderWriter.Read<T>.");
             Assert.That(code, Does.Contain("Context.Default"),
                 "Element deserialization must use the AOT-safe context overload.");
+            Assert.That(code, Does.Contain("valueResultElement.GetUtf8Bytes()"));
+            Assert.That(code, Does.Not.Contain("GetRawText"));
         }
 
         [Test]
@@ -108,6 +110,8 @@ namespace Azure.Generator.Management.Tests.Providers
                 "Dictionary responses should be parsed inline with JsonDocument.");
             Assert.That(code, Does.Contain("EnumerateObject()"),
                 "Dictionary responses should be built by enumerating the JSON object.");
+            Assert.That(code, Does.Contain("valueResultProperty.Value.GetUtf8Bytes()"));
+            Assert.That(code, Does.Not.Contain("GetRawText"));
             Assert.That(code, Does.Contain("GetUtf8Bytes()"),
                 "Each Record<unknown> value should be materialized from its JSON element.");
         }
