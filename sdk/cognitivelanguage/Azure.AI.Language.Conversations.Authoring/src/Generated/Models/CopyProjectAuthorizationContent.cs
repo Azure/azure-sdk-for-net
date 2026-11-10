@@ -10,25 +10,25 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    /// <summary> The CopyProjectAuthorizationRequest. </summary>
-    internal partial class CopyProjectAuthorizationRequest
+    /// <summary> The CopyProjectAuthorizationContent. </summary>
+    internal partial class CopyProjectAuthorizationContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CopyProjectAuthorizationRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyProjectAuthorizationContent"/>. </summary>
         /// <param name="projectKind"> Represents the project kind. </param>
-        internal CopyProjectAuthorizationRequest(ConversationAuthoringProjectKind projectKind)
+        internal CopyProjectAuthorizationContent(ConversationAuthoringProjectKind projectKind)
         {
             ProjectKind = projectKind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CopyProjectAuthorizationRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyProjectAuthorizationContent"/>. </summary>
         /// <param name="projectKind"> Represents the project kind. </param>
         /// <param name="storageInputContainerName"> The name of the storage container. </param>
         /// <param name="allowOverwrite"> Whether to allow an existing project to be overwritten using the resulting copy authorization. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CopyProjectAuthorizationRequest(ConversationAuthoringProjectKind projectKind, string storageInputContainerName, bool? allowOverwrite, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CopyProjectAuthorizationContent(ConversationAuthoringProjectKind projectKind, string storageInputContainerName, bool? allowOverwrite, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProjectKind = projectKind;
             StorageInputContainerName = storageInputContainerName;

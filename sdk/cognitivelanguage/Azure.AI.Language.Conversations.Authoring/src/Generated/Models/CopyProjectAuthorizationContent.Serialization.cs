@@ -13,67 +13,67 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    /// <summary> The CopyProjectAuthorizationRequest. </summary>
-    internal partial class CopyProjectAuthorizationRequest : IJsonModel<CopyProjectAuthorizationRequest>
+    /// <summary> The CopyProjectAuthorizationContent. </summary>
+    internal partial class CopyProjectAuthorizationContent : IJsonModel<CopyProjectAuthorizationContent>
     {
-        /// <summary> Initializes a new instance of <see cref="CopyProjectAuthorizationRequest"/> for deserialization. </summary>
-        internal CopyProjectAuthorizationRequest()
+        /// <summary> Initializes a new instance of <see cref="CopyProjectAuthorizationContent"/> for deserialization. </summary>
+        internal CopyProjectAuthorizationContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CopyProjectAuthorizationRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CopyProjectAuthorizationContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CopyProjectAuthorizationRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CopyProjectAuthorizationContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCopyProjectAuthorizationRequest(document.RootElement, options);
+                        return DeserializeCopyProjectAuthorizationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CopyProjectAuthorizationRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CopyProjectAuthorizationContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CopyProjectAuthorizationRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CopyProjectAuthorizationContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsAuthoringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CopyProjectAuthorizationRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CopyProjectAuthorizationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CopyProjectAuthorizationRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CopyProjectAuthorizationContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CopyProjectAuthorizationRequest IPersistableModel<CopyProjectAuthorizationRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CopyProjectAuthorizationContent IPersistableModel<CopyProjectAuthorizationContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CopyProjectAuthorizationRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CopyProjectAuthorizationContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="copyProjectAuthorizationRequest"> The <see cref="CopyProjectAuthorizationRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(CopyProjectAuthorizationRequest copyProjectAuthorizationRequest)
+        /// <param name="copyProjectAuthorizationContent"> The <see cref="CopyProjectAuthorizationContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(CopyProjectAuthorizationContent copyProjectAuthorizationContent)
         {
-            if (copyProjectAuthorizationRequest == null)
+            if (copyProjectAuthorizationContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(copyProjectAuthorizationRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(copyProjectAuthorizationContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CopyProjectAuthorizationRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CopyProjectAuthorizationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -84,10 +84,10 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CopyProjectAuthorizationRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CopyProjectAuthorizationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CopyProjectAuthorizationRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CopyProjectAuthorizationContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("projectKind"u8);
             writer.WriteStringValue(ProjectKind.ToString());
@@ -120,24 +120,24 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CopyProjectAuthorizationRequest IJsonModel<CopyProjectAuthorizationRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CopyProjectAuthorizationContent IJsonModel<CopyProjectAuthorizationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CopyProjectAuthorizationRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CopyProjectAuthorizationContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CopyProjectAuthorizationRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CopyProjectAuthorizationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CopyProjectAuthorizationRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CopyProjectAuthorizationContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCopyProjectAuthorizationRequest(document.RootElement, options);
+            return DeserializeCopyProjectAuthorizationContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CopyProjectAuthorizationRequest DeserializeCopyProjectAuthorizationRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static CopyProjectAuthorizationContent DeserializeCopyProjectAuthorizationContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -173,7 +173,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, additionalBinaryDataProperties);
+            return new CopyProjectAuthorizationContent(projectKind, storageInputContainerName, allowOverwrite, additionalBinaryDataProperties);
         }
     }
 }
