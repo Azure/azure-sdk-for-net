@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CloudAccountPatchProperties(CompanyProfile company, CloudAccountMarketplaceUpdate marketplace, CloudAccountUserUpdate user, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CloudAccountPatchProperties(CommvaultCompanyProfile company, CloudAccountMarketplacePatch marketplace, CloudAccountUserPatch user, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Company = company;
             Marketplace = marketplace;
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> Optional company details for the cloud account. </summary>
-        public CompanyProfile Company { get; set; }
+        public CommvaultCompanyProfile Company { get; set; }
 
         /// <summary> Marketplace details of the resource. </summary>
-        public CloudAccountMarketplaceUpdate Marketplace { get; set; }
+        public CloudAccountMarketplacePatch Marketplace { get; set; }
 
         /// <summary> Details of the user. </summary>
-        public CloudAccountUserUpdate User { get; set; }
+        public CloudAccountUserPatch User { get; set; }
     }
 }

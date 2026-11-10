@@ -13,8 +13,18 @@ namespace Azure.AI.Projects.Evaluation;
 #pragma warning disable AAIP002
 [CodeGenType("AzureAIAgentTarget")]
 [CodeGenSerialization(nameof(Tools), DeserializationValueHook = nameof(DeserializeToolsValue))]
+[CodeGenSuppress("AzureAIAgentTarget")]
 public partial class AzureAIAgentTarget
 {
+    // The generated parameterless constructor initializes the experimental Tools property without suppressing
+    // AAIP002, which fails the build. It is redefined here, where AAIP002 is suppressed for the whole file.
+    /// <summary> Initializes a new instance of <see cref="AzureAIAgentTarget"/>. </summary>
+    public AzureAIAgentTarget() : base("azure_ai_agent")
+    {
+        ToolDescriptions = new ChangeTrackingList<ToolDescription>();
+        Tools = new ChangeTrackingList<ResponseTool>();
+    }
+
     private static void DeserializeToolsValue(JsonProperty property, ref IList<ResponseTool> tools)
     {
         IList<ResponseTool> replacementTools = new ChangeTrackingList<ResponseTool>();

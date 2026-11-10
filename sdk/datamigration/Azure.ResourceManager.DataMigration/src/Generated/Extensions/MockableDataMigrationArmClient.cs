@@ -111,35 +111,21 @@ namespace Azure.ResourceManager.DataMigration.Mocking
             return new DataMigrationProjectResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="DatabaseMigrationsMongoToCosmosDbRUMongoResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="DatabaseMigrationsMongoToCosmosDBRUMongoResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseMigrationsMongoToCosmosDbRUMongoResource"/> object. </returns>
-        public virtual DatabaseMigrationsMongoToCosmosDbRUMongoResource GetDatabaseMigrationsMongoToCosmosDbRUMongoResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseMigrationsMongoToCosmosDBRUMongoResource"/> object. </returns>
+        public virtual DatabaseMigrationsMongoToCosmosDBRUMongoResource GetDatabaseMigrationsMongoToCosmosDBRUMongoResource(ResourceIdentifier id)
         {
-            DatabaseMigrationsMongoToCosmosDbRUMongoResource.ValidateResourceId(id);
-            return new DatabaseMigrationsMongoToCosmosDbRUMongoResource(Client, id);
+            DatabaseMigrationsMongoToCosmosDBRUMongoResource.ValidateResourceId(id);
+            return new DatabaseMigrationsMongoToCosmosDBRUMongoResource(Client, id);
         }
 
-        /// <summary> Gets a collection of <see cref="DatabaseMigrationsMongoToCosmosDbRUMongoCollection"/> objects within the specified scope. </summary>
+        /// <summary> Gets a collection of <see cref="DatabaseMigrationsMongoToCosmosDBRUMongoCollection"/> objects within the specified scope. </summary>
         /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <returns> Returns a collection of <see cref="DatabaseMigrationsMongoToCosmosDbRUMongoResource"/> objects. </returns>
-        public virtual DatabaseMigrationsMongoToCosmosDbRUMongoCollection GetDatabaseMigrationsMongoToCosmosDbRUMongos(ResourceIdentifier scope)
+        /// <returns> Returns a collection of <see cref="DatabaseMigrationsMongoToCosmosDBRUMongoResource"/> objects. </returns>
+        public virtual DatabaseMigrationsMongoToCosmosDBRUMongoCollection GetDatabaseMigrationsMongoToCosmosDBRUMongos(ResourceIdentifier scope)
         {
-            return new DatabaseMigrationsMongoToCosmosDbRUMongoCollection(Client, scope);
-        }
-
-        /// <summary> Get Database Migration resource. </summary>
-        /// <param name="scope"> The scope of the resource collection to get. </param>
-        /// <param name="migrationName"> Name of the migration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DatabaseMigrationsMongoToCosmosDbRUMongoResource> GetDatabaseMigrationsMongoToCosmosDbRUMongo(ResourceIdentifier scope, string migrationName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
-
-            return GetDatabaseMigrationsMongoToCosmosDbRUMongos(scope).Get(migrationName, cancellationToken);
+            return new DatabaseMigrationsMongoToCosmosDBRUMongoCollection(Client, scope);
         }
 
         /// <summary> Get Database Migration resource. </summary>
@@ -149,11 +135,25 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DatabaseMigrationsMongoToCosmosDbRUMongoResource>> GetDatabaseMigrationsMongoToCosmosDbRUMongoAsync(ResourceIdentifier scope, string migrationName, CancellationToken cancellationToken = default)
+        public virtual Response<DatabaseMigrationsMongoToCosmosDBRUMongoResource> GetDatabaseMigrationsMongoToCosmosDBRUMongo(ResourceIdentifier scope, string migrationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
-            return await GetDatabaseMigrationsMongoToCosmosDbRUMongos(scope).GetAsync(migrationName, cancellationToken).ConfigureAwait(false);
+            return GetDatabaseMigrationsMongoToCosmosDBRUMongos(scope).Get(migrationName, cancellationToken);
+        }
+
+        /// <summary> Get Database Migration resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="migrationName"> Name of the migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DatabaseMigrationsMongoToCosmosDBRUMongoResource>> GetDatabaseMigrationsMongoToCosmosDBRUMongoAsync(ResourceIdentifier scope, string migrationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
+
+            return await GetDatabaseMigrationsMongoToCosmosDBRUMongos(scope).GetAsync(migrationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets an object representing a <see cref="DatabaseMigrationSqlDBResource"/> along with the instance operations that can be performed on it but with no data. </summary>
