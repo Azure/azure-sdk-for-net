@@ -4,6 +4,13 @@ These two examples use the existing `EvaluationClient` protocol APIs. They requi
 service support for the built-in audio evaluators and an eligible audio-input judge
 deployment.
 
+Only `FOUNDRY_PROJECT_ENDPOINT` and `FOUNDRY_MODEL_NAME` (the audio judge deployment)
+are required environment variables for either sample. The project still needs
+dataset upload permissions and storage for the recorded sample. Simulation requires
+a chat deployment named `gpt-4.1` (or the optional simulator override) and access to
+the managed `gpt-realtime` voice model. The simulator and judge serve different
+purposes; an audio judge is not necessarily a chat-capable simulator.
+
 The [runnable sample](../../tests/Samples/Evaluation/Sample_VoiceEvaluation.cs) contains
 both workflows and their shared helpers. Authenticate with `DefaultAzureCredential`
 as in the other project samples. Result parsing and pagination reuse
@@ -11,8 +18,14 @@ as in the other project samples. Result parsing and pagination reuse
 
 ## Grade existing recordings
 
-Set `FOUNDRY_PROJECT_ENDPOINT`, `FOUNDRY_MODEL_NAME` (the audio judge), and
-`FOUNDRY_DATASET_ID` (an existing registered JSONL dataset). No target agent is invoked.
+Set the endpoint and judge variables above. By default, the sample uploads the
+[bundled synthetic conversation](../../tests/TestData/VoiceEvaluation/README.md)
+as a folder dataset, then creates and uploads a separate JSONL dataset referencing
+that recording. Both datasets and the working folder are removed after evaluation,
+including on failure. No target agent is invoked.
+
+Optionally set `FOUNDRY_DATASET_ID` to reuse an existing registered JSONL dataset
+without uploading or deleting any input resources.
 Each JSONL row contains a recording reference; the transcript is optional:
 
 ```json
@@ -30,11 +43,11 @@ Each JSONL row contains a recording reference; the transcript is optional:
 }
 ```
 
-Use one compact object per line in the actual JSONL file. The recording must already
+Use one compact object per line in the actual JSONL file. The recording must
 be registered in the same project. Its reference uses `/datasets/` and a relative
 member path, not a local file or SAS URL. `FOUNDRY_DATASET_ID` identifies the JSONL
-dataset, not the WAV asset. These samples do not upload or delete either input;
-see [datasets](../Sample1_Datasets.md) for dataset operations.
+dataset, not the WAV asset. The default setup normalizes the uploaded recording ID
+from `/data/` to `/datasets/`; see [datasets](../Sample1_Datasets.md) for dataset operations.
 
 The recorded workflow uses task completion, groundedness, customer satisfaction,
 and coherence audio evaluators:
@@ -42,13 +55,14 @@ and coherence audio evaluators:
 ```C# Snippet:Sample_VoiceEvaluation_Recorded
 string endpoint = GetRequiredVariable("FOUNDRY_PROJECT_ENDPOINT");
 string judge = GetRequiredVariable("FOUNDRY_MODEL_NAME");
-string datasetId = GetRequiredVariable("FOUNDRY_DATASET_ID");
+string datasetId = GetOptionalVariable("FOUNDRY_DATASET_ID");
 AIProjectClient project = new(new Uri(endpoint), new DefaultAzureCredential());
 EvaluationClient client = project.ProjectOpenAIClient.GetEvaluationClient();
 
 BinaryData definition = CreateDefinition(judge,
     ["task_completion", "groundedness", "customer_satisfaction", "coherence"]);
-await RunEvaluationAsync(client, definition, CreateRecordedRun(datasetId));
+await WithRecordedDatasetAsync(project.Datasets,
+    id => RunEvaluationAsync(client, definition, CreateRecordedRun(id)), datasetId);
 ```
 
 Its run uses conversation scope and the existing JSONL source:
@@ -69,12 +83,102 @@ internal static BinaryData CreateRecordedRun(string datasetId)
 }
 ```
 
+The upload helper keeps both inputs until grading and result retrieval finish:
+
+The .NET folder helper uploads bare filenames. This sample registers the containing
+blob folder as the audio asset root and uses `conversation.wav` as its member path.
+
+```C# Snippet:Sample_VoiceEvaluation_Upload
+internal static async Task WithRecordedDatasetAsync(
+    AIProjectDatasetsOperations datasets, Func<string, Task> evaluate, string datasetId = null)
+{
+    if (!string.IsNullOrWhiteSpace(datasetId))
+    {
+        await evaluate(datasetId);
+        return;
+    }
+
+    string name = $"voice-evaluation-{Guid.NewGuid():N}";
+    string audioName = $"{name}-audio";
+    string directory = Path.Combine(Environment.CurrentDirectory, name);
+    Directory.CreateDirectory(directory);
+    bool audioCreated = false;
+    bool datasetCreated = false;
+    try
+    {
+        string recordings = Path.Combine(directory, "recordings");
+        Directory.CreateDirectory(recordings);
+        File.Copy(Path.Combine(AppContext.BaseDirectory, "TestData", "VoiceEvaluation", "conversation.wav"),
+            Path.Combine(recordings, "conversation.wav"));
+        FolderDataset audio = await datasets.UploadFolderAsync(audioName, "1", recordings);
+        audioCreated = true;
+        // UploadFolder flattens filenames and returns the last blob's URI. Register
+        // the containing folder so asset_file_path is relative to that folder.
+        using BinaryContent folder = BinaryContent.Create(new FolderDataset(new Uri(audio.DataUri, ".")));
+        await datasets.CreateOrUpdateAsync(audioName, "1", folder);
+        string jsonl = Path.Combine(directory, "conversations.jsonl");
+        await File.WriteAllTextAsync(jsonl, JsonSerializer.Serialize(new
+        {
+            messages = new[]
+            {
+                new { role = "user", content = "When do you close?" },
+                new { role = "assistant", content = "We close at nine PM." }
+            },
+            conversation_artifacts = new
+            {
+                audio = new { asset_id = audio.Id.Replace("/data/", "/datasets/"), asset_file_path = "conversation.wav" }
+            }
+        }) + Environment.NewLine);
+        FileDataset dataset = await datasets.UploadFileAsync(name, "1", jsonl);
+        datasetCreated = true;
+        await evaluate(dataset.Id);
+    }
+    finally
+    {
+        try
+        {
+            if (datasetCreated)
+            {
+                await datasets.DeleteAsync(name, "1");
+            }
+        }
+        finally
+        {
+            try
+            {
+                if (audioCreated)
+                {
+                    await datasets.DeleteAsync(audioName, "1");
+                }
+            }
+            finally
+            {
+                Directory.Delete(directory, recursive: true);
+            }
+        }
+    }
+}
+```
+
 ## Simulate and grade a voice-agent call
 
-Set the endpoint and judge variables above, plus `FOUNDRY_AGENT_NAME`,
-`FOUNDRY_AGENT_VERSION`, `FOUNDRY_SIMULATOR_MODEL_NAME`, and `FOUNDRY_SIMULATOR_VOICE`
-(for example, `en-US-AvaNeural`). An existing voice agent must be configured for
-the store-hours scenario below; replace the seed if your agent serves a different task.
+Set the endpoint and judge variables above. By default, the sample creates a unique
+store-hours voice agent backed by managed `gpt-realtime`, enables audio output and
+conversation storage, and deletes only the created version after evaluation.
+
+Optional overrides:
+
+| Variable | Default |
+| --- | --- |
+| `FOUNDRY_AGENT_NAME` | Create a new voice agent |
+| `FOUNDRY_AGENT_VERSION` | Latest version of the specified existing agent |
+| `FOUNDRY_SIMULATOR_MODEL_NAME` | `gpt-4.1` chat deployment |
+| `FOUNDRY_SIMULATOR_VOICE` | `en-US-AvaNeural` |
+| `FOUNDRY_VOICE_MODEL_NAME` | `gpt-realtime` for a new agent |
+| `FOUNDRY_VOICE_MODEL_TYPE` | `managed`; use `self_deployed` for your own voice deployment |
+
+Existing agents are never changed or deleted. Configure an existing agent for
+the store-hours scenario below, or replace the seed for a different task.
 
 The **target agent** handles the call, the **simulator model** generates user turns,
 the **voice** renders simulated-user speech, and the **audio judge** scores the result.
@@ -82,16 +186,70 @@ the **voice** renders simulated-user speech, and the **audio judge** scores the 
 ```C# Snippet:Sample_VoiceEvaluation_Simulation
 string endpoint = GetRequiredVariable("FOUNDRY_PROJECT_ENDPOINT");
 string judge = GetRequiredVariable("FOUNDRY_MODEL_NAME");
-string agentName = GetRequiredVariable("FOUNDRY_AGENT_NAME");
-string agentVersion = GetRequiredVariable("FOUNDRY_AGENT_VERSION");
-string simulatorModel = GetRequiredVariable("FOUNDRY_SIMULATOR_MODEL_NAME");
-string simulatorVoice = GetRequiredVariable("FOUNDRY_SIMULATOR_VOICE");
+string agentName = GetOptionalVariable("FOUNDRY_AGENT_NAME");
+string agentVersion = GetOptionalVariable("FOUNDRY_AGENT_VERSION");
+string simulatorModel = GetOptionalVariable("FOUNDRY_SIMULATOR_MODEL_NAME", "gpt-4.1");
+string simulatorVoice = GetOptionalVariable("FOUNDRY_SIMULATOR_VOICE", "en-US-AvaNeural");
+string voiceModel = GetOptionalVariable("FOUNDRY_VOICE_MODEL_NAME", "gpt-realtime");
+string voiceModelType = GetOptionalVariable("FOUNDRY_VOICE_MODEL_TYPE", "managed");
 AIProjectClient project = new(new Uri(endpoint), new DefaultAzureCredential());
 EvaluationClient client = project.ProjectOpenAIClient.GetEvaluationClient();
 
 BinaryData definition = CreateDefinition(judge, ["task_completion"]);
-BinaryData run = CreateSimulationRun(agentName, agentVersion, simulatorModel, simulatorVoice);
-await RunEvaluationAsync(client, definition, run);
+await WithVoiceAgentAsync(project.AgentAdministrationClient,
+    (name, version) => RunEvaluationAsync(client, definition,
+        CreateSimulationRun(name, version, simulatorModel, simulatorVoice)),
+    agentName, agentVersion, voiceModel, voiceModelType);
+```
+
+The agent helper either reuses the supplied version, discovers the latest version,
+or creates a configured voice agent:
+
+```C# Snippet:Sample_VoiceEvaluation_Agent
+internal static async Task WithVoiceAgentAsync(
+    AgentAdministrationClient agents, Func<string, string, Task> evaluate,
+    string agentName = null, string agentVersion = null,
+    string voiceModel = "gpt-realtime", string voiceModelType = "managed")
+{
+    if (!string.IsNullOrWhiteSpace(agentName))
+    {
+        if (string.IsNullOrWhiteSpace(agentVersion))
+        {
+            ProjectsAgentRecord existing = await agents.GetAgentAsync(agentName);
+            agentVersion = existing.GetLatestVersion().Version;
+        }
+        await evaluate(agentName, agentVersion);
+        return;
+    }
+
+    agentName = $"voice-evaluation-{Guid.NewGuid():N}";
+    VoiceAgentDefinition definition = new()
+    {
+        ModelType = new VoiceModelType(voiceModelType),
+        Model = voiceModel,
+        Instructions = "You are a store assistant. The Springfield, Illinois store closes at nine PM every day. Ask for the location if needed. Answer briefly.",
+        Audio = new VoiceAgentAudioConfig
+        {
+            Output = new VoiceAgentAudioOutputConfig
+            {
+                Voice = "en-US-AvaNeural",
+                VoiceType = VoiceType.AzureStandard
+            }
+        },
+        Store = true
+    };
+    definition.OutputModalities.Add(VoiceOutputModality.Audio);
+    ProjectsAgentVersion created = await agents.CreateAgentVersionAsync(
+        agentName, new ProjectsAgentVersionCreationOptions(definition));
+    try
+    {
+        await evaluate(agentName, created.Version);
+    }
+    finally
+    {
+        await agents.DeleteAgentVersionAsync(agentName, created.Version);
+    }
+}
 ```
 
 The single inline seed needs no dataset upload. This generates billable
@@ -258,9 +416,14 @@ internal static async Task<IReadOnlyList<string>> RunEvaluationAsync(
 }
 ```
 
-Environment variables are required explicitly:
+Required variables fail early; optional variables treat empty values as absent:
 
 ```C# Snippet:Sample_VoiceEvaluation_Environment
+private static string GetOptionalVariable(string name, string defaultValue = null) =>
+    Environment.GetEnvironmentVariable(name) is string value && !string.IsNullOrWhiteSpace(value)
+        ? value
+        : defaultValue;
+
 private static string GetRequiredVariable(string name) =>
     Environment.GetEnvironmentVariable(name) is string value && !string.IsNullOrWhiteSpace(value)
         ? value
