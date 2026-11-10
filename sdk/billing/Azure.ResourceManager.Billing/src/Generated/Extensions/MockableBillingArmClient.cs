@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Billing;
@@ -193,6 +194,15 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingCustomerPolicyResource"/> object. </returns>
         public virtual BillingCustomerPolicyResource GetBillingCustomerPolicyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != BillingCustomerPolicyResource.ResourceType || segments.Length != 9 || segments[0] != "" || !string.Equals(segments[1], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[2], "Microsoft.Billing", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[3], "billingAccounts", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "customers", StringComparison.OrdinalIgnoreCase) || segments[6] == "" || !string.Equals(segments[7], "policies", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[8], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/customers/{customerName}/policies/default"), nameof(id));
+            }
             BillingCustomerPolicyResource.ValidateResourceId(id);
             return new BillingCustomerPolicyResource(Client, id);
         }
@@ -211,6 +221,15 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingProfilePolicyResource"/> object. </returns>
         public virtual BillingProfilePolicyResource GetBillingProfilePolicyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != BillingProfilePolicyResource.ResourceType || segments.Length != 9 || segments[0] != "" || !string.Equals(segments[1], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[2], "Microsoft.Billing", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[3], "billingAccounts", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "billingProfiles", StringComparison.OrdinalIgnoreCase) || segments[6] == "" || !string.Equals(segments[7], "policies", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[8], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/policies/default"), nameof(id));
+            }
             BillingProfilePolicyResource.ValidateResourceId(id);
             return new BillingProfilePolicyResource(Client, id);
         }
@@ -220,6 +239,15 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingAccountPolicyResource"/> object. </returns>
         public virtual BillingAccountPolicyResource GetBillingAccountPolicyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != BillingAccountPolicyResource.ResourceType || segments.Length != 7 || segments[0] != "" || !string.Equals(segments[1], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[2], "Microsoft.Billing", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[3], "billingAccounts", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "policies", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/policies/default"), nameof(id));
+            }
             BillingAccountPolicyResource.ValidateResourceId(id);
             return new BillingAccountPolicyResource(Client, id);
         }
@@ -229,6 +257,15 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="SubscriptionPolicyResource"/> object. </returns>
         public virtual SubscriptionPolicyResource GetSubscriptionPolicyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != SubscriptionPolicyResource.ResourceType || segments.Length != 7 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[4], "Microsoft.Billing", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[5], "policies", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/providers/Microsoft.Billing/policies/default"), nameof(id));
+            }
             SubscriptionPolicyResource.ValidateResourceId(id);
             return new SubscriptionPolicyResource(Client, id);
         }
@@ -364,6 +401,15 @@ namespace Azure.ResourceManager.Billing.Mocking
         /// <returns> Returns a <see cref="BillingPropertyResource"/> object. </returns>
         public virtual BillingPropertyResource GetBillingPropertyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != BillingPropertyResource.ResourceType || segments.Length != 7 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[4], "Microsoft.Billing", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[5], "billingProperty", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingProperty/default"), nameof(id));
+            }
             BillingPropertyResource.ValidateResourceId(id);
             return new BillingPropertyResource(Client, id);
         }

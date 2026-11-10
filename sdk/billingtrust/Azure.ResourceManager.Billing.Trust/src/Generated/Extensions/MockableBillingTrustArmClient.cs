@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Billing.Trust.Mocking
         public virtual BillingTrustAssessmentResource GetBillingTrustAssessmentResource(ResourceIdentifier id)
         {
             BillingTrustAssessmentResource.ValidateResourceId(id);
+            if (id != null && id.ResourceType == BillingTrustAssessmentResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new BillingTrustAssessmentResource(Client, id);
         }
 
