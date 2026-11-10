@@ -10,24 +10,24 @@ using System.Collections.Generic;
 
 namespace Azure.Security.Attestation
 {
-    /// <summary> The AttestAzureGuestRequest. </summary>
-    internal partial class AttestAzureGuestRequest
+    /// <summary> The AttestAzureGuestContent. </summary>
+    internal partial class AttestAzureGuestContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AttestAzureGuestRequest"/>. </summary>
-        internal AttestAzureGuestRequest()
+        /// <summary> Initializes a new instance of <see cref="AttestAzureGuestContent"/>. </summary>
+        internal AttestAzureGuestContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AttestAzureGuestRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestAzureGuestContent"/>. </summary>
         /// <param name="attestationInfo">
         /// Attestation client information containing all artifacts required for Guest
         /// Attestation.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AttestAzureGuestRequest(string attestationInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AttestAzureGuestContent(string attestationInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AttestationInfo = attestationInfo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

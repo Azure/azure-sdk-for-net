@@ -10,23 +10,23 @@ using System.Collections.Generic;
 
 namespace Azure.Security.Attestation
 {
-    /// <summary> The RemoveRequest. </summary>
-    internal partial class RemoveRequest
+    /// <summary> The RemoveContent. </summary>
+    internal partial class RemoveContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RemoveRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoveContent"/>. </summary>
         /// <param name="policyCertificateToRemove"> The certificate to remove, as a string (e.g., PEM or JWK). </param>
-        internal RemoveRequest(string policyCertificateToRemove)
+        internal RemoveContent(string policyCertificateToRemove)
         {
             PolicyCertificateToRemove = policyCertificateToRemove;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RemoveRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoveContent"/>. </summary>
         /// <param name="policyCertificateToRemove"> The certificate to remove, as a string (e.g., PEM or JWK). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RemoveRequest(string policyCertificateToRemove, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RemoveContent(string policyCertificateToRemove, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicyCertificateToRemove = policyCertificateToRemove;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
