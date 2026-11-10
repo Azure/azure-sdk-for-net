@@ -260,6 +260,107 @@ namespace Azure.Messaging.ServiceBus.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="CbsTokenProvider.GetTokenAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task GetTokenAsyncRefreshesJwtTokensWhenRefreshOnIsDue()
+        {
+            var expires = DateTimeOffset.UtcNow.AddHours(1);
+            var refreshOn = DateTimeOffset.UtcNow.AddMinutes(-1);
+            var mockCredential = new Mock<TokenCredential>();
+            var credential = new ServiceBusTokenCredential(mockCredential.Object);
+
+            using var provider = new CbsTokenProvider(credential, TimeSpan.Zero, default);
+
+            mockCredential
+                .SetupSequence(tokenCredential => tokenCredential.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+                .Returns(new ValueTask<AccessToken>(new AccessToken("first", expires, refreshOn)))
+                .Returns(new ValueTask<AccessToken>(new AccessToken("second", expires.AddHours(1))));
+
+            var firstCallToken = await provider.GetTokenAsync(new Uri("http://www.here.com"), "nobody", new string[0]);
+            var nextCallToken = await provider.GetTokenAsync(new Uri("http://www.here.com"), "nobody", new string[0]);
+
+            Assert.That(firstCallToken, Is.Not.Null, "The first call token should have been produced.");
+            Assert.That(firstCallToken.TokenValue, Is.EqualTo("first"), "The first token value should match.");
+            Assert.That(firstCallToken.ExpiresAtUtc, Is.EqualTo(expires.UtcDateTime), "The CBS token should keep the real expiration.");
+            Assert.That(nextCallToken.TokenValue, Is.EqualTo("second"), "A due RefreshOn should acquire a new token.");
+            Assert.That(firstCallToken, Is.Not.SameAs(nextCallToken), "The refreshed token should be a new instance.");
+
+            mockCredential
+                .Verify(tokenCredential => tokenCredential.GetTokenAsync(
+                    It.IsAny<TokenRequestContext>(),
+                    It.IsAny<CancellationToken>()),
+                Times.Exactly(2));
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="CbsTokenProvider.GetTokenAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task GetTokenAsyncCachesJwtTokensUntilRefreshOn()
+        {
+            var expires = DateTimeOffset.UtcNow.AddHours(1);
+            var refreshOn = DateTimeOffset.UtcNow.AddMinutes(30);
+            var mockCredential = new Mock<TokenCredential>();
+            var credential = new ServiceBusTokenCredential(mockCredential.Object);
+
+            using var provider = new CbsTokenProvider(credential, TimeSpan.Zero, default);
+
+            mockCredential
+                .Setup(tokenCredential => tokenCredential.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+                .Returns(new ValueTask<AccessToken>(new AccessToken("cached", expires, refreshOn)));
+
+            var firstCallToken = await provider.GetTokenAsync(new Uri("http://www.here.com"), "nobody", new string[0]);
+            var nextCallToken = await provider.GetTokenAsync(new Uri("http://www.here.com"), "nobody", new string[0]);
+
+            Assert.That(firstCallToken, Is.SameAs(nextCallToken), "The token should stay cached until RefreshOn.");
+            Assert.That(firstCallToken.ExpiresAtUtc, Is.EqualTo(expires.UtcDateTime), "The CBS token should keep the real expiration.");
+            Assert.That(provider.CredentialRefreshAt, Is.EqualTo(refreshOn), "The refresh time should be the credential's RefreshOn.");
+
+            mockCredential
+                .Verify(tokenCredential => tokenCredential.GetTokenAsync(
+                    It.IsAny<TokenRequestContext>(),
+                    It.IsAny<CancellationToken>()),
+                Times.Once);
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="CbsTokenProvider.GetTokenAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task GetTokenAsyncIgnoresRefreshOnThatIsNotEarlierThanExpiration()
+        {
+            var expires = DateTimeOffset.UtcNow.AddHours(1);
+            var refreshOn = expires.AddMinutes(5);
+            var mockCredential = new Mock<TokenCredential>();
+            var credential = new ServiceBusTokenCredential(mockCredential.Object);
+
+            using var provider = new CbsTokenProvider(credential, TimeSpan.Zero, default);
+
+            mockCredential
+                .Setup(tokenCredential => tokenCredential.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+                .Returns(new ValueTask<AccessToken>(new AccessToken("cached", expires, refreshOn)));
+
+            var firstCallToken = await provider.GetTokenAsync(new Uri("http://www.here.com"), "nobody", new string[0]);
+            var nextCallToken = await provider.GetTokenAsync(new Uri("http://www.here.com"), "nobody", new string[0]);
+
+            Assert.That(firstCallToken, Is.SameAs(nextCallToken), "A later RefreshOn should not force a refresh.");
+            Assert.That(provider.CredentialRefreshAt, Is.Null, "A RefreshOn after expiration should not be used.");
+
+            mockCredential
+                .Verify(tokenCredential => tokenCredential.GetTokenAsync(
+                    It.IsAny<TokenRequestContext>(),
+                    It.IsAny<CancellationToken>()),
+                Times.Once);
+        }
+
+        /// <summary>
         ///   Gets the token type used for SAS-based credentials, using the
         ///   private field of the provider.
         /// </summary>
