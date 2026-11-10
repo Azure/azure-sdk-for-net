@@ -196,15 +196,15 @@ namespace Azure.Data.AI
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetMultimodalEmbeddings(RequestContent content, RequestContext context = null)
+        public virtual Response GetEmbeddings(RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("InferenceClient.GetMultimodalEmbeddings");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("InferenceClient.GetEmbeddings");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateGetMultimodalEmbeddingsRequest(content, context);
+                using HttpMessage message = CreateGetEmbeddingsRequest(content, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -230,15 +230,15 @@ namespace Azure.Data.AI
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetMultimodalEmbeddingsAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> GetEmbeddingsAsync(RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("InferenceClient.GetMultimodalEmbeddings");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("InferenceClient.GetEmbeddings");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateGetMultimodalEmbeddingsRequest(content, context);
+                using HttpMessage message = CreateGetEmbeddingsRequest(content, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -283,12 +283,12 @@ namespace Azure.Data.AI
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contents"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<MultimodalEmbeddingResult> GetMultimodalEmbeddings(IEnumerable<EmbeddingContentItem> contents, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
+        public virtual Response<EmbeddingResult> GetEmbeddings(IEnumerable<EmbeddingsInputContent> contents, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(contents, nameof(contents));
 
-            MultiModalEmbedRequest spreadModel = new MultiModalEmbedRequest(
-                contents?.ToList() as IList<EmbeddingContentItem> ?? new ChangeTrackingList<EmbeddingContentItem>(),
+            EmbedRequest spreadModel = new EmbedRequest(
+                contents?.ToList() as IList<EmbeddingsInputContent> ?? new ChangeTrackingList<EmbeddingsInputContent>(),
                 model,
                 modelVersion,
                 vectorKind,
@@ -299,8 +299,8 @@ namespace Azure.Data.AI
                 encodingFormat,
                 delivery,
                 default);
-            Response result = GetMultimodalEmbeddings(spreadModel, cancellationToken.ToRequestContext());
-            return Response.FromValue((MultimodalEmbeddingResult)result, result);
+            Response result = GetEmbeddings(spreadModel, cancellationToken.ToRequestContext());
+            return Response.FromValue((EmbeddingResult)result, result);
         }
 
         /// <summary>
@@ -338,12 +338,12 @@ namespace Azure.Data.AI
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contents"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<MultimodalEmbeddingResult>> GetMultimodalEmbeddingsAsync(IEnumerable<EmbeddingContentItem> contents, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EmbeddingResult>> GetEmbeddingsAsync(IEnumerable<EmbeddingsInputContent> contents, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(contents, nameof(contents));
 
-            MultiModalEmbedRequest spreadModel = new MultiModalEmbedRequest(
-                contents?.ToList() as IList<EmbeddingContentItem> ?? new ChangeTrackingList<EmbeddingContentItem>(),
+            EmbedRequest spreadModel = new EmbedRequest(
+                contents?.ToList() as IList<EmbeddingsInputContent> ?? new ChangeTrackingList<EmbeddingsInputContent>(),
                 model,
                 modelVersion,
                 vectorKind,
@@ -354,8 +354,8 @@ namespace Azure.Data.AI
                 encodingFormat,
                 delivery,
                 default);
-            Response result = await GetMultimodalEmbeddingsAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((MultimodalEmbeddingResult)result, result);
+            Response result = await GetEmbeddingsAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((EmbeddingResult)result, result);
         }
     }
 }

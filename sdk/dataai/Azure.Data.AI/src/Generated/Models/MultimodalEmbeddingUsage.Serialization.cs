@@ -12,8 +12,8 @@ using System.Text.Json;
 
 namespace Azure.Data.AI
 {
-    /// <summary> Usage for a multimodal embedding operation. Token counts are omitted when the model doesn't report them. </summary>
-    public partial class MultimodalEmbeddingUsage : IJsonModel<MultimodalEmbeddingUsage>
+    /// <summary> Usage for a multimodal embedding operation. </summary>
+    public partial class MultimodalEmbeddingUsage : EmbeddingUsage, IJsonModel<MultimodalEmbeddingUsage>
     {
         /// <summary> Initializes a new instance of <see cref="MultimodalEmbeddingUsage"/> for deserialization. </summary>
         internal MultimodalEmbeddingUsage()
@@ -22,7 +22,7 @@ namespace Azure.Data.AI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MultimodalEmbeddingUsage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override EmbeddingUsage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MultimodalEmbeddingUsage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -38,7 +38,7 @@ namespace Azure.Data.AI
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MultimodalEmbeddingUsage>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -55,7 +55,7 @@ namespace Azure.Data.AI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MultimodalEmbeddingUsage IPersistableModel<MultimodalEmbeddingUsage>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MultimodalEmbeddingUsage IPersistableModel<MultimodalEmbeddingUsage>.Create(BinaryData data, ModelReaderWriterOptions options) => (MultimodalEmbeddingUsage)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<MultimodalEmbeddingUsage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -71,23 +71,14 @@ namespace Azure.Data.AI
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MultimodalEmbeddingUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(MultimodalEmbeddingUsage)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(PromptTokens))
-            {
-                writer.WritePropertyName("promptTokens"u8);
-                writer.WriteNumberValue(PromptTokens.Value);
-            }
-            if (Optional.IsDefined(TotalTokens))
-            {
-                writer.WritePropertyName("totalTokens"u8);
-                writer.WriteNumberValue(TotalTokens.Value);
-            }
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(TextTokens))
             {
                 writer.WritePropertyName("textTokens"u8);
@@ -100,30 +91,15 @@ namespace Azure.Data.AI
                 writer.WritePropertyName("visualTokens"u8);
                 writer.WriteNumberValue(VisualTokens.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MultimodalEmbeddingUsage IJsonModel<MultimodalEmbeddingUsage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MultimodalEmbeddingUsage IJsonModel<MultimodalEmbeddingUsage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MultimodalEmbeddingUsage)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MultimodalEmbeddingUsage JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override EmbeddingUsage JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MultimodalEmbeddingUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -142,14 +118,20 @@ namespace Azure.Data.AI
             {
                 return null;
             }
+            EmbeddingUsageType @type = default;
             long? promptTokens = default;
             long? totalTokens = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             long? textTokens = default;
             int imageCount = default;
             long? visualTokens = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = new EmbeddingUsageType(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("promptTokens"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -197,12 +179,13 @@ namespace Azure.Data.AI
                 }
             }
             return new MultimodalEmbeddingUsage(
+                @type,
                 promptTokens,
                 totalTokens,
+                additionalBinaryDataProperties,
                 textTokens,
                 imageCount,
-                visualTokens,
-                additionalBinaryDataProperties);
+                visualTokens);
         }
     }
 }

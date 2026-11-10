@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.Data.AI
 {
     /// <summary> The result for one item when `vectorKind` is `dense_multi`: a dense vector and one vector per token, from one model run. </summary>
-    public partial class MultimodalDenseAndMultiVectorEmbedding : MultimodalEmbeddingItem, IJsonModel<MultimodalDenseAndMultiVectorEmbedding>
+    public partial class MultimodalDenseAndMultiVectorEmbedding : EmbeddingItem, IJsonModel<MultimodalDenseAndMultiVectorEmbedding>
     {
         /// <summary> Initializes a new instance of <see cref="MultimodalDenseAndMultiVectorEmbedding"/> for deserialization. </summary>
         internal MultimodalDenseAndMultiVectorEmbedding()
@@ -22,7 +22,7 @@ namespace Azure.Data.AI
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MultimodalEmbeddingItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override EmbeddingItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MultimodalDenseAndMultiVectorEmbedding>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -79,6 +79,45 @@ namespace Azure.Data.AI
                 throw new FormatException($"The model {nameof(MultimodalDenseAndMultiVectorEmbedding)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("contentKind"u8);
+            writer.WriteStringValue(ContentKind.ToString());
+            if (Optional.IsDefined(Width))
+            {
+                writer.WritePropertyName("width"u8);
+                writer.WriteNumberValue(Width.Value);
+            }
+            if (Optional.IsDefined(Height))
+            {
+                writer.WritePropertyName("height"u8);
+                writer.WriteNumberValue(Height.Value);
+            }
+            if (Optional.IsDefined(Format))
+            {
+                writer.WritePropertyName("format"u8);
+                writer.WriteStringValue(Format.Value.ToString());
+            }
+            if (Optional.IsDefined(Tokens))
+            {
+                writer.WritePropertyName("tokens"u8);
+                writer.WriteNumberValue(Tokens.Value);
+            }
+            if (Optional.IsDefined(VisualTokens))
+            {
+                writer.WritePropertyName("visualTokens"u8);
+                writer.WriteNumberValue(VisualTokens.Value);
+            }
+            if (Optional.IsDefined(Truncated))
+            {
+                writer.WritePropertyName("truncated"u8);
+                writer.WriteBooleanValue(Truncated.Value);
+            }
+            if (Optional.IsDefined(InputTokens))
+            {
+                writer.WritePropertyName("inputTokens"u8);
+                writer.WriteNumberValue(InputTokens.Value);
+            }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
             writer.WritePropertyName("shape"u8);
             writer.WriteStartArray();
             foreach (int item in Shape)
@@ -98,7 +137,7 @@ namespace Azure.Data.AI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override MultimodalEmbeddingItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override EmbeddingItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MultimodalDenseAndMultiVectorEmbedding>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -117,10 +156,11 @@ namespace Azure.Data.AI
             {
                 return null;
             }
+            EmbeddingDataType @type = default;
             int index = default;
             string id = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             EmbeddingContentKind contentKind = default;
-            EmbeddingVectorKind kind = default;
             int? width = default;
             int? height = default;
             EmbeddingImageFormat? format = default;
@@ -128,12 +168,17 @@ namespace Azure.Data.AI
             long? visualTokens = default;
             bool? truncated = default;
             long? inputTokens = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            EmbeddingVectorKind kind = default;
             IList<int> shape = default;
             BinaryData embedding = default;
             BinaryData multiEmbedding = default;
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = new EmbeddingDataType(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("index"u8))
                 {
                     index = prop.Value.GetInt32();
@@ -147,11 +192,6 @@ namespace Azure.Data.AI
                 if (prop.NameEquals("contentKind"u8))
                 {
                     contentKind = new EmbeddingContentKind(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("kind"u8))
-                {
-                    kind = new EmbeddingVectorKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("width"u8))
@@ -217,6 +257,11 @@ namespace Azure.Data.AI
                     inputTokens = prop.Value.GetInt64();
                     continue;
                 }
+                if (prop.NameEquals("kind"u8))
+                {
+                    kind = new EmbeddingVectorKind(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("shape"u8))
                 {
                     List<int> array = new List<int>();
@@ -243,10 +288,11 @@ namespace Azure.Data.AI
                 }
             }
             return new MultimodalDenseAndMultiVectorEmbedding(
+                @type,
                 index,
                 id,
+                additionalBinaryDataProperties,
                 contentKind,
-                kind,
                 width,
                 height,
                 format,
@@ -254,7 +300,7 @@ namespace Azure.Data.AI
                 visualTokens,
                 truncated,
                 inputTokens,
-                additionalBinaryDataProperties,
+                kind,
                 shape ?? new ChangeTrackingList<int>(),
                 embedding,
                 multiEmbedding);

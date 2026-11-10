@@ -111,9 +111,9 @@ namespace Azure.Data.AI
             return new LatencyResult(dataPreprocessDuration, inferenceDuration, postProcessDuration, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> One item to embed: its `kind`, an optional `id`, and exactly one source: `content`, or `url` with `sasToken`. </summary>
+        /// <summary> One item to embed, defaulting to text: an optional `id` and exactly one source, `content` or `url` with `sasToken`. </summary>
         /// <param name="id"> A caller-chosen identifier, up to 256 characters, echoed on the matching result. </param>
-        /// <param name="kind"> What the item is: a document (`text`), a search query (`query`) or a document image (`image`). </param>
+        /// <param name="kind"> What the item is: a document (`text`, the default), a search query (`query`) or a document image (`image`). </param>
         /// <param name="content">
         /// The item, inline. For `text` and `query`: the text, up to 100,000 characters; text over the model's token limit
         /// (currently 8,192 tokens) isn't rejected: only its start is embedded, and the result is flagged with `truncated` and
@@ -131,10 +131,10 @@ namespace Azure.Data.AI
         /// API. A SAS valid for more than 15 minutes is accepted with warning `EMBEDDING_SAS_LONG_LIVED`. The service uses
         /// it for one read and never stores, logs or returns it.
         /// </param>
-        /// <returns> A new <see cref="AI.EmbeddingContentItem"/> instance for mocking. </returns>
-        public static EmbeddingContentItem EmbeddingContentItem(string id = default, EmbeddingContentKind kind = default, string content = default, Uri uri = default, string sasToken = default)
+        /// <returns> A new <see cref="AI.EmbeddingsInputContent"/> instance for mocking. </returns>
+        public static EmbeddingsInputContent EmbeddingsInputContent(string id = default, EmbeddingContentKind? kind = default, string content = default, Uri uri = default, string sasToken = default)
         {
-            return new EmbeddingContentItem(
+            return new EmbeddingsInputContent(
                 id,
                 kind,
                 content,
@@ -143,7 +143,7 @@ namespace Azure.Data.AI
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The result of a multimodal embedding operation. </summary>
+        /// <summary> The result of an embedding operation. </summary>
         /// <param name="model"> The name of the model that produced the vectors. </param>
         /// <param name="modelVersion"> The model version that produced the vectors. Pin it to keep an index stable. </param>
         /// <param name="outputDataKind"> The numeric type of the returned values. </param>
@@ -151,13 +151,13 @@ namespace Azure.Data.AI
         /// <param name="usage"> Usage for the operation. </param>
         /// <param name="warnings"> Things to know about a successful response, such as truncated items. Omitted when there are none. </param>
         /// <param name="output"> With `delivery: link`: where to read the results. </param>
-        /// <returns> A new <see cref="AI.MultimodalEmbeddingResult"/> instance for mocking. </returns>
-        public static MultimodalEmbeddingResult MultimodalEmbeddingResult(string model = default, string modelVersion = default, EmbeddingOutputDataKind outputDataKind = default, IEnumerable<MultimodalEmbeddingItem> data = default, MultimodalEmbeddingUsage usage = default, IEnumerable<MultimodalEmbeddingWarning> warnings = default, MultimodalEmbeddingOutput output = default)
+        /// <returns> A new <see cref="AI.EmbeddingResult"/> instance for mocking. </returns>
+        public static EmbeddingResult EmbeddingResult(string model = default, string modelVersion = default, EmbeddingOutputDataKind outputDataKind = default, IEnumerable<EmbeddingItem> data = default, EmbeddingUsage usage = default, IEnumerable<MultimodalEmbeddingWarning> warnings = default, MultimodalEmbeddingOutput output = default)
         {
-            data ??= new ChangeTrackingList<MultimodalEmbeddingItem>();
+            data ??= new ChangeTrackingList<EmbeddingItem>();
             warnings ??= new ChangeTrackingList<MultimodalEmbeddingWarning>();
 
-            return new MultimodalEmbeddingResult(
+            return new EmbeddingResult(
                 model,
                 modelVersion,
                 outputDataKind,
@@ -193,10 +193,11 @@ namespace Azure.Data.AI
         public static MultimodalDenseEmbedding MultimodalDenseEmbedding(int index = default, string id = default, EmbeddingContentKind contentKind = default, int? width = default, int? height = default, EmbeddingImageFormat? format = default, long? tokens = default, long? visualTokens = default, bool? truncated = default, long? inputTokens = default, BinaryData embedding = default)
         {
             return new MultimodalDenseEmbedding(
+                EmbeddingDataType.MultimodalDense,
                 index,
                 id,
+                additionalBinaryDataProperties: null,
                 contentKind,
-                EmbeddingVectorKind.Dense,
                 width,
                 height,
                 format,
@@ -204,7 +205,7 @@ namespace Azure.Data.AI
                 visualTokens,
                 truncated,
                 inputTokens,
-                additionalBinaryDataProperties: null,
+                "dense",
                 embedding);
         }
 
@@ -236,10 +237,11 @@ namespace Azure.Data.AI
             shape ??= new ChangeTrackingList<int>();
 
             return new MultimodalMultiVectorEmbedding(
+                EmbeddingDataType.MultimodalMultiVector,
                 index,
                 id,
+                additionalBinaryDataProperties: null,
                 contentKind,
-                EmbeddingVectorKind.Multi,
                 width,
                 height,
                 format,
@@ -247,7 +249,7 @@ namespace Azure.Data.AI
                 visualTokens,
                 truncated,
                 inputTokens,
-                additionalBinaryDataProperties: null,
+                "multi",
                 shape.ToList(),
                 multiEmbedding);
         }
@@ -284,10 +286,11 @@ namespace Azure.Data.AI
             shape ??= new ChangeTrackingList<int>();
 
             return new MultimodalDenseAndMultiVectorEmbedding(
+                EmbeddingDataType.MultimodalDenseAndMultiVector,
                 index,
                 id,
+                additionalBinaryDataProperties: null,
                 contentKind,
-                EmbeddingVectorKind.DenseAndMulti,
                 width,
                 height,
                 format,
@@ -295,13 +298,13 @@ namespace Azure.Data.AI
                 visualTokens,
                 truncated,
                 inputTokens,
-                additionalBinaryDataProperties: null,
+                "dense_multi",
                 shape.ToList(),
                 embedding,
                 multiEmbedding);
         }
 
-        /// <summary> Usage for a multimodal embedding operation. Token counts are omitted when the model doesn't report them. </summary>
+        /// <summary> Usage for a multimodal embedding operation. </summary>
         /// <param name="promptTokens"> The number of input tokens. </param>
         /// <param name="totalTokens"> The total number of tokens. </param>
         /// <param name="textTokens">
@@ -316,12 +319,13 @@ namespace Azure.Data.AI
         public static MultimodalEmbeddingUsage MultimodalEmbeddingUsage(long? promptTokens = default, long? totalTokens = default, long? textTokens = default, int imageCount = default, long? visualTokens = default)
         {
             return new MultimodalEmbeddingUsage(
+                EmbeddingUsageType.Multimodal,
                 promptTokens,
                 totalTokens,
+                additionalBinaryDataProperties: null,
                 textTokens,
                 imageCount,
-                visualTokens,
-                additionalBinaryDataProperties: null);
+                visualTokens);
         }
 
         /// <summary> Something about a successful multimodal embedding response the caller should know. </summary>

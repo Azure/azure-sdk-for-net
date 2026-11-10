@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.Data.AI
 {
     /// <summary> The result for one item when `vectorKind` is `multi`: one vector per token, for late-interaction (MaxSim) scoring. </summary>
-    public partial class MultimodalMultiVectorEmbedding : MultimodalEmbeddingItem
+    public partial class MultimodalMultiVectorEmbedding : EmbeddingItem
     {
         /// <summary> Initializes a new instance of <see cref="MultimodalMultiVectorEmbedding"/>. </summary>
         /// <param name="index"> The zero-based position of the item in the request. </param>
@@ -23,17 +23,19 @@ namespace Azure.Data.AI
         /// The vectors: an array of arrays of numbers, or, when `encodingFormat` is `base64`, one base64 string of all their
         /// little-endian `outputDataKind` values in row-major order. Decode it and reshape it to `shape`.
         /// </param>
-        internal MultimodalMultiVectorEmbedding(int index, EmbeddingContentKind contentKind, IEnumerable<int> shape, BinaryData multiEmbedding) : base(index, contentKind, EmbeddingVectorKind.Multi)
+        internal MultimodalMultiVectorEmbedding(int index, EmbeddingContentKind contentKind, IEnumerable<int> shape, BinaryData multiEmbedding) : base(EmbeddingDataType.MultimodalMultiVector, index)
         {
+            ContentKind = contentKind;
             Shape = shape.ToList();
             MultiEmbedding = multiEmbedding;
         }
 
         /// <summary> Initializes a new instance of <see cref="MultimodalMultiVectorEmbedding"/>. </summary>
+        /// <param name="type"> The embedding implementation that produced this item. </param>
         /// <param name="index"> The zero-based position of the item in the request. </param>
         /// <param name="id"> The item's `id` from the request, if it had one. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="contentKind"> The item's content kind, as supplied in the request's `kind`. </param>
-        /// <param name="kind"> The kind of vectors returned, as requested in `vectorKind`. </param>
         /// <param name="width"> For images: the width in pixels. </param>
         /// <param name="height"> For images: the height in pixels. </param>
         /// <param name="format"> For images: the detected image format. </param>
@@ -47,17 +49,59 @@ namespace Azure.Data.AI
         /// `EMBEDDING_INPUT_TRUNCATED` entry for it. Omitted otherwise.
         /// </param>
         /// <param name="inputTokens"> For truncated items only: the item's tokens before truncation. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="kind"> The kind of vectors returned. </param>
         /// <param name="shape"> The number of vectors and the number of dimensions: `[vectors, dimensions]`. </param>
         /// <param name="multiEmbedding">
         /// The vectors: an array of arrays of numbers, or, when `encodingFormat` is `base64`, one base64 string of all their
         /// little-endian `outputDataKind` values in row-major order. Decode it and reshape it to `shape`.
         /// </param>
-        internal MultimodalMultiVectorEmbedding(int index, string id, EmbeddingContentKind contentKind, EmbeddingVectorKind kind, int? width, int? height, EmbeddingImageFormat? format, long? tokens, long? visualTokens, bool? truncated, long? inputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<int> shape, BinaryData multiEmbedding) : base(index, id, contentKind, kind, width, height, format, tokens, visualTokens, truncated, inputTokens, additionalBinaryDataProperties)
+        internal MultimodalMultiVectorEmbedding(EmbeddingDataType @type, int index, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties, EmbeddingContentKind contentKind, int? width, int? height, EmbeddingImageFormat? format, long? tokens, long? visualTokens, bool? truncated, long? inputTokens, EmbeddingVectorKind kind, IList<int> shape, BinaryData multiEmbedding) : base(@type, index, id, additionalBinaryDataProperties)
         {
+            ContentKind = contentKind;
+            Width = width;
+            Height = height;
+            Format = format;
+            Tokens = tokens;
+            VisualTokens = visualTokens;
+            Truncated = truncated;
+            InputTokens = inputTokens;
+            Kind = kind;
             Shape = shape;
             MultiEmbedding = multiEmbedding;
         }
+
+        /// <summary> The item's content kind, as supplied in the request's `kind`. </summary>
+        public EmbeddingContentKind ContentKind { get; }
+
+        /// <summary> For images: the width in pixels. </summary>
+        public int? Width { get; }
+
+        /// <summary> For images: the height in pixels. </summary>
+        public int? Height { get; }
+
+        /// <summary> For images: the detected image format. </summary>
+        public EmbeddingImageFormat? Format { get; }
+
+        /// <summary>
+        /// The tokens the model read for this item, including any text the service adds to queries and, for images, the
+        /// image prompt and image tokens. For a truncated item, the tokens embedded. Omitted when the model doesn't report it.
+        /// </summary>
+        public long? Tokens { get; }
+
+        /// <summary> For images: how many of `tokens` were image tokens. </summary>
+        public long? VisualTokens { get; }
+
+        /// <summary>
+        /// `true` when the item was over the model's token limit and only its start was embedded; `warnings` then has an
+        /// `EMBEDDING_INPUT_TRUNCATED` entry for it. Omitted otherwise.
+        /// </summary>
+        public bool? Truncated { get; }
+
+        /// <summary> For truncated items only: the item's tokens before truncation. </summary>
+        public long? InputTokens { get; }
+
+        /// <summary> The kind of vectors returned. </summary>
+        public EmbeddingVectorKind Kind { get; } = "multi";
 
         /// <summary> The number of vectors and the number of dimensions: `[vectors, dimensions]`. </summary>
         public IList<int> Shape { get; }

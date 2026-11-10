@@ -89,7 +89,7 @@ namespace Azure.Data.AI
             writer.WriteStringValue(SasToken);
             writer.WritePropertyName("expiresAt"u8);
             writer.WriteStringValue(ExpiresOn, "O");
-            writer.WritePropertyName("records"u8);
+            writer.WritePropertyName("recordCount"u8);
             writer.WriteNumberValue(RecordCount);
             writer.WritePropertyName("sizeInBytes"u8);
             writer.WriteNumberValue(SizeInBytes);
@@ -170,7 +170,7 @@ namespace Azure.Data.AI
                     expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("records"u8))
+                if (prop.NameEquals("recordCount"u8))
                 {
                     recordCount = prop.Value.GetInt32();
                     continue;

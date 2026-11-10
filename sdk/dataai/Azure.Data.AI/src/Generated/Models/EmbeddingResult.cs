@@ -11,19 +11,19 @@ using System.Linq;
 
 namespace Azure.Data.AI
 {
-    /// <summary> The result of a multimodal embedding operation. </summary>
-    public partial class MultimodalEmbeddingResult
+    /// <summary> The result of an embedding operation. </summary>
+    public partial class EmbeddingResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MultimodalEmbeddingResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmbeddingResult"/>. </summary>
         /// <param name="model"> The name of the model that produced the vectors. </param>
         /// <param name="modelVersion"> The model version that produced the vectors. Pin it to keep an index stable. </param>
         /// <param name="outputDataKind"> The numeric type of the returned values. </param>
         /// <param name="data"> One entry per item in `contents`, in request order. Empty when `output` is present. </param>
         /// <param name="usage"> Usage for the operation. </param>
-        internal MultimodalEmbeddingResult(string model, string modelVersion, EmbeddingOutputDataKind outputDataKind, IEnumerable<MultimodalEmbeddingItem> data, MultimodalEmbeddingUsage usage)
+        internal EmbeddingResult(string model, string modelVersion, EmbeddingOutputDataKind outputDataKind, IEnumerable<EmbeddingItem> data, EmbeddingUsage usage)
         {
             Model = model;
             ModelVersion = modelVersion;
@@ -33,7 +33,7 @@ namespace Azure.Data.AI
             Warnings = new ChangeTrackingList<MultimodalEmbeddingWarning>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MultimodalEmbeddingResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmbeddingResult"/>. </summary>
         /// <param name="model"> The name of the model that produced the vectors. </param>
         /// <param name="modelVersion"> The model version that produced the vectors. Pin it to keep an index stable. </param>
         /// <param name="outputDataKind"> The numeric type of the returned values. </param>
@@ -42,7 +42,7 @@ namespace Azure.Data.AI
         /// <param name="warnings"> Things to know about a successful response, such as truncated items. Omitted when there are none. </param>
         /// <param name="output"> With `delivery: link`: where to read the results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MultimodalEmbeddingResult(string model, string modelVersion, EmbeddingOutputDataKind outputDataKind, IList<MultimodalEmbeddingItem> data, MultimodalEmbeddingUsage usage, IList<MultimodalEmbeddingWarning> warnings, MultimodalEmbeddingOutput output, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EmbeddingResult(string model, string modelVersion, EmbeddingOutputDataKind outputDataKind, IList<EmbeddingItem> data, EmbeddingUsage usage, IList<MultimodalEmbeddingWarning> warnings, MultimodalEmbeddingOutput output, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             ModelVersion = modelVersion;
@@ -64,10 +64,10 @@ namespace Azure.Data.AI
         public EmbeddingOutputDataKind OutputDataKind { get; }
 
         /// <summary> One entry per item in `contents`, in request order. Empty when `output` is present. </summary>
-        public IList<MultimodalEmbeddingItem> Data { get; }
+        public IList<EmbeddingItem> Data { get; }
 
         /// <summary> Usage for the operation. </summary>
-        public MultimodalEmbeddingUsage Usage { get; }
+        public EmbeddingUsage Usage { get; }
 
         /// <summary> Things to know about a successful response, such as truncated items. Omitted when there are none. </summary>
         public IList<MultimodalEmbeddingWarning> Warnings { get; }

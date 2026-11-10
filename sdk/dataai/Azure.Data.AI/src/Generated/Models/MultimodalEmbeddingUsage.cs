@@ -10,22 +10,21 @@ using System.Collections.Generic;
 
 namespace Azure.Data.AI
 {
-    /// <summary> Usage for a multimodal embedding operation. Token counts are omitted when the model doesn't report them. </summary>
-    public partial class MultimodalEmbeddingUsage
+    /// <summary> Usage for a multimodal embedding operation. </summary>
+    public partial class MultimodalEmbeddingUsage : EmbeddingUsage
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         /// <summary> Initializes a new instance of <see cref="MultimodalEmbeddingUsage"/>. </summary>
         /// <param name="imageCount"> The number of images embedded. </param>
-        internal MultimodalEmbeddingUsage(int imageCount)
+        internal MultimodalEmbeddingUsage(int imageCount) : base(EmbeddingUsageType.Multimodal)
         {
             ImageCount = imageCount;
         }
 
         /// <summary> Initializes a new instance of <see cref="MultimodalEmbeddingUsage"/>. </summary>
+        /// <param name="type"> The embedding implementation that reported this usage. </param>
         /// <param name="promptTokens"> The number of input tokens. </param>
         /// <param name="totalTokens"> The total number of tokens. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="textTokens">
         /// Tokens that aren't image tokens: the query and text items (including the query instruction) and the short prompt
         /// the model adds around each image. Equal to `promptTokens` minus `visualTokens`, so text and image tokens can be
@@ -34,22 +33,12 @@ namespace Azure.Data.AI
         /// </param>
         /// <param name="imageCount"> The number of images embedded. </param>
         /// <param name="visualTokens"> The number of tokens the images produced. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MultimodalEmbeddingUsage(long? promptTokens, long? totalTokens, long? textTokens, int imageCount, long? visualTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MultimodalEmbeddingUsage(EmbeddingUsageType @type, long? promptTokens, long? totalTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? textTokens, int imageCount, long? visualTokens) : base(@type, promptTokens, totalTokens, additionalBinaryDataProperties)
         {
-            PromptTokens = promptTokens;
-            TotalTokens = totalTokens;
             TextTokens = textTokens;
             ImageCount = imageCount;
             VisualTokens = visualTokens;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The number of input tokens. </summary>
-        public long? PromptTokens { get; }
-
-        /// <summary> The total number of tokens. </summary>
-        public long? TotalTokens { get; }
 
         /// <summary>
         /// Tokens that aren't image tokens: the query and text items (including the query instruction) and the short prompt

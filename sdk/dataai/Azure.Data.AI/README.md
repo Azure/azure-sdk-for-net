@@ -51,7 +51,7 @@ The generated bearer-token policy requests the `https://dbinference.azure.com/.d
 
 Use `InferenceClient.SemanticRerank` or `SemanticRerankAsync` to rerank documents directly.
 
-Use `InferenceClient.GetMultimodalEmbeddings` or `GetMultimodalEmbeddingsAsync` to embed text, queries, or document images.
+Use `InferenceClient.GetEmbeddings` or `GetEmbeddingsAsync` to embed text, queries, or document images.
 Request settings are named method arguments; no request options object is required.
 Embedding model availability and image input support depend on the endpoint.
 
@@ -60,12 +60,13 @@ Embedding model availability and image input support depend on the endpoint.
 ### Multimodal embeddings with anonymous inputs
 
 The .NET overloads accept anonymous objects or dictionaries using the JSON property names
-`kind`, `id`, `content`, `url`, and `sasToken`. Settings stay as named arguments and the response is typed.
+`kind`, `id`, `content`, `url`, and `sasToken`. Omit `kind` for text, or set it to `query` or `image`.
+Settings stay as named arguments and the response is typed.
 For image inputs, authenticate `client` with Microsoft Entra ID and provide a caller-signed
 user-delegation SAS for the image blob.
 
 ```C#
-Response<MultimodalEmbeddingResult> response = await client.GetMultimodalEmbeddingsAsync(
+Response<EmbeddingResult> response = await client.GetEmbeddingsAsync(
     contents: new object[]
     {
         new
@@ -87,13 +88,16 @@ Response<MultimodalEmbeddingResult> response = await client.GetMultimodalEmbeddi
     dimensions: 2560,
     delivery: EmbeddingDelivery.Inline);
 
-MultimodalEmbeddingResult result = response.Value;
+EmbeddingResult result = response.Value;
 ```
 
 Use a model version and dimension supported by your endpoint. Omit `dimensions` to use the
 model's native width. Each input produces a separate embedding, not a fused query/image embedding.
 Anonymous inputs use reflection-based JSON serialization; trimmed or Native AOT applications
-should use the existing typed `EmbeddingContentItem` overloads instead.
+should use the typed `EmbeddingsInputContent` overloads instead. These inputs have a parameterless
+constructor and optional `Kind`, so text inputs only need `Content`. `EmbeddingResult` exposes generic
+`EmbeddingItem` and `EmbeddingUsage` bases; cast to the concrete multimodal models to access their
+vector payloads and modality-specific metadata.
 
 See [Semantic reranking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/dataai/Azure.Data.AI/samples/Sample1_SemanticReranking.md).
 

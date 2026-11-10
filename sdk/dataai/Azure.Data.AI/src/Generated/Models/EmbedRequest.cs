@@ -11,24 +11,24 @@ using System.Linq;
 
 namespace Azure.Data.AI
 {
-    /// <summary> The MultiModalEmbedRequest. </summary>
-    internal partial class MultiModalEmbedRequest
+    /// <summary> The EmbedRequest. </summary>
+    internal partial class EmbedRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MultiModalEmbedRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmbedRequest"/>. </summary>
         /// <param name="contents">
         /// The items to embed, in order: 1 to 32 items. Currently a request can have at most one `text` or `query` item and
         /// at most 8 images. Images can be up to 20 MiB and 50 megapixels each (JPEG, PNG, GIF or WebP), with at most 20 MiB
         /// of images per request. The request body can be up to 30,000,000 bytes.
         /// </param>
-        internal MultiModalEmbedRequest(IEnumerable<EmbeddingContentItem> contents)
+        internal EmbedRequest(IEnumerable<EmbeddingsInputContent> contents)
         {
             Contents = contents.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MultiModalEmbedRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmbedRequest"/>. </summary>
         /// <param name="contents">
         /// The items to embed, in order: 1 to 32 items. Currently a request can have at most one `text` or `query` item and
         /// at most 8 images. Images can be up to 20 MiB and 50 megapixels each (JPEG, PNG, GIF or WebP), with at most 20 MiB
@@ -56,7 +56,7 @@ namespace Azure.Data.AI
         /// endpoint has a result store, and every other request gets `inline`.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MultiModalEmbedRequest(IList<EmbeddingContentItem> contents, string model, string modelVersion, EmbeddingVectorKind? vectorKind, int? dimensions, int? multiDimensions, int? maxVectorCount, EmbeddingOutputDataKind? outputDataKind, EmbeddingEncodingFormat? encodingFormat, EmbeddingDelivery? delivery, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EmbedRequest(IList<EmbeddingsInputContent> contents, string model, string modelVersion, EmbeddingVectorKind? vectorKind, int? dimensions, int? multiDimensions, int? maxVectorCount, EmbeddingOutputDataKind? outputDataKind, EmbeddingEncodingFormat? encodingFormat, EmbeddingDelivery? delivery, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Contents = contents;
             Model = model;
@@ -76,7 +76,7 @@ namespace Azure.Data.AI
         /// at most 8 images. Images can be up to 20 MiB and 50 megapixels each (JPEG, PNG, GIF or WebP), with at most 20 MiB
         /// of images per request. The request body can be up to 30,000,000 bytes.
         /// </summary>
-        public IList<EmbeddingContentItem> Contents { get; }
+        public IList<EmbeddingsInputContent> Contents { get; }
 
         /// <summary> The model to use. Defaults to `microsoft-embedding-1-large` (Microsoft Embedding 1-large). </summary>
         public string Model { get; }

@@ -12,57 +12,52 @@ using System.Text.Json;
 
 namespace Azure.Data.AI
 {
-    /// <summary> One item to embed: its `kind`, an optional `id`, and exactly one source: `content`, or `url` with `sasToken`. </summary>
-    public partial class EmbeddingContentItem : IJsonModel<EmbeddingContentItem>
+    /// <summary> One item to embed, defaulting to text: an optional `id` and exactly one source, `content` or `url` with `sasToken`. </summary>
+    public partial class EmbeddingsInputContent : IJsonModel<EmbeddingsInputContent>
     {
-        /// <summary> Initializes a new instance of <see cref="EmbeddingContentItem"/> for deserialization. </summary>
-        internal EmbeddingContentItem()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EmbeddingContentItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EmbeddingsInputContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EmbeddingContentItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EmbeddingsInputContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEmbeddingContentItem(document.RootElement, options);
+                        return DeserializeEmbeddingsInputContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EmbeddingContentItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmbeddingsInputContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EmbeddingContentItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EmbeddingsInputContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureDataAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EmbeddingContentItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmbeddingsInputContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EmbeddingContentItem>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EmbeddingsInputContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EmbeddingContentItem IPersistableModel<EmbeddingContentItem>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EmbeddingsInputContent IPersistableModel<EmbeddingsInputContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EmbeddingContentItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EmbeddingsInputContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EmbeddingContentItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EmbeddingsInputContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -73,18 +68,21 @@ namespace Azure.Data.AI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EmbeddingContentItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EmbeddingsInputContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EmbeddingContentItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EmbeddingsInputContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind.Value.ToString());
+            }
             if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
@@ -119,31 +117,31 @@ namespace Azure.Data.AI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EmbeddingContentItem IJsonModel<EmbeddingContentItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EmbeddingsInputContent IJsonModel<EmbeddingsInputContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual EmbeddingContentItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EmbeddingsInputContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EmbeddingContentItem>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EmbeddingsInputContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EmbeddingContentItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EmbeddingsInputContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEmbeddingContentItem(document.RootElement, options);
+            return DeserializeEmbeddingsInputContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EmbeddingContentItem DeserializeEmbeddingContentItem(JsonElement element, ModelReaderWriterOptions options)
+        internal static EmbeddingsInputContent DeserializeEmbeddingsInputContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string id = default;
-            EmbeddingContentKind kind = default;
+            EmbeddingContentKind? kind = default;
             string content = default;
             Uri uri = default;
             string sasToken = default;
@@ -157,6 +155,10 @@ namespace Azure.Data.AI
                 }
                 if (prop.NameEquals("kind"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     kind = new EmbeddingContentKind(prop.Value.GetString());
                     continue;
                 }
@@ -184,7 +186,7 @@ namespace Azure.Data.AI
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EmbeddingContentItem(
+            return new EmbeddingsInputContent(
                 id,
                 kind,
                 content,

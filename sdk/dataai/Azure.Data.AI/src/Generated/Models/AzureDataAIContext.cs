@@ -13,13 +13,14 @@ namespace Azure.Data.AI
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(EmbeddingContentItem))]
+    [ModelReaderWriterBuildable(typeof(EmbeddingItem))]
+    [ModelReaderWriterBuildable(typeof(EmbeddingResult))]
+    [ModelReaderWriterBuildable(typeof(EmbeddingsInputContent))]
+    [ModelReaderWriterBuildable(typeof(EmbeddingUsage))]
     [ModelReaderWriterBuildable(typeof(LatencyResult))]
     [ModelReaderWriterBuildable(typeof(MultimodalDenseAndMultiVectorEmbedding))]
     [ModelReaderWriterBuildable(typeof(MultimodalDenseEmbedding))]
-    [ModelReaderWriterBuildable(typeof(MultimodalEmbeddingItem))]
     [ModelReaderWriterBuildable(typeof(MultimodalEmbeddingOutput))]
-    [ModelReaderWriterBuildable(typeof(MultimodalEmbeddingResult))]
     [ModelReaderWriterBuildable(typeof(MultimodalEmbeddingUsage))]
     [ModelReaderWriterBuildable(typeof(MultimodalEmbeddingWarning))]
     [ModelReaderWriterBuildable(typeof(MultimodalMultiVectorEmbedding))]

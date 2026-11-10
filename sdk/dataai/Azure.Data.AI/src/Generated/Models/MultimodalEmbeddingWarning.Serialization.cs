@@ -82,7 +82,7 @@ namespace Azure.Data.AI
             writer.WriteStringValue(Code.ToString());
             if (Optional.IsDefined(CodeNumber))
             {
-                writer.WritePropertyName("number"u8);
+                writer.WritePropertyName("codeNumber"u8);
                 writer.WriteNumberValue(CodeNumber.Value);
             }
             writer.WritePropertyName("index"u8);
@@ -155,7 +155,7 @@ namespace Azure.Data.AI
                     code = new EmbeddingWarningCode(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("number"u8))
+                if (prop.NameEquals("codeNumber"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {

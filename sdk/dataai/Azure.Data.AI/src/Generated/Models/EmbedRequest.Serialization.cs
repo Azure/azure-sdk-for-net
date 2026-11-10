@@ -13,67 +13,67 @@ using Azure.Core;
 
 namespace Azure.Data.AI
 {
-    /// <summary> The MultiModalEmbedRequest. </summary>
-    internal partial class MultiModalEmbedRequest : IJsonModel<MultiModalEmbedRequest>
+    /// <summary> The EmbedRequest. </summary>
+    internal partial class EmbedRequest : IJsonModel<EmbedRequest>
     {
-        /// <summary> Initializes a new instance of <see cref="MultiModalEmbedRequest"/> for deserialization. </summary>
-        internal MultiModalEmbedRequest()
+        /// <summary> Initializes a new instance of <see cref="EmbedRequest"/> for deserialization. </summary>
+        internal EmbedRequest()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MultiModalEmbedRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EmbedRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MultiModalEmbedRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EmbedRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMultiModalEmbedRequest(document.RootElement, options);
+                        return DeserializeEmbedRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MultiModalEmbedRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmbedRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MultiModalEmbedRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EmbedRequest>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureDataAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MultiModalEmbedRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmbedRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MultiModalEmbedRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EmbedRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MultiModalEmbedRequest IPersistableModel<MultiModalEmbedRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EmbedRequest IPersistableModel<EmbedRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MultiModalEmbedRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EmbedRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="multiModalEmbedRequest"> The <see cref="MultiModalEmbedRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(MultiModalEmbedRequest multiModalEmbedRequest)
+        /// <param name="embedRequest"> The <see cref="EmbedRequest"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(EmbedRequest embedRequest)
         {
-            if (multiModalEmbedRequest == null)
+            if (embedRequest == null)
             {
                 return null;
             }
-            return RequestContent.Create(multiModalEmbedRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(embedRequest, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MultiModalEmbedRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EmbedRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -84,14 +84,14 @@ namespace Azure.Data.AI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MultiModalEmbedRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EmbedRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultiModalEmbedRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EmbedRequest)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("contents"u8);
             writer.WriteStartArray();
-            foreach (EmbeddingContentItem item in Contents)
+            foreach (EmbeddingsInputContent item in Contents)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -123,7 +123,7 @@ namespace Azure.Data.AI
             }
             if (Optional.IsDefined(MaxVectorCount))
             {
-                writer.WritePropertyName("maxNumVectors"u8);
+                writer.WritePropertyName("maxVectorCount"u8);
                 writer.WriteNumberValue(MaxVectorCount.Value);
             }
             if (Optional.IsDefined(OutputDataKind))
@@ -160,30 +160,30 @@ namespace Azure.Data.AI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MultiModalEmbedRequest IJsonModel<MultiModalEmbedRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EmbedRequest IJsonModel<EmbedRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MultiModalEmbedRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EmbedRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MultiModalEmbedRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EmbedRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultiModalEmbedRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EmbedRequest)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMultiModalEmbedRequest(document.RootElement, options);
+            return DeserializeEmbedRequest(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MultiModalEmbedRequest DeserializeMultiModalEmbedRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static EmbedRequest DeserializeEmbedRequest(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<EmbeddingContentItem> contents = default;
+            IList<EmbeddingsInputContent> contents = default;
             string model = default;
             string modelVersion = default;
             EmbeddingVectorKind? vectorKind = default;
@@ -198,10 +198,10 @@ namespace Azure.Data.AI
             {
                 if (prop.NameEquals("contents"u8))
                 {
-                    List<EmbeddingContentItem> array = new List<EmbeddingContentItem>();
+                    List<EmbeddingsInputContent> array = new List<EmbeddingsInputContent>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(EmbeddingContentItem.DeserializeEmbeddingContentItem(item, options));
+                        array.Add(EmbeddingsInputContent.DeserializeEmbeddingsInputContent(item, options));
                     }
                     contents = array;
                     continue;
@@ -243,7 +243,7 @@ namespace Azure.Data.AI
                     multiDimensions = prop.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("maxNumVectors"u8))
+                if (prop.NameEquals("maxVectorCount"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -284,8 +284,8 @@ namespace Azure.Data.AI
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MultiModalEmbedRequest(
-                contents ?? new ChangeTrackingList<EmbeddingContentItem>(),
+            return new EmbedRequest(
+                contents ?? new ChangeTrackingList<EmbeddingsInputContent>(),
                 model,
                 modelVersion,
                 vectorKind,
