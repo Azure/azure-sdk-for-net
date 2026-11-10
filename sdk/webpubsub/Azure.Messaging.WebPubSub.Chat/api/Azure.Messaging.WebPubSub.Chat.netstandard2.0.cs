@@ -65,7 +65,7 @@ namespace Azure.Messaging.WebPubSub.Chat
     }
     public partial class WebPubSubChatMessage : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessage>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessage>
     {
-        public WebPubSubChatMessage(string createdBy, Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessageContent content) { }
+        public WebPubSubChatMessage() { }
         public Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessageContent Content { get { throw null; } set { } }
         public string CreatedBy { get { throw null; } set { } }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
