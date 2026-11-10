@@ -5,14 +5,18 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Projects.Agents;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Evals;
+
+#pragma warning disable AAIP001
 
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
 
@@ -30,13 +34,14 @@ public class Sample_VoiceEvaluation : EvaluationSampleBase
         #region Snippet:Sample_VoiceEvaluation_Recorded
         string endpoint = GetRequiredVariable("FOUNDRY_PROJECT_ENDPOINT");
         string judge = GetRequiredVariable("FOUNDRY_MODEL_NAME");
-        string datasetId = GetRequiredVariable("FOUNDRY_DATASET_ID");
+        string datasetId = GetOptionalVariable("FOUNDRY_DATASET_ID");
         AIProjectClient project = new(new Uri(endpoint), new DefaultAzureCredential());
         EvaluationClient client = project.ProjectOpenAIClient.GetEvaluationClient();
 
         BinaryData definition = CreateDefinition(judge,
             ["task_completion", "groundedness", "customer_satisfaction", "coherence"]);
-        await RunEvaluationAsync(client, definition, CreateRecordedRun(datasetId));
+        await WithRecordedDatasetAsync(project.Datasets,
+            id => RunEvaluationAsync(client, definition, CreateRecordedRun(id)), datasetId);
         #endregion
     }
 
@@ -47,18 +52,141 @@ public class Sample_VoiceEvaluation : EvaluationSampleBase
         #region Snippet:Sample_VoiceEvaluation_Simulation
         string endpoint = GetRequiredVariable("FOUNDRY_PROJECT_ENDPOINT");
         string judge = GetRequiredVariable("FOUNDRY_MODEL_NAME");
-        string agentName = GetRequiredVariable("FOUNDRY_AGENT_NAME");
-        string agentVersion = GetRequiredVariable("FOUNDRY_AGENT_VERSION");
-        string simulatorModel = GetRequiredVariable("FOUNDRY_SIMULATOR_MODEL_NAME");
-        string simulatorVoice = GetRequiredVariable("FOUNDRY_SIMULATOR_VOICE");
+        string agentName = GetOptionalVariable("FOUNDRY_AGENT_NAME");
+        string agentVersion = GetOptionalVariable("FOUNDRY_AGENT_VERSION");
+        string simulatorModel = GetOptionalVariable("FOUNDRY_SIMULATOR_MODEL_NAME", "gpt-4.1");
+        string simulatorVoice = GetOptionalVariable("FOUNDRY_SIMULATOR_VOICE", "en-US-AvaNeural");
+        string voiceModel = GetOptionalVariable("FOUNDRY_VOICE_MODEL_NAME", "gpt-realtime");
+        string voiceModelType = GetOptionalVariable("FOUNDRY_VOICE_MODEL_TYPE", "managed");
         AIProjectClient project = new(new Uri(endpoint), new DefaultAzureCredential());
         EvaluationClient client = project.ProjectOpenAIClient.GetEvaluationClient();
 
         BinaryData definition = CreateDefinition(judge, ["task_completion"]);
-        BinaryData run = CreateSimulationRun(agentName, agentVersion, simulatorModel, simulatorVoice);
-        await RunEvaluationAsync(client, definition, run);
+        await WithVoiceAgentAsync(project.AgentAdministrationClient,
+            (name, version) => RunEvaluationAsync(client, definition,
+                CreateSimulationRun(name, version, simulatorModel, simulatorVoice)),
+            agentName, agentVersion, voiceModel, voiceModelType);
         #endregion
     }
+
+    #region Snippet:Sample_VoiceEvaluation_Upload
+    internal static async Task WithRecordedDatasetAsync(
+        AIProjectDatasetsOperations datasets, Func<string, Task> evaluate, string datasetId = null)
+    {
+        if (!string.IsNullOrWhiteSpace(datasetId))
+        {
+            await evaluate(datasetId);
+            return;
+        }
+
+        string name = $"voice-evaluation-{Guid.NewGuid():N}";
+        string audioName = $"{name}-audio";
+        string directory = Path.Combine(Environment.CurrentDirectory, name);
+        Directory.CreateDirectory(directory);
+        bool audioCreated = false;
+        bool datasetCreated = false;
+        try
+        {
+            string recordings = Path.Combine(directory, "recordings");
+            Directory.CreateDirectory(recordings);
+            File.Copy(Path.Combine(AppContext.BaseDirectory, "TestData", "VoiceEvaluation", "conversation.wav"),
+                Path.Combine(recordings, "conversation.wav"));
+            FolderDataset audio = await datasets.UploadFolderAsync(audioName, "1", recordings);
+            audioCreated = true;
+            // UploadFolder flattens filenames and returns the last blob's URI. Register
+            // the containing folder so asset_file_path is relative to that folder.
+            using BinaryContent folder = BinaryContent.Create(new FolderDataset(new Uri(audio.DataUri, ".")));
+            await datasets.CreateOrUpdateAsync(audioName, "1", folder);
+            string jsonl = Path.Combine(directory, "conversations.jsonl");
+            await File.WriteAllTextAsync(jsonl, JsonSerializer.Serialize(new
+            {
+                messages = new[]
+                {
+                    new { role = "user", content = "When do you close?" },
+                    new { role = "assistant", content = "We close at nine PM." }
+                },
+                conversation_artifacts = new
+                {
+                    audio = new { asset_id = audio.Id.Replace("/data/", "/datasets/"), asset_file_path = "conversation.wav" }
+                }
+            }) + Environment.NewLine);
+            FileDataset dataset = await datasets.UploadFileAsync(name, "1", jsonl);
+            datasetCreated = true;
+            await evaluate(dataset.Id);
+        }
+        finally
+        {
+            try
+            {
+                if (datasetCreated)
+                {
+                    await datasets.DeleteAsync(name, "1");
+                }
+            }
+            finally
+            {
+                try
+                {
+                    if (audioCreated)
+                    {
+                        await datasets.DeleteAsync(audioName, "1");
+                    }
+                }
+                finally
+                {
+                    Directory.Delete(directory, recursive: true);
+                }
+            }
+        }
+    }
+    #endregion
+
+    #region Snippet:Sample_VoiceEvaluation_Agent
+    internal static async Task WithVoiceAgentAsync(
+        AgentAdministrationClient agents, Func<string, string, Task> evaluate,
+        string agentName = null, string agentVersion = null,
+        string voiceModel = "gpt-realtime", string voiceModelType = "managed")
+    {
+        if (!string.IsNullOrWhiteSpace(agentName))
+        {
+            if (string.IsNullOrWhiteSpace(agentVersion))
+            {
+                ProjectsAgentRecord existing = await agents.GetAgentAsync(agentName);
+                agentVersion = existing.GetLatestVersion().Version;
+            }
+            await evaluate(agentName, agentVersion);
+            return;
+        }
+
+        agentName = $"voice-evaluation-{Guid.NewGuid():N}";
+        VoiceAgentDefinition definition = new()
+        {
+            ModelType = new VoiceModelType(voiceModelType),
+            Model = voiceModel,
+            Instructions = "You are a store assistant. The Springfield, Illinois store closes at nine PM every day. Ask for the location if needed. Answer briefly.",
+            Audio = new VoiceAgentAudioConfig
+            {
+                Output = new VoiceAgentAudioOutputConfig
+                {
+                    Voice = "en-US-AvaNeural",
+                    VoiceType = VoiceType.AzureStandard
+                }
+            },
+            Store = true
+        };
+        definition.OutputModalities.Add(VoiceOutputModality.Audio);
+        ProjectsAgentVersion created = await agents.CreateAgentVersionAsync(
+            agentName, new ProjectsAgentVersionCreationOptions(definition));
+        try
+        {
+            await evaluate(agentName, created.Version);
+        }
+        finally
+        {
+            await agents.DeleteAgentVersionAsync(agentName, created.Version);
+        }
+    }
+    #endregion
 
     #region Snippet:Sample_VoiceEvaluation_Definition
     internal static BinaryData CreateDefinition(string judge, string[] metrics)
@@ -221,6 +349,11 @@ public class Sample_VoiceEvaluation : EvaluationSampleBase
     #endregion
 
     #region Snippet:Sample_VoiceEvaluation_Environment
+    private static string GetOptionalVariable(string name, string defaultValue = null) =>
+        Environment.GetEnvironmentVariable(name) is string value && !string.IsNullOrWhiteSpace(value)
+            ? value
+            : defaultValue;
+
     private static string GetRequiredVariable(string name) =>
         Environment.GetEnvironmentVariable(name) is string value && !string.IsNullOrWhiteSpace(value)
             ? value

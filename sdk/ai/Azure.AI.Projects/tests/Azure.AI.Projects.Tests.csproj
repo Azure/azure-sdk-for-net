@@ -36,6 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="TestData\VoiceEvaluation\conversation.wav" CopyToOutputDirectory="PreserveNewest" />
     <Folder Include="Samples\Agents\" />
     <Folder Include="SessionRecords\" />
   </ItemGroup>
