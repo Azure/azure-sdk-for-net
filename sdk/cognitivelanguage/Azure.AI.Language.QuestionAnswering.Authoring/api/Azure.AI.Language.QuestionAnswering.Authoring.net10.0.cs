@@ -248,7 +248,6 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     public partial class QnaRecord : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.QuestionAnswering.Authoring.QnaRecord>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.QuestionAnswering.Authoring.QnaRecord>
     {
         public QnaRecord() { }
-        public QnaRecord(int id) { }
         public System.Collections.Generic.IList<Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestionsCluster> ActiveLearningSuggestions { get { throw null; } }
         public string Answer { get { throw null; } set { } }
         public Azure.AI.Language.QuestionAnswering.Authoring.QnaDialog Dialog { get { throw null; } set { } }
