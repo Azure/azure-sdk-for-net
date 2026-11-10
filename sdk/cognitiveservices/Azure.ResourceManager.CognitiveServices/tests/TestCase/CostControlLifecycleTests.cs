@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -69,7 +70,12 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
 
             try
             {
-                CognitiveServicesAccountCostControlData data = CreateData("SDK recorded test", 25);
+                DateTimeOffset startsOn = Recording.UtcNow;
+                CognitiveServicesAccountCostControlData data = new()
+                {
+                    Properties = new CostControlProperties(CostControlCategory.Cost, 25, CostControlTimeGrain.Monthly,
+                        new CostControlTimePeriod(startsOn, startsOn.AddMonths(1)))
+                };
                 MatchConditions createOnly = new() { IfNoneMatch = ETag.All };
                 ArmOperation<CognitiveServicesAccountCostControlResource> create = await collection.CreateOrUpdateAsync(
                     WaitUntil.Started,
@@ -78,26 +84,25 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
                     createOnly);
                 resource = create.Value;
 
-                Assert.That(resource.Data.Properties.Rules[0].Thresholds[0].Action,
-                    Is.EqualTo(CostControlThresholdAction.Alert));
+                Assert.That(resource.Data.Properties.Category, Is.EqualTo(CostControlCategory.Cost));
+                Assert.That(resource.Data.Properties.Amount, Is.EqualTo(25));
 
                 resource = (await collection.GetAsync(costControlName)).Value;
                 Assert.That(resource.Data.ETag, Is.Not.Null);
-                Assert.That(resource.Data.Properties.Rules[0].Thresholds[0].Value, Is.EqualTo(80));
+                Assert.That(resource.Data.Properties.TimeGrain, Is.EqualTo(CostControlTimeGrain.Monthly));
 
                 var resources = await collection.GetAllAsync().ToEnumerableAsync();
-                Assert.That(resources.Any(item => item.Data.Properties.DisplayName == "SDK recorded test"), Is.True);
+                Assert.That(resources.Any(item => item.Id == resource.Id), Is.True);
 
-                CostControlPatchProperties patchProperties = new() { DisplayName = "SDK recorded test updated" };
-                patchProperties.Rules.Add(CreateRule(50));
+                CostControlPatchProperties patchProperties = new() { Amount = 50 };
                 resource = (await resource.UpdateAsync(
-                    new CognitiveServicesAccountCostControlPatch { Properties = patchProperties },
+                    new CostControlPatch { Properties = patchProperties },
                     resource.Data.ETag)).Value;
 
-                Assert.That(resource.Data.Properties.DisplayName, Is.EqualTo("SDK recorded test updated"));
-                Assert.That(resource.Data.Properties.Rules[0].Amount, Is.EqualTo(50));
+                Assert.That(resource.Data.Properties.Amount, Is.EqualTo(50));
 
                 resource = (await collection.GetAsync(costControlName)).Value;
+                Assert.That(resource.Data.Properties.Amount, Is.EqualTo(50));
                 await resource.DeleteAsync(WaitUntil.Started, resource.Data.ETag);
                 resource = null;
 
@@ -118,30 +123,6 @@ namespace Azure.ResourceManager.CognitiveServices.Tests
                     }
                 }
             }
-        }
-
-        private static CognitiveServicesAccountCostControlData CreateData(string displayName, double amount)
-            => new()
-            {
-                Properties = new CostControlProperties(new[] { CreateRule(amount) })
-                {
-                    DisplayName = displayName
-                }
-            };
-
-        private static CostControlRule CreateRule(double amount)
-        {
-            CostControlRule rule = new(
-                "account-budget",
-                new CostControlDimension(CostControlDimensionType.Account),
-                CostControlUnit.Usd,
-                amount)
-            {
-                Period = CostControlPeriod.Month,
-                Recurring = true
-            };
-            rule.Thresholds.Add(new CostControlThreshold(CostControlThresholdType.Percentage, 80, CostControlThresholdAction.Alert));
-            return rule;
         }
     }
 }
