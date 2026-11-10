@@ -12,26 +12,26 @@ using System.Linq;
 namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
 {
     /// <summary> Import update input metadata. </summary>
-    public partial class ImportUpdateRequest
+    public partial class ImportUpdateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ImportUpdateRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportUpdateContent"/>. </summary>
         /// <param name="importUpdateInput"> Import update input metadata. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="importUpdateInput"/> is null. </exception>
-        public ImportUpdateRequest(IEnumerable<ImportUpdateInputItem> importUpdateInput)
+        public ImportUpdateContent(IEnumerable<ImportUpdateInputItem> importUpdateInput)
         {
             Argument.AssertNotNull(importUpdateInput, nameof(importUpdateInput));
 
             ImportUpdateInput = importUpdateInput.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImportUpdateRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportUpdateContent"/>. </summary>
         /// <param name="importUpdateInput"> Import update input metadata. </param>
         /// <param name="enableScan"> Whether to enable anti-malware scan of the imported update payload files. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImportUpdateRequest(IList<ImportUpdateInputItem> importUpdateInput, bool? enableScan, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImportUpdateContent(IList<ImportUpdateInputItem> importUpdateInput, bool? enableScan, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImportUpdateInput = importUpdateInput;
             EnableScan = enableScan;

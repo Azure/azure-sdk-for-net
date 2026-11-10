@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.AI.Discovery
 {
     /// <summary> Request body for starting a task. </summary>
-    public partial class StartTaskRequest
+    public partial class StartTaskContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="StartTaskRequest"/>. </summary>
-        public StartTaskRequest()
+        /// <summary> Initializes a new instance of <see cref="StartTaskContent"/>. </summary>
+        public StartTaskContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StartTaskRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="StartTaskContent"/>. </summary>
         /// <param name="assignee"> Assignee that will execute the task. Optional. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StartTaskRequest(TaskAssignee assignee, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StartTaskContent(TaskAssignee assignee, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Assignee = assignee;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

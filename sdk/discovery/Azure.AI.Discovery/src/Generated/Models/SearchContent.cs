@@ -11,25 +11,25 @@ using System.Collections.Generic;
 namespace Azure.AI.Discovery
 {
     /// <summary> The search action request body. </summary>
-    public partial class SearchRequest
+    public partial class SearchContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SearchRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchContent"/>. </summary>
         /// <param name="query"> The query text to search against the knowledge base. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
-        public SearchRequest(string query)
+        public SearchContent(string query)
         {
             Argument.AssertNotNull(query, nameof(query));
 
             Query = query;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SearchRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchContent"/>. </summary>
         /// <param name="query"> The query text to search against the knowledge base. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchRequest(string query, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchContent(string query, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Query = query;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

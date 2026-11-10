@@ -14,66 +14,66 @@ using Azure.Core;
 namespace Azure.AI.Discovery
 {
     /// <summary> The search action request body. </summary>
-    public partial class SearchRequest : IJsonModel<SearchRequest>
+    public partial class SearchContent : IJsonModel<SearchContent>
     {
-        /// <summary> Initializes a new instance of <see cref="SearchRequest"/> for deserialization. </summary>
-        internal SearchRequest()
+        /// <summary> Initializes a new instance of <see cref="SearchContent"/> for deserialization. </summary>
+        internal SearchContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SearchRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SearchContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSearchRequest(document.RootElement, options);
+                        return DeserializeSearchContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SearchRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIDiscoveryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SearchRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SearchRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SearchContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SearchRequest IPersistableModel<SearchRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SearchContent IPersistableModel<SearchContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SearchRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SearchContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="searchRequest"> The <see cref="SearchRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(SearchRequest searchRequest)
+        /// <param name="searchContent"> The <see cref="SearchContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(SearchContent searchContent)
         {
-            if (searchRequest == null)
+            if (searchContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(searchRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(searchContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SearchRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SearchContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -84,10 +84,10 @@ namespace Azure.AI.Discovery
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("query"u8);
             writer.WriteStringValue(Query);
@@ -110,24 +110,24 @@ namespace Azure.AI.Discovery
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SearchRequest IJsonModel<SearchRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SearchContent IJsonModel<SearchContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SearchRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SearchContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SearchRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SearchContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSearchRequest(document.RootElement, options);
+            return DeserializeSearchContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SearchRequest DeserializeSearchRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static SearchContent DeserializeSearchContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -147,7 +147,7 @@ namespace Azure.AI.Discovery
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SearchRequest(query, additionalBinaryDataProperties);
+            return new SearchContent(query, additionalBinaryDataProperties);
         }
     }
 }
