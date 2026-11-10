@@ -14,16 +14,8 @@ namespace Azure.Analytics.OnlineExperimentation
     public partial class EventRateMetricDefinition : ExperimentMetricDefinition
     {
         /// <summary> Initializes a new instance of <see cref="EventRateMetricDefinition"/>. </summary>
-        /// <param name="event"> Event to observe as the rate denominator. </param>
-        /// <param name="rateCondition"> The event contributes to the rate numerator if it satisfies this condition. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="event"/> or <paramref name="rateCondition"/> is null. </exception>
-        public EventRateMetricDefinition(ObservedEvent @event, string rateCondition) : base(ExperimentMetricType.EventRate)
+        public EventRateMetricDefinition() : base(ExperimentMetricType.EventRate)
         {
-            Argument.AssertNotNull(@event, nameof(@event));
-            Argument.AssertNotNull(rateCondition, nameof(rateCondition));
-
-            Event = @event;
-            RateCondition = rateCondition;
         }
 
         /// <summary> Initializes a new instance of <see cref="EventRateMetricDefinition"/>. </summary>
