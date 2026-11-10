@@ -1680,12 +1680,7 @@ internal sealed partial class TaskEngine : IDisposable
         // Publish causes (C-CAN-2) so a handler waking on the cancelled token always observes
         // a cause (an explicit cancel) or a positive pending-input count (a steering nudge).
         runState.Cancellation.BindCause(() => ctxState.CancelRequested = true);
-        activeRun.PublishPendingInputCount = count => ctxState.PendingInputCount = count;
-
-        // Reconcile any cause that landed between this turn's launch and the publisher wiring:
-        // a steering nudge bumps the count. BindCause reconciles explicit pre-dispatch cancellation
-        // against this exact input's source, rather than the previous turn's cancellation flag.
-        ctxState.PendingInputCount = activeRun.SteeringCount;
+        activeRun.BindPendingInputCount(runState, count => ctxState.PendingInputCount = count);
 
         // Read the persisted turn-start + retry budget so the timeout deadline and retry counter
         // survive crashes (a recovered turn reads the same absolute deadline and resumes at the
@@ -3287,7 +3282,19 @@ internal sealed partial class TaskEngine : IDisposable
         public int SteeringCount => _steering?.Count ?? 0;
 
         /// <summary>Set by the executor to publish the pending-input count onto the live context state.</summary>
-        public Action<int>? PublishPendingInputCount { get; set; }
+        private Action<int>? PublishPendingInputCount { get; set; }
+
+        public void BindPendingInputCount(TaskRunState<TOutput> state, Action<int> publish)
+        {
+            lock (_gate)
+            {
+                if (ReferenceEquals(_state, state))
+                {
+                    PublishPendingInputCount = publish;
+                    publish(SteeringCount);
+                }
+            }
+        }
 
         private int _deleteRequested;
 
@@ -3352,6 +3359,7 @@ internal sealed partial class TaskEngine : IDisposable
                     _inputs.Remove(_state);
                 }
                 _state = state;
+                PublishPendingInputCount = null;
                 _inputs.Add(state);
                 _promoting = null;
                 _deletion?.Track(state.StreamState, state.InputId, _producerStopped.Task);
@@ -3435,12 +3443,11 @@ internal sealed partial class TaskEngine : IDisposable
         /// </summary>
         public async Task SignalSteeringAsync()
         {
-            PublishPendingInputCount?.Invoke(Steering.Count);
             await CancelCurrentHandlerAsync().ConfigureAwait(false);
         }
 
-        // Only steering follows turn transitions. An explicit handle cancellation always stays
-        // bound to its own input. Both paths pin their source while callbacks run outside locks.
+        // Steering follows turn transitions only while input remains queued. An explicit handle
+        // cancellation stays bound to its own input. Callbacks run outside locks.
         private async Task CancelCurrentHandlerAsync()
         {
             TaskRunCancellation? signalled = null;
@@ -3449,7 +3456,13 @@ internal sealed partial class TaskEngine : IDisposable
                 TaskRunCancellation current;
                 lock (_gate)
                 {
+                    int pending = SteeringCount;
+                    if (pending == 0)
+                    {
+                        return;
+                    }
                     current = _state.Cancellation;
+                    PublishPendingInputCount?.Invoke(pending);
                 }
 
                 if (ReferenceEquals(current, signalled))

@@ -21,7 +21,7 @@ namespace Azure.Provisioning.AppService
         private SystemData _systemData;
         private SiteExtensionInfoProperties _properties;
         private BicepValue<string> _kind;
-        private ResourceReference<WebSite> _parent;
+        private ProvisioningResourceReference<WebSite> _parent;
 
         /// <summary> Creates a new WebSiteExtension. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -459,7 +459,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SiteExtensionInfoProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<WebSite>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<WebSite>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

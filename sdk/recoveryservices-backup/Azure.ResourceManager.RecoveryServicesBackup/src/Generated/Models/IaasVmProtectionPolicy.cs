@@ -34,16 +34,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Tiering policy specifies the criteria to move RP to the target tier.
         /// </param>
         /// <param name="instantRPRetentionRangeInDays"> Instant RP retention policy range in days. </param>
+        /// <param name="instantAccessSnapshotEnabled">
+        /// Specifies whether Instant Access snapshot is enabled for the policy. If false or omitted,
+        /// instantAccessDurationMinutes is ignored and no Instant Access snapshot is retained.
+        /// </param>
+        /// <param name="instantAccessDurationMinutes">
+        /// Duration in minutes for which the Instant Access snapshot is retained, when instantAccessSnapshotEnabled
+        /// is true. Must be between 60 and 300 minutes; defaults to 300 minutes if not specified.
+        /// </param>
         /// <param name="timeZone"> TimeZone optional input as string. For example: TimeZone = "Pacific Standard Time". </param>
         /// <param name="policyType"></param>
         /// <param name="snapshotConsistencyType"></param>
-        internal IaasVmProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, InstantRPAdditionalDetails instantRPDetails, BackupSchedulePolicy schedulePolicy, BackupRetentionPolicy retentionPolicy, IDictionary<string, BackupTieringPolicy> tieringPolicy, int? instantRPRetentionRangeInDays, string timeZone, IaasVmPolicyType? policyType, IaasVmSnapshotConsistencyType? snapshotConsistencyType) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests, additionalBinaryDataProperties)
+        internal IaasVmProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, InstantRPAdditionalDetails instantRPDetails, BackupSchedulePolicy schedulePolicy, BackupRetentionPolicy retentionPolicy, IDictionary<string, BackupTieringPolicy> tieringPolicy, int? instantRPRetentionRangeInDays, bool? instantAccessSnapshotEnabled, int? instantAccessDurationMinutes, string timeZone, IaasVmPolicyType? policyType, IaasVmSnapshotConsistencyType? snapshotConsistencyType) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests, additionalBinaryDataProperties)
         {
             InstantRPDetails = instantRPDetails;
             SchedulePolicy = schedulePolicy;
             RetentionPolicy = retentionPolicy;
             TieringPolicy = tieringPolicy;
             InstantRPRetentionRangeInDays = instantRPRetentionRangeInDays;
+            InstantAccessSnapshotEnabled = instantAccessSnapshotEnabled;
+            InstantAccessDurationMinutes = instantAccessDurationMinutes;
             TimeZone = timeZone;
             PolicyType = policyType;
             SnapshotConsistencyType = snapshotConsistencyType;
@@ -67,6 +77,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Instant RP retention policy range in days. </summary>
         public int? InstantRPRetentionRangeInDays { get; set; }
+
+        /// <summary>
+        /// Specifies whether Instant Access snapshot is enabled for the policy. If false or omitted,
+        /// instantAccessDurationMinutes is ignored and no Instant Access snapshot is retained.
+        /// </summary>
+        public bool? InstantAccessSnapshotEnabled { get; set; }
+
+        /// <summary>
+        /// Duration in minutes for which the Instant Access snapshot is retained, when instantAccessSnapshotEnabled
+        /// is true. Must be between 60 and 300 minutes; defaults to 300 minutes if not specified.
+        /// </summary>
+        public int? InstantAccessDurationMinutes { get; set; }
 
         /// <summary> TimeZone optional input as string. For example: TimeZone = "Pacific Standard Time". </summary>
         public string TimeZone { get; set; }

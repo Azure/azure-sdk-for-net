@@ -657,12 +657,21 @@ internal sealed class ResponseEndpointHandler
         var enumerator = stream.Subscribe().GetAsyncEnumerator(relayCts.Token);
         Task? executionTask = execution.ExecutionTask;
         var createdSeen = false;
+        string? lastEventId = null;
+        string? failureEventId = null;
+        ExceptionDispatchInfo? completionFailure = null;
         try
         {
             while (true)
             {
                 try
                 {
+                    if (completionFailure is not null
+                        && string.Equals(lastEventId, failureEventId, StringComparison.Ordinal))
+                    {
+                        completionFailure.Throw();
+                    }
+
                     ValueTask<bool> moveNext = enumerator.MoveNextAsync();
                     bool hasNext;
                     if (moveNext.IsCompletedSuccessfully)
@@ -674,7 +683,8 @@ internal sealed class ResponseEndpointHandler
                     else
                     {
                         Task<bool> moveNextTask = moveNext.AsTask();
-                        if (executionTask is not null && !executionTask.IsCompletedSuccessfully)
+                        if (completionFailure is null
+                            && executionTask is not null && !executionTask.IsCompletedSuccessfully)
                         {
                             Task completed = await Task.WhenAny(moveNextTask, executionTask);
                             if (ReferenceEquals(completed, executionTask) && executionTask.IsFaulted)
@@ -695,25 +705,26 @@ internal sealed class ResponseEndpointHandler
                                         : ex;
                                 }
 
-                                // Core intentionally leaves the task stream open when its durable
-                                // completed/suspended transition fails so a later process can recover
-                                // it. Observe the task fault here to end only this HTTP subscription;
-                                // SseResult converts the exception to the existing SSE error event.
-                                //
-                                // Cancel and await the pending relay read before disposing its
-                                // enumerator. This cancellation is subscription-local: the Core stream
-                                // remains open and writable for recovery.
-                                relayCts.Cancel();
-                                try
-                                {
-                                    await moveNextTask;
-                                }
-                                catch (OperationCanceledException) when (relayCts.IsCancellationRequested)
-                                {
-                                    // Expected: cancellation releases the pending subscription read.
-                                }
+                                completionFailure = ExceptionDispatchInfo.Capture(failure);
+                                failureEventId = await stream.GetLastEventIdAsync(cancellationToken);
 
-                                ExceptionDispatchInfo.Capture(failure).Throw();
+                                // Replay may require asynchronous I/O even when events are retained.
+                                // Drain through the fault-time watermark before surfacing the failure;
+                                // Core leaves this stream open for recovery, so waiting for EOF hangs.
+                                if (string.Equals(lastEventId, failureEventId, StringComparison.Ordinal))
+                                {
+                                    relayCts.Cancel();
+                                    try
+                                    {
+                                        await moveNextTask;
+                                    }
+                                    catch (OperationCanceledException) when (relayCts.IsCancellationRequested)
+                                    {
+                                        // Cancellation is local to this subscription, not the recoverable stream.
+                                    }
+
+                                    completionFailure.Throw();
+                                }
                             }
                         }
 
@@ -738,6 +749,7 @@ internal sealed class ResponseEndpointHandler
                 }
 
                 var item = enumerator.Current;
+                lastEventId = item.EventId;
                 if (string.Equals(item.EventType, "response.created", StringComparison.Ordinal))
                 {
                     createdSeen = true;

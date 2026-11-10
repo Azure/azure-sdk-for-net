@@ -178,7 +178,7 @@ model ModelWithClientName {
 
 @doc("this is a roundtrip model")
 @useSystemTextJsonConverter()
-@TypeSpec.HttpClient.CSharp.dynamicModel
+@dynamicModel("csharp")
 model RoundTripModel {
   @doc("Required string, illustrating a reference type property.")
   requiredString: string;
