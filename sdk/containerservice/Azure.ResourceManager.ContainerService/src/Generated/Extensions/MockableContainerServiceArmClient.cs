@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ContainerService;
@@ -49,6 +50,15 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> Returns a <see cref="ManagedClusterUpgradeProfileResource"/> object. </returns>
         public virtual ManagedClusterUpgradeProfileResource GetManagedClusterUpgradeProfileResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != ManagedClusterUpgradeProfileResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.ContainerService", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "managedClusters", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "upgradeProfiles", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/upgradeProfiles/default"), nameof(id));
+            }
             ManagedClusterUpgradeProfileResource.ValidateResourceId(id);
             return new ManagedClusterUpgradeProfileResource(Client, id);
         }
@@ -121,6 +131,15 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// <returns> Returns a <see cref="AgentPoolUpgradeProfileResource"/> object. </returns>
         public virtual AgentPoolUpgradeProfileResource GetAgentPoolUpgradeProfileResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != AgentPoolUpgradeProfileResource.ResourceType || segments.Length != 13 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.ContainerService", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "managedClusters", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "agentPools", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "upgradeProfiles", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[12], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/agentPools/{agentPoolName}/upgradeProfiles/default"), nameof(id));
+            }
             AgentPoolUpgradeProfileResource.ValidateResourceId(id);
             return new AgentPoolUpgradeProfileResource(Client, id);
         }

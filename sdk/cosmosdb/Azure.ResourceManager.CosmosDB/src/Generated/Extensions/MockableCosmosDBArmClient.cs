@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB;
@@ -67,6 +68,15 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBSqlDatabaseThroughputSettingResource"/> object. </returns>
         public virtual CosmosDBSqlDatabaseThroughputSettingResource GetCosmosDBSqlDatabaseThroughputSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != CosmosDBSqlDatabaseThroughputSettingResource.ResourceType || segments.Length != 13 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.DocumentDB", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "databaseAccounts", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "sqlDatabases", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "throughputSettings", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[12], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/throughputSettings/default"), nameof(id));
+            }
             CosmosDBSqlDatabaseThroughputSettingResource.ValidateResourceId(id);
             return new CosmosDBSqlDatabaseThroughputSettingResource(Client, id);
         }
@@ -76,6 +86,15 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosDBSqlContainerThroughputSettingResource"/> object. </returns>
         public virtual CosmosDBSqlContainerThroughputSettingResource GetCosmosDBSqlContainerThroughputSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != CosmosDBSqlContainerThroughputSettingResource.ResourceType || segments.Length != 15 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.DocumentDB", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "databaseAccounts", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "sqlDatabases", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "containers", StringComparison.OrdinalIgnoreCase) || segments[12] == "" || !string.Equals(segments[13], "throughputSettings", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[14], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default"), nameof(id));
+            }
             CosmosDBSqlContainerThroughputSettingResource.ValidateResourceId(id);
             return new CosmosDBSqlContainerThroughputSettingResource(Client, id);
         }
@@ -148,6 +167,15 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="MongoDBDatabaseThroughputSettingResource"/> object. </returns>
         public virtual MongoDBDatabaseThroughputSettingResource GetMongoDBDatabaseThroughputSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != MongoDBDatabaseThroughputSettingResource.ResourceType || segments.Length != 13 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.DocumentDB", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "databaseAccounts", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "mongodbDatabases", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "throughputSettings", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[12], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/throughputSettings/default"), nameof(id));
+            }
             MongoDBDatabaseThroughputSettingResource.ValidateResourceId(id);
             return new MongoDBDatabaseThroughputSettingResource(Client, id);
         }
@@ -157,6 +185,15 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="MongoDBCollectionThroughputSettingResource"/> object. </returns>
         public virtual MongoDBCollectionThroughputSettingResource GetMongoDBCollectionThroughputSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != MongoDBCollectionThroughputSettingResource.ResourceType || segments.Length != 15 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.DocumentDB", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "databaseAccounts", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "mongodbDatabases", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "collections", StringComparison.OrdinalIgnoreCase) || segments[12] == "" || !string.Equals(segments[13], "throughputSettings", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[14], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/collections/{collectionName}/throughputSettings/default"), nameof(id));
+            }
             MongoDBCollectionThroughputSettingResource.ValidateResourceId(id);
             return new MongoDBCollectionThroughputSettingResource(Client, id);
         }
@@ -202,6 +239,15 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CosmosTableThroughputSettingResource"/> object. </returns>
         public virtual CosmosTableThroughputSettingResource GetCosmosTableThroughputSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != CosmosTableThroughputSettingResource.ResourceType || segments.Length != 13 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.DocumentDB", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "databaseAccounts", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "tables", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "throughputSettings", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[12], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/tables/{tableName}/throughputSettings/default"), nameof(id));
+            }
             CosmosTableThroughputSettingResource.ValidateResourceId(id);
             return new CosmosTableThroughputSettingResource(Client, id);
         }
@@ -238,6 +284,15 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CassandraKeyspaceThroughputSettingResource"/> object. </returns>
         public virtual CassandraKeyspaceThroughputSettingResource GetCassandraKeyspaceThroughputSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != CassandraKeyspaceThroughputSettingResource.ResourceType || segments.Length != 13 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.DocumentDB", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "databaseAccounts", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "cassandraKeyspaces", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "throughputSettings", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[12], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default"), nameof(id));
+            }
             CassandraKeyspaceThroughputSettingResource.ValidateResourceId(id);
             return new CassandraKeyspaceThroughputSettingResource(Client, id);
         }
@@ -247,6 +302,15 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CassandraTableThroughputSettingResource"/> object. </returns>
         public virtual CassandraTableThroughputSettingResource GetCassandraTableThroughputSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != CassandraTableThroughputSettingResource.ResourceType || segments.Length != 15 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.DocumentDB", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "databaseAccounts", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "cassandraKeyspaces", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "tables", StringComparison.OrdinalIgnoreCase) || segments[12] == "" || !string.Equals(segments[13], "throughputSettings", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[14], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}/throughputSettings/default"), nameof(id));
+            }
             CassandraTableThroughputSettingResource.ValidateResourceId(id);
             return new CassandraTableThroughputSettingResource(Client, id);
         }
@@ -256,6 +320,15 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="CassandraViewThroughputSettingResource"/> object. </returns>
         public virtual CassandraViewThroughputSettingResource GetCassandraViewThroughputSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != CassandraViewThroughputSettingResource.ResourceType || segments.Length != 15 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.DocumentDB", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "databaseAccounts", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "cassandraKeyspaces", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "views", StringComparison.OrdinalIgnoreCase) || segments[12] == "" || !string.Equals(segments[13], "throughputSettings", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[14], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/views/{viewName}/throughputSettings/default"), nameof(id));
+            }
             CassandraViewThroughputSettingResource.ValidateResourceId(id);
             return new CassandraViewThroughputSettingResource(Client, id);
         }
@@ -310,6 +383,15 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="GremlinDatabaseThroughputSettingResource"/> object. </returns>
         public virtual GremlinDatabaseThroughputSettingResource GetGremlinDatabaseThroughputSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != GremlinDatabaseThroughputSettingResource.ResourceType || segments.Length != 13 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.DocumentDB", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "databaseAccounts", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "gremlinDatabases", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "throughputSettings", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[12], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/throughputSettings/default"), nameof(id));
+            }
             GremlinDatabaseThroughputSettingResource.ValidateResourceId(id);
             return new GremlinDatabaseThroughputSettingResource(Client, id);
         }
@@ -319,6 +401,15 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <returns> Returns a <see cref="GremlinGraphThroughputSettingResource"/> object. </returns>
         public virtual GremlinGraphThroughputSettingResource GetGremlinGraphThroughputSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != GremlinGraphThroughputSettingResource.ResourceType || segments.Length != 15 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.DocumentDB", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "databaseAccounts", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "gremlinDatabases", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "graphs", StringComparison.OrdinalIgnoreCase) || segments[12] == "" || !string.Equals(segments[13], "throughputSettings", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[14], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/gremlinDatabases/{databaseName}/graphs/{graphName}/throughputSettings/default"), nameof(id));
+            }
             GremlinGraphThroughputSettingResource.ValidateResourceId(id);
             return new GremlinGraphThroughputSettingResource(Client, id);
         }
