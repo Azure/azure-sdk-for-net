@@ -168,6 +168,23 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
+        /// <summary> The relative ordering group used to apply software updates to associated clusters. The minimum accepted value is 1; the service enforces the upper bound currently in effect, which may change over time. </summary>
+        public int? RolloutRing
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RolloutRing;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterManagerProperties();
+                }
+                Properties.RolloutRing = value;
+            }
+        }
+
         /// <summary> The size of the Azure virtual machines to use for hosting the cluster manager resource. </summary>
         public string VmSize
         {

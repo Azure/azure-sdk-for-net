@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         private const string PrivateVaultValue = "PrivateVault";
         /// <summary> The access bridge for access to the storage dashboard. </summary>
         private const string StorageDashboardValue = "StorageDashboard";
+        /// <summary> The access bridge for edge management. </summary>
+        private const string EdgeManagementValue = "EdgeManagement";
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudAccessBridgeAllowedName"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -40,6 +42,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> The access bridge for access to the storage dashboard. </summary>
         public static NetworkCloudAccessBridgeAllowedName StorageDashboard { get; } = new NetworkCloudAccessBridgeAllowedName(StorageDashboardValue);
+
+        /// <summary> The access bridge for edge management. </summary>
+        public static NetworkCloudAccessBridgeAllowedName EdgeManagement { get; } = new NetworkCloudAccessBridgeAllowedName(EdgeManagementValue);
 
         /// <summary> Determines if two <see cref="NetworkCloudAccessBridgeAllowedName"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

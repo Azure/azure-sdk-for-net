@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             TryGetApiVersion(ResourceType, out string networkCloudStorageApplianceApiVersion);
             _storageAppliancesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ResourceType.Namespace, Diagnostics);
-            _storageAppliancesRestClient = new StorageAppliances(_storageAppliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudStorageApplianceApiVersion ?? "2026-07-01");
+            _storageAppliancesRestClient = new StorageAppliances(_storageAppliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudStorageApplianceApiVersion ?? "2026-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

@@ -27,11 +27,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of <see cref="NetworkCloudClusterManagerPatch"/>. </summary>
         /// <param name="identity"> The identity for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The list of cluster manager properties to patch. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudClusterManagerPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkCloudClusterManagerPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, ClusterManagerPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             Tags = tags;
+            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,5 +42,25 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+
+        /// <summary> The list of cluster manager properties to patch. </summary>
+        internal ClusterManagerPatchProperties Properties { get; set; }
+
+        /// <summary> The relative ordering group used to apply software updates to associated clusters. The minimum accepted value is 1; the service enforces the upper bound currently in effect, which may change over time. </summary>
+        public int? ClusterManagerPatchRolloutRing
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RolloutRing;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ClusterManagerPatchProperties();
+                }
+                Properties.RolloutRing = value;
+            }
+        }
     }
 }

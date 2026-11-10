@@ -1,5 +1,20 @@
 # Release History
 
+## 1.5.0-beta.1 (Unreleased)
+
+### Features Added
+
+- Added support for API version `2026-08-01-preview`.
+- Added secret archive provider configuration models for CyberArk, HashiCorp Vault, and OpenBao, along with encryption public key support.
+- Added cluster manager rollout ring configuration.
+- Added the cluster edge management service CA certificate and the `EdgeManagement` access bridge name.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.4.0 (2026-10-08)
 
 ### Features Added
