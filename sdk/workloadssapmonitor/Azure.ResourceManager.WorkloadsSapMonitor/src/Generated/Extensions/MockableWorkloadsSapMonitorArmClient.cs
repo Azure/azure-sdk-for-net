@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.WorkloadsSapMonitor;
@@ -49,6 +50,15 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Mocking
         /// <returns> Returns a <see cref="SapLandscapeMonitorResource"/> object. </returns>
         public virtual SapLandscapeMonitorResource GetSapLandscapeMonitorResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != SapLandscapeMonitorResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Workloads", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "monitors", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "sapLandscapeMonitor", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}/sapLandscapeMonitor/default"), nameof(id));
+            }
             SapLandscapeMonitorResource.ValidateResourceId(id);
             return new SapLandscapeMonitorResource(Client, id);
         }

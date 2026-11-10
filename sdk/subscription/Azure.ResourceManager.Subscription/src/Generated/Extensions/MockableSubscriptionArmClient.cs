@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Subscription;
@@ -40,6 +41,15 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <returns> Returns a <see cref="TenantPolicyResource"/> object. </returns>
         public virtual TenantPolicyResource GetTenantPolicyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != TenantPolicyResource.ResourceType || segments.Length != 5 || segments[0] != "" || !string.Equals(segments[1], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[2], "Microsoft.Subscription", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[3], "policies", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[4], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/providers/Microsoft.Subscription/policies/default"), nameof(id));
+            }
             TenantPolicyResource.ValidateResourceId(id);
             return new TenantPolicyResource(Client, id);
         }
@@ -50,6 +60,10 @@ namespace Azure.ResourceManager.Subscription.Mocking
         public virtual BillingAccountPolicyResource GetBillingAccountPolicyResource(ResourceIdentifier id)
         {
             BillingAccountPolicyResource.ValidateResourceId(id);
+            if (id != null && id.ResourceType == BillingAccountPolicyResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new BillingAccountPolicyResource(Client, id);
         }
 
@@ -66,6 +80,15 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <returns> Returns a <see cref="TargetDirectoryResultResource"/> object. </returns>
         public virtual TargetDirectoryResultResource GetTargetDirectoryResultResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != TargetDirectoryResultResource.ResourceType || segments.Length != 7 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[4], "Microsoft.Subscription", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[5], "changeTenantRequest", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/providers/Microsoft.Subscription/changeTenantRequest/default"), nameof(id));
+            }
             TargetDirectoryResultResource.ValidateResourceId(id);
             return new TargetDirectoryResultResource(Client, id);
         }
