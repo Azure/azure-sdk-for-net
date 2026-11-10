@@ -13,67 +13,67 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Text
 {
-    /// <summary> The AnalyzeTextSubmitJobRequest. </summary>
-    internal partial class AnalyzeTextSubmitJobRequest : IJsonModel<AnalyzeTextSubmitJobRequest>
+    /// <summary> The AnalyzeTextSubmitJobContent. </summary>
+    internal partial class AnalyzeTextSubmitJobContent : IJsonModel<AnalyzeTextSubmitJobContent>
     {
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextSubmitJobRequest"/> for deserialization. </summary>
-        internal AnalyzeTextSubmitJobRequest()
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextSubmitJobContent"/> for deserialization. </summary>
+        internal AnalyzeTextSubmitJobContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AnalyzeTextSubmitJobRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AnalyzeTextSubmitJobContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextSubmitJobRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextSubmitJobContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAnalyzeTextSubmitJobRequest(document.RootElement, options);
+                        return DeserializeAnalyzeTextSubmitJobContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeTextSubmitJobRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalyzeTextSubmitJobContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextSubmitJobRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextSubmitJobContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAILanguageTextContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzeTextSubmitJobRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalyzeTextSubmitJobContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AnalyzeTextSubmitJobRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AnalyzeTextSubmitJobContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AnalyzeTextSubmitJobRequest IPersistableModel<AnalyzeTextSubmitJobRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AnalyzeTextSubmitJobContent IPersistableModel<AnalyzeTextSubmitJobContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AnalyzeTextSubmitJobRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AnalyzeTextSubmitJobContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="analyzeTextSubmitJobRequest"> The <see cref="AnalyzeTextSubmitJobRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(AnalyzeTextSubmitJobRequest analyzeTextSubmitJobRequest)
+        /// <param name="analyzeTextSubmitJobContent"> The <see cref="AnalyzeTextSubmitJobContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(AnalyzeTextSubmitJobContent analyzeTextSubmitJobContent)
         {
-            if (analyzeTextSubmitJobRequest == null)
+            if (analyzeTextSubmitJobContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(analyzeTextSubmitJobRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(analyzeTextSubmitJobContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AnalyzeTextSubmitJobRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AnalyzeTextSubmitJobContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -84,10 +84,10 @@ namespace Azure.AI.Language.Text
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextSubmitJobRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextSubmitJobContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalyzeTextSubmitJobRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalyzeTextSubmitJobContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -132,24 +132,24 @@ namespace Azure.AI.Language.Text
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AnalyzeTextSubmitJobRequest IJsonModel<AnalyzeTextSubmitJobRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AnalyzeTextSubmitJobContent IJsonModel<AnalyzeTextSubmitJobContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AnalyzeTextSubmitJobRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AnalyzeTextSubmitJobContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextSubmitJobRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextSubmitJobContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalyzeTextSubmitJobRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalyzeTextSubmitJobContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAnalyzeTextSubmitJobRequest(document.RootElement, options);
+            return DeserializeAnalyzeTextSubmitJobContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AnalyzeTextSubmitJobRequest DeserializeAnalyzeTextSubmitJobRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static AnalyzeTextSubmitJobContent DeserializeAnalyzeTextSubmitJobContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -202,7 +202,7 @@ namespace Azure.AI.Language.Text
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AnalyzeTextSubmitJobRequest(
+            return new AnalyzeTextSubmitJobContent(
                 displayName,
                 textInput,
                 actions ?? new ChangeTrackingList<AnalyzeTextOperationAction>(),
