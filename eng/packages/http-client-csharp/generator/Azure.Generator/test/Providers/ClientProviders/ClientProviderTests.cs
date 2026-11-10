@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace Azure.Generator.Tests.Providers.ClientProviders
 {
@@ -145,6 +146,88 @@ namespace Azure.Generator.Tests.Providers.ClientProviders
             {
                 ValidatePrimaryConstructor(primaryPublicConstructors[i], inputParameters, i);
             }
+        }
+
+        [Test]
+        public void PagingOperationsHandleContinuationToken(
+            [Values] bool hasNextLink,
+            [Values] bool isHeader,
+            [Values] bool isContinuationToken,
+            [Values] bool emptyTokenSegments)
+        {
+            var (inputClient, item, page, method) = CreateContinuationTokenPagingClient(
+                hasNextLink, isHeader, isContinuationToken, emptyTokenSegments);
+            MockHelpers.LoadMockGenerator(inputModels: () => [item, page], clients: () => [inputClient]);
+            var client = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
+            var methods = new ScmMethodProviderCollection(method, client);
+
+            Assert.AreEqual(4, methods.Count);
+            client.Update(methods: methods, constructors: [], properties: [], fields: [], nestedTypes: []);
+            var file = new TypeProviderWriter(client).Write();
+            Assert.AreEqual(Helpers.GetExpectedFromFile((hasNextLink && isContinuationToken).ToString()), file.Content);
+        }
+
+        [Test]
+        public async Task BackCompatibility_NextLinkContinuationToken()
+        {
+            var (inputClient, item, page, _) = CreateContinuationTokenPagingClient();
+            await MockHelpers.LoadMockGeneratorAsync(
+                inputModels: () => [item, page],
+                clients: () => [inputClient],
+                lastContractCompilation: () => Helpers.GetCompilationFromDirectoryAsync());
+            var client = new TestClientProvider(inputClient);
+            client.ApplyBackCompatibility();
+
+            var methods = client.Methods.Where(m => m.Signature.Name is "GetItems" or "GetItemsAsync").ToArray();
+            Assert.AreEqual(8, methods.Length);
+            Assert.AreEqual(4, methods.Count(m => m.Signature.Parameters.All(p => p.Name != "token")));
+            Assert.AreEqual(4, methods.Count(m => m.Signature.Parameters.Any(p => p.Name == "token")));
+
+            client.Update(methods: methods, constructors: [], properties: [], fields: [], nestedTypes: []);
+            var file = new TypeProviderWriter(client).Write();
+            Assert.AreEqual(Helpers.GetExpectedFromFile(), file.Content);
+        }
+
+        private static (InputClient Client, InputModelType Item, InputModelType Page, InputPagingServiceMethod Method)
+            CreateContinuationTokenPagingClient(
+                bool hasNextLink = true,
+                bool isHeader = false,
+                bool isContinuationToken = true,
+                bool emptyTokenSegments = false)
+        {
+            InputParameter token = isHeader
+                ? InputFactory.HeaderParameter("token", InputPrimitiveType.String)
+                : InputFactory.QueryParameter("token", InputPrimitiveType.String);
+            var methodToken = InputFactory.MethodParameter("token", InputPrimitiveType.String,
+                location: isHeader ? InputRequestLocation.Header : InputRequestLocation.Query);
+            token.Update(isContinuationToken: isContinuationToken,
+                methodParameterSegments: emptyTokenSegments ? [] : [methodToken]);
+            if (emptyTokenSegments)
+            {
+                methodToken.Update(isContinuationToken: isContinuationToken);
+            }
+
+            var item = InputFactory.Model("Item");
+            var page = InputFactory.Model("Page", properties:
+            [
+                InputFactory.Property("items", InputFactory.Array(item)),
+                InputFactory.Property("nextLink", InputPrimitiveType.Url),
+                InputFactory.Property("nextToken", InputPrimitiveType.String)
+            ]);
+            var operation = InputFactory.Operation("GetItems", parameters:
+            [
+                token,
+                InputFactory.QueryParameter("filter", InputPrimitiveType.String)
+            ], responses: [InputFactory.OperationResponse([200], page)]);
+            var method = InputFactory.PagingServiceMethod("GetItems", operation, parameters:
+            [
+                methodToken,
+                InputFactory.MethodParameter("filter", InputPrimitiveType.String, location: InputRequestLocation.Query)
+            ], pagingMetadata: InputFactory.PagingMetadata(
+                ["items"],
+                hasNextLink ? new InputNextLink(null, ["nextLink"], InputResponseLocation.Body, null) : null,
+                hasNextLink ? null : new InputContinuationToken(token, ["nextToken"], InputResponseLocation.Body)));
+            return (InputFactory.Client(TestClientName, methods: [method]), item, page, method);
         }
 
         private void ValidatePrimaryConstructor(
@@ -300,6 +383,16 @@ namespace Azure.Generator.Tests.Providers.ClientProviders
         }
 
         public record ExpectedFieldProvider(FieldModifiers Modifiers, ExpectedCSharpType Type, string Name);
+
+        private sealed class TestClientProvider : ClientProvider
+        {
+            public TestClientProvider(InputClient client) : base(client)
+            {
+            }
+
+            public void ApplyBackCompatibility()
+                => Update(methods: base.BuildMethodsForBackCompatibility(Methods));
+        }
 
         private static void AssertCSharpTypeAreEqual(ExpectedCSharpType expected, CSharpType type)
         {
