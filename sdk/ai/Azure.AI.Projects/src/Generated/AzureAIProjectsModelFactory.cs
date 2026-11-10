@@ -742,11 +742,11 @@ namespace Azure.AI.Projects
         /// <summary> Represents a request for a pending upload of a model version. </summary>
         /// <param name="pendingUploadId"> If PendingUploadId is not provided, a random GUID will be used. </param>
         /// <param name="connectionName"> Azure Storage Account connection name to use for generating temporary SAS token. </param>
-        /// <returns> A new <see cref="Projects.ModelPendingUploadRequest"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Projects.ModelPendingUploadContent"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ModelPendingUploadRequest ModelPendingUploadRequest(string pendingUploadId = default, string connectionName = default)
+        public static ModelPendingUploadContent ModelPendingUploadContent(string pendingUploadId = default, string connectionName = default)
         {
-            return new ModelPendingUploadRequest(pendingUploadId, connectionName, "TemporaryBlobReference", additionalBinaryDataProperties: null);
+            return new ModelPendingUploadContent(pendingUploadId, connectionName, "TemporaryBlobReference", additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents the response for a model pending upload request. </summary>
@@ -762,11 +762,11 @@ namespace Azure.AI.Projects
 
         /// <summary> Request to fetch credentials for a model asset. </summary>
         /// <param name="blobUri"> Blob URI of the model asset to fetch credentials for. </param>
-        /// <returns> A new <see cref="Projects.ModelCredentialRequest"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Projects.ModelCredentialContent"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ModelCredentialRequest ModelCredentialRequest(Uri blobUri = default)
+        public static ModelCredentialContent ModelCredentialContent(Uri blobUri = default)
         {
-            return new ModelCredentialRequest(blobUri, additionalBinaryDataProperties: null);
+            return new ModelCredentialContent(blobUri, additionalBinaryDataProperties: null);
         }
 
         /// <summary>

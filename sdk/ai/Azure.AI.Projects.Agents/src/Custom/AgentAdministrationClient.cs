@@ -27,8 +27,8 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("CreateAgentFromCodeAsync", typeof(string), typeof(string), typeof(AgentFromCodeOptions), typeof(CancellationToken))]
 [CodeGenSuppress("UpdateAgentFromCode", typeof(string), typeof(string), typeof(BinaryContent), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("UpdateAgentFromCodeAsync", typeof(string), typeof(string), typeof(BinaryContent), typeof(string), typeof(RequestOptions))]
-[CodeGenSuppress("UpdateAgentFromCode", typeof(string), typeof(string), typeof(CreateAgentVersionFromCodeRequest), typeof(CancellationToken))]
-[CodeGenSuppress("UpdateAgentFromCodeAsync", typeof(string), typeof(string), typeof(CreateAgentVersionFromCodeRequest), typeof(CancellationToken))]
+[CodeGenSuppress("UpdateAgentFromCode", typeof(string), typeof(string), typeof(CreateAgentVersionFromCodeContent), typeof(CancellationToken))]
+[CodeGenSuppress("UpdateAgentFromCodeAsync", typeof(string), typeof(string), typeof(CreateAgentVersionFromCodeContent), typeof(CancellationToken))]
 [CodeGenSuppress("GetAgents", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetAgentsAsync", typeof(string), typeof(int?), typeof(string), typeof(string), typeof(string), typeof(RequestOptions))]
 [CodeGenSuppress("GetAgentVersions", typeof(string), typeof(int?), typeof(AgentListOrder?), typeof(string), typeof(string), typeof(AgentDefinitionOptInKeys?), typeof(bool?), typeof(CancellationToken))]
@@ -607,7 +607,7 @@ public partial class AgentAdministrationClient
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-        CreateSessionRequest spreadModel = new CreateSessionRequest(agentSessionId, versionIndicator, default);
+        CreateSessionContent spreadModel = new CreateSessionContent(agentSessionId, versionIndicator, default);
         ClientResult result = CreateSession(agentName, spreadModel, cancellationToken.ToRequestOptions());
         return ClientResult.FromValue((ProjectAgentSession)result, result.GetRawResponse());
     }
@@ -628,7 +628,7 @@ public partial class AgentAdministrationClient
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-        CreateSessionRequest spreadModel = new CreateSessionRequest(agentSessionId, versionIndicator, default);
+        CreateSessionContent spreadModel = new CreateSessionContent(agentSessionId, versionIndicator, default);
         ClientResult result = await CreateSessionAsync(agentName, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         return ClientResult.FromValue((ProjectAgentSession)result, result.GetRawResponse());
     }
@@ -1145,7 +1145,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     [Experimental("AAIP001")]
-    public virtual ClientResult<ProjectsAgentRecord> GenerateAgent(GenerateVoiceAgentRequest body, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ProjectsAgentRecord> GenerateAgent(GenerateVoiceAgentContent body, CancellationToken cancellationToken = default)
     {
         return GenerateAgent(
             body: ModelReaderWriter.Write(body, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default),
@@ -1162,7 +1162,7 @@ public partial class AgentAdministrationClient
     /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     [Experimental("AAIP001")]
-    public virtual async Task<ClientResult<ProjectsAgentRecord>> GenerateAgentAsync(GenerateVoiceAgentRequest body, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ProjectsAgentRecord>> GenerateAgentAsync(GenerateVoiceAgentContent body, CancellationToken cancellationToken = default)
     {
         return await GenerateAgentAsync(
             body: ModelReaderWriter.Write(body, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default),

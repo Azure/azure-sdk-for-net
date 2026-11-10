@@ -13,11 +13,6 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> Input configuration for the evaluation taxonomy when the input type is agent. </summary>
     public partial class AgentTaxonomyInput : EvaluationTaxonomyInput, IJsonModel<AgentTaxonomyInput>
     {
-        /// <summary> Initializes a new instance of <see cref="AgentTaxonomyInput"/> for deserialization. </summary>
-        internal AgentTaxonomyInput()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EvaluationTaxonomyInput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

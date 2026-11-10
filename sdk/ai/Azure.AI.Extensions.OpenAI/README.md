@@ -537,7 +537,7 @@ Configure an Agent endpoint for Responses protocol.
 ```C# Snippet:Sample_CreateTheEndpoint_HostedAgent_Sync
 AgentEndpointConfiguration config = new()
 {
-    VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+    VersionSelector = new() { VersionSelectionRules = { new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100) } },
     ProtocolConfiguration = new()
     {
         Responses = new()
