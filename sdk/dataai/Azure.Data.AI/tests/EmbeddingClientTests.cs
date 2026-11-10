@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using NUnit.Framework;
 
@@ -149,6 +150,66 @@ namespace Azure.Data.AI.Tests
             Assert.That(response.Value.Data[1], Is.TypeOf<MultimodalDenseEmbedding>());
         }
 
+        [TestCase(false, 2560)]
+        [TestCase(true, 2560)]
+        [TestCase(false, null)]
+        [TestCase(true, null)]
+        public async Task FlattenedCallsAcceptQueryAndImageWithModelSettings(bool async, int? dimensions)
+        {
+            var contents = new[]
+            {
+                new EmbeddingContentItem(EmbeddingContentKind.Query)
+                {
+                    Id = "map-question",
+                    Content = "Which walking route follows the lake?"
+                },
+                new EmbeddingContentItem(EmbeddingContentKind.Image)
+                {
+                    Id = "trail-map",
+                    Uri = new Uri("https://example.blob.core.windows.net/images/trail.png"),
+                    SasToken = "fake-sas"
+                }
+            };
+            using var handler = new EmbeddingHandler(contents, "dense", new Dictionary<string, object>
+            {
+                ["model"] = "microsoft-embedding-1-large",
+                ["modelVersion"] = "test-model-version",
+                ["dimensions"] = dimensions,
+                ["delivery"] = "inline"
+            }, useTokenCredential: true);
+            using var httpClient = new HttpClient(handler);
+            var client = CreateClient(httpClient, useTokenCredential: true);
+
+            Response<MultimodalEmbeddingResult> response = async
+                ? await client.GetMultimodalEmbeddingsAsync(
+                    contents: contents,
+                    model: "microsoft-embedding-1-large",
+                    modelVersion: "test-model-version",
+                    dimensions: dimensions,
+                    delivery: EmbeddingDelivery.Inline)
+                : client.GetMultimodalEmbeddings(
+                    contents: contents,
+                    model: "microsoft-embedding-1-large",
+                    modelVersion: "test-model-version",
+                    dimensions: dimensions,
+                    delivery: EmbeddingDelivery.Inline);
+
+            Assert.That(handler.RequestCount, Is.EqualTo(1));
+            Assert.That(response.Value.Model, Is.EqualTo("microsoft-embedding-1-large"));
+            Assert.That(response.Value.ModelVersion, Is.EqualTo("test-model-version"));
+            Assert.That(response.Value.Output, Is.Null);
+            Assert.That(response.Value.Data, Has.Count.EqualTo(2));
+            for (int index = 0; index < contents.Length; index++)
+            {
+                MultimodalEmbeddingItem item = response.Value.Data[index];
+                Assert.That(item.Index, Is.EqualTo(index));
+                Assert.That(item.Id, Is.EqualTo(contents[index].Id));
+                Assert.That(item.ContentKind, Is.EqualTo(contents[index].Kind));
+                Assert.That(item, Is.TypeOf<MultimodalDenseEmbedding>());
+                AssertVector(((MultimodalDenseEmbedding)item).Embedding, dimensions: dimensions ?? 2);
+            }
+        }
+
         [Test]
         public void WarningCodeNumberPreservesNumberWireName()
         {
@@ -217,15 +278,20 @@ namespace Azure.Data.AI.Tests
             Assert.That(json.RootElement.TryGetProperty("uri", out _), Is.False);
         }
 
-        private static InferenceClient CreateClient(HttpClient httpClient) =>
-            new InferenceClient(new Uri("https://example.inference.azure.com"), new AzureKeyCredential("api-key"),
-                new InferenceClientOptions { Transport = new HttpClientTransport(httpClient) });
+        private static InferenceClient CreateClient(HttpClient httpClient, bool useTokenCredential = false)
+        {
+            var endpoint = new Uri("https://example.inference.azure.com");
+            var options = new InferenceClientOptions { Transport = new HttpClientTransport(httpClient) };
+            return useTokenCredential
+                ? new InferenceClient(endpoint, new TestCredential(), options)
+                : new InferenceClient(endpoint, new AzureKeyCredential("api-key"), options);
+        }
 
-        private static void AssertVector(BinaryData data, bool multiVector = false)
+        private static void AssertVector(BinaryData data, bool multiVector = false, int dimensions = 2)
         {
             using JsonDocument json = JsonDocument.Parse(data.ToString());
             JsonElement vector = multiVector ? json.RootElement[0] : json.RootElement;
-            Assert.That(vector.GetArrayLength(), Is.EqualTo(2));
+            Assert.That(vector.GetArrayLength(), Is.EqualTo(dimensions));
             Assert.That(vector[0].GetSingle(), Is.EqualTo(0.25f));
             Assert.That(vector[1].GetSingle(), Is.EqualTo(0.5f));
         }
@@ -235,13 +301,15 @@ namespace Azure.Data.AI.Tests
             private readonly IReadOnlyList<EmbeddingContentItem> _contents;
             private readonly IReadOnlyDictionary<string, object> _expectedOptions;
             private readonly string _kind;
+            private readonly bool _useTokenCredential;
 
             public EmbeddingHandler(IReadOnlyList<EmbeddingContentItem> contents, string kind,
-                IReadOnlyDictionary<string, object> expectedOptions = null)
+                IReadOnlyDictionary<string, object> expectedOptions = null, bool useTokenCredential = false)
             {
                 _contents = contents;
                 _expectedOptions = expectedOptions ?? new Dictionary<string, object>();
                 _kind = kind;
+                _useTokenCredential = useTokenCredential;
             }
 
             public int RequestCount { get; private set; }
@@ -258,24 +326,41 @@ namespace Azure.Data.AI.Tests
                 Assert.That(request.Method, Is.EqualTo(HttpMethod.Post));
                 Assert.That(request.RequestUri.AbsolutePath, Is.EqualTo("/inference/embedding"));
                 Assert.That(request.RequestUri.Query, Is.EqualTo("?api-version=2026-11-01-preview"));
-                Assert.That(request.Headers.GetValues("Ocp-Apim-Subscription-Key"), Is.EquivalentTo(new[] { "api-key" }));
+                if (_useTokenCredential)
+                {
+                    Assert.That(request.Headers.Authorization?.Scheme, Is.EqualTo("Bearer"));
+                    Assert.That(request.Headers.Authorization?.Parameter, Is.EqualTo("token"));
+                    Assert.That(request.Headers.Contains("Ocp-Apim-Subscription-Key"), Is.False);
+                }
+                else
+                {
+                    Assert.That(request.Headers.GetValues("Ocp-Apim-Subscription-Key"), Is.EquivalentTo(new[] { "api-key" }));
+                }
                 Assert.That(request.Content.Headers.ContentType.MediaType, Is.EqualTo("application/json"));
                 using JsonDocument json = JsonDocument.Parse(await request.Content.ReadAsStringAsync().ConfigureAwait(false));
                 JsonElement body = json.RootElement;
                 Assert.That(body.GetProperty("contents").GetArrayLength(), Is.EqualTo(_contents.Count));
-                JsonElement content = body.GetProperty("contents")[0];
-                Assert.That(content.GetProperty("kind").GetString(), Is.EqualTo("text"));
-                Assert.That(content.TryGetProperty("type", out _), Is.False);
-                Assert.That(content.GetProperty("id").GetString(), Is.EqualTo("item-1"));
-                Assert.That(content.GetProperty("content").GetString(), Is.EqualTo("document"));
-                if (_contents.Count == 2)
+                for (int index = 0; index < _contents.Count; index++)
                 {
-                    JsonElement image = body.GetProperty("contents")[1];
-                    Assert.That(image.GetProperty("kind").GetString(), Is.EqualTo("image"));
-                    Assert.That(image.GetProperty("url").GetString(), Is.EqualTo(_contents[1].Uri.AbsoluteUri));
-                    Assert.That(image.GetProperty("sasToken").GetString(), Is.EqualTo("fake-sas"));
-                    Assert.That(image.TryGetProperty("uri", out _), Is.False);
-                    Assert.That(image.TryGetProperty("type", out _), Is.False);
+                    JsonElement content = body.GetProperty("contents")[index];
+                    EmbeddingContentItem expected = _contents[index];
+                    Assert.That(content.GetProperty("kind").GetString(), Is.EqualTo(expected.Kind.ToString()));
+                    Assert.That(content.GetProperty("id").GetString(), Is.EqualTo(expected.Id));
+                    if (expected.Content != null)
+                    {
+                        Assert.That(content.GetProperty("content").GetString(), Is.EqualTo(expected.Content));
+                    }
+                    if (expected.Uri != null)
+                    {
+                        Assert.That(content.GetProperty("url").GetString(), Is.EqualTo(expected.Uri.AbsoluteUri));
+                    }
+                    if (expected.SasToken != null)
+                    {
+                        Assert.That(content.GetProperty("sasToken").GetString(), Is.EqualTo(expected.SasToken));
+                    }
+                    Assert.That(content.TryGetProperty("type", out _), Is.False);
+                    Assert.That(content.TryGetProperty("uri", out _), Is.False);
+                    Assert.That(content.TryGetProperty("sas_token", out _), Is.False);
                 }
                 foreach (string property in new[]
                 {
@@ -295,22 +380,29 @@ namespace Azure.Data.AI.Tests
                 Assert.That(body.TryGetProperty("outputDtype", out _), Is.False);
                 Assert.That(body.TryGetProperty("vectorType", out _), Is.False);
                 Assert.That(body.TryGetProperty("maxVectorCount", out _), Is.False);
+                Assert.That(body.TryGetProperty("inputs", out _), Is.False);
+                Assert.That(body.TryGetProperty("model_version", out _), Is.False);
 
+                var vector = new[] { 0.25f, 0.5f };
+                if (_expectedOptions.TryGetValue("dimensions", out object dimensions) && dimensions is int width)
+                {
+                    Array.Resize(ref vector, width);
+                }
                 var data = new Dictionary<string, object>
                 {
                     ["index"] = 0,
-                    ["id"] = "item-1",
-                    ["contentKind"] = "text",
+                    ["id"] = _contents[0].Id,
+                    ["contentKind"] = _contents[0].Kind.ToString(),
                     ["kind"] = _kind
                 };
                 if (_kind == "dense" || _kind == "dense_multi")
                 {
-                    data["embedding"] = new[] { 0.25f, 0.5f };
+                    data["embedding"] = vector;
                 }
                 if (_kind == "multi" || _kind == "dense_multi")
                 {
                     data["shape"] = new[] { 1, 2 };
-                    data["multiEmbedding"] = new[] { new[] { 0.25f, 0.5f } };
+                    data["multiEmbedding"] = new[] { vector };
                 }
                 var responseData = new List<object>();
                 if (_kind != "link")
@@ -321,18 +413,18 @@ namespace Azure.Data.AI.Tests
                         responseData.Add(new
                         {
                             index = 1,
-                            id = "item-2",
-                            contentKind = "image",
+                            id = _contents[1].Id,
+                            contentKind = _contents[1].Kind.ToString(),
                             kind = "dense",
-                            embedding = new[] { 0.25f, 0.5f }
+                            embedding = vector
                         });
                     }
                 }
                 var response = new Dictionary<string, object>
                 {
                     ["object"] = "list",
-                    ["model"] = "test-model",
-                    ["modelVersion"] = "v1",
+                    ["model"] = _expectedOptions.TryGetValue("model", out object model) ? model : "test-model",
+                    ["modelVersion"] = _expectedOptions.TryGetValue("modelVersion", out object modelVersion) ? modelVersion : "v1",
                     ["outputDataKind"] = "float16",
                     ["data"] = responseData,
                     ["usage"] = new { totalTokens = 2, imageCount = _contents.Count - 1 }
@@ -356,6 +448,18 @@ namespace Azure.Data.AI.Tests
                     Content = new StringContent(JsonSerializer.Serialize(response))
                 };
             }
+        }
+
+        private sealed class TestCredential : TokenCredential
+        {
+            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+            {
+                Assert.That(requestContext.Scopes, Is.EqualTo(new[] { "https://dbinference.azure.com/.default" }));
+                return new AccessToken("token", DateTimeOffset.MaxValue);
+            }
+
+            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
+                new ValueTask<AccessToken>(GetToken(requestContext, cancellationToken));
         }
     }
 }
