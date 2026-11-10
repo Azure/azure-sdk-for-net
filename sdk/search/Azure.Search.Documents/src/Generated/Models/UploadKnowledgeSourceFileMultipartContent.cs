@@ -13,16 +13,16 @@ using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Multipart request for updating a file in a File knowledge source. </summary>
-    public partial class UpdateKnowledgeSourceFileRequest
+    /// <summary> Multipart request for uploading a file to a File knowledge source. </summary>
+    public partial class UploadKnowledgeSourceFileMultipartContent
     {
-        /// <summary> Initializes a new instance of <see cref="UpdateKnowledgeSourceFileRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UploadKnowledgeSourceFileMultipartContent"/>. </summary>
         /// <param name="metadata"> The JSON metadata describing the file. </param>
         /// <param name="contentPath"> The file path for the content file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> or <paramref name="contentPath"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="contentPath"/> is an empty string, and was expected to be non-empty. </exception>
         [Experimental("SCME0004")]
-        public UpdateKnowledgeSourceFileRequest(FileUploadMetadata metadata, string contentPath)
+        public UploadKnowledgeSourceFileMultipartContent(FileUploadMetadata metadata, string contentPath)
         {
             Argument.AssertNotNull(metadata, nameof(metadata));
             Argument.AssertNotNullOrEmpty(contentPath, nameof(contentPath));
@@ -31,12 +31,12 @@ namespace Azure.Search.Documents.Indexes.Models
             Content = new FileBinaryContent(contentPath);
         }
 
-        /// <summary> Initializes a new instance of <see cref="UpdateKnowledgeSourceFileRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UploadKnowledgeSourceFileMultipartContent"/>. </summary>
         /// <param name="metadata"> The JSON metadata describing the file. </param>
         /// <param name="content"> The content for the content file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> or <paramref name="content"/> is null. </exception>
         [Experimental("SCME0004")]
-        public UpdateKnowledgeSourceFileRequest(FileUploadMetadata metadata, Stream content)
+        public UploadKnowledgeSourceFileMultipartContent(FileUploadMetadata metadata, Stream content)
         {
             Argument.AssertNotNull(metadata, nameof(metadata));
             Argument.AssertNotNull(content, nameof(content));
@@ -45,12 +45,12 @@ namespace Azure.Search.Documents.Indexes.Models
             Content = new FileBinaryContent(content);
         }
 
-        /// <summary> Initializes a new instance of <see cref="UpdateKnowledgeSourceFileRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UploadKnowledgeSourceFileMultipartContent"/>. </summary>
         /// <param name="metadata"> The JSON metadata describing the file. </param>
         /// <param name="content"> The content for the content file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> or <paramref name="content"/> is null. </exception>
         [Experimental("SCME0004")]
-        public UpdateKnowledgeSourceFileRequest(FileUploadMetadata metadata, BinaryData content)
+        public UploadKnowledgeSourceFileMultipartContent(FileUploadMetadata metadata, BinaryData content)
         {
             Argument.AssertNotNull(metadata, nameof(metadata));
             Argument.AssertNotNull(content, nameof(content));
@@ -59,12 +59,12 @@ namespace Azure.Search.Documents.Indexes.Models
             Content = new FileBinaryContent(content);
         }
 
-        /// <summary> Initializes a new instance of <see cref="UpdateKnowledgeSourceFileRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UploadKnowledgeSourceFileMultipartContent"/>. </summary>
         /// <param name="metadata"> The JSON metadata describing the file. </param>
         /// <param name="content"> The raw file content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> or <paramref name="content"/> is null. </exception>
         [Experimental("SCME0004")]
-        public UpdateKnowledgeSourceFileRequest(FileUploadMetadata metadata, FileBinaryContent content)
+        public UploadKnowledgeSourceFileMultipartContent(FileUploadMetadata metadata, FileBinaryContent content)
         {
             Argument.AssertNotNull(metadata, nameof(metadata));
             Argument.AssertNotNull(content, nameof(content));
