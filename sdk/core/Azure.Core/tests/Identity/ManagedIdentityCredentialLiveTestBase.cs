@@ -5,10 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Security.KeyVault.Secrets;
 using NUnit.Framework;
-
-using Azure.Identity;
 namespace Azure.Core.Tests.Identity
 {
     [NonParallelizable]
@@ -24,9 +23,9 @@ namespace Azure.Core.Tests.Identity
         {
         }
 
-        protected IDisposable ReadOrRestoreManagedIdentityEnvironment()
+        protected IDisposable ReadOrRestoreManagedIdentityEnvironment(Dictionary<string, string> additionalVariables = null)
         {
-            return new ManagedIdenityEnvironment(TestEnvironment);
+            return new ManagedIdenityEnvironment(TestEnvironment, additionalVariables);
         }
 
         [SetUp]
@@ -48,17 +47,25 @@ namespace Azure.Core.Tests.Identity
         {
             private readonly TestEnvVar _envVar;
 
-            public ManagedIdenityEnvironment(IdentityTestEnvironment env)
+            public ManagedIdenityEnvironment(IdentityTestEnvironment env, Dictionary<string, string> additionalVariables)
             {
-                _envVar =
-                    new TestEnvVar(
-                        new Dictionary<string, string>
-                        {
-                            { "IDENTITY_ENDPOINT", env.IdentityEndpoint },
-                            { "IMDS_ENDPOINT", env.ImdsEndpoint },
-                            { "MSI_ENDPOINT", env.MsiEndpoint },
-                            { "MSI_SECRET", env.MsiSecret },{ "IDENTITY_HEADER", env.IdentityHeader },
-                            { "IDENTITY_SERVER_THUMBPRINT", env.IdentityServerThumbprint } });
+                var variables = new Dictionary<string, string>
+                {
+                    { "IDENTITY_ENDPOINT", env.IdentityEndpoint },
+                    { "IMDS_ENDPOINT", env.ImdsEndpoint },
+                    { "MSI_ENDPOINT", env.MsiEndpoint },
+                    { "MSI_SECRET", env.MsiSecret },
+                    { "IDENTITY_HEADER", env.IdentityHeader },
+                    { "IDENTITY_SERVER_THUMBPRINT", env.IdentityServerThumbprint }
+                };
+                if (additionalVariables != null)
+                {
+                    foreach (var variable in additionalVariables)
+                    {
+                        variables[variable.Key] = variable.Value;
+                    }
+                }
+                _envVar = new TestEnvVar(variables);
             }
 
             public void Dispose()

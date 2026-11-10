@@ -92,7 +92,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _acronymWidgetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _sourceIPv6Address, sourceIPAddress, context);
+                HttpMessage message = _acronymWidgetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _sourceIPv6Address, sourceIPAddress, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AcronymWidgetData> response = Response.FromValue(AcronymWidgetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -141,7 +141,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _acronymWidgetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _sourceIPv6Address, sourceIPAddress, context);
+                HttpMessage message = _acronymWidgetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _sourceIPv6Address, sourceIPAddress, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AcronymWidgetData> response = Response.FromValue(AcronymWidgetData.FromResponse(result), result);
                 if (response.Value == null)
@@ -258,7 +258,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _acronymWidgetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _sourceIPv6Address, sourceIPAddress, context);
+                HttpMessage message = _acronymWidgetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _sourceIPv6Address, sourceIPAddress, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AcronymWidgetData> response = default;
@@ -315,7 +315,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _acronymWidgetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _sourceIPv6Address, sourceIPAddress, context);
+                HttpMessage message = _acronymWidgetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _sourceIPv6Address, sourceIPAddress, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AcronymWidgetData> response = default;
@@ -372,7 +372,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _acronymWidgetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _sourceIPv6Address, sourceIPAddress, context);
+                HttpMessage message = _acronymWidgetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _sourceIPv6Address, sourceIPAddress, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<AcronymWidgetData> response = default;
@@ -433,7 +433,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _acronymWidgetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _sourceIPv6Address, sourceIPAddress, context);
+                HttpMessage message = _acronymWidgetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, _sourceIPv6Address, sourceIPAddress, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<AcronymWidgetData> response = default;

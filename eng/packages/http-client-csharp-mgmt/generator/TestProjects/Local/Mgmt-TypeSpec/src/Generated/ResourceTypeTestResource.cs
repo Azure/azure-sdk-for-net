@@ -125,7 +125,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _resourceTypeTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _resourceTypeTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceTypeTestResourceData> response = Response.FromValue(ResourceTypeTestResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _resourceTypeTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _resourceTypeTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceTypeTestResourceData> response = Response.FromValue(ResourceTypeTestResourceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -226,7 +226,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _resourceTypeTestsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResourceTypeTestResourceData.ToRequestContent(data), context);
+                HttpMessage message = _resourceTypeTestsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResourceTypeTestResourceData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ResourceTypeTestResourceData> response = Response.FromValue(ResourceTypeTestResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -282,7 +282,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _resourceTypeTestsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResourceTypeTestResourceData.ToRequestContent(data), context);
+                HttpMessage message = _resourceTypeTestsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ResourceTypeTestResourceData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ResourceTypeTestResourceData> response = Response.FromValue(ResourceTypeTestResourceData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -324,7 +324,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _resourceTypeTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _resourceTypeTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ResourceTypeTestResourceData> response = Response.FromValue(ResourceTypeTestResourceData.FromResponse(result), result);
                     return Response.FromValue(new ResourceTypeTestResource(Client, response.Value), response.GetRawResponse());
@@ -367,7 +367,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _resourceTypeTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _resourceTypeTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ResourceTypeTestResourceData> response = Response.FromValue(ResourceTypeTestResourceData.FromResponse(result), result);
                     return Response.FromValue(new ResourceTypeTestResource(Client, response.Value), response.GetRawResponse());
@@ -408,7 +408,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _resourceTypeTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _resourceTypeTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ResourceTypeTestResourceData> response = Response.FromValue(ResourceTypeTestResourceData.FromResponse(result), result);
                     return Response.FromValue(new ResourceTypeTestResource(Client, response.Value), response.GetRawResponse());
@@ -449,7 +449,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _resourceTypeTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _resourceTypeTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ResourceTypeTestResourceData> response = Response.FromValue(ResourceTypeTestResourceData.FromResponse(result), result);
                     return Response.FromValue(new ResourceTypeTestResource(Client, response.Value), response.GetRawResponse());
@@ -490,7 +490,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _resourceTypeTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _resourceTypeTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                     Response<ResourceTypeTestResourceData> response = Response.FromValue(ResourceTypeTestResourceData.FromResponse(result), result);
                     return Response.FromValue(new ResourceTypeTestResource(Client, response.Value), response.GetRawResponse());
@@ -531,7 +531,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         CancellationToken = cancellationToken
                     };
-                    using HttpMessage message = _resourceTypeTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _resourceTypeTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
                     Response<ResourceTypeTestResourceData> response = Response.FromValue(ResourceTypeTestResourceData.FromResponse(result), result);
                     return Response.FromValue(new ResourceTypeTestResource(Client, response.Value), response.GetRawResponse());

@@ -17,11 +17,6 @@ namespace Azure.AI.Projects.Evaluation
     /// </summary>
     public partial class AzureAIAgentTarget : EvaluationTarget, IJsonModel<AzureAIAgentTarget>
     {
-        /// <summary> Initializes a new instance of <see cref="AzureAIAgentTarget"/> for deserialization. </summary>
-        internal AzureAIAgentTarget()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EvaluationTarget PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.LargeHeader.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = LargeHeadersRestClient.CreateTwo6kRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, largeHeaderName, context);
+                HttpMessage message = LargeHeadersRestClient.CreateTwo6kRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, largeHeaderName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 LargeHeaderArmOperation<CancelResult> operation = new LargeHeaderArmOperation<CancelResult>(
                     new CancelResultOperationSource(),
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.LargeHeader.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = LargeHeadersRestClient.CreateTwo6kRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, largeHeaderName, context);
+                HttpMessage message = LargeHeadersRestClient.CreateTwo6kRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, largeHeaderName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 LargeHeaderArmOperation<CancelResult> operation = new LargeHeaderArmOperation<CancelResult>(
                     new CancelResultOperationSource(),
