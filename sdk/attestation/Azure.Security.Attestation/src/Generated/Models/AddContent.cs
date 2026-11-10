@@ -10,23 +10,23 @@ using System.Collections.Generic;
 
 namespace Azure.Security.Attestation
 {
-    /// <summary> The AddRequest. </summary>
-    internal partial class AddRequest
+    /// <summary> The AddContent. </summary>
+    internal partial class AddContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AddRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddContent"/>. </summary>
         /// <param name="policyCertificateToAdd"> The certificate to add, as a string (e.g., PEM or JWK). </param>
-        internal AddRequest(string policyCertificateToAdd)
+        internal AddContent(string policyCertificateToAdd)
         {
             PolicyCertificateToAdd = policyCertificateToAdd;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AddRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddContent"/>. </summary>
         /// <param name="policyCertificateToAdd"> The certificate to add, as a string (e.g., PEM or JWK). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AddRequest(string policyCertificateToAdd, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AddContent(string policyCertificateToAdd, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicyCertificateToAdd = policyCertificateToAdd;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
