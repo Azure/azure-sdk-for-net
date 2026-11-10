@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ProviderHub;
@@ -31,6 +32,15 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         /// <returns> Returns a <see cref="OperationsPutContentResource"/> object. </returns>
         public virtual OperationsPutContentResource GetOperationsPutContentResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != OperationsPutContentResource.ResourceType || segments.Length != 9 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[4], "Microsoft.ProviderHub", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[5], "providerRegistrations", StringComparison.OrdinalIgnoreCase) || segments[6] == "" || !string.Equals(segments[7], "operations", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[8], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/operations/default"), nameof(id));
+            }
             OperationsPutContentResource.ValidateResourceId(id);
             return new OperationsPutContentResource(Client, id);
         }
