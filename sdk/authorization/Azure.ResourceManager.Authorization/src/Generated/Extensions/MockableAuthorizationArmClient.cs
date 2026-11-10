@@ -267,6 +267,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         public virtual ScopeAccessReviewDefaultSettingResource GetScopeAccessReviewDefaultSettingResource(ResourceIdentifier id)
         {
             ScopeAccessReviewDefaultSettingResource.ValidateResourceId(id);
+            if (id != null && id.ResourceType == ScopeAccessReviewDefaultSettingResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new ScopeAccessReviewDefaultSettingResource(Client, id);
         }
 
@@ -960,6 +964,15 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <returns> Returns a <see cref="AccessReviewDefaultSettingResource"/> object. </returns>
         public virtual AccessReviewDefaultSettingResource GetAccessReviewDefaultSettingResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != AccessReviewDefaultSettingResource.ResourceType || segments.Length != 7 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[4], "Microsoft.Authorization", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[5], "accessReviewScheduleSettings", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/accessReviewScheduleSettings/default"), nameof(id));
+            }
             AccessReviewDefaultSettingResource.ValidateResourceId(id);
             return new AccessReviewDefaultSettingResource(Client, id);
         }
