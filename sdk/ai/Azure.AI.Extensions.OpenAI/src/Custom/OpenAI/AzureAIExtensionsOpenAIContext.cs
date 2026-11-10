@@ -9,6 +9,9 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
+#pragma warning disable AAIP002
+    [ModelReaderWriterBuildable(typeof(ComputerTool))]
+#pragma warning restore AAIP002
     public partial class AzureAIExtensionsOpenAIContext
     {
         // Registers custom type builders that the source generator cannot emit:

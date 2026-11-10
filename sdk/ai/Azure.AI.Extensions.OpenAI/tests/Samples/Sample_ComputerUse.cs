@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -43,9 +42,8 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
     private static string ProcessComputerUseCall(ComputerCallResponseItem item, string oldScreenshot)
     {
         string currentScreenshot = oldScreenshot;
-        foreach (ReadOnlyMemory<byte> actionJson in item.Patch.EnumerateArray("$.actions"u8))
+        foreach (ComputerCallAction action in item.Actions)
         {
-            ComputerCallAction action = ModelReaderWriter.Read<ComputerCallAction>(BinaryData.FromBytes(actionJson));
             switch (action.Kind)
             {
                 case ComputerCallActionKind.Type:
@@ -133,7 +131,7 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
             Instructions = "You are a computer automation assistant.\n\n" +
                            "Be direct and efficient. When you reach the search results page, read and describe the actual search result titles and descriptions you can see.",
             Tools = {
-                ModelReaderWriter.Read<ResponseTool>(BinaryData.FromObjectAsJson(new { type = "computer" })),
+                new ComputerTool(),
             }
         };
         ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
@@ -232,7 +230,7 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
             Instructions = "You are a computer automation assistant.\n\n" +
                            "Be direct and efficient. When you reach the search results page, read and describe the actual search result titles and descriptions you can see.",
             Tools = {
-                ModelReaderWriter.Read<ResponseTool>(BinaryData.FromObjectAsJson(new { type = "computer" })),
+                new ComputerTool(),
             }
         };
         ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(

@@ -771,7 +771,7 @@ Console.WriteLine($"PDF downloaded and saved to: {Path.GetFullPath("results.pdf"
 
 ### Computer use
 
-`ComputerTool` allows Agents to assist customer in computer related tasks. Its constructor is provided with description of an operation system and screen resolution.
+`ComputerTool` allows Agents to assist customer in computer related tasks.
 
 ```C# Snippet:Sample_CreateAgent_ComputerUse_Async
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -779,7 +779,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a computer automation assistant.\n\n" +
                    "Be direct and efficient. When you reach the search results page, read and describe the actual search result titles and descriptions you can see.",
     Tools = {
-        ModelReaderWriter.Read<ResponseTool>(BinaryData.FromObjectAsJson(new { type = "computer" })),
+        new ComputerTool(),
     }
 };
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
@@ -834,9 +834,8 @@ The Agent in turn can analyze it, and return actions, user need to do, then user
 private static string ProcessComputerUseCall(ComputerCallResponseItem item, string oldScreenshot)
 {
     string currentScreenshot = oldScreenshot;
-    foreach (ReadOnlyMemory<byte> actionJson in item.Patch.EnumerateArray("$.actions"u8))
+    foreach (ComputerCallAction action in item.Actions)
     {
-        ComputerCallAction action = ModelReaderWriter.Read<ComputerCallAction>(BinaryData.FromBytes(actionJson));
         switch (action.Kind)
         {
             case ComputerCallActionKind.Type:
