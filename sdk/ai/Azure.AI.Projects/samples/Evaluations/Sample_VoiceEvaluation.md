@@ -188,9 +188,10 @@ Existing agents and input assets are never deleted. Generated conversation datas
 are not removed by evaluation cleanup.
 
 ```C# Snippet:Sample_VoiceEvaluation_Run
-internal static async Task RunEvaluationAsync(
+internal static async Task<IReadOnlyList<string>> RunEvaluationAsync(
     EvaluationClient client, BinaryData definition, BinaryData runData,
-    CancellationToken cancellationToken = default)
+    CancellationToken cancellationToken = default,
+    Func<CancellationToken, Task> pollingDelay = null)
 {
     using CancellationTokenSource timeout = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
     timeout.CancelAfter(TimeSpan.FromMinutes(10));
@@ -209,7 +210,7 @@ internal static async Task RunEvaluationAsync(
         Console.WriteLine($"Evaluation: {evaluationId}, run: {runId}");
         while (status is not ("completed" or "failed" or "canceled" or "cancelled"))
         {
-            await Task.Delay(TimeSpan.FromSeconds(5), timeout.Token);
+            await (pollingDelay?.Invoke(timeout.Token) ?? Task.Delay(TimeSpan.FromSeconds(5), timeout.Token));
             run = await client.GetEvaluationRunAsync(evaluationId, runId, options);
             status = ParseClientResult(run, ["status"])["status"];
         }
@@ -217,7 +218,8 @@ internal static async Task RunEvaluationAsync(
         {
             throw new InvalidOperationException($"Evaluation run {status}: {GetErrorMessageOrEmpty(run)}");
         }
-        foreach (string item in await GetResultsListAsync(client, evaluationId, runId))
+        IReadOnlyList<string> results = await GetResultsListAsync(client, evaluationId, runId);
+        foreach (string item in results)
         {
             Console.WriteLine(item);
         }
@@ -228,6 +230,7 @@ internal static async Task RunEvaluationAsync(
         {
             throw new InvalidOperationException("The evaluation has execution errors or produced no items.");
         }
+        return results;
     }
     finally
     {
@@ -263,3 +266,54 @@ private static string GetRequiredVariable(string name) =>
         ? value
         : throw new InvalidOperationException($"Set {name} before running this sample.");
 ```
+
+## Recorded integration coverage
+
+The separate `VoiceEvaluationRecordedTests` fixture exercises these same helpers
+through instrumented project and OpenAI clients. The samples retain their live-only
+convention. Both recorded tests require every expected grader to complete with a
+finite numeric score; a low score or `passed: false` is a valid result, not an
+execution failure. Polling delays are omitted during playback.
+
+For recording, configure these variables in the test environment file:
+
+| Workflow | Variables |
+| --- | --- |
+| Existing recording | `FOUNDRY_VOICE_EVALUATION_PROJECT_ENDPOINT`, `FOUNDRY_VOICE_EVALUATION_MODEL_NAME`, `FOUNDRY_DATASET_ID` |
+| Voice simulation | `FOUNDRY_VOICE_SIMULATION_PROJECT_ENDPOINT`, `FOUNDRY_VOICE_SIMULATION_MODEL_NAME`, `FOUNDRY_AGENT_NAME`, `FOUNDRY_AGENT_VERSION`, `FOUNDRY_SIMULATOR_MODEL_NAME`, `FOUNDRY_SIMULATOR_VOICE` |
+
+The workflow-specific model variables identify the audio judge deployment. Separate
+endpoints allow recording against different projects. Supply an existing synthetic
+JSONL/WAV dataset for the first workflow and an existing store-hours voice agent,
+simulator deployment, and supported speech voice for the second. The tests create
+and clean up evaluations, but do not provision or delete those input resources.
+Use the package's usual test credentials, or `USE_CLI_CREDENTIAL=true` with an
+authenticated Azure CLI. Set `CLIENTMODEL_DISABLE_BOOTSTRAPPING=true` to prevent
+automatic resource provisioning if a required variable is missing.
+
+To prepare a fresh re-recording fixture, create one short synthetic store-hours
+conversation WAV and follow the [dataset upload sample](../Sample1_Datasets.md)
+to upload and register it as a recording asset. Create a separate one-row,
+transcript-free JSONL file containing
+`{"conversation_artifacts":{"audio":{"asset_id":"<registered recording ID>","asset_file_path":"recordings/conversation.wav"}}}`.
+Use the recording's registered `azureai://` ID with `/datasets/` in `asset_id`,
+and its actual relative WAV member path in `asset_file_path`, not a local path or
+SAS URL. Upload and register this JSONL separately using the same sample, then set
+`FOUNDRY_DATASET_ID` to the JSONL dataset ID, not the recording asset ID. The
+existing audio judge and, for simulation, voice agent remain prerequisites;
+any completed, finite low score is a valid result.
+
+Run these tests through the Azure SDK test runner. To restrict its package-wide
+invocation, set
+`VSTestTestCaseFilter=FullyQualifiedName~Azure.AI.Projects.Tests.VoiceEvaluationRecordedTests`
+in the environment file passed to the runner. Append
+`&FullyQualifiedName~RecordedConversationAsync` or
+`&FullyQualifiedName~VoiceAgentSimulationAsync` to record just one workflow.
+Set `BuildSnippets=true` in that file to select the repository's current LTS test
+framework (`net10.0`) without forcing analyzer project references to that framework.
+Do not set the global `TargetFramework` environment variable. The voice fixture
+and helpers do not have snippet-only conditional behavior.
+Use a runner timeout of at least 1800 seconds for both
+workflows, or 1200 seconds for one. Recordings
+sanitize the project identifiers, judge, dataset, agent, simulator model, and SAS
+parameters; playback uses the recorded environment values without live resources.
