@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
@@ -24,6 +25,17 @@ namespace Azure.Storage.Blobs.Test
         public BlobBaseClientSessionAuthenticationTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer("<SessionToken>(?<group>[^<]+)</SessionToken>")
+            {
+                GroupForReplace = "group",
+                Value = SanitizeValue
+            });
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer("<SessionKey>(?<group>[^<]+)</SessionKey>")
+            {
+                GroupForReplace = "group",
+                // Playback still needs a valid Base64 HMAC key.
+                Value = Convert.ToBase64String(new byte[32])
+            });
         }
 
         [RecordedTest]
@@ -626,6 +638,67 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(1, countingPolicy.NonGetSessionAuthCount, "Expected GetProperties to use Session authorization");
             Assert.AreEqual(0, countingPolicy.GetSessionAuthCount, "Expected no Get Blob requests");
             Assert.AreEqual(1, countingPolicy.BearerNonGetCount, "Expected only CreateSession to use Bearer authorization");
+        }
+
+        [RecordedTest]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task ExistsAsync_Sessions(bool exists)
+        {
+            await GetAuthToken();
+
+            string containerName = GetNewContainerName();
+            SessionAuthCountingPolicy countingPolicy = new SessionAuthCountingPolicy(containerName);
+            BlobClientOptions options = GetOptions();
+            options.SessionOptions = new SessionOptions
+            {
+                SessionMode = SessionMode.Enabled,
+            };
+            options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
+            BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
+            await using DisposingContainer test = await GetTestContainerAsync(containerName: containerName, service: oauthServiceClient);
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            if (exists)
+            {
+                byte[] data = GetRandomBuffer(Constants.KB);
+                using MemoryStream stream = new MemoryStream(data);
+                await blob.UploadAsync(stream);
+            }
+
+            countingPolicy.Start();
+            Response<bool> response = await blob.ExistsAsync();
+
+            Assert.AreEqual(exists, response.Value);
+            Assert.AreEqual(1, countingPolicy.CreateSessionCount, "Expected Exists to create a session");
+            Assert.AreEqual(1, countingPolicy.NonGetSessionAuthCount, "Expected Exists to use Session authorization");
+            Assert.AreEqual(1, countingPolicy.BearerNonGetCount, "Expected only CreateSession to use Bearer authorization");
+        }
+
+        [RecordedTest]
+        public async Task ExistsAsync_Sessions_ContainerNotExists()
+        {
+            await GetAuthToken();
+
+            string containerName = GetNewContainerName();
+            SessionAuthCountingPolicy countingPolicy = new SessionAuthCountingPolicy(containerName);
+            BlobClientOptions options = GetOptions();
+            options.SessionOptions = new SessionOptions
+            {
+                SessionMode = SessionMode.Enabled,
+            };
+            options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
+            BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
+            BlobClient blob = InstrumentClient(oauthServiceClient
+                .GetBlobContainerClient(containerName)
+                .GetBlobClient(GetNewBlobName()));
+
+            countingPolicy.Start();
+            Response<bool> response = await blob.ExistsAsync();
+
+            Assert.IsFalse(response.Value);
+            Assert.AreEqual(1, countingPolicy.CreateSessionCount, "Expected Exists to attempt session creation");
+            Assert.AreEqual(0, countingPolicy.NonGetSessionAuthCount, "Expected no Session authorization when session creation fails");
+            Assert.AreEqual(2, countingPolicy.BearerNonGetCount, "Expected CreateSession and Exists to use Bearer authorization");
         }
 
         [RecordedTest]

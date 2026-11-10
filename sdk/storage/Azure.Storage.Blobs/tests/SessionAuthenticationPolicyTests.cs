@@ -915,8 +915,9 @@ namespace Azure.Storage.Blobs.Tests
             VerifyBearerPolicyInvoked(mockBearer, Times.Never());
         }
 
-        [Test]
-        public void SessionAcquireFails_404_Propagates()
+        [TestCase("GET")]
+        [TestCase("HEAD")]
+        public async Task SessionAcquireFails_404_ContainerNotFound_FallsBackToBearer(string method)
         {
             var mockBearer = CreateMockBearerPolicy();
             var policy = CreateSessionPolicy(
@@ -924,12 +925,12 @@ namespace Azure.Storage.Blobs.Tests
                 EnabledOptions,
                 CreateSessionErrorResponse(404, "ContainerNotFound"));
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await SendBlobGetAsync(
+            await SendBlobGetAsync(
                 policy,
                 BlobUri,
-                RequestMethod.Get,
-                CreateBlobGetResponse(200)));
-            VerifyBearerPolicyInvoked(mockBearer, Times.Never());
+                new RequestMethod(method),
+                CreateBlobGetResponse(200));
+            VerifyBearerPolicyInvoked(mockBearer, Times.Once());
         }
 
         #endregion
@@ -938,13 +939,14 @@ namespace Azure.Storage.Blobs.Tests
         /// <summary>
         /// Every fallback-eligible CreateSession failure caches a fallback-to-bearer
         /// sentinel, so subsequent requests reuse it instead of re-attempting acquisition.
-        /// 5xx, 403, and 400/FeatureNotEnabled all use the same 5 minute cooldown.
-        /// All three must suppress re-acquisition within the test's time window.
+        /// All fallback-eligible failures use the same 5 minute cooldown and suppress
+        /// re-acquisition within the test's time window.
         /// </summary>
         [TestCase(500, "InternalError")]
         [TestCase(503, "ServerBusy")]
         [TestCase(403, "Forbidden")]
         [TestCase(400, "FeatureNotEnabled")]
+        [TestCase(404, "ContainerNotFound")]
         public async Task SessionAcquireFails_CooldownPreventsRepeatAcquisition(int statusCode, string errorCode)
         {
             const int requestCount = 5;
@@ -1736,12 +1738,12 @@ namespace Azure.Storage.Blobs.Tests
 
         /// <summary>
         /// Builds client options wired to <paramref name="provider"/> and to a
-        /// data-plane transport that serves a single blob download.
+        /// data-plane transport that serves the supplied response or a single blob download.
         /// </summary>
         private static (BlobClientOptions Options, MockTransport DataTransport) CreateWiredClientOptions(
-            SessionProvider provider)
+            SessionProvider provider, MockResponse dataResponse = null)
         {
-            var dataTransport = new MockTransport(CreateBlobDownloadResponse());
+            var dataTransport = new MockTransport(dataResponse ?? CreateBlobDownloadResponse());
             var options = new BlobClientOptions
             {
                 Transport = dataTransport,
@@ -1776,6 +1778,60 @@ namespace Azure.Storage.Blobs.Tests
                 "Data-plane request should carry an Authorization header.");
             Assert.IsTrue(auth.StartsWith($"Session {expectedToken}:", StringComparison.Ordinal),
                 $"Expected session auth using the supplied provider's token, got: {auth}");
+        }
+
+        [TestCase(200, null, true)]
+        [TestCase(404, "BlobNotFound", false)]
+        [TestCase(404, "ContainerNotFound", false)]
+        public async Task BlobClient_Exists_SessionContainerNotFound_PreservesResponse(
+            int statusCode,
+            string errorCode,
+            bool expectedExists)
+        {
+            (ContainerSessionProvider provider, MockTransport createSessionTransport) = CreateProvider(
+                CreateSessionErrorResponse(404, "ContainerNotFound"));
+            MockResponse response = CreateBlobGetResponse(statusCode: statusCode, errorCode: errorCode);
+            (BlobClientOptions options, MockTransport dataTransport) = CreateWiredClientOptions(provider, response);
+            BlobClient client = new BlobClient(BlobUri, new StaticTokenCredential(), options);
+
+            Response<bool> result = _async
+                ? await client.ExistsAsync()
+                : client.Exists();
+
+            Assert.AreEqual(expectedExists, result.Value);
+            Assert.AreSame(response, result.GetRawResponse());
+            Assert.AreEqual(1, createSessionTransport.Requests.Count);
+            Assert.AreEqual(1, dataTransport.Requests.Count);
+            Assert.AreEqual(RequestMethod.Head, dataTransport.Requests[0].Method);
+            Assert.IsTrue(dataTransport.Requests[0].Headers.TryGetValue("Authorization", out string auth));
+            Assert.That(auth, Does.StartWith("Bearer "));
+        }
+
+        [Test]
+        public void BlobClient_GetProperties_SessionContainerNotFound_PreservesError()
+        {
+            (ContainerSessionProvider provider, MockTransport createSessionTransport) = CreateProvider(
+                CreateSessionErrorResponse(404, "ContainerNotFound"));
+            MockResponse response = CreateBlobGetResponse(statusCode: 404, errorCode: "BlobNotFound");
+            (BlobClientOptions options, MockTransport dataTransport) = CreateWiredClientOptions(provider, response);
+            BlobClient client = new BlobClient(BlobUri, new StaticTokenCredential(), options);
+
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                if (_async)
+                {
+                    await client.GetPropertiesAsync();
+                }
+                else
+                {
+                    client.GetProperties();
+                }
+            });
+
+            Assert.AreEqual(404, exception.Status);
+            Assert.AreEqual("BlobNotFound", exception.ErrorCode);
+            Assert.AreEqual(1, createSessionTransport.Requests.Count);
+            Assert.AreEqual(1, dataTransport.Requests.Count);
         }
 
         [Test]

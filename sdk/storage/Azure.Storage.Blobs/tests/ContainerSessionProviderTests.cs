@@ -323,13 +323,14 @@ namespace Azure.Storage.Blobs.Tests
 
         #region Fallback Cooldown
         /// <summary>
-        /// Every fallback-eligible CreateSession failure (5xx, 403, or 400 FeatureNotEnabled)
-        /// produces a fallback-to-bearer sentinel cached for the same 5 minute cooldown.
+        /// Every fallback-eligible CreateSession failure produces a fallback-to-bearer
+        /// sentinel cached for the same 5 minute cooldown.
         /// </summary>
         [TestCase(500, "InternalError")]
         [TestCase(503, "ServerBusy")]
         [TestCase(403, "AuthorizationFailure")]
         [TestCase(400, "FeatureNotEnabled")]
+        [TestCase(404, "ContainerNotFound")]
         public async Task AcquireFails_FallbackEligible_UsesFiveMinuteCooldown(int statusCode, string errorCode)
         {
             TimeSpan expectedCooldown = TimeSpan.FromMinutes(5);
@@ -360,7 +361,8 @@ namespace Azure.Storage.Blobs.Tests
         }
 
         [TestCase(400, "InvalidInput")]
-        [TestCase(404, "ContainerNotFound")]
+        [TestCase(404, "BlobNotFound")]
+        [TestCase(404, null)]
         [TestCase(409, "ContainerBeingDeleted")]
         public void AcquireFails_NotFallbackEligible_Propagates(int statusCode, string errorCode)
         {
