@@ -17,13 +17,8 @@ namespace Azure.Template
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WidgetSuite"/>. </summary>
-        /// <param name="manufacturerId"> The ID of the widget's manufacturer. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="manufacturerId"/> is null. </exception>
-        public WidgetSuite(string manufacturerId)
+        public WidgetSuite()
         {
-            Argument.AssertNotNull(manufacturerId, nameof(manufacturerId));
-
-            ManufacturerId = manufacturerId;
         }
 
         /// <summary> Initializes a new instance of <see cref="WidgetSuite"/>. </summary>
