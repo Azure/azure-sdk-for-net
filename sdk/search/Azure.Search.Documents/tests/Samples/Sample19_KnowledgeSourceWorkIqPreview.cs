@@ -4,9 +4,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 #region Snippet:Azure_Search_Tests_Samples_Sample19_WorkIqKS_Namespaces
+using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.KnowledgeBases;
@@ -154,11 +155,16 @@ namespace Azure.Search.Documents.Tests.Samples
                 #region Snippet:Azure_Search_Tests_Samples_Sample19_WorkIqKS_Retrieve
                 // Retrieve from the knowledge base — Work IQ queries M365 data.
                 // Note: Work IQ may take 40-60 seconds, so set a generous maxRuntimeInSeconds.
+                // The Work IQ user assertion authenticates on behalf of the user to Work IQ.
+                // Do not reuse a Search access token here.
+                string queryWorkIQSourceAuthorization = Environment.GetEnvironmentVariable("WORK_IQ_USER_ASSERTION");
+                SearchClientOptions retrievalOptions = new SearchClientOptions();
+                retrievalOptions.AddPolicy(new WorkIQAuthorizationPolicy(queryWorkIQSourceAuthorization), HttpPipelinePosition.PerCall);
                 KnowledgeBaseRetrievalClient retrievalClient = new KnowledgeBaseRetrievalClient(
-                    endpoint, knowledgeBaseName, credential);
+                    endpoint, knowledgeBaseName, credential, retrievalOptions);
 #if !SNIPPET
                 retrievalClient = InstrumentClient(new KnowledgeBaseRetrievalClient(
-                    endpoint, testBaseName, credential, InstrumentClientOptions(new SearchClientOptions())));
+                    endpoint, testBaseName, credential, InstrumentClientOptions(retrievalOptions)));
 #endif
 
                 KnowledgeBaseRetrievalRequest request = new KnowledgeBaseRetrievalRequest
@@ -180,14 +186,9 @@ namespace Azure.Search.Documents.Tests.Samples
                 // It is separate from the Work IQ user assertion.
                 string querySourceAuthorization = Environment.GetEnvironmentVariable("SEARCH_QUERY_SOURCE_AUTH");
 
-                // The Work IQ user assertion represents the user for on-behalf-of
-                // authentication to Work IQ. Do not reuse a Search access token here.
-                string queryWorkIQSourceAuthorization = Environment.GetEnvironmentVariable("WORK_IQ_USER_ASSERTION");
-
                 Response<KnowledgeBaseRetrievalResponse> response = await retrievalClient.RetrieveAsync(
                     request,
-                    querySourceAuthorization: querySourceAuthorization,
-                    queryWorkIQSourceAuthorization: queryWorkIQSourceAuthorization);
+                    querySourceAuthorization: querySourceAuthorization);
                 KnowledgeBaseRetrievalResponse retrievalResponse = response.Value;
 
                 foreach (KnowledgeBaseMessage message in retrievalResponse.Response)
@@ -205,7 +206,6 @@ namespace Azure.Search.Documents.Tests.Samples
                 foreach (KnowledgeBaseReference reference in retrievalResponse.References)
                 {
                     Console.WriteLine($"Reference ID: {reference.Id}");
-
                     if (reference is KnowledgeBaseWorkIQReference workIqRef)
                     {
                         Console.WriteLine($"  Work IQ reference data:");
@@ -232,5 +232,18 @@ namespace Azure.Search.Documents.Tests.Samples
                 }
             }
         }
+
+        #region Snippet:Azure_Search_Tests_Samples_Sample19_WorkIqKS_AuthorizationPolicy
+        private sealed class WorkIQAuthorizationPolicy(string userAssertion) : HttpPipelineSynchronousPolicy
+        {
+            public override void OnSendingRequest(HttpMessage message)
+            {
+                if (!string.IsNullOrEmpty(userAssertion))
+                {
+                    message.Request.Headers.SetValue("x-ms-query-workiq-source-authorization", userAssertion);
+                }
+            }
+        }
+        #endregion Snippet:Azure_Search_Tests_Samples_Sample19_WorkIqKS_AuthorizationPolicy
     }
 }

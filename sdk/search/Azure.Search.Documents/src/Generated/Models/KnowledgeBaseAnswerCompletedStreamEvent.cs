@@ -11,8 +11,15 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Emitted when an answer message is complete. </summary>
-    public sealed partial class KnowledgeBaseAnswerCompletedStreamEvent : KnowledgeBaseRetrievalStreamEvent
+    public partial class KnowledgeBaseAnswerCompletedStreamEvent : KnowledgeBaseRetrievalStreamEvent
     {
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAnswerCompletedStreamEvent"/>. </summary>
+        /// <param name="value"> The completed answer payload. </param>
+        internal KnowledgeBaseAnswerCompletedStreamEvent(KnowledgeBaseAnswerCompletedEvent value)
+        {
+            Value = value;
+        }
+
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAnswerCompletedStreamEvent"/>. </summary>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The completed answer payload. </param>
@@ -20,5 +27,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         {
             Value = value;
         }
+
+        /// <summary> The completed answer payload. </summary>
+        public KnowledgeBaseAnswerCompletedEvent Value { get; }
     }
 }

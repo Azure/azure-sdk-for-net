@@ -8,14 +8,20 @@
 - Added graph queries with typed results, diagnostics, statistics, explain plans, and provenance, along with graph knowledge source extraction, grounding, and retrieval models.
 - Added topic-graph vector search profiles and discriminated `NoneVectorQueryTopicGraph`, `DiverseVectorQueryTopicGraph`, and `BalancedVectorQueryTopicGraph` query options.
 - Added facet-based filter-hint `AutoConfiguration`, knowledge source enrichment caching, and the `Gpt6Astra`, `Gpt6Sol`, `Gpt6Luna`, and `Gpt61Sol` model names.
-- Added random scoring profiles with optional query-time seeds, agentic search options, and more-like-this queries.
+- Added random scoring profiles with optional query-time seeds and agentic search options.
 - Restored preview indexer cache, query, and knowledge retrieval capabilities from the full preview specification.
+- Carried forward the `2026-10-01` GA service version, knowledge base streaming contracts, document lookup authorization options, and token-credential client registration overloads.
 
 ### Breaking Changes
 
 - Renamed the preview `GetIndexStatsSummary` and `GetKnowledgeSourceFiles` pageable methods to `GetAllIndexStatsSummary` and `GetAllKnowledgeSourceFiles`. Generated pageable APIs for synonym maps, indexers, data sources, and skillsets now use `GetAll*` names; the existing buffered list APIs remain available.
 - Updated preview knowledge source query-hint and retrieval models to match the `2026-11-01-preview` contract.
 - Renamed the preview activity record property `ElapsedInMs` to `ElapsedMs`.
+- Aligned preview knowledge base streaming models, retrieval overloads, and model factories with the October GA SDK contract.
+
+### Bugs Fixed
+
+- Preserved October GA model factory signatures, defaults, and scoring values while exposing preview-only response properties through additional factory overloads. Corrected selected-index listing forwarding, indexing configuration serialization, semantic and vector option roundtripping, and culture-sensitive numeric conversions.
 
 ## 12.1.0-beta.3 (2026-09-14)
 

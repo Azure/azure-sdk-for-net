@@ -84,6 +84,36 @@ namespace Azure.Search.Documents.Tests
                 "\"topicGraph\":{\"kind\":\"balanced\",\"minDiversityPoolSize\":1000}")
                 .SetName("Serializes_VectorTopicGraph");
 
+            yield return new TestCaseData(
+                (Action<SearchOptions>)(o => o.VectorSearch = new VectorSearchOptions
+                {
+                    Queries =
+                    {
+                        new VectorizedQuery(new[] { 0.1f, 0.2f })
+                        {
+                            Fields = { "contentVector" },
+                            TopicGraph = new DiverseVectorQueryTopicGraph { DiversityFactor = 0.5f, MinDiversityPoolSize = 1000 }
+                        }
+                    }
+                }),
+                "\"topicGraph\":{\"kind\":\"diverse\",\"diversityFactor\":0.5,\"minDiversityPoolSize\":1000}")
+                .SetName("Serializes_DiverseVectorTopicGraph");
+
+            yield return new TestCaseData(
+                (Action<SearchOptions>)(o => o.VectorSearch = new VectorSearchOptions
+                {
+                    Queries =
+                    {
+                        new VectorizedQuery(new[] { 0.1f, 0.2f })
+                        {
+                            Fields = { "contentVector" },
+                            TopicGraph = new NoneVectorQueryTopicGraph()
+                        }
+                    }
+                }),
+                "\"topicGraph\":{\"kind\":\"none\"}")
+                .SetName("Serializes_DisabledVectorTopicGraph");
+
             // Filter
             yield return new TestCaseData(
                 (Action<SearchOptions>)(o => o.Filter = "rating gt 4"),
@@ -213,7 +243,7 @@ namespace Azure.Search.Documents.Tests
             configure(searchOptions);
 
             // Act: trigger the search request
-            await client.SearchAsync<SearchDocument>("*", searchOptions);
+            await client.SearchAsync<SearchDocument>(searchOptions.MoreLikeThis is null ? "*" : null, searchOptions);
 
             // Assert: check the request body contains the expected JSON fragment
             var request = transport.Requests.Single();

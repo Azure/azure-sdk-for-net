@@ -14,7 +14,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Emitted when the references used by the response are available. </summary>
-    public sealed partial class KnowledgeBaseReferencesCompletedStreamEvent : KnowledgeBaseRetrievalStreamEvent, IJsonModel<KnowledgeBaseReferencesCompletedStreamEvent>
+    public partial class KnowledgeBaseReferencesCompletedStreamEvent : KnowledgeBaseRetrievalStreamEvent, IJsonModel<KnowledgeBaseReferencesCompletedStreamEvent>
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseReferencesCompletedStreamEvent"/> for deserialization. </summary>
         internal KnowledgeBaseReferencesCompletedStreamEvent()
@@ -115,7 +115,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 return null;
             }
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IReadOnlyList<KnowledgeBaseReference> value = default;
+            IList<KnowledgeBaseReference> value = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))

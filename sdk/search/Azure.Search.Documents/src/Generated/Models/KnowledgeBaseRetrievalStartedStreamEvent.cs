@@ -11,8 +11,15 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Emitted after retrieval preflight validation completes. </summary>
-    public sealed partial class KnowledgeBaseRetrievalStartedStreamEvent : KnowledgeBaseRetrievalStreamEvent
+    public partial class KnowledgeBaseRetrievalStartedStreamEvent : KnowledgeBaseRetrievalStreamEvent
     {
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseRetrievalStartedStreamEvent"/>. </summary>
+        /// <param name="value"> The retrieval-started payload. </param>
+        internal KnowledgeBaseRetrievalStartedStreamEvent(KnowledgeBaseRetrievalStartedEvent value)
+        {
+            Value = value;
+        }
+
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseRetrievalStartedStreamEvent"/>. </summary>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The retrieval-started payload. </param>
@@ -20,5 +27,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         {
             Value = value;
         }
+
+        /// <summary> The retrieval-started payload. </summary>
+        public KnowledgeBaseRetrievalStartedEvent Value { get; }
     }
 }

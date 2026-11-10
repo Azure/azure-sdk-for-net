@@ -638,6 +638,7 @@ namespace Azure.Search.Documents.Tests
 
         [Test]
         [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
+        [Ignore("Temporarily disabled: Vision VectorizeSkill is not supported in the PPE Search service's region.")]
         public async Task RoundtripAllSkills()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);

@@ -98,7 +98,7 @@ try
                 break;
         }
 
-        terminalEventReceived = item.Data.IsTerminal;
+        terminalEventReceived = item.EventType is "response.completed" or "error";
 
         // EventId and ReconnectionInterval contain optional SSE protocol metadata.
         if (!string.IsNullOrEmpty(item.EventId))

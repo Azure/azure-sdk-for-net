@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.Search.Documents.Tests
 {
@@ -76,6 +78,11 @@ namespace Azure.Search.Documents.Tests
         public string SearchStorageKey => GetRecordedVariable(StorageAccountKeyVariableName, options => options.IsSecret());
 
         /// <summary>
+        /// Gets an optional storage connection string, including a ResourceId connection for managed identity.
+        /// </summary>
+        public string SearchStorageConnectionString => GetRecordedOptionalVariable("SEARCH_STORAGE_CONNECTION_STRING", options => options.IsSecret());
+
+        /// <summary>
         /// Gets the Cognitive Services key for skillsets.
         /// </summary>
         public string SearchCognitiveKey => GetRecordedVariable(CognitiveKeyVariableName, options => options.IsSecret());
@@ -136,5 +143,24 @@ namespace Azure.Search.Documents.Tests
         /// Returns "AzureCloud" as default if the ENVIRONMENT variable is not set.
         /// </summary>
         public new string AzureEnvironment => GetRecordedOptionalVariable("ENVIRONMENT") ?? "AzureCloud";
+
+        protected override TokenCredential CreateDeveloperCredential()
+        {
+            string tenantId = GetOptionalVariable("TENANT_ID");
+            if (string.IsNullOrEmpty(tenantId))
+            {
+                return base.CreateDeveloperCredential();
+            }
+
+            // Existing resources can belong to a different tenant than the framework's default test tenant.
+            return new DefaultAzureCredential(new DefaultAzureCredentialOptions
+            {
+                TenantId = tenantId,
+                ExcludeEnvironmentCredential = true,
+                ExcludeManagedIdentityCredential = true,
+                ExcludeWorkloadIdentityCredential = true,
+                ExcludeBrokerCredential = true
+            });
+        }
     }
 }

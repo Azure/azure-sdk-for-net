@@ -11,13 +11,13 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Common base for events emitted by a streaming knowledge base retrieval. </summary>
-    public abstract partial class KnowledgeBaseRetrievalStreamEvent
+    public partial class KnowledgeBaseRetrievalStreamEvent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseRetrievalStreamEvent"/>. </summary>
-        private protected KnowledgeBaseRetrievalStreamEvent()
+        internal KnowledgeBaseRetrievalStreamEvent()
         {
         }
 

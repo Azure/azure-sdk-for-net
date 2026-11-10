@@ -167,6 +167,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
         [Test]
         [AsyncOnly]
+        [Ignore("Temporarily disabled: the configured Cognitive Services key is not valid for the PPE Search service's region.")]
         public async Task CreateIndexerAsync()
         {
             await using SearchResources resources = await SearchResources.CreateWithBlobStorageAsync(this, populate: true, true);

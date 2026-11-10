@@ -28,6 +28,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
         [Test]
         [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
+        [Ignore("Temporarily disabled pending PPE retrieval service recovery: all retrieval tasks fail with BadGateway.")]
         public async Task RetrieveWithPreviewResponseFeatures()
         {
             await using SearchResources resources = await SearchResources.CreateWithKnowledgeBaseAsync(this);
@@ -129,6 +130,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
         [Test]
         [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
+        [Ignore("Temporarily disabled pending PPE retrieval service recovery: all retrieval tasks fail with BadGateway.")]
         public async Task RetrieveWithExtractiveDataMode()
         {
             await using SearchResources resources = await SearchResources.CreateWithKnowledgeBaseAsync(this);
@@ -190,6 +192,7 @@ namespace Azure.Search.Documents.Tests.Samples
 
         [Test]
         [PlaybackOnly("Running it in the playback mode, eliminating the need for pipelines to create OpenAI resources.")]
+        [Ignore("Temporarily disabled pending PPE retrieval service recovery: all retrieval tasks fail with BadGateway.")]
         public async Task OverridePerSourceRetrievalBehavior()
         {
             await using SearchResources resources = await SearchResources.CreateWithKnowledgeBaseAsync(this);

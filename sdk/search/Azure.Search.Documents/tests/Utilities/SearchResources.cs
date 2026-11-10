@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
@@ -64,7 +65,27 @@ namespace Azure.Search.Documents.Tests
         /// <summary>
         /// The storage account connection string.
         /// </summary>
-        public string StorageAccountConnectionString => $"DefaultEndpointsProtocol=https;AccountName={StorageAccountName};AccountKey={StorageAccountKey};EndpointSuffix={StorageEndpointSuffix}";
+        public string StorageAccountConnectionString => TestFixture.TestEnvironment.SearchStorageConnectionString ??
+            $"DefaultEndpointsProtocol=https;AccountName={StorageAccountName};AccountKey={StorageAccountKey};EndpointSuffix={StorageEndpointSuffix}";
+
+        private BlobContainerClient GetBlobContainerClient() => CreateBlobContainerClient(
+            StorageAccountConnectionString,
+            BlobContainerName,
+            new Uri($"https://{StorageAccountName}.blob.{StorageEndpointSuffix}/{BlobContainerName}"),
+            () => TestFixture.TestEnvironment.Credential);
+
+        internal static BlobContainerClient CreateBlobContainerClient(
+            string connectionString,
+            string containerName,
+            Uri containerUri,
+            Func<TokenCredential> getCredential,
+            BlobClientOptions options = null)
+        {
+            // ResourceId authenticates Search's managed identity, not the local process creating test blobs.
+            return connectionString.StartsWith("ResourceId=", StringComparison.OrdinalIgnoreCase)
+                ? new BlobContainerClient(containerUri, getCredential(), options)
+                : new BlobContainerClient(connectionString, containerName, options);
+        }
 
         /// <summary>
         /// The Cognitive Services key.
@@ -555,7 +576,7 @@ namespace Azure.Search.Documents.Tests
         {
             if (RequiresBlobContainerCleanup)
             {
-                BlobContainerClient client = new BlobContainerClient(StorageAccountConnectionString, BlobContainerName);
+                BlobContainerClient client = GetBlobContainerClient();
                 await client.DeleteIfExistsAsync();
                 RequiresBlobContainerCleanup = false;
 
@@ -688,7 +709,7 @@ namespace Azure.Search.Documents.Tests
 
                 using CancellationTokenSource cts = new CancellationTokenSource(Timeout);
 
-                BlobContainerClient client = new BlobContainerClient(StorageAccountConnectionString, BlobContainerName);
+                BlobContainerClient client = GetBlobContainerClient();
                 await client.CreateIfNotExistsAsync(cancellationToken: cts.Token);
 
                 RequiresBlobContainerCleanup = true;

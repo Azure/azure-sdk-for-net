@@ -14,7 +14,7 @@ using Azure.Search.Documents;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Emitted when retrieval fails after the stream starts. </summary>
-    public sealed partial class KnowledgeBaseErrorStreamEvent : KnowledgeBaseRetrievalStreamEvent, IJsonModel<KnowledgeBaseErrorStreamEvent>
+    public partial class KnowledgeBaseErrorStreamEvent : KnowledgeBaseRetrievalStreamEvent, IJsonModel<KnowledgeBaseErrorStreamEvent>
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseErrorStreamEvent"/> for deserialization. </summary>
         internal KnowledgeBaseErrorStreamEvent()

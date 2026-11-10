@@ -9,6 +9,8 @@ For more information, see the [agentic retrieval documentation](https://learn.mi
 ## Required Namespaces
 
 ```C# Snippet:Azure_Search_Tests_Samples_Sample19_WorkIqKS_Namespaces
+using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.KnowledgeBases;
@@ -116,11 +118,31 @@ Console.WriteLine($"Created knowledge base '{createdBase.Name}' with Work IQ sou
 
 Retrieve content from the knowledge base. Work IQ queries M365 data and may take 40–60 seconds. Use `MaxRuntimeInSeconds = 120` and `WorkIQKnowledgeSourceParams` with references enabled. Search query-source authorization and the Work IQ user assertion protect different resources and must be acquired and passed separately.
 
+Use a pipeline policy to supply the preview Work IQ authorization header without changing the GA retrieval overloads:
+
+```C# Snippet:Azure_Search_Tests_Samples_Sample19_WorkIqKS_AuthorizationPolicy
+private sealed class WorkIQAuthorizationPolicy(string userAssertion) : HttpPipelineSynchronousPolicy
+{
+    public override void OnSendingRequest(HttpMessage message)
+    {
+        if (!string.IsNullOrEmpty(userAssertion))
+        {
+            message.Request.Headers.SetValue("x-ms-query-workiq-source-authorization", userAssertion);
+        }
+    }
+}
+```
+
 ```C# Snippet:Azure_Search_Tests_Samples_Sample19_WorkIqKS_Retrieve
 // Retrieve from the knowledge base — Work IQ queries M365 data.
 // Note: Work IQ may take 40-60 seconds, so set a generous maxRuntimeInSeconds.
+// The Work IQ user assertion authenticates on behalf of the user to Work IQ.
+// Do not reuse a Search access token here.
+string queryWorkIQSourceAuthorization = Environment.GetEnvironmentVariable("WORK_IQ_USER_ASSERTION");
+SearchClientOptions retrievalOptions = new SearchClientOptions();
+retrievalOptions.AddPolicy(new WorkIQAuthorizationPolicy(queryWorkIQSourceAuthorization), HttpPipelinePosition.PerCall);
 KnowledgeBaseRetrievalClient retrievalClient = new KnowledgeBaseRetrievalClient(
-    endpoint, knowledgeBaseName, credential);
+    endpoint, knowledgeBaseName, credential, retrievalOptions);
 
 KnowledgeBaseRetrievalRequest request = new KnowledgeBaseRetrievalRequest
 {
@@ -141,14 +163,9 @@ request.KnowledgeSourceParams.Add(
 // It is separate from the Work IQ user assertion.
 string querySourceAuthorization = Environment.GetEnvironmentVariable("SEARCH_QUERY_SOURCE_AUTH");
 
-// The Work IQ user assertion represents the user for on-behalf-of
-// authentication to Work IQ. Do not reuse a Search access token here.
-string queryWorkIQSourceAuthorization = Environment.GetEnvironmentVariable("WORK_IQ_USER_ASSERTION");
-
 Response<KnowledgeBaseRetrievalResponse> response = await retrievalClient.RetrieveAsync(
     request,
-    querySourceAuthorization: querySourceAuthorization,
-    queryWorkIQSourceAuthorization: queryWorkIQSourceAuthorization);
+    querySourceAuthorization: querySourceAuthorization);
 KnowledgeBaseRetrievalResponse retrievalResponse = response.Value;
 
 foreach (KnowledgeBaseMessage message in retrievalResponse.Response)
@@ -166,7 +183,6 @@ foreach (KnowledgeBaseMessage message in retrievalResponse.Response)
 foreach (KnowledgeBaseReference reference in retrievalResponse.References)
 {
     Console.WriteLine($"Reference ID: {reference.Id}");
-
     if (reference is KnowledgeBaseWorkIQReference workIqRef)
     {
         Console.WriteLine($"  Work IQ reference data:");

@@ -100,8 +100,11 @@ namespace Azure.Search.Documents.Tests
 
             await client.GetDocumentAsync<SearchDocument>(
                 "1",
-                querySourceAuthorization: "my-auth-token",
-                enableElevatedRead: true);
+                new GetDocumentOptions
+                {
+                    QuerySourceAuthorization = "my-auth-token",
+                    EnableElevatedRead = true
+                });
 
             MockRequest request = transport.Requests.Single();
             Assert.IsTrue(

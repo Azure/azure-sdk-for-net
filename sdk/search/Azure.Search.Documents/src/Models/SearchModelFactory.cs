@@ -18,8 +18,21 @@ namespace Azure.Search.Documents.Models
     /// </summary>
     [CodeGenType("DocumentsModelFactory")]
     [CodeGenSuppress("IndexDocumentsResult", typeof(IReadOnlyList<IndexingResult>))]
+    [CodeGenSuppress(nameof(ScoringFunction), typeof(ScoringFunctionInterpolation?), typeof(string))]
     public static partial class SearchModelFactory
     {
+        /// <summary> Initializes a new instance of ScoringFunction. </summary>
+        /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
+        /// <param name="boost"> The multiplier for the raw score. </param>
+        /// <param name="interpolation"> The interpolation to apply to document scores. </param>
+        /// <param name="type"> The scoring function type. </param>
+        public static ScoringFunction ScoringFunction(
+            string fieldName = null,
+            double boost = 0,
+            ScoringFunctionInterpolation? interpolation = default,
+            string type = null) =>
+            new ScoringFunction(fieldName, boost, interpolation, type, additionalBinaryDataProperties: null);
+
         /// <summary> Initializes a new instance of AnalyzedTokenInfo. </summary>
         /// <param name="token"> The token returned by the analyzer. </param>
         /// <param name="startOffset"> The index of the first character of the token in the input text. </param>
@@ -276,14 +289,14 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new <see cref="Indexes.Models.SearchServiceCounters"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchServiceCounters SearchServiceCounters(
-            SearchResourceCounter documentCounter = null,
-            SearchResourceCounter indexCounter = null,
-            SearchResourceCounter indexerCounter = null,
-            SearchResourceCounter dataSourceCounter = null,
-            SearchResourceCounter storageSizeCounter = null,
-            SearchResourceCounter synonymMapCounter = null,
-            SearchResourceCounter skillsetCounter = null,
-            SearchResourceCounter vectorIndexSizeCounter = null) =>
+            SearchResourceCounter documentCounter,
+            SearchResourceCounter indexCounter,
+            SearchResourceCounter indexerCounter,
+            SearchResourceCounter dataSourceCounter,
+            SearchResourceCounter storageSizeCounter,
+            SearchResourceCounter synonymMapCounter,
+            SearchResourceCounter skillsetCounter,
+            SearchResourceCounter vectorIndexSizeCounter) =>
             new SearchServiceCounters(null, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter, vectorIndexSizeCounter, knowledgeBaseCounter: null, knowledgeSourceCounter: null, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of SearchServiceLimits. </summary>
@@ -295,11 +308,11 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new SearchServiceLimits instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchServiceLimits SearchServiceLimits(
-        int? maxFieldsPerIndex = null,
-        int? maxFieldNestingDepthPerIndex = null,
-        int? maxComplexCollectionFieldsPerIndex = null,
-        int? maxComplexObjectsInCollectionsPerDocument = null,
-        long? maxStoragePerIndexInBytes = null) =>
+        int? maxFieldsPerIndex,
+        int? maxFieldNestingDepthPerIndex,
+        int? maxComplexCollectionFieldsPerIndex,
+        int? maxComplexObjectsInCollectionsPerDocument,
+        long? maxStoragePerIndexInBytes) =>
         new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndexInBytes, null, null, additionalBinaryDataProperties: null);
 
         /// <summary> Initializes a new instance of SearchServiceStatistics. </summary>
@@ -568,7 +581,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         public static QueryAnswerResult QueryAnswerResult(double? score = null, string key = null, string text = null, string highlights = null, IReadOnlyDictionary<string, object> additionalProperties = null)
         {
-            return new QueryAnswerResult(score, key, text, highlights, (IDictionary<string, object>)additionalProperties);
+            return new QueryAnswerResult(score, key, text, highlights, additionalProperties?.ToDictionary(property => property.Key, property => property.Value));
         }
         /// <summary> Initializes a new instance of FacetResult. </summary>
         /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>

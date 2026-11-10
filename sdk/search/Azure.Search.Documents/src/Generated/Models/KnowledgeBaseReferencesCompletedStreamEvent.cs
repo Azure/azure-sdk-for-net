@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Emitted when the references used by the response are available. </summary>
-    public sealed partial class KnowledgeBaseReferencesCompletedStreamEvent : KnowledgeBaseRetrievalStreamEvent
+    public partial class KnowledgeBaseReferencesCompletedStreamEvent : KnowledgeBaseRetrievalStreamEvent
     {
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseReferencesCompletedStreamEvent"/>. </summary>
         /// <param name="value"> The references used to produce the response. </param>
@@ -24,9 +24,12 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseReferencesCompletedStreamEvent"/>. </summary>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The references used to produce the response. </param>
-        internal KnowledgeBaseReferencesCompletedStreamEvent(IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<KnowledgeBaseReference> value) : base(additionalBinaryDataProperties)
+        internal KnowledgeBaseReferencesCompletedStreamEvent(IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<KnowledgeBaseReference> value) : base(additionalBinaryDataProperties)
         {
             Value = value;
         }
+
+        /// <summary> The references used to produce the response. </summary>
+        public IList<KnowledgeBaseReference> Value { get; }
     }
 }

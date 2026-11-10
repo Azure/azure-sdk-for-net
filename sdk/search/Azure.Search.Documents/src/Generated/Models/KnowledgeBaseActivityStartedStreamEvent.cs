@@ -11,8 +11,15 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Emitted when an individual retrieval activity starts. </summary>
-    public sealed partial class KnowledgeBaseActivityStartedStreamEvent : KnowledgeBaseRetrievalStreamEvent
+    public partial class KnowledgeBaseActivityStartedStreamEvent : KnowledgeBaseRetrievalStreamEvent
     {
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseActivityStartedStreamEvent"/>. </summary>
+        /// <param name="value"> The activity-started payload. </param>
+        internal KnowledgeBaseActivityStartedStreamEvent(KnowledgeBaseActivityStartedEvent value)
+        {
+            Value = value;
+        }
+
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseActivityStartedStreamEvent"/>. </summary>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The activity-started payload. </param>
@@ -20,5 +27,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         {
             Value = value;
         }
+
+        /// <summary> The activity-started payload. </summary>
+        public KnowledgeBaseActivityStartedEvent Value { get; }
     }
 }

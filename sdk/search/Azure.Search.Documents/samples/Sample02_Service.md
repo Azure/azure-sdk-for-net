@@ -25,6 +25,34 @@ Response<SearchServiceStatistics> stats = await indexClient.GetServiceStatistics
 Console.WriteLine($"You are using {stats.Value.Counters.IndexCounter.Usage} of {stats.Value.Counters.IndexCounter.Quota} indexes.");
 ```
 
+## List Resources with Paging Controls
+
+Use `GetAllIndexers`, `GetAllDataSourceConnections`, or `GetAllSkillsets` on `SearchIndexerClient`, or
+`GetAllSynonymMaps` on `SearchIndexClient`, to select properties, narrow a listing by name prefix, and process one page at a time.
+Each method also has an async counterpart. The existing list-returning methods remain available and continue
+to buffer all pages.
+
+Given a `SearchIndexerClient` named `indexerClient`:
+
+```C# Snippet:Azure_Search_Tests_Samples_ListIndexers
+await foreach (Page<SearchIndexer> page in indexerClient.GetAllIndexersAsync(
+    select: new[] { "name" },
+    search: "hotel",
+    pageSize: 10,
+    searchType: ListingSearchType.Prefix).AsPages())
+{
+    foreach (SearchIndexer indexer in page.Values)
+    {
+        Console.WriteLine(indexer.Name);
+    }
+    Console.WriteLine($"Continuation token: {page.ContinuationToken}");
+}
+```
+
+Use `AsPages(continuationToken)` with a saved continuation token to resume a listing.
+`AsPages(pageSizeHint: 20)` overrides the method-level `pageSize` on initial and continuation requests.
+Continuation requests preserve the service-provided cursor and other query parameters.
+
 ## Connect a Data Source to an Index
 
 You can index documents already stored in Azure Blob Storage, Azure SQL, Azure Table Storage, Azure Cosmos DB, or MySQL.

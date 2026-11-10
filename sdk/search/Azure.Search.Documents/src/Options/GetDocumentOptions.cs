@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -18,6 +18,20 @@ namespace Azure.Search.Documents
         /// all fields marked as retrievable in the schema are returned.
         /// </summary>
         public IList<string> SelectedFields { get; internal set; } = new List<string>();
+
+        /// <summary>
+        /// Gets or sets the token identifying the user for whom the document
+        /// is being retrieved. The service uses this token to enforce
+        /// document-level permission checks.
+        /// </summary>
+        public string QuerySourceAuthorization { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to request an elevated read, which bypasses
+        /// document-level permission checks when authorized by the service.
+        /// If null, the elevated-read header is omitted.
+        /// </summary>
+        public bool? EnableElevatedRead { get; set; }
 
         /// <summary>
         /// Gets the selected fields.  If the collection is null or empty, we

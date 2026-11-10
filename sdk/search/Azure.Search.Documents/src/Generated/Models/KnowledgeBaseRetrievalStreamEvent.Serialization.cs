@@ -7,13 +7,14 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Common base for events emitted by a streaming knowledge base retrieval. </summary>
-    public abstract partial class KnowledgeBaseRetrievalStreamEvent : IJsonModel<KnowledgeBaseRetrievalStreamEvent>
+    public partial class KnowledgeBaseRetrievalStreamEvent : IJsonModel<KnowledgeBaseRetrievalStreamEvent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -105,6 +106,25 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeKnowledgeBaseRetrievalStreamEvent(document.RootElement, options);
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static KnowledgeBaseRetrievalStreamEvent DeserializeKnowledgeBaseRetrievalStreamEvent(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
+                }
+            }
+            return new KnowledgeBaseRetrievalStreamEvent(additionalBinaryDataProperties);
         }
     }
 }

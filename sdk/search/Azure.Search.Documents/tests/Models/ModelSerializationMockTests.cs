@@ -109,6 +109,185 @@ namespace Azure.Search.Documents.Tests.Models
                 .SetName("Roundtrip_CorsOptions");
 
 #if AZURE_SEARCH_PREVIEW
+            // search-preview:2026-11-01-preview {
+            yield return new TestCaseData(
+                typeof(SearchIndex),
+                """
+                {
+                  "name":"topics",
+                  "fields":[
+                    {"name":"id","type":"Edm.String","key":true},
+                    {"name":"embedding","type":"Collection(Edm.Single)","searchable":true,"dimensions":2,"vectorSearchProfile":"vector-profile","topicGraphProfile":"topic-profile"}
+                  ],
+                  "vectorSearch":{
+                    "profiles":[{"name":"vector-profile","algorithm":"hnsw"}],
+                    "algorithms":[{"name":"hnsw","kind":"hnsw"}],
+                    "topicGraphProfiles":[{"name":"topic-profile","indexName":"topic-index","defaultKind":"diverse","defaultDiversityFactor":0.5,"defaultMinDiversityPoolSize":1000}]
+                  }
+                }
+                """)
+                .SetName("Roundtrip_SearchIndex_TopicGraphProfile");
+
+            yield return new TestCaseData(
+                typeof(SearchIndex),
+                """
+                {
+                  "name":"graph",
+                  "fields":[{"name":"id","type":"Edm.String","key":true}],
+                  "graphProfile":{
+                    "kind":"edgeList","provenanceIndexName":"chunks",
+                    "fields":{
+                      "assertionIdField":"id","factIdField":"fact","subjectField":"subject","predicateField":"predicate",
+                      "objectField":"object","objectStringField":"objectString","objectDoubleField":"objectDouble",
+                      "objectBoolField":"objectBool","objectDateTimeField":"objectDateTime","subjectTypeField":"subjectType",
+                      "subjectIdField":"subjectId","objectTypeField":"objectType","objectIdField":"objectId",
+                      "confidenceField":"confidence","subjectConfidenceField":"subjectConfidence",
+                      "predicateConfidenceField":"predicateConfidence","objectConfidenceField":"objectConfidence",
+                      "sourceChunkIdField":"chunkId","sourceParentIdField":"parentId","graphNameField":"graphName",
+                      "subjectIdDisplayNameField":"subjectName","objectIdDisplayNameField":"objectName"
+                    }
+                  }
+                }
+                """)
+                .SetName("Roundtrip_SearchIndex_GraphRoleMappings");
+
+            yield return new TestCaseData(
+                typeof(KnowledgeSource),
+                """
+                {
+                  "name":"index-source","kind":"searchIndex",
+                  "searchIndexParameters":{"searchIndexName":"chunks","topicGraph":{"kind":"balanced","minDiversityPoolSize":1000}}
+                }
+                """)
+                .SetName("Roundtrip_KnowledgeSource_IndexTopicGraph");
+
+            yield return new TestCaseData(
+                typeof(KnowledgeSource),
+                """
+                {
+                  "name":"blob-source","kind":"azureBlob",
+                  "azureBlobParameters":{
+                    "connectionString":"ResourceId=/subscriptions/fake/storageAccounts/source;","containerName":"documents",
+                    "topicGraph":{"kind":"diverse","diversityFactor":0.5,"minDiversityPoolSize":1000},
+                    "graphExtraction":{
+                      "graphName":"entities",
+                      "ontology":{"kind":"inline","name":"customer-ontology","value":"{\"@context\":{},\"@graph\":[]}"},
+                      "grounding":{"kind":"searchIndex","index":{"indexName":"grounding","vectorFieldName":"embedding"}},
+                      "pageDegreeOfParallelism":8
+                    },
+                    "ingestionParameters":{
+                      "cache":{"storageConnectionString":"ResourceId=/subscriptions/fake/storageAccounts/cache;","enableReprocessing":true,"identity":null},
+                      "chatCompletionModel":{"kind":"azureOpenAI","azureOpenAIParameters":{"resourceUri":"https://model.example.com/","deploymentId":"chat","modelName":"gpt-5-mini"}}
+                    }
+                  }
+                }
+                """)
+                .SetName("Roundtrip_KnowledgeSource_GraphExtractionAndCache");
+
+            yield return new TestCaseData(
+                typeof(SearchIndex),
+                """
+                {
+                  "name":"secured",
+                  "fields":[
+                    {"name":"id","type":"Edm.String","key":true},
+                    {"name":"folders","type":"Collection(Edm.String)","filterable":true,"permissionFilter":"oneLakeParentFolders"},
+                    {"name":"lakehouse","type":"Edm.String","filterable":true,"permissionFilter":"oneLakeLakehouseId"}
+                  ],
+                  "oneLakeSecuritySource":{"fabricWorkspaceId":"11111111-1111-1111-1111-111111111111","lakehouseId":"22222222-2222-2222-2222-222222222222"}
+                }
+                """)
+                .SetName("Roundtrip_SearchIndex_OneLakePermissions");
+
+            yield return new TestCaseData(
+                typeof(KnowledgeSource),
+                """
+                {
+                  "name":"onelake-source","kind":"indexedOneLake",
+                  "indexedOneLakeParameters":{
+                    "fabricWorkspaceId":"11111111-1111-1111-1111-111111111111","lakehouseId":"22222222-2222-2222-2222-222222222222",
+                    "targetPath":"Files/documents",
+                    "ingestionParameters":{"ingestionPermissionOptions":["oneLakeParentFolders","oneLakeLakehouseId"]}
+                  }
+                }
+                """)
+                .SetName("Roundtrip_KnowledgeSource_OneLakePermissionIngestion");
+
+            yield return new TestCaseData(
+                typeof(KnowledgeBase),
+                """
+                {
+                  "name":"kb","knowledgeSources":[{"name":"source"}],
+                  "models":[{"kind":"microsoftRetriever1"}],
+                  "tools":[{
+                    "name":"company-docs","description":"Search company documents",
+                    "knowledgeSources":[{"name":"source","alwaysQuerySource":true,"filterAddOn":"category eq 'company'","rerankerThreshold":2.5,"maxOutputDocuments":50,"failOnError":true}],
+                    "retrievalReasoningEffort":{"kind":"minimal"},
+                    "retrieveDefaults":{"maxRuntimeInSeconds":30,"maxOutputDocuments":50,"maxOutputSizeInTokens":2000}
+                  }]
+                }
+                """)
+                .SetName("Roundtrip_KnowledgeBase_RetrieverAndTools");
+
+            yield return new TestCaseData(
+                typeof(KnowledgeBase),
+                """
+                {
+                  "name":"kb","knowledgeSources":[{"name":"source"}],
+                  "models":[{"kind":"openAICompatible","openAICompatibleParameters":{
+                    "uri":"https://gateway.example.com/responses?route=chat","modelName":"gpt-6-sol",
+                    "headers":{"Authorization":"Bearer fake-test-token","X-Route":"chat"}
+                  }}]
+                }
+                """)
+                .SetName("Roundtrip_KnowledgeBase_OpenAICompatibleHeaders");
+
+            yield return new TestCaseData(
+                typeof(SearchIndex),
+                """
+                {
+                  "name":"apim","fields":[{"name":"id","type":"Edm.String","key":true}],
+                  "vectorSearch":{"vectorizers":[{
+                    "name":"embeddings","kind":"openAICompatible",
+                    "openAICompatibleParameters":{"uri":"https://gateway.example.com/embeddings?route=small","modelName":"text-embedding-3-small","dimensions":256,"headers":{"api-key":"fake-test-key"}}
+                  }]}
+                }
+                """)
+                .SetName("Roundtrip_SearchIndex_OpenAICompatibleVectorizer");
+
+            yield return new TestCaseData(
+                typeof(KnowledgeSource),
+                """
+                {
+                  "name":"file-source","kind":"file","fileParameters":{"ingestionParameters":{
+                    "embeddingModel":{"kind":"openAICompatible","openAICompatibleParameters":{
+                      "uri":"https://gateway.example.com/embeddings?route=large","modelName":"text-embedding-3-large","dimensions":1024,
+                      "managedIdentityAudience":"11111111-1111-1111-1111-111111111111",
+                      "authIdentity":{"@odata.type":"#Microsoft.Azure.Search.DataUserAssignedIdentity","userAssignedIdentity":"/subscriptions/fake/resourceGroups/fake/providers/Microsoft.ManagedIdentity/userAssignedIdentities/ingestion"}
+                    }},
+                    "chatCompletionModel":{"kind":"openAICompatible","openAICompatibleParameters":{
+                      "uri":"https://gateway.example.com/chat/completions?route=images","modelName":"gpt-5-mini",
+                      "managedIdentityAudience":"11111111-1111-1111-1111-111111111111"
+                    }}
+                  }}
+                }
+                """)
+                .SetName("Roundtrip_KnowledgeSource_OpenAICompatibleManagedIdentity");
+
+            yield return new TestCaseData(
+                typeof(SearchIndexerSkill),
+                """
+                {
+                  "@odata.type":"#Microsoft.Skills.Custom.ChatCompletionSkill","name":"gateway-chat",
+                  "inputs":[{"name":"text","source":"/document/content"}],"outputs":[{"name":"response","targetName":"summary"}],
+                  "uri":"https://gateway.example.com/chat/completions?api-version=2026-11-01",
+                  "apiKey":"fake-test-key","commonModelParameters":{"model":"gpt-5-mini"},
+                  "extraParameters":{"max_completion_tokens":256}
+                }
+                """)
+                .SetName("Roundtrip_Skill_GatewayChatCompletion");
+            // search-preview:2026-11-01-preview }
+
             // --- 2026-08-01-preview: new knowledge source polymorphic subtypes ---
             // Each carries the discriminator ("kind") and a nested parameters object; roundtrip exercises
             // the polymorphic dispatch in the KnowledgeSource base type plus the subtype's own serializer.

@@ -11,8 +11,15 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Emitted when retrieval fails after the stream starts. </summary>
-    public sealed partial class KnowledgeBaseErrorStreamEvent : KnowledgeBaseRetrievalStreamEvent
+    public partial class KnowledgeBaseErrorStreamEvent : KnowledgeBaseRetrievalStreamEvent
     {
+        /// <summary> Initializes a new instance of <see cref="KnowledgeBaseErrorStreamEvent"/>. </summary>
+        /// <param name="value"> The retrieval error payload. </param>
+        internal KnowledgeBaseErrorStreamEvent(KnowledgeBaseStreamErrorEvent value)
+        {
+            Value = value;
+        }
+
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseErrorStreamEvent"/>. </summary>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The retrieval error payload. </param>
@@ -20,5 +27,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         {
             Value = value;
         }
+
+        /// <summary> The retrieval error payload. </summary>
+        public KnowledgeBaseStreamErrorEvent Value { get; }
     }
 }

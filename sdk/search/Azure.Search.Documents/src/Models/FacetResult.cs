@@ -5,6 +5,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.Json;
 using Azure.Search.Documents.Utilities;
 
@@ -75,20 +76,20 @@ namespace Azure.Search.Documents.Models
         {
             if (FacetType != FacetType.Range)
             { throw new InvalidCastException(); }
-            return new RangeFacetResult<T>(Count.GetValueOrDefault(), ConvertValue<T>(From), ConvertValue<T>(To));
+            return new RangeFacetResult<T>(Count.GetValueOrDefault(), ConvertValue<T?>(From), ConvertValue<T?>(To));
         }
 
         /// <summary>
-        /// Converts a boxed value to a nullable type T, handling numeric type conversions.
+        /// Converts compatible facet values while preserving values of the requested type.
         /// </summary>
-        private static T? ConvertValue<T>(object value) where T : struct
+        private static T ConvertValue<T>(object value)
         {
-            if (value == null)
+            if (value == null || value is T)
             {
-                return null;
+                return (T)value;
             }
 
-            return (T)Convert.ChangeType(value, typeof(T));
+            return (T)Convert.ChangeType(value, Nullable.GetUnderlyingType(typeof(T)) ?? typeof(T), CultureInfo.InvariantCulture);
         }
 
         /// <summary>
@@ -106,7 +107,7 @@ namespace Azure.Search.Documents.Models
         {
             if (FacetType != FacetType.Value)
             { throw new InvalidCastException(); }
-            return new ValueFacetResult<T>(Count.GetValueOrDefault(), (T)Value);
+            return new ValueFacetResult<T>(Count.GetValueOrDefault(), ConvertValue<T>(Value));
         }
 
         internal IDictionary<string, object> AdditionalProperties => _additionalBinaryDataProperties.ToObjectDictionary();
