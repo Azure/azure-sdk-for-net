@@ -192,7 +192,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<AcknowledgeResult> Acknowledge(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
-            AcknowledgeRequest spreadModel = new AcknowledgeRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
+            AcknowledgeContent spreadModel = new AcknowledgeContent(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
             Response result = Acknowledge(topicName, eventSubscriptionName, spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((AcknowledgeResult)result, result);
         }
@@ -205,7 +205,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<AcknowledgeResult>> AcknowledgeAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
-            AcknowledgeRequest spreadModel = new AcknowledgeRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
+            AcknowledgeContent spreadModel = new AcknowledgeContent(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
             Response result = await AcknowledgeAsync(topicName, eventSubscriptionName, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((AcknowledgeResult)result, result);
         }
@@ -281,7 +281,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<ReleaseResult> Release(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, ReleaseDelay? releaseDelayInSeconds = default, CancellationToken cancellationToken = default)
         {
-            ReleaseRequest spreadModel = new ReleaseRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
+            ReleaseContent spreadModel = new ReleaseContent(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
             Response result = Release(topicName, eventSubscriptionName, spreadModel, releaseDelayInSeconds?.ToString(), cancellationToken.ToRequestContext());
             return Response.FromValue((ReleaseResult)result, result);
         }
@@ -295,7 +295,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<ReleaseResult>> ReleaseAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, ReleaseDelay? releaseDelayInSeconds = default, CancellationToken cancellationToken = default)
         {
-            ReleaseRequest spreadModel = new ReleaseRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
+            ReleaseContent spreadModel = new ReleaseContent(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
             Response result = await ReleaseAsync(topicName, eventSubscriptionName, spreadModel, releaseDelayInSeconds?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ReleaseResult)result, result);
         }
@@ -368,7 +368,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<RejectResult> Reject(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
-            RejectRequest spreadModel = new RejectRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
+            RejectContent spreadModel = new RejectContent(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
             Response result = Reject(topicName, eventSubscriptionName, spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((RejectResult)result, result);
         }
@@ -381,7 +381,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<RejectResult>> RejectAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
-            RejectRequest spreadModel = new RejectRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
+            RejectContent spreadModel = new RejectContent(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
             Response result = await RejectAsync(topicName, eventSubscriptionName, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((RejectResult)result, result);
         }
@@ -454,7 +454,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<RenewLocksResult> RenewLocks(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
-            RenewLocksRequest spreadModel = new RenewLocksRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
+            RenewLocksContent spreadModel = new RenewLocksContent(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
             Response result = RenewLocks(topicName, eventSubscriptionName, spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((RenewLocksResult)result, result);
         }
@@ -467,7 +467,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<RenewLocksResult>> RenewLocksAsync(string topicName, string eventSubscriptionName, IEnumerable<string> lockTokens, CancellationToken cancellationToken = default)
         {
-            RenewLocksRequest spreadModel = new RenewLocksRequest(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
+            RenewLocksContent spreadModel = new RenewLocksContent(lockTokens?.ToList() as IList<string> ?? new ChangeTrackingList<string>(), default);
             Response result = await RenewLocksAsync(topicName, eventSubscriptionName, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((RenewLocksResult)result, result);
         }
