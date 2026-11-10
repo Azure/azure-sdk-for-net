@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Monitor.Tests
         [Test]
         public void VmInsightsGaFactoryPreservesOptionalValues()
         {
-            var data = ArmMonitorModelFactory.VmInsightsOnboardingStatusData(null, null, default, null, null, null, null, null);
+            var data = ArmMonitorModelFactory.VmInsightsOnboardingStatusData(null, null, default, null, (ResourceIdentifier)null, null, null, null);
             Assert.That(data.ResourceId, Is.Null);
             Assert.That(data.OnboardingStatus, Is.Null);
             Assert.That(data.DataStatus, Is.Null);
@@ -299,29 +299,36 @@ namespace Azure.ResourceManager.Monitor.Tests
 
         [TestCase("J")]
         [TestCase("W")]
-        public void VmInsightsGaFactoryPreservesOptionalWireFields(string format)
+        public void VmInsightsFactorySerializesRequiredWireFields(string format)
         {
-            var data = ArmMonitorModelFactory.VmInsightsOnboardingStatusData(resourceId: new ResourceIdentifier(Scope), onboardingStatus: OnboardingStatus.Onboarded);
+            var data = ArmMonitorModelFactory.VmInsightsOnboardingStatusData(resourceId: new ResourceIdentifier(Scope), onboardingStatus: OnboardingStatus.Onboarded, dataStatus: DataStatus.Present);
+            var generated = ArmMonitorModelFactory.VmInsightsOnboardingStatusData(null, null, default, null, Scope, OnboardingStatus.Onboarded, DataStatus.Present, Array.Empty<DataContainer>());
             var options = new ModelReaderWriterOptions(format);
+            Assert.That(generated.ResourceId, Is.EqualTo(new ResourceIdentifier(Scope)));
+            Assert.That(ModelReaderWriter.Write(generated, options).ToString(), Is.EqualTo(ModelReaderWriter.Write(data, options).ToString()));
             using var json = JsonDocument.Parse(ModelReaderWriter.Write(data, options).ToMemory());
             var properties = json.RootElement.GetProperty("properties");
             Assert.That(properties.GetProperty("resourceId").GetString(), Is.EqualTo(Scope));
             Assert.That(properties.GetProperty("onboardingStatus").GetString(), Is.EqualTo("onboarded"));
-            Assert.That(properties.TryGetProperty("dataStatus", out _), Is.False);
+            Assert.That(properties.GetProperty("dataStatus").GetString(), Is.EqualTo("present"));
             var read = ModelReaderWriter.Read<VmInsightsOnboardingStatusData>(BinaryData.FromString(json.RootElement.GetRawText()), options);
             Assert.That(read.ResourceId, Is.EqualTo(new ResourceIdentifier(Scope)));
             Assert.That(read.OnboardingStatus, Is.EqualTo(OnboardingStatus.Onboarded));
-            Assert.That(read.DataStatus, Is.Null);
+            Assert.That(read.DataStatus, Is.EqualTo(DataStatus.Present));
         }
-        [TestCase("J")]
-        [TestCase("W")]
-        public void VmInsightsGaDeserializationAcceptsNullOptionalFields(string format)
+
+        [TestCase("J", false)]
+        [TestCase("J", true)]
+        [TestCase("W", false)]
+        [TestCase("W", true)]
+        public void VmInsightsDeserializationPreservesOptionalData(string format, bool includeEmptyData)
         {
-            var json = BinaryData.FromString("{\"properties\":{\"resourceId\":null,\"onboardingStatus\":null,\"dataStatus\":null,\"data\":null}}");
+            var optionalData = includeEmptyData ? ",\"data\":[]" : "";
+            var json = BinaryData.FromString($"{{\"properties\":{{\"resourceId\":\"{Scope}\",\"onboardingStatus\":\"onboarded\",\"dataStatus\":\"present\"{optionalData}}}}}");
             var data = ModelReaderWriter.Read<VmInsightsOnboardingStatusData>(json, new ModelReaderWriterOptions(format));
-            Assert.That(data.ResourceId, Is.Null);
-            Assert.That(data.OnboardingStatus, Is.Null);
-            Assert.That(data.DataStatus, Is.Null);
+            Assert.That(data.ResourceId, Is.EqualTo(new ResourceIdentifier(Scope)));
+            Assert.That(data.OnboardingStatus, Is.EqualTo(OnboardingStatus.Onboarded));
+            Assert.That(data.DataStatus, Is.EqualTo(DataStatus.Present));
             Assert.That(data.Data, Is.Empty);
         }
 #pragma warning restore CS0618

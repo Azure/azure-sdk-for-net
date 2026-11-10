@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public static SubscriptionMonitorMetric SubscriptionMonitorMetric(string id, string subscriptionScopeMetricType, MonitorLocalizableString name, string displayDescription, string errorCode, string errorMessage, MonitorMetricUnit unit, IEnumerable<MonitorTimeSeriesElement> timeseries)
             => throw new NotSupportedException("This API is no longer supported.");
 
-        /// <summary> Initializes a new instance of <see cref="VmInsightsOnboardingStatusData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Azure.ResourceManager.Monitor.VmInsightsOnboardingStatusData"/>. </summary>
         /// <param name="id"> The resource identifier. </param>
         /// <param name="name"> The resource name. </param>
         /// <param name="resourceType"> The resource type. </param>

@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- VM Insights onboarding status JSON now uses generated serialization for the required `resourceId`, `onboardingStatus`, and `dataStatus` fields instead of the legacy omission and null-tolerant customization.
+
 ### Bugs Fixed
 
 - Restored generated diagnostic setting operations, model serialization, and model factory support instead of throwing compatibility stubs.

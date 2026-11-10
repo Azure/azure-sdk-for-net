@@ -3496,6 +3496,26 @@ namespace Azure.ResourceManager.Monitor.Models
             return new TenantActionGroupPatch(tags ?? new ChangeTrackingDictionary<string, string>(), isEnabled is null ? default : new ActionGroupPatchProperties(isEnabled, default), default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="resourceId"> Azure Resource Manager identifier of the resource whose onboarding status is being represented. </param>
+        /// <param name="onboardingStatus"> The onboarding status for the resource. Note that, a higher level scope, e.g., resource group or subscription, is considered onboarded if at least one resource under it is onboarded. </param>
+        /// <param name="dataStatus"> The status of VM Insights data from the resource. When reported as `present` the data array will contain information about the data containers to which data for the specified resource is being routed. </param>
+        /// <param name="data"> Containers that currently store VM Insights data for the specified resource. </param>
+        /// <returns> A new <see cref="Monitor.VmInsightsOnboardingStatusData"/> instance for mocking. </returns>
+        public static VmInsightsOnboardingStatusData VmInsightsOnboardingStatusData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string resourceId, OnboardingStatus? onboardingStatus, DataStatus? dataStatus, IEnumerable<DataContainer> data)
+        {
+            return new VmInsightsOnboardingStatusData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                resourceId is null && onboardingStatus is null && dataStatus is null && data is null ? default : new VMInsightsOnboardingStatusProperties(resourceId, onboardingStatus.GetValueOrDefault(), dataStatus.GetValueOrDefault(), (data ?? new ChangeTrackingList<DataContainer>()).ToList(), default),
+                default);
+        }
+
         /// <summary> Information about a container with data for a given resource. </summary>
         /// <param name="workspace"> Log Analytics workspace information. </param>
         /// <returns> A new <see cref="Models.DataContainer"/> instance for mocking. </returns>

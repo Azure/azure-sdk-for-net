@@ -11,6 +11,7 @@ using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
+    /// <summary> Resource properties. </summary>
     internal partial class VMInsightsOnboardingStatusProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
