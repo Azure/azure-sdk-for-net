@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Dataset output for a data generation job. </summary>
-    [Experimental("AAIP001")]
     public partial class DatasetDataGenerationJobOutput : DataGenerationJobOutput
     {
         /// <summary> Initializes a new instance of <see cref="DatasetDataGenerationJobOutput"/>. </summary>

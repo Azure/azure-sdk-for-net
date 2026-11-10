@@ -24,12 +24,14 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of <see cref="StorageDataCollaborationPolicyProperties"/>. </summary>
         /// <param name="allowStorageConnectors"> Indicates whether storage connectors are allowed to created or managed on the storage account. </param>
+        /// <param name="allowBlobAccessPoints"> Indicates whether Blob Access Point configurations are allowed to be created or managed on the storage account. </param>
         /// <param name="allowStorageDataShares"> Indicates whether data shares are allowed to be created or managed on the storage account. </param>
         /// <param name="allowCrossTenantDataSharing"> Indicates whether cross-entra tenant data sharing is allowed on the storage account. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageDataCollaborationPolicyProperties(bool? allowStorageConnectors, bool? allowStorageDataShares, bool? allowCrossTenantDataSharing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageDataCollaborationPolicyProperties(bool? allowStorageConnectors, bool? allowBlobAccessPoints, bool? allowStorageDataShares, bool? allowCrossTenantDataSharing, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AllowStorageConnectors = allowStorageConnectors;
+            AllowBlobAccessPoints = allowBlobAccessPoints;
             AllowStorageDataShares = allowStorageDataShares;
             AllowCrossTenantDataSharing = allowCrossTenantDataSharing;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -38,6 +40,10 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Indicates whether storage connectors are allowed to created or managed on the storage account. </summary>
         [WirePath("allowStorageConnectors")]
         public bool? AllowStorageConnectors { get; set; }
+
+        /// <summary> Indicates whether Blob Access Point configurations are allowed to be created or managed on the storage account. </summary>
+        [WirePath("allowBlobAccessPoints")]
+        public bool? AllowBlobAccessPoints { get; set; }
 
         /// <summary> Indicates whether data shares are allowed to be created or managed on the storage account. </summary>
         [WirePath("allowStorageDataShares")]

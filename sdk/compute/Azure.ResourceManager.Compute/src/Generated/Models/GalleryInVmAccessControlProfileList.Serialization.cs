@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GalleryInVmAccessControlProfileList(value, nextLink, additionalBinaryDataProperties);
+            return new GalleryInVmAccessControlProfileList(value ?? new ChangeTrackingList<GalleryInVmAccessControlProfileData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

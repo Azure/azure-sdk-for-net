@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ThreatIntelligenceQueryConditionClause(clauseConnective, @field, @operator, values, additionalBinaryDataProperties);
+            return new ThreatIntelligenceQueryConditionClause(clauseConnective, @field, @operator, values ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IPCommunityRule(action, sequenceNumber, wellKnownCommunities ?? new ChangeTrackingList<WellKnownCommunity>(), communityMembers, additionalBinaryDataProperties);
+            return new IPCommunityRule(action, sequenceNumber, wellKnownCommunities ?? new ChangeTrackingList<WellKnownCommunity>(), communityMembers ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

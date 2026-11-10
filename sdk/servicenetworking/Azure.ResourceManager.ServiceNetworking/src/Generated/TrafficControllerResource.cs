@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal TrafficControllerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string trafficControllerApiVersion);
             _trafficControllerInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceNetworking", ResourceType.Namespace, Diagnostics);
-            _trafficControllerInterfaceRestClient = new TrafficControllerInterface(_trafficControllerInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, trafficControllerApiVersion ?? "2026-03-01");
+            _trafficControllerInterfaceRestClient = new TrafficControllerInterface(_trafficControllerInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ServiceNetworking/trafficControllers", out string trafficControllerInterfaceApiVersionOverride) ? trafficControllerInterfaceApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 

@@ -60,7 +60,13 @@ namespace Azure.ResourceManager.DataFactory
         {
             TryGetApiVersion(ResourceType, out string dataFactoryApiVersion);
             _factoriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
-            _factoriesRestClient = new Factories(_factoriesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
+            _factoriesRestClient = new Factories(
+                _factoriesClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                dataFactoryApiVersion ?? "2018-06-01",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             _dataFlowDebugSessionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);
             _dataFlowDebugSessionRestClient = new DataFlowDebugSession(_dataFlowDebugSessionClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataFactoryApiVersion ?? "2018-06-01");
             _pipelineRunsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataFactory", ResourceType.Namespace, Diagnostics);

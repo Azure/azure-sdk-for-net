@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.DevHub.Mocking
 
         private ClientDiagnostics IacProfilesClientDiagnostics => _iacProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevHub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private IacProfiles IacProfilesRestClient => _iacProfilesRestClient ??= new IacProfiles(IacProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01-preview");
+        private IacProfiles IacProfilesRestClient => _iacProfilesRestClient ??= new IacProfiles(IacProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DevHub/iacProfiles", out string apiVersion) ? apiVersion : "2025-03-01-preview");
 
         private ClientDiagnostics WorkflowClientDiagnostics => _workflowClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevHub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Workflow WorkflowRestClient => _workflowRestClient ??= new Workflow(WorkflowClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01-preview");
+        private Workflow WorkflowRestClient => _workflowRestClient ??= new Workflow(WorkflowClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DevHub/workflows", out string apiVersion0) ? apiVersion0 : "2025-03-01-preview");
 
         private ClientDiagnostics DevHubClientClientDiagnostics => _devHubClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevHub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

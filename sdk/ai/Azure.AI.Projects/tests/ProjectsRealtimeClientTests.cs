@@ -4,13 +4,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Net.WebSockets;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Projects.Agents;
 using NUnit.Framework;
 using OpenAI.Realtime;
 
+#pragma warning disable AAIP001
 #pragma warning disable AAIP002
 #pragma warning disable OPENAI002
 
@@ -142,6 +146,110 @@ public class ProjectsRealtimeClientTests
         listener.Stop();
 
         Assert.That(query, Does.Contain("store=true"));
+    }
+
+    [TestCase("websocket")]
+    [TestCase("webrtc")]
+    [TestCase("future-transport")]
+    [TestCase("future transport/+")]
+    public async Task TypedTransportOverridesLegacyQueryWithoutChangingOtherValues(string transportValue)
+    {
+        const string additionalQuery = "store=true&transport=old&%74ransport=duplicate&keep=one&keep=two&path=folder%2F";
+        RealtimeSessionClientOptions options = new ProjectsRealtimeSessionClientOptions
+        {
+            Transport = transportValue switch
+            {
+                "websocket" => VoiceAgentTransport.Websocket,
+                "webrtc" => VoiceAgentTransport.Webrtc,
+                _ => new VoiceAgentTransport(transportValue)
+            },
+            QueryString = additionalQuery
+        };
+
+        string query = await CaptureHandshakeQueryAsync(options);
+        string[] parameters = query.TrimStart('?').Split('&');
+        string[] transports = parameters
+            .Where(parameter => Uri.UnescapeDataString(parameter.Split('=')[0]) == "transport")
+            .ToArray();
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(transports, Is.EqualTo(new[] { $"transport={Uri.EscapeDataString(transportValue)}" }));
+            Assert.That(parameters, Does.Contain("store=true"));
+            Assert.That(parameters, Does.Contain("keep=one").And.Contain("keep=two"));
+            Assert.That(parameters, Does.Contain("path=folder%2F"));
+            Assert.That(parameters, Does.Contain("api-version=v1"));
+            Assert.That(options.QueryString, Is.EqualTo(additionalQuery));
+        });
+    }
+
+    [TestCase(null)]
+    [TestCase("store=true&transport=webrtc")]
+    public async Task OmittedTransportPreservesExistingQueryBehavior(string additionalQuery)
+    {
+        RealtimeSessionClientOptions options = additionalQuery is null ? null : new() { QueryString = additionalQuery };
+
+        string query = await CaptureHandshakeQueryAsync(options);
+        string[] transports = query.TrimStart('?').Split('&')
+            .Where(parameter => Uri.UnescapeDataString(parameter.Split('=')[0]) == "transport")
+            .ToArray();
+
+        Assert.That(transports, additionalQuery is null ? Is.Empty : Is.EqualTo(new[] { "transport=webrtc" }));
+    }
+
+    [Test]
+    public async Task TypedOptionsWithoutTransportPreserveLegacyQuery()
+    {
+        ProjectsRealtimeSessionClientOptions options = new() { QueryString = "store=true&transport=websocket" };
+
+        string query = await CaptureHandshakeQueryAsync(options);
+
+        Assert.That(query, Does.Contain("store=true&transport=websocket"));
+    }
+
+    [Test]
+    public void DefaultTransportValueIsRejectedBeforeConnecting()
+    {
+        AIProjectClient client = new(new Uri("http://127.0.0.1:1/api/projects/proj1"), new FakeTokenProvider());
+        ProjectsRealtimeSessionClientOptions options = new() { Transport = default(VoiceAgentTransport) };
+
+        ArgumentException exception = Assert.ThrowsAsync<ArgumentException>(() =>
+            client.ProjectsRealtimeClient.StartSessionAsync("agent", intent: null, options: options));
+
+        Assert.That(exception.ParamName, Is.EqualTo(nameof(options)));
+    }
+
+    private static async Task<string> CaptureHandshakeQueryAsync(RealtimeSessionClientOptions options)
+    {
+        int port = GetFreeTcpPort();
+        using HttpListener listener = new();
+        listener.Prefixes.Add($"http://127.0.0.1:{port}/");
+        listener.Start();
+
+        Task<(string Query, WebSocket Socket)> serverTask = Task.Run(async () =>
+        {
+            HttpListenerContext context = await listener.GetContextAsync();
+            string query = context.Request.Url.Query;
+            HttpListenerWebSocketContext webSocket = await context.AcceptWebSocketAsync(subProtocol: "realtime");
+            return (query, webSocket.WebSocket);
+        });
+
+        WebSocket serverSocket = null;
+        try
+        {
+            AIProjectClient client = new(new Uri($"http://127.0.0.1:{port}/api/projects/proj1"), new FakeTokenProvider());
+            RealtimeClient realtimeClient = client.ProjectsRealtimeClient;
+            using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(10));
+            using RealtimeSessionClient session = await realtimeClient.StartSessionAsync(
+                "agent", intent: null, options: options, cancellationToken: timeout.Token);
+            (string query, serverSocket) = await AwaitServerRequestAsync(serverTask);
+            return query;
+        }
+        finally
+        {
+            serverSocket?.Dispose();
+            listener.Stop();
+        }
     }
 
     // The client-side call above is bounded by its own 10-second cancellation token, but that

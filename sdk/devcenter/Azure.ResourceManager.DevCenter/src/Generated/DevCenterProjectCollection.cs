@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DevCenterProjectCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DevCenterProjectResource.ResourceType, out string devCenterProjectApiVersion);
             _projectsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", DevCenterProjectResource.ResourceType.Namespace, Diagnostics);
-            _projectsRestClient = new Projects(_projectsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devCenterProjectApiVersion ?? "2026-01-01-preview");
+            _projectsRestClient = new Projects(_projectsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DevCenter/projects", out string projectsApiVersionOverride) ? projectsApiVersionOverride : "2026-01-01-preview");
             ValidateResourceId(id);
         }
 

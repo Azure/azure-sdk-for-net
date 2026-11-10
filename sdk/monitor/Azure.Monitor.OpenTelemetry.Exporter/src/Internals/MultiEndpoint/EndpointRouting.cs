@@ -26,6 +26,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
 
         private const string UnknownService = "unknown_service";
 
+        internal const string AadRouteSuffix = " (aad)";
+
         /// <summary>
         /// Bounds the cache so a caller stamping many distinct endpoints cannot grow it without
         /// limit. The check is not atomic with the insert, so concurrent misses can overshoot by the
@@ -118,6 +120,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
 
         internal static string GetCloudRole(string? cloudRole)
             => string.IsNullOrWhiteSpace(cloudRole) ? UnknownService : cloudRole!.Trim();
+
+        internal static bool IsAadRoute(ref AzMonList mappedTags)
+            => IsAadRoute(mappedTags[SemanticSlot.MicrosoftIngestionAuth]);
+
+        /// <summary>Only the string "aad" (case-insensitive, trimmed) marks an AAD route; anything else is ikey-only.</summary>
+        internal static bool IsAadRoute(object? rawIngestionAuth)
+            => rawIngestionAuth is string value
+                && string.Equals(value.Trim(), SemanticConventions.IngestionAuthAad, StringComparison.OrdinalIgnoreCase);
+
+        /// <summary>The route as shown in self-diagnostics; AAD routes get an " (aad)" suffix.</summary>
+        internal static string DescribeRoute(string ingestionEndpoint, bool isAad)
+            => isAad ? ingestionEndpoint + AadRouteSuffix : ingestionEndpoint;
 
         /// <summary>
         /// Validates an application-supplied endpoint and reduces it to the canonical form used as a

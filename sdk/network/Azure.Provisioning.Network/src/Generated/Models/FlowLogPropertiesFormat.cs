@@ -171,12 +171,12 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the NetworkWatcherFlowAnalyticsConfiguration. </summary>
-        public TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration
+        /// <summary> Gets or sets the TrafficAnalyticsConfiguration. </summary>
+        public TrafficAnalyticsConfigurationProperties TrafficAnalyticsConfiguration
         {
             get
             {
-                return FlowAnalyticsConfiguration is null ? default : FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration;
+                return FlowAnalyticsConfiguration is null ? default : FlowAnalyticsConfiguration.TrafficAnalyticsConfiguration;
             }
             set
             {
@@ -184,7 +184,7 @@ namespace Azure.Provisioning.Network
                 {
                     FlowAnalyticsConfiguration = new TrafficAnalyticsProperties();
                 }
-                FlowAnalyticsConfiguration.NetworkWatcherFlowAnalyticsConfiguration = value;
+                FlowAnalyticsConfiguration.TrafficAnalyticsConfiguration = value;
             }
         }
 

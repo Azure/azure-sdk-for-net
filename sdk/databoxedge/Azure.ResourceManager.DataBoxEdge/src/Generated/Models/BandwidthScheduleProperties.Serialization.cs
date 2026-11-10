@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new BandwidthScheduleProperties(startOn, stopOn, rateInMbps, days, additionalBinaryDataProperties);
+            return new BandwidthScheduleProperties(startOn, stopOn, rateInMbps, days ?? new ChangeTrackingList<DataBoxEdgeDayOfWeek>(), additionalBinaryDataProperties);
         }
     }
 }

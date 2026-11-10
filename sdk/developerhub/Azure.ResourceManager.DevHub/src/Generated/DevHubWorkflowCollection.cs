@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.DevHub
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DevHubWorkflowCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DevHubWorkflowResource.ResourceType, out string devHubWorkflowApiVersion);
             _workflowClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevHub", DevHubWorkflowResource.ResourceType.Namespace, Diagnostics);
-            _workflowRestClient = new Workflow(_workflowClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devHubWorkflowApiVersion ?? "2025-03-01-preview");
+            _workflowRestClient = new Workflow(_workflowClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DevHub/workflows", out string workflowApiVersionOverride) ? workflowApiVersionOverride : "2025-03-01-preview");
             ValidateResourceId(id);
         }
 

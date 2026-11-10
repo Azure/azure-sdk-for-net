@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ScheduleBasedBackupTriggerContext(objectType, additionalBinaryDataProperties, schedule, taggingCriteriaList);
+            return new ScheduleBasedBackupTriggerContext(objectType, additionalBinaryDataProperties, schedule, taggingCriteriaList ?? new ChangeTrackingList<DataProtectionBackupTaggingCriteria>());
         }
     }
 }

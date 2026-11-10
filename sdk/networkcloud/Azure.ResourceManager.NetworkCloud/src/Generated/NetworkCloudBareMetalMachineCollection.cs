@@ -40,9 +40,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkCloudBareMetalMachineCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkCloudBareMetalMachineResource.ResourceType, out string networkCloudBareMetalMachineApiVersion);
             _bareMetalMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", NetworkCloudBareMetalMachineResource.ResourceType.Namespace, Diagnostics);
-            _bareMetalMachinesRestClient = new BareMetalMachines(_bareMetalMachinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudBareMetalMachineApiVersion ?? "2026-08-01-preview");
+            _bareMetalMachinesRestClient = new BareMetalMachines(_bareMetalMachinesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.NetworkCloud/bareMetalMachines", out string bareMetalMachinesApiVersionOverride) ? bareMetalMachinesApiVersionOverride : "2026-08-01-preview");
             ValidateResourceId(id);
         }
 

@@ -96,16 +96,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 writer.WritePropertyName("capacityType"u8);
                 writer.WriteStringValue(CapacityType.Value.ToString());
             }
-            if (Optional.IsDefined(MinCapacity))
-            {
-                writer.WritePropertyName("minCapacity"u8);
-                writer.WriteNumberValue(MinCapacity.Value);
-            }
-            if (Optional.IsDefined(PartialFulfillmentPolicy))
-            {
-                writer.WritePropertyName("partialFulfillmentPolicy"u8);
-                writer.WriteObjectValue(PartialFulfillmentPolicy, options);
-            }
             if (options.Format != "W" && Optional.IsCollectionDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
@@ -116,8 +106,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("priorityProfile"u8);
-            writer.WriteObjectValue(PriorityProfile, options);
             writer.WritePropertyName("computeProfile"u8);
             writer.WriteObjectValue(ComputeProfile, options);
             if (Optional.IsDefined(OverridesProfile))
@@ -176,10 +164,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             BulkInstancesOperationProvisioningState? provisioningState = default;
             int capacity = default;
             CapacityType? capacityType = default;
-            int? minCapacity = default;
-            PartialFulfillmentPolicy partialFulfillmentPolicy = default;
             IReadOnlyList<BulkCreateCustomResolvedItem> resources = default;
-            BulkCreateCustomPriorityProfile priorityProfile = default;
             ComputeProfile computeProfile = default;
             BulkCreateCustomOverridesProfile overridesProfile = default;
             BulkActionExecutionParameterDetail executionParameters = default;
@@ -218,24 +203,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     capacityType = new CapacityType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("minCapacity"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    minCapacity = prop.Value.GetInt32();
-                    continue;
-                }
-                if (prop.NameEquals("partialFulfillmentPolicy"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    partialFulfillmentPolicy = PartialFulfillmentPolicy.DeserializePartialFulfillmentPolicy(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("resources"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -248,11 +215,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                         array.Add(BulkCreateCustomResolvedItem.DeserializeBulkCreateCustomResolvedItem(item, options));
                     }
                     resources = array;
-                    continue;
-                }
-                if (prop.NameEquals("priorityProfile"u8))
-                {
-                    priorityProfile = BulkCreateCustomPriorityProfile.DeserializeBulkCreateCustomPriorityProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("computeProfile"u8))
@@ -288,10 +250,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                 provisioningState,
                 capacity,
                 capacityType,
-                minCapacity,
-                partialFulfillmentPolicy,
                 resources ?? new ChangeTrackingList<BulkCreateCustomResolvedItem>(),
-                priorityProfile,
                 computeProfile,
                 overridesProfile,
                 executionParameters,

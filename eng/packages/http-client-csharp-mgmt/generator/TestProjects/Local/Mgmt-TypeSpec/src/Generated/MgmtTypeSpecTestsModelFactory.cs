@@ -394,7 +394,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <returns> A new <see cref="Models.LimitJsonObject"/> instance for mocking. </returns>
         public static LimitJsonObject LimitJsonObject(string limitObjectType = default)
         {
-            return new UnknownLimitJsonObject(default, default);
+            return new UnknownLimitJsonObject(limitObjectType is null ? default : new LimitType(limitObjectType), default);
         }
 
         /// <summary> An Employee resource. </summary>
@@ -686,14 +686,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new CheckNameAvailabilityRequest(name, @type, default);
         }
 
-        /// <summary> The CheckNameAvailabilityResponse. </summary>
+        /// <summary> The CheckNameAvailabilityResult. </summary>
         /// <param name="nameAvailable"></param>
         /// <param name="reason"></param>
         /// <param name="message"></param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityResponse"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityResponse CheckNameAvailabilityResponse(bool nameAvailable = default, string reason = default, string message = default)
+        /// <returns> A new <see cref="Models.CheckNameAvailabilityResult"/> instance for mocking. </returns>
+        public static CheckNameAvailabilityResult CheckNameAvailabilityResult(bool nameAvailable = default, string reason = default, string message = default)
         {
-            return new CheckNameAvailabilityResponse(nameAvailable, reason, message, default);
+            return new CheckNameAvailabilityResult(nameAvailable, reason, message, default);
         }
 
         /// <summary> Subscription-level location-based Playwright quota resource. </summary>
@@ -1877,7 +1877,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 name,
                 resourceType,
                 systemData,
-                default,
+                "TypeA",
                 default,
                 typeAPolyDeviceDescription is null ? default : new TypeAPolyDeviceProperties(typeAPolyDeviceDescription, default));
         }
@@ -2136,6 +2136,62 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new SolutionsApplicationDefinitionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="ipAddress"> The address value. </param>
+        /// <returns> A new <see cref="Tests.IPAddressData"/> instance for mocking. </returns>
+        public static IPAddressData IPAddressData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string ipAddress = default)
+        {
+            return new IPAddressData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                ipAddress is null ? default : new IPAddressProperties(ipAddress, default),
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="acronymWidgetDescription"> Gets the Description. </param>
+        /// <returns> A new <see cref="Tests.AcronymWidgetData"/> instance for mocking. </returns>
+        public static AcronymWidgetData AcronymWidgetData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string acronymWidgetDescription = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AcronymWidgetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                acronymWidgetDescription is null ? default : new AcronymWidgetProperties(acronymWidgetDescription, default),
+                default);
+        }
+
+        /// <summary> An action body without a conventional ARM suffix. </summary>
+        /// <param name="address"></param>
+        /// <returns> A new <see cref="Models.IPAddress"/> instance for mocking. </returns>
+        public static IPAddress IPAddress(string address = default)
+        {
+            return new IPAddress(address, default);
+        }
+
+        /// <summary> An IPv4 action body without a conventional ARM suffix. </summary>
+        /// <param name="address"></param>
+        /// <returns> A new <see cref="Models.IPv4Address"/> instance for mocking. </returns>
+        public static IPv4Address IPv4Address(string address = default)
+        {
+            return new IPv4Address(address, default);
         }
     }
 }

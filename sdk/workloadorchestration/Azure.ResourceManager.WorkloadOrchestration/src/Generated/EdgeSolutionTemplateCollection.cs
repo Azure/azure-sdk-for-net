@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeSolutionTemplateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(EdgeSolutionTemplateResource.ResourceType, out string edgeSolutionTemplateApiVersion);
             _solutionTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeSolutionTemplateResource.ResourceType.Namespace, Diagnostics);
-            _solutionTemplatesRestClient = new SolutionTemplates(_solutionTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeSolutionTemplateApiVersion ?? "2025-06-01");
+            _solutionTemplatesRestClient = new SolutionTemplates(_solutionTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Edge/solutionTemplates", out string solutionTemplatesApiVersionOverride) ? solutionTemplatesApiVersionOverride : "2025-06-01");
             ValidateResourceId(id);
         }
 

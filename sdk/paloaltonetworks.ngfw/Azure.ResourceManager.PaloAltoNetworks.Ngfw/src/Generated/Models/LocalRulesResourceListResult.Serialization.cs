@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LocalRulesResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new LocalRulesResourceListResult(value ?? new ChangeTrackingList<LocalRulestackRuleData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

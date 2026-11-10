@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AdditionalLocationsProfile(locationProfiles, additionalBinaryDataProperties);
+            return new AdditionalLocationsProfile(locationProfiles ?? new ChangeTrackingList<LocationProfile>(), additionalBinaryDataProperties);
         }
     }
 }

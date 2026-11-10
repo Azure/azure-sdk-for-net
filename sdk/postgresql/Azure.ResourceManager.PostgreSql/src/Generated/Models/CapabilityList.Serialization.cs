@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CapabilityList(value, nextLink, additionalBinaryDataProperties);
+            return new CapabilityList(value ?? new ChangeTrackingList<PostgreSqlFlexibleServerCapabilityProperties>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> The pages of TopicRecordDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<TopicRecordData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Confluent
                 {
                     yield break;
                 }
-                ListTopicsSuccessResponse result = ListTopicsSuccessResponse.FromResponse(response);
+                ListTopicsSuccessResult result = ListTopicsSuccessResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<TopicRecordData>.FromValues((IReadOnlyList<TopicRecordData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

@@ -51,9 +51,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal SecurityConnectorResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string securityConnectorApiVersion);
             _securityConnectorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
-            _securityConnectorsRestClient = new SecurityConnectors(_securityConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, securityConnectorApiVersion ?? "2024-08-01-preview");
+            _securityConnectorsRestClient = new SecurityConnectors(_securityConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

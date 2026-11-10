@@ -1,18 +1,266 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Generator.Management;
+using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Models;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
+using System.Text.Json.Nodes;
 
 namespace Azure.Generator.Mgmt.Tests
 {
     internal class NameVisitorTests
     {
         private const string TestClientName = "TestClient";
+
+        private static IEnumerable<TestCaseData> RequestModelNames()
+        {
+            (string Stem, string Expected)[] names =
+            [
+                ("IpAddress", "IPAddress"),
+                ("Ipv4Address", "IPv4Address"),
+                ("Ipv6Address", "IPv6Address"),
+                ("IpV4Address", "IPv4Address"),
+                ("IpV6Address", "IPv6Address"),
+                ("DbAccount", "DBAccount"),
+                ("OsImage", "OSImage"),
+                ("PublicIp", "PublicIP"),
+                ("IpIpDbDbOsOsIpv4Ipv4Ipv6Ipv6", "IPIPDBDBOSOSIPv4IPv4IPv6IPv6"),
+                ("IPAddress", "IPAddress"),
+                ("IPv4Address", "IPv4Address"),
+                ("IPv6Address", "IPv6Address"),
+                ("Iphone", "Iphone"),
+                ("DbxAccount", "DbxAccount"),
+                ("Osprey", "Osprey"),
+                ("Ipv4address", "Ipv4address"),
+                ("IpV6address", "IPV6address"),
+                ("ipAddress", "ipAddress")
+            ];
+            foreach (var (stem, expected) in names)
+            {
+                foreach (var sharedBody in new[] { false, true })
+                {
+                    yield return new TestCaseData(stem, expected, sharedBody);
+                }
+            }
+        }
+
+        [TestCaseSource(nameof(RequestModelNames))]
+        public void StructuralRequestModelNamesUseSharedAcronymRules(string stem, string expected, bool sharedBody)
+        {
+            var (client, models) = InputResourceData.ClientWithResourcePatchBodyWithoutTags(stem, sharedBody);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+
+            var type = plugin.Object.TypeFactory.CreateModel(models[1])!;
+
+            Assert.That(type.Name, Is.EqualTo(expected + (sharedBody ? "CreateOrUpdateContent" : "Patch")));
+        }
+
+        [TestCase(false, false)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(true, true)]
+        public void StructuralRequestModelReferencesUseFinalName(bool sharedBody, bool clientNameOverride)
+        {
+            var (client, models) = InputResourceData.ClientWithResourcePatchBodyWithoutTags("IpAddress", sharedBody, clientNameOverride: clientNameOverride);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+            var type = plugin.Object.TypeFactory.CreateModel(models[1])!;
+            var expected = clientNameOverride ? "PatchType" : "IPAddress" + (sharedBody ? "CreateOrUpdateContent" : "Patch");
+            var modelText = plugin.Object.GetWriter(type).Write().Content;
+            var serializationText = plugin.Object.GetWriter(type.SerializationProviders.Single()).Write().Content;
+            var factory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var factoryText = plugin.Object.GetWriter(factory).Write().Content;
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(type.Constructors.Select(c => c.Signature.Type.Name), Is.All.EqualTo(expected));
+                Assert.That(modelText, Does.Contain($"partial class {expected}"));
+                Assert.That(serializationText, Does.Contain($"partial class {expected}"));
+                Assert.That(serializationText, Does.Contain($"new global::Samples.Models.{expected}("));
+                Assert.That(factory.Methods.Any(m => m.Signature.Name == expected && m.Signature.ReturnType!.Equals(type.Type)), Is.True);
+                Assert.That(factoryText, Does.Contain(expected));
+                Assert.That(modelText + serializationText + factoryText, Does.Not.Contain("IpAddress"));
+            });
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void StructuralRequestModelPreservesExplicitResourceName(bool sharedBody)
+        {
+            var (client, models) = InputResourceData.ClientWithResourcePatchBodyWithoutTags("IpAddress", sharedBody, resourceNameIsExplicit: true);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+
+            Assert.That(plugin.Object.InputLibrary.ResourceMetadatas.Single().ResourceNameIsExplicit, Is.True);
+            Assert.That(plugin.Object.TypeFactory.CreateModel(models[1])!.Name,
+                Is.EqualTo("IpAddress" + (sharedBody ? "CreateOrUpdateContent" : "Patch")));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void StructuralRequestModelDoesNotUseUnrelatedResourceNamingIntent(bool sharedBody)
+        {
+            var (client, models) = InputResourceData.ClientWithResourcePatchBodyWithoutTags("IpAddress", sharedBody);
+            var arguments = client.Decorators.Single().Arguments!.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            var resources = JsonNode.Parse(arguments["resources"].ToString())!.AsArray();
+            var unrelated = resources[0]!.DeepClone();
+            unrelated["resourceIdPattern"] = "/subscriptions/{subscriptionId}/providers/Microsoft.Tests/other/{otherName}";
+            unrelated["resourceType"] = "Microsoft.Tests/other";
+            unrelated["methods"] = new JsonArray();
+            unrelated["resourceNameIsExplicit"] = true;
+            resources.Add(unrelated);
+            arguments["resources"] = BinaryData.FromString(resources.ToJsonString());
+            var clientWithAdditionalResource = InputFactory.Client(TestClientName, methods: client.Methods,
+                decorators: [new InputDecoratorInfo("Azure.ClientGenerator.Core.@armProviderSchema", arguments)]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [clientWithAdditionalResource]);
+
+            Assert.That(plugin.Object.TypeFactory.CreateModel(models[1])!.Name,
+                Is.EqualTo("IPAddress" + (sharedBody ? "CreateOrUpdateContent" : "Patch")));
+        }
+
+        [TestCase(false, false)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(true, true)]
+        public void StructuralRequestModelPreservesExactNaming(bool sharedBody, bool exactResource)
+        {
+            var (client, models) = InputResourceData.ClientWithResourcePatchBodyWithoutTags("IpAddress", sharedBody);
+            typeof(InputType).GetProperty(nameof(InputType.IsExactName))!
+                .SetValue(models[exactResource ? 0 : 1], true);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+
+            Assert.That(plugin.Object.TypeFactory.CreateModel(models[1])!.Name,
+                Is.EqualTo(exactResource ? "IpAddress" + (sharedBody ? "CreateOrUpdateContent" : "Patch") : "PatchType"));
+        }
+
+        [TestCase(false, false)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(true, true)]
+        public void StructuralRequestModelPreservesExistingName(bool sharedBody, bool customCode)
+        {
+            var (client, models) = InputResourceData.ClientWithResourcePatchBodyWithoutTags("IpAddress", sharedBody);
+            var expected = "IpAddress" + (sharedBody ? "CreateOrUpdateContent" : "Patch");
+            var source = $"namespace Samples.Models {{ public partial class {expected} {{ }} }}";
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => models, clients: () => [client],
+                customizationSources: customCode ? [source] : null,
+                lastContractCompilation: () => customCode ? null : Helpers.BuildCompilation([("Contract.cs", source)]));
+            var type = plugin.Object.TypeFactory.CreateModel(models[1])!;
+
+            Assert.That(type.Name, Is.EqualTo(expected));
+            Assert.That(customCode ? type.CustomCodeView : type.LastContractView, Is.Not.Null);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void StructuralRequestModelPreservesClientNameOverride(bool sharedBody)
+        {
+            var (client, models) = InputResourceData.ClientWithResourcePatchBodyWithoutTags("IpAddress", sharedBody, clientNameOverride: true);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+
+            Assert.That(plugin.Object.TypeFactory.CreateModel(models[1])!.Name,
+                Is.EqualTo("PatchType"));
+        }
+
+        [TestCase("TestModelUrl", false)]
+        [TestCase("TestModelUrl", true)]
+        [TestCase("Sku", false)]
+        [TestCase("Sku", true)]
+        public void OrdinaryModelPreservesExplicitName(string name, bool exactName)
+        {
+            var model = InputFactory.Model(name, decorators: exactName
+                ? []
+                : [new InputDecoratorInfo("Azure.ResourceManager.@hasClientNameOverride", new Dictionary<string, BinaryData>())]);
+            if (exactName)
+            {
+                typeof(InputType).GetProperty(nameof(InputType.IsExactName))!.SetValue(model, true);
+            }
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+
+            Assert.That(plugin.Object.TypeFactory.CreateModel(model)!.Name, Is.EqualTo(name));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void StructuralRequestModelNormalizedCustomizationWinsOverPreviousContract(bool sharedBody)
+        {
+            var (client, models) = InputResourceData.ClientWithResourcePatchBodyWithoutTags("IpAddress", sharedBody);
+            var suffix = sharedBody ? "CreateOrUpdateContent" : "Patch";
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => models, clients: () => [client],
+                customizationSources: [$"namespace Samples.Models {{ public partial class IPAddress{suffix} {{ }} }}"],
+                lastContractCompilation: () => Helpers.BuildCompilation([
+                    ("Contract.cs", $"namespace Samples.Models {{ public partial class IpAddress{suffix} {{ }} }}")
+                ]));
+
+            var type = plugin.Object.TypeFactory.CreateModel(models[1])!;
+
+            Assert.That(type.Name, Is.EqualTo("IPAddress" + suffix));
+            Assert.That(type.CustomCodeView, Is.Not.Null);
+        }
+
+        [Test]
+        public void ArmResourceTypePropertyUsesSharedProjection()
+        {
+            var resourceType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "armResourceType", "Azure.Core.armResourceType");
+            var inputProperty = InputFactory.Property("type", resourceType, isReadOnly: true);
+            var model = InputFactory.Model(KnownManagementTypes.ArmResourceId, properties: [inputProperty]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = new SystemObjectModelProvider(typeof(ResourceData), model);
+
+            var property = plugin.Object.TypeFactory.CreateProperty(inputProperty, provider)!;
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(property.Name, Is.EqualTo(nameof(ResourceData.ResourceType)));
+                Assert.That(property.Type, Is.EqualTo(new CSharpType(typeof(ResourceType))));
+                Assert.That(property.WireInfo!.SerializedName, Is.EqualTo("type"));
+            });
+        }
+
+        [TestCase("id")]
+        [TestCase("type")]
+        [TestCase("location")]
+        public void ArmFrameworkStringPropertyIsNotBroadlyProjected(string wireName)
+        {
+            var inputProperty = InputFactory.Property("currentProperty", InputPrimitiveType.String, serializedName: wireName, isReadOnly: wireName != "location");
+            var model = InputFactory.Model(KnownManagementTypes.ArmResourceId, properties: [inputProperty]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = new SystemObjectModelProvider(typeof(TrackedResourceData), model);
+
+            var property = plugin.Object.TypeFactory.CreateProperty(inputProperty, provider)!;
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(property.Name, Is.EqualTo("CurrentProperty"));
+                Assert.That(property.Type, Is.EqualTo(new CSharpType(typeof(string), isNullable: true)));
+                Assert.That(property.WireInfo!.SerializedName, Is.EqualTo(wireName));
+            });
+        }
+
+        [Test]
+        public void OrdinaryModelPropertyIsNotArmProjected()
+        {
+            var inputProperty = InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true);
+            var model = InputFactory.Model("CurrentResource", properties: [inputProperty]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model]);
+            var provider = plugin.Object.TypeFactory.CreateModel(model)!;
+
+            var property = plugin.Object.TypeFactory.CreateProperty(inputProperty, provider)!;
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(property.Name, Is.EqualTo("Type"));
+                Assert.That(property.Type, Is.EqualTo(new CSharpType(typeof(string), isNullable: true)));
+            });
+        }
 
         [Test]
         public void TestTransformUrlToUri()

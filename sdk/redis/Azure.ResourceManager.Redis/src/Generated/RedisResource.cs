@@ -53,9 +53,8 @@ namespace Azure.ResourceManager.Redis
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RedisResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string redisApiVersion);
             _redisResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", ResourceType.Namespace, Diagnostics);
-            _redisResourcesRestClient = new RedisResources(_redisResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisApiVersion ?? "2025-08-01-preview");
+            _redisResourcesRestClient = new RedisResources(_redisResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Cache/redis", out string redisResourcesApiVersionOverride) ? redisResourcesApiVersionOverride : "2025-08-01-preview");
             ValidateResourceId(id);
         }
 

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DaprConfigurationList(value, nextLink, additionalBinaryDataProperties);
+            return new DaprConfigurationList(value ?? new ChangeTrackingList<DaprConfiguration>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

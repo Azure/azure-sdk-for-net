@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SolutionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SolutionListResult(value ?? new ChangeTrackingList<EdgeSolutionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new OperationalInsightsWorkspacePurgeContent(table, filters, additionalBinaryDataProperties);
+            return new OperationalInsightsWorkspacePurgeContent(table, filters ?? new ChangeTrackingList<OperationalInsightsWorkspacePurgeFilter>(), additionalBinaryDataProperties);
         }
     }
 }

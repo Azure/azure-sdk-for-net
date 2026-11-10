@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
             }
             return new AutoscaleSettingProperties(
-                profiles,
+                profiles ?? new ChangeTrackingList<AutoscaleProfile>(),
                 notifications ?? new ChangeTrackingList<AutoscaleNotification>(),
                 isEnabled,
                 predictiveAutoscalePolicy,

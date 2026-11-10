@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             TryGetApiVersion(AppConfigurationStoreResource.ResourceType, out string appConfigurationStoreApiVersion);
             _configurationStoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", AppConfigurationStoreResource.ResourceType.Namespace, Diagnostics);
-            _configurationStoresRestClient = new ConfigurationStores(_configurationStoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appConfigurationStoreApiVersion ?? "2025-08-01-preview");
+            _configurationStoresRestClient = new ConfigurationStores(
+                _configurationStoresClientDiagnostics,
+                Pipeline,
+                Diagnostics.ApplicationId,
+                Endpoint,
+                appConfigurationStoreApiVersion ?? "2025-08-01-preview",
+                resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

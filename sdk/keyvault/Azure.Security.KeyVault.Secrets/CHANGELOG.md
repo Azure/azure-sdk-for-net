@@ -1,6 +1,6 @@
 # Release History
 
-## 4.12.0-beta.3 (Unreleased)
+## 4.13.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -8,10 +8,20 @@
 
 ### Bugs Fixed
 
-- Fixed an issue in the challenge-based authentication policy where a cached authentication challenge accepted with challenge resource verification disabled could be reused by a separate default-strict client without revalidating the challenge resource.
-- Improved authentication challenge resource validation.
+### Other Changes
+
+## 4.12.0 (2026-10-27)
 
 ### Other Changes
+
+- Regenerated the library for stable Key Vault API version `2026-04-01`.
+
+## 4.12.0-beta.3 (2026-10-08)
+
+### Bugs Fixed
+
+- Fixed an issue in the challenge-based authentication policy where a cached authentication challenge accepted with challenge resource verification disabled could be reused by a separate default-strict client without revalidating the challenge resource.
+- Improved authentication challenge resource validation.
 
 ## 4.12.0-beta.2 (2026-09-27)
 

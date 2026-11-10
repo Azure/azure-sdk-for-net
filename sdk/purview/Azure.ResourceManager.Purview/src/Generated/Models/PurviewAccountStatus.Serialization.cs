@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Purview.Models
                 return null;
             }
             PurviewAccountProvisioningState? accountProvisioningState = default;
-            ErrorResponse error = default;
+            ErrorResult error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Purview.Models
                     {
                         continue;
                     }
-                    error = ErrorResponse.DeserializeErrorResponse(prop.Value, options);
+                    error = ErrorResult.DeserializeErrorResult(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

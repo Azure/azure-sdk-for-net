@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DisconnectedOperationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(DisconnectedOperationResource.ResourceType, out string disconnectedOperationApiVersion);
             _disconnectedClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DisconnectedOperations", DisconnectedOperationResource.ResourceType.Namespace, Diagnostics);
-            _disconnectedRestClient = new Disconnected(_disconnectedClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, disconnectedOperationApiVersion ?? "2026-03-15");
+            _disconnectedRestClient = new Disconnected(_disconnectedClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Edge/disconnectedOperations", out string disconnectedApiVersionOverride) ? disconnectedApiVersionOverride : "2026-03-15");
             ValidateResourceId(id);
         }
 

@@ -160,8 +160,8 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.AssetKind Contact { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.AssetKind Domain { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.AssetKind Host { get { throw null; } }
-        public static Azure.Analytics.Defender.Easm.AssetKind IpAddress { get { throw null; } }
-        public static Azure.Analytics.Defender.Easm.AssetKind IpBlock { get { throw null; } }
+        public static Azure.Analytics.Defender.Easm.AssetKind IPAddress { get { throw null; } }
+        public static Azure.Analytics.Defender.Easm.AssetKind IPBlock { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.AssetKind Page { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.AssetKind SslCert { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.AssetKind other) { throw null; }
@@ -392,8 +392,8 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.AssetUpdateTransfers Contact { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.AssetUpdateTransfers Domain { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.AssetUpdateTransfers Host { get { throw null; } }
-        public static Azure.Analytics.Defender.Easm.AssetUpdateTransfers IpAddress { get { throw null; } }
-        public static Azure.Analytics.Defender.Easm.AssetUpdateTransfers IpBlock { get { throw null; } }
+        public static Azure.Analytics.Defender.Easm.AssetUpdateTransfers IPAddress { get { throw null; } }
+        public static Azure.Analytics.Defender.Easm.AssetUpdateTransfers IPBlock { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.AssetUpdateTransfers Page { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.AssetUpdateTransfers SslCert { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.AssetUpdateTransfers other) { throw null; }
@@ -453,8 +453,8 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.AuditTrailItemKind Contact { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.AuditTrailItemKind Domain { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.AuditTrailItemKind Host { get { throw null; } }
-        public static Azure.Analytics.Defender.Easm.AuditTrailItemKind IpAddress { get { throw null; } }
-        public static Azure.Analytics.Defender.Easm.AuditTrailItemKind IpBlock { get { throw null; } }
+        public static Azure.Analytics.Defender.Easm.AuditTrailItemKind IPAddress { get { throw null; } }
+        public static Azure.Analytics.Defender.Easm.AuditTrailItemKind IPBlock { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.AuditTrailItemKind Page { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.AuditTrailItemKind SslCert { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.AuditTrailItemKind other) { throw null; }
@@ -1178,7 +1178,7 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.DiscoverySourceKind Contact { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.DiscoverySourceKind Domain { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.DiscoverySourceKind Host { get { throw null; } }
-        public static Azure.Analytics.Defender.Easm.DiscoverySourceKind IpBlock { get { throw null; } }
+        public static Azure.Analytics.Defender.Easm.DiscoverySourceKind IPBlock { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.DiscoverySourceKind other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
@@ -1539,8 +1539,8 @@ namespace Azure.Analytics.Defender.Easm
         public static Azure.Analytics.Defender.Easm.GlobalAssetType Contact { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.GlobalAssetType Domain { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.GlobalAssetType Host { get { throw null; } }
-        public static Azure.Analytics.Defender.Easm.GlobalAssetType IpAddress { get { throw null; } }
-        public static Azure.Analytics.Defender.Easm.GlobalAssetType IpBlock { get { throw null; } }
+        public static Azure.Analytics.Defender.Easm.GlobalAssetType IPAddress { get { throw null; } }
+        public static Azure.Analytics.Defender.Easm.GlobalAssetType IPBlock { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.GlobalAssetType MailServer { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.GlobalAssetType NameServer { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.GlobalAssetType Page { get { throw null; } }
@@ -2486,7 +2486,7 @@ namespace Azure.Analytics.Defender.Easm
         public ReportBillableAssetBreakdownKind(string value) { throw null; }
         public static Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdownKind Domain { get { throw null; } }
         public static Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdownKind Host { get { throw null; } }
-        public static Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdownKind IpAddress { get { throw null; } }
+        public static Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdownKind IPAddress { get { throw null; } }
         public bool Equals(Azure.Analytics.Defender.Easm.ReportBillableAssetBreakdownKind other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }

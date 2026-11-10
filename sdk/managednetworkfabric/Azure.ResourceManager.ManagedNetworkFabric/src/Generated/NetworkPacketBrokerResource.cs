@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkPacketBrokerResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string networkPacketBrokerApiVersion);
             _networkPacketBrokersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", ResourceType.Namespace, Diagnostics);
-            _networkPacketBrokersRestClient = new NetworkPacketBrokers(_networkPacketBrokersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkPacketBrokerApiVersion ?? "2025-07-15");
+            _networkPacketBrokersRestClient = new NetworkPacketBrokers(_networkPacketBrokersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkPacketBrokers", out string networkPacketBrokersApiVersionOverride) ? networkPacketBrokersApiVersionOverride : "2025-07-15");
             ValidateResourceId(id);
         }
 

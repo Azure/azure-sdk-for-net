@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ActionGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ActionGroupResource.ResourceType, out string actionGroupApiVersion);
             _actionGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ActionGroupResource.ResourceType.Namespace, Diagnostics);
-            _actionGroupsRestClient = new ActionGroups(_actionGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, actionGroupApiVersion ?? "2024-10-01-preview");
+            _actionGroupsRestClient = new ActionGroups(_actionGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
             ValidateResourceId(id);
         }
 

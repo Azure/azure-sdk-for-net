@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             return new ValidateMigrationInputSqlServerSqlMITaskInput(
                 sourceConnectionInfo,
                 targetConnectionInfo,
-                selectedDatabases,
+                selectedDatabases ?? new ChangeTrackingList<MigrateSqlServerSqlMIDatabaseInput>(),
                 selectedLogins ?? new ChangeTrackingList<string>(),
                 backupFileShare,
                 backupBlobShare,

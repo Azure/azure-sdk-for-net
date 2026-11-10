@@ -113,14 +113,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.BaseResourceProperties"/> instance for mocking. </returns>
         public static BaseResourceProperties BaseResourceProperties(string objectType = default)
         {
-            return new UnknownBaseResourceProperties(default, default);
+            return new UnknownBaseResourceProperties(objectType is null ? default : new ResourcePropertiesObjectType(objectType), default);
         }
 
         /// <summary> Default source properties. </summary>
         /// <returns> A new <see cref="Models.DefaultResourceProperties"/> instance for mocking. </returns>
         public static DefaultResourceProperties DefaultResourceProperties()
         {
-            return new DefaultResourceProperties(default, default);
+            return new DefaultResourceProperties(ResourcePropertiesObjectType.DefaultResourceProperties, default);
         }
 
         /// <summary> DatasourceSet details of datasource to be backed up. </summary>
@@ -187,12 +187,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.OperationalDataStoreSettings"/> instance for mocking. </returns>
         public static OperationalDataStoreSettings OperationalDataStoreSettings(DataStoreType dataStoreType = default, ResourceIdentifier resourceGroupId = default)
         {
-            return new OperationalDataStoreSettings(default, dataStoreType, default, resourceGroupId);
+            return new OperationalDataStoreSettings("AzureOperationalStoreParameters", dataStoreType, default, resourceGroupId);
         }
 
         /// <summary>
         /// Parameters for Backup Datasource
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AdlsBlobBackupDataSourceSettings"/>, <see cref="Models.AdlsBlobBackupDatasourceParametersForAutoProtection"/>, <see cref="Models.BlobBackupDataSourceSettings"/>, <see cref="Models.BlobBackupDatasourceParametersForAutoProtection"/>, <see cref="Models.GenericBackupDataSourceSettings"/>, and <see cref="Models.KubernetesClusterBackupDataSourceSettings"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AdlsBlobBackupDataSourceSettings"/>, <see cref="Models.AdlsBlobBackupDatasourceParametersForAutoProtection"/>, <see cref="Models.BlobBackupDataSourceSettings"/>, <see cref="Models.BlobBackupDatasourceParametersForAutoProtection"/>, <see cref="Models.GenericBackupDataSourceSettings"/>, <see cref="Models.KubernetesClusterBackupDataSourceSettings"/>, and <see cref="Models.PostgreSqlFlexibleServerBackupDataSourceSettings"/>.
         /// </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <returns> A new <see cref="Models.BackupDataSourceSettings"/> instance for mocking. </returns>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             backupHookReferences ??= new ChangeTrackingList<NamespacedName>();
 
             return new KubernetesClusterBackupDataSourceSettings(
-                default,
+                "KubernetesClusterBackupDatasourceParameters",
                 default,
                 isSnapshotVolumesEnabled,
                 (includedVolumeTypes ?? new ChangeTrackingList<DataProtectionAksVolumeType>()).ToList(),
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             containersList ??= new ChangeTrackingList<string>();
 
-            return new BlobBackupDataSourceSettings(default, default, (containersList ?? new ChangeTrackingList<string>()).ToList());
+            return new BlobBackupDataSourceSettings("BlobBackupDatasourceParameters", default, (containersList ?? new ChangeTrackingList<string>()).ToList());
         }
 
         /// <summary> Parameters to be used during configuration of backup of azure data lake storage account blobs. </summary>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             containersList ??= new ChangeTrackingList<string>();
 
-            return new AdlsBlobBackupDataSourceSettings(default, default, (containersList ?? new ChangeTrackingList<string>()).ToList());
+            return new AdlsBlobBackupDataSourceSettings("BlobBackupDatasourceParameters", default, (containersList ?? new ChangeTrackingList<string>()).ToList());
         }
 
         /// <summary> Paramters to be used during configuration of backup of blobs using AutoProtection settings. </summary>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.BlobBackupDatasourceParametersForAutoProtection"/> instance for mocking. </returns>
         public static BlobBackupDatasourceParametersForAutoProtection BlobBackupDatasourceParametersForAutoProtection(BlobBackupRuleBasedAutoProtectionSettings autoProtectionSettings = default)
         {
-            return new BlobBackupDatasourceParametersForAutoProtection(default, default, autoProtectionSettings);
+            return new BlobBackupDatasourceParametersForAutoProtection("BlobBackupDatasourceParametersForAutoProtection", default, autoProtectionSettings);
         }
 
         /// <summary> Parameters to be used for Blob Backup Rule Based Auto Protection settings. </summary>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             rules ??= new ChangeTrackingList<BlobBackupAutoProtectionRule>();
 
-            return new BlobBackupRuleBasedAutoProtectionSettings(default, enabled, default, (rules ?? new ChangeTrackingList<BlobBackupAutoProtectionRule>()).ToList());
+            return new BlobBackupRuleBasedAutoProtectionSettings("BlobBackupRuleBasedAutoProtectionSettings", enabled, default, (rules ?? new ChangeTrackingList<BlobBackupAutoProtectionRule>()).ToList());
         }
 
         /// <summary> Indicates a Blob Backup Auto Protection Rule. </summary>
@@ -315,7 +315,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.AdlsBlobBackupDatasourceParametersForAutoProtection"/> instance for mocking. </returns>
         public static AdlsBlobBackupDatasourceParametersForAutoProtection AdlsBlobBackupDatasourceParametersForAutoProtection(BlobBackupRuleBasedAutoProtectionSettings autoProtectionSettings = default)
         {
-            return new AdlsBlobBackupDatasourceParametersForAutoProtection(default, default, autoProtectionSettings);
+            return new AdlsBlobBackupDatasourceParametersForAutoProtection("AdlsBlobBackupDatasourceParametersForAutoProtection", default, autoProtectionSettings);
+        }
+
+        /// <summary> Parameters to be used during configuration of backup of PostgreSQL Flexible Servers. </summary>
+        /// <param name="backupSolutionType"> Type of backup taken, Logical/Physical. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerBackupDataSourceSettings"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerBackupDataSourceSettings PostgreSqlFlexibleServerBackupDataSourceSettings(BackupSolutionType? backupSolutionType = default)
+        {
+            return new PostgreSqlFlexibleServerBackupDataSourceSettings("PostgreSqlFlexibleServerBackupDatasourceParameters", default, backupSolutionType);
         }
 
         /// <summary> Generic parameters to be used during configuration of backup. </summary>
@@ -325,7 +333,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             resourceSelectors ??= new ChangeTrackingList<string>();
 
-            return new GenericBackupDataSourceSettings(default, default, (resourceSelectors ?? new ChangeTrackingList<string>()).ToList());
+            return new GenericBackupDataSourceSettings("GenericBackupDatasourceParameters", default, (resourceSelectors ?? new ChangeTrackingList<string>()).ToList());
         }
 
         /// <summary> Protection status details. </summary>
@@ -395,7 +403,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.SecretStoreBasedAuthCredentials"/> instance for mocking. </returns>
         public static SecretStoreBasedAuthCredentials SecretStoreBasedAuthCredentials(SecretStoreResourceInfo secretStoreResource = default)
         {
-            return new SecretStoreBasedAuthCredentials(default, default, secretStoreResource);
+            return new SecretStoreBasedAuthCredentials("SecretStoreBasedAuthCredentials", default, secretStoreResource);
         }
 
         /// <summary> Class representing a secret store resource. </summary>
@@ -499,13 +507,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 default);
         }
 
+        /// <summary> Class containing security settings of vault. </summary>
         /// <param name="softDeleteSettings"> Soft delete related settings. </param>
-        /// <param name="immutabilityState"> Immutability state. </param>
+        /// <param name="immutabilitySettings"> Immutability Settings at vault level. </param>
         /// <param name="encryptionSettings"> Customer Managed Key details of the resource. </param>
         /// <returns> A new <see cref="Models.BackupVaultSecuritySettings"/> instance for mocking. </returns>
-        public static BackupVaultSecuritySettings BackupVaultSecuritySettings(BackupVaultSoftDeleteSettings softDeleteSettings = default, BackupVaultImmutabilityState? immutabilityState = default, BackupVaultEncryptionSettings encryptionSettings = default)
+        public static BackupVaultSecuritySettings BackupVaultSecuritySettings(BackupVaultSoftDeleteSettings softDeleteSettings = default, ImmutabilitySettings immutabilitySettings = default, BackupVaultEncryptionSettings encryptionSettings = default)
         {
-            return new BackupVaultSecuritySettings(softDeleteSettings, immutabilityState is null ? default : new ImmutabilitySettings(immutabilityState, default), encryptionSettings, default);
+            return new BackupVaultSecuritySettings(softDeleteSettings, immutabilitySettings, encryptionSettings, default);
         }
 
         /// <summary> Soft delete related settings. </summary>
@@ -515,6 +524,27 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static BackupVaultSoftDeleteSettings BackupVaultSoftDeleteSettings(BackupVaultSoftDeleteState? state = default, double? retentionDurationInDays = default)
         {
             return new BackupVaultSoftDeleteSettings(state, retentionDurationInDays, default);
+        }
+
+        /// <summary> Immutability Settings at vault level. </summary>
+        /// <param name="state"> Immutability state. </param>
+        /// <param name="configuration"> Immutability configuration containing type and duration. </param>
+        /// <returns> A new <see cref="Models.ImmutabilitySettings"/> instance for mocking. </returns>
+        public static ImmutabilitySettings ImmutabilitySettings(BackupVaultImmutabilityState? state = default, ImmutabilityConfiguration configuration = default)
+        {
+            return new ImmutabilitySettings(state, configuration, default);
+        }
+
+        /// <summary> Immutability configuration containing type and duration. </summary>
+        /// <param name="type"> Type of immutability. Supported values: AsPerPolicy or TimeBased. </param>
+        /// <param name="durationInDays">
+        /// Duration in days for time-based immutability.
+        /// Required when type is TimeBased. Must be null when type is AsPerPolicy.
+        /// </param>
+        /// <returns> A new <see cref="Models.ImmutabilityConfiguration"/> instance for mocking. </returns>
+        public static ImmutabilityConfiguration ImmutabilityConfiguration(ImmutabilityType? @type = default, int? durationInDays = default)
+        {
+            return new ImmutabilityConfiguration(@type, durationInDays, default);
         }
 
         /// <param name="state"> Encryption state of the Backup Vault. </param>
@@ -597,7 +627,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.DataProtectionOperationJobExtendedInfo"/> instance for mocking. </returns>
         public static DataProtectionOperationJobExtendedInfo DataProtectionOperationJobExtendedInfo(string jobIdentifier = default)
         {
-            return new DataProtectionOperationJobExtendedInfo(default, default, jobIdentifier);
+            return new DataProtectionOperationJobExtendedInfo("OperationJobExtendedInfo", default, jobIdentifier);
         }
 
         /// <summary>
@@ -725,7 +755,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             dataSourceTypes ??= new ChangeTrackingList<string>();
             policyRules ??= new ChangeTrackingList<DataProtectionBasePolicyRule>();
 
-            return new RuleBasedBackupPolicy((dataSourceTypes ?? new ChangeTrackingList<string>()).ToList(), default, default, (policyRules ?? new ChangeTrackingList<DataProtectionBasePolicyRule>()).ToList());
+            return new RuleBasedBackupPolicy((dataSourceTypes ?? new ChangeTrackingList<string>()).ToList(), "BackupPolicy", default, (policyRules ?? new ChangeTrackingList<DataProtectionBasePolicyRule>()).ToList());
         }
 
         /// <summary>
@@ -750,7 +780,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             return new DataProtectionBackupRule(
                 name,
-                default,
+                "AzureBackupRule",
                 default,
                 backupParameters,
                 dataStore,
@@ -773,7 +803,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.DataProtectionBackupSettings"/> instance for mocking. </returns>
         public static DataProtectionBackupSettings DataProtectionBackupSettings(string backupType = default)
         {
-            return new DataProtectionBackupSettings(default, default, backupType);
+            return new DataProtectionBackupSettings("AzureBackupParams", default, backupType);
         }
 
         /// <summary> DataStoreInfo base. </summary>
@@ -800,7 +830,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.AdhocBasedBackupTriggerContext"/> instance for mocking. </returns>
         public static AdhocBasedBackupTriggerContext AdhocBasedBackupTriggerContext(DataProtectionBackupRetentionTag adhocBackupRetentionTagInfo = default)
         {
-            return new AdhocBasedBackupTriggerContext(default, default, adhocBackupRetentionTagInfo is null ? default : new AdhocBasedBackupTaggingCriteria(adhocBackupRetentionTagInfo, default));
+            return new AdhocBasedBackupTriggerContext("AdhocBasedTriggerContext", default, adhocBackupRetentionTagInfo is null ? default : new AdhocBasedBackupTaggingCriteria(adhocBackupRetentionTagInfo, default));
         }
 
         /// <param name="etag"> Retention Tag version. </param>
@@ -820,7 +850,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             taggingCriteriaList ??= new ChangeTrackingList<DataProtectionBackupTaggingCriteria>();
 
-            return new ScheduleBasedBackupTriggerContext(default, default, schedule, (taggingCriteriaList ?? new ChangeTrackingList<DataProtectionBackupTaggingCriteria>()).ToList());
+            return new ScheduleBasedBackupTriggerContext("ScheduleBasedTriggerContext", default, schedule, (taggingCriteriaList ?? new ChangeTrackingList<DataProtectionBackupTaggingCriteria>()).ToList());
         }
 
         /// <summary> Schedule for backup. </summary>
@@ -876,8 +906,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Schedule based backup criteria. </summary>
         /// <param name="absoluteCriteria">
-        /// it contains absolute values like "AllBackup" / "FirstOfDay" / "FirstOfWeek" / "FirstOfMonth"
-        /// and should be part of AbsoluteMarker enum
+        /// It contains absolute marker values such as `AllBackup`, `FirstOfDay`, `FirstOfWeek`, and `FirstOfMonth`.
+        /// These values should be part of the `AbsoluteMarker` enum.
         /// </param>
         /// <param name="daysOfMonth"> This is day of the month from 1 to 28 other wise last of month. </param>
         /// <param name="daysOfWeek"> It should be Sunday/Monday/T..../Saturday. </param>
@@ -895,7 +925,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             weeksOfMonth ??= new ChangeTrackingList<DataProtectionBackupWeekNumber>();
 
             return new ScheduleBasedBackupCriteria(
-                default,
+                "ScheduleBasedBackupCriteria",
                 default,
                 (absoluteCriteria ?? new ChangeTrackingList<BackupAbsoluteMarker>()).ToList(),
                 (daysOfMonth ?? new ChangeTrackingList<DataProtectionBackupDay>()).ToList(),
@@ -923,7 +953,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             lifecycles ??= new ChangeTrackingList<SourceLifeCycle>();
 
-            return new DataProtectionRetentionRule(name, default, default, isDefault, (lifecycles ?? new ChangeTrackingList<SourceLifeCycle>()).ToList());
+            return new DataProtectionRetentionRule(name, "AzureRetentionRule", default, isDefault, (lifecycles ?? new ChangeTrackingList<SourceLifeCycle>()).ToList());
         }
 
         /// <summary> Source LifeCycle. </summary>
@@ -955,7 +985,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.DataProtectionBackupAbsoluteDeleteSetting"/> instance for mocking. </returns>
         public static DataProtectionBackupAbsoluteDeleteSetting DataProtectionBackupAbsoluteDeleteSetting(TimeSpan duration = default)
         {
-            return new DataProtectionBackupAbsoluteDeleteSetting(duration, default, default);
+            return new DataProtectionBackupAbsoluteDeleteSetting(duration, "AbsoluteDeleteOption", default);
         }
 
         /// <summary> Target copy settings. </summary>
@@ -982,7 +1012,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.CopyOnExpirySetting"/> instance for mocking. </returns>
         public static CopyOnExpirySetting CopyOnExpirySetting()
         {
-            return new CopyOnExpirySetting(default, default);
+            return new CopyOnExpirySetting("CopyOnExpiryOption", default);
         }
 
         /// <summary> Duration based custom options to copy. </summary>
@@ -990,14 +1020,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.CustomCopySetting"/> instance for mocking. </returns>
         public static CustomCopySetting CustomCopySetting(TimeSpan? duration = default)
         {
-            return new CustomCopySetting(default, default, duration);
+            return new CustomCopySetting("CustomCopyOption", default, duration);
         }
 
         /// <summary> Immediate copy Option. </summary>
         /// <returns> A new <see cref="Models.ImmediateCopySetting"/> instance for mocking. </returns>
         public static ImmediateCopySetting ImmediateCopySetting()
         {
-            return new ImmediateCopySetting(default, default);
+            return new ImmediateCopySetting("ImmediateCopyOption", default);
         }
 
         /// <summary> Trigger backup request. </summary>
@@ -1088,7 +1118,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             restoreCriteria ??= new ChangeTrackingList<ItemLevelRestoreCriteria>();
 
             return new ItemLevelRestoreTargetInfo(
-                default,
+                "ItemLevelRestoreTargetInfo",
                 recoverySetting,
                 restoreLocation,
                 default,
@@ -1120,7 +1150,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             subItemPathPrefix ??= new ChangeTrackingList<string>();
 
             return new ItemPathBasedRestoreCriteria(
-                default,
+                "ItemPathBasedRestoreCriteria",
                 default,
                 itemPath,
                 isPathRelativeToBackupItem,
@@ -1134,7 +1164,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.RangeBasedItemLevelRestoreCriteria"/> instance for mocking. </returns>
         public static RangeBasedItemLevelRestoreCriteria RangeBasedItemLevelRestoreCriteria(string minMatchingValue = default, string maxMatchingValue = default)
         {
-            return new RangeBasedItemLevelRestoreCriteria(default, default, minMatchingValue, maxMatchingValue);
+            return new RangeBasedItemLevelRestoreCriteria("RangeBasedItemLevelRestoreCriteria", default, minMatchingValue, maxMatchingValue);
         }
 
         /// <summary> Generic criteria to be used during restore. </summary>
@@ -1142,7 +1172,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.GenericRestoreDataSourceCriteria"/> instance for mocking. </returns>
         public static GenericRestoreDataSourceCriteria GenericRestoreDataSourceCriteria(ResourceListSelectionCriteria resourceSelectors = default)
         {
-            return new GenericRestoreDataSourceCriteria(default, default, resourceSelectors);
+            return new GenericRestoreDataSourceCriteria("GenericRestoreDatasourceCriteria", default, resourceSelectors);
         }
 
         /// <summary> Specifies the list of resources to be restored. </summary>
@@ -1164,7 +1194,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.KubernetesStorageClassRestoreCriteria"/> instance for mocking. </returns>
         public static KubernetesStorageClassRestoreCriteria KubernetesStorageClassRestoreCriteria(string selectedStorageClassName = default, string provisioner = default)
         {
-            return new KubernetesStorageClassRestoreCriteria(default, default, selectedStorageClassName, provisioner);
+            return new KubernetesStorageClassRestoreCriteria("KubernetesStorageClassRestoreCriteria", default, selectedStorageClassName, provisioner);
         }
 
         /// <summary> Item Level kubernetes persistent volume target info for restore operation. </summary>
@@ -1173,7 +1203,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.KubernetesPVRestoreCriteria"/> instance for mocking. </returns>
         public static KubernetesPVRestoreCriteria KubernetesPVRestoreCriteria(string name = default, string storageClassName = default)
         {
-            return new KubernetesPVRestoreCriteria(default, default, name, storageClassName);
+            return new KubernetesPVRestoreCriteria("KubernetesPVRestoreCriteria", default, name, storageClassName);
         }
 
         /// <summary> kubernetes Cluster Backup target info for restore operation. </summary>
@@ -1200,7 +1230,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             restoreHookReferences ??= new ChangeTrackingList<NamespacedName>();
 
             return new KubernetesClusterRestoreCriteria(
-                default,
+                "KubernetesClusterRestoreCriteria",
                 default,
                 isClusterScopeResourcesIncluded,
                 (includedNamespaces ?? new ChangeTrackingList<string>()).ToList(),
@@ -1241,7 +1271,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             restoreHookReferences ??= new ChangeTrackingList<NamespacedName>();
 
             return new KubernetesClusterVaultTierRestoreCriteria(
-                default,
+                "KubernetesClusterVaultTierRestoreCriteria",
                 default,
                 includeClusterScopeResources,
                 (includedNamespaces ?? new ChangeTrackingList<string>()).ToList(),
@@ -1265,7 +1295,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.RestoreFilesTargetInfo"/> instance for mocking. </returns>
         public static RestoreFilesTargetInfo RestoreFilesTargetInfo(RecoverySetting recoverySetting = default, AzureLocation? restoreLocation = default, RestoreFilesTargetDetails targetDetails = default)
         {
-            return new RestoreFilesTargetInfo(default, recoverySetting, restoreLocation, default, targetDetails);
+            return new RestoreFilesTargetInfo("RestoreFilesTargetInfo", recoverySetting, restoreLocation, default, targetDetails);
         }
 
         /// <summary> Class encapsulating target details, used where the destination is not a datasource. </summary>
@@ -1299,7 +1329,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static RestoreTargetInfo RestoreTargetInfo(RecoverySetting recoverySetting = default, AzureLocation? restoreLocation = default, DataSourceInfo dataSourceInfo = default, DataSourceSetInfo dataSourceSetInfo = default, DataProtectionBackupAuthCredentials dataSourceAuthCredentials = default)
         {
             return new RestoreTargetInfo(
-                default,
+                "RestoreTargetInfo",
                 recoverySetting,
                 restoreLocation,
                 default,
@@ -1324,7 +1354,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
 
             return new BackupRecoveryPointBasedRestoreContent(
-                default,
+                "AzureBackupRecoveryPointBasedRestoreRequest",
                 restoreTargetInfo,
                 sourceDataStoreType,
                 sourceResourceId,
@@ -1352,7 +1382,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
 
             return new BackupRestoreWithRehydrationContent(
-                default,
+                "AzureBackupRecoveryPointBasedRestoreRequest",
                 restoreTargetInfo,
                 sourceDataStoreType,
                 sourceResourceId,
@@ -1380,7 +1410,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
 
             return new BackupRecoveryTimeBasedRestoreContent(
-                default,
+                "AzureBackupRecoveryTimeBasedRestoreRequest",
                 restoreTargetInfo,
                 sourceDataStoreType,
                 sourceResourceId,
@@ -1516,13 +1546,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="retentionTagVersion"></param>
         /// <param name="expireOn"></param>
         /// <param name="recoveryPointState"> Specifies recovery point completeness. Partial (i.e., only some of the intended items were backed up), or Completed (i.e., ALL intended items were backed up). </param>
+        /// <param name="immutabilityProperties"> Immutability properties of the recovery point. </param>
         /// <returns> A new <see cref="Models.DataProtectionBackupDiscreteRecoveryPointProperties"/> instance for mocking. </returns>
-        public static DataProtectionBackupDiscreteRecoveryPointProperties DataProtectionBackupDiscreteRecoveryPointProperties(string friendlyName = default, IEnumerable<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails = default, DateTimeOffset recoverOn = default, string policyName = default, string policyVersion = default, string recoveryPointId = default, string recoveryPointType = default, string retentionTagName = default, string retentionTagVersion = default, DateTimeOffset? expireOn = default, DataProtectionBackupRecoveryPointCompletionState? recoveryPointState = default)
+        public static DataProtectionBackupDiscreteRecoveryPointProperties DataProtectionBackupDiscreteRecoveryPointProperties(string friendlyName = default, IEnumerable<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails = default, DateTimeOffset recoverOn = default, string policyName = default, string policyVersion = default, string recoveryPointId = default, string recoveryPointType = default, string retentionTagName = default, string retentionTagVersion = default, DateTimeOffset? expireOn = default, DataProtectionBackupRecoveryPointCompletionState? recoveryPointState = default, RecoveryPointImmutabilityProperties immutabilityProperties = default)
         {
             recoveryPointDataStoresDetails ??= new ChangeTrackingList<RecoveryPointDataStoreDetail>();
 
             return new DataProtectionBackupDiscreteRecoveryPointProperties(
-                default,
+                "AzureBackupDiscreteRecoveryPoint",
                 default,
                 friendlyName,
                 (recoveryPointDataStoresDetails ?? new ChangeTrackingList<RecoveryPointDataStoreDetail>()).ToList(),
@@ -1534,7 +1565,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 retentionTagName,
                 retentionTagVersion,
                 expireOn,
-                recoveryPointState);
+                recoveryPointState,
+                immutabilityProperties);
         }
 
         /// <summary> RecoveryPoint datastore details. </summary>
@@ -1561,6 +1593,18 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 rehydrationExpireOn,
                 rehydrationStatus,
                 default);
+        }
+
+        /// <summary> Immutability properties of a recovery point. </summary>
+        /// <param name="isImmutable"> Whether the recovery point is currently within its immutability window. </param>
+        /// <param name="expiryOn">
+        /// UTC time when the recovery point's immutability window expires.
+        /// Null for AsPerPolicy vaults.
+        /// </param>
+        /// <returns> A new <see cref="Models.RecoveryPointImmutabilityProperties"/> instance for mocking. </returns>
+        public static RecoveryPointImmutabilityProperties RecoveryPointImmutabilityProperties(bool isImmutable = default, DateTimeOffset? expiryOn = default)
+        {
+            return new RecoveryPointImmutabilityProperties(isImmutable, expiryOn, default);
         }
 
         /// <summary> AzureBackup Job Resource Class. </summary>
@@ -1960,7 +2004,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.BackupFeatureValidationContent"/> instance for mocking. </returns>
         public static BackupFeatureValidationContent BackupFeatureValidationContent(BackupSupportedFeatureType? featureType = default, string featureName = default)
         {
-            return new BackupFeatureValidationContent(default, default, featureType, featureName);
+            return new BackupFeatureValidationContent("FeatureValidationRequest", default, featureType, featureName);
         }
 
         /// <summary>
@@ -1982,7 +2026,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             features ??= new ChangeTrackingList<BackupSupportedFeature>();
 
-            return new BackupFeatureValidationResult(default, default, featureType, (features ?? new ChangeTrackingList<BackupSupportedFeature>()).ToList());
+            return new BackupFeatureValidationResult("FeatureValidationResponse", default, featureType, (features ?? new ChangeTrackingList<BackupSupportedFeature>()).ToList());
         }
 
         /// <summary> Elements class for feature request. </summary>
@@ -2056,6 +2100,50 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new CrossRegionRestoreJobsContent(sourceRegion, sourceBackupVaultId, default);
         }
 
+        /// <summary> Class containing security settings of vault. </summary>
+        /// <param name="softDeleteSettings"> Soft delete related settings. </param>
+        /// <param name="immutabilityState"> Immutability state. </param>
+        /// <param name="encryptionSettings"> Customer Managed Key details of the resource. </param>
+        /// <returns> A new <see cref="Models.BackupVaultSecuritySettings"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BackupVaultSecuritySettings BackupVaultSecuritySettings(BackupVaultSoftDeleteSettings softDeleteSettings, BackupVaultImmutabilityState? immutabilityState, BackupVaultEncryptionSettings encryptionSettings)
+        {
+            return new BackupVaultSecuritySettings(softDeleteSettings, immutabilityState is null ? default : new ImmutabilitySettings(immutabilityState, default, default), encryptionSettings, default);
+        }
+
+        /// <summary> Azure backup discrete RecoveryPoint. </summary>
+        /// <param name="friendlyName"></param>
+        /// <param name="recoveryPointDataStoresDetails"></param>
+        /// <param name="recoverOn"></param>
+        /// <param name="policyName"></param>
+        /// <param name="policyVersion"></param>
+        /// <param name="recoveryPointId"></param>
+        /// <param name="recoveryPointType"></param>
+        /// <param name="retentionTagName"></param>
+        /// <param name="retentionTagVersion"></param>
+        /// <param name="expireOn"></param>
+        /// <param name="recoveryPointState"> Specifies recovery point completeness. Partial (i.e., only some of the intended items were backed up), or Completed (i.e., ALL intended items were backed up). </param>
+        /// <returns> A new <see cref="Models.DataProtectionBackupDiscreteRecoveryPointProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataProtectionBackupDiscreteRecoveryPointProperties DataProtectionBackupDiscreteRecoveryPointProperties(string friendlyName, IEnumerable<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails, DateTimeOffset recoverOn, string policyName, string policyVersion, string recoveryPointId, string recoveryPointType, string retentionTagName, string retentionTagVersion, DateTimeOffset? expireOn, DataProtectionBackupRecoveryPointCompletionState? recoveryPointState)
+        {
+            return new DataProtectionBackupDiscreteRecoveryPointProperties(
+                "AzureBackupDiscreteRecoveryPoint",
+                default,
+                friendlyName,
+                (recoveryPointDataStoresDetails ?? new ChangeTrackingList<RecoveryPointDataStoreDetail>()).ToList(),
+                recoverOn,
+                policyName,
+                policyVersion,
+                recoveryPointId,
+                recoveryPointType,
+                retentionTagName,
+                retentionTagVersion,
+                expireOn,
+                recoveryPointState,
+                default);
+        }
+
         /// <summary> Backup Vault. </summary>
         /// <param name="monitoringAlertSettingsForAllJobFailures"></param>
         /// <param name="provisioningState"> Provisioning state of the BackupVault resource. </param>
@@ -2071,7 +2159,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="replicatedRegions"> List of replicated regions for Backup Vault. </param>
         /// <returns> A new <see cref="Models.DataProtectionBackupVaultProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataProtectionBackupVaultProperties DataProtectionBackupVaultProperties(AzureMonitorAlertsState? monitoringAlertSettingsForAllJobFailures = default, DataProtectionBackupProvisioningState? provisioningState = default, BackupVaultResourceMoveState? resourceMoveState = default, BackupVaultResourceMoveDetails resourceMoveDetails = default, BackupVaultSecuritySettings securitySettings = default, IEnumerable<DataProtectionBackupStorageSetting> storageSettings = default, bool? isVaultProtectedByResourceGuard = default, BackupVaultFeatureSettings featureSettings = default, BackupVaultSecureScoreLevel? secureScore = default, BcdrSecurityLevel? bcdrSecurityLevel = default, IEnumerable<string> resourceGuardOperationRequests = default, IEnumerable<AzureLocation> replicatedRegions = default)
+        public static DataProtectionBackupVaultProperties DataProtectionBackupVaultProperties(AzureMonitorAlertsState? monitoringAlertSettingsForAllJobFailures, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IEnumerable<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel? secureScore, BcdrSecurityLevel? bcdrSecurityLevel, IEnumerable<string> resourceGuardOperationRequests, IEnumerable<AzureLocation> replicatedRegions)
         {
             return new DataProtectionBackupVaultProperties(
                 default,
@@ -2097,7 +2185,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <returns> A new <see cref="Models.DataProtectionBackupVaultPatchProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataProtectionBackupVaultPatchProperties DataProtectionBackupVaultPatchProperties(AzureMonitorAlertsState? monitoringAlertSettingsForAllJobFailures = default, BackupVaultSecuritySettings securitySettings = default, BackupVaultFeatureSettings featureSettings = default, IEnumerable<string> resourceGuardOperationRequests = default)
+        public static DataProtectionBackupVaultPatchProperties DataProtectionBackupVaultPatchProperties(AzureMonitorAlertsState? monitoringAlertSettingsForAllJobFailures, BackupVaultSecuritySettings securitySettings, BackupVaultFeatureSettings featureSettings, IEnumerable<string> resourceGuardOperationRequests)
         {
             return new DataProtectionBackupVaultPatchProperties(
                 default,
@@ -2127,7 +2215,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="resourceDeletionInfo"> Deletion info for the tracked resource (Backup Vault). </param>
         /// <returns> A new <see cref="Models.DataProtectionDeletedBackupVaultProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataProtectionDeletedBackupVaultProperties DataProtectionDeletedBackupVaultProperties(AzureMonitorAlertsState? monitoringAlertSettingsForAllJobFailures = default, DataProtectionBackupProvisioningState? provisioningState = default, BackupVaultResourceMoveState? resourceMoveState = default, BackupVaultResourceMoveDetails resourceMoveDetails = default, BackupVaultSecuritySettings securitySettings = default, IEnumerable<DataProtectionBackupStorageSetting> storageSettings = default, bool? isVaultProtectedByResourceGuard = default, BackupVaultFeatureSettings featureSettings = default, BackupVaultSecureScoreLevel? secureScore = default, BcdrSecurityLevel? bcdrSecurityLevel = default, IEnumerable<string> resourceGuardOperationRequests = default, IEnumerable<AzureLocation> replicatedRegions = default, string originalBackupVaultId = default, string originalBackupVaultName = default, string originalBackupVaultResourcePath = default, DataProtectionResourceDeletionInfo resourceDeletionInfo = default)
+        public static DataProtectionDeletedBackupVaultProperties DataProtectionDeletedBackupVaultProperties(AzureMonitorAlertsState? monitoringAlertSettingsForAllJobFailures, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IEnumerable<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel? secureScore, BcdrSecurityLevel? bcdrSecurityLevel, IEnumerable<string> resourceGuardOperationRequests, IEnumerable<AzureLocation> replicatedRegions, string originalBackupVaultId, string originalBackupVaultName, string originalBackupVaultResourcePath, DataProtectionResourceDeletionInfo resourceDeletionInfo)
         {
             return new DataProtectionDeletedBackupVaultProperties(
                 default,
@@ -2250,7 +2338,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataProtectionOperationJobExtendedInfo DataProtectionOperationJobExtendedInfo(ResourceIdentifier jobResourceId)
         {
-            return new DataProtectionOperationJobExtendedInfo(default, default, default);
+            return new DataProtectionOperationJobExtendedInfo("OperationJobExtendedInfo", default, default);
         }
 
         /// <summary> Backup Instance. </summary>
@@ -2421,7 +2509,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static ItemPathBasedRestoreCriteria ItemPathBasedRestoreCriteria(string itemPath, bool isPathRelativeToBackupItem, IEnumerable<string> subItemPathPrefix)
         {
             return new ItemPathBasedRestoreCriteria(
-                default,
+                "ItemPathBasedRestoreCriteria",
                 default,
                 itemPath,
                 isPathRelativeToBackupItem,
@@ -2574,7 +2662,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static DataProtectionBackupDiscreteRecoveryPointProperties DataProtectionBackupDiscreteRecoveryPointProperties(string friendlyName, IEnumerable<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails, DateTimeOffset recoverOn, string policyName, string policyVersion, string recoveryPointId, string recoveryPointType, string retentionTagName, string retentionTagVersion, DateTimeOffset? expireOn)
         {
             return new DataProtectionBackupDiscreteRecoveryPointProperties(
-                default,
+                "AzureBackupDiscreteRecoveryPoint",
                 default,
                 friendlyName,
                 (recoveryPointDataStoresDetails ?? new ChangeTrackingList<RecoveryPointDataStoreDetail>()).ToList(),
@@ -2586,6 +2674,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 retentionTagName,
                 retentionTagVersion,
                 expireOn,
+                default,
                 default);
         }
 
@@ -2605,7 +2694,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static BackupRestoreWithRehydrationContent BackupRestoreWithRehydrationContent(RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, ResourceIdentifier sourceResourceId, DataProtectionIdentityDetails identityDetails, string recoveryPointId, BackupRehydrationPriority rehydrationPriority, TimeSpan rehydrationRetentionDuration)
         {
             return new BackupRestoreWithRehydrationContent(
-                default,
+                "AzureBackupRecoveryPointBasedRestoreRequest",
                 restoreTargetInfo,
                 sourceDataStoreType,
                 sourceResourceId,
@@ -2631,7 +2720,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static BackupRecoveryTimeBasedRestoreContent BackupRecoveryTimeBasedRestoreContent(RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, ResourceIdentifier sourceResourceId, DataProtectionIdentityDetails identityDetails, DateTimeOffset recoverOn)
         {
             return new BackupRecoveryTimeBasedRestoreContent(
-                default,
+                "AzureBackupRecoveryTimeBasedRestoreRequest",
                 restoreTargetInfo,
                 sourceDataStoreType,
                 sourceResourceId,
@@ -2655,7 +2744,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static BackupRecoveryPointBasedRestoreContent BackupRecoveryPointBasedRestoreContent(RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, ResourceIdentifier sourceResourceId, DataProtectionIdentityDetails identityDetails, string recoveryPointId)
         {
             return new BackupRecoveryPointBasedRestoreContent(
-                default,
+                "AzureBackupRecoveryPointBasedRestoreRequest",
                 restoreTargetInfo,
                 sourceDataStoreType,
                 sourceResourceId,

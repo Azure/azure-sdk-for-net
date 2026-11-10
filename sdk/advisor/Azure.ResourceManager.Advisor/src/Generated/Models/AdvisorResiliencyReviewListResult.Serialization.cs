@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Advisor.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AdvisorResiliencyReviewListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AdvisorResiliencyReviewListResult(value ?? new ChangeTrackingList<AdvisorResiliencyReviewData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

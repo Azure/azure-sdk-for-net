@@ -11,8 +11,10 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.Tests.Identity.Mock;
 using Azure.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Identity.Client;
 using NUnit.Framework;
 namespace Azure.Core.Tests.Identity.ConfigurableCredentials
 {
@@ -300,6 +302,80 @@ namespace Azure.Core.Tests.Identity.ConfigurableCredentials
             Assert.AreEqual(2, sources.Length, "Expected exactly two credentials in the chain");
             Assert.IsInstanceOf<VisualStudioCredential>(sources[0]);
             Assert.IsInstanceOf<AzureCliCredential>(sources[1]);
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void ChainedManagedIdentity_ArcIdentityRejectionStopsChain(
+            [Values("ClientId", "ResourceId", "ObjectId")] string identityKind,
+            [Values("missing", "mismatched", "unattached")] string failure)
+        {
+            using var environment = CredentialTestHelpers.CreateArcManagedIdentityEnvironment();
+            ApplicationBase.ResetStateForTest();
+            try
+            {
+                string identityId = identityKind == "ResourceId"
+                    ? $"/subscriptions/{Guid.NewGuid()}/resourceGroups/test/providers/Microsoft.ManagedIdentity/userAssignedIdentities/arc-uami"
+                    : Guid.NewGuid().ToString();
+                string identityParameter = identityKind switch
+                {
+                    "ClientId" => "client_id",
+                    "ResourceId" => "msi_res_id",
+                    _ => "object_id"
+                };
+                MockResponse response;
+                if (failure == "unattached")
+                {
+                    response = new MockResponse(400);
+                    response.SetContent("""{"error":"identity_not_found","error_description":"The requested identity is not assigned to this resource."}""");
+                }
+                else
+                {
+                    response = CredentialTestHelpers.CreateMockArcTokenResponse(
+                        "wrong-identity-token",
+                        failure == "mismatched" ? identityParameter : null,
+                        $"{identityId}-different");
+                }
+                var transport = new MockTransport(response);
+                var config = new ConfigurationBuilder()
+                    .AddInMemoryCollection(new Dictionary<string, string>
+                    {
+                        ["Credential:CredentialSource"] = "ChainedTokenCredential",
+                        ["Credential:Sources:0:CredentialSource"] = "ManagedIdentityCredential",
+                        ["Credential:Sources:0:ManagedIdentityIdKind"] = identityKind,
+                        ["Credential:Sources:0:ManagedIdentityId"] = identityId,
+                        ["Credential:Sources:1:CredentialSource"] = "AzureCliCredential"
+                    })
+                    .Build();
+                var section = config.GetSection("Credential");
+                var options = new DefaultAzureCredentialOptions(new CredentialSettings(section), section);
+                options.Sources[0].Transport = transport;
+                options.Sources[0].Retry.MaxRetries = 0;
+                var credential = new ConfigurableCredential(options);
+                var chain = GetInnerCredential(credential) as ChainedTokenCredential;
+                Assert.IsNotNull(chain);
+                var sources = GetChainedTokenCredentialSources(chain);
+                Assert.AreEqual(2, sources.Length);
+                Assert.IsInstanceOf<ManagedIdentityCredential>(sources[0]);
+                var fallback = new Moq.Mock<TokenCredential>(Moq.MockBehavior.Strict);
+                sources[1] = fallback.Object;
+                var instrumented = InstrumentClient(credential);
+
+                var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () =>
+                    await instrumented.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+
+                Assert.That(ex, Is.Not.InstanceOf<CredentialUnavailableException>());
+                Assert.That(ex.ToString(), Does.Contain(failure == "unattached"
+                    ? "identity_not_found"
+                    : Constants.MiSourceNoUserAssignedIdentityMessage));
+                Assert.That(transport.Requests, Has.Count.EqualTo(1));
+                CredentialTestHelpers.AssertArcManagedIdentityRequest(transport.Requests[0], identityParameter, identityId);
+                fallback.VerifyNoOtherCalls();
+            }
+            finally
+            {
+                ApplicationBase.ResetStateForTest();
+            }
         }
 
         [Test]

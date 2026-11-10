@@ -232,7 +232,6 @@
             "$id": "20",
             "name": "input",
             "isExactName": false,
-            "resourceName": "Usage",
             "accessibility": "public",
             "parameters": [
               {
@@ -368,7 +367,6 @@
             "$id": "26",
             "name": "output",
             "isExactName": false,
-            "resourceName": "Usage",
             "accessibility": "public",
             "parameters": [
               {
@@ -465,7 +463,6 @@
             "$id": "30",
             "name": "inputAndOutput",
             "isExactName": false,
-            "resourceName": "Usage",
             "accessibility": "public",
             "parameters": [
               {

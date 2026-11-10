@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RedisEnterpriseMigrationValidationError(disparities, additionalBinaryDataProperties);
+            return new RedisEnterpriseMigrationValidationError(disparities ?? new ChangeTrackingList<RedisEnterpriseMigrationValidationDisparity>(), additionalBinaryDataProperties);
         }
     }
 }

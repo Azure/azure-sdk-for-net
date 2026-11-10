@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SAPCentralServerInstanceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SAPCentralServerInstanceListResult(value ?? new ChangeTrackingList<SapCentralServerInstanceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

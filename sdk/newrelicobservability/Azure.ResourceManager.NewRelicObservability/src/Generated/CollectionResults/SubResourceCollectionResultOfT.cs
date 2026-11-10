@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <returns> The pages of SubResourceCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<SubResource>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 {
                     yield break;
                 }
-                LinkedResourceListResponse result = LinkedResourceListResponse.FromResponse(response);
+                LinkedResourceListResult result = LinkedResourceListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<SubResource>.FromValues((IReadOnlyList<SubResource>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

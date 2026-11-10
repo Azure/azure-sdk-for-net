@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DataFactoryLinkedServiceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new DataFactoryLinkedServiceListResult(value ?? new ChangeTrackingList<DataFactoryLinkedServiceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Initializes a new instance of <see cref="ExecutionConfigurations"/>. </summary>
         /// <param name="userConsent"> User consent for performing recovery action. </param>
-        public ExecutionConfigurations(UserConsent userConsent)
+        public ExecutionConfigurations(RecoveryActionUserConsent userConsent)
         {
             UserConsent = userConsent;
         }
@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <summary> Initializes a new instance of <see cref="ExecutionConfigurations"/>. </summary>
         /// <param name="userConsent"> User consent for performing recovery action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExecutionConfigurations(UserConsent userConsent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExecutionConfigurations(RecoveryActionUserConsent userConsent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UserConsent = userConsent;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> User consent for performing recovery action. </summary>
-        public UserConsent UserConsent { get; set; }
+        public RecoveryActionUserConsent UserConsent { get; set; }
     }
 }

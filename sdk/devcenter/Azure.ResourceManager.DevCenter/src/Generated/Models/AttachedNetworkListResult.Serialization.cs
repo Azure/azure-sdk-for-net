@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AttachedNetworkListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AttachedNetworkListResult(value ?? new ChangeTrackingList<AttachedNetworkConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

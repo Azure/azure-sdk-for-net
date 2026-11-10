@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkRackCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(NetworkRackResource.ResourceType, out string networkRackApiVersion);
             _networkRacksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", NetworkRackResource.ResourceType.Namespace, Diagnostics);
-            _networkRacksRestClient = new NetworkRacks(_networkRacksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkRackApiVersion ?? "2025-07-15");
+            _networkRacksRestClient = new NetworkRacks(_networkRacksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/networkRacks", out string networkRacksApiVersionOverride) ? networkRacksApiVersionOverride : "2025-07-15");
             ValidateResourceId(id);
         }
 

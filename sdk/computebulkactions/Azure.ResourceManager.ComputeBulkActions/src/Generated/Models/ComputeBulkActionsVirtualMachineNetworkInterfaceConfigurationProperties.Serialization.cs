@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
                 isIPForwardingEnabled,
                 networkSecurityGroup,
                 dnsSettings,
-                ipConfigurations,
+                ipConfigurations ?? new ChangeTrackingList<ComputeBulkActionsVirtualMachineNetworkInterfaceIPConfiguration>(),
                 dscpConfiguration,
                 auxiliaryMode,
                 auxiliarySku,

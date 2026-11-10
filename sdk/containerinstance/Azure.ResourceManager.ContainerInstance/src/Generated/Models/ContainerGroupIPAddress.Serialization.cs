@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             return new ContainerGroupIPAddress(
-                ports,
+                ports ?? new ChangeTrackingList<ContainerGroupPort>(),
                 addressType,
                 ip,
                 dnsNameLabel,

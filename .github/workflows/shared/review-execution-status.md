@@ -54,7 +54,7 @@ jobs:
       review_event: ${{ steps.validate.outputs.review_event }}
     steps:
       - name: Download review output
-        uses: actions/download-artifact@v8.0.1
+        uses: actions/download-artifact@v8.0.2
         with:
           pattern: "{agent,agent-output-fallback}"
           merge-multiple: true

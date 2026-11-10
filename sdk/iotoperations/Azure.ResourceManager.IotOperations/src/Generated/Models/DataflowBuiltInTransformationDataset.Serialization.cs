@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 key,
                 description,
                 schemaRef,
-                inputs,
+                inputs ?? new ChangeTrackingList<string>(),
                 expression,
                 additionalBinaryDataProperties);
         }

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <returns> The pages of PaymentHsmClusterPrivateEndpointConnectionDataCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<PaymentHsmClusterPrivateEndpointConnectionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

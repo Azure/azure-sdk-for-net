@@ -73,8 +73,8 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _data = DefineProperty<BinaryData>(nameof(Data), new string[] { "data" }, format: "base64");
-            _validatedCertData = DefineProperty<BinaryData>(nameof(ValidatedCertData), new string[] { "validatedCertData" }, isOutput: true, format: "base64");
+            _data = DefineProperty<BinaryData>(nameof(Data), new string[] { "data" });
+            _validatedCertData = DefineProperty<BinaryData>(nameof(ValidatedCertData), new string[] { "validatedCertData" }, isOutput: true);
             _clientCertIssuerDN = DefineProperty<string>(nameof(ClientCertIssuerDN), new string[] { "clientCertIssuerDN" }, isOutput: true);
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();

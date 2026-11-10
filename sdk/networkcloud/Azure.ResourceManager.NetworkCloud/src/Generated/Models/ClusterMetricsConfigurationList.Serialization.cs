@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ClusterMetricsConfigurationList(value, nextLink, additionalBinaryDataProperties);
+            return new ClusterMetricsConfigurationList(value ?? new ChangeTrackingList<NetworkCloudClusterMetricsConfigurationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

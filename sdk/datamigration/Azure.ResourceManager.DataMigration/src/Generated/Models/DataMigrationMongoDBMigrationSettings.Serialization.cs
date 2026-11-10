@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             return new DataMigrationMongoDBMigrationSettings(
                 boostRUs,
-                databases,
+                databases ?? new ChangeTrackingDictionary<string, DataMigrationMongoDBDatabaseSettings>(),
                 replication,
                 source,
                 target,

@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ApiManagementPrivateLinkResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ApiManagementPrivateLinkResourceListResult(value ?? new ChangeTrackingList<ApiManagementPrivateLinkResourceData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

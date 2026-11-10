@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MigrationConfigListResult(value, nextLink, additionalBinaryDataProperties);
+            return new MigrationConfigListResult(value ?? new ChangeTrackingList<MigrationConfigurationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

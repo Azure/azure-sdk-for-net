@@ -174,7 +174,6 @@ namespace Azure.ResourceManager.DevTestLabs
     [ModelReaderWriterBuildable(typeof(SecretProperties))]
     [ModelReaderWriterBuildable(typeof(ServiceFabricList))]
     [ModelReaderWriterBuildable(typeof(ServiceFabricProperties))]
-    [ModelReaderWriterBuildable(typeof(SharedPublicIPAddressConfiguration))]
     [ModelReaderWriterBuildable(typeof(SubnetSharedPublicIPAddressConfiguration))]
     [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

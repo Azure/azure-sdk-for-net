@@ -797,7 +797,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             return new DatabaseAccountCreateUpdateProperties(
                 consistencyPolicy,
-                locations,
+                locations ?? new ChangeTrackingList<CosmosDBAccountLocation>(),
                 databaseAccountOfferType,
                 ipRules ?? new ChangeTrackingList<CosmosDBIPAddressOrRange>(),
                 isVirtualNetworkFilterEnabled,

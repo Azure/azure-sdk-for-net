@@ -43,15 +43,33 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
 
         private ClientDiagnostics DnsResolversClientDiagnostics => _dnsResolversClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DnsResolvers DnsResolversRestClient => _dnsResolversRestClient ??= new DnsResolvers(DnsResolversClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
+        private DnsResolvers DnsResolversRestClient => _dnsResolversRestClient ??= new DnsResolvers(
+            DnsResolversClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-10-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics DnsForwardingRulesetsClientDiagnostics => _dnsForwardingRulesetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DnsForwardingRulesets DnsForwardingRulesetsRestClient => _dnsForwardingRulesetsRestClient ??= new DnsForwardingRulesets(DnsForwardingRulesetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
+        private DnsForwardingRulesets DnsForwardingRulesetsRestClient => _dnsForwardingRulesetsRestClient ??= new DnsForwardingRulesets(
+            DnsForwardingRulesetsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-10-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics DnsResolverPoliciesClientDiagnostics => _dnsResolverPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DnsResolver.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DnsResolverPolicies DnsResolverPoliciesRestClient => _dnsResolverPoliciesRestClient ??= new DnsResolverPolicies(DnsResolverPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-01-preview");
+        private DnsResolverPolicies DnsResolverPoliciesRestClient => _dnsResolverPoliciesRestClient ??= new DnsResolverPolicies(
+            DnsResolverPoliciesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-10-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary> Gets a collection of DnsResolvers in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of DnsResolvers and their operations over a DnsResolverResource. </returns>

@@ -93,17 +93,61 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 routeBatch[0].TelemetryItems.Select(item => item.InstrumentationKey));
         }
 
+        [Fact]
+        public void AadAndInstrumentationKeyRoutesToOneEndpointBecomeDistinctGroups()
+        {
+            var routeBatch = Convert(
+                Emit(Ikey("ikey-a"), Endpoint(EastUs)),
+                Emit(Ikey("ikey-b"), Endpoint(EastUs), IngestionAuth("aad")),
+                Emit(Ikey("ikey-c"), Endpoint(EastUs), IngestionAuth("AAD")));
+
+            Assert.Equal(2, routeBatch.Count);
+
+            Assert.Equal(EastUs, routeBatch[0].IngestionEndpoint);
+            Assert.False(routeBatch[0].IsAad);
+            Assert.Equal(new[] { "ikey-a" }, routeBatch[0].TelemetryItems.Select(item => item.InstrumentationKey));
+
+            Assert.Equal(EastUs, routeBatch[1].IngestionEndpoint);
+            Assert.True(routeBatch[1].IsAad);
+            Assert.Equal(new[] { "ikey-b", "ikey-c" }, routeBatch[1].TelemetryItems.Select(item => item.InstrumentationKey));
+        }
+
+        [Theory]
+        [InlineData("entra")]
+        [InlineData("")]
+        [InlineData(true)]
+        public void OtherIngestionAuthValuesAreInstrumentationKeyRoutes(object ingestionAuth)
+        {
+            var routeBatch = Convert(
+                Emit(Ikey("ikey-a"), Endpoint(EastUs)),
+                Emit(Ikey("ikey-b"), Endpoint(EastUs), IngestionAuth(ingestionAuth)));
+
+            Assert.Equal(1, routeBatch.Count);
+            Assert.False(routeBatch[0].IsAad);
+            Assert.Equal(2, routeBatch[0].TelemetryItems.Count);
+        }
+
+        [Fact]
+        public void FirstOccurrenceOfARepeatedIngestionAuthWins()
+        {
+            var routeBatch = Convert(
+                Emit(Ikey("ikey-a"), Endpoint(EastUs), IngestionAuth("aad"), IngestionAuth("ikey")));
+
+            Assert.True(routeBatch[0].IsAad);
+        }
+
         /// <summary>
         /// On the routed path they are consumed, so they must not also appear as dimensions.
         /// </summary>
         [Fact]
         public void RoutedTelemetryDoesNotCarryTheRoutingTagsAsCustomDimensions()
         {
-            var routeBatch = Convert(Emit(Ikey("ikey-a"), Endpoint(EastUs), CloudRole("app-role")));
+            var routeBatch = Convert(Emit(Ikey("ikey-a"), Endpoint(EastUs), CloudRole("app-role"), IngestionAuth("aad")));
 
             var properties = ((MessageData)routeBatch[0].TelemetryItems.Single().Data!.BaseData).Properties;
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftInstrumentationKey, properties.Keys);
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftIngestionEndpoint, properties.Keys);
+            Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftIngestionAuth, properties.Keys);
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole, properties.Keys);
         }
 
@@ -286,7 +330,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [InlineData(false)]
         public void AvailabilityLogRoutesRegardlessOfWhereTheRoutingTagsSit(bool routingTagsBeforeMarker)
         {
-            var routingTags = new[] { Ikey("ikey-a"), Endpoint(EastUs), CloudRole("app-role") };
+            var routingTags = new[] { Ikey("ikey-a"), Endpoint(EastUs), CloudRole("app-role"), IngestionAuth("aad") };
             var attributes = routingTagsBeforeMarker
                 ? routingTags.Concat(AvailabilityMarkers()).ToArray()
                 : AvailabilityMarkers().Concat(routingTags).ToArray();
@@ -295,6 +339,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             Assert.Equal(1, routeBatch.Count);
             Assert.Equal(EastUs, routeBatch[0].IngestionEndpoint);
+            Assert.True(routeBatch[0].IsAad);
 
             var telemetryItem = routeBatch[0].TelemetryItems.Single();
             Assert.Equal("AvailabilityData", telemetryItem.Data!.BaseType);
@@ -304,6 +349,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var properties = ((AvailabilityData)telemetryItem.Data!.BaseData).Properties;
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftInstrumentationKey, properties.Keys);
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftIngestionEndpoint, properties.Keys);
+            Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftIngestionAuth, properties.Keys);
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole, properties.Keys);
         }
 
@@ -317,7 +363,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var telemetryItems = ConvertSingleEndpoint(
                 "exporter-ikey",
                 CreateResource(),
-                Emit(Ikey("ikey-a"), Endpoint(EastUs), CloudRole("app-role")));
+                Emit(Ikey("ikey-a"), Endpoint(EastUs), CloudRole("app-role"), IngestionAuth("aad")));
 
             var telemetryItem = telemetryItems.Single();
             Assert.Equal("exporter-ikey", telemetryItem.InstrumentationKey);
@@ -327,6 +373,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var properties = ((MessageData)telemetryItem.Data!.BaseData).Properties;
             Assert.Equal("ikey-a", properties[SemanticConventions.AttributeMicrosoftInstrumentationKey]);
             Assert.Equal(EastUs, properties[SemanticConventions.AttributeMicrosoftIngestionEndpoint]);
+            Assert.Equal("aad", properties[SemanticConventions.AttributeMicrosoftIngestionAuth]);
             Assert.Equal("app-role", properties[SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole]);
         }
 
@@ -698,6 +745,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private static KeyValuePair<string, object?> Endpoint(object? value)
             => new(SemanticConventions.AttributeMicrosoftIngestionEndpoint, value);
+
+        private static KeyValuePair<string, object?> IngestionAuth(object? value)
+            => new(SemanticConventions.AttributeMicrosoftIngestionAuth, value);
 
         private static KeyValuePair<string, object?> CloudRole(object? value)
             => new(SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole, value);

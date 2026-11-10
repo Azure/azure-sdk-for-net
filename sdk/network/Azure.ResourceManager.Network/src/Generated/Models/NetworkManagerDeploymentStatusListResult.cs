@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> A list of Network Manager Deployment Status. </summary>
-    public partial class NetworkManagerDeploymentStatusListResult
+    internal partial class NetworkManagerDeploymentStatusListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

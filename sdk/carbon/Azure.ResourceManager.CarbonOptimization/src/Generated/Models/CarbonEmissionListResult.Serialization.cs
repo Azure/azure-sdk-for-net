@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CarbonEmissionListResult(value, skipToken, subscriptionAccessDecisionList ?? new ChangeTrackingList<SubscriptionAccessDecision>(), additionalBinaryDataProperties);
+            return new CarbonEmissionListResult(value ?? new ChangeTrackingList<CarbonEmission>(), skipToken, subscriptionAccessDecisionList ?? new ChangeTrackingList<SubscriptionAccessDecision>(), additionalBinaryDataProperties);
         }
     }
 }

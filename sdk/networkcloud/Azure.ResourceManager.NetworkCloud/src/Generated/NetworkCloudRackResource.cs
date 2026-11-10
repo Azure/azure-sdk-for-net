@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkCloudRackResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string networkCloudRackApiVersion);
             _racksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ResourceType.Namespace, Diagnostics);
-            _racksRestClient = new Racks(_racksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudRackApiVersion ?? "2026-08-01-preview");
+            _racksRestClient = new Racks(_racksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.NetworkCloud/racks", out string racksApiVersionOverride) ? racksApiVersionOverride : "2026-08-01-preview");
             ValidateResourceId(id);
         }
 

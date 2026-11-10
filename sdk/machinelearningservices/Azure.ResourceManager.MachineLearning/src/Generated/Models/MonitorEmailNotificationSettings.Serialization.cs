@@ -13,7 +13,6 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The MonitorEmailNotificationSettings. </summary>
     internal partial class MonitorEmailNotificationSettings : IJsonModel<MonitorEmailNotificationSettings>
     {
         /// <param name="data"> The data to parse. </param>
@@ -76,18 +75,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsCollectionDefined(Emails))
             {
-                writer.WritePropertyName("emails"u8);
-                writer.WriteStartArray();
-                foreach (string item in Emails)
+                if (Emails != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("emails"u8);
+                    writer.WriteStartArray();
+                    foreach (string item in Emails)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        if (item == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        writer.WriteStringValue(item);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("emails"u8);
+                }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            IList<string> emails = default;
+            IList<string> emails = new ChangeTrackingList<string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -139,6 +145,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        emails = null;
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -161,7 +168,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MonitorEmailNotificationSettings(emails ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new MonitorEmailNotificationSettings(emails, additionalBinaryDataProperties);
         }
     }
 }

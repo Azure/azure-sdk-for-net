@@ -39,14 +39,16 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="name"> The name of the route. The name can only include alphanumeric characters, periods, underscores, hyphens, has a maximum length of 64 characters, and must be unique. </param>
         /// <param name="source"> The source that the routing rule is to be applied to, such as DeviceMessages. </param>
         /// <param name="condition"> The condition that is evaluated to apply the routing rule. If no condition is provided, it evaluates to true by default. For grammar, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language. </param>
+        /// <param name="dataSchema"> The data schema reference that is used to interpret the message body. </param>
         /// <param name="endpointNames"> The list of endpoints to which messages that satisfy the condition are routed. Currently only one endpoint is allowed. </param>
         /// <param name="isEnabled"> Used to specify whether a route is enabled. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoutingRuleProperties(string name, IotHubRoutingSource source, string condition, IList<string> endpointNames, bool isEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoutingRuleProperties(string name, IotHubRoutingSource source, string condition, string dataSchema, IList<string> endpointNames, bool isEnabled, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Source = source;
             Condition = condition;
+            DataSchema = dataSchema;
             EndpointNames = endpointNames;
             IsEnabled = isEnabled;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -60,6 +62,9 @@ namespace Azure.ResourceManager.IotHub.Models
 
         /// <summary> The condition that is evaluated to apply the routing rule. If no condition is provided, it evaluates to true by default. For grammar, see: https://docs.microsoft.com/azure/iot-hub/iot-hub-devguide-query-language. </summary>
         public string Condition { get; set; }
+
+        /// <summary> The data schema reference that is used to interpret the message body. </summary>
+        public string DataSchema { get; set; }
 
         /// <summary> The list of endpoints to which messages that satisfy the condition are routed. Currently only one endpoint is allowed. </summary>
         public IList<string> EndpointNames { get; }

@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 aadConfiguration,
                 administratorConfiguration,
                 controlPlaneNodeConfiguration,
-                initialAgentPoolConfigurations,
+                initialAgentPoolConfigurations ?? new ChangeTrackingList<InitialAgentPoolConfiguration>(),
                 kubernetesVersion,
                 managedResourceGroupConfiguration,
                 networkConfiguration,

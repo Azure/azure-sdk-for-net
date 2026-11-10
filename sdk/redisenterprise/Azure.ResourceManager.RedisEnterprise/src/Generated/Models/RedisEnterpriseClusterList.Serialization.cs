@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RedisEnterpriseClusterList(value, nextLink, additionalBinaryDataProperties);
+            return new RedisEnterpriseClusterList(value ?? new ChangeTrackingList<RedisEnterpriseClusterData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

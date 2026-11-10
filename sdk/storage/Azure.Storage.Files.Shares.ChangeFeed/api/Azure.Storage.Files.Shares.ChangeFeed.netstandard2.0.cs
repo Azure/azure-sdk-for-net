@@ -26,7 +26,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
     {
         public ShareChangeFeedClientOptions() { }
         public bool IncludeNonFinalizedEvents { get { throw null; } set { } }
-        public long? MaximumTransferSize { get { throw null; } set { } }
+        public long? MaximumTransferSizeInBytes { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedResetPolicy? ResetPolicy { get { throw null; } set { } }
     }
     public partial class ShareChangeFeedEvent
@@ -34,10 +34,10 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         internal ShareChangeFeedEvent() { }
         public long ContainerVersionNumber { get { throw null; } }
         public Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEventData EventData { get { throw null; } }
-        public System.DateTimeOffset EventTime { get { throw null; } }
+        public System.DateTimeOffset EventOccurredOn { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedProtocol Protocol { get { throw null; } }
-        public Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType Reason { get { throw null; } }
+        public Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind Reason { get { throw null; } }
         public long SchemaVersion { get { throw null; } }
         public override string ToString() { throw null; }
     }
@@ -70,7 +70,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
     }
     public static partial class ShareChangeFeedModelFactory
     {
-        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEvent ShareChangeFeedEvent(long schemaVersion = (long)0, Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType reason = default(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType), Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedProtocol protocol = default(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedProtocol), System.DateTimeOffset eventTime = default(System.DateTimeOffset), string id = null, long containerVersionNumber = (long)0, Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEventData eventData = null) { throw null; }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEvent ShareChangeFeedEvent(long schemaVersion = (long)0, Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind reason = default(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind), Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedProtocol protocol = default(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedProtocol), System.DateTimeOffset eventTime = default(System.DateTimeOffset), string id = null, long containerVersionNumber = (long)0, Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEventData eventData = null) { throw null; }
         public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEventData ShareChangeFeedEventData(string fileId = null, string parentFileId = null, string newParentFileId = null, Azure.ETag? eTag = default(Azure.ETag?), string fileName = null, string fullFilePath = null, string newFullFilePath = null, Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEventIdentity identity = null, string description = null, string initiator = null, bool isDirectory = false, string replacedFileId = null) { throw null; }
         public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEventIdentity ShareChangeFeedEventIdentity(string entraObjectId = null, string securityIdentifier = null) { throw null; }
         public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedResetEvent ShareChangeFeedResetEvent(System.Guid resetId = default(System.Guid), long resetFileTime = (long)0, System.DateTimeOffset resetTimeUtc = default(System.DateTimeOffset), string accountName = null, string containerName = null, string resetReason = null, long schemaVersion = (long)1) { throw null; }
@@ -92,36 +92,36 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ShareChangeFeedReasonType : System.IEquatable<Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType>
+    public readonly partial struct ShareChangeFeedReasonKind : System.IEquatable<Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public ShareChangeFeedReasonType(string value) { throw null; }
-        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType AsyncCopyFile { get { throw null; } }
-        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType ControlEvent { get { throw null; } }
-        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType Reset { get { throw null; } }
-        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType RestCreate { get { throw null; } }
-        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType RestCreateTruncate { get { throw null; } }
-        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType RestDelete { get { throw null; } }
-        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType RestRename { get { throw null; } }
-        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType RestSetInfo { get { throw null; } }
-        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType RestSetSecurityInfo { get { throw null; } }
-        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType RestWrite { get { throw null; } }
-        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType SetInfo { get { throw null; } }
-        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType SetSecurityInfo { get { throw null; } }
-        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType SmbCreate { get { throw null; } }
-        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType SmbCreateTruncate { get { throw null; } }
-        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType SmbDelete { get { throw null; } }
-        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType SmbExtend { get { throw null; } }
-        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType SmbRename { get { throw null; } }
-        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType SmbWrite { get { throw null; } }
-        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType SyncCopyFile { get { throw null; } }
-        public bool Equals(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType other) { throw null; }
+        public ShareChangeFeedReasonKind(string value) { throw null; }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind AsyncCopyFile { get { throw null; } }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind ControlEvent { get { throw null; } }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind Reset { get { throw null; } }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind RestCreate { get { throw null; } }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind RestCreateTruncate { get { throw null; } }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind RestDelete { get { throw null; } }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind RestRename { get { throw null; } }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind RestSetInfo { get { throw null; } }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind RestSetSecurityInfo { get { throw null; } }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind RestWrite { get { throw null; } }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind SetInfo { get { throw null; } }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind SetSecurityInfo { get { throw null; } }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind SmbCreate { get { throw null; } }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind SmbCreateTruncate { get { throw null; } }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind SmbDelete { get { throw null; } }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind SmbExtend { get { throw null; } }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind SmbRename { get { throw null; } }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind SmbWrite { get { throw null; } }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind SyncCopyFile { get { throw null; } }
+        public bool Equals(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType left, Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType right) { throw null; }
-        public static implicit operator Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType (string value) { throw null; }
-        public static bool operator !=(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType left, Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonType right) { throw null; }
+        public static bool operator ==(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind left, Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind right) { throw null; }
+        public static implicit operator Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind (string value) { throw null; }
+        public static bool operator !=(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind left, Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedReasonKind right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ShareChangeFeedResetEvent : Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedEvent
@@ -141,15 +141,39 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
         public ShareChangeFeedResetException(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedResetEvent resetEvent, string message, System.Exception innerException) { }
         public Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedResetEvent ResetEvent { get { throw null; } }
     }
-    public enum ShareChangeFeedResetPolicy
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ShareChangeFeedResetPolicy : System.IEquatable<Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedResetPolicy>
     {
-        ThrowOnReset = 0,
-        ContinueOnReset = 1,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ShareChangeFeedResetPolicy(string value) { throw null; }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedResetPolicy ContinueOnReset { get { throw null; } }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedResetPolicy ThrowOnReset { get { throw null; } }
+        public bool Equals(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedResetPolicy other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedResetPolicy left, Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedResetPolicy right) { throw null; }
+        public static implicit operator Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedResetPolicy (string value) { throw null; }
+        public static implicit operator Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedResetPolicy? (string value) { throw null; }
+        public static bool operator !=(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedResetPolicy left, Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedResetPolicy right) { throw null; }
+        public override string ToString() { throw null; }
     }
-    public enum ShareChangeFeedSnapshotStatus
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ShareChangeFeedSnapshotStatus : System.IEquatable<Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedSnapshotStatus>
     {
-        NotFound = 0,
-        Pending = 1,
-        Finalized = 2,
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ShareChangeFeedSnapshotStatus(string value) { throw null; }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedSnapshotStatus Finalized { get { throw null; } }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedSnapshotStatus NotFound { get { throw null; } }
+        public static Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedSnapshotStatus Pending { get { throw null; } }
+        public bool Equals(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedSnapshotStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedSnapshotStatus left, Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedSnapshotStatus right) { throw null; }
+        public static implicit operator Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedSnapshotStatus (string value) { throw null; }
+        public static implicit operator Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedSnapshotStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedSnapshotStatus left, Azure.Storage.Files.Shares.ChangeFeed.ShareChangeFeedSnapshotStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
 }

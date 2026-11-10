@@ -42,7 +42,13 @@ namespace Azure.ResourceManager.Purview.Mocking
 
         private ClientDiagnostics AccountsClientDiagnostics => _accountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Purview.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Accounts AccountsRestClient => _accountsRestClient ??= new Accounts(AccountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-04-01-preview");
+        private Accounts AccountsRestClient => _accountsRestClient ??= new Accounts(
+            AccountsClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2024-04-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         private ClientDiagnostics FeaturesClientDiagnostics => _featuresClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Purview.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

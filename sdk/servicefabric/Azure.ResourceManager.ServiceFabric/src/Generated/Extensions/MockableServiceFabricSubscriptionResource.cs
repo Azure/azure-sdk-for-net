@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
 
         private ClientDiagnostics ClustersClientDiagnostics => _clustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-03-01-preview");
+        private Clusters ClustersRestClient => _clustersRestClient ??= new Clusters(ClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ServiceFabric/clusters", out string apiVersion) ? apiVersion : "2026-03-01-preview");
 
         private ClientDiagnostics ClusterVersionDetailsClientDiagnostics => _clusterVersionDetailsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabric.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <returns> An object representing collection of ServiceFabricVmSizeResources and their operations over a ServiceFabricVmSizeResource. </returns>
         public virtual ServiceFabricVmSizeResourceCollection GetServiceFabricVmSizeResources(AzureLocation location)
         {
-            return GetCachedClient(client => new ServiceFabricVmSizeResourceCollection(client, Id, location));
+            return new ServiceFabricVmSizeResourceCollection(Client, Id, location);
         }
 
         /// <summary>

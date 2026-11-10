@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Mocking
 
         private ClientDiagnostics VaultClientDiagnostics => _vaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Vault VaultRestClient => _vaultRestClient ??= new Vault(VaultClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-09-01");
+        private Vault VaultRestClient => _vaultRestClient ??= new Vault(VaultClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DataReplication/replicationVaults", out string apiVersion) ? apiVersion : "2024-09-01");
 
         private ClientDiagnostics FabricClientDiagnostics => _fabricClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Fabric FabricRestClient => _fabricRestClient ??= new Fabric(FabricClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-09-01");
+        private Fabric FabricRestClient => _fabricRestClient ??= new Fabric(FabricClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DataReplication/replicationFabrics", out string apiVersion0) ? apiVersion0 : "2024-09-01");
 
         private ClientDiagnostics CheckNameAvailabilityClientDiagnostics => _checkNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 

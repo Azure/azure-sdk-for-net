@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ChaosPrivateAccessResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string chaosPrivateAccessApiVersion);
             _privateAccessesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ResourceType.Namespace, Diagnostics);
-            _privateAccessesRestClient = new PrivateAccesses(_privateAccessesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, chaosPrivateAccessApiVersion ?? "2026-08-01-preview");
+            _privateAccessesRestClient = new PrivateAccesses(_privateAccessesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Chaos/privateAccesses", out string privateAccessesApiVersionOverride) ? privateAccessesApiVersionOverride : "2026-08-01-preview");
             ValidateResourceId(id);
         }
 

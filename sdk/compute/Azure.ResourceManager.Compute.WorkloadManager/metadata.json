@@ -1,0 +1,5 @@
+{
+  "apiVersions": {
+    "Microsoft.Compute.WorkloadManager": "2026-11-01-preview"
+  }
+}

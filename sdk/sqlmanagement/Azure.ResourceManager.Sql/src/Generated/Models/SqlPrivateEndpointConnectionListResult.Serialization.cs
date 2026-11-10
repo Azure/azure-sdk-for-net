@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SqlPrivateEndpointConnectionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SqlPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<SqlPrivateEndpointConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -170,7 +170,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SampleDataListResult(value, nextLink, additionalBinaryDataProperties);
+            return new SampleDataListResult(value ?? new ChangeTrackingList<SampleData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

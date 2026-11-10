@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AlertProcessingRules.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AlertProcessingRuleAddGroupsAction(actionType, additionalBinaryDataProperties, actionGroupIds);
+            return new AlertProcessingRuleAddGroupsAction(actionType, additionalBinaryDataProperties, actionGroupIds ?? new ChangeTrackingList<ResourceIdentifier>());
         }
     }
 }

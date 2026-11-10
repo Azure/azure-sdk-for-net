@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             return new JitRequestProperties(
                 applicationResourceId,
                 publisherTenantId,
-                jitAuthorizationPolicies,
+                jitAuthorizationPolicies ?? new ChangeTrackingList<JitAuthorizationPolicies>(),
                 jitSchedulingPolicy,
                 provisioningState,
                 jitRequestState,

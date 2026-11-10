@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RecoveryServicesVaultCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(RecoveryServicesVaultResource.ResourceType, out string recoveryServicesVaultApiVersion);
             _vaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", RecoveryServicesVaultResource.ResourceType.Namespace, Diagnostics);
-            _vaultsRestClient = new Vaults(_vaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, recoveryServicesVaultApiVersion ?? "2026-07-01");
+            _vaultsRestClient = new Vaults(_vaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.RecoveryServices/vaults", out string vaultsApiVersionOverride) ? vaultsApiVersionOverride : "2026-07-01");
             ValidateResourceId(id);
         }
 

@@ -21,9 +21,6 @@ namespace Azure.ResourceManager.Commerce
     [ModelReaderWriterBuildable(typeof(CommerceRateCardInfo))]
     [ModelReaderWriterBuildable(typeof(CommerceRecurringCharge))]
     [ModelReaderWriterBuildable(typeof(CommerceUsageAggregation))]
-    [ModelReaderWriterBuildable(typeof(UnknownCommerceOfferTermInfo))]
-    [ModelReaderWriterBuildable(typeof(UsageAggregationListResult))]
-    [ModelReaderWriterBuildable(typeof(UsageSample))]
     public partial class AzureResourceManagerCommerceContext : ModelReaderWriterContext
     {
     }

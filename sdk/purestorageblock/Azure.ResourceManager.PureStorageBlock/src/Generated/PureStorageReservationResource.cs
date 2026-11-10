@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.PureStorageBlock
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal PureStorageReservationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string pureStorageReservationApiVersion);
             _reservationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", ResourceType.Namespace, Diagnostics);
-            _reservationsRestClient = new Reservations(_reservationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, pureStorageReservationApiVersion ?? "2024-11-01");
+            _reservationsRestClient = new Reservations(_reservationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("PureStorage.Block/reservations", out string reservationsApiVersionOverride) ? reservationsApiVersionOverride : "2024-11-01");
             ValidateResourceId(id);
         }
 

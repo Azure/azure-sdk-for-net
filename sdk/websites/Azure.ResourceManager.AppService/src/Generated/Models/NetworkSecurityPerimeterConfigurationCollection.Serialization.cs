@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new NetworkSecurityPerimeterConfigurationCollection(value, nextLink, additionalBinaryDataProperties);
+            return new NetworkSecurityPerimeterConfigurationCollection(value ?? new ChangeTrackingList<AppServiceNetworkSecurityPerimeterConfiguration>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

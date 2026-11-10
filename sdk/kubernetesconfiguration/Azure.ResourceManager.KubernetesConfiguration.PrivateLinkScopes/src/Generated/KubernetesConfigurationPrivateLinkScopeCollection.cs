@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal KubernetesConfigurationPrivateLinkScopeCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(KubernetesConfigurationPrivateLinkScopeResource.ResourceType, out string kubernetesConfigurationPrivateLinkScopeApiVersion);
             _privateLinkScopesOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes", KubernetesConfigurationPrivateLinkScopeResource.ResourceType.Namespace, Diagnostics);
-            _privateLinkScopesOperationsRestClient = new PrivateLinkScopesOperations(_privateLinkScopesOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kubernetesConfigurationPrivateLinkScopeApiVersion ?? "2024-11-01-preview");
+            _privateLinkScopesOperationsRestClient = new PrivateLinkScopesOperations(_privateLinkScopesOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.KubernetesConfiguration/privateLinkScopes", out string privateLinkScopesOperationsApiVersionOverride) ? privateLinkScopesOperationsApiVersionOverride : "2024-11-01-preview");
             ValidateResourceId(id);
         }
 

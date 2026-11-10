@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PaymentHsmClusterListResult(value, nextLink, additionalBinaryDataProperties);
+            return new PaymentHsmClusterListResult(value ?? new ChangeTrackingList<PaymentHsmClusterData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

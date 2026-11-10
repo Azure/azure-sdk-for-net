@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ProtocolConfiguration(NetworkHttpConfiguration httpConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            HTTPConfiguration = httpConfiguration;
+            HttpConfiguration = httpConfiguration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> HTTP configuration of the connectivity check. </summary>
         [WirePath("HTTPConfiguration")]
-        public NetworkHttpConfiguration HTTPConfiguration { get; set; }
+        public NetworkHttpConfiguration HttpConfiguration { get; set; }
     }
 }

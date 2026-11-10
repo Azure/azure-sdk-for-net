@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PipelineActivityRunsResult(value, continuationToken, additionalBinaryDataProperties);
+            return new PipelineActivityRunsResult(value ?? new ChangeTrackingList<PipelineActivityRunInformation>(), continuationToken, additionalBinaryDataProperties);
         }
     }
 }

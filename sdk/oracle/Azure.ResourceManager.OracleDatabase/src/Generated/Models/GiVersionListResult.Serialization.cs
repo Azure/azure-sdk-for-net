@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new GiVersionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new GiVersionListResult(value ?? new ChangeTrackingList<OracleGIVersionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

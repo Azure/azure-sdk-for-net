@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.EdgeActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EdgeActionProperties(provisioningState, attachments, additionalBinaryDataProperties);
+            return new EdgeActionProperties(provisioningState, attachments ?? new ChangeTrackingList<EdgeActionAttachment>(), additionalBinaryDataProperties);
         }
     }
 }

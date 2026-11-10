@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Databricks.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new VirtualNetworkPeeringList(value, nextLink, additionalBinaryDataProperties);
+            return new VirtualNetworkPeeringList(value ?? new ChangeTrackingList<DatabricksVirtualNetworkPeeringData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

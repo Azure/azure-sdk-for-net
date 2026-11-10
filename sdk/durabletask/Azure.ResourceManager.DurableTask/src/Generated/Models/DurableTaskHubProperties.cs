@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DurableTask;
 
 namespace Azure.ResourceManager.DurableTask.Models
 {
@@ -19,16 +20,19 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <summary> Initializes a new instance of <see cref="DurableTaskHubProperties"/>. </summary>
         public DurableTaskHubProperties()
         {
+            Capabilities = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DurableTaskHubProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="dashboardUri"> URL of the durable task scheduler dashboard. </param>
+        /// <param name="capabilities"> A set of Task Hub capabilities that can be enabled or disabled for a Task Hub. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DurableTaskHubProperties(DurableTaskProvisioningState? provisioningState, Uri dashboardUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DurableTaskHubProperties(DurableTaskProvisioningState? provisioningState, Uri dashboardUri, IList<string> capabilities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DashboardUri = dashboardUri;
+            Capabilities = capabilities;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -37,5 +41,8 @@ namespace Azure.ResourceManager.DurableTask.Models
 
         /// <summary> URL of the durable task scheduler dashboard. </summary>
         public Uri DashboardUri { get; }
+
+        /// <summary> A set of Task Hub capabilities that can be enabled or disabled for a Task Hub. </summary>
+        public IList<string> Capabilities { get; }
     }
 }

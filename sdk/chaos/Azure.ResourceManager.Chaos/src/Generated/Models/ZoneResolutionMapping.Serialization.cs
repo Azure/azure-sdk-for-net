@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ZoneResolutionMapping(subscriptionId, zoneMappings, additionalBinaryDataProperties);
+            return new ZoneResolutionMapping(subscriptionId, zoneMappings ?? new ChangeTrackingList<PhysicalToLogicalZoneMapping>(), additionalBinaryDataProperties);
         }
     }
 }

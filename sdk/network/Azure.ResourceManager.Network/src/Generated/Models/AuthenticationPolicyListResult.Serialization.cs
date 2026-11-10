@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AuthenticationPolicyListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AuthenticationPolicyListResult(value ?? new ChangeTrackingList<IdentityIntegrationAuthenticationPolicyData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

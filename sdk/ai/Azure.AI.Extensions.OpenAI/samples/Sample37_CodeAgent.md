@@ -1,10 +1,6 @@
 # Sample on getting the responses from hosted code Agent in Azure.AI.Extensions.OpenAI.
 
-## Hosted Code Agent Deployment prerequisites
-
-In this example we will use the code from the simple [sample](https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/agentserver/azure-ai-agentserver-responses/samples/sample_01_getting_started.py). The service defined in this file just gets the request, adds "Echo: " to it and sends it back using the responses protocol.
-
-## Run the sample
+## Hosted agent deployment
 `Azure.AI.Projects` can be used only to create a `ProjectsAgentVersion` object, however hosted object represents the running container, which exposes the OpenAI-compatible API.
 1. Create a project and add `Azure.AI.AgentServer.Responses` package as a dependency.
 

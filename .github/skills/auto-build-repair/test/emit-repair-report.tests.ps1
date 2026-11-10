@@ -53,6 +53,11 @@ function Get-DiagnosticDetails([string]$body) {
     if ($m.Success) { return $m.Groups[1].Value } else { return '' }
 }
 
+function Get-EngineCommand([string]$body) {
+    $m = [regex]::Match($body, '(?s)<details><summary>Exact engine command</summary>\s*(?<fence>`{3,})bash\n(?<command>.*?)\n\k<fence>\n</details>')
+    if ($m.Success) { return $m.Groups['command'].Value } else { return $null }
+}
+
 # Characters/patterns the gh-aw sanitizer rewrites. The object must contain NONE of them.
 function Test-SanitizerSafe([string]$obj) {
     $violations = @()
@@ -93,6 +98,89 @@ try {
         response_error = 'Repair stopped after 3 attempts: final build failed with CS0111: duplicate member.'
         appliedPatches = @(@{ FilePath = 'sdk/foo/Azure.Foo/src/Custom.cs'; Description = 'attempted fix'; ReplacementCount = 1 })
     } | ConvertTo-Json -Depth 6 | Set-Content (Join-Path $failedProgressDir 'result.json')
+
+    Write-Host 'Section: the recorded invocation is displayed exactly, not reconstructed'
+    $commandDir = Join-Path $tmp 'command'; New-Item -ItemType Directory -Path $commandDir | Out-Null
+    $commandFile = Join-Path $commandDir 'engine-command.txt'
+    $commandOut = Join-Path $tmp 'command.md'
+    foreach ($success in @($true, $false)) {
+        @{ success = $success; attemptsUsed = 0 } | ConvertTo-Json | Set-Content (Join-Path $commandDir 'result.json')
+        foreach ($command in @(
+            'azsdk -o json tsp client customized-update --edit-scope CustomCode --package-path sdk/foo/Azure.Foo --customization-request Fix --max-attempts 1',
+            'azsdk -o json tsp client customized-update --edit-scope CustomCode --package-path sdk/foo/Azure.Foo --customization-request Fix --max-attempts 3',
+            'azsdk -o json tsp client customized-update --edit-scope CustomCode --package-path sdk/foo/Azure.Foo --customization-request Fix --max-attempts 10',
+            'azsdk -o json tsp client customized-update --package-path sdk/foo\ package --customization-request $''Fix \''X\'' | `Y` <Z> & $HOME; $(false)\nnext line'' --edit-scope CustomCode --max-attempts 3',
+            'azsdk --customization-request http://example.test/error\ https://example.test/error\ @contoso/types\ #42 --max-attempts 3',
+            ("azsdk --customization-request 'first line`n````````````json`n{}`n````````````' --max-attempts 3"),
+            ("azsdk --customization-request '" + ('x' * 9000) + "' --max-attempts 3")
+        )) {
+            Set-Content -LiteralPath $commandFile -Value $command
+            & pwsh -NoProfile -File $EmitterPath -ResultsDir $commandDir -PackagePath 'sdk/foo/Azure.Foo' -RepoRoot $tmp -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $commandOut | Out-Null
+            $body = Get-Content -Raw $commandOut
+            Assert ((Get-EngineCommand $body) -ceq $command) "command(success=$success): exact recorded arguments, order, quoting, and bound are preserved"
+            Assert ($body.Contains('| **Engine** | See exact invocation below |')) "command(success=$success): summary points to the actual invocation"
+            Assert (($body | Select-String -Pattern '(?m)^```json$' -AllMatches).Matches.Count -eq 1) "command(success=$success): embedded fences cannot introduce telemetry blocks"
+            Assert ($body.Length -le 65000) "command(success=$success): long command fits the actual safe-output limit without truncation"
+        }
+    }
+    Write-Host 'Section: oversized commands are preserved losslessly in workflow artifacts'
+    $artifactDir = Join-Path $tmp 'agent-logs'; New-Item -ItemType Directory -Path $artifactDir | Out-Null
+    foreach ($success in @($true, $false)) {
+        @{ success = $success; attemptsUsed = 0 } | ConvertTo-Json | Set-Content (Join-Path $commandDir 'result.json')
+        $prefix = 'azsdk --customization-request '
+        $suffix = ' --max-attempts 3'
+        Set-Content -LiteralPath $commandFile -Value ($prefix + 'x' + $suffix)
+        & pwsh -NoProfile -File $EmitterPath -ResultsDir $commandDir -RepoRoot $tmp -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -RunId 'gha-12345-1' -OutFile $commandOut | Out-Null
+        $overhead = (Get-Content -Raw $commandOut).Length - 1
+        foreach ($length in @((65000 - $overhead), (65001 - $overhead), 70000)) {
+            $command = $prefix + ('x' * $length) + $suffix
+            Set-Content -LiteralPath $commandFile -Value $command
+            & pwsh -NoProfile -File $EmitterPath -ResultsDir $commandDir -CommandArtifactDir $artifactDir -RepoRoot $tmp -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -RunId 'gha-12345-1' -OutFile $commandOut | Out-Null
+            Assert ($LASTEXITCODE -eq 0) "size(success=$success,length=$length): rendering succeeds"
+            $body = Get-Content -Raw $commandOut
+            Assert ($body.Length -le 65000) "size(success=$success,length=$length): safe-output body stays within 65000"
+            $telemetry = Get-TelemetryObject $body
+            Assert ((Test-Json -Json $telemetry -Schema $schema) -and ($telemetry | ConvertFrom-Json).status -eq $(if ($success) { 'repaired' } else { 'failed' })) "size(success=$success,length=$length): terminal telemetry remains intact"
+            Assert ($body.EndsWith("--generated by Copilot`n")) "size(success=$success,length=$length): attribution remains intact"
+            if ($length -eq 65000 - $overhead) {
+                Assert ($body.Length -eq 65000 -and (Get-EngineCommand $body) -ceq $command) 'exactly 65000 characters still displays the complete command inline'
+            }
+            else {
+                Assert ($null -eq (Get-EngineCommand $body) -and $body.Contains('No command or engine argument was truncated.')) 'over limit uses explicit artifact reporting, never a truncated command'
+                Assert ($body.Contains('See full invocation in workflow artifacts') -and $body.Contains('/actions/runs/12345#artifacts')) 'oversized summary points to the workflow artifact'
+                Assert ((Get-Content -Raw (Join-Path $artifactDir 'engine-command.txt')) -ceq $command) 'artifact preserves the entire original command byte-for-byte'
+                $fullReport = Get-Content -Raw (Join-Path $artifactDir 'repair-report-full.md')
+                Assert ($fullReport.Length -gt 65000 -and (Get-EngineCommand $fullReport) -ceq $command) 'full report artifact retains command and all original sections'
+                Assert ((Get-TelemetryObject $fullReport) -ceq $telemetry) 'compact and full report telemetry are identical'
+            }
+        }
+    }
+    $noArtifactOut = Join-Path $tmp 'no-artifact.md'
+    & pwsh -NoProfile -File $EmitterPath -ResultsDir $commandDir -RepoRoot $tmp -OutFile $noArtifactOut 2> (Join-Path $tmp 'no-artifact-error.txt') | Out-Null
+    Assert ($LASTEXITCODE -ne 0 -and -not (Test-Path $noArtifactOut)) 'oversized report without artifact directory fails explicitly rather than inventing a lossless artifact'
+    Assert ((Get-Content -Raw (Join-Path $tmp 'no-artifact-error.txt')).Contains('Supply -CommandArtifactDir')) 'missing artifact configuration has actionable diagnostics'
+
+    foreach ($value in @($null, '', " `r`n")) {
+        if ($null -eq $value) { Remove-Item -LiteralPath $commandFile }
+        else { Set-Content -LiteralPath $commandFile -Value $value }
+        & pwsh -NoProfile -File $EmitterPath -ResultsDir $commandDir -RepoRoot $tmp -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $commandOut | Out-Null
+        $body = Get-Content -Raw $commandOut
+        Assert ($body.Contains('| **Engine** | Unavailable (invocation was not recorded) |')) 'missing/empty command is explicitly unavailable'
+        Assert ($null -eq (Get-EngineCommand $body) -and $body -notmatch 'azsdk tsp client customized-update') 'missing command never falls back to an invented invocation'
+    }
+    Set-Content -LiteralPath $commandFile -Value 'azsdk --max-attempts 10'
+    foreach ($json in @($null, '{')) {
+        if ($null -eq $json) { Remove-Item -LiteralPath (Join-Path $commandDir 'result.json') }
+        else { Set-Content -LiteralPath (Join-Path $commandDir 'result.json') -Value $json }
+        & pwsh -NoProfile -File $EmitterPath -ResultsDir $commandDir -RepoRoot $tmp -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $commandOut | Out-Null
+        Assert ((Get-EngineCommand (Get-Content -Raw $commandOut)) -ceq 'azsdk --max-attempts 10') 'missing/malformed response still displays the captured invocation'
+    }
+    Remove-Item -LiteralPath (Join-Path $commandDir 'result.json')
+    & pwsh -NoProfile -File $EmitterPath -ResultsDir $commandDir -ForcedStatus skipped_already_green -RepoRoot $tmp -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $commandOut | Out-Null
+    $body = Get-Content -Raw $commandOut
+    Assert ($body.Contains('| **Engine** | Not invoked (package already green) |') -and $null -eq (Get-EngineCommand $body)) 'already-green report does not display a stale invocation'
+    & pwsh -NoProfile -File $EmitterPath -ResultsDir $commandDir '-Eligible:$false' -RepoRoot $tmp -Pr 123 -HeadSha 'abc1234' -Repo 'Azure/azure-sdk-for-net' -OutFile $commandOut | Out-Null
+    Assert ($null -eq (Get-EngineCommand (Get-Content -Raw $commandOut))) 'ineligible report does not display a stale invocation'
 
     $cases = @(
         @{ name = 'repaired';              args = @('-ResultsDir', $repairedDir, '-PackagePath', 'sdk/foo/Azure.Foo', '-PreRepairSha', '', '-PreRepairErrorsFile', $repairedPre) ; expect = 'repaired' }
@@ -477,7 +565,7 @@ try {
             if ($case.name -in @('large-lf', 'large-crlf')) {
                 Assert ($details.Contains('DETAIL-ONLY') -and ([regex]::Matches($body, 'DETAIL-ONLY')).Count -eq 1) "${label}: log detail is rendered only once, inside the diagnostic block"
             }
-            Assert ($body.Length -le 65536) "${label}: full comment fits the gh-aw comment limit"
+            Assert ($body.Length -le 65000) "${label}: full comment fits the gh-aw comment limit"
             $json = Get-TelemetryObject $body
             Assert (([regex]::Matches($body, '```json')).Count -eq 1 -and (Test-Json -Json $json -Schema $schema)) "${label}: exactly one valid telemetry record survives"
             Assert (($json | ConvertFrom-Json).status -eq 'failed' -and $body.EndsWith("--generated by Copilot`n")) "${label}: failure status and final attribution remain intact"

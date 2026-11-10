@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CatalogsResult(value, nextLink, totalItems, additionalBinaryDataProperties);
+            return new CatalogsResult(value ?? new ChangeTrackingList<ReservationCatalog>(), nextLink, totalItems, additionalBinaryDataProperties);
         }
     }
 }

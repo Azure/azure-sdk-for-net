@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DevHub.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TemplateListResult(value, nextLink, additionalBinaryDataProperties);
+            return new TemplateListResult(value ?? new ChangeTrackingList<DevHubTemplateData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

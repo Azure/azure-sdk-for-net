@@ -152,6 +152,49 @@ namespace Azure.ResourceManager.Storage.Tests
 
         [Test]
         [RecordedTest]
+        public async Task CreateAndUpdateStorageAccountWithTurboTier()
+        {
+            AzureLocation location = new AzureLocation("eastus2euap");
+            string accountName = Recording.GenerateAssetName(namePrefix);
+            string resourceGroupName = Recording.GenerateAssetName("teststorageRG-");
+            _resourceGroup = (await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                resourceGroupName,
+                new ResourceGroupData(location))).Value;
+            StorageAccountCollection storageAccountCollection = _resourceGroup.GetStorageAccounts();
+            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(
+                new StorageSku(StorageSkuName.StandardLrs),
+                StorageKind.StorageV2);
+            parameters.Location = location;
+            parameters.AccessTier = StorageAccountAccessTier.Hot;
+            parameters.TurboTier = new TurboTier
+            {
+                Status = TurboTierStatus.Enabled,
+                TargetPercent = 10
+            };
+
+            StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                accountName,
+                parameters)).Value;
+
+            Assert.AreEqual(TurboTierStatus.Enabled, account.Data.TurboTier.Status);
+            Assert.AreEqual(10, account.Data.TurboTier.TargetPercent);
+
+            account = await account.UpdateAsync(new StorageAccountPatch
+            {
+                TurboTier = new TurboTier
+                {
+                    Status = TurboTierStatus.Disabled
+                }
+            });
+
+            account = await account.GetAsync();
+            Assert.AreEqual(TurboTierStatus.Disabled, account.Data.TurboTier.Status);
+        }
+
+        [Test]
+        [RecordedTest]
         public async Task CreateStandardAccount()
         {
             _resourceGroup = await CreateResourceGroupAsync();

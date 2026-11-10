@@ -10,6 +10,12 @@
 
 ### Other Changes
 
+## 1.6.5 (2026-10-21)
+
+### Other Changes
+
+- Updated `Microsoft.AspNetCore.DataProtection` dependency to `8.0.32` for `net8.0` and `10.0.13` for all other target frameworks.
+
 ## 1.6.4 (2026-09-08)
 
 ### Other Changes

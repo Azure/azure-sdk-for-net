@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ComputeSchedule
         /// <returns> The pages of OccurrenceDetailsCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<OccurrenceDetails>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                 {
                     yield break;
                 }
-                OccurrenceResourceListResponse result = OccurrenceResourceListResponse.FromResponse(response);
+                OccurrenceResourceListResult result = OccurrenceResourceListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<OccurrenceDetails>.FromValues((IReadOnlyList<OccurrenceDetails>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

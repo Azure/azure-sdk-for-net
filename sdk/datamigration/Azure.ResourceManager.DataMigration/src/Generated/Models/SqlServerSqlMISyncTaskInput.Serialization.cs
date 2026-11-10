@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             return new SqlServerSqlMISyncTaskInput(
-                selectedDatabases,
+                selectedDatabases ?? new ChangeTrackingList<MigrateSqlServerSqlMIDatabaseInput>(),
                 backupFileShare,
                 storageResourceId,
                 sourceConnectionInfo,

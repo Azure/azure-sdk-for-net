@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<BenefitValidateResponse>> ValidateAsync(BenefitValidateRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BenefitValidateResult>> ValidateAsync(BenefitValidateRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
                 };
                 HttpMessage message = BenefitRestClient.CreateValidateRequest(BenefitValidateRequest.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BenefitValidateResponse> response = Response.FromValue(BenefitValidateResponse.FromResponse(result), result);
+                Response<BenefitValidateResult> response = Response.FromValue(BenefitValidateResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<BenefitValidateResponse> Validate(BenefitValidateRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<BenefitValidateResult> Validate(BenefitValidateRequest content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
                 };
                 HttpMessage message = BenefitRestClient.CreateValidateRequest(BenefitValidateRequest.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<BenefitValidateResponse> response = Response.FromValue(BenefitValidateResponse.FromResponse(result), result);
+                Response<BenefitValidateResult> response = Response.FromValue(BenefitValidateResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

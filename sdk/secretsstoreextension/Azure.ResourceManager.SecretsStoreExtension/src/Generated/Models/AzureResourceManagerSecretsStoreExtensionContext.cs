@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.SecretsStoreExtension
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(AzureKeyVaultSecretProviderClassListResult))]
     [ModelReaderWriterBuildable(typeof(AzureKeyVaultSecretProviderClassUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ExtendedLocation))]
     [ModelReaderWriterBuildable(typeof(KeyVaultSecretProviderClassData))]
@@ -26,7 +25,6 @@ namespace Azure.ResourceManager.SecretsStoreExtension
     [ModelReaderWriterBuildable(typeof(KubernetesSecretObjectMapping))]
     [ModelReaderWriterBuildable(typeof(SecretSyncCondition))]
     [ModelReaderWriterBuildable(typeof(SecretSyncData))]
-    [ModelReaderWriterBuildable(typeof(SecretSyncListResult))]
     [ModelReaderWriterBuildable(typeof(SecretSyncPatch))]
     [ModelReaderWriterBuildable(typeof(SecretSyncProperties))]
     [ModelReaderWriterBuildable(typeof(SecretSyncResource))]

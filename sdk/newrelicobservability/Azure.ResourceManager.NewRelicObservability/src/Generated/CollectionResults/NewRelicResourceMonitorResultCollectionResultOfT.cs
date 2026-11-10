@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <returns> The pages of NewRelicResourceMonitorResultCollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<NewRelicResourceMonitorResult>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NewRelicObservability
                 {
                     yield break;
                 }
-                MonitoredResourceListResponse result = MonitoredResourceListResponse.FromResponse(response);
+                MonitoredResourceListResult result = MonitoredResourceListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<NewRelicResourceMonitorResult>.FromValues((IReadOnlyList<NewRelicResourceMonitorResult>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

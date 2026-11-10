@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RecoveryJobResourceListResult(value, nextLink, additionalBinaryDataProperties);
+            return new RecoveryJobResourceListResult(value ?? new ChangeTrackingList<RecoveryJobTargetData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

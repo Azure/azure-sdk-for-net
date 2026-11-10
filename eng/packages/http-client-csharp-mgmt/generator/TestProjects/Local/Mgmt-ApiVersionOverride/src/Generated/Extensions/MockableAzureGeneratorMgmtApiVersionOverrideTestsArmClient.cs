@@ -43,5 +43,14 @@ namespace Azure.Generator.MgmtApiVersionOverride.Tests.Mocking
             WireVersionTestResource.ValidateResourceId(id);
             return new WireVersionTestResource(Client, id);
         }
+
+        /// <summary> Gets an object representing a <see cref="OrdinaryWireVersionTestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="OrdinaryWireVersionTestResource"/> object. </returns>
+        public virtual OrdinaryWireVersionTestResource GetOrdinaryWireVersionTestResource(ResourceIdentifier id)
+        {
+            OrdinaryWireVersionTestResource.ValidateResourceId(id);
+            return new OrdinaryWireVersionTestResource(Client, id);
+        }
     }
 }

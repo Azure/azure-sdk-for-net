@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Mocking
 
         private ClientDiagnostics AIManagersClientDiagnostics => _aiManagersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerServiceAIManager.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AIManagers AIManagersRestClient => _aiManagersRestClient ??= new AIManagers(AIManagersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-02-preview");
+        private AIManagers AIManagersRestClient => _aiManagersRestClient ??= new AIManagers(AIManagersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ContainerService/aiManagers", out string apiVersion) ? apiVersion : "2026-09-02-preview");
 
         /// <summary> Gets a collection of AIModels in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
         /// <returns> An object representing collection of AIModels and their operations over a AIModelResource. </returns>
         public virtual AIModelCollection GetAIModels(AzureLocation location)
         {
-            return GetCachedClient(client => new AIModelCollection(client, Id, location));
+            return new AIModelCollection(Client, Id, location);
         }
 
         /// <summary>

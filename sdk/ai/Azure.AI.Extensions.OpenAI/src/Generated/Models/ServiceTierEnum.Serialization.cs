@@ -13,6 +13,7 @@ namespace Azure.AI.Extensions.OpenAI.Internal
         {
             ServiceTierEnum.Auto => "auto",
             ServiceTierEnum.Default => "default",
+            ServiceTierEnum.Fast => "fast",
             ServiceTierEnum.Flex => "flex",
             ServiceTierEnum.Priority => "priority",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceTierEnum value.")
@@ -28,6 +29,10 @@ namespace Azure.AI.Extensions.OpenAI.Internal
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "default"))
             {
                 return ServiceTierEnum.Default;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "fast"))
+            {
+                return ServiceTierEnum.Fast;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "flex"))
             {

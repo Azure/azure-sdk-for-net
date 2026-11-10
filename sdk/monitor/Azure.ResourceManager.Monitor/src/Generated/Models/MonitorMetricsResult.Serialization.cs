@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 interval,
                 @namespace,
                 resourceregion,
-                value,
+                value ?? new ChangeTrackingList<MonitorMetric>(),
                 additionalBinaryDataProperties);
         }
     }

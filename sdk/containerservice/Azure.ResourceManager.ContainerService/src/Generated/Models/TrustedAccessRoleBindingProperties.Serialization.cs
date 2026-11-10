@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new TrustedAccessRoleBindingProperties(provisioningState, sourceResourceId, roles, additionalBinaryDataProperties);
+            return new TrustedAccessRoleBindingProperties(provisioningState, sourceResourceId, roles ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

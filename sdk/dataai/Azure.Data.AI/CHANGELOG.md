@@ -1,14 +1,12 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0 (2026-10-30)
 
 ### Features Added
 
-### Breaking Changes
+- First stable release of the Azure.Data.AI client library for semantic reranking.
+- Supports the generally available service API version `2026-10-30`.
 
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.1 (2026-09-28)
 

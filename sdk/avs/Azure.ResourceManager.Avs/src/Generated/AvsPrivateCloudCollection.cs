@@ -39,9 +39,8 @@ namespace Azure.ResourceManager.Avs
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal AvsPrivateCloudCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AvsPrivateCloudResource.ResourceType, out string avsPrivateCloudApiVersion);
             _privateCloudsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Avs", AvsPrivateCloudResource.ResourceType.Namespace, Diagnostics);
-            _privateCloudsRestClient = new PrivateClouds(_privateCloudsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, avsPrivateCloudApiVersion ?? "2026-03-01");
+            _privateCloudsRestClient = new PrivateClouds(_privateCloudsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.AVS/privateClouds", out string privateCloudsApiVersionOverride) ? privateCloudsApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 

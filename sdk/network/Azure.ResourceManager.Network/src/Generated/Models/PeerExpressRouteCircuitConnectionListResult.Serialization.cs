@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new PeerExpressRouteCircuitConnectionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new PeerExpressRouteCircuitConnectionListResult(value ?? new ChangeTrackingList<PeerExpressRouteCircuitConnectionData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

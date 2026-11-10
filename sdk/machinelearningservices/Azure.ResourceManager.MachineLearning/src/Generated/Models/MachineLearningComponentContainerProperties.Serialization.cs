@@ -110,18 +110,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            bool descriptionIsDefined = false;
             string description = default;
-            IDictionary<string, string> properties = default;
-            IDictionary<string, string> tags = default;
+            IDictionary<string, string> properties = new ChangeTrackingDictionary<string, string>();
+            IDictionary<string, string> tags = new ChangeTrackingDictionary<string, string>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             bool? isArchived = default;
+            bool latestVersionIsDefined = false;
             string latestVersion = default;
+            bool nextVersionIsDefined = false;
             string nextVersion = default;
             RegistryAssetProvisioningState? provisioningState = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("description"u8))
                 {
+                    descriptionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         description = null;
@@ -134,6 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        properties = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -155,6 +160,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        tags = null;
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -183,6 +189,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("latestVersion"u8))
                 {
+                    latestVersionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         latestVersion = null;
@@ -193,6 +200,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("nextVersion"u8))
                 {
+                    nextVersionIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         nextVersion = null;
@@ -217,13 +225,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             return new MachineLearningComponentContainerProperties(
                 description,
-                properties ?? new ChangeTrackingDictionary<string, string>(),
-                tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties,
+                tags,
                 additionalBinaryDataProperties,
                 isArchived,
                 latestVersion,
                 nextVersion,
-                provisioningState);
+                provisioningState)
+            {
+                _descriptionIsDefined = descriptionIsDefined,
+                _latestVersionIsDefined = latestVersionIsDefined,
+                _nextVersionIsDefined = nextVersionIsDefined
+            };
         }
     }
 }

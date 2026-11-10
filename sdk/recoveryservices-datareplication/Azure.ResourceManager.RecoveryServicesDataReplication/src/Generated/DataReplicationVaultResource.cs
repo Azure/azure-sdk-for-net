@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DataReplicationVaultResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string dataReplicationVaultApiVersion);
             _vaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServicesDataReplication", ResourceType.Namespace, Diagnostics);
-            _vaultRestClient = new Vault(_vaultClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataReplicationVaultApiVersion ?? "2024-09-01");
+            _vaultRestClient = new Vault(_vaultClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.DataReplication/replicationVaults", out string vaultApiVersionOverride) ? vaultApiVersionOverride : "2024-09-01");
             ValidateResourceId(id);
         }
 

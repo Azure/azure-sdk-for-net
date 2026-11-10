@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Monitor
 {
     /// <summary>
     /// The types of conditions for a multi query metric alert.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="StaticPromQLCriteria"/> and <see cref="DynamicPromQLCriteria"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="DynamicPromQLCriteria"/> and <see cref="StaticPromQLCriteria"/>.
     /// </summary>
     public partial class MultiPromQLCriteria : ProvisionableConstruct
     {

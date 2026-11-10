@@ -162,7 +162,7 @@ namespace Azure.Storage.Blobs.Models
                 writer.WriteObjectValue(StaticWebsite, options);
                 writer.WriteEndElement();
             }
-            if (Optional.IsCollectionDefined(Cors))
+            if (Cors != null && Optional.IsCollectionDefined(Cors))
             {
                 writer.WriteStartElement("Cors");
                 foreach (BlobCorsRule item in Cors)

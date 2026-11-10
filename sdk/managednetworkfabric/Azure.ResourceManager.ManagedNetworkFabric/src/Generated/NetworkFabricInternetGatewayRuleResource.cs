@@ -52,9 +52,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NetworkFabricInternetGatewayRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string networkFabricInternetGatewayRuleApiVersion);
             _internetGatewayRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", ResourceType.Namespace, Diagnostics);
-            _internetGatewayRulesRestClient = new InternetGatewayRules(_internetGatewayRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricInternetGatewayRuleApiVersion ?? "2025-07-15");
+            _internetGatewayRulesRestClient = new InternetGatewayRules(_internetGatewayRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.ManagedNetworkFabric/internetGatewayRules", out string internetGatewayRulesApiVersionOverride) ? internetGatewayRulesApiVersionOverride : "2025-07-15");
             ValidateResourceId(id);
         }
 

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ScVmm
         /// <returns> The pages of ScVmmVirtualNetworkData0CollectionResultOfT as an enumerable collection. </returns>
         public override IEnumerable<Page<ScVmmVirtualNetworkData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken, UriKind.RelativeOrAbsolute) : null;
             while (true)
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);

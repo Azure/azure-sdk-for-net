@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 secrets ?? new ChangeTrackingList<AkriConnectorsSecret>(),
                 trustSettings,
                 additionalBinaryDataProperties,
-                statefulSetConfigurationSettings);
+                statefulSetConfigurationSettings ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
     }
 }

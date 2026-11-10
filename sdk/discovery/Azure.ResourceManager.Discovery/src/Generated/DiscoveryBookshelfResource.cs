@@ -51,9 +51,8 @@ namespace Azure.ResourceManager.Discovery
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DiscoveryBookshelfResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string discoveryBookshelfApiVersion);
             _bookshelvesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Discovery", ResourceType.Namespace, Diagnostics);
-            _bookshelvesRestClient = new Bookshelves(_bookshelvesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discoveryBookshelfApiVersion ?? "2026-06-01");
+            _bookshelvesRestClient = new Bookshelves(_bookshelvesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Discovery/bookshelves", out string bookshelvesApiVersionOverride) ? bookshelvesApiVersionOverride : "2026-06-01");
             ValidateResourceId(id);
         }
 

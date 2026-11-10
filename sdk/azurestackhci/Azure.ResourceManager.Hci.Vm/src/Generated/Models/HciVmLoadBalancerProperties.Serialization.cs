@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Hci.Vm.Models
                 }
             }
             return new HciVmLoadBalancerProperties(
-                frontendIPConfigurations,
+                frontendIPConfigurations ?? new ChangeTrackingList<HciVmFrontendIPConfiguration>(),
                 backendAddressPools ?? new ChangeTrackingList<HciVmBackendAddressPool>(),
                 loadBalancingRules ?? new ChangeTrackingList<HciVmLoadBalancerRule>(),
                 probes ?? new ChangeTrackingList<HciVmLoadBalancerHealthProbe>(),

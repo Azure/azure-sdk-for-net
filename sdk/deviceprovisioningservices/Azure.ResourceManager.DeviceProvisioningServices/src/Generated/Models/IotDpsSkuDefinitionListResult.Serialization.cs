@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IotDpsSkuDefinitionListResult(value, nextLink, additionalBinaryDataProperties);
+            return new IotDpsSkuDefinitionListResult(value ?? new ChangeTrackingList<DeviceProvisioningServicesSkuDefinition>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

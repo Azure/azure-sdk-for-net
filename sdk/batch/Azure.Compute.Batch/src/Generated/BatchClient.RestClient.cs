@@ -16,11 +16,14 @@ namespace Azure.Compute.Batch
     public partial class BatchClient
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
+        private static ResponseClassifier _pipelineMessageClassifier200404;
         private static ResponseClassifier _pipelineMessageClassifier201;
         private static ResponseClassifier _pipelineMessageClassifier202;
         private static ResponseClassifier _pipelineMessageClassifier204;
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+
+        private static ResponseClassifier PipelineMessageClassifier200404 => _pipelineMessageClassifier200404 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 404 });
 
         private static ResponseClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 ??= new StatusCodeClassifier(stackalloc ushort[] { 201 });
 
@@ -321,7 +324,7 @@ namespace Azure.Compute.Batch
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200404);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Head;
@@ -1277,7 +1280,7 @@ namespace Azure.Compute.Batch
             {
                 uri.AppendQuery("timeOut", TypeFormatters.ConvertToString(timeout, SerializationFormat.Duration_Seconds), true);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200404);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Head;

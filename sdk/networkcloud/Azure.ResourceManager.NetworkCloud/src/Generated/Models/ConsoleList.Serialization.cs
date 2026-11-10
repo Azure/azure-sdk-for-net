@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ConsoleList(value, nextLink, additionalBinaryDataProperties);
+            return new ConsoleList(value ?? new ChangeTrackingList<NetworkCloudVirtualMachineConsoleData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

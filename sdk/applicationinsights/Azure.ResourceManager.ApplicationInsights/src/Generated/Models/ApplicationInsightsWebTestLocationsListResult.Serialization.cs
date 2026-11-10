@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ApplicationInsightsWebTestLocationsListResult(value, nextLink, additionalBinaryDataProperties);
+            return new ApplicationInsightsWebTestLocationsListResult(value ?? new ChangeTrackingList<ApplicationInsightsComponentWebTestLocation>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

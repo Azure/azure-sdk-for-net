@@ -38,7 +38,13 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
 
         private ClientDiagnostics AppliancesClientDiagnostics => _appliancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ResourceConnector.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Appliances AppliancesRestClient => _appliancesRestClient ??= new Appliances(AppliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01-preview");
+        private Appliances AppliancesRestClient => _appliancesRestClient ??= new Appliances(
+            AppliancesClientDiagnostics,
+            Pipeline,
+            Diagnostics.ApplicationId,
+            Endpoint,
+            "2025-03-01-preview",
+            resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
 
         /// <summary>
         /// Gets a list of Appliances in the specified subscription. The operation returns properties of each Appliance

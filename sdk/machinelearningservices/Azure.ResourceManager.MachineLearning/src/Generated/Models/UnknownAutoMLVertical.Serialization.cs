@@ -113,6 +113,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             MachineLearningLogVerbosity? logVerbosity = default;
+            bool targetColumnNameIsDefined = false;
             string targetColumnName = default;
             TaskType taskType = default;
             MachineLearningTableJobInput trainingData = default;
@@ -130,6 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (prop.NameEquals("targetColumnName"u8))
                 {
+                    targetColumnNameIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         targetColumnName = null;
@@ -153,7 +155,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new UnknownAutoMLVertical(logVerbosity, targetColumnName, taskType, trainingData, additionalBinaryDataProperties);
+            return new UnknownAutoMLVertical(logVerbosity, targetColumnName, taskType, trainingData, additionalBinaryDataProperties)
+            {
+                _targetColumnNameIsDefined = targetColumnNameIsDefined
+            };
         }
     }
 }

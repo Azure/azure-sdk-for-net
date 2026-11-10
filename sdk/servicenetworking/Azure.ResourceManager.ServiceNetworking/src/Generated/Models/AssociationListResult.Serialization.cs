@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AssociationListResult(value, nextLink, additionalBinaryDataProperties);
+            return new AssociationListResult(value ?? new ChangeTrackingList<TrafficControllerAssociationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }
