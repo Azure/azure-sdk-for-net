@@ -171,6 +171,10 @@ namespace Azure.ResourceManager.Monitor.Mocking
         public virtual ServiceDiagnosticSettingResource GetServiceDiagnosticSettingResource(ResourceIdentifier id)
         {
             ServiceDiagnosticSettingResource.ValidateResourceId(id);
+            if (id != null && id.ResourceType == ServiceDiagnosticSettingResource.ResourceType && !string.Equals(id.Name, "service", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "service"), nameof(id));
+            }
             return new ServiceDiagnosticSettingResource(Client, id);
         }
 

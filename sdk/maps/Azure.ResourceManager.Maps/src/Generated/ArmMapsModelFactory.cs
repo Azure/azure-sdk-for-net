@@ -372,8 +372,8 @@ namespace Azure.ResourceManager.Maps.Models
                 (linkedResources ?? new ChangeTrackingList<MapsLinkedResource>()).ToList(),
                 default,
                 encryption,
-                default,
-                default,
+                new ChangeTrackingList<MapsLocationItem>(),
+                new ChangeTrackingList<MapsPrivateEndpointConnectionData>(),
                 default,
                 default);
         }
