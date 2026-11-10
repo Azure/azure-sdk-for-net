@@ -556,11 +556,20 @@ public static class Sample_VoiceAgent_Live
 
     #region Snippet:Sample_VoiceAgent_Live_AudioTasks
     internal static async Task RunAudioConversationAsync(ProjectsLiveSessionClient session, byte[] speech, Stream output,
-        TextWriter transcript, CancellationToken cancellationToken, bool streamAudio = false)
+        TextWriter transcript, CancellationToken cancellationToken, bool streamAudio = false,
+        Func<TimeSpan> elapsedTime = null, Func<TimeSpan, CancellationToken, Task> delayAsync = null)
     {
+        if (elapsedTime == null)
+        {
+            Stopwatch clock = Stopwatch.StartNew();
+            elapsedTime = () => clock.Elapsed;
+        }
+        delayAsync ??= Task.Delay;
         using CancellationTokenSource flow = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         Task<long> receiving = ReceiveAudioAsync(session, output, transcript, flow.Token);
-        Task<long> feeding = streamAudio ? FeedAudioStreamAsync(session, speech, flow.Token) : FeedAudioAsync(session, speech, flow.Token);
+        Task<long> feeding = streamAudio
+            ? FeedAudioStreamAsync(session, speech, flow.Token, elapsedTime, delayAsync)
+            : FeedAudioAsync(session, speech, flow.Token, elapsedTime, delayAsync);
         Task closing = CloseAfterAudioAsync(session, feeding, cancellationToken);
         Task first = await Task.WhenAny(receiving, closing);
         if (first == receiving || first.IsFaulted || first.IsCanceled)
@@ -765,7 +774,8 @@ public static class Sample_VoiceAgent_Live
         await session.CloseAsync(cancellationToken);
     }
 
-    private static async Task<long> FeedAudioAsync(ProjectsLiveSessionClient session, byte[] speech, CancellationToken cancellationToken)
+    private static async Task<long> FeedAudioAsync(ProjectsLiveSessionClient session, byte[] speech,
+        CancellationToken cancellationToken, Func<TimeSpan> elapsedTime, Func<TimeSpan, CancellationToken, Task> delayAsync)
     {
         const int chunkSize = 960;
         const int chunkMilliseconds = 20;
@@ -773,10 +783,9 @@ public static class Sample_VoiceAgent_Live
         int offset = 0;
         long sentBytes = 0;
         int silenceChunksRemaining = 8000 / chunkMilliseconds;
-        Stopwatch clock = Stopwatch.StartNew();
         while (offset < speech.Length || silenceChunksRemaining > 0)
         {
-            TimeSpan chunkStarted = clock.Elapsed;
+            TimeSpan chunkStarted = elapsedTime();
             int count = Math.Min(chunkSize, speech.Length - offset);
             BinaryData audio = count > 0 ? BinaryData.FromBytes(speech.AsMemory(offset, count)) : BinaryData.FromBytes(silence);
             await session.SendInputAudioAsync(audio, cancellationToken);
@@ -786,19 +795,20 @@ public static class Sample_VoiceAgent_Live
             {
                 silenceChunksRemaining--;
             }
-            TimeSpan delay = TimeSpan.FromMilliseconds(chunkMilliseconds) - (clock.Elapsed - chunkStarted);
+            TimeSpan delay = TimeSpan.FromMilliseconds(chunkMilliseconds) - (elapsedTime() - chunkStarted);
             if (delay > TimeSpan.Zero)
             {
-                await Task.Delay(delay, cancellationToken);
+                await delayAsync(delay, cancellationToken);
             }
         }
         return sentBytes;
     }
 
     #region Snippet:Sample_VoiceAgent_Live_StreamSend
-    private static async Task<long> FeedAudioStreamAsync(ProjectsLiveSessionClient session, byte[] speech, CancellationToken cancellationToken)
+    private static async Task<long> FeedAudioStreamAsync(ProjectsLiveSessionClient session, byte[] speech,
+        CancellationToken cancellationToken, Func<TimeSpan> elapsedTime, Func<TimeSpan, CancellationToken, Task> delayAsync)
     {
-        using PacedPcmStream audio = new(speech);
+        using PacedPcmStream audio = new(speech, elapsedTime, delayAsync);
         // The caller controls pacing; the SDK reads to the end and leaves the stream open.
         await session.SendInputAudioAsync(audio, cancellationToken);
         return audio.BytesRead;
@@ -819,12 +829,16 @@ public static class Sample_VoiceAgent_Live
 
     private sealed class PacedPcmStream : MemoryStream
     {
-        private readonly Stopwatch _clock = Stopwatch.StartNew();
+        private readonly Func<TimeSpan> _elapsedTime;
+        private readonly Func<TimeSpan, CancellationToken, Task> _delayAsync;
         private TimeSpan _nextRead;
         public long BytesRead { get; private set; }
 
-        public PacedPcmStream(byte[] speech) : base(WithSilenceTail(speech), writable: false)
+        public PacedPcmStream(byte[] speech, Func<TimeSpan> elapsedTime,
+            Func<TimeSpan, CancellationToken, Task> delayAsync) : base(WithSilenceTail(speech), writable: false)
         {
+            _elapsedTime = elapsedTime;
+            _delayAsync = delayAsync;
         }
 
         public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
@@ -834,14 +848,14 @@ public static class Sample_VoiceAgent_Live
             {
                 return 0;
             }
-            TimeSpan delay = _nextRead - _clock.Elapsed;
+            TimeSpan delay = _nextRead - _elapsedTime();
             if (delay > TimeSpan.Zero)
             {
-                await Task.Delay(delay, cancellationToken);
+                await _delayAsync(delay, cancellationToken);
             }
             int read = await base.ReadAsync(buffer, offset, Math.Min(count, 960), cancellationToken);
             BytesRead += read;
-            _nextRead = _clock.Elapsed + TimeSpan.FromSeconds(read / 48000.0);
+            _nextRead = _elapsedTime() + TimeSpan.FromSeconds(read / 48000.0);
             return read;
         }
 

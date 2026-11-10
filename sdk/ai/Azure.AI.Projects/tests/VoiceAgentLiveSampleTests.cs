@@ -270,6 +270,7 @@ public class VoiceAgentLiveSampleTests
     [Test]
     public async Task SuccessfulAudioReceiverDoesNotCancelRemainingCloseHandshake()
     {
+        AudioTestClock clock = new();
         using ScriptedSession session = new(Read("""{"type":"session.output_audio.delta","delta":"AQABAA=="}"""))
         {
             WaitForClose = true,
@@ -279,13 +280,15 @@ public class VoiceAgentLiveSampleTests
         using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(20));
 
         await Sample_VoiceAgent_Live.RunAudioConversationAsync(
-            session, Array.Empty<byte>(), output, TextWriter.Null, timeout.Token);
+            session, Array.Empty<byte>(), output, TextWriter.Null, timeout.Token,
+            elapsedTime: () => clock.Elapsed, delayAsync: clock.DelayAsync);
 
         Assert.Multiple(() =>
         {
             Assert.That(session.CloseToken, Is.EqualTo(timeout.Token));
             Assert.That(session.CloseToken.IsCancellationRequested, Is.False);
             Assert.That(session.ReceiverEnded, Is.True);
+            Assert.That(clock.Elapsed, Is.EqualTo(TimeSpan.FromSeconds(8)));
         });
     }
 
@@ -376,16 +379,19 @@ public class VoiceAgentLiveSampleTests
     [Test]
     public async Task SlowAudioSendDoesNotTruncateSpeechOrShortenSilenceTail()
     {
+        AudioTestClock clock = new();
         using ScriptedSession session = new(Read("""{"type":"session.output_audio.delta","delta":"AQABAA=="}"""))
         {
             FirstAudioDelay = TimeSpan.FromSeconds(9),
+            AudioDelayAsync = clock.DelayAsync,
             WaitForClose = true
         };
         byte[] speech = Enumerable.Repeat((byte)1, 1920).ToArray();
         using MemoryStream output = new();
         using StringWriter transcript = new();
         using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(30));
-        await Sample_VoiceAgent_Live.RunAudioConversationAsync(session, speech, output, transcript, timeout.Token);
+        await Sample_VoiceAgent_Live.RunAudioConversationAsync(session, speech, output, transcript, timeout.Token,
+            elapsedTime: () => clock.Elapsed, delayAsync: clock.DelayAsync);
 
         Assert.Multiple(() =>
         {
@@ -397,6 +403,7 @@ public class VoiceAgentLiveSampleTests
             Assert.That(output.Length, Is.GreaterThan(0));
             Assert.That(session.ReceiverEnded, Is.True);
             Assert.That(timeout.IsCancellationRequested, Is.False);
+            Assert.That(clock.Elapsed, Is.EqualTo(TimeSpan.FromSeconds(9) + TimeSpan.FromMilliseconds(401 * 20)));
             Assert.That(transcript.ToString(), Does.Contain("Input audio sent: 385920 bytes")
                 .And.Contain("Output audio received: 4 bytes").And.Contain("Total audio transferred: 385924 bytes"));
         });
@@ -493,13 +500,15 @@ public class VoiceAgentLiveSampleTests
     [Test]
     public async Task StreamSampleSendsAllPcmAndSilenceThroughTheStreamOverload()
     {
+        AudioTestClock clock = new();
         using ScriptedSession session = new(Read("""{"type":"session.output_audio.delta","delta":"AQABAA=="}""")) { WaitForClose = true };
         byte[] speech = Enumerable.Repeat((byte)1, 1920).ToArray();
         using MemoryStream output = new();
         using StringWriter transcript = new();
         using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(20));
         await Sample_VoiceAgent_Live.RunAudioConversationAsync(
-            session, speech, output, transcript, timeout.Token, streamAudio: true);
+            session, speech, output, transcript, timeout.Token, streamAudio: true,
+            elapsedTime: () => clock.Elapsed, delayAsync: clock.DelayAsync);
 
         Assert.Multiple(() =>
         {
@@ -509,6 +518,7 @@ public class VoiceAgentLiveSampleTests
             Assert.That(session.AudioChunks.Skip(2).All(chunk => chunk.ToArray().All(value => value == 0)), Is.True);
             Assert.That(session.ReceiverEnded, Is.True);
             Assert.That(output.Length, Is.GreaterThan(0));
+            Assert.That(clock.Elapsed, Is.EqualTo(TimeSpan.FromMilliseconds(401 * 20)));
             Assert.That(transcript.ToString(), Does.Contain("Input audio sent: 385920 bytes")
                 .And.Contain("Output audio received: 4 bytes").And.Contain("Total audio transferred: 385924 bytes"));
         });
@@ -646,6 +656,18 @@ public class VoiceAgentLiveSampleTests
         return document.RootElement.GetProperty("type").GetString();
     }
 
+    private sealed class AudioTestClock
+    {
+        public TimeSpan Elapsed { get; private set; }
+
+        public Task DelayAsync(TimeSpan delay, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            Elapsed += delay;
+            return Task.CompletedTask;
+        }
+    }
+
     private sealed class ScriptedSession : ProjectsLiveSessionClient
     {
         private readonly LiveServerEvent[] _events;
@@ -666,6 +688,7 @@ public class VoiceAgentLiveSampleTests
         public bool WaitAfterEvents { get; set; }
         public bool WaitForClose { get; set; }
         public TimeSpan FirstAudioDelay { get; set; }
+        public Func<TimeSpan, CancellationToken, Task> AudioDelayAsync { get; set; } = Task.Delay;
         public TimeSpan CloseDelay { get; set; }
         public Exception AudioFailure { get; set; }
         public CancellationToken ReceiveToken { get; private set; }
@@ -714,7 +737,7 @@ public class VoiceAgentLiveSampleTests
                 AudioChunks.Add(BinaryData.FromBytes(audio.ToArray()));
                 if (AudioChunks.Count == 1 && FirstAudioDelay > TimeSpan.Zero)
                 {
-                    await Task.Delay(FirstAudioDelay, cancellationToken);
+                    await AudioDelayAsync(FirstAudioDelay, cancellationToken);
                 }
             }
             finally

@@ -174,11 +174,20 @@ before disposing the session:
 
 ```C# Snippet:Sample_VoiceAgent_Live_AudioTasks
 internal static async Task RunAudioConversationAsync(ProjectsLiveSessionClient session, byte[] speech, Stream output,
-    TextWriter transcript, CancellationToken cancellationToken, bool streamAudio = false)
+    TextWriter transcript, CancellationToken cancellationToken, bool streamAudio = false,
+    Func<TimeSpan> elapsedTime = null, Func<TimeSpan, CancellationToken, Task> delayAsync = null)
 {
+    if (elapsedTime == null)
+    {
+        Stopwatch clock = Stopwatch.StartNew();
+        elapsedTime = () => clock.Elapsed;
+    }
+    delayAsync ??= Task.Delay;
     using CancellationTokenSource flow = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
     Task<long> receiving = ReceiveAudioAsync(session, output, transcript, flow.Token);
-    Task<long> feeding = streamAudio ? FeedAudioStreamAsync(session, speech, flow.Token) : FeedAudioAsync(session, speech, flow.Token);
+    Task<long> feeding = streamAudio
+        ? FeedAudioStreamAsync(session, speech, flow.Token, elapsedTime, delayAsync)
+        : FeedAudioAsync(session, speech, flow.Token, elapsedTime, delayAsync);
     Task closing = CloseAfterAudioAsync(session, feeding, cancellationToken);
     Task first = await Task.WhenAny(receiving, closing);
     if (first == receiving || first.IsFaulted || first.IsCanceled)
@@ -485,9 +494,10 @@ public static async Task StreamAudioAsync(string projectEndpoint, string liveDep
 ```
 
 ```C# Snippet:Sample_VoiceAgent_Live_StreamSend
-private static async Task<long> FeedAudioStreamAsync(ProjectsLiveSessionClient session, byte[] speech, CancellationToken cancellationToken)
+private static async Task<long> FeedAudioStreamAsync(ProjectsLiveSessionClient session, byte[] speech,
+    CancellationToken cancellationToken, Func<TimeSpan> elapsedTime, Func<TimeSpan, CancellationToken, Task> delayAsync)
 {
-    using PacedPcmStream audio = new(speech);
+    using PacedPcmStream audio = new(speech, elapsedTime, delayAsync);
     // The caller controls pacing; the SDK reads to the end and leaves the stream open.
     await session.SendInputAudioAsync(audio, cancellationToken);
     return audio.BytesRead;

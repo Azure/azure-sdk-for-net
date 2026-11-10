@@ -36,6 +36,7 @@ public class EvaluatorGenerationArtifactsTests
         });
     }
 
+    [Test]
     public void LegacyConstructorNullValidationIsPreserved()
     {
         Assert.Throws<ArgumentNullException>(() => new EvaluatorGenerationInputs(
