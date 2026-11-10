@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Buffers;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -96,9 +98,12 @@ namespace Azure.Storage.Blobs
             bool async,
             CancellationToken cancellationToken)
         {
+            const int BUF_LIMIT = 8 * Constants.KB;
+
             // retrim start of stream to original requested location
             // keeping in mind whether we already trimmed due to an IV or nonce
             int gap = (int)(originalRange.Offset - (receivedRange?.Start ?? 0)) - alreadyTrimmedOffsetAmount;
+            using IDisposable _d = ArrayPool<byte>.Shared.RentDisposable(Math.Min(gap, BUF_LIMIT), out byte[] buf);
 
             int read = 0;
             while (gap > read)
@@ -107,11 +112,11 @@ namespace Azure.Storage.Blobs
                 // throw away initial bytes we want to trim off; stream cannot seek into future
                 if (async)
                 {
-                    read += await stream.ReadAsync(new byte[toRead], 0, toRead, cancellationToken).ConfigureAwait(false);
+                    read += await stream.ReadAsync(buf, 0, Math.Min(buf.Length, toRead), cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    read += stream.Read(new byte[toRead], 0, toRead);
+                    read += stream.Read(buf, 0, Math.Min(buf.Length, toRead));
                 }
             }
 
