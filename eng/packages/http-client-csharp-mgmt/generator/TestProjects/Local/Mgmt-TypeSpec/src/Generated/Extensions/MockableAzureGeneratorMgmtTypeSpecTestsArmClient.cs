@@ -84,6 +84,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         public virtual FooConfigurationResource GetFooConfigurationResource(ResourceIdentifier id)
         {
             FooConfigurationResource.ValidateResourceId(id);
+            if (id != null && id.ResourceType == FooConfigurationResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new FooConfigurationResource(Client, id);
         }
 
@@ -93,6 +97,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         public virtual BarSettingsResource GetBarSettingsResource(ResourceIdentifier id)
         {
             BarSettingsResource.ValidateResourceId(id);
+            if (id != null && id.ResourceType == BarSettingsResource.ResourceType && !string.Equals(id.Name, "current", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "current"), nameof(id));
+            }
             return new BarSettingsResource(Client, id);
         }
 
@@ -246,6 +254,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         public virtual HciVmInstanceResource GetHciVmInstanceResource(ResourceIdentifier id)
         {
             HciVmInstanceResource.ValidateResourceId(id);
+            if (id != null && id.ResourceType == HciVmInstanceResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+            }
             return new HciVmInstanceResource(Client, id);
         }
 

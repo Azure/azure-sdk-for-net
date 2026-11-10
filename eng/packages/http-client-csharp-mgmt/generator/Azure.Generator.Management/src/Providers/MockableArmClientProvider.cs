@@ -9,7 +9,9 @@ using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -117,15 +119,35 @@ namespace Azure.Generator.Management.Providers
                 $"Returns a {resource.Type:C} object.",
                 [idParameter]);
 
-            var body = new MethodBodyStatement[]
+            var body = new List<MethodBodyStatement>
             {
-                Static(resource.Type).Invoke("ValidateResourceId", idParameter).Terminate(),
-                Return(New.Instance(resource.Type,
-                    [
-                        This.As<ArmResource>().Client(),
-                        idParameter
-                    ]))
+                Static(resource.Type).Invoke("ValidateResourceId", idParameter).Terminate()
             };
+
+            // Some invalid routes have a variable or query embedded in the last segment and
+            // are currently classified as singletons. Their names are not fixed resource names.
+            if (resource.SingletonResourceName is { } singletonName && singletonName.IndexOfAny(['{', '}', '?', '#']) < 0)
+            {
+                // Preserve the existing resource-type validation policy and avoid imposing this
+                // check on identifiers received from the service or built by parent accessors.
+                var nameMatches = StringSnippets.Equals(
+                    idParameter.Property(nameof(ResourceIdentifier.Name)).As<string>(),
+                    Literal(singletonName).As<string>(),
+                    StringComparison.OrdinalIgnoreCase);
+                body.Add(new IfStatement(
+                    idParameter.NotEqual(Null)
+                        .And(idParameter.As<ResourceIdentifier>().ResourceType().Equal(Static(resource.Type).Property("ResourceType")))
+                        .And(Not(nameMatches)))
+                {
+                    Throw(New.ArgumentException(idParameter, StringSnippets.Format(Literal("Invalid singleton resource name {0} expected {1}"), idParameter.Property(nameof(ResourceIdentifier.Name)), Literal(singletonName)), wrapInNameOf: true))
+                });
+            }
+
+            body.Add(Return(New.Instance(resource.Type,
+                [
+                    This.As<ArmResource>().Client(),
+                    idParameter
+                ])));
 
             return new MethodProvider(signature, body, this);
         }
