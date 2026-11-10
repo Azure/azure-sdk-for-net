@@ -37,6 +37,47 @@ namespace Azure.Generator.Management.Tests
         }
 
         [Test]
+        public void GetLocationSingletonRejectsNonCanonicalLocation()
+        {
+            var client = new ArmClient(Mock.Of<TokenCredential>(), SubscriptionId);
+            var id = new ResourceIdentifier($"/subscriptions/{SubscriptionId}/providers/MgmtTypeSpec/locations/East US/locationSingletons/current");
+
+            Assert.Throws<ArgumentException>(() => client.GetLocationSingletonResource(id));
+        }
+
+        [TestCase("eastus")]
+        [TestCase("EASTUS")]
+        [TestCase("customregion")]
+        public void GetLocationSingletonAcceptsCanonicalLocations(string location)
+        {
+            var client = new ArmClient(Mock.Of<TokenCredential>(), SubscriptionId);
+            var id = new ResourceIdentifier($"/subscriptions/{SubscriptionId}/providers/MgmtTypeSpec/locations/{location}/locationSingletons/current");
+
+            Assert.That(client.GetLocationSingletonResource(id).Id, Is.EqualTo(id));
+        }
+
+        [Test]
+        public void GetSingletonResourceAcceptsCaseInsensitiveFixedPathSegments()
+        {
+            var client = new ArmClient(Mock.Of<TokenCredential>(), SubscriptionId);
+            var id = new ResourceIdentifier($"/SUBSCRIPTIONS/{SubscriptionId}/RESOURCEGROUPS/group/PROVIDERS/MGMTTYPESPEC/FOOS/foo/BARS/bar/SETTINGS/CURRENT");
+
+            Assert.That(client.GetBarSettingsResource(id).Id, Is.EqualTo(id));
+        }
+
+        [TestCase("/subscriptions/00000000-0000-0000-0000-000000000000")]
+        [TestCase("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group/providers/Microsoft.Compute/virtualMachines/vm")]
+        public void SingletonExtensionResourceKeepsVariableScopeAndNameValidation(string scope)
+        {
+            var client = new ArmClient(Mock.Of<TokenCredential>(), SubscriptionId);
+            var id = HciVmInstanceResource.CreateResourceIdentifier(scope);
+            var otherId = new ResourceIdentifier($"{scope}/providers/MgmtTypeSpec/virtualMachineInstances/other");
+
+            Assert.That(client.GetHciVmInstanceResource(id).Id, Is.EqualTo(id));
+            Assert.Throws<ArgumentException>(() => client.GetHciVmInstanceResource(otherId));
+        }
+
+        [Test]
         public void ParentAccessorAndOrdinaryResourcesRetainVariableNames()
         {
             var client = new ArmClient(Mock.Of<TokenCredential>(), SubscriptionId);
@@ -48,18 +89,54 @@ namespace Azure.Generator.Management.Tests
         }
 
         [Test]
-        public void ResourceTypeValidationRetainsItsExistingBuildConfigurationPolicy()
+        public void OrdinaryResourceTypeValidationRetainsItsExistingBuildConfigurationPolicy()
         {
             var client = new ArmClient(Mock.Of<TokenCredential>(), SubscriptionId);
             var otherTypeId = new ResourceIdentifier($"/subscriptions/{SubscriptionId}/resourceGroups/group/providers/MgmtTypeSpec/foos/foo/bars/bar/quotas/other");
 
 #if DEBUG
-            Assert.Throws<ArgumentException>(() => client.GetBarSettingsResource(otherTypeId));
             Assert.Throws<ArgumentException>(() => client.GetBarResource(otherTypeId));
 #else
-            Assert.That(client.GetBarSettingsResource(otherTypeId).Id, Is.EqualTo(otherTypeId));
             Assert.That(client.GetBarResource(otherTypeId).Id, Is.EqualTo(otherTypeId));
 #endif
+        }
+
+        [Test]
+        public void GetSingletonResourceRejectsWrongTypeInAllConfigurations()
+        {
+            var client = new ArmClient(Mock.Of<TokenCredential>(), SubscriptionId);
+            var otherTypeId = new ResourceIdentifier($"/subscriptions/{SubscriptionId}/resourceGroups/group/providers/MgmtTypeSpec/foos/foo/bars/bar/quotas/other");
+
+            Assert.Throws<ArgumentException>(() => client.GetBarSettingsResource(otherTypeId));
+        }
+
+        [TestCase("/subscriptions/00000000-0000-0000-0000-000000000000/providers/MgmtTypeSpec/foos/foo/bars/bar/settings/current")]
+        [TestCase("/providers/MgmtTypeSpec/foos/foo/bars/bar/settings/current")]
+        public void GetSingletonResourceRejectsOtherScopesWithSameResourceType(string value)
+        {
+            var client = new ArmClient(Mock.Of<TokenCredential>(), SubscriptionId);
+            var expectedId = BarSettingsResource.CreateResourceIdentifier(SubscriptionId, "group", "foo", "bar");
+            var otherId = new ResourceIdentifier(value);
+
+            Assert.That(otherId.ResourceType, Is.EqualTo(expectedId.ResourceType));
+            Assert.Throws<ArgumentException>(() => client.GetBarSettingsResource(otherId));
+        }
+
+        [Test]
+        public void GetSingletonResourceRejectsTrailingSlash()
+        {
+            var client = new ArmClient(Mock.Of<TokenCredential>(), SubscriptionId);
+            var id = BarSettingsResource.CreateResourceIdentifier(SubscriptionId, "group", "foo", "bar");
+
+            Assert.Throws<ArgumentException>(() => client.GetBarSettingsResource(new ResourceIdentifier(id + "/")));
+        }
+
+        [Test]
+        public void GetSingletonResourceRejectsNullInAllConfigurations()
+        {
+            var client = new ArmClient(Mock.Of<TokenCredential>(), SubscriptionId);
+
+            Assert.Throws<ArgumentNullException>(() => client.GetBarSettingsResource(null!));
         }
 
         [Test]

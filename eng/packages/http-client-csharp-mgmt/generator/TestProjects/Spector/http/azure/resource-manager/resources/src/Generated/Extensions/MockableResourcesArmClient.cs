@@ -53,11 +53,16 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <returns> Returns a <see cref="SingletonTrackedResource"/> object. </returns>
         public virtual SingletonTrackedResource GetSingletonTrackedResource(ResourceIdentifier id)
         {
-            SingletonTrackedResource.ValidateResourceId(id);
-            if (id != null && id.ResourceType == SingletonTrackedResource.ResourceType && !string.Equals(id.Name, "default", StringComparison.OrdinalIgnoreCase))
+            if (id == null)
             {
-                throw new ArgumentException(string.Format("Invalid singleton resource name {0} expected {1}", id.Name, "default"), nameof(id));
+                throw new ArgumentNullException(nameof(id));
             }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != SingletonTrackedResource.ResourceType || segments.Length != 9 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Azure.ResourceManager.Resources", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "singletonTrackedResources", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[8], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Azure.ResourceManager.Resources/singletonTrackedResources/default"), nameof(id));
+            }
+            SingletonTrackedResource.ValidateResourceId(id);
             return new SingletonTrackedResource(Client, id);
         }
 
