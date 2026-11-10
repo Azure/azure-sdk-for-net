@@ -16,8 +16,6 @@ namespace Azure.AI.Projects.Evaluation
         private const string ResponseCompletedValue = "responseCompleted";
         /// <summary> Manual trigger. </summary>
         private const string ManualValue = "manual";
-        /// <summary> Run the rule's action on its schedule. </summary>
-        private const string TimerTriggerValue = "timerTrigger";
 
         /// <summary> Initializes a new instance of <see cref="EvaluationRuleEventType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,9 +32,6 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Manual trigger. </summary>
         public static EvaluationRuleEventType Manual { get; } = new EvaluationRuleEventType(ManualValue);
-
-        /// <summary> Run the rule's action on its schedule. </summary>
-        public static EvaluationRuleEventType TimerTrigger { get; } = new EvaluationRuleEventType(TimerTriggerValue);
 
         /// <summary> Determines if two <see cref="EvaluationRuleEventType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

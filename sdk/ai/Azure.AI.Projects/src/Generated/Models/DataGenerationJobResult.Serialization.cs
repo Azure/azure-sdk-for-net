@@ -101,16 +101,6 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("token_usage"u8);
                 writer.WriteObjectValue(TokenUsage, options);
             }
-            if (Optional.IsCollectionDefined(Warnings))
-            {
-                writer.WritePropertyName("warnings"u8);
-                writer.WriteStartArray();
-                foreach (DataGenerationWarning item in Warnings)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -156,7 +146,6 @@ namespace Azure.AI.Projects
             IList<DataGenerationJobOutput> outputs = default;
             int generatedSamples = default;
             DataGenerationTokenUsage tokenUsage = default;
-            IList<DataGenerationWarning> warnings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -188,26 +177,12 @@ namespace Azure.AI.Projects
                     tokenUsage = DataGenerationTokenUsage.DeserializeDataGenerationTokenUsage(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("warnings"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<DataGenerationWarning> array = new List<DataGenerationWarning>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(DataGenerationWarning.DeserializeDataGenerationWarning(item, options));
-                    }
-                    warnings = array;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DataGenerationJobResult(outputs ?? new ChangeTrackingList<DataGenerationJobOutput>(), generatedSamples, tokenUsage, warnings ?? new ChangeTrackingList<DataGenerationWarning>(), additionalBinaryDataProperties);
+            return new DataGenerationJobResult(outputs ?? new ChangeTrackingList<DataGenerationJobOutput>(), generatedSamples, tokenUsage, additionalBinaryDataProperties);
         }
     }
 }

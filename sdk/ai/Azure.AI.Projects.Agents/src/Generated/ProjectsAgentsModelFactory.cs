@@ -413,6 +413,7 @@ namespace Azure.AI.Projects.Agents
         /// The resolved value is always echoed on read.
         /// </param>
         /// <returns> A new <see cref="Agents.ExternalAgentDefinition"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static ExternalAgentDefinition ExternalAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, string otelAgentId = default)
         {
             return new ExternalAgentDefinition(ProjectsAgentKind.External, contentFilterConfiguration, additionalBinaryDataProperties: null, otelAgentId);
@@ -3791,15 +3792,13 @@ namespace Azure.AI.Projects.Agents
         /// <param name="requireApprovalInternal"></param>
         /// <param name="deferLoading"> Whether this MCP tool is deferred and discovered via tool search. </param>
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
-        /// <param name="requestHeaderBindings"> Bindings that supply request headers to this MCP server. </param>
         /// <returns> A new <see cref="Agents.MCPToolboxTool"/> instance for mocking. </returns>
         [Experimental("AAIP002")]
-        public static MCPToolboxTool MCPToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, string serverLabel = default, Uri serverUri = default, McpToolConnectorId? connectorId = default, string tunnelId = default, string authorization = default, string serverDescription = default, IDictionary<string, string> headers = default, McpToolFilter allowedTools = default, IEnumerable<CallableToolAllowedCaller> allowedCallers = default, BinaryData requireApprovalInternal = default, bool? deferLoading = default, string projectConnectionId = default, IEnumerable<MCPToolboxRequestHeaderBinding> requestHeaderBindings = default)
+        public static MCPToolboxTool MCPToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, string serverLabel = default, Uri serverUri = default, McpToolConnectorId? connectorId = default, string tunnelId = default, string authorization = default, string serverDescription = default, IDictionary<string, string> headers = default, McpToolFilter allowedTools = default, IEnumerable<CallableToolAllowedCaller> allowedCallers = default, BinaryData requireApprovalInternal = default, bool? deferLoading = default, string projectConnectionId = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
             headers ??= new ChangeTrackingDictionary<string, string>();
             allowedCallers ??= new ChangeTrackingList<CallableToolAllowedCaller>();
-            requestHeaderBindings ??= new ChangeTrackingList<MCPToolboxRequestHeaderBinding>();
 
             return new MCPToolboxTool(
                 ToolboxToolType.Mcp,
@@ -3818,18 +3817,7 @@ namespace Azure.AI.Projects.Agents
                 allowedCallers.ToList(),
                 requireApprovalInternal,
                 deferLoading,
-                projectConnectionId,
-                requestHeaderBindings.ToList());
-        }
-
-        /// <summary> A binding that supplies a request header to an MCP server. </summary>
-        /// <param name="headerName"> The name of the HTTP header to forward to the MCP server. Must be a non-empty HTTP field-name token. </param>
-        /// <param name="source"> The source of the header value, for example `client_headers`. </param>
-        /// <param name="required"> Whether the client must supply this header. </param>
-        /// <returns> A new <see cref="Agents.MCPToolboxRequestHeaderBinding"/> instance for mocking. </returns>
-        public static MCPToolboxRequestHeaderBinding MCPToolboxRequestHeaderBinding(string headerName = default, MCPToolboxRequestHeaderBindingSource source = default, bool @required = default)
-        {
-            return new MCPToolboxRequestHeaderBinding(headerName, source, @required, additionalBinaryDataProperties: null);
+                projectConnectionId);
         }
 
         /// <summary> An Azure AI Search tool stored in a toolbox. </summary>
@@ -4245,6 +4233,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="defaultVersion"> The default version for the skill. Can be changed via updateSkill. </param>
         /// <param name="latestVersion"> The latest version for the skill. </param>
         /// <returns> A new <see cref="Agents.AgentsSkill"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static AgentsSkill AgentsSkill(string id = default, string name = default, string description = default, DateTimeOffset createdOn = default, string defaultVersion = default, string latestVersion = default)
         {
             return new AgentsSkill(
@@ -4262,6 +4251,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="deleted"> Whether the skill was successfully deleted. </param>
         /// <returns> A new <see cref="Agents.SkillDeletionResult"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static SkillDeletionResult SkillDeletionResult(string id = default, string name = default, bool deleted = default)
         {
             return new SkillDeletionResult(id, name, deleted, additionalBinaryDataProperties: null);
@@ -4275,6 +4265,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="metadata"> Arbitrary key-value metadata for additional properties. </param>
         /// <param name="allowedTools"> List of pre-approved tools the skill may use. Experimental. </param>
         /// <returns> A new <see cref="Agents.SkillInlineContent"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static SkillInlineContent SkillInlineContent(string description = default, string instructions = default, string license = default, string compatibility = default, IDictionary<string, string> metadata = default, IEnumerable<string> allowedTools = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
@@ -4298,6 +4289,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="description"> A human-readable description of the skill version. </param>
         /// <param name="createdOn"> The Unix timestamp (seconds) when the skill version was created. </param>
         /// <returns> A new <see cref="Agents.SkillVersion"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static SkillVersion SkillVersion(string id = default, string skillId = default, string name = default, string version = default, string description = default, DateTimeOffset createdOn = default)
         {
             return new SkillVersion(
@@ -4316,6 +4308,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="deleted"> Whether the skill version was successfully deleted. </param>
         /// <param name="version"> The version that was deleted. </param>
         /// <returns> A new <see cref="Agents.SkillVersionDeletionResult"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static SkillVersionDeletionResult SkillVersionDeletionResult(string id = default, string name = default, bool deleted = default, string version = default)
         {
             return new SkillVersionDeletionResult(id, name, deleted, version, additionalBinaryDataProperties: null);
@@ -4341,13 +4334,13 @@ namespace Azure.AI.Projects.Agents
             return new SessionDirectoryEntry(name, sizeInBytes, isDirectory, modifiedOn, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Agent optimization job resource — a long-running job that produces candidate changes or versioned skill packages. For failed or skipped jobs, error explains the outcome; status distinguishes failure from a skip. </summary>
+        /// <summary> Agent optimization job resource — a long-running job that produces candidate changes to a Foundry agent configuration. </summary>
         /// <param name="id"> Server-assigned unique identifier. </param>
         /// <param name="result"> Result produced on success. </param>
         /// <param name="status"> Current lifecycle status. </param>
-        /// <param name="error"> Failure or skip reason; status distinguishes the outcomes. Omitted otherwise. </param>
+        /// <param name="error"> Error details — populated only on failure. </param>
         /// <param name="displayName"> Human-readable label. Omitted when no label is needed; it has no uniqueness, routing, or idempotency semantics. </param>
-        /// <param name="targetConfiguration"> Foundry agent whose configuration is optimized, or a read-only trace and skill source for skill_optimization. Agentless skill optimization requires explicit agent_traces telemetry configuration with an exact agent_name. Skill optimization does not modify the target agent. </param>
+        /// <param name="targetConfiguration"> Foundry agent whose configuration is optimized. Omitted when the workflow does not target a registered Foundry agent. </param>
         /// <param name="optimizationModelConfiguration"> Model used to generate candidate changes. An existing deployment name is also accepted. </param>
         /// <param name="optimizationConfiguration"> Type-specific optimization configuration. </param>
         /// <param name="runDurationMs"> Duration for which the job has been running, in milliseconds. </param>
@@ -4355,7 +4348,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="updatedOn"> The timestamp when the job was last updated, represented in Unix time. </param>
         /// <param name="warnings"> Non-fatal warnings emitted during optimization. Omitted when no warnings were produced. </param>
         /// <returns> A new <see cref="Agents.AgentOptimizationJob"/> instance for mocking. </returns>
-        public static AgentOptimizationJob AgentOptimizationJob(string id = default, AgentOptimizationJobResult result = default, AgentOptimizationJobStatus status = default, FoundryOpenAIError error = default, string displayName = default, AgentOptimizationTargetConfiguration targetConfiguration = default, AgentOptimizationModelConfiguration optimizationModelConfiguration = default, AgentOptimizationConfigurationBase optimizationConfiguration = default, TimeSpan runDurationMs = default, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default, IEnumerable<string> warnings = default)
+        public static AgentOptimizationJob AgentOptimizationJob(string id = default, AgentOptimizationJobResult result = default, AgentsJobStatus status = default, FoundryOpenAIError error = default, string displayName = default, AgentOptimizationTargetConfiguration targetConfiguration = default, AgentOptimizationModelConfiguration optimizationModelConfiguration = default, AgentOptimizationConfigurationBase optimizationConfiguration = default, TimeSpan runDurationMs = default, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default, IEnumerable<string> warnings = default)
         {
             warnings ??= new ChangeTrackingList<string>();
 
@@ -4490,7 +4483,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// Base model for type-specific optimization configuration.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.AgentOptimizationConfiguration"/>, <see cref="Agents.PromptOptimizationConfiguration"/>, and <see cref="Agents.SkillOptimizationConfiguration"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.AgentOptimizationConfiguration"/> and <see cref="Agents.PromptOptimizationConfiguration"/>.
         /// </summary>
         /// <param name="type"> Optimization type discriminator. </param>
         /// <returns> A new <see cref="Agents.AgentOptimizationConfigurationBase"/> instance for mocking. </returns>
@@ -4518,7 +4511,7 @@ namespace Azure.AI.Projects.Agents
                 agentOptimizationSpace);
         }
 
-        /// <summary> Reusable quality-measurement configuration for agent optimization. </summary>
+        /// <summary> Reusable quality-measurement configuration. </summary>
         /// <param name="trainingSet"> Evaluation set used to guide the optimization search. Inline data supports up to 2,000 test cases when a separate validation set is supplied; otherwise it is also used for validation and is limited to 500. </param>
         /// <param name="validationSet"> Held-out evaluation set used for full candidate evaluation, limited to 500 inline test cases. The training set is reused and subject to the same 500-test-case validation limit when omitted. </param>
         /// <param name="evaluators"> Evaluator references used to score candidate quality. </param>
@@ -4799,26 +4792,18 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Configuration for a one-shot prompt transformation without comparative evaluation. </summary>
-        /// <param name="context"> Steering context for prompt optimization. Agent trace and skill reference context are supported only by skill optimization. Omitted when no context is supplied. </param>
+        /// <param name="context"> Context used to steer prompt optimization. Omitted when no context is supplied. </param>
         /// <returns> A new <see cref="Agents.PromptOptimizationConfiguration"/> instance for mocking. </returns>
-        public static PromptOptimizationConfiguration PromptOptimizationConfiguration(IEnumerable<SteeringPromptOptimizationContext> context = default)
+        public static PromptOptimizationConfiguration PromptOptimizationConfiguration(IEnumerable<OptimizationContext> context = default)
         {
-            context ??= new ChangeTrackingList<SteeringPromptOptimizationContext>();
+            context ??= new ChangeTrackingList<OptimizationContext>();
 
             return new PromptOptimizationConfiguration(AgentOptimizationConfigurationType.PromptOptimization, additionalBinaryDataProperties: null, context.ToList());
         }
 
-        /// <summary> Natural-language guidance for the desired optimization. </summary>
-        /// <param name="prompt"> Developer guidance describing the desired changes. </param>
-        /// <returns> A new <see cref="Agents.SteeringPromptOptimizationContext"/> instance for mocking. </returns>
-        public static SteeringPromptOptimizationContext SteeringPromptOptimizationContext(string prompt = default)
-        {
-            return new SteeringPromptOptimizationContext(OptimizationContextType.SteeringPrompt, additionalBinaryDataProperties: null, prompt);
-        }
-
         /// <summary>
         /// Base model for typed optimization context.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.AgentTracesOptimizationContext"/>, <see cref="Agents.SkillReferencesOptimizationContext"/>, and <see cref="Agents.SteeringPromptOptimizationContext"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.SteeringPromptOptimizationContext"/>.
         /// </summary>
         /// <param name="type"> Optimization context type discriminator. </param>
         /// <returns> A new <see cref="Agents.OptimizationContext"/> instance for mocking. </returns>
@@ -4827,148 +4812,12 @@ namespace Azure.AI.Projects.Agents
             return new UnknownOptimizationContext(new OptimizationContextType(@type), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Explicit exact-version baselines for skill optimization. </summary>
-        /// <param name="skillReferences"> Exact skill versions combined with skills discovered from Prompt or Managed targets, including toolboxes. References across context items and discovered skills are deduplicated. Without a target these are the only baselines; an empty effective inventory permits creation from selected traces. An empty list supplies no explicit baselines. </param>
-        /// <returns> A new <see cref="Agents.SkillReferencesOptimizationContext"/> instance for mocking. </returns>
-        public static SkillReferencesOptimizationContext SkillReferencesOptimizationContext(IEnumerable<AgentOptimizationSkillReference> skillReferences = default)
+        /// <summary> Natural-language guidance for the desired optimization. </summary>
+        /// <param name="prompt"> Developer guidance describing the desired changes. </param>
+        /// <returns> A new <see cref="Agents.SteeringPromptOptimizationContext"/> instance for mocking. </returns>
+        public static SteeringPromptOptimizationContext SteeringPromptOptimizationContext(string prompt = default)
         {
-            skillReferences ??= new ChangeTrackingList<AgentOptimizationSkillReference>();
-
-            return new SkillReferencesOptimizationContext(OptimizationContextType.SkillReferences, additionalBinaryDataProperties: null, skillReferences.ToList());
-        }
-
-        /// <summary>
-        /// Base reference to a skill used by optimization.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.AgentOptimizationFoundrySkillReference"/>.
-        /// </summary>
-        /// <param name="type"> Skill reference type. Additional types may be added in future API versions. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationSkillReference"/> instance for mocking. </returns>
-        public static AgentOptimizationSkillReference AgentOptimizationSkillReference(string @type = default)
-        {
-            return new UnknownAgentOptimizationSkillReference(new AgentOptimizationSkillReferenceType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Exact reference to an existing skill version in the job's project. </summary>
-        /// <param name="name"> Registered skill name, from 1 to 64 characters, following the shared skill naming rules. </param>
-        /// <param name="version"> Non-empty opaque pinned version. The aliases latest and default are not accepted. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationFoundrySkillReference"/> instance for mocking. </returns>
-        public static AgentOptimizationFoundrySkillReference AgentOptimizationFoundrySkillReference(string name = default, string version = default)
-        {
-            return new AgentOptimizationFoundrySkillReference(AgentOptimizationSkillReferenceType.FoundrySkill, additionalBinaryDataProperties: null, name, version);
-        }
-
-        /// <summary> Trace evidence for skill optimization, selected independently of feedback availability. </summary>
-        /// <param name="traceConnectionConfiguration"> Explicit telemetry selection. Required without a target agent. When omitted with a target, use its project-linked telemetry. Not accepted on steering_prompt context. </param>
-        /// <param name="traceWindow"> Trace selection using a fixed half-open window or explicit trace_ids within a lookback interval ending at job creation. </param>
-        /// <returns> A new <see cref="Agents.AgentTracesOptimizationContext"/> instance for mocking. </returns>
-        public static AgentTracesOptimizationContext AgentTracesOptimizationContext(AgentOptimizationTraceConnectionConfiguration traceConnectionConfiguration = default, AgentOptimizationTraceWindow traceWindow = default)
-        {
-            return new AgentTracesOptimizationContext(OptimizationContextType.AgentTraces, additionalBinaryDataProperties: null, traceConnectionConfiguration, traceWindow);
-        }
-
-        /// <summary>
-        /// Explicit project-authorized telemetry selection, not an arbitrary endpoint.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.AgentOptimizationAppInsightsTraceConnectionConfiguration"/>.
-        /// </summary>
-        /// <param name="type"> Trace provider discriminator. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationTraceConnectionConfiguration"/> instance for mocking. </returns>
-        public static AgentOptimizationTraceConnectionConfiguration AgentOptimizationTraceConnectionConfiguration(string @type = default)
-        {
-            return new UnknownAgentOptimizationTraceConnectionConfiguration(new AgentOptimizationTraceConnectionType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Selects a project-linked Application Insights component. </summary>
-        /// <param name="resourceId"> Non-empty ARM component resource ID of an Application Insights connection linked to this project. Invalid or unavailable explicit configuration must fail rather than fall back. </param>
-        /// <param name="agentName"> Required without target_configuration and omitted with a target agent. From 1 to 256 characters. Exact, case-sensitive AppRoleName or cloud_RoleName, including any emitted OpenTelemetry namespace prefix. This is a telemetry service identity, not a Foundry agent reference. No surrounding whitespace, wildcards, or KQL. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationAppInsightsTraceConnectionConfiguration"/> instance for mocking. </returns>
-        public static AgentOptimizationAppInsightsTraceConnectionConfiguration AgentOptimizationAppInsightsTraceConnectionConfiguration(string resourceId = default, string agentName = default)
-        {
-            return new AgentOptimizationAppInsightsTraceConnectionConfiguration(AgentOptimizationTraceConnectionType.ApplicationInsights, additionalBinaryDataProperties: null, resourceId, agentName);
-        }
-
-        /// <summary>
-        /// Trace selection window for a one-time skill optimization job.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.AgentOptimizationFixedTraceWindow"/> and <see cref="Agents.AgentOptimizationTraceIdsTraceWindow"/>.
-        /// </summary>
-        /// <param name="type"> Trace window discriminator. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationTraceWindow"/> instance for mocking. </returns>
-        public static AgentOptimizationTraceWindow AgentOptimizationTraceWindow(string @type = default)
-        {
-            return new UnknownAgentOptimizationTraceWindow(new AgentOptimizationTraceWindowType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Selects the latest readable trace conversations in a half-open interval, independently of feedback availability. </summary>
-        /// <param name="startsOn"> Inclusive UTC Unix timestamp in seconds, at or after the Unix epoch. Must precede the effective end_time after truncation to job submission time. The service rejects empty or inverted effective intervals. </param>
-        /// <param name="endsOn"> Exclusive UTC Unix timestamp in seconds. A future value is truncated to job submission time, and the effective end is returned in the job configuration. The service does not wait for future traces. </param>
-        /// <param name="maxTraces"> Maximum number of trace conversations to select, from 1 to 100 inclusive. If omitted, the service defaults to 100. Selects the latest matching readable traces before collecting their annotations or evaluation results; feedback availability does not affect selection priority. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationFixedTraceWindow"/> instance for mocking. </returns>
-        public static AgentOptimizationFixedTraceWindow AgentOptimizationFixedTraceWindow(DateTimeOffset startsOn = default, DateTimeOffset endsOn = default, int? maxTraces = default)
-        {
-            return new AgentOptimizationFixedTraceWindow(AgentOptimizationTraceWindowType.Fixed, additionalBinaryDataProperties: null, startsOn, endsOn, maxTraces);
-        }
-
-        /// <summary> Selects explicit trace IDs within the configured telemetry source and a lookback interval ending at job creation. </summary>
-        /// <param name="traceIds"> At least one explicit trace identifier to look up within the configured telemetry source. Service support, maximum list size, duplicate handling, and missing-ID behavior are TBD. </param>
-        /// <param name="lookbackHours"> Telemetry lookup horizon in hours, at least 1. The half-open lookup interval starts this many hours before job creation and ends at job creation; retries do not move the anchor. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationTraceIdsTraceWindow"/> instance for mocking. </returns>
-        public static AgentOptimizationTraceIdsTraceWindow AgentOptimizationTraceIdsTraceWindow(IEnumerable<string> traceIds = default, int lookbackHours = default)
-        {
-            traceIds ??= new ChangeTrackingList<string>();
-
-            return new AgentOptimizationTraceIdsTraceWindow(AgentOptimizationTraceWindowType.TraceIds, additionalBinaryDataProperties: null, traceIds.ToList(), lookbackHours);
-        }
-
-        /// <summary> Configuration for generating a single skill candidate from trace evidence. The candidate can contain zero or more skill outcomes; no new learnings can produce an empty skill_results array without publishing versions. Optional evaluation reuses a non-generated baseline candidate. </summary>
-        /// <param name="context"> At least one context item containing trace evidence, optional steering guidance, and optional exact baseline references. Supply agent_traces context; use separate steering_prompt and skill_references items for guidance and baselines. For skill optimization only, a steering prompt must be non-empty and at most 100 KiB (102,400 UTF-8 bytes), enforced by the service; oversized prompts are rejected rather than truncated. </param>
-        /// <param name="trainingSplitRatio"> Fraction of generated question groups assigned to learning, strictly greater than 0 and less than 1. Defaults to 0.7 when omitted. Normalized questions and shared source traces stay in the same group, and every generated row belongs to learning or validation. The service rejects splits that leave either side empty. Caller-provided validation data is not split. </param>
-        /// <param name="evaluationConfiguration"> Optional historical training-trace grading and before/after comparison for supported registered targets. Requires target_configuration, evaluation_model, and one existing evaluator or evaluator_generation_configuration. Training verdicts can inform learning; separate before/after scores report impact and do not drive candidate search, selection, or publication. Omitted to skip new training grading and comparison. </param>
-        /// <returns> A new <see cref="Agents.SkillOptimizationConfiguration"/> instance for mocking. </returns>
-        public static SkillOptimizationConfiguration SkillOptimizationConfiguration(IEnumerable<OptimizationContext> context = default, double? trainingSplitRatio = default, SkillOptimizationEvaluationConfiguration evaluationConfiguration = default)
-        {
-            context ??= new ChangeTrackingList<OptimizationContext>();
-
-            return new SkillOptimizationConfiguration(AgentOptimizationConfigurationType.SkillOptimization, additionalBinaryDataProperties: null, context.ToList(), trainingSplitRatio, evaluationConfiguration);
-        }
-
-        /// <summary> Skill-only evaluation inputs. Training-trace grading can inform single-shot learning; supported before/after comparison reports impact without gating publication. </summary>
-        /// <param name="validationSet"> Optional target-completion validation data, limited to 500 inline test cases. When omitted, the service generates data from the selected traces and partitions it using training_split_ratio for supported before/after comparison. Both comparison runs reuse the same frozen validation dataset. Caller-provided validation data is reused without splitting. Caller-supplied training_set is not accepted. </param>
-        /// <param name="evaluators"> Existing evaluator reference. At submission, supply exactly one reference or evaluator_generation_configuration, not both; the service validates this combination. After preparation, contains the resolved exact evaluator version used for training grading and supported baseline and learned-candidate evaluation. </param>
-        /// <param name="evaluationModel"> Required model configuration used for evaluation. Its model also supplies evaluator-generation requests when generation is selected. </param>
-        /// <param name="maxConcurrentAgentRuns"> Maximum number of target-agent runs executed concurrently during each target-completion evaluation, from 1 to 10. If omitted, the service defaults to 1. </param>
-        /// <param name="evaluatorGenerationConfiguration"> Alternative to an existing evaluator reference at submission. Generates an evaluator using evaluation_model.model. Resolved exact versions are returned in evaluators after preparation. </param>
-        /// <returns> A new <see cref="Agents.SkillOptimizationEvaluationConfiguration"/> instance for mocking. </returns>
-        public static SkillOptimizationEvaluationConfiguration SkillOptimizationEvaluationConfiguration(AgentOptimizationTargetCompletionEvaluationSet validationSet = default, IEnumerable<AgentOptimizationEvaluator> evaluators = default, EvaluationModelConfiguration evaluationModel = default, int? maxConcurrentAgentRuns = default, AgentOptimizationEvaluatorGenerationConfiguration evaluatorGenerationConfiguration = default)
-        {
-            evaluators ??= new ChangeTrackingList<AgentOptimizationEvaluator>();
-
-            return new SkillOptimizationEvaluationConfiguration(
-                validationSet,
-                evaluators.ToList(),
-                evaluationModel,
-                maxConcurrentAgentRuns,
-                evaluatorGenerationConfiguration,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Base configuration for service-generated optimization evaluators. Currently supported for skill optimization only. Uses evaluation_configuration.evaluation_model; no separate generation model is accepted.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.AgentOptimizationTraceEvaluatorGenerationConfiguration"/>.
-        /// </summary>
-        /// <param name="type"> Evaluator generation source discriminator. </param>
-        /// <param name="prompt"> Additional instructions or context to guide evaluator generation from the selected source. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationEvaluatorGenerationConfiguration"/> instance for mocking. </returns>
-        public static AgentOptimizationEvaluatorGenerationConfiguration AgentOptimizationEvaluatorGenerationConfiguration(string @type = default, string prompt = default)
-        {
-            return new UnknownAgentOptimizationEvaluatorGenerationConfiguration(new AgentOptimizationEvaluatorGenerationSourceType(@type), prompt, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Generates an evaluator from the job's trace evidence or a separate evaluator-only trace selection. </summary>
-        /// <param name="prompt"> Additional instructions or context to guide evaluator generation from the selected source. </param>
-        /// <param name="traceWindow"> Optional trace selection used only to generate the evaluator. When omitted, reuses the agent_traces context window. An override does not change dataset generation, learning evidence, or validation partitioning. Uses the same fixed-window truncation and trace-ID lookup rules as the context window. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationTraceEvaluatorGenerationConfiguration"/> instance for mocking. </returns>
-        public static AgentOptimizationTraceEvaluatorGenerationConfiguration AgentOptimizationTraceEvaluatorGenerationConfiguration(string prompt = default, AgentOptimizationTraceWindow traceWindow = default)
-        {
-            return new AgentOptimizationTraceEvaluatorGenerationConfiguration(AgentOptimizationEvaluatorGenerationSourceType.AgentTraces, prompt, additionalBinaryDataProperties: null, traceWindow);
+            return new SteeringPromptOptimizationContext(OptimizationContextType.SteeringPrompt, additionalBinaryDataProperties: null, prompt);
         }
 
         /// <summary> Inputs for estimating an agent-optimization job. </summary>
@@ -5029,33 +4878,23 @@ namespace Azure.AI.Projects.Agents
         /// <param name="jobId"> Identifier of the parent optimization job. </param>
         /// <param name="name"> Display name of the candidate (e.g., 'baseline', 'instruction-v2'). </param>
         /// <param name="status"> The candidate's current lifecycle state. </param>
-        /// <param name="error"> Primary failure or skip reason. Omitted for other candidate statuses. </param>
         /// <param name="startedOn"> Timestamp when work on this candidate slot began, represented in Unix time. </param>
         /// <param name="output"> Typed output generated for this candidate. The output type matches the parent job's optimization type. Omitted until output is available. </param>
-        /// <param name="executionSummary"> Persisted skill execution snapshot, including partial outcomes. Populated on candidate GET when available and omitted from LIST. </param>
-        /// <param name="resolvedContext"> Frozen trace cohort and discovered agent skills for skill optimization. Populated on candidate GET when available and omitted from LIST. </param>
         /// <param name="rationale"> Human-readable explanation of why the optimizer produced this candidate. Populated on candidate GET when available and omitted from LIST. </param>
-        /// <param name="files"> Metadata for files generated for this candidate, such as trace analysis. Populated on candidate GET when available and omitted from LIST. An empty list means no files were generated; omission means the inventory is not available. Metadata does not provide file content or a download URL. </param>
         /// <param name="agentVersion"> Foundry agent version associated with this candidate. Omitted when no temporary or evaluated agent version was created. </param>
-        /// <param name="evaluation"> Evaluation summary, including reporting-only measurements for skill baseline and generated candidates. Omitted when no measurements are available. Missing scores do not imply success or zero. </param>
+        /// <param name="evaluation"> Comparative evaluation summary. Omitted when this candidate was not comparatively evaluated. </param>
         /// <param name="promotion"> Promotion metadata. Omitted if this candidate has not been promoted. </param>
         /// <returns> A new <see cref="Agents.AgentOptimizationCandidate"/> instance for mocking. </returns>
-        public static AgentOptimizationCandidate AgentOptimizationCandidate(string candidateId = default, string jobId = default, string name = default, AgentOptimizationCandidateStatus status = default, FoundryOpenAIError error = default, DateTimeOffset startedOn = default, AgentOptimizationCandidateOutput output = default, AgentOptimizationSkillExecutionSummary executionSummary = default, AgentOptimizationSkillResolvedContext resolvedContext = default, string rationale = default, IEnumerable<AgentOptimizationCandidateFile> files = default, string agentVersion = default, AgentOptimizationCandidateEvaluation evaluation = default, AgentOptimizationCandidatePromotionInfo promotion = default)
+        public static AgentOptimizationCandidate AgentOptimizationCandidate(string candidateId = default, string jobId = default, string name = default, AgentOptimizationCandidateStatus status = default, DateTimeOffset startedOn = default, AgentOptimizationCandidateOutput output = default, string rationale = default, string agentVersion = default, AgentOptimizationCandidateEvaluation evaluation = default, AgentOptimizationCandidatePromotionInfo promotion = default)
         {
-            files ??= new ChangeTrackingList<AgentOptimizationCandidateFile>();
-
             return new AgentOptimizationCandidate(
                 candidateId,
                 jobId,
                 name,
                 status,
-                error,
                 startedOn,
                 output,
-                executionSummary,
-                resolvedContext,
                 rationale,
-                files.ToList(),
                 agentVersion,
                 evaluation,
                 promotion,
@@ -5064,7 +4903,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// Base candidate output. Job types define derived output models with their own fields.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.AgentOptimizationAgentCandidateOutput"/>, <see cref="Agents.AgentOptimizationPromptCandidateOutput"/>, and <see cref="Agents.AgentOptimizationSkillCandidateOutput"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.AgentOptimizationAgentCandidateOutput"/> and <see cref="Agents.AgentOptimizationPromptCandidateOutput"/>.
         /// </summary>
         /// <param name="type"> Output type matching the parent job's optimization type. Additional types may be added in future API versions. </param>
         /// <returns> A new <see cref="Agents.AgentOptimizationCandidateOutput"/> instance for mocking. </returns>
@@ -5138,150 +4977,6 @@ namespace Azure.AI.Projects.Agents
             mutations ??= new ChangeTrackingList<AgentOptimizationMutation>();
 
             return new AgentOptimizationPromptCandidateOutput(AgentOptimizationConfigurationType.PromptOptimization, additionalBinaryDataProperties: null, mutations.ToList());
-        }
-
-        /// <summary> Output of the single generated candidate produced by trace-driven skill optimization. It can contain zero or more independent skill outcomes. Optional reporting-only evaluation reuses a baseline candidate and each candidate's evaluation summary; the baseline is not a generated alternative. </summary>
-        /// <param name="skillResults"> Independent proposed skill outcomes. A completed empty array means no changes were proposed, for example because there were no new learnings; no new versions are published in that case. Discovered but untouched skills do not require outcomes. Populated on candidate GET when available and omitted from LIST summaries. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationSkillCandidateOutput"/> instance for mocking. </returns>
-        public static AgentOptimizationSkillCandidateOutput AgentOptimizationSkillCandidateOutput(IEnumerable<AgentOptimizationSkillResult> skillResults = default)
-        {
-            skillResults ??= new ChangeTrackingList<AgentOptimizationSkillResult>();
-
-            return new AgentOptimizationSkillCandidateOutput(AgentOptimizationConfigurationType.SkillOptimization, additionalBinaryDataProperties: null, skillResults.ToList());
-        }
-
-        /// <summary> One independent skill outcome with its input baseline and intended or confirmed output. </summary>
-        /// <param name="status"> Validation or publication outcome. </param>
-        /// <param name="inputSkill"> Exact input baseline when updating or retaining an existing skill, with the same name as output_skill. Omitted when creating a new skill. </param>
-        /// <param name="outputSkill"> Intended identity for every result. A confirmed version appears only with status created; no_change retains the baseline version only in input_skill. </param>
-        /// <param name="rationale"> Safe, human-readable explanation of why this skill was proposed or retained, grounded in the selected evidence. Omitted until available. Must not include sensitive trace excerpts or hidden model reasoning. </param>
-        /// <param name="validations"> Artifact checks, including rejections. Absence does not imply success. Candidate evaluation is reported through AgentOptimizationCandidate.evaluation and is not included in per-skill validations. </param>
-        /// <param name="error"> Primary failure, rejection, or uncertain-publication reason. Detailed findings remain in validations. Omitted when there is no error. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationSkillResult"/> instance for mocking. </returns>
-        public static AgentOptimizationSkillResult AgentOptimizationSkillResult(AgentOptimizationSkillResultStatus status = default, AgentOptimizationSkillReference inputSkill = default, AgentOptimizationSkillOutputReference outputSkill = default, string rationale = default, IEnumerable<AgentOptimizationSkillValidation> validations = default, AgentOptimizationSkillResultError error = default)
-        {
-            validations ??= new ChangeTrackingList<AgentOptimizationSkillValidation>();
-
-            return new AgentOptimizationSkillResult(
-                status,
-                inputSkill,
-                outputSkill,
-                rationale,
-                validations.ToList(),
-                error,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
-        /// Base intended output identity, not proof that a skill version was created.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.AgentOptimizationFoundrySkillOutputReference"/>.
-        /// </summary>
-        /// <param name="type"> Skill reference type. Additional types may be added in future API versions. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationSkillOutputReference"/> instance for mocking. </returns>
-        public static AgentOptimizationSkillOutputReference AgentOptimizationSkillOutputReference(string @type = default)
-        {
-            return new UnknownAgentOptimizationSkillOutputReference(new AgentOptimizationSkillReferenceType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Intended output identity, not proof that a skill version was created. </summary>
-        /// <param name="name"> Non-empty intended skill name, retained for rejected, failed, pending, and unchanged results. </param>
-        /// <param name="version"> Non-empty exact service-returned version, present only with status created after confirmed publication. Never copy the input version here or infer a version for an uncertain write. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationFoundrySkillOutputReference"/> instance for mocking. </returns>
-        public static AgentOptimizationFoundrySkillOutputReference AgentOptimizationFoundrySkillOutputReference(string name = default, string version = default)
-        {
-            return new AgentOptimizationFoundrySkillOutputReference(AgentOptimizationSkillReferenceType.FoundrySkill, additionalBinaryDataProperties: null, name, version);
-        }
-
-        /// <summary>
-        /// Base validation category; reporting-only performance scores use the baseline and generated candidate evaluation summaries.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.AgentOptimizationSkillArtifactValidation"/>.
-        /// </summary>
-        /// <param name="type"> Validation category discriminator. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationSkillValidation"/> instance for mocking. </returns>
-        public static AgentOptimizationSkillValidation AgentOptimizationSkillValidation(string @type = default)
-        {
-            return new UnknownAgentOptimizationSkillValidation(new AgentOptimizationSkillValidationType(@type), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Per-skill artifact validation with explicit coverage and limitations. </summary>
-        /// <param name="id"> Check identifier. Each (type, id) pair is unique within one skill result. </param>
-        /// <param name="status"> Whether the check ran and its outcome. Unimplemented checks are omitted. </param>
-        /// <param name="details"> Safe explanation of coverage, limitations, or why the check did not run, at most 1,024 characters. Limited checks must not imply full-package coverage; no sensitive excerpts. </param>
-        /// <param name="errorCode"> Service-authored failure or availability code. Omitted when unavailable. </param>
-        /// <param name="score"> Advisory quality or overlap score from 0 to 1 inclusive, not a comparative candidate evaluation score. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationSkillArtifactValidation"/> instance for mocking. </returns>
-        public static AgentOptimizationSkillArtifactValidation AgentOptimizationSkillArtifactValidation(AgentOptimizationSkillValidationId id = default, AgentOptimizationSkillValidationStatus status = default, string details = default, string errorCode = default, double? score = default)
-        {
-            return new AgentOptimizationSkillArtifactValidation(
-                AgentOptimizationSkillValidationType.Artifact,
-                additionalBinaryDataProperties: null,
-                id,
-                status,
-                details,
-                errorCode,
-                score);
-        }
-
-        /// <summary> Structured error for an independent skill outcome. </summary>
-        /// <param name="code"> Stable service-authored error code, from 1 to 128 characters. </param>
-        /// <param name="message"> Safe explanation, from 1 to 1,024 characters, never raw exceptions or sensitive trace or model content. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationSkillResultError"/> instance for mocking. </returns>
-        public static AgentOptimizationSkillResultError AgentOptimizationSkillResultError(string code = default, string message = default)
-        {
-            return new AgentOptimizationSkillResultError(code, message, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Persisted candidate execution snapshot, including partial runs. Not exposed on the job or candidate list response. </summary>
-        /// <param name="updatedOn"> Time the recorded execution facts last changed, as a UTC Unix timestamp in seconds. </param>
-        /// <param name="steps"> At most eleven distinct steps in pipeline order. Older snapshots may omit collect_feedback or evaluate_training_traces. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationSkillExecutionSummary"/> instance for mocking. </returns>
-        public static AgentOptimizationSkillExecutionSummary AgentOptimizationSkillExecutionSummary(DateTimeOffset updatedOn = default, IEnumerable<AgentOptimizationSkillExecutionStep> steps = default)
-        {
-            steps ??= new ChangeTrackingList<AgentOptimizationSkillExecutionStep>();
-
-            return new AgentOptimizationSkillExecutionSummary(updatedOn, steps.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Latest recorded state of one logical step in the persisted execution snapshot. </summary>
-        /// <param name="name"> Service-authored logical step name, unique within the snapshot, for example resolve_inputs, collect_traces, evaluate_training_traces, or publish_skills. Consumers must tolerate unfamiliar names. </param>
-        /// <param name="status"> Recorded step state. </param>
-        /// <param name="summary"> Safe service-authored explanation, at most 1,024 characters, never raw model or trace content. </param>
-        /// <param name="stepDetails"> Step-specific JSON key/value details, with arbitrary JSON values rather than a fixed property schema. Omitted when unavailable. Never include sensitive trace or model content. </param>
-        /// <param name="errorCode"> Safe failure or cancellation code, cleared when a retry starts or succeeds. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationSkillExecutionStep"/> instance for mocking. </returns>
-        public static AgentOptimizationSkillExecutionStep AgentOptimizationSkillExecutionStep(string name = default, AgentOptimizationSkillExecutionStepStatus status = default, string summary = default, IDictionary<string, BinaryData> stepDetails = default, string errorCode = default)
-        {
-            stepDetails ??= new ChangeTrackingDictionary<string, BinaryData>();
-
-            return new AgentOptimizationSkillExecutionStep(
-                name,
-                status,
-                summary,
-                stepDetails,
-                errorCode,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Frozen evidence and discovered baselines, without duplicating requested job configuration. </summary>
-        /// <param name="sourceTraceIds"> Complete evidence cohort, including traces that produced no artifact. Omitted before resolution; an empty array means a resolved empty cohort. </param>
-        /// <param name="agentSkills"> Deduplicated exact baselines discovered from the agent and its toolboxes. Excludes skills supplied only through skill_references context items and does not imply invocation. Omitted before discovery; empty when none were discovered or the job is agentless. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationSkillResolvedContext"/> instance for mocking. </returns>
-        public static AgentOptimizationSkillResolvedContext AgentOptimizationSkillResolvedContext(IEnumerable<string> sourceTraceIds = default, IEnumerable<AgentOptimizationSkillReference> agentSkills = default)
-        {
-            sourceTraceIds ??= new ChangeTrackingList<string>();
-            agentSkills ??= new ChangeTrackingList<AgentOptimizationSkillReference>();
-
-            return new AgentOptimizationSkillResolvedContext(sourceTraceIds.ToList(), agentSkills.ToList(), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Metadata for an artifact generated for an optimization candidate. </summary>
-        /// <param name="path"> Non-empty candidate-relative artifact path, not a local filesystem path or a download URL. </param>
-        /// <param name="type"> Non-empty artifact category, for example trace_analysis. Additional categories may be returned. </param>
-        /// <param name="sizeInBytes"> Artifact size in bytes, greater than or equal to 0. </param>
-        /// <returns> A new <see cref="Agents.AgentOptimizationCandidateFile"/> instance for mocking. </returns>
-        public static AgentOptimizationCandidateFile AgentOptimizationCandidateFile(string path = default, string @type = default, long sizeInBytes = default)
-        {
-            return new AgentOptimizationCandidateFile(path, @type, sizeInBytes, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Comparative evaluation summary for a candidate. </summary>

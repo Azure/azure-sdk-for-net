@@ -197,7 +197,7 @@ namespace Azure.AI.Projects
                 return null;
             }
             string id = default;
-            AgentInsightRunInputs inputs = default;
+            AgentInsightRunCreate inputs = default;
             AgentInsightRunResult result = default;
             ProjectsJobStatus status = default;
             FoundryOpenAIError error = default;
@@ -225,7 +225,7 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    inputs = AgentInsightRunInputs.DeserializeAgentInsightRunInputs(prop.Value, options);
+                    inputs = AgentInsightRunCreate.DeserializeAgentInsightRunCreate(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("result"u8))

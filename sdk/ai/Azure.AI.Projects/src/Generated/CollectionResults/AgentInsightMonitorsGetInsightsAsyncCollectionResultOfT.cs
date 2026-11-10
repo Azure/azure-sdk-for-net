@@ -6,23 +6,23 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 
 namespace Azure.AI.Projects
 {
+    [Experimental("AAIP001")]
     internal partial class AgentInsightMonitorsGetInsightsAsyncCollectionResultOfT : AsyncCollectionResult<AgentInsight>
     {
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         private readonly AgentInsightMonitors _client;
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
         private readonly string _monitorId;
         private readonly string _after;
         private readonly string _before;
         private readonly int? _limit;
         private readonly string _order;
-        private readonly IEnumerable<string> _categories;
-        private readonly IEnumerable<AgentInsightSeverity> _severities;
-        private readonly IEnumerable<AgentInsightStatus> _statuses;
+        private readonly string _category;
+        private readonly string _severity;
+        private readonly string _status;
         private readonly bool? _includeDetails;
         private readonly RequestOptions _options;
 
@@ -33,13 +33,12 @@ namespace Azure.AI.Projects
         /// <param name="before"> A cursor that identifies the first item in the next page. </param>
         /// <param name="limit"> The maximum number of items to return. Defaults to 20. </param>
         /// <param name="order"> Sort order by creation time. Defaults to descending. </param>
-        /// <param name="categories"> Match any listed category. Commas separate identifiers; identifiers containing commas cannot be filtered individually. </param>
-        /// <param name="severities"> Match any listed severity. </param>
-        /// <param name="statuses"> Match any listed status. </param>
+        /// <param name="category"> Filter insights by category. </param>
+        /// <param name="severity"> Filter insights by severity. </param>
+        /// <param name="status"> Filter insights by lifecycle status. </param>
         /// <param name="includeDetails"> Whether to include expanded insight details such as evidence and run links in the response. Defaults to false. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
-        public AgentInsightMonitorsGetInsightsAsyncCollectionResultOfT(AgentInsightMonitors client, string monitorId, string after, string before, int? limit, string order, IEnumerable<string> categories, IEnumerable<AgentInsightSeverity> severities, IEnumerable<AgentInsightStatus> statuses, bool? includeDetails, RequestOptions options)
+        public AgentInsightMonitorsGetInsightsAsyncCollectionResultOfT(AgentInsightMonitors client, string monitorId, string after, string before, int? limit, string order, string category, string severity, string status, bool? includeDetails, RequestOptions options)
         {
             _client = client;
             _monitorId = monitorId;
@@ -47,20 +46,18 @@ namespace Azure.AI.Projects
             _before = before;
             _limit = limit;
             _order = order;
-            _categories = categories;
-            _severities = severities;
-            _statuses = statuses;
+            _category = category;
+            _severity = severity;
+            _status = status;
             _includeDetails = includeDetails;
             _options = options;
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Gets the raw pages of the collection. </summary>
         /// <returns> The raw pages of the collection. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
         {
-            PipelineMessage message = _client.CreateGetInsightsRequest(_monitorId, _after, _before, _limit, _order, _categories, _severities, _statuses, _includeDetails, _options);
+            PipelineMessage message = _client.CreateGetInsightsRequest(_monitorId, _after, _before, _limit, _order, _category, _severity, _status, _includeDetails, _options);
             string nextToken = null;
             while (true)
             {
@@ -72,15 +69,13 @@ namespace Azure.AI.Projects
                 {
                     yield break;
                 }
-                message = _client.CreateGetInsightsRequest(_monitorId, nextToken, _before, _limit, _order, _categories, _severities, _statuses, _includeDetails, _options);
+                message = _client.CreateGetInsightsRequest(_monitorId, nextToken, _before, _limit, _order, _category, _severity, _status, _includeDetails, _options);
             }
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Gets the continuation token from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The continuation token for the specified page. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         public override ContinuationToken GetContinuationToken(ClientResult page)
         {
             string nextPage = ((AgentsPagedResultAgentInsight)page).LastId;
@@ -93,12 +88,10 @@ namespace Azure.AI.Projects
                 return null;
             }
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Gets the values from the specified page. </summary>
         /// <param name="page"></param>
         /// <returns> The values from the specified page. </returns>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         protected override async IAsyncEnumerable<AgentInsight> GetValuesFromPageAsync(ClientResult page)
         {
             foreach (AgentInsight item in ((AgentsPagedResultAgentInsight)page).Data)
@@ -107,11 +100,9 @@ namespace Azure.AI.Projects
                 await Task.Yield();
             }
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
 
         /// <summary> Sends the request in the pipeline message and returns the response. </summary>
         /// <param name="message"> The pipeline message containing the request to send. </param>
-#pragma warning disable AAIP001 // This generated code depends on experimental functionality.
         private async ValueTask<ClientResult> GetNextResponseAsync(PipelineMessage message)
         {
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("AgentInsightMonitors.GetInsights");
@@ -126,6 +117,5 @@ namespace Azure.AI.Projects
                 throw;
             }
         }
-#pragma warning restore AAIP001 // This generated code depends on experimental functionality.
     }
 }

@@ -13,14 +13,12 @@ namespace Azure.AI.Projects
         private readonly string _value;
         /// <summary> Simple question and answers between user and agent. </summary>
         private const string SimpleQnaValue = "simple_qna";
-        /// <summary> Samples from captured turns in agent traces. </summary>
+        /// <summary> Single turn query and response from agent traces. </summary>
         private const string TracesValue = "traces";
         /// <summary> Tool calling conversation between user and agent. </summary>
         private const string ToolUseValue = "tool_use";
         /// <summary> Simulation seed for evaluation scenarios. </summary>
         private const string SimulationSeedValue = "simulation_seed";
-        /// <summary> Reconstruction of existing traced conversations for evaluation. This is a preview feature, not synthetic conversation simulation. </summary>
-        private const string ConversationsValue = "conversations";
 
         /// <summary> Initializes a new instance of <see cref="DataGenerationJobKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,7 +33,7 @@ namespace Azure.AI.Projects
         /// <summary> Simple question and answers between user and agent. </summary>
         public static DataGenerationJobKind SimpleQna { get; } = new DataGenerationJobKind(SimpleQnaValue);
 
-        /// <summary> Samples from captured turns in agent traces. </summary>
+        /// <summary> Single turn query and response from agent traces. </summary>
         public static DataGenerationJobKind Traces { get; } = new DataGenerationJobKind(TracesValue);
 
         /// <summary> Tool calling conversation between user and agent. </summary>
@@ -43,9 +41,6 @@ namespace Azure.AI.Projects
 
         /// <summary> Simulation seed for evaluation scenarios. </summary>
         public static DataGenerationJobKind SimulationSeed { get; } = new DataGenerationJobKind(SimulationSeedValue);
-
-        /// <summary> Reconstruction of existing traced conversations for evaluation. This is a preview feature, not synthetic conversation simulation. </summary>
-        public static DataGenerationJobKind Conversations { get; } = new DataGenerationJobKind(ConversationsValue);
 
         /// <summary> Determines if two <see cref="DataGenerationJobKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

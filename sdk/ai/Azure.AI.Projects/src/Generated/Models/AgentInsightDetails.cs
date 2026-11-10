@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Additional insight details. Omitted unless details are requested. </summary>
+    [Experimental("AAIP001")]
     public partial class AgentInsightDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

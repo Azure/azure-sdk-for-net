@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Agent optimization job resource — a long-running job that produces candidate changes or versioned skill packages. For failed or skipped jobs, error explains the outcome; status distinguishes failure from a skip. </summary>
+    /// <summary> Agent optimization job resource — a long-running job that produces candidate changes to a Foundry agent configuration. </summary>
     public partial class AgentOptimizationJob
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -31,9 +31,9 @@ namespace Azure.AI.Projects.Agents
         /// <param name="id"> Server-assigned unique identifier. </param>
         /// <param name="result"> Result produced on success. </param>
         /// <param name="status"> Current lifecycle status. </param>
-        /// <param name="error"> Failure or skip reason; status distinguishes the outcomes. Omitted otherwise. </param>
+        /// <param name="error"> Error details — populated only on failure. </param>
         /// <param name="displayName"> Human-readable label. Omitted when no label is needed; it has no uniqueness, routing, or idempotency semantics. </param>
-        /// <param name="targetConfiguration"> Foundry agent whose configuration is optimized, or a read-only trace and skill source for skill_optimization. Agentless skill optimization requires explicit agent_traces telemetry configuration with an exact agent_name. Skill optimization does not modify the target agent. </param>
+        /// <param name="targetConfiguration"> Foundry agent whose configuration is optimized. Omitted when the workflow does not target a registered Foundry agent. </param>
         /// <param name="optimizationModelConfiguration"> Model used to generate candidate changes. An existing deployment name is also accepted. </param>
         /// <param name="optimizationConfiguration"> Type-specific optimization configuration. </param>
         /// <param name="runDurationMs"> Duration for which the job has been running, in milliseconds. </param>
@@ -41,7 +41,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="updatedOn"> The timestamp when the job was last updated, represented in Unix time. </param>
         /// <param name="warnings"> Non-fatal warnings emitted during optimization. Omitted when no warnings were produced. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentOptimizationJob(string id, AgentOptimizationJobResult result, AgentOptimizationJobStatus status, FoundryOpenAIError error, string displayName, AgentOptimizationTargetConfiguration targetConfiguration, AgentOptimizationModelConfiguration optimizationModelConfiguration, AgentOptimizationConfigurationBase optimizationConfiguration, TimeSpan runDurationMs, DateTimeOffset createdOn, DateTimeOffset updatedOn, IReadOnlyList<string> warnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentOptimizationJob(string id, AgentOptimizationJobResult result, AgentsJobStatus status, FoundryOpenAIError error, string displayName, AgentOptimizationTargetConfiguration targetConfiguration, AgentOptimizationModelConfiguration optimizationModelConfiguration, AgentOptimizationConfigurationBase optimizationConfiguration, TimeSpan runDurationMs, DateTimeOffset createdOn, DateTimeOffset updatedOn, IReadOnlyList<string> warnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Result = result;
@@ -65,12 +65,12 @@ namespace Azure.AI.Projects.Agents
         public AgentOptimizationJobResult Result { get; }
 
         /// <summary> Current lifecycle status. </summary>
-        public AgentOptimizationJobStatus Status { get; }
+        public AgentsJobStatus Status { get; }
 
         /// <summary> Human-readable label. Omitted when no label is needed; it has no uniqueness, routing, or idempotency semantics. </summary>
         public string DisplayName { get; set; }
 
-        /// <summary> Foundry agent whose configuration is optimized, or a read-only trace and skill source for skill_optimization. Agentless skill optimization requires explicit agent_traces telemetry configuration with an exact agent_name. Skill optimization does not modify the target agent. </summary>
+        /// <summary> Foundry agent whose configuration is optimized. Omitted when the workflow does not target a registered Foundry agent. </summary>
         public AgentOptimizationTargetConfiguration TargetConfiguration { get; set; }
 
         /// <summary> Model used to generate candidate changes. An existing deployment name is also accepted. </summary>

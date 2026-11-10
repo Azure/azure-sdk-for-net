@@ -10,7 +10,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// Base model for type-specific optimization configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentOptimizationConfiguration"/>, <see cref="PromptOptimizationConfiguration"/>, and <see cref="SkillOptimizationConfiguration"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentOptimizationConfiguration"/> and <see cref="PromptOptimizationConfiguration"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownAgentOptimizationConfigurationBase))]
     public abstract partial class AgentOptimizationConfigurationBase : IJsonModel<AgentOptimizationConfigurationBase>
@@ -130,8 +130,6 @@ namespace Azure.AI.Projects.Agents
                         return AgentOptimizationConfiguration.DeserializeAgentOptimizationConfiguration(element, options);
                     case "prompt_optimization":
                         return PromptOptimizationConfiguration.DeserializePromptOptimizationConfiguration(element, options);
-                    case "skill_optimization":
-                        return SkillOptimizationConfiguration.DeserializeSkillOptimizationConfiguration(element, options);
                 }
             }
             return UnknownAgentOptimizationConfigurationBase.DeserializeUnknownAgentOptimizationConfigurationBase(element, options);

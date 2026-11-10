@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A lightweight trace reference linked to an agent insight as supporting evidence. </summary>
+    [Experimental("AAIP001")]
     public partial class AgentInsightLinkedTrace
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

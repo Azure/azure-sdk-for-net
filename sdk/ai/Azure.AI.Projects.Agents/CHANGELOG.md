@@ -4,7 +4,6 @@
 
 ### Features Added
 - Promoted core Realtime/cascaded Voice Agent definitions, persisted conversations/responses/items, heard/generated audio and recordings, audio/voice/avatar/soundscape configuration, tools, delegate subagents, and non-SIP telephony to GA in the service contract. These shared types and core client operations no longer require a blanket `AAIP001` opt-in.
-- Added trace-driven skill optimization, skill candidate results, and evaluation context models.
 - Added experimental Live voice agent definitions, native client/server event models, and `BetaVoiceAgentsLiveConversations` for stored Live history and recordings.
 - Added typed `VoiceAgentLiveSessionResource` snapshots, `VoiceAgentLiveDelegation` configuration, and `VoiceAgentLiveDelegationItem` metadata, including `foundry_managed_agent` ownership with the pinned agent name and resolved version.
 - Added typed Realtime/Live definition dispatch and stored Live history pagination.
@@ -15,11 +14,12 @@
 - Added experimental SIP telephony binding models and allowed-caller configuration.
 - Added experimental telephony campaign configuration, schedules, operation-bound completion reads, pagination, and validation-error APIs.
 - Added the public `FoundryOpenAIError` data model for typed campaign failure details while keeping exception-formatting helpers internal.
-- Added MCP toolbox request-header bindings for forwarding declared client headers to an MCP server.
 
 ### Breaking Changes
 - `VoiceAgentTransferRouting.RingTimeoutSeconds` now uses `TimeSpan?` instead of `int?`; JSON continues to use seconds.
-- Agent optimization jobs and their list filters now use `AgentOptimizationJobStatus`, including the terminal `Skipped` state, instead of `AgentsJobStatus`.
+- Agent optimization jobs and their list filters now use the shared `AgentsJobStatus`; `AgentOptimizationJobStatus` and its `Skipped` state are no longer available.
+- Removed the specialized skill-optimization and trace-window model APIs that are no longer in the service contract.
+- Removed MCP toolbox request-header-binding models; use the `MCPToolboxTool.Headers` dictionary for declared headers.
 - Realtime voice definitions now emit the required `sub_protocol` discriminator with the value `realtime`.
 - `VoiceAgentSubagentConfig` is now an abstract base class. Use `VoiceAgentDelegateSubagentConfig` for referenced agents or `VoiceAgentInlineSubagentConfig` for inline handoff graphs.
 - Telephony binding creation now accepts `TelephonyBinding` provider-specific models instead of the removed create-content models. Binding status fields and the binding-list status filter were removed.
@@ -38,7 +38,7 @@
 - Fixed telephony call-history pagination to stop on terminal pages and use the correct cursor when paging backward.
 
 ### Other Changes
-- Regenerated from `feature/foundry-release` at [`298aa64878ea0a8f5eb2f610760a60356c3e58e2`](https://github.com/Azure/azure-rest-api-specs/tree/298aa64878ea0a8f5eb2f610760a60356c3e58e2), using OpenAI TypeSpec 1.34.1.
+- Regenerated from `feature/foundry-release` at [`879f4945427593222a5a9ecabefcd8a454e9ed71`](https://github.com/Azure/azure-rest-api-specs/tree/879f4945427593222a5a9ecabefcd8a454e9ed71), using OpenAI TypeSpec 1.34.1.
 
 ## 3.0.0-beta.6 (2026-10-30)
 

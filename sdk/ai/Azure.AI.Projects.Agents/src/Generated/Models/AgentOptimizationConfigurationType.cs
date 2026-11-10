@@ -11,12 +11,10 @@ namespace Azure.AI.Projects.Agents
     internal readonly partial struct AgentOptimizationConfigurationType : IEquatable<AgentOptimizationConfigurationType>
     {
         private readonly string _value;
-        /// <summary> Comparative agent optimization that can generate multiple candidates within configured search limits. </summary>
+        /// <summary> Comparative agent optimization. </summary>
         private const string AgentOptimizationValue = "agent_optimization";
-        /// <summary> One-shot prompt optimization that generates a single candidate. </summary>
+        /// <summary> One-shot prompt optimization. </summary>
         private const string PromptOptimizationValue = "prompt_optimization";
-        /// <summary> Generates a single candidate containing zero or more skill outcomes from trace evidence, with optional reporting-only evaluation recorded on baseline and learned candidates. </summary>
-        private const string SkillOptimizationValue = "skill_optimization";
 
         /// <summary> Initializes a new instance of <see cref="AgentOptimizationConfigurationType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -28,14 +26,11 @@ namespace Azure.AI.Projects.Agents
             _value = value;
         }
 
-        /// <summary> Comparative agent optimization that can generate multiple candidates within configured search limits. </summary>
+        /// <summary> Comparative agent optimization. </summary>
         public static AgentOptimizationConfigurationType AgentOptimization { get; } = new AgentOptimizationConfigurationType(AgentOptimizationValue);
 
-        /// <summary> One-shot prompt optimization that generates a single candidate. </summary>
+        /// <summary> One-shot prompt optimization. </summary>
         public static AgentOptimizationConfigurationType PromptOptimization { get; } = new AgentOptimizationConfigurationType(PromptOptimizationValue);
-
-        /// <summary> Generates a single candidate containing zero or more skill outcomes from trace evidence, with optional reporting-only evaluation recorded on baseline and learned candidates. </summary>
-        public static AgentOptimizationConfigurationType SkillOptimization { get; } = new AgentOptimizationConfigurationType(SkillOptimizationValue);
 
         /// <summary> Determines if two <see cref="AgentOptimizationConfigurationType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
