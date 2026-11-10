@@ -5,8 +5,9 @@ It downloads the retained `/audio/generated` artifact, not the ordinary heard-au
 
 ## Before you start
 
-- Reference `Azure.AI.Projects` and `Azure.Identity`, authenticate a project with
-  `DefaultAzureCredential`, and opt in to the experimental API with `#pragma warning disable AAIP001`.
+- Reference `Azure.AI.Projects` and `Azure.Identity` and authenticate a project with
+  `DefaultAzureCredential`. These Realtime generated-audio REST operations are GA and do not
+  require a Voice Agents preview opt-in.
 - Create a stored Realtime conversation using a deployed voice agent.
 - Interrupt audio playback and truncate the assistant item to the duration actually played.
 - Wait for the conversation to finish persisting.

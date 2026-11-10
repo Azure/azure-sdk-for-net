@@ -8,9 +8,11 @@
 
 ### Bugs Fixed
 
+- Removed the unrelated Voice Agents preview flag from default OpenAI-compatible requests.
+
 ### Other Changes
 
-- Regenerated from `feature/foundry-release` at [`298aa64878ea0a8f5eb2f610760a60356c3e58e2`](https://github.com/Azure/azure-rest-api-specs/tree/298aa64878ea0a8f5eb2f610760a60356c3e58e2), using OpenAI TypeSpec 1.34.1.
+- Regenerated from `feature/foundry-release` at [`879f4945427593222a5a9ecabefcd8a454e9ed71`](https://github.com/Azure/azure-rest-api-specs/tree/879f4945427593222a5a9ecabefcd8a454e9ed71), using OpenAI TypeSpec 1.34.1.
 
 ## 3.0.0-beta.6 (2026-10-30)
 

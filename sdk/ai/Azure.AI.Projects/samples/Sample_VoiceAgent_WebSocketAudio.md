@@ -114,9 +114,9 @@ if (!sawCompletedResponse || inputAudioBytes == 0 || outputAudioBytes == 0)
 3. Delete the temporary agent version, including when the audio exchange fails.
 
 ```C# Snippet:Sample_VoiceAgent_WebSocketAudio_Cleanup
-ClientResult deleteResult = await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(
-    agentName: agentName, agentVersion: agentVersion.Version);
-Console.WriteLine($"Deleted voice agent {agentName} version {agentVersion.Version}: HTTP {deleteResult.GetRawResponse().Status}");
+using CancellationTokenSource cleanupTimeout = new(TimeSpan.FromSeconds(30));
+ClientResult deleteResult = await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName, cleanupTimeout.Token);
+Console.WriteLine($"Deleted voice agent {agentName}: HTTP {deleteResult.GetRawResponse().Status}");
 ```
 
 For WebRTC signaling requirements, see [transport selection and saved history](Sample_VoiceAgent_ReadConversation.md).

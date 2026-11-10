@@ -228,8 +228,8 @@ public class AgentTelephonyProtocolTests
             Assert.That(request.Uri.Query, Is.EqualTo("?api-version=v1"));
             Assert.That(result.GetRawResponse().Status, Is.EqualTo(expectedStatus));
             Assert.That(result.GetRawResponse().Content.ToString(), Is.EqualTo(expectedResponse));
-            Assert.That(request.Headers.TryGetValue("Foundry-Features", out string foundryFeatures), Is.True);
-            Assert.That(foundryFeatures, Does.Contain("VoiceAgents=V1Preview"));
+            Assert.That(request.Headers.TryGetValue("Foundry-Features", out _), Is.False,
+                "Non-SIP telephony operations must not automatically opt into preview features.");
 
             if (protocol)
             {
@@ -379,8 +379,8 @@ public class AgentTelephonyProtocolTests
                 Assert.That(Query(request.Uri, "order"), Is.EqualTo("asc"));
                 Assert.That(Query(request.Uri, "after"), Is.EqualTo(i == 0 ? "initial" : "first"));
                 Assert.That(Query(request.Uri, "before"), Is.Null);
-                Assert.That(request.Headers.TryGetValue("Foundry-Features", out string features), Is.True);
-                Assert.That(features, Does.Contain("VoiceAgents=V1Preview"));
+                Assert.That(request.Headers.TryGetValue("Foundry-Features", out _), Is.False,
+                    "GA Twilio reads must not acquire a preview opt-in on any page.");
                 if (calls)
                 {
                     Assert.That(Query(request.Uri, "status"), Is.EqualTo("success"));

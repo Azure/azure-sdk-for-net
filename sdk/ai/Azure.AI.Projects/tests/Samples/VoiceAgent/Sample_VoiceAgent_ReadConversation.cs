@@ -11,7 +11,6 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Realtime;
 
-#pragma warning disable AAIP001
 #pragma warning disable AAIP002
 #pragma warning disable OPENAI002
 

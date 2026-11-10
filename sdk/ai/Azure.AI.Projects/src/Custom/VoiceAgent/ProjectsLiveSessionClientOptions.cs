@@ -20,9 +20,16 @@ public class ProjectsLiveSessionClientOptions
     /// <summary> JSON values for the agent's structured input templates. </summary>
     public IDictionary<string, BinaryData> StructuredInputs { get; } = new Dictionary<string, BinaryData>();
 
-    /// <summary> Additional connection query parameters, without a leading question mark. </summary>
+    /// <summary>
+    /// Additional connection query parameters, without a leading question mark. Foundry features may
+    /// be supplied as <c>foundry_features</c> instead of a <c>Foundry-Features</c> header.
+    /// The client ensures that the selected feature channel includes <c>VoiceAgents=V1Preview</c>.
+    /// </summary>
     public string QueryString { get; set; }
 
-    /// <summary> Additional connection headers. The client supplies authentication and Voice Agents preview headers. </summary>
+    /// <summary>
+    /// Additional connection headers. The client supplies authentication and ensures that
+    /// <c>VoiceAgents=V1Preview</c> is included in <c>Foundry-Features</c> unless features are supplied in the query.
+    /// </summary>
     public IDictionary<string, string> Headers { get; } = new Dictionary<string, string>();
 }

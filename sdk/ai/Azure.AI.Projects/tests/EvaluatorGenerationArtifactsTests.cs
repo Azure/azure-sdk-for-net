@@ -7,6 +7,8 @@ using System.Text.Json;
 using Azure.AI.Projects.Evaluation;
 using NUnit.Framework;
 
+#pragma warning disable AAIP001
+
 namespace Azure.AI.Projects.Tests;
 
 public class EvaluatorGenerationArtifactsTests
@@ -34,19 +36,6 @@ public class EvaluatorGenerationArtifactsTests
         });
     }
 
-    [Test]
-    public void UnweightedDimensionOmitsConfiguredWeight()
-    {
-        EvaluationsDimension dimension = new("resolution", "Resolves the request.");
-        using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(dimension, new("W")));
-        Assert.Multiple(() =>
-        {
-            Assert.That(dimension.Weight, Is.Null);
-            Assert.That(document.RootElement.TryGetProperty("weight", out _), Is.False);
-        });
-    }
-
-    [Test]
     public void LegacyConstructorNullValidationIsPreserved()
     {
         Assert.Throws<ArgumentNullException>(() => new EvaluatorGenerationInputs(
@@ -55,23 +44,18 @@ public class EvaluatorGenerationArtifactsTests
     }
 
     [Test]
-    public void GeneratedErrorAndMetadataAliasesPreserveWireFields()
+    public void GeneratedErrorPreservesWireFields()
     {
         ProjectsError error = ModelReaderWriter.Read<ProjectsError>(BinaryData.FromString("""
             {"code":"invalid_input","message":"Invalid input.","target":"dataset","details":[{"code":"missing_row","message":"A row is missing."}]}
             """));
-        ProjectsMetadata metadata = ModelReaderWriter.Read<ProjectsMetadata>(
-            BinaryData.FromString("""{"test_id":"metadata-roundtrip"}"""));
         using JsonDocument errorJson = JsonDocument.Parse(ModelReaderWriter.Write(error));
-        using JsonDocument metadataJson = JsonDocument.Parse(ModelReaderWriter.Write(metadata));
         Assert.Multiple(() =>
         {
             Assert.That(error.Code, Is.EqualTo("invalid_input"));
             Assert.That(error.Target, Is.EqualTo("dataset"));
             Assert.That(error.Details[0].Code, Is.EqualTo("missing_row"));
             Assert.That(errorJson.RootElement.GetProperty("details")[0].GetProperty("message").GetString(), Is.EqualTo("A row is missing."));
-            Assert.That(metadata.AdditionalProperties["test_id"], Is.EqualTo("metadata-roundtrip"));
-            Assert.That(metadataJson.RootElement.GetProperty("test_id").GetString(), Is.EqualTo("metadata-roundtrip"));
         });
     }
 

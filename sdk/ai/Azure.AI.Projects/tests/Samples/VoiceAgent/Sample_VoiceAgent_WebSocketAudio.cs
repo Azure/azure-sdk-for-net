@@ -13,7 +13,6 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Realtime;
 
-#pragma warning disable AAIP001
 #pragma warning disable AAIP002
 #pragma warning disable OPENAI002
 
@@ -141,9 +140,9 @@ public class Sample_VoiceAgent_WebSocketAudio : SamplesBase
         finally
         {
             #region Snippet:Sample_VoiceAgent_WebSocketAudio_Cleanup
-            ClientResult deleteResult = await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(
-                agentName: agentName, agentVersion: agentVersion.Version);
-            Console.WriteLine($"Deleted voice agent {agentName} version {agentVersion.Version}: HTTP {deleteResult.GetRawResponse().Status}");
+            using CancellationTokenSource cleanupTimeout = new(TimeSpan.FromSeconds(30));
+            ClientResult deleteResult = await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName, cleanupTimeout.Token);
+            Console.WriteLine($"Deleted voice agent {agentName}: HTTP {deleteResult.GetRawResponse().Status}");
             #endregion
         }
     }

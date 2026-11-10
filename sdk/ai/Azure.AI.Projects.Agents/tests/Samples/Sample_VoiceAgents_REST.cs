@@ -55,7 +55,6 @@ public class Sample_VoiceAgents_REST : SamplesBase
                 await administration.CreateAgentVersionAsync(
                     agentName,
                     new ProjectsAgentVersionCreationOptions(definition),
-                    foundryFeatures: "VoiceAgents=V1Preview",
                     cancellationToken: timeout.Token);
             ProjectsAgentVersion created = createResult;
             if (created.Name != agentName || string.IsNullOrEmpty(created.Version))

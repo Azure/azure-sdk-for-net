@@ -12,7 +12,7 @@ using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Realtime;
 
-#pragma warning disable AAIP001, AAIP002, OPENAI002
+#pragma warning disable AAIP002, OPENAI002
 
 namespace Azure.AI.Projects.Tests.Samples;
 
@@ -49,6 +49,7 @@ public class Sample_VoiceAgent : SamplesBase
         definition.OutputModalities.Add(VoiceOutputModality.Text);
         ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             agentName, new ProjectsAgentVersionCreationOptions(definition), cancellationToken: timeout.Token);
+        Console.WriteLine($"Created voice agent '{agentName}' version '{agentVersion.Version}'.");
         #endregion
 
         try
@@ -83,8 +84,9 @@ public class Sample_VoiceAgent : SamplesBase
         finally
         {
             #region Snippet:Sample_VoiceAgent_Cleanup
-            await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(
-                agentName, agentVersion.Version, CancellationToken.None);
+            using CancellationTokenSource cleanupTimeout = new(TimeSpan.FromSeconds(30));
+            var deleted = await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName, cleanupTimeout.Token);
+            Console.WriteLine($"Deleted voice agent '{agentName}': HTTP {deleted.GetRawResponse().Status}");
             #endregion
         }
     }
@@ -172,7 +174,9 @@ public class Sample_VoiceAgent : SamplesBase
         }
         finally
         {
-            await project.AgentAdministrationClient.DeleteAgentAsync(agentName, cancellationToken: CancellationToken.None);
+            using CancellationTokenSource cleanupTimeout = new(TimeSpan.FromSeconds(30));
+            var deleted = await project.AgentAdministrationClient.DeleteAgentAsync(agentName, cleanupTimeout.Token);
+            Console.WriteLine($"Deleted voice agent '{agentName}': HTTP {deleted.GetRawResponse().Status}");
         }
         #endregion
     }

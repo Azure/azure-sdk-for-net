@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Net.WebSockets;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -147,19 +148,10 @@ public class ProjectsRealtimeClientTests
         AIProjectClient client = new(new Uri($"http://127.0.0.1:{port}/api/projects/proj1"), new FakeTokenProvider());
 
         using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(10));
-        try
-        {
-            using ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)await client.ProjectsRealtimeClient.StartSessionAsync(
-                "cs-e2e-connectivity-test-agent",
-                intent: null,
-                cancellationToken: timeout.Token);
-        }
-        catch
-        {
-            // The loopback listener does not implement the real realtime protocol past the
-            // handshake, so the client may fault soon after connecting; only the request the
-            // server observed (asserted below) matters for this test.
-        }
+        using ProjectsRealtimeSessionClient session = (ProjectsRealtimeSessionClient)await client.ProjectsRealtimeClient.StartSessionAsync(
+            "cs-e2e-connectivity-test-agent",
+            intent: null,
+            cancellationToken: timeout.Token);
 
         (string path, string query, string authorization, string foundryFeatures, string subProtocol) = await AwaitServerRequestAsync(serverTask);
         listener.Stop();
@@ -169,7 +161,9 @@ public class ProjectsRealtimeClientTests
             Assert.That(path, Is.EqualTo("/api/projects/proj1/agents/cs-e2e-connectivity-test-agent/endpoint/protocols/voice"),
                 "Must target the agent-scoped realtime endpoint, not OpenAI's generic /realtime endpoint.");
             Assert.That(query, Does.Contain("api-version="));
-            Assert.That(foundryFeatures, Does.Contain("VoiceAgents=V1Preview"));
+            Assert.That(foundryFeatures, Is.Null,
+                "GA realtime connections must not automatically opt into any preview features.");
+            Assert.That(query, Does.Not.Contain("foundry_features"));
             Assert.That(authorization, Does.StartWith("Bearer "));
             Assert.That(subProtocol, Is.EqualTo("realtime"));
         });
@@ -284,6 +278,153 @@ public class ProjectsRealtimeClientTests
         Assert.That(query, Does.Contain("store=true&transport=websocket"));
     }
 
+    [Test]
+    public async Task DefaultRealtimeHandshakeWithoutInheritedFeaturesIsGA()
+    {
+        HttpListenerRequest request = await CaptureHandshakeRequestAsync(null, withoutDefaultFeatures: true);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(request.Headers["Foundry-Features"], Is.Null);
+            Assert.That(request.Url.Query, Is.EqualTo("?api-version=v1"));
+            Assert.That(request.Headers["Authorization"], Is.EqualTo("Bearer fake-token"));
+        });
+    }
+
+    [TestCase("Foundry-Features")]
+    [TestCase("foundry-features")]
+    [TestCase("FOUNDRY-FEATURES")]
+    public async Task ExplicitFeatureHeaderOptsIntoPreviewWithoutChangingCallerOptions(string header)
+    {
+        const string features = "Other=V2Preview,VoiceAgents=V1Preview,Other=V2Preview,voiceagents=v1preview";
+        RealtimeSessionClientOptions options = new() { QueryString = "store=true&keep=%2B" };
+        options.Headers.Add(header, features);
+        options.Headers.Add("x-realtime-test", "custom-header");
+
+        HttpListenerRequest request = await CaptureHandshakeRequestAsync(options);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(request.Headers["Foundry-Features"], Is.EqualTo("Other=V2Preview,VoiceAgents=V1Preview"));
+            Assert.That(request.Headers.GetValues("Foundry-Features"), Has.Length.EqualTo(1));
+            Assert.That(request.Url.Query, Is.EqualTo("?api-version=v1&store=true&keep=%2B"));
+            Assert.That(request.Headers["Authorization"], Is.EqualTo("Bearer fake-token"));
+            Assert.That(request.Headers["x-realtime-test"], Is.EqualTo("custom-header"));
+            Assert.That(options.Headers[header], Is.EqualTo(features));
+            Assert.That(options.QueryString, Is.EqualTo("store=true&keep=%2B"));
+        });
+    }
+
+    [TestCase("foundry_features")]
+    [TestCase("%66oundry_features")]
+    [TestCase("FOUNDRY_FEATURES")]
+    public async Task ExplicitFeatureQueryOptsIntoPreviewWithoutACompetingHeader(string name)
+    {
+        const string features = "Other=V2Preview,VoiceAgents=V1Preview,Other=V2Preview";
+        string query = $"?keep=one&{name}={Uri.EscapeDataString(features)}&keep=two&path=folder%2F&flag";
+        RealtimeSessionClientOptions options = new() { QueryString = query };
+
+        HttpListenerRequest request = await CaptureHandshakeRequestAsync(options);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(request.Headers["Foundry-Features"], Is.Null);
+            Assert.That(request.Url.Query, Is.EqualTo("?api-version=v1&keep=one&foundry_features=" +
+                Uri.EscapeDataString("Other=V2Preview,VoiceAgents=V1Preview") + "&keep=two&path=folder%2F&flag"));
+            Assert.That(request.Headers["Authorization"], Is.EqualTo("Bearer fake-token"));
+            Assert.That(options.QueryString, Is.EqualTo(query));
+        });
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public async Task UnrelatedExplicitFeaturesDoNotImplyVoicePreview(bool useQuery)
+    {
+        RealtimeSessionClientOptions options = new();
+        if (useQuery)
+        {
+            options.QueryString = "foundry_features=Other%3DV2Preview";
+        }
+        else
+        {
+            options.Headers.Add("Foundry-Features", "Other=V2Preview");
+        }
+
+        HttpListenerRequest request = await CaptureHandshakeRequestAsync(options);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(request.Headers["Foundry-Features"], useQuery ? Is.Null : Is.EqualTo("Other=V2Preview"));
+            Assert.That(request.Url.Query, Is.EqualTo(useQuery
+                ? "?api-version=v1&foundry_features=Other%3DV2Preview"
+                : "?api-version=v1"));
+        });
+    }
+
+    [TestCase(null)]
+    [TestCase("")]
+    [TestCase(" ")]
+    [TestCase("VoiceAgents")]
+    [TestCase("VoiceAgents=")]
+    [TestCase("VoiceAgents=V2Preview")]
+    [TestCase("VoiceAgents=V1Preview,VoiceAgents=V2Preview")]
+    [TestCase("Other=one,Other=two")]
+    [TestCase("Other=one,,VoiceAgents=V1Preview")]
+    [TestCase("Other=one\r\n")]
+    public void InvalidExplicitFeaturesAreRejectedBeforeAuthentication(string features)
+    {
+        foreach (bool useQuery in new[] { false, true })
+        {
+            LiveTestTokenProvider provider = new();
+            AIProjectClient project = new(new Uri("https://example.test/api/projects/project"), provider);
+            RealtimeSessionClientOptions options = new();
+            if (useQuery)
+            {
+                options.QueryString = features == null ? "foundry_features" : "foundry_features=" + Uri.EscapeDataString(features);
+            }
+            else
+            {
+                options.Headers.Add("Foundry-Features", features);
+            }
+
+            Assert.ThrowsAsync<ArgumentException>(() => project.ProjectsRealtimeClient.StartSessionAsync("agent", null, options));
+            Assert.That(provider.AsyncCalls, Is.Zero);
+            Assert.That(provider.SyncCalls, Is.Zero);
+        }
+    }
+
+    [TestCase("foundry_features=Other%3Done&foundry_features=Other%3Done", false)]
+    [TestCase("foundry_features=Other%3Done&%66oundry_features=Other%3Dtwo", false)]
+    [TestCase("foundry_features=VoiceAgents%3DV1Preview", true)]
+    [TestCase("foundry_features=Other%3Done", true)]
+    [TestCase("foundry_features=Other%3Done%ZZ", false)]
+    public void AmbiguousOrMalformedFeatureQueriesAreRejectedBeforeAuthentication(string query, bool addHeader)
+    {
+        LiveTestTokenProvider provider = new();
+        AIProjectClient project = new(new Uri("https://example.test/api/projects/project"), provider);
+        RealtimeSessionClientOptions options = new() { QueryString = query };
+        if (addHeader)
+        {
+            options.Headers.Add("Foundry-Features", "VoiceAgents=V1Preview");
+        }
+
+        Assert.ThrowsAsync<ArgumentException>(() => project.ProjectsRealtimeClient.StartSessionAsync("agent", null, options));
+        Assert.That(provider.AsyncCalls, Is.Zero);
+    }
+
+    [Test]
+    public void DuplicateFeatureHeadersAreRejectedBeforeAuthentication()
+    {
+        LiveTestTokenProvider provider = new();
+        AIProjectClient project = new(new Uri("https://example.test/api/projects/project"), provider);
+        RealtimeSessionClientOptions options = new();
+        options.Headers.Add("Foundry-Features", "VoiceAgents=V1Preview");
+        options.Headers.Add("foundry-features", "Other=V2Preview");
+
+        Assert.ThrowsAsync<ArgumentException>(() => project.ProjectsRealtimeClient.StartSessionAsync("agent", null, options));
+        Assert.That(provider.AsyncCalls, Is.Zero);
+    }
+
     [TestCase("Sec-WebSocket-Protocol")]
     [TestCase("sec-websocket-protocol")]
     [TestCase("SEC-WEBSOCKET-PROTOCOL")]
@@ -299,8 +440,6 @@ public class ProjectsRealtimeClientTests
 
     [TestCase("Authorization", "caller-token")]
     [TestCase("authorization", "caller-token")]
-    [TestCase("Foundry-Features", "other-feature")]
-    [TestCase("foundry-features", "other-feature")]
     [TestCase("Sec-WebSocket-Protocol", "unsupported")]
     [TestCase("sec-websocket-protocol", "realtime,realtime")]
     public void ManagedRealtimeHeadersRejectConflictingOverrides(string header, string value)
@@ -317,9 +456,11 @@ public class ProjectsRealtimeClientTests
         Assert.That(provider.AsyncCalls, Is.Zero, "Invalid managed headers must be rejected before acquiring a credential.");
     }
 
-    [TestCase(false)]
-    [TestCase(true)]
-    public async Task SynchronousReceiversYieldWithoutReadingAheadAndPreserveSocketOwnership(bool protocol)
+    [TestCase(false, false)]
+    [TestCase(true, false)]
+    [TestCase(false, true)]
+    [TestCase(true, true)]
+    public async Task SynchronousReceiversYieldWithoutReadingAheadAndPreserveSocketOwnership(bool protocol, bool preview)
     {
         int port = GetFreeTcpPort();
         using HttpListener listener = new();
@@ -331,6 +472,9 @@ public class ProjectsRealtimeClientTests
         Task server = Task.Run(async () =>
         {
             HttpListenerContext context = await listener.GetContextAsync();
+            Assert.That(context.Request.Headers["Foundry-Features"] ?? "", preview
+                ? Is.EqualTo("Other=V2Preview,VoiceAgents=V1Preview")
+                : Is.Empty);
             using WebSocket socket = (await context.AcceptWebSocketAsync("realtime")).WebSocket;
             await reading.Task;
             await Task.Delay(50, timeout.Token);
@@ -346,7 +490,12 @@ public class ProjectsRealtimeClientTests
                 WebSocketMessageType.Text, true, timeout.Token);
         });
         AIProjectClient project = new(new Uri($"http://127.0.0.1:{port}/api/projects/project"), new FakeTokenProvider());
-        using RealtimeSessionClient session = await project.ProjectsRealtimeClient.StartSessionAsync("agent", null, cancellationToken: timeout.Token);
+        RealtimeSessionClientOptions options = new();
+        if (preview)
+        {
+            options.Headers.Add("Foundry-Features", "Other=V2Preview,VoiceAgents=V1Preview");
+        }
+        using RealtimeSessionClient session = await project.ProjectsRealtimeClient.StartSessionAsync("agent", null, options, timeout.Token);
         Task<bool> reader = Task.Run(() =>
         {
             SynchronizationContext previous = SynchronizationContext.Current;
@@ -455,31 +604,48 @@ public class ProjectsRealtimeClientTests
     }
 
     private static async Task<string> CaptureHandshakeQueryAsync(RealtimeSessionClientOptions options)
+        => (await CaptureHandshakeRequestAsync(options)).Url.Query;
+
+    private static async Task<HttpListenerRequest> CaptureHandshakeRequestAsync(RealtimeSessionClientOptions options, bool withoutDefaultFeatures = false)
     {
         int port = GetFreeTcpPort();
         using HttpListener listener = new();
         listener.Prefixes.Add($"http://127.0.0.1:{port}/");
         listener.Start();
 
-        Task<(string Query, WebSocket Socket)> serverTask = Task.Run(async () =>
+        Task<(HttpListenerRequest Request, WebSocket Socket)> serverTask = Task.Run(async () =>
         {
             HttpListenerContext context = await listener.GetContextAsync();
-            string query = context.Request.Url.Query;
             Assert.That(context.Request.Headers["Sec-WebSocket-Protocol"], Is.EqualTo("realtime"));
             HttpListenerWebSocketContext webSocket = await context.AcceptWebSocketAsync(subProtocol: "realtime");
-            return (query, webSocket.WebSocket);
+            return (context.Request, webSocket.WebSocket);
         });
 
         WebSocket serverSocket = null;
         try
         {
-            AIProjectClient client = new(new Uri($"http://127.0.0.1:{port}/api/projects/proj1"), new FakeTokenProvider());
-            RealtimeClient realtimeClient = client.ProjectsRealtimeClient;
+            Uri endpoint = new($"http://127.0.0.1:{port}/api/projects/proj1");
+            AIProjectClient client = new(endpoint, new FakeTokenProvider());
+            RealtimeClient realtimeClient = withoutDefaultFeatures
+                ? (ProjectsRealtimeClient)Activator.CreateInstance(typeof(ProjectsRealtimeClient),
+                    BindingFlags.Instance | BindingFlags.NonPublic, null,
+                    new object[] { endpoint, new FakeTokenProvider(), new Dictionary<string, object>(), "v1", null, null }, null)
+                : client.ProjectsRealtimeClient;
             using CancellationTokenSource timeout = new(TimeSpan.FromSeconds(10));
             using RealtimeSessionClient session = await realtimeClient.StartSessionAsync(
                 "agent", intent: null, options: options, cancellationToken: timeout.Token);
-            (string query, serverSocket) = await AwaitServerRequestAsync(serverTask);
-            return query;
+            (HttpListenerRequest request, serverSocket) = await AwaitServerRequestAsync(serverTask);
+            await serverSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(
+                """{"type":"response.created","response":{"id":"handshake-response","status":"in_progress"}}""")),
+                WebSocketMessageType.Text, true, timeout.Token);
+            await using (IAsyncEnumerator<RealtimeServerUpdate> events = session.ReceiveUpdatesAsync(timeout.Token).GetAsyncEnumerator())
+            {
+                Assert.That(await AwaitServerRequestAsync(events.MoveNextAsync().AsTask()), Is.True);
+                Assert.That(events.Current, Is.TypeOf<RealtimeServerUpdateResponseCreated>());
+                Assert.That(((RealtimeServerUpdateResponseCreated)events.Current).Response.Id, Is.EqualTo("handshake-response"));
+            }
+            Assert.That(session.WebSocket.State, Is.EqualTo(WebSocketState.Open));
+            return request;
         }
         finally
         {

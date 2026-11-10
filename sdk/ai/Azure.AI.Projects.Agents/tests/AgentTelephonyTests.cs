@@ -19,6 +19,7 @@ public class AgentTelephonyTests : AgentsTestBase
     {
         ProjectsTestSanitizers.ApplyLegacyRealtimeVoiceRecordingDefaults(this);
         ProjectsTestSanitizers.ApplyLegacyTelephonyCallJobRecordingRoutes(this);
+        ProjectsTestSanitizers.ApplyLegacyVoiceHistoryRecordingHeaders(this);
     }
 
     private async Task<string> EnsureTelephonyAgentAsync(AgentAdministrationClient agentsClient)

@@ -38,7 +38,8 @@ public static class Sample_VoiceAgent_Live
             DefaultValue = BinaryData.FromObjectAsJson("English")
         };
         ProjectsAgentVersion version = await project.AgentAdministrationClient.CreateAgentVersionAsync(
-            agentName, new ProjectsAgentVersionCreationOptions(definition), cancellationToken: cancellationToken);
+            agentName, new ProjectsAgentVersionCreationOptions(definition),
+            foundryFeatures: "VoiceAgents=V1Preview", cancellationToken: cancellationToken);
         try
         {
             ProjectsLiveClient live = project.ProjectsLiveClient;
@@ -80,7 +81,8 @@ public static class Sample_VoiceAgent_Live
         AIProjectClient project = new(new Uri(projectEndpoint), new DefaultAzureCredential());
         string agentName = NewName();
         await project.AgentAdministrationClient.CreateAgentVersionAsync(
-            agentName, new ProjectsAgentVersionCreationOptions(CreateDefinition(liveDeployment)), cancellationToken: cancellationToken);
+            agentName, new ProjectsAgentVersionCreationOptions(CreateDefinition(liveDeployment)),
+            foundryFeatures: "VoiceAgents=V1Preview", cancellationToken: cancellationToken);
         try
         {
             using ProjectsLiveSessionClient session = await project.ProjectsLiveClient.StartSessionAsync(
@@ -105,7 +107,7 @@ public static class Sample_VoiceAgent_Live
         string agentName = NewName();
         await project.AgentAdministrationClient.CreateAgentVersionAsync(agentName,
             new ProjectsAgentVersionCreationOptions(CreateResponsesDefinition(liveDeployment, backendDeployment, tools: false)),
-            cancellationToken: cancellationToken);
+            foundryFeatures: "VoiceAgents=V1Preview", cancellationToken: cancellationToken);
         try
         {
             using ProjectsLiveSessionClient session = await project.ProjectsLiveClient.StartSessionAsync(
@@ -220,7 +222,8 @@ public static class Sample_VoiceAgent_Live
         AIProjectClient project = new(new Uri(projectEndpoint), new DefaultAzureCredential());
         string agentName = NewName();
         await project.AgentAdministrationClient.CreateAgentVersionAsync(
-            agentName, new ProjectsAgentVersionCreationOptions(CreateDefinition(liveDeployment)), cancellationToken: cancellationToken);
+            agentName, new ProjectsAgentVersionCreationOptions(CreateDefinition(liveDeployment)),
+            foundryFeatures: "VoiceAgents=V1Preview", cancellationToken: cancellationToken);
         try
         {
             using ProjectsLiveSessionClient session = await project.ProjectsLiveClient.StartSessionAsync(
@@ -248,7 +251,8 @@ public static class Sample_VoiceAgent_Live
         AIProjectClient project = new(new Uri(projectEndpoint), new DefaultAzureCredential());
         string agentName = NewName();
         await project.AgentAdministrationClient.CreateAgentVersionAsync(
-            agentName, new ProjectsAgentVersionCreationOptions(CreateDefinition(liveDeployment)), cancellationToken: cancellationToken);
+            agentName, new ProjectsAgentVersionCreationOptions(CreateDefinition(liveDeployment)),
+            foundryFeatures: "VoiceAgents=V1Preview", cancellationToken: cancellationToken);
         try
         {
             using ProjectsLiveSessionClient session = await project.ProjectsLiveClient.StartSessionAsync(
@@ -285,7 +289,8 @@ public static class Sample_VoiceAgent_Live
         VoiceAgentLiveDefinition definition = CreateDefinition(liveDeployment);
         definition.Store = true;
         await project.AgentAdministrationClient.CreateAgentVersionAsync(
-            agentName, new ProjectsAgentVersionCreationOptions(definition), cancellationToken: cancellationToken);
+            agentName, new ProjectsAgentVersionCreationOptions(definition),
+            foundryFeatures: "VoiceAgents=V1Preview", cancellationToken: cancellationToken);
         try
         {
             string conversationId;
@@ -377,7 +382,8 @@ public static class Sample_VoiceAgent_Live
         AIProjectClient project = new(new Uri(projectEndpoint), new DefaultAzureCredential());
         string agentName = NewName();
         await project.AgentAdministrationClient.CreateAgentVersionAsync(
-            agentName, new ProjectsAgentVersionCreationOptions(CreateDefinition(liveDeployment)), cancellationToken: cancellationToken);
+            agentName, new ProjectsAgentVersionCreationOptions(CreateDefinition(liveDeployment)),
+            foundryFeatures: "VoiceAgents=V1Preview", cancellationToken: cancellationToken);
         try
         {
             using ProjectsLiveSessionClient session = await project.ProjectsLiveClient.StartSessionAsync(
@@ -416,7 +422,8 @@ public static class Sample_VoiceAgent_Live
         string agentName = NewName();
         VoiceAgentLiveDefinition definition = CreateResponsesDefinition(liveDeployment, backendDeployment, tools: false);
         await project.AgentAdministrationClient.CreateAgentVersionAsync(
-            agentName, new ProjectsAgentVersionCreationOptions(definition), cancellationToken: cancellationToken);
+            agentName, new ProjectsAgentVersionCreationOptions(definition),
+            foundryFeatures: "VoiceAgents=V1Preview", cancellationToken: cancellationToken);
         try
         {
             using ProjectsLiveSessionClient session = await project.ProjectsLiveClient.StartSessionAsync(
@@ -439,7 +446,8 @@ public static class Sample_VoiceAgent_Live
         string agentName = NewName();
         VoiceAgentLiveDefinition definition = CreateResponsesDefinition(liveDeployment, backendDeployment, tools: true);
         await project.AgentAdministrationClient.CreateAgentVersionAsync(
-            agentName, new ProjectsAgentVersionCreationOptions(definition), cancellationToken: cancellationToken);
+            agentName, new ProjectsAgentVersionCreationOptions(definition),
+            foundryFeatures: "VoiceAgents=V1Preview", cancellationToken: cancellationToken);
         try
         {
             using ProjectsLiveSessionClient session = await project.ProjectsLiveClient.StartSessionAsync(

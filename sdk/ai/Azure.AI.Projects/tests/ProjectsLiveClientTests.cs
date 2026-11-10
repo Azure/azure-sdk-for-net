@@ -245,7 +245,8 @@ public class ProjectsLiveClientTests
             Assert.That(query.Where(parameter => parameter.StartsWith("store=", StringComparison.Ordinal)),
                 store.HasValue ? Is.EqualTo(new[] { store.Value ? "store=true" : "store=false" }) : Is.Empty);
             Assert.That(connection.Request.Headers["x-live-test"], Is.EqualTo("custom-header"));
-            Assert.That(connection.Request.Headers["Foundry-Features"], Does.Contain("VoiceAgents=V1Preview"));
+            Assert.That(connection.Request.Headers["Foundry-Features"], Is.EqualTo("VoiceAgents=V1Preview"));
+            Assert.That(query.Any(parameter => parameter.StartsWith("foundry_features=", StringComparison.Ordinal)), Is.False);
             Assert.That(connection.Request.Headers["Authorization"], Is.EqualTo("TestScheme live-test-token"));
             Assert.That(connection.Request.Headers["Sec-WebSocket-Protocol"], Is.Null.Or.Empty);
             Assert.That(connection.Socket.SubProtocol, Is.Null.Or.Empty);
@@ -258,6 +259,69 @@ public class ProjectsLiveClientTests
             Assert.That(session.SessionStarted, Is.Not.Null);
             Assert.That(LiveTestHelpers.EventType(session.SessionStarted), Is.EqualTo("session.started"));
         });
+    }
+
+    [TestCase("Foundry-Features", "Other=V2Preview")]
+    [TestCase("foundry-features", "Other=V2Preview,VoiceAgents=V1Preview")]
+    [TestCase("FOUNDRY-FEATURES", "Other=V2Preview,VoiceAgents=V1Preview,voiceagents=v1preview,Other=V2Preview")]
+    public async Task ExplicitFeatureHeaderPreservesOtherFlagsAndRequiresPreviewExactlyOnce(string header, string features)
+    {
+        using LiveLoopbackServer server = new();
+        AIProjectClient project = new(server.Endpoint, new LiveTestTokenProvider());
+        ProjectsLiveSessionClientOptions options = new() { QueryString = "keep=%2B" };
+        options.Headers.Add(header, features);
+        Task<LiveLoopbackConnection> accepting = server.AcceptSessionAsync();
+        using CancellationTokenSource timeout = LiveTestHelpers.CreateTimeout();
+        using ProjectsLiveSessionClient session = await LiveTestHelpers.AwaitAsync(
+            LiveTestHelpers.ConnectAsync(project.ProjectsLiveClient, "agent", options, timeout.Token));
+        LiveLoopbackConnection connection = await LiveTestHelpers.AwaitAsync(accepting);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(connection.Request.Headers["Foundry-Features"], Is.EqualTo("Other=V2Preview,VoiceAgents=V1Preview"));
+            Assert.That(connection.Request.Headers.GetValues("Foundry-Features"), Has.Length.EqualTo(1));
+            Assert.That(connection.Request.Url.Query, Is.EqualTo("?api-version=v1&keep=%2B"));
+            Assert.That(connection.Request.Headers["Authorization"], Is.EqualTo("TestScheme live-test-token"));
+            Assert.That(options.Headers[header], Is.EqualTo(features));
+            Assert.That(options.QueryString, Is.EqualTo("keep=%2B"));
+            Assert.That(session.State, Is.EqualTo(WebSocketState.Open));
+            Assert.That(session.SessionStarted, Is.Not.Null);
+        });
+    }
+
+    [TestCase("foundry_features", "Other=V2Preview")]
+    [TestCase("%66oundry_features", "Other=V2Preview,VoiceAgents=V1Preview")]
+    [TestCase("FOUNDRY_FEATURES", "Other=V2Preview,voiceagents=v1preview,VoiceAgents=V1Preview,Other=V2Preview")]
+    public async Task ExplicitFeatureQueryRequiresPreviewWithoutACompetingHeader(string name, string features)
+    {
+        using LiveLoopbackServer server = new();
+        AIProjectClient project = new(server.Endpoint, new LiveTestTokenProvider());
+        string query = $"?keep=one&{name}={Uri.EscapeDataString(features)}&keep=two&path=folder%2F&flag";
+        ProjectsLiveSessionClientOptions options = new() { QueryString = query };
+        Task<LiveLoopbackConnection> accepting = server.AcceptSessionAsync();
+        using CancellationTokenSource timeout = LiveTestHelpers.CreateTimeout();
+        using ProjectsLiveSessionClient session = await LiveTestHelpers.AwaitAsync(
+            LiveTestHelpers.ConnectAsync(project.ProjectsLiveClient, "agent", options, timeout.Token));
+        LiveLoopbackConnection connection = await LiveTestHelpers.AwaitAsync(accepting);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(connection.Request.Headers["Foundry-Features"], Is.Null);
+            Assert.That(connection.Request.Url.Query, Is.EqualTo("?api-version=v1&keep=one&foundry_features=" +
+                Uri.EscapeDataString("Other=V2Preview,VoiceAgents=V1Preview") + "&keep=two&path=folder%2F&flag"));
+            Assert.That(connection.Request.Headers["Authorization"], Is.EqualTo("TestScheme live-test-token"));
+            Assert.That(options.QueryString, Is.EqualTo(query));
+            Assert.That(session.SessionStarted, Is.Not.Null);
+        });
+
+        await session.SendEventAsync(new LiveClientEventLiveSessionCloseParam(), timeout.Token);
+        Assert.That(LiveTestHelpers.EventType(await LiveTestHelpers.ReceiveTextAsync(connection.Socket, timeout.Token)), Is.EqualTo("session.close"));
+        await LiveTestHelpers.SendTextAsync(connection.Socket, LiveTestHelpers.SessionClosedJson, timeout.Token);
+        await using IAsyncEnumerator<LiveServerEvent> events = session.ReceiveEventsAsync(timeout.Token).GetAsyncEnumerator();
+        Assert.That(await LiveTestHelpers.AwaitAsync(events.MoveNextAsync().AsTask()), Is.True);
+        Assert.That(events.Current, Is.SameAs(session.SessionStarted));
+        Assert.That(await LiveTestHelpers.AwaitAsync(events.MoveNextAsync().AsTask()), Is.True);
+        Assert.That(events.Current, Is.SameAs(session.SessionClosed));
     }
 
     [TestCase(false)]
@@ -449,8 +513,6 @@ public class ProjectsLiveClientTests
 
     [TestCase("Authorization")]
     [TestCase("authorization")]
-    [TestCase("Foundry-Features")]
-    [TestCase("foundry-features")]
     [TestCase("Sec-WebSocket-Protocol")]
     public void ManagedHandshakeHeadersCannotBeOverridden(string header)
     {
@@ -458,6 +520,70 @@ public class ProjectsLiveClientTests
         AIProjectClient project = new(new Uri("https://example.test/api/projects/project"), provider);
         ProjectsLiveSessionClientOptions options = new();
         options.Headers.Add(header, "not-allowed");
+
+        Assert.ThrowsAsync<ArgumentException>(() => project.ProjectsLiveClient.StartSessionAsync("agent", options));
+        Assert.That(provider.AsyncCalls, Is.Zero);
+    }
+
+    [TestCase(null)]
+    [TestCase("")]
+    [TestCase(" ")]
+    [TestCase("VoiceAgents")]
+    [TestCase("VoiceAgents=")]
+    [TestCase("VoiceAgents=V2Preview")]
+    [TestCase("VoiceAgents=V1Preview,VoiceAgents=V2Preview")]
+    [TestCase("Other=one,Other=two")]
+    [TestCase("Other=one,,VoiceAgents=V1Preview")]
+    [TestCase("Other=one\r\n")]
+    public void InvalidExplicitFeaturesAreRejectedBeforeAuthentication(string features)
+    {
+        foreach (bool useQuery in new[] { false, true })
+        {
+            LiveTestTokenProvider provider = new();
+            AIProjectClient project = new(new Uri("https://example.test/api/projects/project"), provider);
+            ProjectsLiveSessionClientOptions options = new();
+            if (useQuery)
+            {
+                options.QueryString = features == null ? "foundry_features" : "foundry_features=" + Uri.EscapeDataString(features);
+            }
+            else
+            {
+                options.Headers.Add("Foundry-Features", features);
+            }
+
+            Assert.ThrowsAsync<ArgumentException>(() => project.ProjectsLiveClient.StartSessionAsync("agent", options));
+            Assert.That(provider.AsyncCalls, Is.Zero);
+            Assert.That(provider.SyncCalls, Is.Zero);
+        }
+    }
+
+    [TestCase("foundry_features=Other%3Done&foundry_features=Other%3Done", false)]
+    [TestCase("foundry_features=Other%3Done&%66oundry_features=Other%3Dtwo", false)]
+    [TestCase("foundry_features=VoiceAgents%3DV1Preview", true)]
+    [TestCase("foundry_features=Other%3Done", true)]
+    [TestCase("foundry_features=Other%3Done%ZZ", false)]
+    public void AmbiguousOrMalformedFeatureQueriesAreRejectedBeforeAuthentication(string query, bool addHeader)
+    {
+        LiveTestTokenProvider provider = new();
+        AIProjectClient project = new(new Uri("https://example.test/api/projects/project"), provider);
+        ProjectsLiveSessionClientOptions options = new() { QueryString = query };
+        if (addHeader)
+        {
+            options.Headers.Add("Foundry-Features", "VoiceAgents=V1Preview");
+        }
+
+        Assert.ThrowsAsync<ArgumentException>(() => project.ProjectsLiveClient.StartSessionAsync("agent", options));
+        Assert.That(provider.AsyncCalls, Is.Zero);
+    }
+
+    [Test]
+    public void DuplicateFeatureHeadersAreRejectedBeforeAuthentication()
+    {
+        LiveTestTokenProvider provider = new();
+        AIProjectClient project = new(new Uri("https://example.test/api/projects/project"), provider);
+        ProjectsLiveSessionClientOptions options = new();
+        options.Headers.Add("Foundry-Features", "VoiceAgents=V1Preview");
+        options.Headers.Add("foundry-features", "Other=V2Preview");
 
         Assert.ThrowsAsync<ArgumentException>(() => project.ProjectsLiveClient.StartSessionAsync("agent", options));
         Assert.That(provider.AsyncCalls, Is.Zero);

@@ -3,9 +3,9 @@
 This sample uses the `Azure.AI.Projects.Agents` REST clients to administer a voice agent and
 inspect existing telephony resources. It does not need a WebSocket connection.
 
-Voice agent and telephony APIs are experimental. Suppress diagnostic `AAIP001` when compiling
-these snippets. Each example uses a bounded cancellation token; synchronous counterparts are
-also available.
+Realtime/cascaded voice administration and non-SIP telephony are GA. SIP models and telephony
+campaigns remain preview; suppress diagnostic `AAIP001` for those parts of the sample. Each
+example uses a bounded cancellation token; synchronous counterparts are also available.
 
 ## Prerequisites
 
@@ -17,7 +17,7 @@ also available.
 
 ## Administer a voice agent
 
-This example explicitly opts into the preview, creates an agent with a unique name, reads its
+This GA example needs no Voice Agents preview opt-in. It creates an agent with a unique name, reads its
 typed `VoiceAgentDefinition`, lists its versions, and deletes only that agent in `finally`.
 
 ```C# Snippet:Sample_VoiceAgents_REST_Admin
@@ -44,7 +44,6 @@ try
         await administration.CreateAgentVersionAsync(
             agentName,
             new ProjectsAgentVersionCreationOptions(definition),
-            foundryFeatures: "VoiceAgents=V1Preview",
             cancellationToken: timeout.Token);
     ProjectsAgentVersion created = createResult;
     if (created.Name != agentName || string.IsNullOrEmpty(created.Version))
@@ -105,6 +104,11 @@ Set `VOICE_AGENT_NAME`, `VOICE_TELEPHONY_BINDING_ID`, `VOICE_TELEPHONY_CALL_ID`,
 `VOICE_TELEPHONY_CALL_JOB_ID` to existing resources. This example only invokes read operations.
 It does not create or delete a provider binding, dial a number, send SMS or DTMF, transfer or end
 a call, or enumerate internal call-job APIs.
+
+Twilio and Teams Phone Extensibility reads require no preview opt-in. For conditional writes to
+SIP resources, explicitly supply `Foundry-Features: VoiceAgents=V1Preview` using the request
+options or a caller pipeline policy. Campaign operations always require preview; their client
+adds the required header.
 
 ```C# Snippet:Sample_VoiceAgents_REST_TelephonyReadOnly
 string projectEndpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");

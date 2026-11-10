@@ -104,54 +104,28 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Create an Agent Insights monitor for an agent. </summary>
-        /// <param name="agentName"> The agent this monitor should analyze. </param>
-        /// <param name="modelDeploymentName"> The model deployment to use for analyzing traces. Accepts either the deployment name alone or with the connection name as '{connectionName}/modelDeploymentName'. </param>
-        /// <param name="enabled"> Whether scheduled insight generation should be armed. Defaults to false. </param>
-        /// <param name="runIntervalHours"> Interval between scheduled insight runs, in hours. Defaults to 6. </param>
-        /// <param name="priorities"> Analysis priorities for the monitor. </param>
+        /// <param name="monitor"> The monitor to create. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="modelDeploymentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="modelDeploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitor"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<AgentInsightMonitor> Create(string agentName, string modelDeploymentName, bool? enabled = default, double? runIntervalHours = default, AgentInsightPriorities priorities = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<AgentInsightMonitor> Create(AgentInsightMonitorCreate monitor, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(modelDeploymentName, nameof(modelDeploymentName));
+            Argument.AssertNotNull(monitor, nameof(monitor));
 
-            CreateRequest spreadModel = new CreateRequest(
-                agentName,
-                enabled,
-                runIntervalHours,
-                modelDeploymentName,
-                priorities,
-                default);
-            ClientResult result = Create(spreadModel, cancellationToken.ToRequestOptions());
+            ClientResult result = Create(monitor, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((AgentInsightMonitor)result, result.GetRawResponse());
         }
 
         /// <summary> Create an Agent Insights monitor for an agent. </summary>
-        /// <param name="agentName"> The agent this monitor should analyze. </param>
-        /// <param name="modelDeploymentName"> The model deployment to use for analyzing traces. Accepts either the deployment name alone or with the connection name as '{connectionName}/modelDeploymentName'. </param>
-        /// <param name="enabled"> Whether scheduled insight generation should be armed. Defaults to false. </param>
-        /// <param name="runIntervalHours"> Interval between scheduled insight runs, in hours. Defaults to 6. </param>
-        /// <param name="priorities"> Analysis priorities for the monitor. </param>
+        /// <param name="monitor"> The monitor to create. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="modelDeploymentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> or <paramref name="modelDeploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitor"/> is null. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<AgentInsightMonitor>> CreateAsync(string agentName, string modelDeploymentName, bool? enabled = default, double? runIntervalHours = default, AgentInsightPriorities priorities = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<AgentInsightMonitor>> CreateAsync(AgentInsightMonitorCreate monitor, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
-            Argument.AssertNotNullOrEmpty(modelDeploymentName, nameof(modelDeploymentName));
+            Argument.AssertNotNull(monitor, nameof(monitor));
 
-            CreateRequest spreadModel = new CreateRequest(
-                agentName,
-                enabled,
-                runIntervalHours,
-                modelDeploymentName,
-                priorities,
-                default);
-            ClientResult result = await CreateAsync(spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await CreateAsync(monitor, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((AgentInsightMonitor)result, result.GetRawResponse());
         }
 
@@ -406,7 +380,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Reset an Agent Insights monitor's generated summary, checkpoint, and active insight state.
+        /// [Protocol Method] Reset an Agent Insights monitor's overview, checkpoint, and active insight state.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -438,7 +412,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// [Protocol Method] Reset an Agent Insights monitor's generated summary, checkpoint, and active insight state.
+        /// [Protocol Method] Reset an Agent Insights monitor's overview, checkpoint, and active insight state.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -469,7 +443,7 @@ namespace Azure.AI.Projects
             }
         }
 
-        /// <summary> Reset an Agent Insights monitor's generated summary, checkpoint, and active insight state. </summary>
+        /// <summary> Reset an Agent Insights monitor's overview, checkpoint, and active insight state. </summary>
         /// <param name="monitorId"> The identifier of the monitor. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
@@ -482,7 +456,7 @@ namespace Azure.AI.Projects
             return Reset(monitorId, cancellationToken.ToRequestOptions());
         }
 
-        /// <summary> Reset an Agent Insights monitor's generated summary, checkpoint, and active insight state. </summary>
+        /// <summary> Reset an Agent Insights monitor's overview, checkpoint, and active insight state. </summary>
         /// <param name="monitorId"> The identifier of the monitor. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
@@ -556,36 +530,36 @@ namespace Azure.AI.Projects
         /// <summary> Start an Agent Insights run for a monitor. </summary>
         /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
         /// <param name="monitorId"> The identifier of the monitor. </param>
-        /// <param name="lookbackHours"> Optional finite positive number of hours of trace history to analyze, up to 2,160. Defaults to 168. </param>
+        /// <param name="run"> Run inputs. Send an empty object to use the default 168-hour lookback window. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> or <paramref name="run"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
         [Experimental("SCME0006")]
-        public virtual OperationResult CreateRun(bool waitUntilCompleted, string monitorId, double? lookbackHours = default, string operationId = default, CancellationToken cancellationToken = default)
+        public virtual OperationResult CreateRun(bool waitUntilCompleted, string monitorId, AgentInsightRunCreate run, string operationId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+            Argument.AssertNotNull(run, nameof(run));
 
-            CreateRunRequest spreadModel = new CreateRunRequest(lookbackHours, default);
-            OperationResult result = CreateRun(waitUntilCompleted, monitorId, spreadModel, operationId, cancellationToken.ToRequestOptions());
+            OperationResult result = CreateRun(waitUntilCompleted, monitorId, run, operationId, cancellationToken.ToRequestOptions());
             return result;
         }
 
         /// <summary> Start an Agent Insights run for a monitor. </summary>
         /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
         /// <param name="monitorId"> The identifier of the monitor. </param>
-        /// <param name="lookbackHours"> Optional finite positive number of hours of trace history to analyze, up to 2,160. Defaults to 168. </param>
+        /// <param name="run"> Run inputs. Send an empty object to use the default 168-hour lookback window. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> or <paramref name="run"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
         [Experimental("SCME0006")]
-        public virtual async Task<OperationResult> CreateRunAsync(bool waitUntilCompleted, string monitorId, double? lookbackHours = default, string operationId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<OperationResult> CreateRunAsync(bool waitUntilCompleted, string monitorId, AgentInsightRunCreate run, string operationId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+            Argument.AssertNotNull(run, nameof(run));
 
-            CreateRunRequest spreadModel = new CreateRunRequest(lookbackHours, default);
-            OperationResult result = await CreateRunAsync(waitUntilCompleted, monitorId, spreadModel, operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            OperationResult result = await CreateRunAsync(waitUntilCompleted, monitorId, run, operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return result;
         }
 

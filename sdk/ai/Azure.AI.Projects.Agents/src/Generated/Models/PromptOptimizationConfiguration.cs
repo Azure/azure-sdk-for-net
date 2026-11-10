@@ -13,19 +13,19 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="PromptOptimizationConfiguration"/>. </summary>
         public PromptOptimizationConfiguration() : base(AgentOptimizationConfigurationType.PromptOptimization)
         {
-            Context = new ChangeTrackingList<SteeringPromptOptimizationContext>();
+            Context = new ChangeTrackingList<OptimizationContext>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PromptOptimizationConfiguration"/>. </summary>
         /// <param name="type"> Optimization type discriminator. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="context"> Steering context for prompt optimization. Agent trace and skill reference context are supported only by skill optimization. Omitted when no context is supplied. </param>
-        internal PromptOptimizationConfiguration(AgentOptimizationConfigurationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<SteeringPromptOptimizationContext> context) : base(@type, additionalBinaryDataProperties)
+        /// <param name="context"> Context used to steer prompt optimization. Omitted when no context is supplied. </param>
+        internal PromptOptimizationConfiguration(AgentOptimizationConfigurationType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<OptimizationContext> context) : base(@type, additionalBinaryDataProperties)
         {
             Context = context;
         }
 
-        /// <summary> Steering context for prompt optimization. Agent trace and skill reference context are supported only by skill optimization. Omitted when no context is supplied. </summary>
-        public IList<SteeringPromptOptimizationContext> Context { get; }
+        /// <summary> Context used to steer prompt optimization. Omitted when no context is supplied. </summary>
+        public IList<OptimizationContext> Context { get; }
     }
 }

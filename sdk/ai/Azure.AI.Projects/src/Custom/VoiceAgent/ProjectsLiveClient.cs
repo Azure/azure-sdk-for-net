@@ -21,7 +21,6 @@ public class ProjectsLiveClient
     private readonly AuthenticationTokenProvider _tokenProvider;
     private readonly IReadOnlyDictionary<string, object> _tokenProperties;
     private readonly string _apiVersion;
-    private readonly string _experimentalHeaders;
     private readonly ClientDiagnostics _diagnostics;
     private readonly TimeSpan _connectionTimeout;
 
@@ -31,14 +30,13 @@ public class ProjectsLiveClient
     }
 
     internal ProjectsLiveClient(Uri endpoint, AuthenticationTokenProvider tokenProvider,
-        IReadOnlyDictionary<string, object> tokenProperties, string apiVersion, string experimentalHeaders,
+        IReadOnlyDictionary<string, object> tokenProperties, string apiVersion,
         ClientPipeline pipeline, ClientDiagnostics diagnostics, TimeSpan? networkTimeout)
     {
         Endpoint = endpoint;
         _tokenProvider = tokenProvider;
         _tokenProperties = tokenProperties;
         _apiVersion = apiVersion;
-        _experimentalHeaders = RealtimeClientHelper.ExperimentalHeaders(experimentalHeaders);
         Pipeline = pipeline;
         _diagnostics = diagnostics;
         _connectionTimeout = networkTimeout ?? TimeSpan.FromMinutes(1);
@@ -83,15 +81,22 @@ public class ProjectsLiveClient
         ProjectsLiveSessionClient session = null;
         try
         {
+            string query = uri.Query;
+            string foundryFeatures = RealtimeClientHelper.ResolveFoundryFeatures(
+                options?.Headers, ref query, requireVoiceAgentsPreview: true);
+            uri = new UriBuilder(uri) { Query = query }.Uri;
             if (options != null)
             {
                 foreach (KeyValuePair<string, string> header in options.Headers)
                 {
                     if (header.Key.Equals("Authorization", StringComparison.OrdinalIgnoreCase) ||
-                        header.Key.Equals("Foundry-Features", StringComparison.OrdinalIgnoreCase) ||
                         header.Key.Equals("Sec-WebSocket-Protocol", StringComparison.OrdinalIgnoreCase))
                     {
-                        throw new ArgumentException("Authentication, preview, and WebSocket protocol headers are managed by the client.", nameof(options));
+                        throw new ArgumentException("Authentication and WebSocket protocol headers are managed by the client.", nameof(options));
+                    }
+                    if (header.Key.Equals("Foundry-Features", StringComparison.OrdinalIgnoreCase))
+                    {
+                        continue;
                     }
                     socket.Options.SetRequestHeader(header.Key, header.Value);
                 }
@@ -103,7 +108,10 @@ public class ProjectsLiveClient
             }
             AuthenticationToken token = await _tokenProvider.GetTokenAsync(tokenOptions, timeout.Token).ConfigureAwait(false);
             socket.Options.SetRequestHeader("Authorization", $"{token.TokenType} {token.TokenValue}");
-            socket.Options.SetRequestHeader("Foundry-Features", _experimentalHeaders);
+            if (foundryFeatures != null)
+            {
+                socket.Options.SetRequestHeader("Foundry-Features", foundryFeatures);
+            }
             socket.Options.SetRequestHeader("x-ms-client-request-id", Guid.NewGuid().ToString());
             await socket.ConnectAsync(uri, timeout.Token).ConfigureAwait(false);
             session = new ProjectsLiveSessionClient(socket);
@@ -135,6 +143,8 @@ public class ProjectsLiveClient
 
     internal static Uri BuildEndpoint(Uri endpoint, string agentName, string apiVersion, ProjectsLiveSessionClientOptions options)
     {
+        string queryString = options?.QueryString;
+        RealtimeClientHelper.ResolveFoundryFeatures(options?.Headers, ref queryString, requireVoiceAgentsPreview: true);
         UriBuilder builder = new(RealtimeClientHelper.GetAgentWebSocketEndpoint(endpoint, agentName));
         builder.Path += "/live/sessions";
         StringBuilder query = new();
@@ -171,9 +181,9 @@ public class ProjectsLiveClient
             }
             RealtimeClientHelper.AppendQueryParameter(query, "structured_inputs", Encoding.UTF8.GetString(stream.ToArray()));
         }
-        if (!string.IsNullOrEmpty(options?.QueryString))
+        if (!string.IsNullOrEmpty(queryString))
         {
-            foreach (string parameter in options.QueryString.TrimStart('?').Split('&'))
+            foreach (string parameter in queryString.Split('&'))
             {
                 if (parameter.Length == 0)
                 {
@@ -217,7 +227,7 @@ public partial class AIProjectClient
             }
             return Volatile.Read(ref _cachedProjectsLiveClient) ??
                 Interlocked.CompareExchange(ref _cachedProjectsLiveClient,
-                    new ProjectsLiveClient(_endpoint, _tokenProvider, _flows[0], _apiVersion, s_experimentalHeaders,
+                    new ProjectsLiveClient(_endpoint, _tokenProvider, _flows[0], _apiVersion,
                         Pipeline, ClientDiagnostics, _clientOptions?.NetworkTimeout), null) ??
                 _cachedProjectsLiveClient;
         }

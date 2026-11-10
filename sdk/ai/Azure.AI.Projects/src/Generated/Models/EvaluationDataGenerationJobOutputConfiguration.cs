@@ -23,7 +23,7 @@ namespace Azure.AI.Projects
         /// <param name="name"> Dataset name to assign to the output. </param>
         /// <param name="description"> Description to assign to the output dataset. </param>
         /// <param name="tags"> Tags to assign to the output dataset. </param>
-        /// <param name="writeMode"> Controls how dataset outputs are written. If omitted, defaults to `overwrite` and creates the next dataset version using only newly generated rows. `merge` combines newly generated rows with the latest existing dataset version and de-duplicates trace rows. For conversation jobs, a newly generated conversation snapshot replaces the existing snapshot of the same conversation wholesale. The replacement snapshot may omit earlier turns outside the selected time window. Existing conversations without a newly generated replacement remain unchanged. Merging replaces whole conversation snapshots rather than unioning individual turns, so it does not retain every previous turn from the replaced snapshot. </param>
+        /// <param name="writeMode"> Controls how dataset outputs are written. If omitted, defaults to `overwrite` and creates the next dataset version using only newly generated rows. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal EvaluationDataGenerationJobOutputConfiguration(string name, string description, IDictionary<string, string> tags, DataGenerationJobOutputWriteMode? writeMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -43,7 +43,7 @@ namespace Azure.AI.Projects
         /// <summary> Tags to assign to the output dataset. </summary>
         public IDictionary<string, string> Tags { get; }
 
-        /// <summary> Controls how dataset outputs are written. If omitted, defaults to `overwrite` and creates the next dataset version using only newly generated rows. `merge` combines newly generated rows with the latest existing dataset version and de-duplicates trace rows. For conversation jobs, a newly generated conversation snapshot replaces the existing snapshot of the same conversation wholesale. The replacement snapshot may omit earlier turns outside the selected time window. Existing conversations without a newly generated replacement remain unchanged. Merging replaces whole conversation snapshots rather than unioning individual turns, so it does not retain every previous turn from the replaced snapshot. </summary>
+        /// <summary> Controls how dataset outputs are written. If omitted, defaults to `overwrite` and creates the next dataset version using only newly generated rows. </summary>
         public DataGenerationJobOutputWriteMode? WriteMode { get; set; }
     }
 }

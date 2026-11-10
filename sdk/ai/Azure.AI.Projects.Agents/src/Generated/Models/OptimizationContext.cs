@@ -9,7 +9,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// Base model for typed optimization context.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentTracesOptimizationContext"/>, <see cref="SkillReferencesOptimizationContext"/>, and <see cref="SteeringPromptOptimizationContext"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SteeringPromptOptimizationContext"/>.
     /// </summary>
     public abstract partial class OptimizationContext
     {

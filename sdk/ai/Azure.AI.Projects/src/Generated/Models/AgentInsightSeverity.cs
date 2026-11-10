@@ -4,10 +4,12 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> The severity of an agent insight. </summary>
+    [Experimental("AAIP001")]
     public readonly partial struct AgentInsightSeverity : IEquatable<AgentInsightSeverity>
     {
         private readonly string _value;

@@ -22,7 +22,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of ProjectAgentSkillsGetSkillVersionsAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ProjectAgentSkills client used to send requests. </param>
-        /// <param name="name"> The public ID of the skill to list versions for. </param>
+        /// <param name="name"> The name of the skill to list versions for. </param>
         /// <param name="limit">
         /// A limit on the number of objects to be returned. Limit can range between 1 and 100, and the
         /// default is 20.

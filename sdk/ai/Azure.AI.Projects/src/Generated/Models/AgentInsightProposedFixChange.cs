@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A customer-renderable change in a proposed fix. </summary>
+    [Experimental("AAIP001")]
     public partial class AgentInsightProposedFixChange
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

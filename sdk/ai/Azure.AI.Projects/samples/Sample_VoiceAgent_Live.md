@@ -15,6 +15,8 @@ used below. To read saved conversations and download recordings, see the
   For local development, sign in with `az login`.
 - `Azure.AI.Projects` and `Azure.Identity`.
 - Experimental opt-ins `AAIP001`, `AAIP002`, and `OPENAI001` where used by the sample.
+- The `VoiceAgents=V1Preview` service opt-in when creating a native GPT Live definition; the sample
+  passes it explicitly. Native Live connections and stored-history operations also require preview.
 - For text and function calls, a separate Responses-compatible model deployment in the same resource.
 - For audio, a mono, 16-bit PCM WAV file at 24 kHz. You can use the repository's
   [recorded weather question](../../../openai/Azure.AI.OpenAI/tests/Assets/whats_the_weather_pcm16_24khz_mono.wav).
@@ -50,7 +52,8 @@ public static async Task ConnectAsync(string projectEndpoint, string liveDeploym
     AIProjectClient project = new(new Uri(projectEndpoint), new DefaultAzureCredential());
     string agentName = NewName();
     await project.AgentAdministrationClient.CreateAgentVersionAsync(
-        agentName, new ProjectsAgentVersionCreationOptions(CreateDefinition(liveDeployment)), cancellationToken: cancellationToken);
+        agentName, new ProjectsAgentVersionCreationOptions(CreateDefinition(liveDeployment)),
+        foundryFeatures: "VoiceAgents=V1Preview", cancellationToken: cancellationToken);
     try
     {
         using ProjectsLiveSessionClient session = await project.ProjectsLiveClient.StartSessionAsync(
@@ -89,7 +92,8 @@ public static async Task TextConversationAsync(
     string agentName = NewName();
     VoiceAgentLiveDefinition definition = CreateResponsesDefinition(liveDeployment, backendDeployment, tools: false);
     await project.AgentAdministrationClient.CreateAgentVersionAsync(
-        agentName, new ProjectsAgentVersionCreationOptions(definition), cancellationToken: cancellationToken);
+        agentName, new ProjectsAgentVersionCreationOptions(definition),
+        foundryFeatures: "VoiceAgents=V1Preview", cancellationToken: cancellationToken);
     try
     {
         using ProjectsLiveSessionClient session = await project.ProjectsLiveClient.StartSessionAsync(
@@ -137,7 +141,8 @@ public static async Task ConversationAsync(
     AIProjectClient project = new(new Uri(projectEndpoint), new DefaultAzureCredential());
     string agentName = NewName();
     await project.AgentAdministrationClient.CreateAgentVersionAsync(
-        agentName, new ProjectsAgentVersionCreationOptions(CreateDefinition(liveDeployment)), cancellationToken: cancellationToken);
+        agentName, new ProjectsAgentVersionCreationOptions(CreateDefinition(liveDeployment)),
+        foundryFeatures: "VoiceAgents=V1Preview", cancellationToken: cancellationToken);
     try
     {
         using ProjectsLiveSessionClient session = await project.ProjectsLiveClient.StartSessionAsync(
@@ -220,7 +225,8 @@ public static async Task FunctionAsync(
     string agentName = NewName();
     VoiceAgentLiveDefinition definition = CreateResponsesDefinition(liveDeployment, backendDeployment, tools: true);
     await project.AgentAdministrationClient.CreateAgentVersionAsync(
-        agentName, new ProjectsAgentVersionCreationOptions(definition), cancellationToken: cancellationToken);
+        agentName, new ProjectsAgentVersionCreationOptions(definition),
+        foundryFeatures: "VoiceAgents=V1Preview", cancellationToken: cancellationToken);
     try
     {
         using ProjectsLiveSessionClient session = await project.ProjectsLiveClient.StartSessionAsync(
@@ -257,8 +263,11 @@ observe output audio and transcript events separately.
 ## Set connection options
 
 Select an agent version, provide structured instruction values, and add a correlation header.
-Set storage through `Store` or `QueryString`, not both. The SDK manages authentication, API
-version, and preview headers; those values cannot be overridden.
+Set storage through `Store` or `QueryString`, not both. The SDK manages authentication and API
+version; those values cannot be overridden. Native Live requires `VoiceAgents=V1Preview`.
+The SDK adds that opt-in by default, or preserves an explicit `Foundry-Features` header or
+`foundry_features` query while ensuring that the required opt-in is present. Use only one
+feature channel.
 `await using` calls `DisposeAsync` to try graceful shutdown.
 
 ```C# Snippet:Sample_VoiceAgent_Live_Options
@@ -275,7 +284,8 @@ public static async Task ConnectionOptionsAsync(
         DefaultValue = BinaryData.FromObjectAsJson("English")
     };
     ProjectsAgentVersion version = await project.AgentAdministrationClient.CreateAgentVersionAsync(
-        agentName, new ProjectsAgentVersionCreationOptions(definition), cancellationToken: cancellationToken);
+        agentName, new ProjectsAgentVersionCreationOptions(definition),
+        foundryFeatures: "VoiceAgents=V1Preview", cancellationToken: cancellationToken);
     try
     {
         ProjectsLiveClient live = project.ProjectsLiveClient;
@@ -329,7 +339,7 @@ public static async Task SessionControlsAsync(
     string agentName = NewName();
     await project.AgentAdministrationClient.CreateAgentVersionAsync(agentName,
         new ProjectsAgentVersionCreationOptions(CreateResponsesDefinition(liveDeployment, backendDeployment, tools: false)),
-        cancellationToken: cancellationToken);
+        foundryFeatures: "VoiceAgents=V1Preview", cancellationToken: cancellationToken);
     try
     {
         using ProjectsLiveSessionClient session = await project.ProjectsLiveClient.StartSessionAsync(
@@ -451,7 +461,8 @@ public static async Task StreamAudioAsync(string projectEndpoint, string liveDep
     AIProjectClient project = new(new Uri(projectEndpoint), new DefaultAzureCredential());
     string agentName = NewName();
     await project.AgentAdministrationClient.CreateAgentVersionAsync(
-        agentName, new ProjectsAgentVersionCreationOptions(CreateDefinition(liveDeployment)), cancellationToken: cancellationToken);
+        agentName, new ProjectsAgentVersionCreationOptions(CreateDefinition(liveDeployment)),
+        foundryFeatures: "VoiceAgents=V1Preview", cancellationToken: cancellationToken);
     try
     {
         using ProjectsLiveSessionClient session = await project.ProjectsLiveClient.StartSessionAsync(
@@ -494,7 +505,8 @@ public static async Task CancelReceiveAsync(string projectEndpoint, string liveD
     AIProjectClient project = new(new Uri(projectEndpoint), new DefaultAzureCredential());
     string agentName = NewName();
     await project.AgentAdministrationClient.CreateAgentVersionAsync(
-        agentName, new ProjectsAgentVersionCreationOptions(CreateDefinition(liveDeployment)), cancellationToken: cancellationToken);
+        agentName, new ProjectsAgentVersionCreationOptions(CreateDefinition(liveDeployment)),
+        foundryFeatures: "VoiceAgents=V1Preview", cancellationToken: cancellationToken);
     try
     {
         using ProjectsLiveSessionClient session = await project.ProjectsLiveClient.StartSessionAsync(
@@ -548,7 +560,8 @@ public static async Task StoredConversationAsync(string projectEndpoint, string 
     VoiceAgentLiveDefinition definition = CreateDefinition(liveDeployment);
     definition.Store = true;
     await project.AgentAdministrationClient.CreateAgentVersionAsync(
-        agentName, new ProjectsAgentVersionCreationOptions(definition), cancellationToken: cancellationToken);
+        agentName, new ProjectsAgentVersionCreationOptions(definition),
+        foundryFeatures: "VoiceAgents=V1Preview", cancellationToken: cancellationToken);
     try
     {
         string conversationId;

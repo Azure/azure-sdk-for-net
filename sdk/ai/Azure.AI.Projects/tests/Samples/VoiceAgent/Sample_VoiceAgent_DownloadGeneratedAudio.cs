@@ -7,8 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.Agents;
 
-#pragma warning disable AAIP001
-
 namespace Azure.AI.Projects.Tests.Samples;
 
 public static class Sample_VoiceAgent_DownloadGeneratedAudio

@@ -20,7 +20,7 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="DataGenerationJob"/>. </summary>
         /// <param name="name"> The display name of the data generation job. </param>
         /// <param name="sources"> The sources used for the data generation job. </param>
-        /// <param name="generationConfiguration"> The effective generation configuration for the data generation job. </param>
+        /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
         /// <param name="scenario"> The scenario of the data generation job. Either for fine-tuning or evaluation. </param>
         private protected DataGenerationJob(string name, IEnumerable<DataGenerationJobSource> sources, DataGenerationJobConfiguration generationConfiguration, DataGenerationJobScenario scenario)
         {
@@ -37,7 +37,7 @@ namespace Azure.AI.Projects
         /// <param name="error"> Error details — populated only on failure. </param>
         /// <param name="name"> The display name of the data generation job. </param>
         /// <param name="sources"> The sources used for the data generation job. </param>
-        /// <param name="generationConfiguration"> The effective generation configuration for the data generation job. </param>
+        /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
         /// <param name="scenario"> The scenario of the data generation job. Either for fine-tuning or evaluation. </param>
         /// <param name="createdOn"> The timestamp when the job was created, represented in Unix time (seconds since January 1, 1970). </param>
         /// <param name="finishedOn"> The timestamp when the job was finished, represented in Unix time (seconds since January 1, 1970). </param>
@@ -72,7 +72,7 @@ namespace Azure.AI.Projects
         /// <summary> The sources used for the data generation job. </summary>
         public IList<DataGenerationJobSource> Sources { get; }
 
-        /// <summary> The effective generation configuration for the data generation job. </summary>
+        /// <summary> The generation configuration for the data generation job. </summary>
         public DataGenerationJobConfiguration GenerationConfiguration { get; }
 
         /// <summary> The scenario of the data generation job. Either for fine-tuning or evaluation. </summary>

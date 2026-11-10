@@ -43,8 +43,6 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// [Protocol Method] Retrieves the specified data generation job and its current status.
-        /// Returns effective generation settings and preserves `type: conversations` for
-        /// conversation jobs. Reading an existing job does not require preview opt-in.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -74,8 +72,6 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// [Protocol Method] Retrieves the specified data generation job and its current status.
-        /// Returns effective generation settings and preserves `type: conversations` for
-        /// conversation jobs. Reading an existing job does not require preview opt-in.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -103,11 +99,7 @@ namespace Azure.AI.Projects
             }
         }
 
-        /// <summary>
-        /// Retrieves the specified data generation job and its current status.
-        /// Returns effective generation settings and preserves `type: conversations` for
-        /// conversation jobs. Reading an existing job does not require preview opt-in.
-        /// </summary>
+        /// <summary> Retrieves the specified data generation job and its current status. </summary>
         /// <param name="jobId"> The ID of the job. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -118,11 +110,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromValue((DataGenerationJob)result, result.GetRawResponse());
         }
 
-        /// <summary>
-        /// Retrieves the specified data generation job and its current status.
-        /// Returns effective generation settings and preserves `type: conversations` for
-        /// conversation jobs. Reading an existing job does not require preview opt-in.
-        /// </summary>
+        /// <summary> Retrieves the specified data generation job and its current status. </summary>
         /// <param name="jobId"> The ID of the job. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
@@ -133,24 +121,7 @@ namespace Azure.AI.Projects
             return ClientResult.FromValue((DataGenerationJob)result, result.GetRawResponse());
         }
 
-        /// <summary>
-        /// Submits a new data generation job for asynchronous execution.
-        /// Requests with `type` set to `conversations`, or `traces` with
-        /// `generate_test_case_rubric` set to true, require
-        /// `Foundry-Features: DataGenerationJobs=V1Preview`; the service rejects
-        /// these requests without this opt-in. Ordinary turn-level trace requests
-        /// without rubric generation do not require the header.
-        /// Conversation samples require `scenario` to be `evaluation`.
-        /// Jobs with `type: conversations` reconstruct existing traced conversations,
-        /// use sources of type `traces`, and do not support `sample_level`.
-        /// The `generate_test_case_rubric` flag is supported for both trace and
-        /// conversation jobs and requires a nonempty `model_options.model` when true.
-        /// The conversation-only `generate_test_case_description` flag also requires
-        /// a nonempty `model_options.model` when true. For conversation jobs, model
-        /// options must be omitted when neither flag is enabled.
-        /// Create, get, and list responses preserve `type: conversations`.
-        /// The response includes the effective generation settings.
-        /// </summary>
+        /// <summary> Submits a new data generation job for asynchronous execution. </summary>
         /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
@@ -174,24 +145,7 @@ namespace Azure.AI.Projects
             }
         }
 
-        /// <summary>
-        /// Submits a new data generation job for asynchronous execution.
-        /// Requests with `type` set to `conversations`, or `traces` with
-        /// `generate_test_case_rubric` set to true, require
-        /// `Foundry-Features: DataGenerationJobs=V1Preview`; the service rejects
-        /// these requests without this opt-in. Ordinary turn-level trace requests
-        /// without rubric generation do not require the header.
-        /// Conversation samples require `scenario` to be `evaluation`.
-        /// Jobs with `type: conversations` reconstruct existing traced conversations,
-        /// use sources of type `traces`, and do not support `sample_level`.
-        /// The `generate_test_case_rubric` flag is supported for both trace and
-        /// conversation jobs and requires a nonempty `model_options.model` when true.
-        /// The conversation-only `generate_test_case_description` flag also requires
-        /// a nonempty `model_options.model` when true. For conversation jobs, model
-        /// options must be omitted when neither flag is enabled.
-        /// Create, get, and list responses preserve `type: conversations`.
-        /// The response includes the effective generation settings.
-        /// </summary>
+        /// <summary> Submits a new data generation job for asynchronous execution. </summary>
         /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
@@ -215,24 +169,7 @@ namespace Azure.AI.Projects
             }
         }
 
-        /// <summary>
-        /// Submits a new data generation job for asynchronous execution.
-        /// Requests with `type` set to `conversations`, or `traces` with
-        /// `generate_test_case_rubric` set to true, require
-        /// `Foundry-Features: DataGenerationJobs=V1Preview`; the service rejects
-        /// these requests without this opt-in. Ordinary turn-level trace requests
-        /// without rubric generation do not require the header.
-        /// Conversation samples require `scenario` to be `evaluation`.
-        /// Jobs with `type: conversations` reconstruct existing traced conversations,
-        /// use sources of type `traces`, and do not support `sample_level`.
-        /// The `generate_test_case_rubric` flag is supported for both trace and
-        /// conversation jobs and requires a nonempty `model_options.model` when true.
-        /// The conversation-only `generate_test_case_description` flag also requires
-        /// a nonempty `model_options.model` when true. For conversation jobs, model
-        /// options must be omitted when neither flag is enabled.
-        /// Create, get, and list responses preserve `type: conversations`.
-        /// The response includes the effective generation settings.
-        /// </summary>
+        /// <summary> Submits a new data generation job for asynchronous execution. </summary>
         /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
         /// <param name="job"> The data generation job inputs to create. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
@@ -245,24 +182,7 @@ namespace Azure.AI.Projects
             return result;
         }
 
-        /// <summary>
-        /// Submits a new data generation job for asynchronous execution.
-        /// Requests with `type` set to `conversations`, or `traces` with
-        /// `generate_test_case_rubric` set to true, require
-        /// `Foundry-Features: DataGenerationJobs=V1Preview`; the service rejects
-        /// these requests without this opt-in. Ordinary turn-level trace requests
-        /// without rubric generation do not require the header.
-        /// Conversation samples require `scenario` to be `evaluation`.
-        /// Jobs with `type: conversations` reconstruct existing traced conversations,
-        /// use sources of type `traces`, and do not support `sample_level`.
-        /// The `generate_test_case_rubric` flag is supported for both trace and
-        /// conversation jobs and requires a nonempty `model_options.model` when true.
-        /// The conversation-only `generate_test_case_description` flag also requires
-        /// a nonempty `model_options.model` when true. For conversation jobs, model
-        /// options must be omitted when neither flag is enabled.
-        /// Create, get, and list responses preserve `type: conversations`.
-        /// The response includes the effective generation settings.
-        /// </summary>
+        /// <summary> Submits a new data generation job for asynchronous execution. </summary>
         /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
         /// <param name="job"> The data generation job inputs to create. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>

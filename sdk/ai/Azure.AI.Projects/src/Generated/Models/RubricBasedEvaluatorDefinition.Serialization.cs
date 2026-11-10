@@ -10,7 +10,7 @@ using Azure.AI.Projects.Evaluation;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Rubric evaluator definition. Ordinary quality rubrics report one aggregate. Safety rubrics require Boolean scoring and an explicit allowed classification on every dimension, and report disallowed_behavior_violated and allowed_behavior_violated as two independent lower-is-better metrics. Safety rubrics have no weights, threshold, or combined safety score. </summary>
+    /// <summary> Rubric-based evaluator definition — stores dimensions produced by the generate API. Used for both quality and safety evaluators. </summary>
     public partial class RubricBasedEvaluatorDefinition : EvaluatorDefinition, IJsonModel<RubricBasedEvaluatorDefinition>
     {
         /// <summary> Initializes a new instance of <see cref="RubricBasedEvaluatorDefinition"/> for deserialization. </summary>
@@ -20,7 +20,6 @@ namespace Azure.AI.Projects
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected override EvaluatorDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<RubricBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
@@ -35,10 +34,8 @@ namespace Azure.AI.Projects
                     throw new FormatException($"The model {nameof(RubricBasedEvaluatorDefinition)} does not support reading '{options.Format}' format.");
             }
         }
-#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
-#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<RubricBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
@@ -50,38 +47,28 @@ namespace Azure.AI.Projects
                     throw new FormatException($"The model {nameof(RubricBasedEvaluatorDefinition)} does not support writing '{options.Format}' format.");
             }
         }
-#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
-#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         BinaryData IPersistableModel<RubricBasedEvaluatorDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         RubricBasedEvaluatorDefinition IPersistableModel<RubricBasedEvaluatorDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => (RubricBasedEvaluatorDefinition)PersistableModelCreateCore(data, options);
-#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
-#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         string IPersistableModel<RubricBasedEvaluatorDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         void IJsonModel<RubricBasedEvaluatorDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
-#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<RubricBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
@@ -102,23 +89,14 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("pass_threshold"u8);
                 writer.WriteNumberValue(PassThreshold.Value);
             }
-            if (Optional.IsDefined(Scoring))
-            {
-                writer.WritePropertyName("scoring"u8);
-                writer.WriteObjectValue(Scoring, options);
-            }
         }
-#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         RubricBasedEvaluatorDefinition IJsonModel<RubricBasedEvaluatorDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RubricBasedEvaluatorDefinition)JsonModelCreateCore(ref reader, options);
-#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected override EvaluatorDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<RubricBasedEvaluatorDefinition>)this).GetFormatFromOptions(options) : options.Format;
@@ -129,11 +107,9 @@ namespace Azure.AI.Projects
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeRubricBasedEvaluatorDefinition(document.RootElement, options);
         }
-#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal static RubricBasedEvaluatorDefinition DeserializeRubricBasedEvaluatorDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -147,7 +123,6 @@ namespace Azure.AI.Projects
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<EvaluationsDimension> dimensions = default;
             float? passThreshold = default;
-            RubricScoring scoring = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -206,15 +181,6 @@ namespace Azure.AI.Projects
                     passThreshold = prop.Value.GetSingle();
                     continue;
                 }
-                if (prop.NameEquals("scoring"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    scoring = RubricScoring.DeserializeRubricScoring(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -227,9 +193,7 @@ namespace Azure.AI.Projects
                 metrics ?? new ChangeTrackingDictionary<string, EvaluatorMetric>(),
                 additionalBinaryDataProperties,
                 dimensions ?? new ChangeTrackingList<EvaluationsDimension>(),
-                passThreshold,
-                scoring);
+                passThreshold);
         }
-#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
     }
 }

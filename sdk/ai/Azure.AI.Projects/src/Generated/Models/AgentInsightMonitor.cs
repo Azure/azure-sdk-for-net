@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A per-agent Agent Insights monitor that owns configuration, runs, and discovered insights. </summary>
+    [Experimental("AAIP001")]
     public partial class AgentInsightMonitor
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -27,11 +29,10 @@ namespace Azure.AI.Projects
         /// <param name="nextScheduledRunOn"> The next time a scheduled agent insight run will start. Omitted when scheduled generation is disabled. </param>
         /// <param name="estimatedCost"> Estimated cost accumulated by Agent Insights for this monitor. </param>
         /// <param name="suspension"> Why the system suspended scheduled generation. Null when the monitor is not suspended. </param>
-        /// <param name="agentSummary"> Generated summary. Omitted when unavailable. </param>
-        /// <param name="priorities"> Analysis priorities. Omitted when not configured. </param>
+        /// <param name="overview"> The effective overview, or null before an overview is available. </param>
         /// <param name="updatedOn"> The time when this monitor was last updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentInsightMonitor(string id, string agentName, bool enabled, double runIntervalHours, string modelDeploymentName, DateTimeOffset? nextScheduledRunOn, AgentInsightEstimatedCost estimatedCost, AgentInsightSuspension suspension, AgentInsightSummary agentSummary, AgentInsightPrioritiesRead priorities, DateTimeOffset updatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentInsightMonitor(string id, string agentName, bool enabled, double runIntervalHours, string modelDeploymentName, DateTimeOffset? nextScheduledRunOn, AgentInsightEstimatedCost estimatedCost, AgentInsightSuspension suspension, AgentInsightsOverview overview, DateTimeOffset updatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             AgentName = agentName;
@@ -41,8 +42,7 @@ namespace Azure.AI.Projects
             NextScheduledRunOn = nextScheduledRunOn;
             EstimatedCost = estimatedCost;
             Suspension = suspension;
-            AgentSummary = agentSummary;
-            Priorities = priorities;
+            Overview = overview;
             UpdatedOn = updatedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -71,11 +71,8 @@ namespace Azure.AI.Projects
         /// <summary> Why the system suspended scheduled generation. Null when the monitor is not suspended. </summary>
         public AgentInsightSuspension Suspension { get; }
 
-        /// <summary> Generated summary. Omitted when unavailable. </summary>
-        public AgentInsightSummary AgentSummary { get; }
-
-        /// <summary> Analysis priorities. Omitted when not configured. </summary>
-        public AgentInsightPrioritiesRead Priorities { get; }
+        /// <summary> The effective overview, or null before an overview is available. </summary>
+        public AgentInsightsOverview Overview { get; }
 
         /// <summary> The time when this monitor was last updated. </summary>
         public DateTimeOffset UpdatedOn { get; }

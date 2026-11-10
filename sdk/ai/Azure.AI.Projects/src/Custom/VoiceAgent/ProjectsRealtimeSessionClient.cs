@@ -24,7 +24,6 @@ namespace Azure.AI.Projects;
 [Experimental("AAIP002")]
 public class ProjectsRealtimeSessionClient : RealtimeSessionClient
 {
-    private readonly string _experimentalHeaders;
     private readonly AuthenticationTokenProvider _tokenProvider;
     private readonly IReadOnlyDictionary<string, object> _tokenProperties;
     private readonly string _apiVersion;
@@ -75,7 +74,6 @@ public class ProjectsRealtimeSessionClient : RealtimeSessionClient
         _tokenProperties = tokenProperties;
         _apiVersion = apiVersion;
         _telemetry = telemetry;
-        _experimentalHeaders = parentClient?.ExperimentalHeaders ?? RealtimeClientHelper.ExperimentalHeaders(null);
     }
 
     // Bridges ProjectsRealtimeClient.StartSessionAsync (a sibling type, not a subclass, but in the
@@ -154,7 +152,7 @@ public class ProjectsRealtimeSessionClient : RealtimeSessionClient
 #pragma warning restore AZC0102
 
     /// <summary>
-    /// Connects to the Foundry voice agent using the project's authentication, API version, and preview headers.
+    /// Connects to the Foundry voice agent using the project's authentication, API version, and explicit feature opt-ins.
     /// </summary>
     /// <param name="queryString">Additional query parameters, such as <c>store=true</c>.</param>
     /// <param name="headers">Additional WebSocket headers.</param>
@@ -174,18 +172,24 @@ public class ProjectsRealtimeSessionClient : RealtimeSessionClient
             // ArgumentException), unlike .NET/.NET Core. Since Azure.AI.Projects also targets
             // netstandard2.0 (loadable by .NET Framework consumers), sending it here would break the
             // WebSocket handshake for them.
-            Dictionary<string, string> connectionHeaders = new(StringComparer.OrdinalIgnoreCase)
+            Dictionary<string, string> connectionHeaders = new(StringComparer.OrdinalIgnoreCase);
+            string foundryFeatures = RealtimeClientHelper.ResolveFoundryFeatures(
+                headers, ref queryString, requireVoiceAgentsPreview: false);
+            if (foundryFeatures != null)
             {
-                ["Foundry-Features"] = _experimentalHeaders,
-            };
+                connectionHeaders["Foundry-Features"] = foundryFeatures;
+            }
             if (headers is not null)
             {
                 foreach (KeyValuePair<string, string> nameHeader in headers)
                 {
-                    if (nameHeader.Key.Equals("Authorization", StringComparison.OrdinalIgnoreCase) ||
-                        nameHeader.Key.Equals("Foundry-Features", StringComparison.OrdinalIgnoreCase))
+                    if (nameHeader.Key.Equals("Authorization", StringComparison.OrdinalIgnoreCase))
                     {
-                        throw new ArgumentException("Authentication and preview headers are managed by the client.", nameof(headers));
+                        throw new ArgumentException("Authentication headers are managed by the client.", nameof(headers));
+                    }
+                    if (nameHeader.Key.Equals("Foundry-Features", StringComparison.OrdinalIgnoreCase))
+                    {
+                        continue;
                     }
                     if (nameHeader.Key.Equals("Sec-WebSocket-Protocol", StringComparison.OrdinalIgnoreCase))
                     {

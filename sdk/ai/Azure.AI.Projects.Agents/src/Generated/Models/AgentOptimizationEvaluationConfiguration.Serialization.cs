@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Reusable quality-measurement configuration for agent optimization. </summary>
+    /// <summary> Reusable quality-measurement configuration. </summary>
     public partial class AgentOptimizationEvaluationConfiguration : IJsonModel<AgentOptimizationEvaluationConfiguration>
     {
         /// <summary> Initializes a new instance of <see cref="AgentOptimizationEvaluationConfiguration"/> for deserialization. </summary>

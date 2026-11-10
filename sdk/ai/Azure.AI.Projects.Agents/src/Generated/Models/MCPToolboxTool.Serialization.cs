@@ -192,16 +192,6 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("project_connection_id"u8);
                 writer.WriteStringValue(ProjectConnectionId);
             }
-            if (Optional.IsCollectionDefined(RequestHeaderBindings))
-            {
-                writer.WritePropertyName("request_header_bindings"u8);
-                writer.WriteStartArray();
-                foreach (MCPToolboxRequestHeaderBinding item in RequestHeaderBindings)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
         }
 #pragma warning restore AAIP002 // Model initialization and serialization support experimental members and variants.
 
@@ -253,7 +243,6 @@ namespace Azure.AI.Projects.Agents
             BinaryData requireApprovalInternal = default;
             bool? deferLoading = default;
             string projectConnectionId = default;
-            IList<MCPToolboxRequestHeaderBinding> requestHeaderBindings = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -397,20 +386,6 @@ namespace Azure.AI.Projects.Agents
                     projectConnectionId = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("request_header_bindings"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<MCPToolboxRequestHeaderBinding> array = new List<MCPToolboxRequestHeaderBinding>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(MCPToolboxRequestHeaderBinding.DeserializeMCPToolboxRequestHeaderBinding(item, options));
-                    }
-                    requestHeaderBindings = array;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -433,8 +408,7 @@ namespace Azure.AI.Projects.Agents
                 allowedCallers,
                 requireApprovalInternal,
                 deferLoading,
-                projectConnectionId,
-                requestHeaderBindings ?? new ChangeTrackingList<MCPToolboxRequestHeaderBinding>())
+                projectConnectionId)
             {
                 _allowedToolsIsDefined = allowedToolsIsDefined
             };

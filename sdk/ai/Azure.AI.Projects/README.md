@@ -121,7 +121,6 @@ To select a transport for a Voice Agent connection, pass `ProjectsRealtimeSessio
 to `AIProjectClient.ProjectsRealtimeClient.StartSessionAsync`:
 
 ```C#
-#pragma warning disable AAIP001 // VoiceAgentTransport is experimental.
 #pragma warning disable AAIP002 // The realtime client is experimental.
 #pragma warning disable OPENAI002 // OpenAI realtime types are experimental.
 ProjectsRealtimeSessionClientOptions options = new()
@@ -135,6 +134,13 @@ using RealtimeSessionClient session = await projectClient.ProjectsRealtimeClient
 
 `Websocket` sends Realtime events over a WebSocket. `Webrtc` provides signaling only; your
 application must handle the peer connection, audio transport, and SDP exchange.
+
+Ordinary Realtime connections do not require a Voice Agents preview opt-in. When an agent uses
+inline/Handoff, SIP transfer destinations, or post-call delivery, explicitly supply
+`VoiceAgents=V1Preview` through `options.Headers["Foundry-Features"]` or the
+`foundry_features` query parameter, but not both. Native GPT Live remains preview and adds its
+required opt-in by default. `AAIP002` and `OPENAI002` are separate SDK experimental diagnostics,
+not the Foundry service's feature stages.
 
 For runnable examples, see [text and function calls](samples/Sample_VoiceAgent.md),
 [WebSocket transport and saved history](samples/Sample_VoiceAgent_ReadConversation.md),

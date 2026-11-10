@@ -13,6 +13,8 @@ namespace Azure.AI.Extensions.OpenAI.Tests.Utils
     public static class ProjectsTestSanitizers
     {
         internal const string LegacyAgentInsightsFeaturePattern = @"(?:^AgentInsights=V1Preview(?:,|$)|,AgentInsights=V1Preview(?=,|$))";
+        internal const string LegacyDefaultVoiceAgentFeaturePattern = @"(\AMemoryStores=V1Preview,WorkflowAgents=V1Preview,(?:[^,]+,)*DraftAgents=V1Preview),VoiceAgents=V1Preview(?=,ModelRouterControls=V1Preview(?:,|\z))";
+        internal const string LegacyDefaultVoiceAgentFeatureReplacement = "${1}";
 
         // Replacement values
         public const string SANITIZED_SUBSCRIPTION = "00000000-0000-0000-0000-000000000000";
@@ -65,6 +67,12 @@ namespace Azure.AI.Extensions.OpenAI.Tests.Utils
                 {
                     Regex = LegacyAgentInsightsFeaturePattern,
                     Value = string.Empty
+                }));
+                // Remove only the obsolete token embedded in the legacy defaults, not explicit Voice opt-ins.
+                testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new("Foundry-Features")
+                {
+                    Regex = LegacyDefaultVoiceAgentFeaturePattern,
+                    Value = LegacyDefaultVoiceAgentFeatureReplacement
                 }));
             }
 

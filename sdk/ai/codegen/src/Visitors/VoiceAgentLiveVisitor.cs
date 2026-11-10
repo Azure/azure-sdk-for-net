@@ -126,6 +126,7 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
         if (type is ModelFactoryProvider)
         {
             RemoveSupersededVoiceFactories(type);
+            AddStableRealtimeFactory(type);
         }
         return base.VisitType(type);
     }
@@ -164,7 +165,7 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
             method.Update(bodyStatements: body);
         }
         if (method.EnclosingType is ModelFactoryProvider && method.Signature.ReturnType?.Name is
-            "VoiceAgentDefinition" or "VoiceAgentLiveDefinition" or "VoiceAgentBaseDefinition" or "VoiceAgentAudioOutputConfig")
+            "VoiceAgentLiveDefinition" or "VoiceAgentBaseDefinition" or "VoiceAgentAudioOutputConfig")
         {
             UpdateVoiceFactory(method);
         }
@@ -354,6 +355,126 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
         factory.Update(methods: methods);
     }
 
+    private void AddStableRealtimeFactory(TypeProvider factory)
+    {
+        MethodProvider previewFactory = factory.Methods.SingleOrDefault(method =>
+            method.Signature.Name == "VoiceAgentDefinition" &&
+            method.Signature.Parameters.Any(parameter => parameter.Name == "postCall"));
+        if (previewFactory?.BodyStatements == null)
+        {
+            return;
+        }
+        Dictionary<string, CSharpType> collectionInitializers = [];
+        foreach (MethodBodyStatement statement in previewFactory.BodyStatements)
+        {
+            if (statement is ExpressionStatement { Expression: AssignmentExpression { UseNullCoalesce: true } assignment })
+            {
+                ValueExpression variable = assignment.Variable;
+                ValueExpression value = assignment.Value;
+                while (variable is ScopedApi variableApi)
+                {
+                    variable = variableApi.Original;
+                }
+                while (value is ScopedApi valueApi)
+                {
+                    value = valueApi.Original;
+                }
+                if (variable is not VariableExpression parameter || value is not NewInstanceExpression initializer ||
+                    initializer.Parameters.Count != 0 || initializer.InitExpression != null)
+                {
+                    throw new InvalidOperationException("Unexpected Realtime factory collection initialization.");
+                }
+                collectionInitializers.Add(parameter.Declaration.RequestedName, initializer.Type);
+            }
+        }
+        // The GA factory must not call a constructor whose signature exposes the preview configuration.
+        ModelProvider model = _models["VoiceAgentDefinition"];
+        ConstructorSignature constructor = model.FullConstructor.Signature;
+        ParameterProvider[] constructorParameters = constructor.Parameters.Where(parameter => parameter.Name != "postCall")
+            .Select(parameter => new ParameterProvider(parameter.Name, parameter.Description, parameter.Type,
+                attributes: parameter.Attributes)).ToArray();
+        ConstructorProvider stableConstructor = new(
+            new ConstructorSignature(model.Type, constructor.Description, MethodSignatureModifiers.Internal,
+                constructorParameters,
+                initializer: new ConstructorInitializer(false, constructor.Parameters.Select(parameter =>
+                    parameter.Name == "postCall" ? Null :
+                        constructorParameters.Single(candidate => candidate.Name == parameter.Name).AsVariable()).ToArray())),
+            Array.Empty<MethodBodyStatement>(), model);
+        model.Update(constructors: [.. model.Constructors, stableConstructor]);
+
+        MethodSignature signature = previewFactory.Signature;
+        ParameterProvider[] orderedParameters =
+        [
+            .. RealtimeFactoryParameters.Select(name => signature.Parameters.Single(parameter => parameter.Name == name)),
+            .. signature.Parameters.Where(parameter => parameter.Name is not ("kind" or "subProtocol") &&
+                !RealtimeFactoryParameters.Contains(parameter.Name))
+        ];
+        ParameterProvider[] stableParameters = orderedParameters.Where(parameter => parameter.Name != "postCall")
+            .Select(parameter => new ParameterProvider(parameter.Name, parameter.Description, parameter.Type,
+                defaultValue: Default, attributes: parameter.Attributes)).ToArray();
+        ParameterProvider[] previewParameters = orderedParameters.Select(parameter =>
+            new ParameterProvider(parameter.Name, parameter.Description, parameter.Type, attributes: parameter.Attributes)).ToArray();
+        MethodProvider stableFactory = new(
+            new MethodSignature(signature.Name, signature.Description, signature.Modifiers, signature.ReturnType,
+                signature.ReturnDescription, stableParameters,
+                Attributes: signature.Attributes),
+            BuildRealtimeFactoryBody(model, stableParameters, collectionInitializers), factory, FactoryDocs(stableParameters));
+
+        // Two optional overloads with the same prefix make GA calls ambiguous. Keep the preview CLR
+        // signature and positional order, but require every argument on that compatibility overload.
+        signature.Update(parameters: previewParameters);
+        previewFactory.Update(bodyStatements: BuildRealtimeFactoryBody(model, previewParameters, collectionInitializers),
+            xmlDocProvider: FactoryDocs(previewParameters));
+        List<MethodProvider> methods = [.. factory.Methods];
+        methods.Insert(methods.IndexOf(previewFactory), stableFactory);
+        factory.Update(methods: methods);
+
+        XmlDocProvider FactoryDocs(IReadOnlyList<ParameterProvider> parameters)
+            => new(previewFactory.XmlDocs.Summary,
+                parameters.Select(parameter => new XmlDocParamStatement(parameter)).ToArray(),
+                returns: new XmlDocReturnsStatement($"A new {signature.ReturnType:C} instance for mocking."));
+    }
+
+    private static MethodBodyStatement[] BuildRealtimeFactoryBody(ModelProvider model,
+        IReadOnlyList<ParameterProvider> parameters, IReadOnlyDictionary<string, CSharpType> collectionInitializers)
+    {
+        List<MethodBodyStatement> body = [];
+        foreach (ParameterProvider parameter in parameters.Where(parameter => parameter.Type.IsCollection))
+        {
+            if (!collectionInitializers.TryGetValue(parameter.Name, out CSharpType initializationType))
+            {
+                throw new InvalidOperationException($"Missing Realtime factory collection initialization for {parameter.Name}.");
+            }
+            body.Add(new ExpressionStatement(new AssignmentExpression(parameter.AsVariable(),
+                New.Instance(initializationType), true)));
+        }
+        Dictionary<string, ParameterProvider> byName = parameters.ToDictionary(parameter => parameter.Name);
+        ValueExpression[] arguments = model.FullConstructor.Signature.Parameters
+            .Where(parameter => parameter.Name != "postCall" || byName.ContainsKey(parameter.Name))
+            .Select(parameter =>
+            {
+                if (parameter.Name == "kind")
+                {
+                    return Literal("voice");
+                }
+                if (parameter.Name == "additionalBinaryDataProperties")
+                {
+                    return Null;
+                }
+                if (parameter.Name == "subProtocol")
+                {
+                    return Default;
+                }
+                ParameterProvider argument = byName[parameter.Name];
+                ValueExpression value = argument.AsVariable();
+                return CSharpType.RequiresToList(argument.Type, parameter.Type)
+                    ? value.Invoke(nameof(Enumerable.ToList))
+                    : value;
+            }).ToArray();
+        body.Add(Return(New.Instance(model.Type, arguments)));
+        return body.ToArray();
+    }
+
     private void UpdateVoiceFactory(MethodProvider method)
     {
         if (method.BodyStatements == null)
@@ -364,7 +485,6 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
         string name = method.Signature.ReturnType.Name;
         string[] originalParameters = name switch
         {
-            "VoiceAgentDefinition" => RealtimeFactoryParameters,
             "VoiceAgentAudioOutputConfig" => AudioOutputFactoryParameters,
             _ => null
         };
@@ -393,7 +513,6 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
                     constructor[index].Name switch
                     {
                         "kind" => Literal("voice"),
-                        "subProtocol" when name == "VoiceAgentDefinition" => Default,
                         "subProtocol" when name == "VoiceAgentLiveDefinition" => Static(constructor[index].Type).Property("Live"),
                         "modelType" when name == "VoiceAgentLiveDefinition" => Literal("self_deployed"),
                         _ => argument

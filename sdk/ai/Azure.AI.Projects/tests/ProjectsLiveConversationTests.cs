@@ -24,6 +24,7 @@ public class ProjectsLiveConversationTests : ProjectsClientTestBase
 {
     public ProjectsLiveConversationTests(bool isAsync) : base(isAsync)
     {
+        ProjectsTestSanitizers.ApplyLegacyLiveVoiceRecordingHeaders(this);
         TestTimeoutInSeconds = 180;
         JsonPathSanitizers.Add("$..principal_id");
         JsonPathSanitizers.Add("$..client_id");
@@ -37,7 +38,8 @@ public class ProjectsLiveConversationTests : ProjectsClientTestBase
         AIProjectClient project = CreateRecordedProject();
         AgentAdministrationClient agents = CreateProxyFromClient(project.AgentAdministrationClient);
         string name = Recording.GenerateId("live-rest-recording-", 40);
-        await agents.CreateAgentVersionAsync(name, new ProjectsAgentVersionCreationOptions(CreateDefinition()));
+        await agents.CreateAgentVersionAsync(name, new ProjectsAgentVersionCreationOptions(CreateDefinition()),
+            foundryFeatures: "VoiceAgents=V1Preview");
         try
         {
             string conversationId = await CreateStoredConversationAsync(project, name);
@@ -78,7 +80,8 @@ public class ProjectsLiveConversationTests : ProjectsClientTestBase
         AIProjectClient project = CreateRecordedProject();
         AgentAdministrationClient agents = CreateProxyFromClient(project.AgentAdministrationClient);
         string name = Recording.GenerateId("live-audio-recording-", 40);
-        await agents.CreateAgentVersionAsync(name, new ProjectsAgentVersionCreationOptions(CreateDefinition()));
+        await agents.CreateAgentVersionAsync(name, new ProjectsAgentVersionCreationOptions(CreateDefinition()),
+            foundryFeatures: "VoiceAgents=V1Preview");
         try
         {
             string conversationId = await CreateStoredConversationAsync(project, name);

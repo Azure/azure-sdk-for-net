@@ -9,7 +9,6 @@ using NUnit.Framework;
 using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents.Tests;
-#pragma warning disable AAIP001
 #pragma warning disable AAIP002, OPENAI002
 public class VoiceAgentUnitTests
 {
@@ -123,11 +122,41 @@ public class VoiceAgentUnitTests
     }
 
     [Test]
+    public void RealtimeModelFactorySupportsGaCallsWithoutPreviewOptIn()
+    {
+        VoiceAgentDefinition[] definitions =
+        [
+            ProjectsAgentsModelFactory.VoiceAgentDefinition(),
+            ProjectsAgentsModelFactory.VoiceAgentDefinition(default),
+            ProjectsAgentsModelFactory.VoiceAgentDefinition(null),
+            ProjectsAgentsModelFactory.VoiceAgentDefinition(default, default),
+            ProjectsAgentsModelFactory.VoiceAgentDefinition(default, model: "realtime-model"),
+            ProjectsAgentsModelFactory.VoiceAgentDefinition(null, model: "realtime-model"),
+            ProjectsAgentsModelFactory.VoiceAgentDefinition(
+                default, default, "realtime-model", default, default, default, default,
+                default, default, default, default, default, default, default,
+                default, default, default, default, default)
+        ];
+
+        Assert.That(definitions, Is.All.Not.Null);
+        Assert.That(definitions[^1].Model, Is.EqualTo("realtime-model"));
+        foreach (VoiceAgentDefinition definition in definitions)
+        {
+            using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(definition));
+            Assert.That(document.RootElement.TryGetProperty("post_call", out _), Is.False);
+        }
+    }
+
+#pragma warning disable AAIP001
+
+    [Test]
     public void RealtimeModelFactoryPreservesPostCall()
     {
         VoiceAgentPostCallConfig postCall = new([]);
         VoiceAgentDefinition definition = ProjectsAgentsModelFactory.VoiceAgentDefinition(
-            model: "realtime-model", postCall: postCall);
+            default, default, "realtime-model", default, default, default, default,
+            default, default, default, default, default, default, default,
+            default, default, default, default, default, postCall);
 
         Assert.That(definition.PostCall, Is.SameAs(postCall));
         using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(definition));
@@ -135,7 +164,20 @@ public class VoiceAgentUnitTests
     }
 
     [Test]
-    public void RealtimeModelFactoryKeepsExistingParameterOrderWhenAddingFields()
+    public void RealtimeModelFactoryCanSetPreviewPostCallAfterGaConstruction()
+    {
+        VoiceAgentPostCallConfig postCall = new([]);
+        VoiceAgentDefinition definition = ProjectsAgentsModelFactory.VoiceAgentDefinition(model: "realtime-model");
+        definition.PostCall = postCall;
+
+        Assert.That(definition.PostCall, Is.SameAs(postCall));
+        using JsonDocument document = JsonDocument.Parse(ModelReaderWriter.Write(definition));
+        Assert.That(document.RootElement.GetProperty("post_call").GetProperty("destinations").GetArrayLength(), Is.Zero);
+    }
+
+    [TestCase(false)]
+    [TestCase(true)]
+    public void RealtimeModelFactoryKeepsExistingParameterOrderWhenAddingFields(bool includesPostCall)
     {
         string[] originalParameters =
         [
@@ -144,13 +186,15 @@ public class VoiceAgentUnitTests
             "parallelToolCalls", "structuredInputs", "subagentConfig", "store"
         ];
         string[] parameters = typeof(ProjectsAgentsModelFactory)
-            .GetMethod(nameof(ProjectsAgentsModelFactory.VoiceAgentDefinition))
+            .GetMethods().Single(method => method.Name == nameof(ProjectsAgentsModelFactory.VoiceAgentDefinition) &&
+                method.GetParameters().Any(parameter => parameter.Name == "postCall") == includesPostCall)
             .GetParameters().Select(parameter => parameter.Name).ToArray();
 
         Assert.Multiple(() =>
         {
             Assert.That(parameters.Take(originalParameters.Length), Is.EqualTo(originalParameters));
-            Assert.That(parameters.Skip(originalParameters.Length), Is.EqualTo(new[] { "soundscape", "postCall" }));
+            Assert.That(parameters.Skip(originalParameters.Length),
+                Is.EqualTo(includesPostCall ? new[] { "soundscape", "postCall" } : new[] { "soundscape" }));
             Assert.That(parameters, Does.Not.Contain("kind").And.Not.Contain("subProtocol"));
         });
     }

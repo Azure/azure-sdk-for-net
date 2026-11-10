@@ -62,7 +62,8 @@ public static class Sample_VoiceAgent_LiveManagedDelegation
         try
         {
             await project.AgentAdministrationClient.CreateAgentVersionAsync(
-                agentName, new ProjectsAgentVersionCreationOptions(definition), cancellationToken: timeout.Token);
+                agentName, new ProjectsAgentVersionCreationOptions(definition),
+                foundryFeatures: "VoiceAgents=V1Preview", cancellationToken: timeout.Token);
             using ProjectsLiveSessionClient session = await project.ProjectsLiveClient.StartSessionAsync(
                 agentName, new ProjectsLiveSessionClientOptions { Store = false }, timeout.Token);
             if (session.SessionStarted.Session.Delegation is not VoiceAgentLiveManagedAgentDelegation owner ||

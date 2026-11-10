@@ -62,20 +62,14 @@ public class ProjectsRealtimeClient : RealtimeClient
         _tokenProperties = tokenProperties;
         _apiVersion = apiVersion;
         _options = preparedOptions;
-        ExperimentalHeaders = RealtimeClientHelper.ExperimentalHeaders(experimentalHeaders);
     }
 
     private static ClientPipeline CreatePipeline(Uri endpoint, AuthenticationTokenProvider tokenProvider, string experimentalHeaders, RealtimeClientOptions options, out RealtimeClientOptions preparedOptions)
     {
         preparedOptions = options ?? new RealtimeClientOptions();
         preparedOptions.Endpoint = endpoint;
-        return RealtimeClientHelper.CreatePipeline(endpoint, tokenProvider, RealtimeClientHelper.ExperimentalHeaders(experimentalHeaders), s_defaultAuthorizationScope, preparedOptions);
+        return RealtimeClientHelper.CreatePipeline(endpoint, tokenProvider, experimentalHeaders, s_defaultAuthorizationScope, preparedOptions);
     }
-
-    // Read by ProjectsRealtimeSessionClient (via its internal ParentClient reference) so the same
-    // Foundry-Features header value isn't computed/stored a second time for the session's own
-    // independent WebSocket handshake.
-    internal string ExperimentalHeaders { get; }
 
     /// <summary>
     /// Starts a Realtime session for the named Foundry voice agent.

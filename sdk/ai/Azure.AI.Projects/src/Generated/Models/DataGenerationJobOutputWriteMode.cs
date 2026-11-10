@@ -13,7 +13,7 @@ namespace Azure.AI.Projects
         private readonly string _value;
         /// <summary> Default behavior. Write newly generated output without merging it with an existing output. For dataset outputs, creates the next dataset version using only newly generated rows. </summary>
         private const string OverwriteValue = "overwrite";
-        /// <summary> Merge newly generated output into an existing output. For trace data generation jobs that output evaluation datasets, creates the next dataset version by merging newly generated rows with the latest existing dataset version and de-duping trace rows. For conversation jobs, a newly generated conversation snapshot replaces the existing snapshot of the same conversation wholesale. The replacement snapshot may omit earlier turns outside the selected time window. Existing conversations without a newly generated replacement remain unchanged. Merging replaces whole conversation snapshots rather than unioning individual turns, so it does not retain every previous turn from the replaced snapshot. For fine-tuning file outputs, merges into the file identified by `merge_file_id`. </summary>
+        /// <summary> Merge newly generated output into an existing output. For trace data generation jobs that output evaluation datasets, creates the next dataset version by merging newly generated rows with the latest existing dataset version and de-duping trace rows. For fine-tuning file outputs, merges into the file identified by `merge_file_id`. </summary>
         private const string MergeValue = "merge";
 
         /// <summary> Initializes a new instance of <see cref="DataGenerationJobOutputWriteMode"/>. </summary>
@@ -29,7 +29,7 @@ namespace Azure.AI.Projects
         /// <summary> Default behavior. Write newly generated output without merging it with an existing output. For dataset outputs, creates the next dataset version using only newly generated rows. </summary>
         public static DataGenerationJobOutputWriteMode Overwrite { get; } = new DataGenerationJobOutputWriteMode(OverwriteValue);
 
-        /// <summary> Merge newly generated output into an existing output. For trace data generation jobs that output evaluation datasets, creates the next dataset version by merging newly generated rows with the latest existing dataset version and de-duping trace rows. For conversation jobs, a newly generated conversation snapshot replaces the existing snapshot of the same conversation wholesale. The replacement snapshot may omit earlier turns outside the selected time window. Existing conversations without a newly generated replacement remain unchanged. Merging replaces whole conversation snapshots rather than unioning individual turns, so it does not retain every previous turn from the replaced snapshot. For fine-tuning file outputs, merges into the file identified by `merge_file_id`. </summary>
+        /// <summary> Merge newly generated output into an existing output. For trace data generation jobs that output evaluation datasets, creates the next dataset version by merging newly generated rows with the latest existing dataset version and de-duping trace rows. For fine-tuning file outputs, merges into the file identified by `merge_file_id`. </summary>
         public static DataGenerationJobOutputWriteMode Merge { get; } = new DataGenerationJobOutputWriteMode(MergeValue);
 
         /// <summary> Determines if two <see cref="DataGenerationJobOutputWriteMode"/> values are the same. </summary>

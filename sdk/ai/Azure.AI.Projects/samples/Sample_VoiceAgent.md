@@ -9,8 +9,8 @@ Realtime commands and events with your Foundry voice agent.
 - Set `FOUNDRY_REALTIME_MODEL_NAME` to a deployed realtime model.
 - Use an identity with permission to create agents and connect to their voice endpoints.
 - Reference `Azure.AI.Projects` and `Azure.Identity`.
-- These APIs are experimental. Suppress diagnostics `AAIP001`, `AAIP002`, and `OPENAI002`
-  when building the sample.
+- The Realtime client depends on experimental OpenAI SDK types. Suppress diagnostics `AAIP002`
+  and `OPENAI002` when building the sample; the Realtime service features shown here are GA.
 
 Run the snippets in an asynchronous method. The [complete sample](../tests/Samples/VoiceAgent/Sample_VoiceAgent.cs)
 includes the required imports, timeout, and cleanup.
@@ -23,6 +23,11 @@ credentials, such as `DefaultAzureCredential`. For local development, sign in wi
 `RealtimeSessionClientOptions.ClientSecret` does not provide ephemeral authentication for
 this Voice Agent connection path. Inherited client-secret creation methods are not mapped
 to Voice Agent endpoints.
+
+GA Realtime definitions and connections do not require `VoiceAgents=V1Preview`. If an agent
+uses inline/Handoff, SIP transfer destinations, or post-call delivery, opt in explicitly when
+creating its definition and connecting. Connection options accept either a `Foundry-Features`
+header or a `foundry_features` query parameter, but not both.
 
 ## Create and use a voice agent
 
@@ -39,6 +44,7 @@ VoiceAgentDefinition definition = new()
 definition.OutputModalities.Add(VoiceOutputModality.Text);
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName, new ProjectsAgentVersionCreationOptions(definition), cancellationToken: timeout.Token);
+Console.WriteLine($"Created voice agent '{agentName}' version '{agentVersion.Version}'.");
 ```
 
 2. Start a realtime session against the agent, send a text turn, and read the response.
@@ -69,11 +75,12 @@ await foreach (RealtimeServerUpdate update in session.ReceiveUpdatesAsync(timeou
 Console.WriteLine($"Voice agent response: {responseText}");
 ```
 
-3. Clean up the temporary agent version.
+3. Clean up the temporary agent and all its versions.
 
 ```C# Snippet:Sample_VoiceAgent_Cleanup
-await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(
-    agentName, agentVersion.Version, CancellationToken.None);
+using CancellationTokenSource cleanupTimeout = new(TimeSpan.FromSeconds(30));
+var deleted = await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName, cleanupTimeout.Token);
+Console.WriteLine($"Deleted voice agent '{agentName}': HTTP {deleted.GetRawResponse().Status}");
 ```
 
 ## Call a function
@@ -145,6 +152,8 @@ try
 }
 finally
 {
-    await project.AgentAdministrationClient.DeleteAgentAsync(agentName, cancellationToken: CancellationToken.None);
+    using CancellationTokenSource cleanupTimeout = new(TimeSpan.FromSeconds(30));
+    var deleted = await project.AgentAdministrationClient.DeleteAgentAsync(agentName, cleanupTimeout.Token);
+    Console.WriteLine($"Deleted voice agent '{agentName}': HTTP {deleted.GetRawResponse().Status}");
 }
 ```

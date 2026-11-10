@@ -8,26 +8,31 @@
 - Native Live connections require TLS-protected WebSocket endpoints and use the authentication token provider's options factory.
 - Added opt-in Voice Agent realtime tracing for connections, sessions, responses, tool milestones, audio usage, cancellation, and errors using the existing Foundry GenAI tracing settings. Added correlated, payload-free realtime diagnostic logs.
 - Included first-text/audio latency, reported audio formats and sample rates, session audio totals, consistent session lifecycle events, and bounded opt-in transcript/tool message content in Voice Agent telemetry.
-- Added Agent Insights analysis priorities, generated summaries, and run-input models aligned with the current service contract.
-- Added rubric scoring and safety-generation configuration, model-suggested dimension weights, and endpoint evaluator schema versions.
-- Added evaluator diagnostic history and health metrics, trace/conversation evaluation data sources, conversation-based data generation, and user-conversation simulation configuration.
-- Added optional-model evaluator generation inputs and parameterless daily schedules while retaining the existing explicit-model, weighted-dimension, and explicit-hours constructors.
+- Added rubric-based evaluator definitions and quality warnings for rubric generation.
 
 ### Breaking Changes
 
-- Realtime connection options no longer allow overriding the client-managed `Authorization` or `Foundry-Features` headers; these overrides now throw `ArgumentException`.
-- `EvaluationsDimension.Weight` is now an optional `int?` property.
+- Realtime connection options no longer allow overriding the client-managed `Authorization` header; these overrides throw `ArgumentException`. Conditional Voice Agents preview opt-ins may be supplied explicitly through the `Foundry-Features` header or `foundry_features` query.
+- `EvaluationsDimension.Weight` is a required `int`; provide a value when constructing a dimension.
+- `EvaluatorGenerationInputs` requires a caller-provided model, and `DailyRecurrenceSchedule` requires explicit hours.
 - `EvaluatorGenerationArtifacts.Reference` now uses `VersionedDatasetReference` instead of the removed `DatasetReference` model, retaining the required dataset version.
-- `AgentInsightMonitors.GetInsights` and `GetInsightsAsync` now accept `categories`, `severities`, and `statuses` collections instead of singular filters.
-- Agent Insights monitor/run creation now uses generated method parameters instead of `AgentInsightMonitorCreate` and `AgentInsightRunCreate`. The retired overview models were removed in favor of monitor summaries.
+- `AgentInsightMonitors.GetInsights` and `GetInsightsAsync` accept category, severity, and status collections, serialized to the service's singular `category`, `severity`, and `status` query parameters.
+- Agent Insights monitor creation accepts `AgentInsightMonitorCreate`, and run creation accepts `AgentInsightRunCreate`. Monitors expose `Overview` instead of `Priorities`.
+- Added typed Agent Insights monitor and run request models, plus overview and overview-source models for monitor summaries.
+- Added `EvaluationDataGenerationJobOutputConfiguration` and `EvaluationRuleActionType` models from the current service contract.
+- The regenerated contract removes the prior Agent Insights diagnostic, priority, generated-summary, and run-input models; evaluator diagnostic-history and health APIs; trace/conversation evaluation data-source and user-conversation simulation APIs; and the `ProjectsMetadata` alias.
 
 ### Bugs Fixed
 
+- Stopped automatically opting GA Realtime sessions and Voice Agent REST operations into preview. Native GPT Live retains its required opt-in, while conditional Handoff, SIP, and post-call configurations require an explicit caller opt-in.
+- Preserved per-request feature headers on inherited Agents clients and initialized settings-based connection caching consistently.
 - Realtime WebSocket authentication now honors provider-created token options and explicitly rejects unsupported authentication flows.
 - Fixed synchronous Realtime event streaming and connection failures when explicitly setting the `realtime` WebSocket subprotocol.
+- Preserved the Agent Insights collection-filter overloads during regeneration so calls that omit optional filters remain unambiguous.
 
 ### Sample Updates
 
+- Updated existing Voice Agent examples to distinguish GA Realtime usage from explicitly opted-in native GPT Live definition creation.
 - Added native Live samples for connections, session controls, multi-turn text, audio streaming, function calling, and stored-conversation REST APIs, including synchronous/asynchronous typed/protocol overloads, typed delegation ownership and session updates, persistence finalization polling, speech-item validation, and coordinated audio cleanup and graceful shutdown.
 - Consolidated the Realtime WebSocket transport and saved-conversation samples into one end-to-end example with bounded requests, completed-response validation, and temporary-agent cleanup.
 - Added two focused Voice Agent samples: downloading audio retained after an interruption and delegating native GPT Live work to a Foundry-managed agent.
@@ -35,7 +40,7 @@
 ### Other Changes
 
 - Agent Insights no longer requires the `AgentInsights=V1Preview` feature header.
-- Regenerated from `feature/foundry-release` at [`298aa64878ea0a8f5eb2f610760a60356c3e58e2`](https://github.com/Azure/azure-rest-api-specs/tree/298aa64878ea0a8f5eb2f610760a60356c3e58e2).
+- Regenerated from `feature/foundry-release` at [`879f4945427593222a5a9ecabefcd8a454e9ed71`](https://github.com/Azure/azure-rest-api-specs/tree/879f4945427593222a5a9ecabefcd8a454e9ed71).
 
 ## 3.0.0-beta.6 (2026-10-30)
 

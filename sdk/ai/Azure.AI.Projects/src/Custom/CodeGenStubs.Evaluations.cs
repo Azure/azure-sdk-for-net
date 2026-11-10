@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Azure.AI.Projects.Evaluation;
 
@@ -24,13 +26,9 @@ public partial class DailyRecurrenceSchedule
     /// <summary> Initializes a daily schedule with explicit recurrence hours. </summary>
     /// <param name="hours"> Hours for the recurrence schedule. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="hours"/> is null. </exception>
-    public DailyRecurrenceSchedule(IEnumerable<int> hours) : this()
+    public DailyRecurrenceSchedule(IEnumerable<int> hours)
+        : this(RecurrenceType.Daily, new Dictionary<string, BinaryData>(), hours?.ToList() ?? throw new ArgumentNullException(nameof(hours)))
     {
-        Argument.AssertNotNull(hours, nameof(hours));
-        foreach (int hour in hours)
-        {
-            Hours.Add(hour);
-        }
     }
 }
 
@@ -41,9 +39,9 @@ public partial class EvaluationsDimension
     /// <param name="id"> The dimension identifier. </param>
     /// <param name="description"> What this dimension measures. </param>
     /// <param name="weight"> The configured dimension weight. </param>
-    public EvaluationsDimension(string id, string description, int weight) : this(id, description)
+    public EvaluationsDimension(string id, string description, int weight)
+        : this(id, description, weight, null, new Dictionary<string, BinaryData>())
     {
-        Weight = weight;
     }
 }
 [CodeGenType("EndpointBasedEvaluatorDefinition")] public partial class EndpointBasedEvaluatorDefinition { }
@@ -64,10 +62,20 @@ public partial class EvaluatorGenerationInputs
     /// <param name="evaluatorName"> The evaluator name. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="sources"/>, <paramref name="model"/>, or <paramref name="evaluatorName"/> is null. </exception>
     public EvaluatorGenerationInputs(IEnumerable<EvaluatorGenerationJobSource> sources, string model, string evaluatorName)
-        : this(sources, evaluatorName)
+        : this(
+            sources?.ToList() ?? throw new ArgumentNullException(nameof(sources)),
+            ValidateRequired(model, nameof(model)),
+            ValidateRequired(evaluatorName, nameof(evaluatorName)),
+            null,
+            null,
+            new Dictionary<string, BinaryData>())
     {
-        Argument.AssertNotNull(model, nameof(model));
-        Model = model;
+    }
+
+    private static string ValidateRequired(string value, string parameterName)
+    {
+        Argument.AssertNotNull(value, parameterName);
+        return value;
     }
 }
 [CodeGenType("EvaluatorGenerationJobSource")] public partial class EvaluatorGenerationJobSource { }
