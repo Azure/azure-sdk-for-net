@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
@@ -31,6 +32,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <returns> Returns a <see cref="CustomCaptureConfigurationsFirewallResource"/> object. </returns>
         public virtual CustomCaptureConfigurationsFirewallResource GetCustomCaptureConfigurationsFirewallResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != CustomCaptureConfigurationsFirewallResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "PaloAltoNetworks.Cloudngfw", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "firewalls", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "customCaptureConfigurations", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/customCaptureConfigurations/default"), nameof(id));
+            }
             CustomCaptureConfigurationsFirewallResource.ValidateResourceId(id);
             return new CustomCaptureConfigurationsFirewallResource(Client, id);
         }
@@ -40,6 +50,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <returns> Returns a <see cref="LogIngestionSettingsResource"/> object. </returns>
         public virtual LogIngestionSettingsResource GetLogIngestionSettingsResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != LogIngestionSettingsResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "PaloAltoNetworks.Cloudngfw", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "firewalls", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "logIngestionSettings", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/logIngestionSettings/default"), nameof(id));
+            }
             LogIngestionSettingsResource.ValidateResourceId(id);
             return new LogIngestionSettingsResource(Client, id);
         }
@@ -121,6 +140,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <returns> Returns a <see cref="MetricsObjectFirewallResource"/> object. </returns>
         public virtual MetricsObjectFirewallResource GetMetricsObjectFirewallResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != MetricsObjectFirewallResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "PaloAltoNetworks.Cloudngfw", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "firewalls", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "metrics", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/metrics/default"), nameof(id));
+            }
             MetricsObjectFirewallResource.ValidateResourceId(id);
             return new MetricsObjectFirewallResource(Client, id);
         }
@@ -130,6 +158,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         /// <returns> Returns a <see cref="PaloAltoNetworksFirewallStatusResource"/> object. </returns>
         public virtual PaloAltoNetworksFirewallStatusResource GetPaloAltoNetworksFirewallStatusResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != PaloAltoNetworksFirewallStatusResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "PaloAltoNetworks.Cloudngfw", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "firewalls", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "statuses", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/statuses/default"), nameof(id));
+            }
             PaloAltoNetworksFirewallStatusResource.ValidateResourceId(id);
             return new PaloAltoNetworksFirewallStatusResource(Client, id);
         }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -43,6 +44,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ApplicationGatewayAvailableSslOptionsInfoResource"/> object. </returns>
         public virtual ApplicationGatewayAvailableSslOptionsInfoResource GetApplicationGatewayAvailableSslOptionsInfoResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != ApplicationGatewayAvailableSslOptionsInfoResource.ResourceType || segments.Length != 7 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[4], "Microsoft.Network", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[5], "applicationGatewayAvailableSslOptions", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/providers/Microsoft.Network/applicationGatewayAvailableSslOptions/default"), nameof(id));
+            }
             ApplicationGatewayAvailableSslOptionsInfoResource.ValidateResourceId(id);
             return new ApplicationGatewayAvailableSslOptionsInfoResource(Client, id);
         }
@@ -268,6 +278,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="PolicySignaturesOverridesForIdpsResource"/> object. </returns>
         public virtual PolicySignaturesOverridesForIdpsResource GetPolicySignaturesOverridesForIdpsResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != PolicySignaturesOverridesForIdpsResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Network", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "firewallPolicies", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "signatureOverrides", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/signatureOverrides/default"), nameof(id));
+            }
             PolicySignaturesOverridesForIdpsResource.ValidateResourceId(id);
             return new PolicySignaturesOverridesForIdpsResource(Client, id);
         }
@@ -277,6 +296,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="FirewallPolicyDraftResource"/> object. </returns>
         public virtual FirewallPolicyDraftResource GetFirewallPolicyDraftResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != FirewallPolicyDraftResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Network", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "firewallPolicies", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "firewallPolicyDrafts", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/firewallPolicyDrafts/default"), nameof(id));
+            }
             FirewallPolicyDraftResource.ValidateResourceId(id);
             return new FirewallPolicyDraftResource(Client, id);
         }
@@ -286,6 +314,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="FirewallPolicyRuleCollectionGroupDraftResource"/> object. </returns>
         public virtual FirewallPolicyRuleCollectionGroupDraftResource GetFirewallPolicyRuleCollectionGroupDraftResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != FirewallPolicyRuleCollectionGroupDraftResource.ResourceType || segments.Length != 13 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Network", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "firewallPolicies", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "ruleCollectionGroups", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "ruleCollectionGroupDrafts", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[12], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/firewallPolicies/{firewallPolicyName}/ruleCollectionGroups/{ruleCollectionGroupName}/ruleCollectionGroupDrafts/default"), nameof(id));
+            }
             FirewallPolicyRuleCollectionGroupDraftResource.ValidateResourceId(id);
             return new FirewallPolicyRuleCollectionGroupDraftResource(Client, id);
         }
@@ -1006,6 +1043,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="ApplicationGatewayWafDynamicManifestResource"/> object. </returns>
         public virtual ApplicationGatewayWafDynamicManifestResource GetApplicationGatewayWafDynamicManifestResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != ApplicationGatewayWafDynamicManifestResource.ResourceType || segments.Length != 9 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[4], "Microsoft.Network", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[5], "locations", StringComparison.OrdinalIgnoreCase) || segments[6] == "" || !string.Equals(segments[6], new AzureLocation(segments[6]).ToString(), StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "applicationGatewayWafDynamicManifests", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[8], "dafault", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/dafault"), nameof(id));
+            }
             ApplicationGatewayWafDynamicManifestResource.ValidateResourceId(id);
             return new ApplicationGatewayWafDynamicManifestResource(Client, id);
         }
@@ -1302,6 +1348,15 @@ namespace Azure.ResourceManager.Network.Mocking
         /// <returns> Returns a <see cref="VpnLinkConnectionSharedKeyResource"/> object. </returns>
         public virtual VpnLinkConnectionSharedKeyResource GetVpnLinkConnectionSharedKeyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != VpnLinkConnectionSharedKeyResource.ResourceType || segments.Length != 15 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.Network", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "vpnGateways", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "vpnConnections", StringComparison.OrdinalIgnoreCase) || segments[10] == "" || !string.Equals(segments[11], "vpnLinkConnections", StringComparison.OrdinalIgnoreCase) || segments[12] == "" || !string.Equals(segments[13], "sharedKeys", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[14], "default", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}/vpnConnections/{connectionName}/vpnLinkConnections/{linkConnectionName}/sharedKeys/default"), nameof(id));
+            }
             VpnLinkConnectionSharedKeyResource.ValidateResourceId(id);
             return new VpnLinkConnectionSharedKeyResource(Client, id);
         }
