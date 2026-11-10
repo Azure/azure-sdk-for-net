@@ -13,67 +13,67 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary> The AcknowledgeRequest. </summary>
-    internal partial class AcknowledgeRequest : IJsonModel<AcknowledgeRequest>
+    /// <summary> The RejectContent. </summary>
+    internal partial class RejectContent : IJsonModel<RejectContent>
     {
-        /// <summary> Initializes a new instance of <see cref="AcknowledgeRequest"/> for deserialization. </summary>
-        internal AcknowledgeRequest()
+        /// <summary> Initializes a new instance of <see cref="RejectContent"/> for deserialization. </summary>
+        internal RejectContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AcknowledgeRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RejectContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcknowledgeRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RejectContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAcknowledgeRequest(document.RootElement, options);
+                        return DeserializeRejectContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AcknowledgeRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RejectContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcknowledgeRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RejectContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureMessagingEventGridNamespacesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AcknowledgeRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RejectContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AcknowledgeRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RejectContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AcknowledgeRequest IPersistableModel<AcknowledgeRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RejectContent IPersistableModel<RejectContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AcknowledgeRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RejectContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="acknowledgeRequest"> The <see cref="AcknowledgeRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(AcknowledgeRequest acknowledgeRequest)
+        /// <param name="rejectContent"> The <see cref="RejectContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(RejectContent rejectContent)
         {
-            if (acknowledgeRequest == null)
+            if (rejectContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(acknowledgeRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(rejectContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AcknowledgeRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RejectContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -84,10 +84,10 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcknowledgeRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RejectContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AcknowledgeRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RejectContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("lockTokens"u8);
             writer.WriteStartArray();
@@ -120,24 +120,24 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AcknowledgeRequest IJsonModel<AcknowledgeRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RejectContent IJsonModel<RejectContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AcknowledgeRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RejectContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AcknowledgeRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RejectContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AcknowledgeRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RejectContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAcknowledgeRequest(document.RootElement, options);
+            return DeserializeRejectContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AcknowledgeRequest DeserializeAcknowledgeRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static RejectContent DeserializeRejectContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -169,7 +169,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AcknowledgeRequest(lockTokens ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new RejectContent(lockTokens ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

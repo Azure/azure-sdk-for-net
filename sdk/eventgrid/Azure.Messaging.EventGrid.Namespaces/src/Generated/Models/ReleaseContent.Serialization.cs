@@ -13,67 +13,67 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary> The RenewLocksRequest. </summary>
-    internal partial class RenewLocksRequest : IJsonModel<RenewLocksRequest>
+    /// <summary> The ReleaseContent. </summary>
+    internal partial class ReleaseContent : IJsonModel<ReleaseContent>
     {
-        /// <summary> Initializes a new instance of <see cref="RenewLocksRequest"/> for deserialization. </summary>
-        internal RenewLocksRequest()
+        /// <summary> Initializes a new instance of <see cref="ReleaseContent"/> for deserialization. </summary>
+        internal ReleaseContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RenewLocksRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ReleaseContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RenewLocksRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReleaseContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRenewLocksRequest(document.RootElement, options);
+                        return DeserializeReleaseContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RenewLocksRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReleaseContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RenewLocksRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReleaseContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureMessagingEventGridNamespacesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RenewLocksRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReleaseContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RenewLocksRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ReleaseContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RenewLocksRequest IPersistableModel<RenewLocksRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ReleaseContent IPersistableModel<ReleaseContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RenewLocksRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ReleaseContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="renewLocksRequest"> The <see cref="RenewLocksRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(RenewLocksRequest renewLocksRequest)
+        /// <param name="releaseContent"> The <see cref="ReleaseContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(ReleaseContent releaseContent)
         {
-            if (renewLocksRequest == null)
+            if (releaseContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(renewLocksRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(releaseContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RenewLocksRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ReleaseContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -84,10 +84,10 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RenewLocksRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReleaseContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RenewLocksRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ReleaseContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("lockTokens"u8);
             writer.WriteStartArray();
@@ -120,24 +120,24 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RenewLocksRequest IJsonModel<RenewLocksRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ReleaseContent IJsonModel<ReleaseContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RenewLocksRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ReleaseContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RenewLocksRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReleaseContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RenewLocksRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ReleaseContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRenewLocksRequest(document.RootElement, options);
+            return DeserializeReleaseContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RenewLocksRequest DeserializeRenewLocksRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static ReleaseContent DeserializeReleaseContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -169,7 +169,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RenewLocksRequest(lockTokens ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new ReleaseContent(lockTokens ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }
