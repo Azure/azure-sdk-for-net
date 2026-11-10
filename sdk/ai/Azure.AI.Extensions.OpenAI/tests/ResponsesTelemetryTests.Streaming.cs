@@ -216,9 +216,8 @@ public partial class ResponsesTelemetryTests
             };
             GenAiTraceVerifier.ValidateSpanAttributes(span, expectedAttributes, allowUnexpected: false);
 
-            // TODO: Re enable this code after the options AddProxy proxy will be implemented. See 5859124.
-            //string inputMessages = span.GetTagItem("gen_ai.input.messages") as string;
-            //Assert.That(inputMessages, Does.Contain("\"content\":\"Hello agent!\""));
+            string inputMessages = span.GetTagItem("gen_ai.input.messages") as string;
+            Assert.That(inputMessages, Does.Contain("\"content\":\"Hello agent!\""));
 
             string outputMessages = span.GetTagItem("gen_ai.output.messages") as string;
             Assert.That(outputMessages, Does.Contain("\"role\":\"assistant\""));

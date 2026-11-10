@@ -370,7 +370,6 @@ public partial class ProjectResponsesClient : ResponsesClient
         ApplyClientDefaults(options);
         StreamingTelemetryContext previousContext = _streamingTelemetryContext.Value;
         StreamingTelemetryContext telemetryContext = OpenTelemetryResponseScope.IsEnabled ? StreamingTelemetryContext.Create(options, Endpoint, _defaultModelName) : null;
-        using OpenTelemetryResponseScope scope = _streamingTelemetryContext.Value?.CreateScope();
         try
         {
             _streamingTelemetryContext.Value = telemetryContext;
@@ -381,6 +380,7 @@ public partial class ProjectResponsesClient : ResponsesClient
         }
         catch (Exception ex)
         {
+            using OpenTelemetryResponseScope scope = _streamingTelemetryContext.Value?.CreateScope();
             scope?.RecordError(ex);
             throw;
         }
