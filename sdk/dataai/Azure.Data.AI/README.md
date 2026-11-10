@@ -44,7 +44,7 @@ The generated bearer-token policy requests the `https://dbinference.azure.com/.d
 ## Key concepts
 
 Use `InferenceClient.SemanticRerank` or `SemanticRerankAsync` to rerank documents directly.
-Pass a `SemanticRerankingOptions` instance and read the scores and `Metadata` from
+Pass a `SemanticRerankingContent` instance and read the scores and `Metadata` from
 the returned `SemanticRerankingResult`. For JSON documents, set `DocumentType` to
 `SemanticRerankingDocumentType.Json` and add up to 100 property paths to the
 `TargetPaths` collection; the client serializes them as a comma-separated string.

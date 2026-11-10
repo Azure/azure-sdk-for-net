@@ -9,7 +9,7 @@
 
 ### Breaking Changes
 
-- Renamed `SemanticRerankingInferenceContent` to `SemanticRerankingOptions`, `SemanticRerankingInferenceResult` to `SemanticRerankingResult`, and `SemanticRerankingMetaResult` to `SemanticRerankingMetadata`, including the corresponding model factory methods.
+- Renamed `SemanticRerankingInferenceContent` to `SemanticRerankingContent`, `SemanticRerankingInferenceResult` to `SemanticRerankingResult`, and `SemanticRerankingMetaResult` to `SemanticRerankingMetadata`, including the corresponding model factory methods.
 - Renamed the result's `Meta` property to `Metadata`; the JSON property remains `meta`.
 - Changed `TargetPaths` from a settable string to an `IList<string>` collection with an API contract limit of 100 paths.
 

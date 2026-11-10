@@ -22,7 +22,7 @@ namespace Azure.Data.AI.Tests.Samples
         private async Task RerankDocuments(InferenceClient client)
         {
             #region Snippet:SemanticReranker_RerankDocuments
-            var request = new SemanticRerankingOptions(
+            var request = new SemanticRerankingContent(
                 "What is the capital of France?",
                 new[]
                 {
@@ -42,7 +42,7 @@ namespace Azure.Data.AI.Tests.Samples
         private async Task RerankJsonDocuments(InferenceClient client)
         {
             #region Snippet:SemanticReranker_RerankJsonDocuments
-            var request = new SemanticRerankingOptions(
+            var request = new SemanticRerankingContent(
                 "What is the capital of France?",
                 new[] { "{\"id\":\"france\",\"meta\":{\"content\":\"Paris is the capital of France.\"}}" })
             {

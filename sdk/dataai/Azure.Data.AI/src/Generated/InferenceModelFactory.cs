@@ -29,13 +29,13 @@ namespace Azure.Data.AI
         /// </param>
         /// <param name="model"> The name of the model used for the semantic reranking operation. </param>
         /// <param name="returnSentenceScore"> Whether to return sentence-level scores in the response. </param>
-        /// <returns> A new <see cref="AI.SemanticRerankingOptions"/> instance for mocking. </returns>
-        public static SemanticRerankingOptions SemanticRerankingOptions(string query = default, IEnumerable<string> documents = default, bool? returnDocuments = default, int? topK = default, int? batchSize = default, bool? sort = default, SemanticRerankingDocumentType? documentType = default, IEnumerable<string> targetPaths = default, string model = default, bool? returnSentenceScore = default)
+        /// <returns> A new <see cref="AI.SemanticRerankingContent"/> instance for mocking. </returns>
+        public static SemanticRerankingContent SemanticRerankingContent(string query = default, IEnumerable<string> documents = default, bool? returnDocuments = default, int? topK = default, int? batchSize = default, bool? sort = default, SemanticRerankingDocumentType? documentType = default, IEnumerable<string> targetPaths = default, string model = default, bool? returnSentenceScore = default)
         {
             documents ??= new ChangeTrackingList<string>();
             targetPaths ??= new ChangeTrackingList<string>();
 
-            return new SemanticRerankingOptions(
+            return new SemanticRerankingContent(
                 query,
                 documents.ToList(),
                 returnDocuments,

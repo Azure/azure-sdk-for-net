@@ -11,7 +11,7 @@ InferenceClient client = new InferenceClient(endpoint, credential);
 Submit a query and documents:
 
 ```C# Snippet:SemanticReranker_RerankDocuments
-var request = new SemanticRerankingOptions(
+var request = new SemanticRerankingContent(
     "What is the capital of France?",
     new[]
     {
@@ -32,7 +32,7 @@ the collection as the comma-separated string expected by the service. The API
 contract specifies a maximum of 100 paths:
 
 ```C# Snippet:SemanticReranker_RerankJsonDocuments
-var request = new SemanticRerankingOptions(
+var request = new SemanticRerankingContent(
     "What is the capital of France?",
     new[] { "{\"id\":\"france\",\"meta\":{\"content\":\"Paris is the capital of France.\"}}" })
 {

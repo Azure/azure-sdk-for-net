@@ -14,8 +14,8 @@ namespace Azure.Data.AI
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(LatencyResult))]
+    [ModelReaderWriterBuildable(typeof(SemanticRerankingContent))]
     [ModelReaderWriterBuildable(typeof(SemanticRerankingMetadata))]
-    [ModelReaderWriterBuildable(typeof(SemanticRerankingOptions))]
     [ModelReaderWriterBuildable(typeof(SemanticRerankingResult))]
     [ModelReaderWriterBuildable(typeof(SemanticRerankingScore))]
     [ModelReaderWriterBuildable(typeof(SentenceScore))]

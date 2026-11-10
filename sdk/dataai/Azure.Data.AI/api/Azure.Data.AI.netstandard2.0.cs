@@ -16,9 +16,9 @@ namespace Azure.Data.AI
         public InferenceClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Data.AI.InferenceClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response SemanticRerank(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Data.AI.SemanticRerankingResult> SemanticRerank(Azure.Data.AI.SemanticRerankingOptions request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Data.AI.SemanticRerankingResult> SemanticRerank(Azure.Data.AI.SemanticRerankingContent request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SemanticRerankAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AI.SemanticRerankingResult>> SemanticRerankAsync(Azure.Data.AI.SemanticRerankingOptions request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AI.SemanticRerankingResult>> SemanticRerankAsync(Azure.Data.AI.SemanticRerankingContent request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class InferenceClientHostExtensions
     {
@@ -45,8 +45,8 @@ namespace Azure.Data.AI
     public static partial class InferenceModelFactory
     {
         public static Azure.Data.AI.LatencyResult LatencyResult(System.TimeSpan? dataPreprocessDuration = default(System.TimeSpan?), System.TimeSpan? inferenceDuration = default(System.TimeSpan?), System.TimeSpan? postProcessDuration = default(System.TimeSpan?)) { throw null; }
+        public static Azure.Data.AI.SemanticRerankingContent SemanticRerankingContent(string query = null, System.Collections.Generic.IEnumerable<string> documents = null, bool? returnDocuments = default(bool?), int? topK = default(int?), int? batchSize = default(int?), bool? sort = default(bool?), Azure.Data.AI.SemanticRerankingDocumentType? documentType = default(Azure.Data.AI.SemanticRerankingDocumentType?), System.Collections.Generic.IEnumerable<string> targetPaths = null, string model = null, bool? returnSentenceScore = default(bool?)) { throw null; }
         public static Azure.Data.AI.SemanticRerankingMetadata SemanticRerankingMetadata(Azure.Data.AI.TokenUsageResult tokenUsage = null, Azure.Data.AI.LatencyResult latency = null, string modelName = null, string modelVersion = null) { throw null; }
-        public static Azure.Data.AI.SemanticRerankingOptions SemanticRerankingOptions(string query = null, System.Collections.Generic.IEnumerable<string> documents = null, bool? returnDocuments = default(bool?), int? topK = default(int?), int? batchSize = default(int?), bool? sort = default(bool?), Azure.Data.AI.SemanticRerankingDocumentType? documentType = default(Azure.Data.AI.SemanticRerankingDocumentType?), System.Collections.Generic.IEnumerable<string> targetPaths = null, string model = null, bool? returnSentenceScore = default(bool?)) { throw null; }
         public static Azure.Data.AI.SemanticRerankingResult SemanticRerankingResult(System.Collections.Generic.IEnumerable<Azure.Data.AI.SemanticRerankingScore> scores = null, Azure.Data.AI.SemanticRerankingMetadata metadata = null) { throw null; }
         public static Azure.Data.AI.SemanticRerankingScore SemanticRerankingScore(int? index = default(int?), string document = null, float? score = default(float?), System.Collections.Generic.IEnumerable<Azure.Data.AI.SentenceScore> sentenceScores = null) { throw null; }
         public static Azure.Data.AI.SentenceScore SentenceScore(int index = 0, float score = 0f) { throw null; }
@@ -67,6 +67,30 @@ namespace Azure.Data.AI
         Azure.Data.AI.LatencyResult System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.LatencyResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.LatencyResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.LatencyResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SemanticRerankingContent : System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.SemanticRerankingContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.SemanticRerankingContent>
+    {
+        public SemanticRerankingContent(string query, System.Collections.Generic.IEnumerable<string> documents) { }
+        public int? BatchSize { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Documents { get { throw null; } }
+        public Azure.Data.AI.SemanticRerankingDocumentType? DocumentType { get { throw null; } set { } }
+        public string Model { get { throw null; } set { } }
+        public string Query { get { throw null; } }
+        public bool? ReturnDocuments { get { throw null; } set { } }
+        public bool? ReturnSentenceScore { get { throw null; } set { } }
+        public bool? Sort { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> TargetPaths { get { throw null; } }
+        public int? TopK { get { throw null; } set { } }
+        protected virtual Azure.Data.AI.SemanticRerankingContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.Core.RequestContent (Azure.Data.AI.SemanticRerankingContent semanticRerankingContent) { throw null; }
+        protected virtual Azure.Data.AI.SemanticRerankingContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Data.AI.SemanticRerankingContent System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.SemanticRerankingContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.SemanticRerankingContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Data.AI.SemanticRerankingContent System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.SemanticRerankingContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.SemanticRerankingContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.SemanticRerankingContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SemanticRerankingDocumentType : System.IEquatable<Azure.Data.AI.SemanticRerankingDocumentType>
@@ -101,30 +125,6 @@ namespace Azure.Data.AI
         Azure.Data.AI.SemanticRerankingMetadata System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.SemanticRerankingMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.SemanticRerankingMetadata>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.SemanticRerankingMetadata>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class SemanticRerankingOptions : System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.SemanticRerankingOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.SemanticRerankingOptions>
-    {
-        public SemanticRerankingOptions(string query, System.Collections.Generic.IEnumerable<string> documents) { }
-        public int? BatchSize { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Documents { get { throw null; } }
-        public Azure.Data.AI.SemanticRerankingDocumentType? DocumentType { get { throw null; } set { } }
-        public string Model { get { throw null; } set { } }
-        public string Query { get { throw null; } }
-        public bool? ReturnDocuments { get { throw null; } set { } }
-        public bool? ReturnSentenceScore { get { throw null; } set { } }
-        public bool? Sort { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> TargetPaths { get { throw null; } }
-        public int? TopK { get { throw null; } set { } }
-        protected virtual Azure.Data.AI.SemanticRerankingOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static implicit operator Azure.Core.RequestContent (Azure.Data.AI.SemanticRerankingOptions semanticRerankingOptions) { throw null; }
-        protected virtual Azure.Data.AI.SemanticRerankingOptions PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.Data.AI.SemanticRerankingOptions System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.SemanticRerankingOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.SemanticRerankingOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Data.AI.SemanticRerankingOptions System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.SemanticRerankingOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.SemanticRerankingOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.SemanticRerankingOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SemanticRerankingResult : System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.SemanticRerankingResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.SemanticRerankingResult>
     {

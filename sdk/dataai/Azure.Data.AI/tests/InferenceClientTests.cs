@@ -56,7 +56,7 @@ namespace Azure.Data.AI.Tests
                 new AzureKeyCredential("api-key"),
                 options);
 
-            var request = new SemanticRerankingOptions("query", new[] { "{\"meta\":{\"content\":\"document\"},\"id\":\"1\"}" })
+            var request = new SemanticRerankingContent("query", new[] { "{\"meta\":{\"content\":\"document\"},\"id\":\"1\"}" })
             {
                 DocumentType = SemanticRerankingDocumentType.Json,
                 TargetPaths = { "meta.content", "id" }
@@ -98,7 +98,7 @@ namespace Azure.Data.AI.Tests
             var client = new InferenceClient(settings);
 
             await client.SemanticRerankAsync(
-                new SemanticRerankingOptions("query", new[] { "{\"meta\":{\"content\":\"document\"},\"id\":\"1\"}" })
+                new SemanticRerankingContent("query", new[] { "{\"meta\":{\"content\":\"document\"},\"id\":\"1\"}" })
                 {
                     DocumentType = SemanticRerankingDocumentType.Json,
                     TargetPaths = { "meta.content", "id" }
@@ -158,13 +158,13 @@ namespace Azure.Data.AI.Tests
         public void RequestRequiresQuery()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                new SemanticRerankingOptions(null, new[] { "document" }));
+                new SemanticRerankingContent(null, new[] { "document" }));
         }
 
         [Test]
         public void RequestSerializesSentenceScoreOption()
         {
-            var request = new SemanticRerankingOptions("query", new[] { "document" })
+            var request = new SemanticRerankingContent("query", new[] { "document" })
             {
                 ReturnDocuments = true,
                 ReturnSentenceScore = true
@@ -215,7 +215,7 @@ namespace Azure.Data.AI.Tests
         [TestCase("W", 100)]
         public void TargetPathsRoundTripAsCommaDelimitedString(string format, int pathCount)
         {
-            var request = new SemanticRerankingOptions("query", new[] { "{\"meta\":{\"content\":\"document\"}}" })
+            var request = new SemanticRerankingContent("query", new[] { "{\"meta\":{\"content\":\"document\"}}" })
             {
                 DocumentType = SemanticRerankingDocumentType.Json
             };
@@ -231,7 +231,7 @@ namespace Azure.Data.AI.Tests
             Assert.That(json.RootElement.GetProperty("targetPaths").GetString(), Is.EqualTo(string.Join(",", request.TargetPaths)));
             Assert.That(json.RootElement.GetProperty("documentType").GetString(), Is.EqualTo("json"));
 
-            var roundTrip = ModelReaderWriter.Read<SemanticRerankingOptions>(data, options, AzureDataAIContext.Default);
+            var roundTrip = ModelReaderWriter.Read<SemanticRerankingContent>(data, options, AzureDataAIContext.Default);
             Assert.That(roundTrip.TargetPaths, Is.EqualTo(request.TargetPaths));
         }
 
@@ -239,7 +239,7 @@ namespace Azure.Data.AI.Tests
         [TestCase("W")]
         public void UnsetTargetPathsAreOmitted(string format)
         {
-            var request = new SemanticRerankingOptions("query", new[] { "document" });
+            var request = new SemanticRerankingContent("query", new[] { "document" });
             BinaryData data = ModelReaderWriter.Write(request, new ModelReaderWriterOptions(format), AzureDataAIContext.Default);
             using JsonDocument json = JsonDocument.Parse(data);
 
@@ -252,7 +252,7 @@ namespace Azure.Data.AI.Tests
         [TestCase("{\"targetPaths\":\"\"}")]
         public void MissingOrEmptyTargetPathsDeserializeToEmptyCollection(string json)
         {
-            var request = ModelReaderWriter.Read<SemanticRerankingOptions>(
+            var request = ModelReaderWriter.Read<SemanticRerankingContent>(
                 BinaryData.FromString(json), ModelReaderWriterOptions.Json, AzureDataAIContext.Default);
 
             Assert.That(request.TargetPaths, Is.Empty);
@@ -296,7 +296,7 @@ namespace Azure.Data.AI.Tests
         [Test]
         public void ModelFactoryUsesReviewedModelNames()
         {
-            var request = InferenceModelFactory.SemanticRerankingOptions(
+            var request = InferenceModelFactory.SemanticRerankingContent(
                 query: "query", documents: new[] { "document" }, targetPaths: new[] { "meta.content", "id" });
             var metadata = InferenceModelFactory.SemanticRerankingMetadata(modelName: "reranker");
             var result = InferenceModelFactory.SemanticRerankingResult(metadata: metadata);
