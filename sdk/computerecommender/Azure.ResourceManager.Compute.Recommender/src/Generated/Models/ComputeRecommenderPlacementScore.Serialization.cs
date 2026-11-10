@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.Recommender;
 
 namespace Azure.ResourceManager.Compute.Recommender.Models
 {
-    /// <summary> The spot placement score for sku/region/zone combination. </summary>
+    /// <summary> The placement score for a virtual machine SKU, region, and availability zone combination. </summary>
     public partial class ComputeRecommenderPlacementScore : IJsonModel<ComputeRecommenderPlacementScore>
     {
         /// <param name="data"> The data to parse. </param>

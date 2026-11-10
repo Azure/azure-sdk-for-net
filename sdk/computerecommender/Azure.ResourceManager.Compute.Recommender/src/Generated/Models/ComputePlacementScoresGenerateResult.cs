@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute.Recommender;
 
 namespace Azure.ResourceManager.Compute.Recommender.Models
 {
-    /// <summary> ComputePlacementScores API response. </summary>
+    /// <summary> The results of scoring placement for regular virtual machines. </summary>
     public partial class ComputePlacementScoresGenerateResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <param name="desiredSizes"> The desired virtual machine SKU sizes. </param>
         /// <param name="desiredCount"> Desired instance count per region/zone based on the scope. </param>
         /// <param name="isZonal"> Defines if the scope is zonal or regional. </param>
-        /// <param name="placementScores"> A placement score indicating the likelihood of successfully allocating the specified Spot VM(s), as well as the expected lifetimes of the Spot VM(s) after allocation. </param>
+        /// <param name="placementScores"> Placement scores indicating the likelihood of successfully allocating the specified regular virtual machines. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ComputePlacementScoresGenerateResult(IList<AzureLocation> desiredLocations, IList<ComputeRecommenderResourceSize> desiredSizes, int? desiredCount, bool? isZonal, IList<ComputeRecommenderPlacementScore> placementScores, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <summary> Defines if the scope is zonal or regional. </summary>
         public bool? IsZonal { get; }
 
-        /// <summary> A placement score indicating the likelihood of successfully allocating the specified Spot VM(s), as well as the expected lifetimes of the Spot VM(s) after allocation. </summary>
+        /// <summary> Placement scores indicating the likelihood of successfully allocating the specified regular virtual machines. </summary>
         public IList<ComputeRecommenderPlacementScore> PlacementScores { get; }
     }
 }

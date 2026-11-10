@@ -15,7 +15,7 @@ using Azure.ResourceManager.Compute.Recommender;
 
 namespace Azure.ResourceManager.Compute.Recommender.Models
 {
-    /// <summary> ComputePlacementScores API response. </summary>
+    /// <summary> The results of scoring placement for regular virtual machines. </summary>
     public partial class ComputePlacementScoresGenerateResult : IJsonModel<ComputePlacementScoresGenerateResult>
     {
         /// <param name="data"> The data to parse. </param>

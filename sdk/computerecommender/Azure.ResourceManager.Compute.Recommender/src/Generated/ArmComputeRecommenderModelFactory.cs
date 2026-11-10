@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             return new ComputePlacementScoresGenerateContent((desiredLocations ?? new ChangeTrackingList<AzureLocation>()).ToList(), (desiredSizes ?? new ChangeTrackingList<ComputeRecommenderResourceSize>()).ToList(), desiredCount, isZonal, default);
         }
 
-        /// <summary> ComputePlacementScores API response. </summary>
+        /// <summary> The results of scoring placement for regular virtual machines. </summary>
         /// <param name="desiredLocations"> The desired regions. </param>
         /// <param name="desiredSizes"> The desired virtual machine SKU sizes. </param>
         /// <param name="desiredCount"> Desired instance count per region/zone based on the scope. </param>
         /// <param name="isZonal"> Defines if the scope is zonal or regional. </param>
-        /// <param name="placementScores"> A placement score indicating the likelihood of successfully allocating the specified Spot VM(s), as well as the expected lifetimes of the Spot VM(s) after allocation. </param>
+        /// <param name="placementScores"> Placement scores indicating the likelihood of successfully allocating the specified regular virtual machines. </param>
         /// <returns> A new <see cref="Models.ComputePlacementScoresGenerateResult"/> instance for mocking. </returns>
         public static ComputePlacementScoresGenerateResult ComputePlacementScoresGenerateResult(IEnumerable<AzureLocation> desiredLocations = default, IEnumerable<ComputeRecommenderResourceSize> desiredSizes = default, int? desiredCount = default, bool? isZonal = default, IEnumerable<ComputeRecommenderPlacementScore> placementScores = default)
         {
