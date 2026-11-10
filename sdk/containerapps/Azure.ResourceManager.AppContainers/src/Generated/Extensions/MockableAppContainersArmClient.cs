@@ -377,6 +377,15 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppDetectorPropertyResource"/> object. </returns>
         public virtual ContainerAppDetectorPropertyResource GetContainerAppDetectorPropertyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != ContainerAppDetectorPropertyResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.App", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "containerApps", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "detectorProperties", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "rootApi", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/detectorProperties/rootApi/"), nameof(id));
+            }
             ContainerAppDetectorPropertyResource.ValidateResourceId(id);
             return new ContainerAppDetectorPropertyResource(Client, id);
         }
@@ -395,6 +404,15 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource"/> object. </returns>
         public virtual ContainerAppManagedEnvironmentDetectorResourcePropertyResource GetContainerAppManagedEnvironmentDetectorResourcePropertyResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != ContainerAppManagedEnvironmentDetectorResourcePropertyResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.App", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "managedEnvironments", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "detectorProperties", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "rootApi", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/detectorProperties/rootApi/"), nameof(id));
+            }
             ContainerAppManagedEnvironmentDetectorResourcePropertyResource.ValidateResourceId(id);
             return new ContainerAppManagedEnvironmentDetectorResourcePropertyResource(Client, id);
         }

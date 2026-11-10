@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Recommender;
@@ -31,6 +32,15 @@ namespace Azure.ResourceManager.Compute.Recommender.Mocking
         /// <returns> Returns a <see cref="ComputeSkuMixPlacementResource"/> object. </returns>
         public virtual ComputeSkuMixPlacementResource GetComputeSkuMixPlacementResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != ComputeSkuMixPlacementResource.ResourceType || segments.Length != 9 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[4], "Microsoft.Compute", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[5], "locations", StringComparison.OrdinalIgnoreCase) || segments[6] == "" || !string.Equals(segments[6], new AzureLocation(segments[6]).ToString(), StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "skuMixPlacementScores", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[8], "recommendations", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/skuMixPlacementScores/recommendations"), nameof(id));
+            }
             ComputeSkuMixPlacementResource.ValidateResourceId(id);
             return new ComputeSkuMixPlacementResource(Client, id);
         }
@@ -40,6 +50,15 @@ namespace Azure.ResourceManager.Compute.Recommender.Mocking
         /// <returns> Returns a <see cref="ComputeRecommenderDiagnosticResource"/> object. </returns>
         public virtual ComputeRecommenderDiagnosticResource GetComputeRecommenderDiagnosticResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != ComputeRecommenderDiagnosticResource.ResourceType || segments.Length != 9 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[4], "Microsoft.Compute", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[5], "locations", StringComparison.OrdinalIgnoreCase) || segments[6] == "" || !string.Equals(segments[6], new AzureLocation(segments[6]).ToString(), StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "placementScores", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[8], "spot", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/placementScores/spot"), nameof(id));
+            }
             ComputeRecommenderDiagnosticResource.ValidateResourceId(id);
             return new ComputeRecommenderDiagnosticResource(Client, id);
         }
