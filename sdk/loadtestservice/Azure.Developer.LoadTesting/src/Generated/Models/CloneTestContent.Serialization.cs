@@ -13,67 +13,67 @@ using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
-    /// <summary> The CloneTestRequest. </summary>
-    internal partial class CloneTestRequest : IJsonModel<CloneTestRequest>
+    /// <summary> The CloneTestContent. </summary>
+    internal partial class CloneTestContent : IJsonModel<CloneTestContent>
     {
-        /// <summary> Initializes a new instance of <see cref="CloneTestRequest"/> for deserialization. </summary>
-        internal CloneTestRequest()
+        /// <summary> Initializes a new instance of <see cref="CloneTestContent"/> for deserialization. </summary>
+        internal CloneTestContent()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CloneTestRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CloneTestContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CloneTestRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloneTestContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCloneTestRequest(document.RootElement, options);
+                        return DeserializeCloneTestContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloneTestRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloneTestContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CloneTestRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloneTestContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureDeveloperLoadTestingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CloneTestRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloneTestContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CloneTestRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CloneTestContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CloneTestRequest IPersistableModel<CloneTestRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CloneTestContent IPersistableModel<CloneTestContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CloneTestRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CloneTestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="cloneTestRequest"> The <see cref="CloneTestRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(CloneTestRequest cloneTestRequest)
+        /// <param name="cloneTestContent"> The <see cref="CloneTestContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(CloneTestContent cloneTestContent)
         {
-            if (cloneTestRequest == null)
+            if (cloneTestContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(cloneTestRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(cloneTestContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CloneTestRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CloneTestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -84,10 +84,10 @@ namespace Azure.Developer.LoadTesting
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CloneTestRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloneTestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloneTestRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CloneTestContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("newTestId"u8);
             writer.WriteStringValue(NewTestId);
@@ -120,24 +120,24 @@ namespace Azure.Developer.LoadTesting
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CloneTestRequest IJsonModel<CloneTestRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CloneTestContent IJsonModel<CloneTestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CloneTestRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CloneTestContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CloneTestRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloneTestContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloneTestRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CloneTestContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCloneTestRequest(document.RootElement, options);
+            return DeserializeCloneTestContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CloneTestRequest DeserializeCloneTestRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static CloneTestContent DeserializeCloneTestContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -169,7 +169,7 @@ namespace Azure.Developer.LoadTesting
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new CloneTestRequest(newTestId, displayName, description, additionalBinaryDataProperties);
+            return new CloneTestContent(newTestId, displayName, description, additionalBinaryDataProperties);
         }
     }
 }

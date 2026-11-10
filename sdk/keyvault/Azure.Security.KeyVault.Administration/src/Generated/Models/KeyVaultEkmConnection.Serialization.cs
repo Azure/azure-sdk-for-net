@@ -17,11 +17,6 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary> A EkmConnection model object. </summary>
     public partial class KeyVaultEkmConnection : IJsonModel<KeyVaultEkmConnection>
     {
-        /// <summary> Initializes a new instance of <see cref="KeyVaultEkmConnection"/> for deserialization. </summary>
-        internal KeyVaultEkmConnection()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual KeyVaultEkmConnection PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
