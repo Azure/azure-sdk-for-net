@@ -11,10 +11,8 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Extensions.OpenAI.Telemetry;
-using Microsoft.Extensions.Options;
 using OpenAI;
 using OpenAI.Responses;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace Azure.AI.Extensions.OpenAI;
 
