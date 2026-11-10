@@ -12,22 +12,22 @@ using Azure.ResourceManager.Chaos;
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> Model that represents a resource associated with a scenario run action. </summary>
-    public partial class ScenarioRunSummaryResource
+    public partial class ScenarioRunResourceSummary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ScenarioRunSummaryResource"/>. </summary>
-        internal ScenarioRunSummaryResource()
+        /// <summary> Initializes a new instance of <see cref="ScenarioRunResourceSummary"/>. </summary>
+        internal ScenarioRunResourceSummary()
         {
             AffectedResources = new ChangeTrackingList<ScenarioRunEffectiveTarget>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScenarioRunSummaryResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScenarioRunResourceSummary"/>. </summary>
         /// <param name="id"> The resource ID. </param>
         /// <param name="affectedResources"> The resources affected during action execution. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScenarioRunSummaryResource(string id, IReadOnlyList<ScenarioRunEffectiveTarget> affectedResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScenarioRunResourceSummary(string id, IReadOnlyList<ScenarioRunEffectiveTarget> affectedResources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             AffectedResources = affectedResources;

@@ -14,51 +14,51 @@ using Azure.ResourceManager.Chaos;
 namespace Azure.ResourceManager.Chaos.Models
 {
     /// <summary> Model that represents a resource associated with a scenario run action. </summary>
-    public partial class ScenarioRunSummaryResource : IJsonModel<ScenarioRunSummaryResource>
+    public partial class ScenarioRunResourceSummary : IJsonModel<ScenarioRunResourceSummary>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ScenarioRunSummaryResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ScenarioRunResourceSummary PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScenarioRunSummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScenarioRunResourceSummary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeScenarioRunSummaryResource(document.RootElement, options);
+                        return DeserializeScenarioRunResourceSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScenarioRunSummaryResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScenarioRunResourceSummary)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScenarioRunSummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScenarioRunResourceSummary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerChaosContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ScenarioRunSummaryResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScenarioRunResourceSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ScenarioRunSummaryResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ScenarioRunResourceSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ScenarioRunSummaryResource IPersistableModel<ScenarioRunSummaryResource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ScenarioRunResourceSummary IPersistableModel<ScenarioRunResourceSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ScenarioRunSummaryResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ScenarioRunResourceSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ScenarioRunSummaryResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ScenarioRunResourceSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScenarioRunSummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScenarioRunResourceSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScenarioRunSummaryResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ScenarioRunResourceSummary)} does not support writing '{format}' format.");
             }
             if (options.Format != "W")
             {
@@ -108,24 +108,24 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ScenarioRunSummaryResource IJsonModel<ScenarioRunSummaryResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ScenarioRunResourceSummary IJsonModel<ScenarioRunResourceSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ScenarioRunSummaryResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ScenarioRunResourceSummary JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScenarioRunSummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScenarioRunResourceSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScenarioRunSummaryResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ScenarioRunResourceSummary)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeScenarioRunSummaryResource(document.RootElement, options);
+            return DeserializeScenarioRunResourceSummary(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ScenarioRunSummaryResource DeserializeScenarioRunSummaryResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static ScenarioRunResourceSummary DeserializeScenarioRunResourceSummary(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ScenarioRunSummaryResource(id, affectedResources ?? new ChangeTrackingList<ScenarioRunEffectiveTarget>(), additionalBinaryDataProperties);
+            return new ScenarioRunResourceSummary(id, affectedResources ?? new ChangeTrackingList<ScenarioRunEffectiveTarget>(), additionalBinaryDataProperties);
         }
     }
 }

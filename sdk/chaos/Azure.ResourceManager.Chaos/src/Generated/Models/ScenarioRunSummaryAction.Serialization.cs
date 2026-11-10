@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
-                foreach (ScenarioRunSummaryResource item in Resources)
+                foreach (ScenarioRunResourceSummary item in Resources)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 return null;
             }
-            IReadOnlyList<ScenarioRunSummaryResource> resources = default;
+            IReadOnlyList<ScenarioRunResourceSummary> resources = default;
             string actionUrn = default;
             ScenarioSummaryState state = default;
             DateTimeOffset? startedOn = default;
@@ -168,10 +168,10 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 if (prop.NameEquals("resources"u8))
                 {
-                    List<ScenarioRunSummaryResource> array = new List<ScenarioRunSummaryResource>();
+                    List<ScenarioRunResourceSummary> array = new List<ScenarioRunResourceSummary>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ScenarioRunSummaryResource.DeserializeScenarioRunSummaryResource(item, options));
+                        array.Add(ScenarioRunResourceSummary.DeserializeScenarioRunResourceSummary(item, options));
                     }
                     resources = array;
                     continue;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             return new ScenarioRunSummaryAction(
-                resources ?? new ChangeTrackingList<ScenarioRunSummaryResource>(),
+                resources ?? new ChangeTrackingList<ScenarioRunResourceSummary>(),
                 actionUrn,
                 state,
                 startedOn,

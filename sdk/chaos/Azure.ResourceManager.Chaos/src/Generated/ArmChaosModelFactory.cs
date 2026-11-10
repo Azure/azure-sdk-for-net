@@ -1564,12 +1564,12 @@ namespace Azure.ResourceManager.Chaos.Models
         /// `Failed` state; absent otherwise.
         /// </param>
         /// <returns> A new <see cref="Models.ScenarioRunSummaryAction"/> instance for mocking. </returns>
-        public static ScenarioRunSummaryAction ScenarioRunSummaryAction(IEnumerable<ScenarioRunSummaryResource> resources = default, string actionUrn = default, ScenarioSummaryState state = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, ActionError error = default, bool? failureSuppressed = default)
+        public static ScenarioRunSummaryAction ScenarioRunSummaryAction(IEnumerable<ScenarioRunResourceSummary> resources = default, string actionUrn = default, ScenarioSummaryState state = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, ActionError error = default, bool? failureSuppressed = default)
         {
-            resources ??= new ChangeTrackingList<ScenarioRunSummaryResource>();
+            resources ??= new ChangeTrackingList<ScenarioRunResourceSummary>();
 
             return new ScenarioRunSummaryAction(
-                (resources ?? new ChangeTrackingList<ScenarioRunSummaryResource>()).ToList(),
+                (resources ?? new ChangeTrackingList<ScenarioRunResourceSummary>()).ToList(),
                 actionUrn,
                 state,
                 startedOn,
@@ -1582,12 +1582,12 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> Model that represents a resource associated with a scenario run action. </summary>
         /// <param name="id"> The resource ID. </param>
         /// <param name="affectedResources"> The resources affected during action execution. </param>
-        /// <returns> A new <see cref="Models.ScenarioRunSummaryResource"/> instance for mocking. </returns>
-        public static ScenarioRunSummaryResource ScenarioRunSummaryResource(string id = default, IEnumerable<ScenarioRunEffectiveTarget> affectedResources = default)
+        /// <returns> A new <see cref="Models.ScenarioRunResourceSummary"/> instance for mocking. </returns>
+        public static ScenarioRunResourceSummary ScenarioRunResourceSummary(string id = default, IEnumerable<ScenarioRunEffectiveTarget> affectedResources = default)
         {
             affectedResources ??= new ChangeTrackingList<ScenarioRunEffectiveTarget>();
 
-            return new ScenarioRunSummaryResource(id, (affectedResources ?? new ChangeTrackingList<ScenarioRunEffectiveTarget>()).ToList(), default);
+            return new ScenarioRunResourceSummary(id, (affectedResources ?? new ChangeTrackingList<ScenarioRunEffectiveTarget>()).ToList(), default);
         }
 
         /// <summary> Model that represents the outcome for a concrete action target. </summary>

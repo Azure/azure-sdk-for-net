@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Renamed `ScenarioRunSummaryResource` to `ScenarioRunResourceSummary` to distinguish the nested action-summary model from ARM resource clients.
+
 ### Bugs Fixed
 
 ### Other Changes
