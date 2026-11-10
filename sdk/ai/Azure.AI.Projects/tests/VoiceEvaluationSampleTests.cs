@@ -21,6 +21,7 @@ public class VoiceEvaluationSampleTests
 {
     [TestCase(false, "completed")]
     [TestCase(true, "completed")]
+    [TestCase(false, "polling")]
     [TestCase(false, "failed")]
     [TestCase(false, "errored")]
     [TestCase(false, "empty")]
@@ -31,6 +32,7 @@ public class VoiceEvaluationSampleTests
         List<(string Method, string Path, string Body)> requests = [];
         using CancellationTokenSource cancellation = new();
         int outputPages = 0;
+        int pollingDelays = 0;
         MockPipelineTransport transport = new(message =>
         {
             string method = message.Request.Method;
@@ -49,6 +51,11 @@ public class VoiceEvaluationSampleTests
                     ? new MockPipelineResponse(400).WithContent("""{"error":{"message":"Cannot cancel"}}""")
                     : new MockPipelineResponse(200).WithContent("""{"status":"canceled"}""");
             }
+            if (method == "GET" && path.EndsWith("/runs/evalrun_audio", StringComparison.Ordinal))
+            {
+                return new MockPipelineResponse(200).WithContent(
+                    """{"id":"evalrun_audio","status":"completed","result_counts":{"total":1,"passed":0,"failed":1,"errored":0}}""");
+            }
             if (path.EndsWith("/runs", StringComparison.Ordinal))
             {
                 return new MockPipelineResponse(201).WithContent(JsonSerializer.Serialize(new
@@ -57,7 +64,7 @@ public class VoiceEvaluationSampleTests
                     status = outcome switch
                     {
                         "failed" => "failed",
-                        "timeout" or "cancel_error" => "queued",
+                        "timeout" or "cancel_error" or "polling" => "queued",
                         _ => "completed"
                     },
                     result_counts = new
@@ -111,18 +118,28 @@ public class VoiceEvaluationSampleTests
             ? Sample_VoiceEvaluation.CreateSimulationRun("store-assistant", "1", "user-simulator", "en-US-AvaNeural")
             : Sample_VoiceEvaluation.CreateRecordedRun("dataset-id");
 
-        Task Invoke()
+        Task<IReadOnlyList<string>> Invoke()
         {
-            Task pending = Sample_VoiceEvaluation.RunEvaluationAsync(openAI.GetEvaluationClient(), definition, run, cancellation.Token);
+            Task<IReadOnlyList<string>> pending = Sample_VoiceEvaluation.RunEvaluationAsync(
+                openAI.GetEvaluationClient(), definition, run, cancellation.Token,
+                outcome == "polling" ? token =>
+                {
+                    token.ThrowIfCancellationRequested();
+                    pollingDelays++;
+                    return Task.CompletedTask;
+                } : null);
             if (outcome is "timeout" or "cancel_error")
             {
                 cancellation.Cancel();
             }
             return pending;
         }
-        if (outcome == "completed")
+        if (outcome is "completed" or "polling")
         {
-            await Invoke();
+            IReadOnlyList<string> results = await Invoke();
+            Assert.That(results.Count, Is.EqualTo(2));
+            Assert.That(results[0], Does.Contain("item_1"));
+            Assert.That(results[1], Does.Contain("item_2"));
         }
         else if (outcome == "timeout")
         {
@@ -167,5 +184,6 @@ public class VoiceEvaluationSampleTests
         Assert.That(requests.Any(request => request.Path.EndsWith("/cancel", StringComparison.Ordinal)),
             Is.EqualTo(outcome is "timeout" or "cancel_error"));
         Assert.That(outputPages, Is.EqualTo(outcome is "failed" or "timeout" or "cancel_error" ? 0 : 2));
+        Assert.That(pollingDelays, Is.EqualTo(outcome == "polling" ? 1 : 0));
     }
 }

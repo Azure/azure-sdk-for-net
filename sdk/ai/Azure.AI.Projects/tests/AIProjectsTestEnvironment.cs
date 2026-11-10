@@ -24,6 +24,15 @@ namespace Azure.AI.Projects.Tests
         public string DATASETVERSION2 => GetRecordedVariable("DATASET_VERSION_2");
         public string FOUNDRY_MODEL_NAME => GetRecordedVariable(nameof(FOUNDRY_MODEL_NAME));
         public string FOUNDRY_REALTIME_MODEL_NAME => GetRecordedVariable(nameof(FOUNDRY_REALTIME_MODEL_NAME));
+        public string FOUNDRY_VOICE_EVALUATION_PROJECT_ENDPOINT => GetRecordedVariable(nameof(FOUNDRY_VOICE_EVALUATION_PROJECT_ENDPOINT), options => options.IsSecret("https://sanitized-host.services.ai.azure.com/api/projects/sanitized-project"));
+        public string FOUNDRY_VOICE_EVALUATION_MODEL_NAME => GetRecordedVariable(nameof(FOUNDRY_VOICE_EVALUATION_MODEL_NAME), options => options.IsSecret("audio-judge"));
+        public string FOUNDRY_DATASET_ID => GetRecordedVariable(nameof(FOUNDRY_DATASET_ID), options => options.IsSecret("sanitized-dataset-id"));
+        public string FOUNDRY_VOICE_SIMULATION_PROJECT_ENDPOINT => GetRecordedVariable(nameof(FOUNDRY_VOICE_SIMULATION_PROJECT_ENDPOINT), options => options.IsSecret("https://sanitized-host.services.ai.azure.com/api/projects/sanitized-project"));
+        public string FOUNDRY_VOICE_SIMULATION_MODEL_NAME => GetRecordedVariable(nameof(FOUNDRY_VOICE_SIMULATION_MODEL_NAME), options => options.IsSecret("audio-judge"));
+        public string FOUNDRY_AGENT_NAME => GetRecordedVariable(nameof(FOUNDRY_AGENT_NAME), options => options.IsSecret("voice-agent"));
+        public string FOUNDRY_AGENT_VERSION => GetRecordedVariable(nameof(FOUNDRY_AGENT_VERSION), options => options.IsSecret("1"));
+        public string FOUNDRY_SIMULATOR_MODEL_NAME => GetRecordedVariable(nameof(FOUNDRY_SIMULATOR_MODEL_NAME), options => options.IsSecret("simulator-model"));
+        public string FOUNDRY_SIMULATOR_VOICE => GetRecordedVariable(nameof(FOUNDRY_SIMULATOR_VOICE));
         public string MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME => GetRecordedVariable(nameof(MEMORY_STORE_EMBEDDING_MODEL_DEPLOYMENT_NAME));
         public string MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME => GetRecordedVariable(nameof(MEMORY_STORE_CHAT_MODEL_DEPLOYMENT_NAME));
         public string EMBEDDING_MODEL_NAME => GetRecordedVariable(nameof(EMBEDDING_MODEL_NAME));

@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading;
@@ -149,9 +150,10 @@ public class Sample_VoiceEvaluation : EvaluationSampleBase
     #endregion
 
     #region Snippet:Sample_VoiceEvaluation_Run
-    internal static async Task RunEvaluationAsync(
+    internal static async Task<IReadOnlyList<string>> RunEvaluationAsync(
         EvaluationClient client, BinaryData definition, BinaryData runData,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default,
+        Func<CancellationToken, Task> pollingDelay = null)
     {
         using CancellationTokenSource timeout = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         timeout.CancelAfter(TimeSpan.FromMinutes(10));
@@ -170,7 +172,7 @@ public class Sample_VoiceEvaluation : EvaluationSampleBase
             Console.WriteLine($"Evaluation: {evaluationId}, run: {runId}");
             while (status is not ("completed" or "failed" or "canceled" or "cancelled"))
             {
-                await Task.Delay(TimeSpan.FromSeconds(5), timeout.Token);
+                await (pollingDelay?.Invoke(timeout.Token) ?? Task.Delay(TimeSpan.FromSeconds(5), timeout.Token));
                 run = await client.GetEvaluationRunAsync(evaluationId, runId, options);
                 status = ParseClientResult(run, ["status"])["status"];
             }
@@ -178,7 +180,8 @@ public class Sample_VoiceEvaluation : EvaluationSampleBase
             {
                 throw new InvalidOperationException($"Evaluation run {status}: {GetErrorMessageOrEmpty(run)}");
             }
-            foreach (string item in await GetResultsListAsync(client, evaluationId, runId))
+            IReadOnlyList<string> results = await GetResultsListAsync(client, evaluationId, runId);
+            foreach (string item in results)
             {
                 Console.WriteLine(item);
             }
@@ -189,6 +192,7 @@ public class Sample_VoiceEvaluation : EvaluationSampleBase
             {
                 throw new InvalidOperationException("The evaluation has execution errors or produced no items.");
             }
+            return results;
         }
         finally
         {
