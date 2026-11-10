@@ -3,7 +3,6 @@ namespace Azure.Analytics.OnlineExperimentation
     public partial class AggregatedValue : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.OnlineExperimentation.AggregatedValue>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.OnlineExperimentation.AggregatedValue>
     {
         public AggregatedValue() { }
-        public AggregatedValue(string eventName, string eventProperty) { }
         public string EventName { get { throw null; } set { } }
         public string EventProperty { get { throw null; } set { } }
         public string Filter { get { throw null; } set { } }
@@ -20,7 +19,6 @@ namespace Azure.Analytics.OnlineExperimentation
     public partial class AverageMetricDefinition : Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition, System.ClientModel.Primitives.IJsonModel<Azure.Analytics.OnlineExperimentation.AverageMetricDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.OnlineExperimentation.AverageMetricDefinition>
     {
         public AverageMetricDefinition() { }
-        public AverageMetricDefinition(Azure.Analytics.OnlineExperimentation.AggregatedValue value) { }
         public AverageMetricDefinition(string eventName, string eventProperty) { }
         public Azure.Analytics.OnlineExperimentation.AggregatedValue Value { get { throw null; } set { } }
         protected override Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -94,7 +92,6 @@ namespace Azure.Analytics.OnlineExperimentation
     public partial class EventCountMetricDefinition : Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition, System.ClientModel.Primitives.IJsonModel<Azure.Analytics.OnlineExperimentation.EventCountMetricDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.OnlineExperimentation.EventCountMetricDefinition>
     {
         public EventCountMetricDefinition() { }
-        public EventCountMetricDefinition(Azure.Analytics.OnlineExperimentation.ObservedEvent @event) { }
         public EventCountMetricDefinition(string eventName) { }
         public Azure.Analytics.OnlineExperimentation.ObservedEvent Event { get { throw null; } set { } }
         protected override Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -110,7 +107,6 @@ namespace Azure.Analytics.OnlineExperimentation
     public partial class EventRateMetricDefinition : Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition, System.ClientModel.Primitives.IJsonModel<Azure.Analytics.OnlineExperimentation.EventRateMetricDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.OnlineExperimentation.EventRateMetricDefinition>
     {
         public EventRateMetricDefinition() { }
-        public EventRateMetricDefinition(Azure.Analytics.OnlineExperimentation.ObservedEvent @event, string rateCondition) { }
         public EventRateMetricDefinition(string eventName, string rateCondition) { }
         public Azure.Analytics.OnlineExperimentation.ObservedEvent Event { get { throw null; } set { } }
         public string RateCondition { get { throw null; } set { } }
@@ -127,7 +123,6 @@ namespace Azure.Analytics.OnlineExperimentation
     public partial class ExperimentMetric : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.OnlineExperimentation.ExperimentMetric>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.OnlineExperimentation.ExperimentMetric>
     {
         public ExperimentMetric() { }
-        public ExperimentMetric(Azure.Analytics.OnlineExperimentation.LifecycleStage lifecycle, string displayName, string description, System.Collections.Generic.IEnumerable<string> categories, Azure.Analytics.OnlineExperimentation.DesiredDirection desiredDirection, Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition definition) { }
         public System.Collections.Generic.IList<string> Categories { get { throw null; } }
         public Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition Definition { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
@@ -203,7 +198,6 @@ namespace Azure.Analytics.OnlineExperimentation
     public partial class ObservedEvent : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.OnlineExperimentation.ObservedEvent>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.OnlineExperimentation.ObservedEvent>
     {
         public ObservedEvent() { }
-        public ObservedEvent(string eventName) { }
         public string EventName { get { throw null; } set { } }
         public string Filter { get { throw null; } set { } }
         protected virtual Azure.Analytics.OnlineExperimentation.ObservedEvent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -296,7 +290,6 @@ namespace Azure.Analytics.OnlineExperimentation
     public partial class PercentileMetricDefinition : Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition, System.ClientModel.Primitives.IJsonModel<Azure.Analytics.OnlineExperimentation.PercentileMetricDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.OnlineExperimentation.PercentileMetricDefinition>
     {
         public PercentileMetricDefinition() { }
-        public PercentileMetricDefinition(Azure.Analytics.OnlineExperimentation.AggregatedValue value, double percentile) { }
         public PercentileMetricDefinition(string eventName, string eventProperty, int percentile) { }
         public double Percentile { get { throw null; } set { } }
         public Azure.Analytics.OnlineExperimentation.AggregatedValue Value { get { throw null; } set { } }
@@ -313,7 +306,6 @@ namespace Azure.Analytics.OnlineExperimentation
     public partial class SumMetricDefinition : Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition, System.ClientModel.Primitives.IJsonModel<Azure.Analytics.OnlineExperimentation.SumMetricDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.OnlineExperimentation.SumMetricDefinition>
     {
         public SumMetricDefinition() { }
-        public SumMetricDefinition(Azure.Analytics.OnlineExperimentation.AggregatedValue value) { }
         public SumMetricDefinition(string eventName, string eventProperty) { }
         public Azure.Analytics.OnlineExperimentation.AggregatedValue Value { get { throw null; } set { } }
         protected override Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -329,7 +321,6 @@ namespace Azure.Analytics.OnlineExperimentation
     public partial class UserCountMetricDefinition : Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition, System.ClientModel.Primitives.IJsonModel<Azure.Analytics.OnlineExperimentation.UserCountMetricDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.OnlineExperimentation.UserCountMetricDefinition>
     {
         public UserCountMetricDefinition() { }
-        public UserCountMetricDefinition(Azure.Analytics.OnlineExperimentation.ObservedEvent @event) { }
         public UserCountMetricDefinition(string eventName) { }
         public Azure.Analytics.OnlineExperimentation.ObservedEvent Event { get { throw null; } set { } }
         protected override Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -345,7 +336,6 @@ namespace Azure.Analytics.OnlineExperimentation
     public partial class UserRateMetricDefinition : Azure.Analytics.OnlineExperimentation.ExperimentMetricDefinition, System.ClientModel.Primitives.IJsonModel<Azure.Analytics.OnlineExperimentation.UserRateMetricDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.OnlineExperimentation.UserRateMetricDefinition>
     {
         public UserRateMetricDefinition() { }
-        public UserRateMetricDefinition(Azure.Analytics.OnlineExperimentation.ObservedEvent startEvent, Azure.Analytics.OnlineExperimentation.ObservedEvent endEvent) { }
         public UserRateMetricDefinition(string startEventName, string endEventName) { }
         public Azure.Analytics.OnlineExperimentation.ObservedEvent EndEvent { get { throw null; } set { } }
         public Azure.Analytics.OnlineExperimentation.ObservedEvent StartEvent { get { throw null; } set { } }
