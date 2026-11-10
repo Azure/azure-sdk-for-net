@@ -56,7 +56,9 @@ namespace Azure.AI.AgentServer.Responses
         private bool _streamIsDefined;
         private ResponseStreamOptions _streamOptions;
         private bool _streamOptionsIsDefined;
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         private ResponseConversationOptions _conversation;
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
         private bool _conversationIsDefined;
         private long? _maxOutputTokens;
         private bool _maxOutputTokensIsDefined;
