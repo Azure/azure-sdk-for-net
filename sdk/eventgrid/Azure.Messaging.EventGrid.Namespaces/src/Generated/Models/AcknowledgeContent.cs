@@ -11,23 +11,23 @@ using System.Linq;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary> The RejectRequest. </summary>
-    internal partial class RejectRequest
+    /// <summary> The AcknowledgeContent. </summary>
+    internal partial class AcknowledgeContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RejectRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcknowledgeContent"/>. </summary>
         /// <param name="lockTokens"> Array of lock tokens. </param>
-        internal RejectRequest(IEnumerable<string> lockTokens)
+        internal AcknowledgeContent(IEnumerable<string> lockTokens)
         {
             LockTokens = lockTokens.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="RejectRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcknowledgeContent"/>. </summary>
         /// <param name="lockTokens"> Array of lock tokens. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RejectRequest(IList<string> lockTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcknowledgeContent(IList<string> lockTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LockTokens = lockTokens;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
