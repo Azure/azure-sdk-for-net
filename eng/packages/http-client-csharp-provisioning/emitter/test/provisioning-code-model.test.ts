@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-import { deepStrictEqual, strictEqual, throws } from "assert";
+import { deepStrictEqual, ok, strictEqual, throws } from "assert";
 import { CodeModel } from "@typespec/http-client-csharp";
 import { describe, it } from "vitest";
 import {
@@ -18,6 +18,7 @@ import {
   buildResourceProjectionMetadata,
   determineResourceProjectionName,
   type ResourceProjection,
+  updateProvisioningCodeModel,
   validateResourceProjectionNames
 } from "../src/provisioning-code-model.js";
 
@@ -213,6 +214,82 @@ describe("resource projection metadata", () => {
           }
         ]),
       /resolve to the same class name 'widget'/
+    );
+  });
+
+  it("keeps resource deployability separate from shared model settability", () => {
+    const modelId = "Microsoft.Test.Widget";
+    const nested = {
+      kind: "model",
+      name: "Settings",
+      crossLanguageDefinitionId: "Microsoft.Test.Settings",
+      properties: []
+    };
+    const output = {
+      kind: "model",
+      name: "Status",
+      crossLanguageDefinitionId: "Microsoft.Test.Status",
+      properties: []
+    };
+    const codeModel = {
+      models: [
+        {
+          kind: "model",
+          name: "Widget",
+          crossLanguageDefinitionId: modelId,
+          properties: [
+            { name: "settings", type: nested, readOnly: false },
+            { name: "status", type: output, readOnly: true }
+          ]
+        },
+        nested,
+        output
+      ],
+      enums: [],
+      clients: [{ decorators: [] }]
+    } as CodeModel;
+    const schema = {
+      resources: [
+        createResource({
+          path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",
+          methodKinds: [
+            ResourceOperationKind.Read,
+            ResourceOperationKind.Create
+          ]
+        }),
+        createResource({
+          path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}/revisions/{revisionName}",
+          resourceType: "Microsoft.Test/widgets/revisions",
+          resourceName: "WidgetRevision",
+          methodKinds: [ResourceOperationKind.Read]
+        })
+      ]
+    } as Parameters<typeof buildResourceProjections>[1];
+
+    const projections = buildResourceProjections(codeModel, schema);
+    strictEqual(projections[0].isDeployableResource, true);
+    strictEqual(projections[1].isDeployableResource, false);
+    strictEqual(projections[0].resourceModel, projections[1].resourceModel);
+    deepStrictEqual(projections[1].writableScopes, []);
+
+    updateProvisioningCodeModel(codeModel, schema);
+    const metadata = codeModel.clients[0].decorators?.find(
+      (decorator) =>
+        decorator.name ===
+        "Azure.ClientGenerator.Core.@provisioningProviderSchema"
+    );
+    deepStrictEqual(metadata?.arguments?.modelSettableUsage, [
+      { modelId, isSettable: true },
+      { modelId: nested.crossLanguageDefinitionId, isSettable: true },
+      { modelId: output.crossLanguageDefinitionId, isSettable: false }
+    ]);
+    const serializedProjections = metadata?.arguments?.resourceProjections;
+    ok(Array.isArray(serializedProjections));
+    deepStrictEqual(
+      serializedProjections.map(
+        (projection) => projection.isDeployableResource
+      ),
+      [true, false]
     );
   });
 

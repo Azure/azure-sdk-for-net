@@ -49,7 +49,10 @@ namespace Azure.Generator.Provisioning.Providers
         private readonly InputModelType _inputModel;
         private readonly ProvisioningResourceProjection? _resourceProjection;
         private readonly string? _defaultApiVersion;
-        private readonly bool _isSettableResource;
+        private readonly bool _hasSettableUsage;
+        private bool IsDeployableResource => _resourceProjection is { } projection
+            ? projection.IsDeployableResource
+            : BaseModelProvider is ProvisioningResourceProvider { IsDeployableResource: true };
         /// <summary>
         /// All collected properties for the resource, including flattened and inherited ones,
         /// with their resolved isOutput/isRequired/bicepPath metadata.
@@ -128,7 +131,7 @@ namespace Azure.Generator.Provisioning.Providers
             _defaultApiVersion = projection.ApiVersions.Count > 0
                 ? projection.ApiVersions.Last()
                 : null;
-            _isSettableResource = ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(projection.ResourceModel);
+            _hasSettableUsage = ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(projection.ResourceModel);
             _createBodyWritableProperties = BuildCreateBodyWritableProperties();
             _immediateParentResource = new(ResolveImmediateParentResource);
             _properties = new(CollectAllProperties);
@@ -144,7 +147,7 @@ namespace Azure.Generator.Provisioning.Providers
             _inputModel = inputModel;
             _resourceProjection = null;
             _defaultApiVersion = null;
-            _isSettableResource = ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(inputModel);
+            _hasSettableUsage = ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(inputModel);
             _createBodyWritableProperties = [];
             _immediateParentResource = new(ResolveImmediateParentResource);
             _properties = new(CollectAllProperties);
@@ -302,7 +305,7 @@ namespace Azure.Generator.Provisioning.Providers
                 var sig = new ConstructorSignature(
                     Type,
                     $"Creates a new {Name}.",
-                    _isSettableResource ? MethodSignatureModifiers.Public : MethodSignatureModifiers.Internal,
+                    IsDeployableResource ? MethodSignatureModifiers.Public : MethodSignatureModifiers.Internal,
                     [bicepIdentifierParam, resourceVersionParam],
                     null,
                     initializer);
@@ -339,7 +342,7 @@ namespace Azure.Generator.Provisioning.Providers
             var baseSig = new ConstructorSignature(
                 Type,
                 $"Creates a new {Name}.",
-                _isSettableResource ? MethodSignatureModifiers.Public : MethodSignatureModifiers.Internal,
+                IsDeployableResource ? MethodSignatureModifiers.Public : MethodSignatureModifiers.Internal,
                 [bicepIdentifierParam, resourceVersionParam],
                 null,
                 baseInitializer);
@@ -521,11 +524,11 @@ namespace Azure.Generator.Provisioning.Providers
                     && ((prop.IsReadOnly && !isResourceName && !_createBodyWritableProperties.Contains(serializedName))
                     || OutputOnlyProperties.Contains(serializedName));
                 // Read-only resources are referenced through FromExisting, so Name must remain settable.
-                // Other non-output properties are settable only when the resource has a writable scope.
-                var isSettable = !prop.IsDiscriminator && !isOutput && (_isSettableResource || isResourceName);
-                // Read-only resources should not require body properties that users cannot set.
+                // Shared models retain setters when reachable through any writable usage.
+                var isSettable = !prop.IsDiscriminator && !isOutput && (_hasSettableUsage || isResourceName);
+                // Models without settable usage should not require body properties that users cannot set.
                 // Metadata inputs such as resource name remain required even without writable scopes.
-                var isRequired = isResourceName || (prop.IsRequired && _isSettableResource);
+                var isRequired = isResourceName || (prop.IsRequired && _hasSettableUsage);
 
                 var propertyName = prop.Name.ToIdentifierName();
                 // Child singletons retain their relative default but allow composite names
@@ -922,7 +925,7 @@ namespace Azure.Generator.Provisioning.Providers
                 var serializedName = prop.SerializedName ?? prop.Name;
                 string[] bicepPath = [serializedName];
                 var isOutput = !prop.IsDiscriminator && prop.IsReadOnly;
-                var isSettable = !prop.IsDiscriminator && !prop.IsReadOnly && _isSettableResource;
+                var isSettable = !prop.IsDiscriminator && !prop.IsReadOnly && _hasSettableUsage;
                 result.Add(
                     prop,
                     new ProvisioningPropertyInfo(
