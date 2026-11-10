@@ -142,7 +142,7 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
                            "Be direct and efficient. When you reach the search results page, read and describe the actual search result titles and descriptions you can see.",
             Tools = {
                 ModelReaderWriter.Read<ResponseTool>(
-                    BinaryData.FromString("""{"type":"computer"}"""),
+                    BinaryData.FromObjectAsJson(new { type = "computer" }),
                     ModelReaderWriterOptions.Json,
                     OpenAIContext.Default
                 ),
@@ -245,7 +245,7 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
                            "Be direct and efficient. When you reach the search results page, read and describe the actual search result titles and descriptions you can see.",
             Tools = {
                 ModelReaderWriter.Read<ResponseTool>(
-                    BinaryData.FromString("""{"type":"computer"}"""),
+                    BinaryData.FromObjectAsJson(new { type = "computer" }),
                     ModelReaderWriterOptions.Json,
                     OpenAIContext.Default
                 ),
