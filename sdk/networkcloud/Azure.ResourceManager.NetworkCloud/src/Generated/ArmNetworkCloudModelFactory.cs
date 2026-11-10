@@ -974,17 +974,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return new ClusterSecretArchive(keyVaultId, useKeyVault, default);
         }
 
-        /// <summary> SecretArchiveSettings represents the settings for the secret archive used to hold credentials for the cluster. </summary>
-        /// <param name="associatedIdentity"> The selection of the managed identity to use with this vault URI. The identity type must be either system assigned or user assigned. </param>
-        /// <param name="encryptionPublicKey"> The public key used to encrypt secrets before they are written to the secret archive. Expected encoding is a PEM-encoded RSA public key with a minimum key size of 3072 bits. Additional key formats or sizes may be supported in future versions. </param>
-        /// <param name="providerConfiguration"> The configuration indicating the use of self-supplied secret archive software. Specification of a provider configuration indicates that the provided configuration will be used. Exclusion of any providerConfiguration indicates the use of Azure Key Vault. If providerConfiguration is included in a PATCH, the body must be a complete, valid configuration for the chosen provider, including all fields required for that provider; omit providerConfiguration from PATCH bodies that do not change it. </param>
-        /// <param name="vaultUri"> The URI of the secret archive endpoint. The URI must use the `https://` scheme. </param>
-        /// <returns> A new <see cref="Models.SecretArchiveSettings"/> instance for mocking. </returns>
-        public static SecretArchiveSettings SecretArchiveSettings(ManagedServiceIdentitySelector associatedIdentity = default, string encryptionPublicKey = default, SecretArchiveProviderConfiguration providerConfiguration = default, Uri vaultUri = default)
-        {
-            return new SecretArchiveSettings(associatedIdentity, encryptionPublicKey, providerConfiguration, vaultUri, default);
-        }
-
         /// <summary>
         /// SecretArchiveProviderConfiguration represents the base configuration for a self-supplied secret archive provider.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CyberArkSecretArchiveProviderConfiguration"/>, <see cref="Models.HashiCorpVaultSecretArchiveProviderConfiguration"/>, and <see cref="Models.OpenBaoSecretArchiveProviderConfiguration"/>.
