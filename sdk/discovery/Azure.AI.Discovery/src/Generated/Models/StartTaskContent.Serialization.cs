@@ -13,62 +13,62 @@ using Azure.Core;
 
 namespace Azure.AI.Discovery
 {
-    /// <summary> The StartIndexingRequest. </summary>
-    internal partial class StartIndexingRequest : IJsonModel<StartIndexingRequest>
+    /// <summary> Request body for starting a task. </summary>
+    public partial class StartTaskContent : IJsonModel<StartTaskContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StartIndexingRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual StartTaskContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StartIndexingRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StartTaskContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeStartIndexingRequest(document.RootElement, options);
+                        return DeserializeStartTaskContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StartIndexingRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StartTaskContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StartIndexingRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StartTaskContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIDiscoveryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(StartIndexingRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StartTaskContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<StartIndexingRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<StartTaskContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StartIndexingRequest IPersistableModel<StartIndexingRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        StartTaskContent IPersistableModel<StartTaskContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<StartIndexingRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<StartTaskContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="startIndexingRequest"> The <see cref="StartIndexingRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(StartIndexingRequest startIndexingRequest)
+        /// <param name="startTaskContent"> The <see cref="StartTaskContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(StartTaskContent startTaskContent)
         {
-            if (startIndexingRequest == null)
+            if (startTaskContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(startIndexingRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(startTaskContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<StartIndexingRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<StartTaskContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -79,20 +79,15 @@ namespace Azure.AI.Discovery
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StartIndexingRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StartTaskContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StartIndexingRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(StartTaskContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(NodePoolId))
+            if (Optional.IsDefined(Assignee))
             {
-                writer.WritePropertyName("nodePoolId"u8);
-                writer.WriteStringValue(NodePoolId);
-            }
-            if (Optional.IsDefined(ProjectId))
-            {
-                writer.WritePropertyName("projectId"u8);
-                writer.WriteStringValue(ProjectId);
+                writer.WritePropertyName("assignee"u8);
+                writer.WriteObjectValue(Assignee, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -113,42 +108,40 @@ namespace Azure.AI.Discovery
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        StartIndexingRequest IJsonModel<StartIndexingRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        StartTaskContent IJsonModel<StartTaskContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual StartIndexingRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual StartTaskContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<StartIndexingRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<StartTaskContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StartIndexingRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(StartTaskContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeStartIndexingRequest(document.RootElement, options);
+            return DeserializeStartTaskContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static StartIndexingRequest DeserializeStartIndexingRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static StartTaskContent DeserializeStartTaskContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string nodePoolId = default;
-            string projectId = default;
+            TaskAssignee assignee = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("nodePoolId"u8))
+                if (prop.NameEquals("assignee"u8))
                 {
-                    nodePoolId = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("projectId"u8))
-                {
-                    projectId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    assignee = TaskAssignee.DeserializeTaskAssignee(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,7 +149,7 @@ namespace Azure.AI.Discovery
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new StartIndexingRequest(nodePoolId, projectId, additionalBinaryDataProperties);
+            return new StartTaskContent(assignee, additionalBinaryDataProperties);
         }
     }
 }

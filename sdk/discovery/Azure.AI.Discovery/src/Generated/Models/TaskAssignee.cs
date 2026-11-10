@@ -17,15 +17,8 @@ namespace Azure.AI.Discovery
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TaskAssignee"/>. </summary>
-        /// <param name="id"> The unique identifier of the assignee. </param>
-        /// <param name="type"> Type of assignee (User, Application, System, or custom type). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public TaskAssignee(string id, DiscoveryActorType @type)
+        public TaskAssignee()
         {
-            Argument.AssertNotNull(id, nameof(id));
-
-            Id = id;
-            Type = @type;
         }
 
         /// <summary> Initializes a new instance of <see cref="TaskAssignee"/>. </summary>
