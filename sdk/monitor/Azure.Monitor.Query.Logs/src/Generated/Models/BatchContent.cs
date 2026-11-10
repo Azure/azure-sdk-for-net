@@ -13,25 +13,25 @@ using Azure.Monitor.Query.Logs;
 namespace Azure.Monitor.Query.Logs.Models
 {
     /// <summary> An array of requests. </summary>
-    internal partial class BatchRequest
+    internal partial class BatchContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BatchRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchContent"/>. </summary>
         /// <param name="requests"> An single request in a batch. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requests"/> is null. </exception>
-        public BatchRequest(IEnumerable<BatchQueryRequest> requests)
+        public BatchContent(IEnumerable<BatchQueryRequest> requests)
         {
             Argument.AssertNotNull(requests, nameof(requests));
 
             Requests = requests.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="BatchRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchContent"/>. </summary>
         /// <param name="requests"> An single request in a batch. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BatchRequest(IList<BatchQueryRequest> requests, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BatchContent(IList<BatchQueryRequest> requests, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Requests = requests;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
