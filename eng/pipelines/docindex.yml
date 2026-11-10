@@ -40,16 +40,17 @@ jobs:
       DocRepoLocation: $(Pipeline.Workspace)/docs
     steps:
       # Checkout the eng folder from the SDK repo
-      - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-        parameters:
-          SkipCheckoutNone: true
-          Paths:
-            # This is for retrieving code owners for service level readme metadata
-            - .github/CODEOWNERS
+      - checkout: self
+        fetchFilter: tree:0
+        fetchTags: false
+        fetchDepth: 0
+        # This is for retrieving code owners for service level readme metadata
+        sparseCheckoutPatterns: '/* !/*/ /eng /.config .github/CODEOWNERS'
 
       # Sync docs repo
       - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
         parameters:
+          SkipCheckoutNone: true
           Paths:
             - bundlepackages/
             - metadata/
