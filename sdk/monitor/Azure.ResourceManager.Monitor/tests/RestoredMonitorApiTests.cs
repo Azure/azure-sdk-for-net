@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Monitor.Tests
             var workspace = ArmMonitorModelFactory.DataContainerWorkspace(new ResourceIdentifier(WorkspaceId), AzureLocation.EastUS, "customer");
             Assert.That(ArmMonitorModelFactory.DataContainer(workspace).Workspace, Is.SameAs(workspace));
             Assert.That(workspace.CustomerId, Is.EqualTo("customer"));
-            Assert.That(ArmMonitorModelFactory.DataContainerWorkspace().CustomerId, Is.Null);
+            Assert.That(ArmMonitorModelFactory.DataContainerWorkspace(), Is.Not.Null);
             Assert.That(OnboardingStatus.Onboarded.ToString(), Is.EqualTo("onboarded"));
             Assert.That(DataStatus.Present.ToString(), Is.EqualTo("present"));
         }

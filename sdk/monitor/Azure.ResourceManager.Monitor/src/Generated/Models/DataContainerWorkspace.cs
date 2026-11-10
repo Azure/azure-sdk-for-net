@@ -49,5 +49,14 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Resource properties. </summary>
         internal WorkspaceInfoProperties Properties { get; }
+
+        /// <summary> Log Analytics workspace identifier. </summary>
+        public string CustomerId
+        {
+            get
+            {
+                return Properties.CustomerId;
+            }
+        }
     }
 }
