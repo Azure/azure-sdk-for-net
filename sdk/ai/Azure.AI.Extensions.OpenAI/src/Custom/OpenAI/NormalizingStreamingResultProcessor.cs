@@ -28,11 +28,32 @@ internal sealed class NormalizingStreamingResultProcessor
         using OpenTelemetryResponseScope scope =
             _telemetryContext?.CreateScope();
 
-        await foreach (StreamingResponseUpdate update in updates.WithCancellation(cancellationToken).ConfigureAwait(false))
+        IAsyncEnumerator<StreamingResponseUpdate> enumerator = updates.GetAsyncEnumerator(cancellationToken);
+        try
         {
-            StreamingResponseUpdate fixedUpdate = AzureAIExtensions.NormalizeStreamingUpdate(update);
-            scope?.RecordStreamingUpdate(fixedUpdate);
-            yield return fixedUpdate;
+            while (true)
+            {
+                StreamingResponseUpdate fixedUpdate;
+                try
+                {
+                    if (!await enumerator.MoveNextAsync().ConfigureAwait(false))
+                    {
+                        break;
+                    }
+                    fixedUpdate = AzureAIExtensions.NormalizeStreamingUpdate(enumerator.Current);
+                }
+                catch (System.Exception ex)
+                {
+                    scope?.RecordError(ex);
+                    throw;
+                }
+                scope?.RecordStreamingUpdate(fixedUpdate);
+                yield return fixedUpdate;
+            }
+        }
+        finally
+        {
+            await enumerator.DisposeAsync().ConfigureAwait(false);
         }
     }
 }
