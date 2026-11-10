@@ -11,29 +11,29 @@ using System.Linq;
 
 namespace Azure.AI.Language.Text
 {
-    /// <summary> The AnalyzeTextSubmitJobRequest. </summary>
-    internal partial class AnalyzeTextSubmitJobRequest
+    /// <summary> The AnalyzeTextSubmitJobContent. </summary>
+    internal partial class AnalyzeTextSubmitJobContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextSubmitJobRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextSubmitJobContent"/>. </summary>
         /// <param name="textInput"> Contains the input to be analyzed. </param>
         /// <param name="actions"> List of tasks to be performed as part of the LRO. </param>
-        internal AnalyzeTextSubmitJobRequest(MultiLanguageTextInput textInput, IEnumerable<AnalyzeTextOperationAction> actions)
+        internal AnalyzeTextSubmitJobContent(MultiLanguageTextInput textInput, IEnumerable<AnalyzeTextOperationAction> actions)
         {
             TextInput = textInput;
             Actions = actions.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AnalyzeTextSubmitJobRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalyzeTextSubmitJobContent"/>. </summary>
         /// <param name="displayName"> Name for the task. </param>
         /// <param name="textInput"> Contains the input to be analyzed. </param>
         /// <param name="actions"> List of tasks to be performed as part of the LRO. </param>
         /// <param name="defaultLanguage"> Default language to use for records requesting automatic language detection. </param>
         /// <param name="cancelAfter"> Optional duration in seconds after which the job will be canceled if not completed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeTextSubmitJobRequest(string displayName, MultiLanguageTextInput textInput, IList<AnalyzeTextOperationAction> actions, string defaultLanguage, float? cancelAfter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeTextSubmitJobContent(string displayName, MultiLanguageTextInput textInput, IList<AnalyzeTextOperationAction> actions, string defaultLanguage, float? cancelAfter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             TextInput = textInput;

@@ -15,11 +15,6 @@ namespace Azure.Compute.Batch
     /// <summary> Specification for creating a new Pool. </summary>
     public partial class BatchPoolSpecification : IJsonModel<BatchPoolSpecification>
     {
-        /// <summary> Initializes a new instance of <see cref="BatchPoolSpecification"/> for deserialization. </summary>
-        internal BatchPoolSpecification()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BatchPoolSpecification PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
