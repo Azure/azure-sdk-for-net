@@ -19,6 +19,15 @@ nowarn:AAIP001 M:Azure.AI.Projects.SimpleQnADataGenerationJobConfiguration.Deser
 nowarn:AAIP001 M:Azure.AI.Projects.DataGenerationJobOutput.DeserializeDataGenerationJobOutput(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
 nowarn:AAIP001 M:Azure.AI.Projects.Evaluation.EvaluatorDefinition.DeserializeEvaluatorDefinition(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
 nowarn:AAIP001 M:Azure.AI.Projects.DataGenerationJobConfiguration.DeserializeDataGenerationJobConfiguration(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP001 M:Azure.AI.Projects.ItemGenerationParams.DeserializeItemGenerationParams(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP001 M:Azure.AI.Projects.RubricBasedEvaluatorDefinition.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP001 M:Azure.AI.Projects.RubricBasedEvaluatorDefinition.DeserializeRubricBasedEvaluatorDefinition(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP001 M:Azure.AI.Projects.Evaluation.EvaluationsDimension.#ctor(System.String,System.String,System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Collections.Generic.IDictionary{System.String,System.BinaryData})
+nowarn:AAIP001 M:Azure.AI.Projects.Evaluation.EvaluationsDimension.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP001 M:Azure.AI.Projects.Evaluation.EvaluatorGenerationInputs.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP001 M:Azure.AI.Projects.Evaluation.EvaluatorGenerationInputs.DeserializeEvaluatorGenerationInputs(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP001 M:Azure.AI.Projects.Evaluation.EvaluatorGenerationJob.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP001 M:Azure.AI.Projects.Evaluation.EvaluatorGenerationJob.DeserializeEvaluatorGenerationJob(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
 
 # AAIP002 is the [Experimental] marker for this library's own preview surface
 # This tag is being set for experimental types, brought from OpenAI package.

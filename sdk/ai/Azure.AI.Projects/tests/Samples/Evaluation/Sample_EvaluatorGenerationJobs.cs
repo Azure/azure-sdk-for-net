@@ -41,9 +41,11 @@ public class Sample_EvaluatorGenerationJob : SamplesBase
         Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
         EvaluatorGenerationInputs job = new(
             sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
-            model: modelDeploymentName,
             evaluatorName: "coherence"
-        );
+        )
+        {
+            Model = modelDeploymentName
+        };
         #endregion
         #region Snippet:Sample_CreateJob_EvaluatorGenerationJob_Async
         OperationResult result = await projectClient.EvaluatorGenerationJobs.CreateAsync(waitUntilCompleted: true, job: job);
@@ -60,9 +62,11 @@ public class Sample_EvaluatorGenerationJob : SamplesBase
         #region Snippet:Sample_CancelingJob_EvaluatorGenerationJob_Async
         job = new(
             sources: [new PromptEvaluatorGenerationJobSource("Please explain the Maxwell's equation")],
-            model: modelDeploymentName,
             evaluatorName: "violence"
-        );
+        )
+        {
+            Model = modelDeploymentName
+        };
         result = await projectClient.EvaluatorGenerationJobs.CreateAsync(waitUntilCompleted: false, job: job);
         EvaluatorGenerationJob jobToCancel = EvaluatorGenerationJob.FromClientResult(await result.UpdateStatusAsync());
         jobToCancel = await projectClient.EvaluatorGenerationJobs.CancelAsync(jobToCancel.Id);
@@ -116,9 +120,11 @@ public class Sample_EvaluatorGenerationJob : SamplesBase
         Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
         EvaluatorGenerationInputs job = new(
             sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
-            model: modelDeploymentName,
             evaluatorName: "coherence"
-        );
+        )
+        {
+            Model = modelDeploymentName
+        };
         #endregion
         #region Snippet:Sample_CreateJob_EvaluatorGenerationJob_Sync
         OperationResult result = projectClient.EvaluatorGenerationJobs.Create(waitUntilCompleted: true, job: job);
@@ -135,9 +141,11 @@ public class Sample_EvaluatorGenerationJob : SamplesBase
         #region Snippet:Sample_CancelingJob_EvaluatorGenerationJob_Sync
         job = new(
             sources: [new PromptEvaluatorGenerationJobSource("Please explain the Maxwell's equation")],
-            model: modelDeploymentName,
             evaluatorName: "violence"
-        );
+        )
+        {
+            Model = modelDeploymentName
+        };
         result = projectClient.EvaluatorGenerationJobs.Create(waitUntilCompleted: false, job: job);
         EvaluatorGenerationJob jobToCancel = EvaluatorGenerationJob.FromClientResult(result.UpdateStatus());
         jobToCancel = projectClient.EvaluatorGenerationJobs.Cancel(jobToCancel.Id);

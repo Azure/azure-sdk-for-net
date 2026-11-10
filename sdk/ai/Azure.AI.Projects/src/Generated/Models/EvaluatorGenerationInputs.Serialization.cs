@@ -94,8 +94,16 @@ namespace Azure.AI.Projects.Evaluation
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            writer.WritePropertyName("model"u8);
-            writer.WriteStringValue(Model);
+            if (Optional.IsDefined(Category))
+            {
+                writer.WritePropertyName("category"u8);
+                writer.WriteStringValue(Category.Value.ToString());
+            }
+            if (Optional.IsDefined(Model))
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(Model);
+            }
             writer.WritePropertyName("evaluator_name"u8);
             writer.WriteStringValue(EvaluatorName);
             if (Optional.IsDefined(EvaluatorDisplayName))
@@ -107,6 +115,26 @@ namespace Azure.AI.Projects.Evaluation
             {
                 writer.WritePropertyName("evaluator_description"u8);
                 writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(Scoring))
+            {
+                writer.WritePropertyName("scoring"u8);
+                writer.WriteObjectValue(Scoring, options);
+            }
+            if (Optional.IsDefined(PassThreshold))
+            {
+                writer.WritePropertyName("pass_threshold"u8);
+                writer.WriteNumberValue(PassThreshold.Value);
+            }
+            if (Optional.IsCollectionDefined(Dimensions))
+            {
+                writer.WritePropertyName("dimensions"u8);
+                writer.WriteStartArray();
+                foreach (EvaluationsDimension item in Dimensions)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -151,10 +179,14 @@ namespace Azure.AI.Projects.Evaluation
                 return null;
             }
             IList<EvaluatorGenerationJobSource> sources = default;
+            EvaluatorGenerationCategory? category = default;
             string model = default;
             string evaluatorName = default;
             string evaluatorDisplayName = default;
             string description = default;
+            RubricScoring scoring = default;
+            float? passThreshold = default;
+            IList<EvaluationsDimension> dimensions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -166,6 +198,15 @@ namespace Azure.AI.Projects.Evaluation
                         array.Add(EvaluatorGenerationJobSource.DeserializeEvaluatorGenerationJobSource(item, options));
                     }
                     sources = array;
+                    continue;
+                }
+                if (prop.NameEquals("category"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    category = new EvaluatorGenerationCategory(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("model"u8))
@@ -188,6 +229,38 @@ namespace Azure.AI.Projects.Evaluation
                     description = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("scoring"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scoring = RubricScoring.DeserializeRubricScoring(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("pass_threshold"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    passThreshold = prop.Value.GetSingle();
+                    continue;
+                }
+                if (prop.NameEquals("dimensions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<EvaluationsDimension> array = new List<EvaluationsDimension>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(EvaluationsDimension.DeserializeEvaluationsDimension(item, options));
+                    }
+                    dimensions = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -195,10 +268,14 @@ namespace Azure.AI.Projects.Evaluation
             }
             return new EvaluatorGenerationInputs(
                 sources ?? new ChangeTrackingList<EvaluatorGenerationJobSource>(),
+                category,
                 model,
                 evaluatorName,
                 evaluatorDisplayName,
                 description,
+                scoring,
+                passThreshold,
+                dimensions ?? new ChangeTrackingList<EvaluationsDimension>(),
                 additionalBinaryDataProperties);
         }
     }

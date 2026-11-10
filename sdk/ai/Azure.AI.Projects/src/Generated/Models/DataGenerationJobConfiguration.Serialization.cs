@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Configuration for managing data generation jobs.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SimpleQnADataGenerationJobConfiguration"/>, <see cref="SimulationSeedDataGenerationJobConfiguration"/>, <see cref="ToolUseFineTuningDataGenerationJobConfiguration"/>, and <see cref="TracesDataGenerationJobConfiguration"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConversationsDataGenerationJobConfiguration"/>, <see cref="SimpleQnADataGenerationJobConfiguration"/>, <see cref="SimulationSeedDataGenerationJobConfiguration"/>, <see cref="ToolUseFineTuningDataGenerationJobConfiguration"/>, and <see cref="TracesDataGenerationJobConfiguration"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownDataGenerationJobConfiguration))]
     public abstract partial class DataGenerationJobConfiguration : IJsonModel<DataGenerationJobConfiguration>
@@ -136,6 +136,8 @@ namespace Azure.AI.Projects
             {
                 switch (discriminator.GetString())
                 {
+                    case "conversations":
+                        return ConversationsDataGenerationJobConfiguration.DeserializeConversationsDataGenerationJobConfiguration(element, options);
                     case "simple_qna":
                         return SimpleQnADataGenerationJobConfiguration.DeserializeSimpleQnADataGenerationJobConfiguration(element, options);
                     case "simulation_seed":

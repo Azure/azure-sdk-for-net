@@ -4,9 +4,19 @@
 
 ### Features Added
 - Uploading of models now can be cancelled.
+- Added rubric scoring for rubric-based evaluators (experimental, `AAIP001`): `RubricScoring` with `RubricScoringMode.Likert` or `RubricScoringMode.Boolean`, `RubricBasedEvaluatorDefinition.Scoring` and `PassThreshold`, and `EvaluationsDimension.Allowed`, `Weight`, and `GeneratedWeight`.
+- Added `Category` (quality or safety), `Scoring`, `PassThreshold`, `Dimensions`, and `Model` to `EvaluatorGenerationInputs` and `EvaluatorGenerationJob`. Supplying `Dimensions` replaces the approved dimensions; omitting it preserves them.
+- Added `TracesEvaluatorGenerationJobSource.TraceIds`.
+- Added `EvaluationRuleActionType.DatasetEvaluation` and `EvaluationRuleActionType.TraceEvaluation`.
+- Added `ProjectsError`, `ProjectsInnerError`, and `ProjectsMetadata`.
 
 ### Breaking Changes
 - Renamed `ModelCredentialRequest` to `ModelCredentialContent`.
+- Removed the `model` constructor parameter from `EvaluatorGenerationInputs`. Set the `Model` property instead; it is required for quality evaluator generation and ignored for safety evaluator generation.
+- Renamed `DatasetReference` to `VersionedDatasetReference`.
+- `AgentInsightMonitors.GetInsights` and `GetInsightsAsync` now accept `categories`, `severities`, and `statuses` collections instead of the single `category`, `severity`, and `status` filters.
+- `AgentInsightMonitors.Create` and `CreateAsync` now take `agentName`, `modelDeploymentName`, and optional settings directly instead of an `AgentInsightMonitorCreate` model. `CreateRun` and `CreateRunAsync` now take an optional `lookbackHours` instead of an `AgentInsightRunCreate` model.
+- Removed `AgentInsightsOverview`, `AgentInsightOverviewSource`, and the related `Overview` property.
 
 ### Bugs Fixed
 

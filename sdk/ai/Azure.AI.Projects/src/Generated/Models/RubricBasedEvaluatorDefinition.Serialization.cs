@@ -10,7 +10,7 @@ using Azure.AI.Projects.Evaluation;
 
 namespace Azure.AI.Projects
 {
-    /// <summary> Rubric-based evaluator definition — stores dimensions produced by the generate API. Used for both quality and safety evaluators. </summary>
+    /// <summary> Rubric evaluator definition. Ordinary quality rubrics report one aggregate. Safety rubrics require Boolean scoring and an explicit allowed classification on every dimension, and report disallowed_behavior_violated and allowed_behavior_violated as two independent lower-is-better metrics. Safety rubrics have no weights, threshold, or combined safety score. </summary>
     public partial class RubricBasedEvaluatorDefinition : EvaluatorDefinition, IJsonModel<RubricBasedEvaluatorDefinition>
     {
         /// <summary> Initializes a new instance of <see cref="RubricBasedEvaluatorDefinition"/> for deserialization. </summary>
@@ -89,6 +89,11 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("pass_threshold"u8);
                 writer.WriteNumberValue(PassThreshold.Value);
             }
+            if (Optional.IsDefined(Scoring))
+            {
+                writer.WritePropertyName("scoring"u8);
+                writer.WriteObjectValue(Scoring, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -123,6 +128,7 @@ namespace Azure.AI.Projects
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<EvaluationsDimension> dimensions = default;
             float? passThreshold = default;
+            RubricScoring scoring = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -181,6 +187,15 @@ namespace Azure.AI.Projects
                     passThreshold = prop.Value.GetSingle();
                     continue;
                 }
+                if (prop.NameEquals("scoring"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scoring = RubricScoring.DeserializeRubricScoring(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -193,7 +208,8 @@ namespace Azure.AI.Projects
                 metrics ?? new ChangeTrackingDictionary<string, EvaluatorMetric>(),
                 additionalBinaryDataProperties,
                 dimensions ?? new ChangeTrackingList<EvaluationsDimension>(),
-                passThreshold);
+                passThreshold,
+                scoring);
         }
     }
 }

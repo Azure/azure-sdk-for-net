@@ -1508,9 +1508,11 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
 Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
 EvaluatorGenerationInputs job = new(
     sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
-    model: modelDeploymentName,
     evaluatorName: "coherence"
-);
+)
+{
+    Model = modelDeploymentName
+};
 ```
 
 To generate the evaluator, we need to start the job:

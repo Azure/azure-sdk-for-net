@@ -43,10 +43,10 @@ public class EvaluatorGenerationJobTests : ProjectsClientTestBase
         // Create
         EvaluatorGenerationInputs job = new(
             sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
-            model: TestEnvironment.FOUNDRY_MODEL_NAME,
             evaluatorName: "coherence"
         )
         {
+            Model = TestEnvironment.FOUNDRY_MODEL_NAME,
             EvaluatorDisplayName = INPUT_PREFIX
         };
         OperationResult evalResult = await projectClient.EvaluatorGenerationJobs.CreateAsync(waitUntilCompleted: false, job);
@@ -62,10 +62,10 @@ public class EvaluatorGenerationJobTests : ProjectsClientTestBase
         // Cancel
         job = new(
             sources: [new PromptEvaluatorGenerationJobSource("Please explain the Maxwell's equation")],
-            model: TestEnvironment.FOUNDRY_MODEL_NAME,
             evaluatorName: "violence"
         )
         {
+            Model = TestEnvironment.FOUNDRY_MODEL_NAME,
             EvaluatorDisplayName = INPUT_PREFIX
         };
         evalResult = await projectClient.EvaluatorGenerationJobs.CreateAsync(waitUntilCompleted: false, job: job);
@@ -106,10 +106,10 @@ public class EvaluatorGenerationJobTests : ProjectsClientTestBase
         {
             EvaluatorGenerationInputs job = new(
                     sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
-                    model: TestEnvironment.FOUNDRY_MODEL_NAME,
                     evaluatorName: "coherence"
             )
             {
+                Model = TestEnvironment.FOUNDRY_MODEL_NAME,
                 EvaluatorDisplayName = $"{INPUT_PREFIX}-{i}"
             };
             OperationResult evalResult = await projectClient.EvaluatorGenerationJobs.CreateAsync(waitUntilCompleted: false, job: job);
