@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <param name="desiredLocations"> The desired regions. If not set, the location from the request URI is used as the desired location. Each location in this list must be a valid Azure region. </param>
         /// <param name="desiredSizes"> The desired virtual machine SKU sizes. </param>
         /// <param name="desiredCount"> Desired instance count per region/zone based on the scope. If not set, defaults to 1. </param>
-        /// <param name="availabilityZones"> Defines if the scope is zonal or regional. </param>
+        /// <param name="isZonal"> Defines if the scope is zonal or regional. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputePlacementScoresGenerateContent(IList<AzureLocation> desiredLocations, IList<ComputeRecommenderResourceSize> desiredSizes, int? desiredCount, bool? availabilityZones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputePlacementScoresGenerateContent(IList<AzureLocation> desiredLocations, IList<ComputeRecommenderResourceSize> desiredSizes, int? desiredCount, bool? isZonal, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DesiredLocations = desiredLocations;
             DesiredSizes = desiredSizes;
             DesiredCount = desiredCount;
-            AvailabilityZones = availabilityZones;
+            IsZonal = isZonal;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -55,6 +55,6 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         public int? DesiredCount { get; set; }
 
         /// <summary> Defines if the scope is zonal or regional. </summary>
-        public bool? AvailabilityZones { get; set; }
+        public bool? IsZonal { get; set; }
     }
 }

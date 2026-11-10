@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                 writer.WritePropertyName("desiredCount"u8);
                 writer.WriteNumberValue(DesiredCount.Value);
             }
-            if (Optional.IsDefined(AvailabilityZones))
+            if (Optional.IsDefined(IsZonal))
             {
                 writer.WritePropertyName("availabilityZones"u8);
-                writer.WriteBooleanValue(AvailabilityZones.Value);
+                writer.WriteBooleanValue(IsZonal.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             IList<AzureLocation> desiredLocations = default;
             IList<ComputeRecommenderResourceSize> desiredSizes = default;
             int? desiredCount = default;
-            bool? availabilityZones = default;
+            bool? isZonal = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                     {
                         continue;
                     }
-                    availabilityZones = prop.Value.GetBoolean();
+                    isZonal = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ComputePlacementScoresGenerateContent(desiredLocations ?? new ChangeTrackingList<AzureLocation>(), desiredSizes ?? new ChangeTrackingList<ComputeRecommenderResourceSize>(), desiredCount, availabilityZones, additionalBinaryDataProperties);
+            return new ComputePlacementScoresGenerateContent(desiredLocations ?? new ChangeTrackingList<AzureLocation>(), desiredSizes ?? new ChangeTrackingList<ComputeRecommenderResourceSize>(), desiredCount, isZonal, additionalBinaryDataProperties);
         }
     }
 }

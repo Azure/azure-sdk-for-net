@@ -5,7 +5,7 @@
 ### Features Added
 
 - Upgraded API version to `2026-10-05-preview`.
-- Added regular compute placement scoring through `GetComputePlacementScores`.
+- Added regular compute placement scoring through `GetComputePlacementScores`. The new request and result models expose zonal scope as `IsZonal`.
 - Added `ComputeRecommenderPlacementScore.PlacementPreference`.
 
 ### Breaking Changes

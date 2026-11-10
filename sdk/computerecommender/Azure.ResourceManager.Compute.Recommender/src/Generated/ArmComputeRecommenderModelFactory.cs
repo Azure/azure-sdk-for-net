@@ -118,24 +118,24 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <param name="desiredLocations"> The desired regions. If not set, the location from the request URI is used as the desired location. Each location in this list must be a valid Azure region. </param>
         /// <param name="desiredSizes"> The desired virtual machine SKU sizes. </param>
         /// <param name="desiredCount"> Desired instance count per region/zone based on the scope. If not set, defaults to 1. </param>
-        /// <param name="availabilityZones"> Defines if the scope is zonal or regional. </param>
+        /// <param name="isZonal"> Defines if the scope is zonal or regional. </param>
         /// <returns> A new <see cref="Models.ComputePlacementScoresGenerateContent"/> instance for mocking. </returns>
-        public static ComputePlacementScoresGenerateContent ComputePlacementScoresGenerateContent(IEnumerable<AzureLocation> desiredLocations = default, IEnumerable<ComputeRecommenderResourceSize> desiredSizes = default, int? desiredCount = default, bool? availabilityZones = default)
+        public static ComputePlacementScoresGenerateContent ComputePlacementScoresGenerateContent(IEnumerable<AzureLocation> desiredLocations = default, IEnumerable<ComputeRecommenderResourceSize> desiredSizes = default, int? desiredCount = default, bool? isZonal = default)
         {
             desiredLocations ??= new ChangeTrackingList<AzureLocation>();
             desiredSizes ??= new ChangeTrackingList<ComputeRecommenderResourceSize>();
 
-            return new ComputePlacementScoresGenerateContent((desiredLocations ?? new ChangeTrackingList<AzureLocation>()).ToList(), (desiredSizes ?? new ChangeTrackingList<ComputeRecommenderResourceSize>()).ToList(), desiredCount, availabilityZones, default);
+            return new ComputePlacementScoresGenerateContent((desiredLocations ?? new ChangeTrackingList<AzureLocation>()).ToList(), (desiredSizes ?? new ChangeTrackingList<ComputeRecommenderResourceSize>()).ToList(), desiredCount, isZonal, default);
         }
 
         /// <summary> ComputePlacementScores API response. </summary>
         /// <param name="desiredLocations"> The desired regions. </param>
         /// <param name="desiredSizes"> The desired virtual machine SKU sizes. </param>
         /// <param name="desiredCount"> Desired instance count per region/zone based on the scope. </param>
-        /// <param name="availabilityZones"> Defines if the scope is zonal or regional. </param>
+        /// <param name="isZonal"> Defines if the scope is zonal or regional. </param>
         /// <param name="placementScores"> A placement score indicating the likelihood of successfully allocating the specified Spot VM(s), as well as the expected lifetimes of the Spot VM(s) after allocation. </param>
         /// <returns> A new <see cref="Models.ComputePlacementScoresGenerateResult"/> instance for mocking. </returns>
-        public static ComputePlacementScoresGenerateResult ComputePlacementScoresGenerateResult(IEnumerable<AzureLocation> desiredLocations = default, IEnumerable<ComputeRecommenderResourceSize> desiredSizes = default, int? desiredCount = default, bool? availabilityZones = default, IEnumerable<ComputeRecommenderPlacementScore> placementScores = default)
+        public static ComputePlacementScoresGenerateResult ComputePlacementScoresGenerateResult(IEnumerable<AzureLocation> desiredLocations = default, IEnumerable<ComputeRecommenderResourceSize> desiredSizes = default, int? desiredCount = default, bool? isZonal = default, IEnumerable<ComputeRecommenderPlacementScore> placementScores = default)
         {
             desiredLocations ??= new ChangeTrackingList<AzureLocation>();
             desiredSizes ??= new ChangeTrackingList<ComputeRecommenderResourceSize>();
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                 (desiredLocations ?? new ChangeTrackingList<AzureLocation>()).ToList(),
                 (desiredSizes ?? new ChangeTrackingList<ComputeRecommenderResourceSize>()).ToList(),
                 desiredCount,
-                availabilityZones,
+                isZonal,
                 (placementScores ?? new ChangeTrackingList<ComputeRecommenderPlacementScore>()).ToList(),
                 default);
         }

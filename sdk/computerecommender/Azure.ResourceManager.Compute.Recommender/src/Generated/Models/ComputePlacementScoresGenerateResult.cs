@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <param name="desiredLocations"> The desired regions. </param>
         /// <param name="desiredSizes"> The desired virtual machine SKU sizes. </param>
         /// <param name="desiredCount"> Desired instance count per region/zone based on the scope. </param>
-        /// <param name="availabilityZones"> Defines if the scope is zonal or regional. </param>
+        /// <param name="isZonal"> Defines if the scope is zonal or regional. </param>
         /// <param name="placementScores"> A placement score indicating the likelihood of successfully allocating the specified Spot VM(s), as well as the expected lifetimes of the Spot VM(s) after allocation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputePlacementScoresGenerateResult(IList<AzureLocation> desiredLocations, IList<ComputeRecommenderResourceSize> desiredSizes, int? desiredCount, bool? availabilityZones, IList<ComputeRecommenderPlacementScore> placementScores, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputePlacementScoresGenerateResult(IList<AzureLocation> desiredLocations, IList<ComputeRecommenderResourceSize> desiredSizes, int? desiredCount, bool? isZonal, IList<ComputeRecommenderPlacementScore> placementScores, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DesiredLocations = desiredLocations;
             DesiredSizes = desiredSizes;
             DesiredCount = desiredCount;
-            AvailabilityZones = availabilityZones;
+            IsZonal = isZonal;
             PlacementScores = placementScores;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         public int? DesiredCount { get; }
 
         /// <summary> Defines if the scope is zonal or regional. </summary>
-        public bool? AvailabilityZones { get; }
+        public bool? IsZonal { get; }
 
         /// <summary> A placement score indicating the likelihood of successfully allocating the specified Spot VM(s), as well as the expected lifetimes of the Spot VM(s) after allocation. </summary>
         public IList<ComputeRecommenderPlacementScore> PlacementScores { get; }

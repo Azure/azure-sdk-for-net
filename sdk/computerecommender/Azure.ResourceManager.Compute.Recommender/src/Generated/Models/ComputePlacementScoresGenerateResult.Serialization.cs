@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                 writer.WritePropertyName("desiredCount"u8);
                 writer.WriteNumberValue(DesiredCount.Value);
             }
-            if (Optional.IsDefined(AvailabilityZones))
+            if (Optional.IsDefined(IsZonal))
             {
                 writer.WritePropertyName("availabilityZones"u8);
-                writer.WriteBooleanValue(AvailabilityZones.Value);
+                writer.WriteBooleanValue(IsZonal.Value);
             }
             if (Optional.IsCollectionDefined(PlacementScores))
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
             IList<AzureLocation> desiredLocations = default;
             IList<ComputeRecommenderResourceSize> desiredSizes = default;
             int? desiredCount = default;
-            bool? availabilityZones = default;
+            bool? isZonal = default;
             IList<ComputeRecommenderPlacementScore> placementScores = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                     {
                         continue;
                     }
-                    availabilityZones = prop.Value.GetBoolean();
+                    isZonal = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("placementScores"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                 desiredLocations ?? new ChangeTrackingList<AzureLocation>(),
                 desiredSizes ?? new ChangeTrackingList<ComputeRecommenderResourceSize>(),
                 desiredCount,
-                availabilityZones,
+                isZonal,
                 placementScores ?? new ChangeTrackingList<ComputeRecommenderPlacementScore>(),
                 additionalBinaryDataProperties);
         }
