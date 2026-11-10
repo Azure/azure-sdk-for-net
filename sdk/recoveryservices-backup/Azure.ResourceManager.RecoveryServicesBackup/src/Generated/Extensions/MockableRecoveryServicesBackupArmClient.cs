@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServicesBackup;
@@ -31,6 +32,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> Returns a <see cref="BackupResourceConfigResource"/> object. </returns>
         public virtual BackupResourceConfigResource GetBackupResourceConfigResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != BackupResourceConfigResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.RecoveryServices", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "vaults", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "backupstorageconfig", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "vaultstorageconfig", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig"), nameof(id));
+            }
             BackupResourceConfigResource.ValidateResourceId(id);
             return new BackupResourceConfigResource(Client, id);
         }
@@ -49,6 +59,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> Returns a <see cref="BackupResourceVaultConfigResource"/> object. </returns>
         public virtual BackupResourceVaultConfigResource GetBackupResourceVaultConfigResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != BackupResourceVaultConfigResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.RecoveryServices", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "vaults", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "backupconfig", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "vaultconfig", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupconfig/vaultconfig"), nameof(id));
+            }
             BackupResourceVaultConfigResource.ValidateResourceId(id);
             return new BackupResourceVaultConfigResource(Client, id);
         }
@@ -58,6 +77,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <returns> Returns a <see cref="BackupResourceEncryptionConfigExtendedResource"/> object. </returns>
         public virtual BackupResourceEncryptionConfigExtendedResource GetBackupResourceEncryptionConfigExtendedResource(ResourceIdentifier id)
         {
+            if (id == null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+            string[] segments = id.ToString().Split('/');
+            if (id.ResourceType != BackupResourceEncryptionConfigExtendedResource.ResourceType || segments.Length != 11 || segments[0] != "" || !string.Equals(segments[1], "subscriptions", StringComparison.OrdinalIgnoreCase) || segments[2] == "" || !string.Equals(segments[3], "resourceGroups", StringComparison.OrdinalIgnoreCase) || segments[4] == "" || !string.Equals(segments[5], "providers", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[6], "Microsoft.RecoveryServices", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[7], "vaults", StringComparison.OrdinalIgnoreCase) || segments[8] == "" || !string.Equals(segments[9], "backupEncryptionConfigs", StringComparison.OrdinalIgnoreCase) || !string.Equals(segments[10], "backupResourceEncryptionConfig", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ArgumentException(string.Format("Invalid singleton resource ID {0} expected path {1}", id, "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEncryptionConfigs/backupResourceEncryptionConfig"), nameof(id));
+            }
             BackupResourceEncryptionConfigExtendedResource.ValidateResourceId(id);
             return new BackupResourceEncryptionConfigExtendedResource(Client, id);
         }
