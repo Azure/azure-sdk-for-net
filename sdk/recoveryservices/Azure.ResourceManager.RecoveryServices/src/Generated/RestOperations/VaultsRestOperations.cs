@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServices
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
             uri.AppendPath(vaultName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServices
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
             uri.AppendPath(vaultName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServices
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
             uri.AppendPath(vaultName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServices
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
             uri.AppendPath(vaultName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.RecoveryServices
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-11-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.RecoveryServices
             uri.AppendPath(vaultName, true);
             uri.AppendPath("/certificates/", false);
             uri.AppendPath(certificateName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServices
             uri.AppendPath(vaultName, true);
             uri.AppendPath("/registeredIdentities/", false);
             uri.AppendPath(identityName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.RecoveryServices
             uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
             uri.AppendPath(vaultName, true);
             uri.AppendPath("/replicationUsages", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-11-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.RecoveryServices
             uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
             uri.AppendPath(vaultName, true);
             uri.AppendPath("/usages", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-11-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.RecoveryServices
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2026-07-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-11-01", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2026-07-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-11-01");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
