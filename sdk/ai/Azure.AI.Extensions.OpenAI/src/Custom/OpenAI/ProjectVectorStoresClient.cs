@@ -12,7 +12,7 @@ namespace Azure.AI.Extensions.OpenAI;
 [Experimental("OPENAI001")]
 public partial class ProjectVectorStoresClient : VectorStoreClient
 {
-    internal ProjectVectorStoresClient(ClientPipeline pipeline, OpenAIClientOptions options)
+    internal ProjectVectorStoresClient(ClientPipeline pipeline, VectorStoreClientOptions options)
         : base(pipeline, options)
     {
     }

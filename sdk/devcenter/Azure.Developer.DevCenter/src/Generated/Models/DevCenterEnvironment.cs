@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using Azure.Developer.DevCenter;
 
 namespace Azure.Developer.DevCenter.Models
 {
@@ -19,12 +18,6 @@ namespace Azure.Developer.DevCenter.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        /// <summary> Initializes a new instance of <see cref="DevCenterEnvironment"/>. </summary>
-        public DevCenterEnvironment()
-        {
-            Parameters = new ChangeTrackingDictionary<string, BinaryData>();
-        }
 
         /// <summary> Initializes a new instance of <see cref="DevCenterEnvironment"/>. </summary>
         /// <param name="parameters"> Parameters object for the environment. </param>

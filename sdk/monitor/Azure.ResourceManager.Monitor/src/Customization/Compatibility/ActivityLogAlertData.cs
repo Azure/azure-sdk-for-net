@@ -3,10 +3,8 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Monitor.Models;
 
 namespace Azure.ResourceManager.Monitor
 {
@@ -19,29 +17,6 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="location"> The location. </param>
         public ActivityLogAlertData(AzureLocation location) : base(location)
         {
-        }
-
-        // AutoRest exposed conditionAllOf directly; TypeSpec now models it under Properties.Condition.
-        // Keep the old property and bridge it to the generated properties bag for source compatibility.
-        /// <summary> The list of Activity Log Alert rule conditions. </summary>
-        public IList<ActivityLogAlertAnyOfOrLeafCondition> ConditionAllOf
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertRuleProperties();
-                }
-                return Properties.ConditionAllOf;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertRuleProperties();
-                }
-                Properties.Condition = new AlertRuleAllOfCondition(value);
-            }
         }
     }
 }
