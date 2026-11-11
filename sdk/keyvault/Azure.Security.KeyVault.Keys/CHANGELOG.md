@@ -1,22 +1,14 @@
 # Release History
 
-## 4.11.0-beta.6 (2026-11-11)
-
-### Other Changes
-
-- Updated the `Azure.Core` dependency to `1.65.0`, which includes the MSAL `4.92.0` update.
-
-## 4.11.0-beta.5 (2026-10-06)
+## 4.11.0-beta.5 (Unreleased)
 
 ### Features Added
-- Added support for Algorithm Key Pair (AKP) keys, such as ML-DSA post-quantum keys:
-  - Added the `KeyType.Akp` and `KeyType.AkpHsm` key types.
-  - Added the `AkpAlgorithm` type listing the supported AKP algorithms.
-  - Added the `CreateAkpKeyOptions` model and the new `CreateAkpKey` and `CreateAkpKeyAsync` methods in `KeyClient`.
-  - Added the `Algorithm` and `Pub` properties to `JsonWebKey`.
+
+### Breaking Changes
+
+### Bugs Fixed
 
 ### Other Changes
-- The default service version is now `2026-07-01-preview`.
 
 ## 4.11.0-beta.4 (2026-09-27)
 
