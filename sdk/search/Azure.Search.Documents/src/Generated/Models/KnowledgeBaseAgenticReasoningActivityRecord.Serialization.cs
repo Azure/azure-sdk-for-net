@@ -70,23 +70,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             writer.WriteEndObject();
         }
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<KnowledgeBaseAgenticReasoningActivityRecord>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(KnowledgeBaseAgenticReasoningActivityRecord)} does not support writing '{format}' format.");
-            }
-            base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(ReasoningTokens))
-            {
-                writer.WritePropertyName("reasoningTokens"u8);
-                writer.WriteNumberValue(ReasoningTokens.Value);
-            }
-        }
-
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         KnowledgeBaseAgenticReasoningActivityRecord IJsonModel<KnowledgeBaseAgenticReasoningActivityRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (KnowledgeBaseAgenticReasoningActivityRecord)JsonModelCreateCore(ref reader, options);
@@ -121,6 +104,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             string warning = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int? reasoningTokens = default;
+            KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -183,6 +167,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     reasoningTokens = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("retrievalReasoningEffort"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    retrievalReasoningEffort = KnowledgeRetrievalReasoningEffort.DeserializeKnowledgeRetrievalReasoningEffort(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -197,7 +190,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 error,
                 warning,
                 additionalBinaryDataProperties,
-                reasoningTokens);
+                reasoningTokens,
+                retrievalReasoningEffort);
         }
     }
 }

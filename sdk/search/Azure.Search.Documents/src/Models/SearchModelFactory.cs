@@ -20,6 +20,28 @@ namespace Azure.Search.Documents.Models
     [CodeGenSuppress("IndexDocumentsResult", typeof(IReadOnlyList<IndexingResult>))]
     public static partial class SearchModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.VectorizableImageBinaryQuery"/> for mocking. </summary>
+        /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
+        /// <param name="fieldsRaw"> Comma-separated vector fields to search. </param>
+        /// <param name="exhaustive"> Whether to use exhaustive nearest neighbor search. </param>
+        /// <param name="oversampling"> The oversampling factor. </param>
+        /// <param name="weight"> The relative weight of the vector query. </param>
+        /// <param name="base64Image"> The base64-encoded image to vectorize. </param>
+        /// <returns> A new <see cref="Models.VectorizableImageBinaryQuery"/> instance for mocking. </returns>
+        public static VectorizableImageBinaryQuery VectorizableImageBinaryQuery(int? kNearestNeighborsCount = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, string base64Image = default) =>
+            new VectorizableImageBinaryQuery(kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, new VectorQueryKind("imageBinary"), additionalBinaryDataProperties: null, base64Image);
+
+        /// <summary> Initializes a new instance of <see cref="Models.VectorizableImageUrlQuery"/> for mocking. </summary>
+        /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
+        /// <param name="fieldsRaw"> Comma-separated vector fields to search. </param>
+        /// <param name="exhaustive"> Whether to use exhaustive nearest neighbor search. </param>
+        /// <param name="oversampling"> The oversampling factor. </param>
+        /// <param name="weight"> The relative weight of the vector query. </param>
+        /// <param name="url"> The URL of the image to vectorize. </param>
+        /// <returns> A new <see cref="Models.VectorizableImageUrlQuery"/> instance for mocking. </returns>
+        public static VectorizableImageUrlQuery VectorizableImageUrlQuery(int? kNearestNeighborsCount = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, Uri url = default) =>
+            new VectorizableImageUrlQuery(kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, new VectorQueryKind("imageUrl"), additionalBinaryDataProperties: null, url);
+
         /// <summary> Initializes a new instance of AnalyzedTokenInfo. </summary>
         /// <param name="token"> The token returned by the analyzer. </param>
         /// <param name="startOffset"> The index of the first character of the token in the input text. </param>

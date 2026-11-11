@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.KnowledgeBases.Models;
+using Azure.Search.Documents.Models;
 using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Models
@@ -58,6 +59,153 @@ namespace Azure.Search.Documents.Tests.Models
     [Category("ModelSerialization")]
     public class ModelSerializationMockTests
     {
+        [TestCase("J", false)]
+        [TestCase("W", false)]
+        [TestCase("J", true)]
+        [TestCase("W", true)]
+        public void ImageQueryCompatibilityRoundtrips(string format, bool useFactory)
+        {
+            ModelReaderWriterOptions options = new ModelReaderWriterOptions(format);
+            VectorizableImageBinaryQuery binary = useFactory
+                ? SearchModelFactory.VectorizableImageBinaryQuery(3, "imageVector", true, 2, 0.5f, "aW1hZ2U=")
+                : new VectorizableImageBinaryQuery
+                {
+                    KNearestNeighborsCount = 3,
+                    Exhaustive = true,
+                    Oversampling = 2,
+                    Weight = 0.5f,
+                    Base64Image = "aW1hZ2U="
+                };
+            VectorizableImageUrlQuery url = useFactory
+                ? SearchModelFactory.VectorizableImageUrlQuery(3, "imageVector", true, 2, 0.5f, new Uri("https://example.com/image.png"))
+                : new VectorizableImageUrlQuery
+                {
+                    KNearestNeighborsCount = 3,
+                    Exhaustive = true,
+                    Oversampling = 2,
+                    Weight = 0.5f,
+                    Url = new Uri("https://example.com/image.png")
+                };
+            if (!useFactory)
+            {
+                binary.Fields.Add("imageVector");
+                url.Fields.Add("imageVector");
+            }
+
+            foreach (VectorQuery query in new VectorQuery[] { binary, url })
+            {
+                BinaryData data = ModelReaderWriter.Write(query, options);
+                using JsonDocument document = JsonDocument.Parse(data);
+                JsonElement json = document.RootElement;
+                bool isBinary = query is VectorizableImageBinaryQuery;
+                Assert.AreEqual(isBinary ? "imageBinary" : "imageUrl", json.GetProperty("kind").GetString());
+                Assert.AreEqual(isBinary ? "aW1hZ2U=" : "https://example.com/image.png",
+                    json.GetProperty(isBinary ? "base64Image" : "url").GetString());
+                Assert.AreEqual(3, json.GetProperty("k").GetInt32());
+                Assert.AreEqual("imageVector", json.GetProperty("fields").GetString());
+                Assert.IsTrue(json.GetProperty("exhaustive").GetBoolean());
+                Assert.AreEqual(2, json.GetProperty("oversampling").GetDouble());
+                Assert.AreEqual(0.5f, json.GetProperty("weight").GetSingle());
+
+                VectorQuery restored = ModelReaderWriter.Read<VectorQuery>(data, options);
+                Assert.AreEqual(query.GetType(), restored.GetType());
+                Assert.AreEqual(query.KNearestNeighborsCount, restored.KNearestNeighborsCount);
+                CollectionAssert.AreEqual(query.Fields, restored.Fields);
+                Assert.AreEqual(query.Exhaustive, restored.Exhaustive);
+                Assert.AreEqual(query.Oversampling, restored.Oversampling);
+                Assert.AreEqual(query.Weight, restored.Weight);
+                if (isBinary)
+                {
+                    Assert.AreEqual(binary.Base64Image, ((VectorizableImageBinaryQuery)restored).Base64Image);
+                    Assert.AreEqual(binary.Base64Image, ModelReaderWriter.Read<VectorizableImageBinaryQuery>(data, options).Base64Image);
+                }
+                else
+                {
+                    Assert.AreEqual(url.Url, ((VectorizableImageUrlQuery)restored).Url);
+                    Assert.AreEqual(url.Url, ModelReaderWriter.Read<VectorizableImageUrlQuery>(data, options).Url);
+                }
+            }
+
+            SearchOptions searchOptions = new SearchOptions
+            {
+                VectorSearch = new VectorSearchOptions { Queries = { binary, url } }
+            };
+            using JsonDocument request = JsonDocument.Parse(ModelReaderWriter.Write(searchOptions, SearchTestHelpers.WireOptions));
+            Assert.AreEqual("imageBinary", request.RootElement.GetProperty("vectorQueries")[0].GetProperty("kind").GetString());
+            Assert.AreEqual("imageUrl", request.RootElement.GetProperty("vectorQueries")[1].GetProperty("kind").GetString());
+        }
+
+        [TestCase("J", "minimal")]
+        [TestCase("W", "minimal")]
+        [TestCase("J", "low")]
+        [TestCase("W", "low")]
+        [TestCase("J", "medium")]
+        [TestCase("W", "medium")]
+        [TestCase("J", "future")]
+        [TestCase("W", "future")]
+        public void AgenticReasoningEffortCompatibilityRoundtrips(string format, string kind)
+        {
+            ModelReaderWriterOptions options = new ModelReaderWriterOptions(format);
+            BinaryData data = BinaryData.FromString($$$"""
+                {"id":1,"type":"agenticReasoning","reasoningTokens":12,"retrievalReasoningEffort":{"kind":"{{{kind}}}"}}
+                """);
+            KnowledgeBaseAgenticReasoningActivityRecord record =
+                (KnowledgeBaseAgenticReasoningActivityRecord)ModelReaderWriter.Read<KnowledgeBaseActivityRecord>(data, options);
+            Assert.IsNotNull(record.RetrievalReasoningEffort);
+            Assert.AreEqual(12, record.ReasoningTokens);
+            Assert.AreEqual(kind, record.RetrievalReasoningEffort.Kind.ToString());
+            if (kind == "minimal")
+            {
+                Assert.IsInstanceOf<KnowledgeRetrievalMinimalReasoningEffort>(record.RetrievalReasoningEffort);
+            }
+
+            using JsonDocument serialized = JsonDocument.Parse(ModelReaderWriter.Write(record, options));
+            Assert.AreEqual(kind, serialized.RootElement.GetProperty("retrievalReasoningEffort").GetProperty("kind").GetString());
+            KnowledgeBaseAgenticReasoningActivityRecord restored =
+                ModelReaderWriter.Read<KnowledgeBaseAgenticReasoningActivityRecord>(ModelReaderWriter.Write(record, options), options);
+            Assert.AreEqual(kind, restored.RetrievalReasoningEffort.Kind.ToString());
+        }
+
+        [TestCase("J", "")]
+        [TestCase("W", "")]
+        [TestCase("J", ",\"retrievalReasoningEffort\":null")]
+        [TestCase("W", ",\"retrievalReasoningEffort\":null")]
+        public void MissingAgenticReasoningEffortRemainsNull(string format, string effortJson)
+        {
+            ModelReaderWriterOptions options = new ModelReaderWriterOptions(format);
+            BinaryData data = BinaryData.FromString("{\"id\":1,\"type\":\"agenticReasoning\"" + effortJson + "}");
+            KnowledgeBaseAgenticReasoningActivityRecord record = ModelReaderWriter.Read<KnowledgeBaseAgenticReasoningActivityRecord>(data, options);
+            Assert.IsNull(record.RetrievalReasoningEffort);
+            using JsonDocument serialized = JsonDocument.Parse(ModelReaderWriter.Write(record, options));
+            Assert.IsFalse(serialized.RootElement.TryGetProperty("retrievalReasoningEffort", out _));
+        }
+
+        [Test]
+        public void AgenticReasoningFactoryPreservesEffort()
+        {
+            KnowledgeRetrievalMinimalReasoningEffort effort = new KnowledgeRetrievalMinimalReasoningEffort();
+            KnowledgeBaseAgenticReasoningActivityRecord record =
+                SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, null, null, 12, effort);
+            Assert.AreSame(effort, record.RetrievalReasoningEffort);
+            using JsonDocument serialized = JsonDocument.Parse(ModelReaderWriter.Write(record, SearchTestHelpers.WireOptions));
+            Assert.AreEqual("minimal", serialized.RootElement.GetProperty("retrievalReasoningEffort").GetProperty("kind").GetString());
+        }
+
+        [TestCase("imageBinary", "base64Image", "aW1hZ2U=")]
+        [TestCase("imageUrl", "url", "https://example.com/image.png")]
+        public void ImageQueryPersistencePreservesUnknownProperties(string kind, string property, string value)
+        {
+            BinaryData data = BinaryData.FromString($$$"""
+                {"kind":"{{{kind}}}","{{{property}}}":"{{{value}}}","futureProperty":{"value":42}}
+                """);
+            VectorQuery query = ModelReaderWriter.Read<VectorQuery>(data);
+            using JsonDocument persisted = JsonDocument.Parse(ModelReaderWriter.Write(query));
+            Assert.AreEqual(42, persisted.RootElement.GetProperty("futureProperty").GetProperty("value").GetInt32());
+            using JsonDocument wire = JsonDocument.Parse(ModelReaderWriter.Write(query, SearchTestHelpers.WireOptions));
+            Assert.IsFalse(wire.RootElement.TryGetProperty("futureProperty", out _));
+            Assert.AreEqual(value, wire.RootElement.GetProperty(property).GetString());
+        }
+
         [Test]
         public void FileCapacityDeserializesAndPersists()
         {

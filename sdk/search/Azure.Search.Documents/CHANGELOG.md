@@ -39,9 +39,8 @@
 
 Relative to the previous GA release, `12.0.0`:
 
-- Removed the public `AIFoundryModelCatalogName`, `AzureMachineLearningParameters`, `AzureMachineLearningVectorizer`, `VectorizableImageBinaryQuery`, and `VectorizableImageUrlQuery` types. These types were present in `12.0.0`, even though their service functionality is not supported by the current GA API.
-- Removed the `SearchModelFactory.AzureMachineLearningParameters`, `AzureMachineLearningVectorizer`, `VectorizableImageBinaryQuery`, and `VectorizableImageUrlQuery` factory methods.
-- Removed `KnowledgeBaseAgenticReasoningActivityRecord.RetrievalReasoningEffort`.
+- Removed the public `AIFoundryModelCatalogName`, `AzureMachineLearningParameters`, and `AzureMachineLearningVectorizer` types. These types were present in `12.0.0`, even though their service functionality is not supported by the current GA API.
+- Removed the `SearchModelFactory.AzureMachineLearningParameters` and `AzureMachineLearningVectorizer` factory methods.
 
 ### Other Changes
 
