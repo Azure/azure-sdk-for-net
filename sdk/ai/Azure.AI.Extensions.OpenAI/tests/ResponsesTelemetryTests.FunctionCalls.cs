@@ -414,13 +414,12 @@ public partial class ResponsesTelemetryTests
         var span2 = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"chat {modelDeploymentName}");
         Assert.That(span2, Is.Not.Null);
 
-        // TODO: Re enable this code after the options AddProxy proxy will be implemented. See 5859124.
-        //string inputMessages2 = span2.GetTagItem("gen_ai.input.messages") as string;
-        //Assert.That(inputMessages2, Does.Contain("\"type\":\"tool_call_response\""));
-        //Assert.That(inputMessages2, Does.Contain("\"role\":\"tool\""));
-        //Assert.That(inputMessages2, Does.Not.Contain("Seattle"));
-        //Assert.That(inputMessages2, Does.Not.Contain("Emerald"));
-        //Assert.That(inputMessages2, Does.Not.Contain("\"result\":"));
+        string inputMessages2 = span2.GetTagItem("gen_ai.input.messages") as string;
+        Assert.That(inputMessages2, Does.Contain("\"type\":\"tool_call_response\""));
+        Assert.That(inputMessages2, Does.Contain("\"role\":\"tool\""));
+        Assert.That(inputMessages2, Does.Not.Contain("Seattle"));
+        Assert.That(inputMessages2, Does.Not.Contain("Emerald"));
+        Assert.That(inputMessages2, Does.Not.Contain("\"result\":"));
 
         string outputMessages2 = span2.GetTagItem("gen_ai.output.messages") as string;
         Assert.That(outputMessages2, Does.Contain("\"role\":\"assistant\""));

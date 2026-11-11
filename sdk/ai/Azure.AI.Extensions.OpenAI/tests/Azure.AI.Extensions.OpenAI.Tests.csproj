@@ -24,7 +24,6 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="OpenTelemetry.Exporter.Console" />
     <PackageReference Include="System.Security.Cryptography.ProtectedData" />
-    <PackageReference Include="System.Linq.AsyncEnumerable" />
   </ItemGroup>
 
   <ItemGroup>

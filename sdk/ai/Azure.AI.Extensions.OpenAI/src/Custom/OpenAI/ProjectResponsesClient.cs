@@ -391,12 +391,17 @@ public partial class ProjectResponsesClient : ResponsesClient
     }
 
     /// <summary>
-    /// Override of the CreateStreamingResult method to normalize the data and record the telemetry if needed.
+    /// Creates the result that the streaming methods of this client return for an established streaming response.
     /// </summary>
-    /// <param name="response"></param>
-    /// <param name="updateProducer"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
+    /// <remarks>
+    /// Derived clients can override this method to observe or transform updates, typically by wrapping
+    /// <paramref name="updateProducer"/> and then calling the base implementation. The returned result takes
+    /// ownership of <paramref name="response"/>, so exactly one result must be created for it.
+    /// </remarks>
+    /// <param name="response"> The established streaming response. </param>
+    /// <param name="updateProducer"> Reads the updates from the content stream of <paramref name="response"/>. </param>
+    /// <param name="cancellationToken"> The cancellation token of the streaming operation. </param>
+    /// <returns> A result that can be enumerated once and that owns <paramref name="response"/>. </returns>
     protected override AsyncStreamingResult<StreamingResponseUpdate> CreateStreamingResult(
         PipelineResponse response,
         Func<Stream, CancellationToken, IAsyncEnumerable<StreamingResponseUpdate>> updateProducer,
