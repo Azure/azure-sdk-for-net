@@ -74,6 +74,16 @@ public class ResponseSnapshotTests
     }
 
     [Test]
+    public void CompletedAt_JsonNull_IsNull()
+    {
+        var response = OpenAIJson.Read<ResponseObject>(
+            """{"id":"resp_1","object":"response","created_at":0,"status":"in_progress","model":"m","output":[],"completed_at":null}""");
+
+        Assert.That(response.CompletedAt, Is.Null);
+        Assert.That(response.Snapshot().CompletedAt, Is.Null);
+    }
+
+    [Test]
     public void Snapshot_PreservesPolymorphicOutputItems()
     {
         // Arrange

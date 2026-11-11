@@ -36,6 +36,7 @@ public static class ResponseItemAttributionExtensions
 {
     private static readonly ReadOnlyMemory<byte> ResponseIdPath = "$.response_id"u8.ToArray();
     private static readonly ReadOnlyMemory<byte> AgentReferencePath = "$.agent_reference"u8.ToArray();
+    private static readonly ReadOnlyMemory<byte> DeprecatedAgentPath = "$.agent"u8.ToArray();
     private static readonly ReadOnlyMemory<byte> CreatedByPath = "$.created_by"u8.ToArray();
     private static readonly ReadOnlyMemory<byte> AgentSessionIdPath = "$.agent_session_id"u8.ToArray();
     private static readonly ReadOnlyMemory<byte> CompletedAtPath = "$.completed_at"u8.ToArray();
@@ -142,6 +143,12 @@ public static class ResponseItemAttributionExtensions
             get => GetJsonModel<AgentReference>(ref options.Patch, AgentReferencePath.Span);
             set => SetOrClear(ref options.Patch, AgentReferencePath.Span, value);
         }
+
+        // Clients may still send the deprecated "agent" property instead of "agent_reference".
+        // It used to be modelled as CreateResponse.Agent; it now only exists in the patch, and
+        // the handler still needs it as a fallback when deriving conversation chain and task IDs.
+        internal AgentReference? DeprecatedAgent
+            => GetJsonModel<AgentReference>(ref options.Patch, DeprecatedAgentPath.Span);
     }
 
     extension(StreamingResponseUpdate update)
@@ -219,10 +226,23 @@ public static class ResponseItemAttributionExtensions
         public string? Text => (part as ReasoningSummaryTextPart)?.Text;
     }
 
+    // A JSON null (for example "completed_at": null on an in-progress response) means the value
+    // is absent; the typed JsonPatch getters would otherwise throw on it.
+    private static bool TryGetValueJson(ref JsonPatch patch, ReadOnlySpan<byte> path, out ReadOnlyMemory<byte> json)
+    {
+        if (patch.IsRemoved(path) || !patch.TryGetJson(path, out json) || json.IsEmpty)
+        {
+            json = default;
+            return false;
+        }
+
+        return !json.Span.Trim(" \t\r\n"u8).SequenceEqual("null"u8);
+    }
+
     private static int? GetInt32(ref JsonPatch patch, ReadOnlySpan<byte> path)
-        => patch.IsRemoved(path) || !patch.TryGetJson(path, out ReadOnlyMemory<byte> json) || json.IsEmpty
-            ? null
-            : patch.GetInt32(path);
+        => TryGetValueJson(ref patch, path, out _)
+            ? patch.GetInt32(path)
+            : null;
 
     private static DateTimeOffset? GetUnixTime(ref JsonPatch patch, ReadOnlySpan<byte> path)
     {
@@ -231,9 +251,9 @@ public static class ResponseItemAttributionExtensions
     }
 
     private static long? GetInt64(ref JsonPatch patch, ReadOnlySpan<byte> path)
-        => patch.IsRemoved(path) || !patch.TryGetJson(path, out ReadOnlyMemory<byte> json) || json.IsEmpty
-            ? null
-            : patch.GetInt64(path);
+        => TryGetValueJson(ref patch, path, out _)
+            ? patch.GetInt64(path)
+            : null;
 
     private static void SetOrClearUnixTime(ref JsonPatch patch, ReadOnlySpan<byte> path, DateTimeOffset? value)
     {
@@ -248,19 +268,19 @@ public static class ResponseItemAttributionExtensions
     }
 
     private static string? GetString(ref JsonPatch patch, ReadOnlySpan<byte> path)
-        => patch.IsRemoved(path) || !patch.TryGetJson(path, out ReadOnlyMemory<byte> json) || json.IsEmpty
-            ? null
-            : patch.GetString(path);
+        => TryGetValueJson(ref patch, path, out _)
+            ? patch.GetString(path)
+            : null;
 
     private static BinaryData? GetBinaryData(ref JsonPatch patch, ReadOnlySpan<byte> path)
-        => patch.IsRemoved(path) || !patch.TryGetJson(path, out ReadOnlyMemory<byte> json) || json.IsEmpty
-            ? null
-            : BinaryData.FromBytes(json);
+        => TryGetValueJson(ref patch, path, out ReadOnlyMemory<byte> json)
+            ? BinaryData.FromBytes(json)
+            : null;
 
     private static T? GetJsonModel<T>(ref JsonPatch patch, ReadOnlySpan<byte> path)
         where T : class, IJsonModel<T>
     {
-        if (patch.IsRemoved(path) || !patch.TryGetJson(path, out ReadOnlyMemory<byte> json) || json.IsEmpty)
+        if (!TryGetValueJson(ref patch, path, out ReadOnlyMemory<byte> json))
         {
             return null;
         }

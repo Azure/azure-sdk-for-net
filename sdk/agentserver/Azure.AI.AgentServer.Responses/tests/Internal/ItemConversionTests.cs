@@ -27,6 +27,9 @@ public class ItemConversionTests
     {
         yield return new TestCaseData(MessageItemFactory.Message(MessageRole.User, "hi"), "msg_")
             .SetName("Message");
+        // Only items of type "output_message" get om_; an assistant-role message is still a message.
+        yield return new TestCaseData(MessageItemFactory.Message(MessageRole.Assistant, "hi"), "msg_")
+            .SetName("AssistantMessage");
         yield return new TestCaseData(
             new FunctionCallResponseItem("call_1", "fn", BinaryData.FromString("{}")), "fc_")
             .SetName("FunctionCall");
@@ -93,9 +96,8 @@ public class ItemConversionTests
         var results = ItemConversion.ToOutputItems(items, PartitionKeyHint).ToList();
 
         Assert.That(results, Has.Count.EqualTo(2));
-        // Input messages get the "msg" prefix; assistant messages get the output-message prefix.
         Assert.That(results[0].Id, Does.StartWith("msg_"));
-        Assert.That(results[1].Id, Does.StartWith("om_"));
+        Assert.That(results[1].Id, Does.StartWith("msg_"));
     }
 
     [Test]

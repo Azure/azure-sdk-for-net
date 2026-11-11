@@ -249,9 +249,7 @@ internal static class IdGenerator
     {
         return item switch
         {
-            MessageResponseItem message => message.Role == MessageRole.Assistant
-                ? NewOutputMessageItemId(partitionKeyHint)
-                : NewMessageItemId(partitionKeyHint),
+            MessageResponseItem => NewMessageItemId(partitionKeyHint),
             ItemFunctionToolCall => NewFunctionCallItemId(partitionKeyHint),
             FunctionCallOutputItemParam => NewFunctionCallOutputItemId(partitionKeyHint),
             Models.OutputItemCustomToolCall => NewCustomToolCallItemId(partitionKeyHint),

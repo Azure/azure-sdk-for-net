@@ -22,6 +22,14 @@ public class StreamingResponseUpdateExtensionsTests
     }
 
     [Test]
+    public void OutputIndex_JsonNull_IsNull()
+    {
+        var update = OpenAIJson.Read<StreamingResponseUpdate>("{\"type\":\"response.custom_event\",\"sequence_number\":1,\"output_index\":null}");
+
+        Assert.That(update.OutputIndex, Is.Null);
+    }
+
+    [Test]
     public void OutputIndex_Present_IsRead()
     {
         var update = OpenAIJson.Read<StreamingResponseUpdate>("{\"type\":\"response.custom_event\",\"sequence_number\":1,\"output_index\":3}");
