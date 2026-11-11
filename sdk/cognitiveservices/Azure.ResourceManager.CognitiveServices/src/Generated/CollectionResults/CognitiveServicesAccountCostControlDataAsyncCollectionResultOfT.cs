@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     internal partial class CognitiveServicesAccountCostControlDataAsyncCollectionResultOfT : AsyncPageable<CognitiveServicesAccountCostControlData>
     {
-        private readonly CostControls _client;
+        private readonly AccountCostControls _client;
         private readonly string _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _accountName;
@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.CognitiveServices
         private readonly string _diagnosticScope;
 
         /// <summary> Initializes a new instance of CognitiveServicesAccountCostControlDataAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The CostControls client used to send requests. </param>
+        /// <param name="client"> The AccountCostControls client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of Cognitive Services account. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public CognitiveServicesAccountCostControlDataAsyncCollectionResultOfT(CostControls client, string subscriptionId, string resourceGroupName, string accountName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public CognitiveServicesAccountCostControlDataAsyncCollectionResultOfT(AccountCostControls client, string subscriptionId, string resourceGroupName, string accountName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
