@@ -137,5 +137,26 @@ namespace Azure.Search.Documents.Models
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVectorQuery(document.RootElement, options);
         }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VectorQuery DeserializeVectorQuery(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            if (element.TryGetProperty("kind"u8, out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "text":
+                        return VectorizableTextQuery.DeserializeVectorizableTextQuery(element, options);
+                    case "vector":
+                        return VectorizedQuery.DeserializeVectorizedQuery(element, options);
+                }
+            }
+            return UnknownVectorQuery.DeserializeUnknownVectorQuery(element, options);
+        }
     }
 }

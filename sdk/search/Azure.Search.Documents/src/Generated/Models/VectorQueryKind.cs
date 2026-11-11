@@ -7,11 +7,9 @@
 
 using System;
 using System.ComponentModel;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> The kind of vector query being performed. </summary>
     internal readonly partial struct VectorQueryKind : IEquatable<VectorQueryKind>
     {
         private readonly string _value;
@@ -19,16 +17,6 @@ namespace Azure.Search.Documents.Models
         private const string VectorValue = "vector";
         /// <summary> Vector query where a text value that needs to be vectorized is provided. </summary>
         private const string TextValue = "text";
-
-        /// <summary> Initializes a new instance of <see cref="VectorQueryKind"/>. </summary>
-        /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VectorQueryKind(string value)
-        {
-            Argument.AssertNotNull(value, nameof(value));
-
-            _value = value;
-        }
 
         /// <summary> Vector query where a raw vector value is provided. </summary>
         public static VectorQueryKind Vector { get; } = new VectorQueryKind(VectorValue);

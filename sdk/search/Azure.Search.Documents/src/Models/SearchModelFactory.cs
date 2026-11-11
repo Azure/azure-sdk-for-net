@@ -20,6 +20,44 @@ namespace Azure.Search.Documents.Models
     [CodeGenSuppress("IndexDocumentsResult", typeof(IReadOnlyList<IndexingResult>))]
     public static partial class SearchModelFactory
     {
+        /// <summary> Represents an agentic reasoning activity record. </summary>
+        /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="error"> The error detail explaining why the operation failed. </param>
+        /// <param name="reasoningTokens"> The number of input tokens for agentic reasoning. </param>
+        /// <param name="retrievalReasoningEffort"> The retrieval reasoning effort configuration. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/> instance for mocking. </returns>
+        [Obsolete("retrievalReasoningEffort is not returned by any service version this library targets. Use the overload without it.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static KnowledgeBaseAgenticReasoningActivityRecord KnowledgeBaseAgenticReasoningActivityRecord(int id, int? elapsedMs, KnowledgeBaseErrorDetail error, int? reasoningTokens, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort)
+        {
+            KnowledgeBaseAgenticReasoningActivityRecord record = KnowledgeBaseAgenticReasoningActivityRecord(id: id, elapsedMs: elapsedMs, error: error, reasoningTokens: reasoningTokens);
+            record.RetrievalReasoningEffort = retrievalReasoningEffort;
+            return record;
+        }
+
+        /// <summary> Specifies an Azure Machine Learning endpoint deployed via the Azure AI Foundry Model Catalog for generating the vector embedding of a query string. </summary>
+        /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
+        /// <param name="amlParameters"> Specifies the properties of the AML vectorizer. </param>
+        /// <returns> A new <see cref="Indexes.Models.AzureMachineLearningVectorizer"/> instance for mocking. </returns>
+        [Obsolete("The Azure Machine Learning vectorizer is not supported by any service version this library targets.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AzureMachineLearningVectorizer AzureMachineLearningVectorizer(string vectorizerName = default, AzureMachineLearningParameters amlParameters = default) =>
+            new AzureMachineLearningVectorizer(vectorizerName, VectorSearchVectorizerKind.AML, additionalBinaryDataProperties: null, amlParameters);
+
+        /// <summary> Specifies the properties for connecting to an AML vectorizer. </summary>
+        /// <param name="scoringUri"> The scoring URI of the AML service. </param>
+        /// <param name="authenticationKey"> The key for the AML service. </param>
+        /// <param name="resourceId"> The Azure Resource Manager resource ID of the AML service. </param>
+        /// <param name="timeout"> The timeout for the HTTP client making the API call. </param>
+        /// <param name="region"> The region the AML service is deployed in. </param>
+        /// <param name="modelName"> The name of the embedding model from the Azure AI Foundry Catalog. </param>
+        /// <returns> A new <see cref="Indexes.Models.AzureMachineLearningParameters"/> instance for mocking. </returns>
+        [Obsolete("The Azure Machine Learning vectorizer is not supported by any service version this library targets.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AzureMachineLearningParameters AzureMachineLearningParameters(Uri scoringUri = default, string authenticationKey = default, string resourceId = default, TimeSpan? timeout = default, string region = default, AIFoundryModelCatalogName? modelName = default) =>
+            new AzureMachineLearningParameters(scoringUri, authenticationKey, resourceId, timeout, region, modelName, additionalBinaryDataProperties: null);
+
         /// <summary> Initializes a new instance of <see cref="Models.VectorizableImageBinaryQuery"/> for mocking. </summary>
         /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Comma-separated vector fields to search. </param>
@@ -28,8 +66,10 @@ namespace Azure.Search.Documents.Models
         /// <param name="weight"> The relative weight of the vector query. </param>
         /// <param name="base64Image"> The base64-encoded image to vectorize. </param>
         /// <returns> A new <see cref="Models.VectorizableImageBinaryQuery"/> instance for mocking. </returns>
+        [Obsolete("Image vector queries are not supported by any service version this library targets.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static VectorizableImageBinaryQuery VectorizableImageBinaryQuery(int? kNearestNeighborsCount = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, string base64Image = default) =>
-            new VectorizableImageBinaryQuery(kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, new VectorQueryKind("imageBinary"), additionalBinaryDataProperties: null, base64Image);
+            new VectorizableImageBinaryQuery(kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, VectorQueryKind.ImageBinary, additionalBinaryDataProperties: null, base64Image);
 
         /// <summary> Initializes a new instance of <see cref="Models.VectorizableImageUrlQuery"/> for mocking. </summary>
         /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
@@ -39,8 +79,10 @@ namespace Azure.Search.Documents.Models
         /// <param name="weight"> The relative weight of the vector query. </param>
         /// <param name="url"> The URL of the image to vectorize. </param>
         /// <returns> A new <see cref="Models.VectorizableImageUrlQuery"/> instance for mocking. </returns>
+        [Obsolete("Image vector queries are not supported by any service version this library targets.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static VectorizableImageUrlQuery VectorizableImageUrlQuery(int? kNearestNeighborsCount = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, Uri url = default) =>
-            new VectorizableImageUrlQuery(kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, new VectorQueryKind("imageUrl"), additionalBinaryDataProperties: null, url);
+            new VectorizableImageUrlQuery(kNearestNeighborsCount, fieldsRaw, exhaustive, oversampling, weight, VectorQueryKind.ImageUrl, additionalBinaryDataProperties: null, url);
 
         /// <summary> Initializes a new instance of AnalyzedTokenInfo. </summary>
         /// <param name="token"> The token returned by the analyzer. </param>

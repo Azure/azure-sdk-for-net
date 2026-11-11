@@ -611,6 +611,29 @@ namespace Azure.Search.Documents.Indexes
 }
 namespace Azure.Search.Documents.Indexes.Models
 {
+    [System.ObsoleteAttribute("The Azure Machine Learning vectorizer is not supported by any service version this library targets.")]
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AIFoundryModelCatalogName : System.IEquatable<Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AIFoundryModelCatalogName(string value) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName CohereEmbedV3English { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName CohereEmbedV3Multilingual { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName CohereEmbedV4 { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName FacebookDinoV2ImageEmbeddingsViTBase { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName FacebookDinoV2ImageEmbeddingsViTGiant { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName OpenAiClipImageTextEmbeddingsVitBasePatch32 { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName OpenAiClipImageTextEmbeddingsViTLargePatch14336 { get { throw null; } }
+        public bool Equals(Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName left, Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName right) { throw null; }
+        public static implicit operator Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName (string value) { throw null; }
+        public static implicit operator Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName? (string value) { throw null; }
+        public static bool operator !=(Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName left, Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AIServicesAccountIdentity : Azure.Search.Documents.Indexes.Models.CognitiveServicesAccount, System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.AIServicesAccountIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.AIServicesAccountIdentity>
     {
         public AIServicesAccountIdentity(System.Uri subdomainUri) : base (default(string)) { }
@@ -726,6 +749,41 @@ namespace Azure.Search.Documents.Indexes.Models
         Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("The Azure Machine Learning vectorizer is not supported by any service version this library targets.")]
+    public partial class AzureMachineLearningParameters : System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.AzureMachineLearningParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.AzureMachineLearningParameters>
+    {
+        public AzureMachineLearningParameters(System.Uri scoringUri) { }
+        public string AuthenticationKey { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName? ModelName { get { throw null; } set { } }
+        public string Region { get { throw null; } set { } }
+        public string ResourceId { get { throw null; } set { } }
+        public System.Uri ScoringUri { get { throw null; } set { } }
+        public System.TimeSpan? Timeout { get { throw null; } set { } }
+        protected virtual Azure.Search.Documents.Indexes.Models.AzureMachineLearningParameters JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.Search.Documents.Indexes.Models.AzureMachineLearningParameters PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Search.Documents.Indexes.Models.AzureMachineLearningParameters System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.AzureMachineLearningParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.AzureMachineLearningParameters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Indexes.Models.AzureMachineLearningParameters System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.AzureMachineLearningParameters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.AzureMachineLearningParameters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.AzureMachineLearningParameters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.ObsoleteAttribute("The Azure Machine Learning vectorizer is not supported by any service version this library targets.")]
+    public partial class AzureMachineLearningVectorizer : Azure.Search.Documents.Indexes.Models.VectorSearchVectorizer, System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer>
+    {
+        public AzureMachineLearningVectorizer(string vectorizerName) : base (default(string)) { }
+        public Azure.Search.Documents.Indexes.Models.AzureMachineLearningParameters AMLParameters { get { throw null; } set { } }
+        protected override Azure.Search.Documents.Indexes.Models.VectorSearchVectorizer JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.Search.Documents.Indexes.Models.VectorSearchVectorizer PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AzureOpenAIEmbeddingSkill : Azure.Search.Documents.Indexes.Models.SearchIndexerSkill, System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Indexes.Models.AzureOpenAIEmbeddingSkill>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.AzureOpenAIEmbeddingSkill>
     {
@@ -6216,6 +6274,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
     {
         internal KnowledgeBaseAgenticReasoningActivityRecord() { }
         public int? ReasoningTokens { get { throw null; } }
+        [System.ObsoleteAttribute("This property is not returned by any service version this library targets.")]
         public Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalReasoningEffort RetrievalReasoningEffort { get { throw null; } }
         protected override Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityRecord JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -7580,6 +7639,10 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Indexes.Models.AzureBlobKnowledgeSourceParameters AzureBlobKnowledgeSourceParameters(string connectionString = null, string containerName = null, string folderPath = null, bool? isADLSGen2 = default(bool?), Azure.Search.Documents.KnowledgeBases.Models.KnowledgeSourceIngestionParameters ingestionParameters = null, Azure.Search.Documents.Indexes.Models.CreatedResources createdResources = null) { throw null; }
         public static Azure.Search.Documents.KnowledgeBases.Models.AzureBlobKnowledgeSourceParams AzureBlobKnowledgeSourceParams(string knowledgeSourceName = null, bool? includeReferences = default(bool?), bool? includeReferenceSourceData = default(bool?), bool? alwaysQuerySource = default(bool?), bool? failOnError = default(bool?), float? rerankerThreshold = default(float?), int? maxOutputDocuments = default(int?)) { throw null; }
         public static Azure.Search.Documents.KnowledgeBases.Models.AzureBlobKnowledgeSourceParams AzureBlobKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, float? rerankerThreshold) { throw null; }
+        [System.ObsoleteAttribute("The Azure Machine Learning vectorizer is not supported by any service version this library targets.")]
+        public static Azure.Search.Documents.Indexes.Models.AzureMachineLearningParameters AzureMachineLearningParameters(System.Uri scoringUri = null, string authenticationKey = null, string resourceId = null, System.TimeSpan? timeout = default(System.TimeSpan?), string region = null, Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName? modelName = default(Azure.Search.Documents.Indexes.Models.AIFoundryModelCatalogName?)) { throw null; }
+        [System.ObsoleteAttribute("The Azure Machine Learning vectorizer is not supported by any service version this library targets.")]
+        public static Azure.Search.Documents.Indexes.Models.AzureMachineLearningVectorizer AzureMachineLearningVectorizer(string vectorizerName = null, Azure.Search.Documents.Indexes.Models.AzureMachineLearningParameters amlParameters = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.AzureOpenAIEmbeddingSkill AzureOpenAIEmbeddingSkill(string name = null, string description = null, string context = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.InputFieldMappingEntry> inputs = null, System.Collections.Generic.IEnumerable<Azure.Search.Documents.Indexes.Models.OutputFieldMappingEntry> outputs = null, System.Uri resourceUri = null, string deploymentName = null, string apiKey = null, Azure.Search.Documents.Indexes.Models.SearchIndexerDataIdentity authenticationIdentity = null, Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName? modelName = default(Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName?), int? dimensions = default(int?)) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.AzureOpenAIVectorizer AzureOpenAIVectorizer(string vectorizerName = null, Azure.Search.Documents.Indexes.Models.AzureOpenAIVectorizerParameters parameters = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.AzureOpenAIVectorizerParameters AzureOpenAIVectorizerParameters(System.Uri resourceUri = null, string deploymentName = null, string apiKey = null, Azure.Search.Documents.Indexes.Models.SearchIndexerDataIdentity authenticationIdentity = null, Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName? modelName = default(Azure.Search.Documents.Indexes.Models.AzureOpenAIModelName?)) { throw null; }
@@ -7677,7 +7740,8 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityRecordModel KnowledgeBaseActivityRecordModel(string modelName = null, string deploymentId = null) { throw null; }
         public static Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityStartedEvent KnowledgeBaseActivityStartedEvent(int id = 0, Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityRecordType type = default(Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityRecordType), System.DateTimeOffset startedOn = default(System.DateTimeOffset), string knowledgeSourceName = null) { throw null; }
         public static Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityStartedStreamEvent KnowledgeBaseActivityStartedStreamEvent(Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseActivityStartedEvent value = null) { throw null; }
-        public static Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord KnowledgeBaseAgenticReasoningActivityRecord(int id = 0, System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? completedOn = default(System.DateTimeOffset?), int? elapsedMs = default(int?), Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseErrorDetail error = null, string warning = null, int? reasoningTokens = default(int?), Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = null) { throw null; }
+        public static Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord KnowledgeBaseAgenticReasoningActivityRecord(int id = 0, System.DateTimeOffset? startedOn = default(System.DateTimeOffset?), System.DateTimeOffset? completedOn = default(System.DateTimeOffset?), int? elapsedMs = default(int?), Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseErrorDetail error = null, string warning = null, int? reasoningTokens = default(int?)) { throw null; }
+        [System.ObsoleteAttribute("retrievalReasoningEffort is not returned by any service version this library targets. Use the overload without it.")]
         public static Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord KnowledgeBaseAgenticReasoningActivityRecord(int id, int? elapsedMs, Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseErrorDetail error, int? reasoningTokens, Azure.Search.Documents.KnowledgeBases.Models.KnowledgeRetrievalReasoningEffort retrievalReasoningEffort) { throw null; }
         public static Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseAnswerCompletedEvent KnowledgeBaseAnswerCompletedEvent(int messageIndex = 0, Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseMessage message = null) { throw null; }
         public static Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseAnswerCompletedStreamEvent KnowledgeBaseAnswerCompletedStreamEvent(Azure.Search.Documents.KnowledgeBases.Models.KnowledgeBaseAnswerCompletedEvent value = null) { throw null; }
@@ -7893,7 +7957,9 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Indexes.Models.UniqueTokenFilter UniqueTokenFilter(string name = null, bool? onlyOnSamePosition = default(bool?)) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.UpdateKnowledgeSourceFileContent UpdateKnowledgeSourceFileContent(Azure.Search.Documents.Indexes.Models.FileUploadMetadata metadata = null, System.ClientModel.FileBinaryContent content = null) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.UploadKnowledgeSourceFileMultipartContent UploadKnowledgeSourceFileMultipartContent(Azure.Search.Documents.Indexes.Models.FileUploadMetadata metadata = null, System.ClientModel.FileBinaryContent content = null) { throw null; }
+        [System.ObsoleteAttribute("Image vector queries are not supported by any service version this library targets.")]
         public static Azure.Search.Documents.Models.VectorizableImageBinaryQuery VectorizableImageBinaryQuery(int? kNearestNeighborsCount = default(int?), string fieldsRaw = null, bool? exhaustive = default(bool?), double? oversampling = default(double?), float? weight = default(float?), string base64Image = null) { throw null; }
+        [System.ObsoleteAttribute("Image vector queries are not supported by any service version this library targets.")]
         public static Azure.Search.Documents.Models.VectorizableImageUrlQuery VectorizableImageUrlQuery(int? kNearestNeighborsCount = default(int?), string fieldsRaw = null, bool? exhaustive = default(bool?), double? oversampling = default(double?), float? weight = default(float?), System.Uri url = null) { throw null; }
         public static Azure.Search.Documents.Models.VectorizableTextQuery VectorizableTextQuery(int? kNearestNeighborsCount = default(int?), string fieldsRaw = null, bool? exhaustive = default(bool?), double? oversampling = default(double?), float? weight = default(float?), string text = null) { throw null; }
         public static Azure.Search.Documents.Models.VectorizedQuery VectorizedQuery(int? kNearestNeighborsCount = default(int?), string fieldsRaw = null, bool? exhaustive = default(bool?), double? oversampling = default(double?), float? weight = default(float?), System.ReadOnlyMemory<float> vector = default(System.ReadOnlyMemory<float>)) { throw null; }
@@ -8093,6 +8159,7 @@ namespace Azure.Search.Documents.Models
         public static bool operator !=(Azure.Search.Documents.Models.VectorFilterMode left, Azure.Search.Documents.Models.VectorFilterMode right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.ObsoleteAttribute("Image vector queries are not supported by any service version this library targets.")]
     public partial class VectorizableImageBinaryQuery : Azure.Search.Documents.Models.VectorQuery, System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Models.VectorizableImageBinaryQuery>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Models.VectorizableImageBinaryQuery>
     {
         public VectorizableImageBinaryQuery() { }
@@ -8107,6 +8174,7 @@ namespace Azure.Search.Documents.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Models.VectorizableImageBinaryQuery>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Models.VectorizableImageBinaryQuery>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("Image vector queries are not supported by any service version this library targets.")]
     public partial class VectorizableImageUrlQuery : Azure.Search.Documents.Models.VectorQuery, System.ClientModel.Primitives.IJsonModel<Azure.Search.Documents.Models.VectorizableImageUrlQuery>, System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Models.VectorizableImageUrlQuery>
     {
         public VectorizableImageUrlQuery() { }

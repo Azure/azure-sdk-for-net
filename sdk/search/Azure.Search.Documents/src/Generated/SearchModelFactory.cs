@@ -4191,9 +4191,8 @@ namespace Azure.Search.Documents.Models
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="reasoningTokens"> The number of input tokens for agentic reasoning. </param>
-        /// <param name="retrievalReasoningEffort"></param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseAgenticReasoningActivityRecord KnowledgeBaseAgenticReasoningActivityRecord(int id = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, int? reasoningTokens = default, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default)
+        public static KnowledgeBaseAgenticReasoningActivityRecord KnowledgeBaseAgenticReasoningActivityRecord(int id = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, int? reasoningTokens = default)
         {
             return new KnowledgeBaseAgenticReasoningActivityRecord(
                 id,
@@ -4204,8 +4203,7 @@ namespace Azure.Search.Documents.Models
                 error,
                 warning,
                 additionalBinaryDataProperties: null,
-                reasoningTokens,
-                retrievalReasoningEffort);
+                reasoningTokens);
         }
 
         /// <summary>
@@ -4845,19 +4843,6 @@ namespace Azure.Search.Documents.Models
         public static KnowledgeBaseModelWebSummarizationActivityRecord KnowledgeBaseModelWebSummarizationActivityRecord(int id, int? elapsedMs, KnowledgeBaseErrorDetail error, int? inputTokensCount, int? outputTokensCount)
         {
             return KnowledgeBaseModelWebSummarizationActivityRecord(id: id, startedOn: default, completedOn: default, elapsedMs: elapsedMs, error: error, warning: default, inputTokensCount: inputTokensCount, outputTokensCount: outputTokensCount, model: default);
-        }
-
-        /// <summary> Represents an agentic reasoning activity record. </summary>
-        /// <param name="id"> The ID of the activity record. </param>
-        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
-        /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
-        /// <param name="reasoningTokens"> The number of input tokens for agentic reasoning. </param>
-        /// <param name="retrievalReasoningEffort"> The retrieval reasoning effort configuration. </param>
-        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KnowledgeBaseAgenticReasoningActivityRecord KnowledgeBaseAgenticReasoningActivityRecord(int id, int? elapsedMs, KnowledgeBaseErrorDetail error, int? reasoningTokens, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort)
-        {
-            return KnowledgeBaseAgenticReasoningActivityRecord(id: id, startedOn: default, completedOn: default, elapsedMs: elapsedMs, error: error, warning: default, reasoningTokens: reasoningTokens, retrievalReasoningEffort: retrievalReasoningEffort);
         }
 
         /// <summary> Represents an Azure Search document reference. </summary>

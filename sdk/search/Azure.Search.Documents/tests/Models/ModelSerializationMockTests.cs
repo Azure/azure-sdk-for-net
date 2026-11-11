@@ -59,6 +59,7 @@ namespace Azure.Search.Documents.Tests.Models
     [Category("ModelSerialization")]
     public class ModelSerializationMockTests
     {
+#pragma warning disable CS0618 // Exercise obsolete compatibility models and factory methods.
         [TestCase("J", false)]
         [TestCase("W", false)]
         [TestCase("J", true)]
@@ -108,7 +109,7 @@ namespace Azure.Search.Documents.Tests.Models
                 Assert.AreEqual(0.5f, json.GetProperty("weight").GetSingle());
 
                 VectorQuery restored = ModelReaderWriter.Read<VectorQuery>(data, options);
-                Assert.AreEqual(query.GetType(), restored.GetType());
+                Assert.AreEqual("UnknownVectorQuery", restored.GetType().Name);
                 Assert.AreEqual(query.KNearestNeighborsCount, restored.KNearestNeighborsCount);
                 CollectionAssert.AreEqual(query.Fields, restored.Fields);
                 Assert.AreEqual(query.Exhaustive, restored.Exhaustive);
@@ -116,13 +117,13 @@ namespace Azure.Search.Documents.Tests.Models
                 Assert.AreEqual(query.Weight, restored.Weight);
                 if (isBinary)
                 {
-                    Assert.AreEqual(binary.Base64Image, ((VectorizableImageBinaryQuery)restored).Base64Image);
                     Assert.AreEqual(binary.Base64Image, ModelReaderWriter.Read<VectorizableImageBinaryQuery>(data, options).Base64Image);
+                    Assert.AreEqual(binary.Base64Image, ModelReaderWriter.Read<VectorizableImageBinaryQuery>(data, options, AzureSearchDocumentsContext.Default).Base64Image);
                 }
                 else
                 {
-                    Assert.AreEqual(url.Url, ((VectorizableImageUrlQuery)restored).Url);
                     Assert.AreEqual(url.Url, ModelReaderWriter.Read<VectorizableImageUrlQuery>(data, options).Url);
+                    Assert.AreEqual(url.Url, ModelReaderWriter.Read<VectorizableImageUrlQuery>(data, options, AzureSearchDocumentsContext.Default).Url);
                 }
             }
 
@@ -143,7 +144,7 @@ namespace Azure.Search.Documents.Tests.Models
         [TestCase("W", "medium")]
         [TestCase("J", "future")]
         [TestCase("W", "future")]
-        public void AgenticReasoningEffortCompatibilityRoundtrips(string format, string kind)
+        public void AgenticReasoningEffortIsNotBoundToWire(string format, string kind)
         {
             ModelReaderWriterOptions options = new ModelReaderWriterOptions(format);
             BinaryData data = BinaryData.FromString($$$"""
@@ -151,19 +152,15 @@ namespace Azure.Search.Documents.Tests.Models
                 """);
             KnowledgeBaseAgenticReasoningActivityRecord record =
                 (KnowledgeBaseAgenticReasoningActivityRecord)ModelReaderWriter.Read<KnowledgeBaseActivityRecord>(data, options);
-            Assert.IsNotNull(record.RetrievalReasoningEffort);
+            Assert.IsNull(record.RetrievalReasoningEffort);
             Assert.AreEqual(12, record.ReasoningTokens);
-            Assert.AreEqual(kind, record.RetrievalReasoningEffort.Kind.ToString());
-            if (kind == "minimal")
-            {
-                Assert.IsInstanceOf<KnowledgeRetrievalMinimalReasoningEffort>(record.RetrievalReasoningEffort);
-            }
 
-            using JsonDocument serialized = JsonDocument.Parse(ModelReaderWriter.Write(record, options));
-            Assert.AreEqual(kind, serialized.RootElement.GetProperty("retrievalReasoningEffort").GetProperty("kind").GetString());
+            using JsonDocument serialized = JsonDocument.Parse(ModelReaderWriter.Write(record, SearchTestHelpers.WireOptions));
+            Assert.IsFalse(serialized.RootElement.TryGetProperty("retrievalReasoningEffort", out _));
+            Assert.AreEqual(12, serialized.RootElement.GetProperty("reasoningTokens").GetInt32());
             KnowledgeBaseAgenticReasoningActivityRecord restored =
                 ModelReaderWriter.Read<KnowledgeBaseAgenticReasoningActivityRecord>(ModelReaderWriter.Write(record, options), options);
-            Assert.AreEqual(kind, restored.RetrievalReasoningEffort.Kind.ToString());
+            Assert.IsNull(restored.RetrievalReasoningEffort);
         }
 
         [TestCase("J", "")]
@@ -176,7 +173,7 @@ namespace Azure.Search.Documents.Tests.Models
             BinaryData data = BinaryData.FromString("{\"id\":1,\"type\":\"agenticReasoning\"" + effortJson + "}");
             KnowledgeBaseAgenticReasoningActivityRecord record = ModelReaderWriter.Read<KnowledgeBaseAgenticReasoningActivityRecord>(data, options);
             Assert.IsNull(record.RetrievalReasoningEffort);
-            using JsonDocument serialized = JsonDocument.Parse(ModelReaderWriter.Write(record, options));
+            using JsonDocument serialized = JsonDocument.Parse(ModelReaderWriter.Write(record, SearchTestHelpers.WireOptions));
             Assert.IsFalse(serialized.RootElement.TryGetProperty("retrievalReasoningEffort", out _));
         }
 
@@ -188,7 +185,8 @@ namespace Azure.Search.Documents.Tests.Models
                 SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, null, null, 12, effort);
             Assert.AreSame(effort, record.RetrievalReasoningEffort);
             using JsonDocument serialized = JsonDocument.Parse(ModelReaderWriter.Write(record, SearchTestHelpers.WireOptions));
-            Assert.AreEqual("minimal", serialized.RootElement.GetProperty("retrievalReasoningEffort").GetProperty("kind").GetString());
+            Assert.IsFalse(serialized.RootElement.TryGetProperty("retrievalReasoningEffort", out _));
+            Assert.AreEqual(12, serialized.RootElement.GetProperty("reasoningTokens").GetInt32());
         }
 
         [TestCase("imageBinary", "base64Image", "aW1hZ2U=")]
@@ -198,13 +196,77 @@ namespace Azure.Search.Documents.Tests.Models
             BinaryData data = BinaryData.FromString($$$"""
                 {"kind":"{{{kind}}}","{{{property}}}":"{{{value}}}","futureProperty":{"value":42}}
                 """);
-            VectorQuery query = ModelReaderWriter.Read<VectorQuery>(data);
+            VectorQuery query = kind == "imageBinary"
+                ? ModelReaderWriter.Read<VectorizableImageBinaryQuery>(data)
+                : ModelReaderWriter.Read<VectorizableImageUrlQuery>(data);
             using JsonDocument persisted = JsonDocument.Parse(ModelReaderWriter.Write(query));
             Assert.AreEqual(42, persisted.RootElement.GetProperty("futureProperty").GetProperty("value").GetInt32());
             using JsonDocument wire = JsonDocument.Parse(ModelReaderWriter.Write(query, SearchTestHelpers.WireOptions));
             Assert.IsFalse(wire.RootElement.TryGetProperty("futureProperty", out _));
             Assert.AreEqual(value, wire.RootElement.GetProperty(property).GetString());
         }
+
+        [TestCase("J", false)]
+        [TestCase("W", false)]
+        [TestCase("J", true)]
+        [TestCase("W", true)]
+        public void AmlCompatibilityRoundtrips(string format, bool useFactory)
+        {
+            ModelReaderWriterOptions options = new ModelReaderWriterOptions(format);
+            Uri scoringUri = new Uri("https://example.com/score");
+            AzureMachineLearningParameters parameters = useFactory
+                ? SearchModelFactory.AzureMachineLearningParameters(scoringUri, "test-key", "resource", TimeSpan.FromMinutes(1), "westus", AIFoundryModelCatalogName.CohereEmbedV4)
+                : new AzureMachineLearningParameters(scoringUri)
+                {
+                    AuthenticationKey = "test-key",
+                    ResourceId = "resource",
+                    Timeout = TimeSpan.FromMinutes(1),
+                    Region = "westus",
+                    ModelName = AIFoundryModelCatalogName.CohereEmbedV4
+                };
+            AzureMachineLearningVectorizer vectorizer = useFactory
+                ? SearchModelFactory.AzureMachineLearningVectorizer("aml", parameters)
+                : new AzureMachineLearningVectorizer("aml") { AMLParameters = parameters };
+
+            BinaryData data = ModelReaderWriter.Write(vectorizer, options, AzureSearchDocumentsContext.Default);
+            using JsonDocument document = JsonDocument.Parse(data);
+            JsonElement json = document.RootElement;
+            Assert.AreEqual("aml", json.GetProperty("name").GetString());
+            Assert.AreEqual("aml", json.GetProperty("kind").GetString());
+            JsonElement aml = json.GetProperty("amlParameters");
+            Assert.AreEqual(scoringUri.AbsoluteUri, aml.GetProperty("uri").GetString());
+            Assert.AreEqual("test-key", aml.GetProperty("key").GetString());
+            Assert.AreEqual("resource", aml.GetProperty("resourceId").GetString());
+            Assert.AreEqual("PT1M", aml.GetProperty("timeout").GetString());
+            Assert.AreEqual("westus", aml.GetProperty("region").GetString());
+            Assert.AreEqual("Cohere-embed-v4", aml.GetProperty("modelName").GetString());
+
+            foreach (bool useContext in new[] { false, true })
+            {
+                AzureMachineLearningVectorizer restored = useContext
+                    ? ModelReaderWriter.Read<AzureMachineLearningVectorizer>(data, options, AzureSearchDocumentsContext.Default)
+                    : ModelReaderWriter.Read<AzureMachineLearningVectorizer>(data, options);
+                Assert.AreEqual(vectorizer.VectorizerName, restored.VectorizerName);
+                BinaryData parameterData = ModelReaderWriter.Write(parameters, options);
+                AzureMachineLearningParameters restoredParameters = useContext
+                    ? ModelReaderWriter.Read<AzureMachineLearningParameters>(parameterData, options, AzureSearchDocumentsContext.Default)
+                    : ModelReaderWriter.Read<AzureMachineLearningParameters>(parameterData, options);
+                foreach (AzureMachineLearningParameters actual in new[] { restored.AMLParameters, restoredParameters })
+                {
+                    Assert.AreEqual(parameters.ScoringUri, actual.ScoringUri);
+                    Assert.AreEqual(parameters.AuthenticationKey, actual.AuthenticationKey);
+                    Assert.AreEqual(parameters.ResourceId, actual.ResourceId);
+                    Assert.AreEqual(parameters.Timeout, actual.Timeout);
+                    Assert.AreEqual(parameters.Region, actual.Region);
+                    Assert.AreEqual(parameters.ModelName, actual.ModelName);
+                }
+            }
+
+            VectorSearchVectorizer baseModel = ModelReaderWriter.Read<VectorSearchVectorizer>(data, options);
+            Assert.AreEqual("UnknownVectorSearchVectorizer", baseModel.GetType().Name);
+            Assert.AreEqual(vectorizer.VectorizerName, baseModel.VectorizerName);
+        }
+#pragma warning restore CS0618
 
         [Test]
         public void FileCapacityDeserializesAndPersists()

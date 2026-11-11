@@ -35,15 +35,10 @@
 - Fixed query-answer thresholds using culture-dependent formatting and parsing, and value facets failing to convert compatible numeric types.
 - Fixed settings-based clients ignoring custom document serializers and the `QueryAnswerResult` model factory rejecting read-only-only dictionaries.
 
-### Breaking Changes
-
-Relative to the previous GA release, `12.0.0`:
-
-- Removed the public `AIFoundryModelCatalogName`, `AzureMachineLearningParameters`, and `AzureMachineLearningVectorizer` types. These types were present in `12.0.0`, even though their service functionality is not supported by the current GA API.
-- Removed the `SearchModelFactory.AzureMachineLearningParameters` and `AzureMachineLearningVectorizer` factory methods.
-
 ### Other Changes
 
+- `AzureMachineLearningVectorizer`, `AzureMachineLearningParameters`, `AIFoundryModelCatalogName`, `VectorizableImageUrlQuery`, `VectorizableImageBinaryQuery`, `KnowledgeBaseAgenticReasoningActivityRecord.RetrievalReasoningEffort`, and their `SearchModelFactory` methods are now obsolete. They shipped in 12.0.0 because of an error in the service specification and are not supported by any service version this library targets.
+- The obsolete AML vectorizer and image query models retain request serialization and typed deserialization, but deserialize as unknown models through their polymorphic base types. The obsolete activity record's `RetrievalReasoningEffort` property is retained for mocking and is not populated from JSON.
 - Added experimental (`SCME0002`) generic-host registration extensions, including keyed registration, for `SearchClient`, `SearchIndexClient`, `SearchIndexerClient`, and `KnowledgeBaseRetrievalClient`.
 - Added constructors and setters that allow knowledge base message roles, text content, image content, and image URLs to be updated.
 

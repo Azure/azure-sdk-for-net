@@ -5,14 +5,17 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The query parameters to use for vector search when a base 64 encoded binary of an image that needs to be vectorized is provided. </summary>
+    [Obsolete("Image vector queries are not supported by any service version this library targets.")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class VectorizableImageBinaryQuery : VectorQuery
     {
         /// <summary> Initializes a new instance of <see cref="VectorizableImageBinaryQuery"/>. </summary>
-        public VectorizableImageBinaryQuery() : base(new VectorQueryKind("imageBinary"))
+        public VectorizableImageBinaryQuery() : base(VectorQueryKind.ImageBinary)
         {
         }
 
