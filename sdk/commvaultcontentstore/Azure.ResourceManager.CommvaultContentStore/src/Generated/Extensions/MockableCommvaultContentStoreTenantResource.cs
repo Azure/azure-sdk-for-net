@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CountProtectedItemsResult>> CountByProtectionGroupsAsync(CountProtectedItemsContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CountProtectedItemsResult>> CountProtectedItemsAsync(CountProtectedItemsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ProtectedItemsOperationGroupClientDiagnostics.CreateScope("MockableCommvaultContentStoreTenantResource.CountByProtectionGroups");
+            using DiagnosticScope scope = ProtectedItemsOperationGroupClientDiagnostics.CreateScope("MockableCommvaultContentStoreTenantResource.CountProtectedItems");
             scope.Start();
             try
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProtectedItemsOperationGroupRestClient.CreateCountByProtectionGroupsRequest(CountProtectedItemsContent.ToRequestContent(content), context);
+                HttpMessage message = ProtectedItemsOperationGroupRestClient.CreateCountProtectedItemsRequest(CountProtectedItemsContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<CountProtectedItemsResult> response = Response.FromValue(CountProtectedItemsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -108,11 +108,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CountProtectedItemsResult> CountByProtectionGroups(CountProtectedItemsContent content, CancellationToken cancellationToken = default)
+        public virtual Response<CountProtectedItemsResult> CountProtectedItems(CountProtectedItemsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = ProtectedItemsOperationGroupClientDiagnostics.CreateScope("MockableCommvaultContentStoreTenantResource.CountByProtectionGroups");
+            using DiagnosticScope scope = ProtectedItemsOperationGroupClientDiagnostics.CreateScope("MockableCommvaultContentStoreTenantResource.CountProtectedItems");
             scope.Start();
             try
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ProtectedItemsOperationGroupRestClient.CreateCountByProtectionGroupsRequest(CountProtectedItemsContent.ToRequestContent(content), context);
+                HttpMessage message = ProtectedItemsOperationGroupRestClient.CreateCountProtectedItemsRequest(CountProtectedItemsContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<CountProtectedItemsResult> response = Response.FromValue(CountProtectedItemsResult.FromResponse(result), result);
                 if (response.Value == null)

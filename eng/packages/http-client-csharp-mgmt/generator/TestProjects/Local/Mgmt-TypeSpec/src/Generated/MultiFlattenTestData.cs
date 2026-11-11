@@ -79,6 +79,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
+        /// <summary> Must not safe-flatten because its model also has an independent internal property. </summary>
+        [WirePath("properties.independentInternal")]
+        public IndependentInternalPropertyModel IndependentInternal
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IndependentInternal;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MultiFlattenProperties();
+                }
+                Properties.IndependentInternal = value;
+            }
+        }
+
         /// <summary> Gets or sets the SelectionType. </summary>
         [WirePath("properties.inner.selectionType")]
         public string InnerSelectionType

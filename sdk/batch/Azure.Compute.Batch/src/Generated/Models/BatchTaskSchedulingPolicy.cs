@@ -17,10 +17,8 @@ namespace Azure.Compute.Batch
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchTaskSchedulingPolicy"/>. </summary>
-        /// <param name="nodeFillType"> How Tasks are distributed across Compute Nodes in a Pool. If not specified, the default is spread. </param>
-        public BatchTaskSchedulingPolicy(BatchNodeFillType nodeFillType)
+        public BatchTaskSchedulingPolicy()
         {
-            NodeFillType = nodeFillType;
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchTaskSchedulingPolicy"/>. </summary>
@@ -32,6 +30,13 @@ namespace Azure.Compute.Batch
             JobDefaultOrder = jobDefaultOrder;
             NodeFillType = nodeFillType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchTaskSchedulingPolicy"/>. </summary>
+        /// <param name="nodeFillType"> How Tasks are distributed across Compute Nodes in a Pool. If not specified, the default is spread. </param>
+        public BatchTaskSchedulingPolicy(BatchNodeFillType nodeFillType) : this()
+        {
+            NodeFillType = nodeFillType;
         }
 
         /// <summary> The order for scheduling tasks from different jobs with the same priority. If not specified, the default is none. </summary>

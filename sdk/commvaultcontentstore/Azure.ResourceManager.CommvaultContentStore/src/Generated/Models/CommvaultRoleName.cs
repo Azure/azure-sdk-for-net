@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
     {
         private readonly string _value;
         /// <summary> Backup Administrator - full access to all resources. </summary>
-        private const string BackupAdminValue = "BackupAdmin";
+        private const string BackupAdministratorValue = "BackupAdmin";
         /// <summary> Backup Operator - can manage resources but cannot delete storage or plans. </summary>
         private const string BackupOperatorValue = "BackupOperator";
         /// <summary> Backup User - can manage protection groups, read-only on plans and storage. </summary>
         private const string BackupUserValue = "BackupUser";
         /// <summary> Security Administrator - can manage CCA enrollment and user management. </summary>
-        private const string SecurityAdminValue = "SecurityAdmin";
+        private const string SecurityAdministratorValue = "SecurityAdmin";
         /// <summary> MPA Administrator - can authorize critical operations protected by MPA. </summary>
         private const string MultiPersonAuthorizationValue = "MultiPersonAuthorization";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> Backup Administrator - full access to all resources. </summary>
-        public static CommvaultRoleName BackupAdmin { get; } = new CommvaultRoleName(BackupAdminValue);
+        public static CommvaultRoleName BackupAdministrator { get; } = new CommvaultRoleName(BackupAdministratorValue);
 
         /// <summary> Backup Operator - can manage resources but cannot delete storage or plans. </summary>
         public static CommvaultRoleName BackupOperator { get; } = new CommvaultRoleName(BackupOperatorValue);
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public static CommvaultRoleName BackupUser { get; } = new CommvaultRoleName(BackupUserValue);
 
         /// <summary> Security Administrator - can manage CCA enrollment and user management. </summary>
-        public static CommvaultRoleName SecurityAdmin { get; } = new CommvaultRoleName(SecurityAdminValue);
+        public static CommvaultRoleName SecurityAdministrator { get; } = new CommvaultRoleName(SecurityAdministratorValue);
 
         /// <summary> MPA Administrator - can authorize critical operations protected by MPA. </summary>
         public static CommvaultRoleName MultiPersonAuthorization { get; } = new CommvaultRoleName(MultiPersonAuthorizationValue);

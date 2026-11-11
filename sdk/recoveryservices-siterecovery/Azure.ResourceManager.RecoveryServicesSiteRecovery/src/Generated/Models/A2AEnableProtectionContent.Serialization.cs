@@ -193,6 +193,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("autoProtectionOfDataDisk"u8);
                 writer.WriteStringValue(AutoProtectionOfDataDisk.Value.ToString());
             }
+            if (Optional.IsDefined(RecoveryConfidentialDataDiskEncryptionIdentity))
+            {
+                writer.WritePropertyName("recoveryConfidentialDataDiskEncryptionIdentity"u8);
+                writer.WriteStringValue(RecoveryConfidentialDataDiskEncryptionIdentity);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -243,6 +248,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResourceIdentifier recoveryCapacityReservationGroupId = default;
             int? platformFaultDomain = default;
             AutoProtectionOfDataDisk? autoProtectionOfDataDisk = default;
+            ResourceIdentifier recoveryConfidentialDataDiskEncryptionIdentity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("instanceType"u8))
@@ -425,6 +431,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     autoProtectionOfDataDisk = new AutoProtectionOfDataDisk(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("recoveryConfidentialDataDiskEncryptionIdentity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryConfidentialDataDiskEncryptionIdentity = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -453,7 +468,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 recoveryVirtualMachineScaleSetId,
                 recoveryCapacityReservationGroupId,
                 platformFaultDomain,
-                autoProtectionOfDataDisk);
+                autoProtectionOfDataDisk,
+                recoveryConfidentialDataDiskEncryptionIdentity);
         }
     }
 }

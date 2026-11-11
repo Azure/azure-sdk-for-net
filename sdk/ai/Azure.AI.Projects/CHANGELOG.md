@@ -6,6 +6,7 @@
 - Uploading of models now can be cancelled.
 
 ### Breaking Changes
+- Renamed `ModelCredentialRequest` to `ModelCredentialContent`.
 
 ### Bugs Fixed
 

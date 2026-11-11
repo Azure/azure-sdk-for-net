@@ -14,6 +14,11 @@ namespace Azure.Communication.JobRouter
     public partial class FunctionRouterRule : RouterRule
     {
         /// <summary> Initializes a new instance of <see cref="FunctionRouterRule"/>. </summary>
+        internal FunctionRouterRule() : base(RouterRuleKind.Function)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FunctionRouterRule"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of RouterRule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="functionUri"> URL for Azure Function. </param>

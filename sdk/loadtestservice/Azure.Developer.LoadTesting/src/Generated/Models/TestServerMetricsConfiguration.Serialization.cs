@@ -16,11 +16,6 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Test server metrics configuration. </summary>
     public partial class TestServerMetricsConfiguration : IJsonModel<TestServerMetricsConfiguration>
     {
-        /// <summary> Initializes a new instance of <see cref="TestServerMetricsConfiguration"/> for deserialization. </summary>
-        internal TestServerMetricsConfiguration()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual TestServerMetricsConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
