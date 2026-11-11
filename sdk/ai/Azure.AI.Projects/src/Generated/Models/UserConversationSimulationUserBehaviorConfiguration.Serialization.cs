@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Configures conversation behavior for the simulated user. </summary>
     public partial class UserConversationSimulationUserBehaviorConfiguration : IJsonModel<UserConversationSimulationUserBehaviorConfiguration>

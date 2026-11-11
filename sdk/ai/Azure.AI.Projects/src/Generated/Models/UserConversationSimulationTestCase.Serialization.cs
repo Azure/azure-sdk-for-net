@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Defines one test scenario. Simulation configuration properties specified here override the corresponding data-source defaults. </summary>
     public partial class UserConversationSimulationTestCase : IJsonModel<UserConversationSimulationTestCase>

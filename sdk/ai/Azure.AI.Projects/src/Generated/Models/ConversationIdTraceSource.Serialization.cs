@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> A trace source that selects traces by conversation IDs. </summary>
     public partial class ConversationIdTraceSource : TraceSource, IJsonModel<ConversationIdTraceSource>

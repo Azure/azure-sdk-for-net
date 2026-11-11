@@ -4,8 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Preview form of `azure_ai_traces`. Returned only for rules backed by existing preview schedules; rejected on create and update. </summary>
     public partial class TracesPreviewEvalRunDataSource : EvalRunDataSource

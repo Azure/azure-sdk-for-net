@@ -5,8 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Supplies strongly typed test scenarios directly in the evaluation run request. </summary>
     public partial class UserConversationSimulationInlineTestCasesSource

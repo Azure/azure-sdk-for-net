@@ -9,7 +9,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Configuration for managing data generation jobs.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ConversationsDataGenerationJobConfiguration"/>, <see cref="SimpleQnADataGenerationJobConfiguration"/>, <see cref="SimulationSeedDataGenerationJobConfiguration"/>, <see cref="ToolUseFineTuningDataGenerationJobConfiguration"/>, and <see cref="TracesDataGenerationJobConfiguration"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.ConversationsDataGenerationJobConfiguration"/>, <see cref="SimpleQnADataGenerationJobConfiguration"/>, <see cref="SimulationSeedDataGenerationJobConfiguration"/>, <see cref="ToolUseFineTuningDataGenerationJobConfiguration"/>, and <see cref="Evaluation.TracesDataGenerationJobConfiguration"/>.
     /// </summary>
     public abstract partial class DataGenerationJobConfiguration
     {

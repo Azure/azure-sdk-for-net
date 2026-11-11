@@ -5,9 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Evaluation;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Preview form of `azure_ai_user_conversation_simulation`. Returned only for rules backed by existing preview schedules; rejected on create and update. </summary>
     public partial class UserConversationSimulationPreviewEvalRunDataSource : EvalRunDataSource

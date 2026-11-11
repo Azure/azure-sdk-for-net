@@ -5,18 +5,14 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary> Output text. </summary>
     internal partial class EvalItemContentOutputText : EvalItemContentItemObject
     {
         /// <summary> Initializes a new instance of <see cref="EvalItemContentOutputText"/>. </summary>
         /// <param name="text"> The text output from the model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public EvalItemContentOutputText(string text) : base(EvalItemContentItemObjectType.OutputText)
         {
-            Argument.AssertNotNull(text, nameof(text));
-
             Text = text;
         }
 

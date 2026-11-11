@@ -4,8 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Configures an Azure standard neural voice used to convert text to speech for evaluation through the Voice Live endpoint. </summary>
     public partial class EvaluationAzureStandardVoiceModelConfiguration : EvaluationVoiceModelConfiguration

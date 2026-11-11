@@ -6,10 +6,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary> Input image. </summary>
     internal partial class EvalItemInputImage : EvalItemContentItemObject, IJsonModel<EvalItemInputImage>
     {
         /// <summary> Initializes a new instance of <see cref="EvalItemInputImage"/> for deserialization. </summary>

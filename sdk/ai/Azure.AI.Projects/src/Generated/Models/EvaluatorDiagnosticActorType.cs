@@ -6,9 +6,8 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary> The type of actor responsible for an evaluator lineage diagnostic. </summary>
     [Experimental("AAIP001")]
     internal readonly partial struct EvaluatorDiagnosticActorType : IEquatable<EvaluatorDiagnosticActorType>
     {
@@ -20,11 +19,8 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="EvaluatorDiagnosticActorType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EvaluatorDiagnosticActorType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
             _value = value;
         }
 

@@ -4,19 +4,16 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary> Input text. </summary>
     internal partial class EvalItemContentItemObjectInputTextContent : EvalItemContentItemObject
     {
         /// <summary> Initializes a new instance of <see cref="EvalItemContentItemObjectInputTextContent"/>. </summary>
         /// <param name="text"> The text input to the model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public EvalItemContentItemObjectInputTextContent(string text) : base(EvalItemContentItemObjectType.InputText)
         {
-            Argument.AssertNotNull(text, nameof(text));
-
             Text = text;
         }
 

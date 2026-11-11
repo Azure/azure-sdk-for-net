@@ -6,9 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Evaluation;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> A diagnostic change recording an update to a rubric dimension. </summary>
     public partial class DimensionUpdatedDiagnosticChange : EvaluatorDiagnostic, IJsonModel<DimensionUpdatedDiagnosticChange>

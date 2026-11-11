@@ -5,12 +5,8 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary>
-    /// Eval content item
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EvalItemContentItemObjectInputTextContent"/>, <see cref="EvalItemContentOutputText"/>, <see cref="EvalItemInputImage"/>, and <see cref="InputAudio"/>.
-    /// </summary>
     internal abstract partial class EvalItemContentItemObject
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

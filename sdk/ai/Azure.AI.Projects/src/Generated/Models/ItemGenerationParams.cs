@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
     /// <summary>
     /// Configures how the service prepares input items for an evaluation run before applying testing criteria.
     /// Depending on `type`, preparation can generate new inputs, retrieve existing responses, transform source data, or simulate conversations. Each `type` selects a workflow-specific model with the parameters required by that preparation workflow. These parameters do not define the evaluated target or the testing criteria.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RedTeamItemGenerationParams"/>, <see cref="RedTeamSeedPromptsItemGenerationParams"/>, <see cref="RedTeamTaxonomyItemGenerationParams"/>, <see cref="ResponseRetrievalItemGenerationParams"/>, <see cref="SyntheticDataGenerationItemGenerationParams"/>, and <see cref="TargetCompletionItemGenerationParams"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RedTeamItemGenerationParams"/>, <see cref="RedTeamSeedPromptsItemGenerationParams"/>, <see cref="RedTeamTaxonomyItemGenerationParams"/>, <see cref="Evaluation.ResponseRetrievalItemGenerationParams"/>, <see cref="SyntheticDataGenerationItemGenerationParams"/>, and <see cref="TargetCompletionItemGenerationParams"/>.
     /// </summary>
     public abstract partial class ItemGenerationParams
     {

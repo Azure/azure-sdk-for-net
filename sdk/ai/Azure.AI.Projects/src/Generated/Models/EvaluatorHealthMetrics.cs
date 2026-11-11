@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> A snapshot of existing rubric-health computations. Missing components remain null and are not replaced with zeros. </summary>
     [Experimental("AAIP001")]

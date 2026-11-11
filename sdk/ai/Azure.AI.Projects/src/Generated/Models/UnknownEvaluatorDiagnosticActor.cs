@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     [Experimental("AAIP001")]
     internal partial class UnknownEvaluatorDiagnosticActor : EvaluatorDiagnosticActor

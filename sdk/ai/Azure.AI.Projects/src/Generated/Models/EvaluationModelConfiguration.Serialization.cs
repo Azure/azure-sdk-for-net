@@ -6,9 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Evaluation;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Configures the model that plays the simulated user. This model is separate from the evaluated `target`. </summary>
     public partial class EvaluationModelConfiguration : IJsonModel<EvaluationModelConfiguration>

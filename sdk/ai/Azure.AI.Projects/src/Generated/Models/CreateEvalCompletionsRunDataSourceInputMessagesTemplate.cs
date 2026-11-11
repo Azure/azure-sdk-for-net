@@ -6,8 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> The CreateEvalCompletionsRunDataSourceInputMessagesTemplate. </summary>
     public partial class CreateEvalCompletionsRunDataSourceInputMessagesTemplate

@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Configures the number, length, audio effects, and simulated user behavior of conversations. </summary>
     public partial class UserConversationSimulationConfiguration

@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> An authenticated user responsible for an evaluator lineage diagnostic. </summary>
     public partial class UserEvaluatorDiagnosticActor : EvaluatorDiagnosticActor, IJsonModel<UserEvaluatorDiagnosticActor>

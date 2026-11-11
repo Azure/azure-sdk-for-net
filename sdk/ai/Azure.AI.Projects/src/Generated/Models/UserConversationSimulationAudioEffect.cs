@@ -4,8 +4,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Effect that can be applied to simulated conversation audio. The union is extensible for additional effects. </summary>
     public readonly partial struct UserConversationSimulationAudioEffect : IEquatable<UserConversationSimulationAudioEffect>

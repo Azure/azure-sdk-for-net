@@ -5,18 +5,14 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary> Input image. </summary>
     internal partial class EvalItemInputImage : EvalItemContentItemObject
     {
         /// <summary> Initializes a new instance of <see cref="EvalItemInputImage"/>. </summary>
         /// <param name="imageUrl"> The URL of the image input. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageUrl"/> is null. </exception>
         public EvalItemInputImage(Uri imageUrl) : base(EvalItemContentItemObjectType.InputImage)
         {
-            Argument.AssertNotNull(imageUrl, nameof(imageUrl));
-
             ImageUrl = imageUrl;
         }
 

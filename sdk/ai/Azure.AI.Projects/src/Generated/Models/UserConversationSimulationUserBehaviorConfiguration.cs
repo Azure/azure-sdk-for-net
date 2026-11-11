@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Configures conversation behavior for the simulated user. </summary>
     public partial class UserConversationSimulationUserBehaviorConfiguration

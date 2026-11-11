@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Simple rubric scoring choices. Omission preserves existing legacy scoring. </summary>
     [Experimental("AAIP001")]

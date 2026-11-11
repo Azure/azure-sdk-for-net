@@ -7,9 +7,8 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary> A flat page of recorded evaluator changes and computed health snapshots. </summary>
     [Experimental("AAIP001")]
     internal partial class CompletedEvaluatorDiagnosticsPage
     {

@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Configures default conversation behavior and optional run-wide persistence of generated conversations. </summary>
     public partial class UserConversationSimulationDefaultConfiguration : IJsonModel<UserConversationSimulationDefaultConfiguration>

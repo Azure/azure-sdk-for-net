@@ -6,9 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Evaluation;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Traces source for evaluator generation jobs — conversation traces from Application Insights. </summary>
     public partial class TracesEvaluatorGenerationJobSource : EvaluatorGenerationJobSource, IJsonModel<TracesEvaluatorGenerationJobSource>

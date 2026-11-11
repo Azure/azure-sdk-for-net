@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Simple rubric scoring choices. Omission preserves existing legacy scoring. </summary>
     public partial class RubricScoring : IJsonModel<RubricScoring>

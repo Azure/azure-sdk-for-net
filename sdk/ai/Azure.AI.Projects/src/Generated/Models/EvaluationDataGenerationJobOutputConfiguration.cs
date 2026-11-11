@@ -4,8 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Dataset output configuration for an evaluation data generation job. </summary>
     public partial class EvaluationDataGenerationJobOutputConfiguration

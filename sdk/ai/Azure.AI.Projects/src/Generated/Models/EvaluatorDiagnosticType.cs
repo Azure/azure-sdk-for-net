@@ -5,8 +5,9 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> The supported evaluator diagnostic change shapes. </summary>
     [Experimental("AAIP001")]

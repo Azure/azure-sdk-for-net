@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Reference to a Dataset whose concrete version has already been resolved. </summary>
     public partial class VersionedDatasetReference

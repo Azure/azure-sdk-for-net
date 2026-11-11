@@ -6,9 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.Projects.Evaluation;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Configures a scheduled evaluation of observed agent traces. </summary>
     public partial class TraceEvaluationRuleAction : EvaluationRuleAction, IJsonModel<TraceEvaluationRuleAction>

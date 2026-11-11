@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Data Generation Job resource.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EvaluationDataGenerationJob"/>, <see cref="ReinforcementFineTuningDataGenerationJob"/>, and <see cref="SupervisedFineTuningDataGenerationJob"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Evaluation.EvaluationDataGenerationJob"/>, <see cref="ReinforcementFineTuningDataGenerationJob"/>, and <see cref="SupervisedFineTuningDataGenerationJob"/>.
     /// </summary>
     public abstract partial class DataGenerationJob
     {

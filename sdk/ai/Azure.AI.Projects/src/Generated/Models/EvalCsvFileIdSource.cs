@@ -4,8 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Represents a reference to an uploaded CSV file used as a source for evaluation data. </summary>
     public partial class EvalCsvFileIdSource

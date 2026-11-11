@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Azure.AI.Projects.Evaluation;
 
 namespace Azure.AI.Projects
 {

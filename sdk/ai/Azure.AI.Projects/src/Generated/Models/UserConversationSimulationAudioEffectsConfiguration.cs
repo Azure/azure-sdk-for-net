@@ -4,8 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Configures effects applied to simulated conversation audio. </summary>
     public partial class UserConversationSimulationAudioEffectsConfiguration

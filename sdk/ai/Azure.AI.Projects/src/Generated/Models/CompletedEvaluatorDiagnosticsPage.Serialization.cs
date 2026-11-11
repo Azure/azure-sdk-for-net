@@ -7,10 +7,10 @@ using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary> A flat page of recorded evaluator changes and computed health snapshots. </summary>
     internal partial class CompletedEvaluatorDiagnosticsPage : IJsonModel<CompletedEvaluatorDiagnosticsPage>
     {
         /// <summary> Initializes a new instance of <see cref="CompletedEvaluatorDiagnosticsPage"/> for deserialization. </summary>

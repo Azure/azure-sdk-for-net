@@ -5,7 +5,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Configures the default interruption behavior for the simulated user. </summary>
     public partial class UserConversationSimulationDefaultInterruptionConfiguration : UserConversationSimulationInterruptionConfiguration

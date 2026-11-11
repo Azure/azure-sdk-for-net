@@ -5,13 +5,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary>
-    /// Eval content item
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="EvalItemContentItemObjectInputTextContent"/>, <see cref="EvalItemContentOutputText"/>, <see cref="EvalItemInputImage"/>, and <see cref="InputAudio"/>.
-    /// </summary>
     [PersistableModelProxy(typeof(UnknownEvalItemContentItemObject))]
     internal abstract partial class EvalItemContentItemObject : IJsonModel<EvalItemContentItemObject>
     {
