@@ -121,7 +121,7 @@ test('a generated page cannot count when its response was dropped', async t => {
 
 function assertNoAgentCredential(execution) {
   const invocation = execution.split('\n').find(line => line.includes('awf --config')) || '';
-  for (const name of ['REVIEW_TOKEN', 'GITHUB_TOKEN', 'GITHUB_MCP_SERVER_TOKEN']) {
+  for (const name of ['REVIEW_TOKEN', 'GH_TOKEN', 'GITHUB_TOKEN', 'GITHUB_MCP_SERVER_TOKEN']) {
     assert.ok(!new RegExp(`^ +${name}:`, 'm').test(execution) || invocation.includes(`--exclude-env ${name}`), `${name} must not enter the agent sandbox`);
   }
 }
@@ -138,6 +138,10 @@ test('compiled input backend is private and GitHub credentials stay outside the 
   assert.ok(lock.includes('--mount "${RUNNER_TEMP}/gh-aw:${RUNNER_TEMP}/gh-aw:ro"'));
   assert.ok(!lock.includes('name: Start MCP Scripts Server'));
   const agent = lock.split('\n  agent:\n')[1].split('\n  check_safe_output_status:')[0];
+  const capture = agent.split('name: Capture all changed-file pages')[1].split(/\n      - /)[0];
+  assert.match(capture, /GH_TOKEN:\s*\$\{\{\s*github\.token\s*\}\}/);
+  assert.doesNotMatch(capture, /GITHUB_ENV/);
+  assert.doesNotMatch(agent.split('\n    steps:\n')[0], /^\s+GH_TOKEN:/m);
   const execution = agent.split('name: Execute GitHub Copilot CLI')[1].split(/\n      - /)[0];
   assertNoAgentCredential(execution);
   assert.ok(agent.includes('"GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_MCP_SERVER_TOKEN}"'));

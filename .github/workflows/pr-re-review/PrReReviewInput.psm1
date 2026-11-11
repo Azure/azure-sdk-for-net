@@ -6,13 +6,26 @@
 $ErrorActionPreference = 'Stop'
 
 function Invoke-PrReReviewGhApi {
-    param([Parameter(Mandatory)][string[]]$Arguments)
+    param([Parameter(Mandatory)][string[]]$Arguments, [switch]$IncludeStatus)
 
-    $output = & gh api @Arguments
-    if ($LASTEXITCODE -ne 0) {
-        throw "gh api $($Arguments -join ' ') failed with exit code $LASTEXITCODE."
+    if (!$IncludeStatus) {
+        $output = & gh api @Arguments
+        if ($LASTEXITCODE -ne 0) {
+            throw "gh api $($Arguments -join ' ') failed with exit code $LASTEXITCODE."
+        }
+        return ($output -join "`n")
     }
-    return ($output -join "`n")
+    # The Contents API caller needs the actual HTTP status to distinguish an
+    # inaccessible fork head from other failures without weakening fallback.
+    $PSNativeCommandUseErrorActionPreference = $false
+    $parts = @(& gh api --include @Arguments 2>&1)
+    $exitCode = $LASTEXITCODE
+    $strings = @($parts | Where-Object { $_ -is [string] })
+    $headers = @($strings | Where-Object { $_ -cmatch '^HTTP/\S+\s+\d{3}\b' })
+    $status = if ($headers.Count) { [int]([regex]::Match($headers[-1], '^HTTP/\S+\s+(\d{3})\b').Groups[1].Value) } else { 0 }
+    $separator = [array]::IndexOf($strings, '')
+    $body = if ($separator -ge 0 -and $separator + 1 -lt $strings.Length) { ($strings[($separator + 1)..($strings.Length - 1)] -join "`n") } else { '' }
+    return @{ Status = $status; ExitCode = $exitCode; Body = $body }
 }
 
 function Get-PrReReviewPullRequestInput {

@@ -1,14 +1,13 @@
 'use strict';
 const assert = require('node:assert/strict');
 const { test } = require('node:test');
-const crypto = require('node:crypto');
 const { captureContext, assertFresh, assertMutationFresh, exportContext } = require('../pr-re-review/ReviewSnapshot.cjs');
 const files = { pull_number: 64192, head_sha: 'a'.repeat(40), base_sha: 'b'.repeat(40), changed_files: 106, files: [] };
 const thread = i => ({ id: `thread-${i}`, isResolved: false, comments: { nodes: [{ databaseId: i + 1, body: 'finding', path: 'src/F.cs' }], pageInfo: { hasNextPage: false, endCursor: null } } });
 function fixture(count = 1, extra = {}) {
   const threads = Array.from({ length: count }, (_, i) => thread(i));
   const calls = [];
-  const pull = { state: 'open', draft: false, head: { sha: files.head_sha }, base: { sha: files.base_sha }, changed_files: 106 };
+  const pull = { state: 'open', draft: false, head: { sha: files.head_sha, repo: { full_name: 'Azure/azure-sdk-for-net' } }, base: { sha: files.base_sha, repo: { full_name: 'Azure/azure-sdk-for-net' } }, changed_files: 106 };
   const github = {
     request: async () => ({ data: { base_commit: { sha: files.base_sha }, merge_base_commit: { sha: files.base_sha } } }),
     rest: { pulls: { get: async () => ({ data: { ...pull, ...extra.pull } }), listReviews: () => {} } },
@@ -23,22 +22,38 @@ function fixture(count = 1, extra = {}) {
   return { github, threads, calls, pull };
 }
 
-function fixtureWithBaseline() {
+function fixtureWithBaseline(t) {
+  const fs = require('node:fs'), os = require('node:os'), path = require('node:path');
   const f = fixture();
   const name = 'eng/apicompatbaselines/Azure.Example.xml';
   const manifest = { ...files, files: [{ filename: name, status: 'modified' }] };
   const repo = { owner: 'Azure', repo: 'azure-sdk-for-net' };
   f.pull.head.repo = { full_name: 'Azure/azure-sdk-for-net' };
   f.pull.base.repo = { full_name: 'Azure/azure-sdk-for-net' };
-  const state = { reads: 0, unavailable: false, corrupt: false };
-  f.github.rest.repos = { getContent: async ({ ref }) => {
-    state.reads++;
-    if (state.unavailable) throw new Error('simulated unavailable immutable blob');
-    const content = ref === files.base_sha ? '<Suppressions />' : '<Suppressions><Suppression><DiagnosticId>CP1</DiagnosticId><Target>T:Model</Target></Suppression></Suppressions>';
-    const bytes = Buffer.from(content);
-    return { data: { type: 'file', encoding: 'base64', content: bytes.toString('base64'), size: bytes.length,
-      sha: state.corrupt ? '0'.repeat(40) : crypto.createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex') } };
-  } };
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'baseline-gh-'));
+  const statePath = path.join(directory, 'state.json');
+  fs.writeFileSync(statePath, JSON.stringify({ reads: 0, unavailable: false, corrupt: false }));
+  const oldPath = process.env.PATH, oldState = process.env.GH_TEST_STATE, oldToken = process.env.GH_TOKEN;
+  process.env.PATH = `${directory}${path.delimiter}${oldPath}`;
+  process.env.GH_TEST_STATE = statePath; process.env.GH_TOKEN = 'fixture-token';
+  t.after(() => { process.env.PATH = oldPath; if (oldState === undefined) delete process.env.GH_TEST_STATE; else process.env.GH_TEST_STATE = oldState; if (oldToken === undefined) delete process.env.GH_TOKEN; else process.env.GH_TOKEN = oldToken; fs.rmSync(directory, { recursive: true, force: true }); });
+  const fake = `#!/usr/bin/env node
+    const fs=require('node:fs'),crypto=require('node:crypto');
+    if(process.env.GH_TOKEN!=='fixture-token') { console.error('missing scoped token'); process.exit(1); }
+    const state=JSON.parse(fs.readFileSync(process.env.GH_TEST_STATE,'utf8'));state.reads++;fs.writeFileSync(process.env.GH_TEST_STATE,JSON.stringify(state));
+    if(state.unavailable){console.log('HTTP/2.0 500 Error\\nContent-Type: application/json\\n\\n{}');console.error('gh: unavailable (HTTP 500)');process.exit(1);}
+    const route=process.argv.at(-1),ref=new URL('https://example.invalid/'+route).searchParams.get('ref');
+    const content=ref===${JSON.stringify(files.base_sha)}?(state.baseContent ?? '<Suppressions />'):(state.headContent ?? '<Suppressions><Suppression><DiagnosticId>CP1</DiagnosticId><Target>T:Model</Target></Suppression></Suppressions>');
+    const b=Buffer.from(content),sha=state.corrupt?'0'.repeat(40):crypto.createHash('sha1').update('blob '+b.length+'\\0').update(b).digest('hex');
+    console.log('HTTP/2.0 200 OK\\nContent-Type: application/json\\n\\n'+JSON.stringify({type:'file',encoding:'base64',content:b.toString('base64'),size:b.length,sha}));
+  `;
+  if (process.platform === 'win32') {
+    fs.writeFileSync(path.join(directory, 'gh-fake.cjs'), fake);
+    fs.writeFileSync(path.join(directory, 'gh.cmd'), '@node "%~dp0gh-fake.cjs" %*\r\n');
+  } else {
+    fs.writeFileSync(path.join(directory, 'gh'), fake, { mode: 0o755 });
+  }
+  const state = new Proxy({}, { get: (_target, key) => JSON.parse(fs.readFileSync(statePath, 'utf8'))[key], set: (_target, key, value) => { const data = JSON.parse(fs.readFileSync(statePath, 'utf8')); data[key] = value; fs.writeFileSync(statePath, JSON.stringify(data)); return true; } });
   return { ...f, manifest, repo, state };
 }
 
@@ -84,8 +99,8 @@ test('fails closed when the pinned diff base is unavailable or invalid', async (
   await assert.rejects(captureContext(f.github, {}, files), /compare unavailable/);
 });
 
-test('captured baseline is checked once and not refetched for freshness', async () => {
-  const f = fixtureWithBaseline();
+test('captured baseline is checked once and not refetched for freshness', async t => {
+  const f = fixtureWithBaseline(t);
   const snapshot = await captureContext(f.github, f.repo, f.manifest);
   assert.equal(snapshot.baseline_suppressions.length, 1);
   assert.equal(f.state.reads, 2);
@@ -96,20 +111,29 @@ test('captured baseline is checked once and not refetched for freshness', async 
   assert.equal(f.state.reads, 2);
 });
 
-test('initial missing baseline data still fails closed', async () => {
-  const f = fixtureWithBaseline();
-  f.state.unavailable = true;
-  await assert.rejects(captureContext(f.github, f.repo, f.manifest), /unavailable immutable blob/);
+test('PowerShell capture preserves Unicode and case-distinct fields through Node JSON parsing', async t => {
+  const f = fixtureWithBaseline(t);
+  f.state.headContent = '<Suppressions><Suppression><DiagnosticId>CP1</DiagnosticId><Target>T:𝄞界</Target><target>different</target></Suppression><Suppression><DiagnosticId>CP2</DiagnosticId><Target>T:Other</Target></Suppression></Suppressions>';
+  const snapshot = await captureContext(f.github, f.repo, f.manifest);
+  assert.equal(snapshot.baseline_suppressions.length, 2);
+  assert.deepEqual(snapshot.baseline_suppressions[0].fields, { DiagnosticId: 'CP1', Target: 'T:𝄞界', target: 'different' });
+  assert.equal(snapshot.baseline_suppressions[1].fields.Target, 'T:Other');
 });
 
-test('initial corrupt baseline data still fails closed', async () => {
-  const f = fixtureWithBaseline();
+test('initial missing baseline data still fails closed', async t => {
+  const f = fixtureWithBaseline(t);
+  f.state.unavailable = true;
+  await assert.rejects(captureContext(f.github, f.repo, f.manifest), /unable|unavailable/i);
+});
+
+test('initial corrupt baseline data still fails closed', async t => {
+  const f = fixtureWithBaseline(t);
   f.state.corrupt = true;
   await assert.rejects(captureContext(f.github, f.repo, f.manifest), /corrupt/i);
 });
 
-test('freshness still rejects changed identity, thread and review state without refetching baselines', async () => {
-  const f = fixtureWithBaseline();
+test('freshness still rejects changed identity, thread and review state without refetching baselines', async t => {
+  const f = fixtureWithBaseline(t);
   const snapshot = await captureContext(f.github, f.repo, f.manifest);
   f.state.unavailable = true;
   f.pull.head.sha = 'c'.repeat(40);
@@ -130,8 +154,8 @@ test('freshness still rejects changed identity, thread and review state without 
   assert.equal(f.state.reads, 2);
 });
 
-test('freshness detects captured thread and comment metadata changes', async () => {
-  const f = fixtureWithBaseline();
+test('freshness detects captured thread and comment metadata changes', async t => {
+  const f = fixtureWithBaseline(t);
   f.threads[0].isOutdated = false;
   f.threads[0].isCollapsed = false;
   f.threads[0].comments.nodes[0].author = { login: 'reviewer' };
@@ -146,8 +170,8 @@ test('freshness detects captured thread and comment metadata changes', async () 
   assert.equal(f.state.reads, 2);
 });
 
-test('thread mutation still rejects external replies without refetching baselines', async () => {
-  const f = fixtureWithBaseline();
+test('thread mutation still rejects external replies without refetching baselines', async t => {
+  const f = fixtureWithBaseline(t);
   const snapshot = await captureContext(f.github, f.repo, f.manifest);
   f.state.unavailable = true;
   f.threads[0].comments.nodes.push({ databaseId: 2, body: 'our reply', path: 'src/F.cs' }, { databaseId: 3, body: 'external', path: 'src/F.cs' });
@@ -254,7 +278,7 @@ test('captures a thread history beyond its first 100 comments', async () => {
   f.threads[0].comments.pageInfo = { hasNextPage: true, endCursor: 'comments-next' };
   const original = f.github.graphql;
   f.github.graphql = async (query, vars) => vars.id ? { node: { comments: { nodes: [{ databaseId: 2, body: 'reply', path: 'src/F.cs' }], pageInfo: { hasNextPage: false, endCursor: null } } } } : original(query, vars);
-  const s = await captureContext(f.github, {}, files);
+  const s = await captureContext(f.github, { owner: 'Azure', repo: 'azure-sdk-for-net' }, files);
   assert.equal(s.threads[0].comments.length, 2);
 });
 
@@ -269,7 +293,7 @@ test('rejects stale state and missing thread pages', async () => {
 
 test('publication rechecks thread status and replies rather than trusting old decisions', async () => {
   const f = fixture();
-  const s = await captureContext(f.github, {}, files);
+  const s = await captureContext(f.github, { owner: 'Azure', repo: 'azure-sdk-for-net' }, files);
   await assertFresh(f.github, {}, s);
   f.threads[0].isResolved = true;
   await assert.rejects(assertFresh(f.github, {}, s), /thread state/i);
@@ -279,7 +303,7 @@ test('publication rechecks thread status and replies rather than trusting old de
 });
 
 test('publication detects new summary reviews even when no thread changed', async () => {
-  const f = fixture(); const s = await captureContext(f.github, {}, files);
+  const f = fixture(); const s = await captureContext(f.github, { owner: 'Azure', repo: 'azure-sdk-for-net' }, files);
   f.github.paginate = async () => [{ id: 7, body: 'New finding in an edited review.', state: 'COMMENTED', commit_id: files.head_sha }];
   await assert.rejects(assertFresh(f.github, {}, s), /review history/i);
 });
@@ -292,7 +316,7 @@ test('thread mutation skips unused review refetch while publication still checks
     if (unavailable) throw new Error('simulated review listing unavailable');
     return [];
   };
-  const snapshot = await captureContext(f.github, {}, files);
+  const snapshot = await captureContext(f.github, { owner: 'Azure', repo: 'azure-sdk-for-net' }, files);
   assert.equal(reviewReads, 1);
   const receipts = [{ type: 'reply_to_pull_request_review_comment', provider: 'github', id: 1, metadata: { reply_id: 2 } }];
   f.threads[0].comments.nodes.push({ databaseId: 2, body: 'our reply', path: 'src/F.cs' });
@@ -310,7 +334,7 @@ test('thread mutation skips unused review refetch while publication still checks
 
 test('late mutation rejects a moved base or external reply, allowing only exact applied reply IDs',async()=>{
   const f=fixture();
-  const s=JSON.parse(JSON.stringify(await captureContext(f.github,{},files)));
+  const s=JSON.parse(JSON.stringify(await captureContext(f.github,{owner:'Azure',repo:'azure-sdk-for-net'},files)));
   const receipt=[{type:'reply_to_pull_request_review_comment',provider:'github',id:1,metadata:{reply_id:2}}];
   f.threads[0].comments.nodes.push({databaseId:2,body:'Our applied reply',path:'src/F.cs'});
   await assertMutationFresh(f.github,{},s,[1],receipt);
@@ -322,7 +346,7 @@ test('late mutation rejects a moved base or external reply, allowing only exact 
 });
 
 test('late mutation rejects absent reply provenance and removed replies',async()=>{
-  const f=fixture();const s=JSON.parse(JSON.stringify(await captureContext(f.github,{},files)));
+  const f=fixture();const s=JSON.parse(JSON.stringify(await captureContext(f.github,{owner:'Azure',repo:'azure-sdk-for-net'},files)));
   await assert.rejects(assertMutationFresh(f.github,{},s,[1],[]),/Missing applied reply identity/);
   await assert.rejects(assertMutationFresh(f.github,{},s,[1],[{type:'reply_to_pull_request_review_comment',provider:'github',id:1,metadata:{reply_id:2}}]),/no longer visible/);
 });

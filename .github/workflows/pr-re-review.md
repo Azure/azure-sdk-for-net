@@ -340,6 +340,8 @@ jobs:
           echo "GH_AW_REVIEW_PWSH=$destination/pwsh" >> "$GITHUB_ENV"
       - name: Capture all changed-file pages
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          GH_TOKEN: ${{ github.token }}
         with:
           script: |
             const fs = require('fs');

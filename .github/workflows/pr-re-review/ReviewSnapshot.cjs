@@ -80,7 +80,18 @@ async function captureContext(github, repo, files) {
   }
   snapshot.diff_base_sha = diffBase;
   // Baselines are immutable at the captured SHAs; fetch and validate them once.
-  snapshot.baseline_suppressions = await require('./ReviewBaselines.cjs').captureBaselines(github, repo, snapshot);
+  // Only filename metadata is needed by the PowerShell capture, not large patches or histories.
+  const { spawnSync } = require('node:child_process');
+  const path = require('node:path');
+  const input = { repo, snapshot: { head_sha: snapshot.head_sha, base_sha: snapshot.base_sha,
+    diff_base_sha: snapshot.diff_base_sha, head_repo: snapshot.head_repo,
+    files: snapshot.files.map(({ filename, previous_filename, status }) => ({ filename, previous_filename, status })) } };
+  const result = spawnSync(process.env.GH_AW_REVIEW_PWSH || 'pwsh', ['-NoLogo', '-NoProfile', '-NonInteractive', '-File', path.join(__dirname, 'ReviewBaselines.ps1'), '-Capture'],
+    { input: JSON.stringify(input), encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
+  if (result.error || result.status !== 0) throw new Error(`Cannot capture baselines: ${result.error?.message || result.stderr}`);
+  const inventory = JSON.parse(result.stdout);
+  if (!Array.isArray(inventory)) throw new Error('Invalid baseline comparison output.');
+  snapshot.baseline_suppressions = inventory;
   return snapshot;
 }
 
