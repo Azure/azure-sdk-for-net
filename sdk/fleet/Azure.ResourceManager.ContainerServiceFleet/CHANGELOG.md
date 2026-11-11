@@ -1,8 +1,10 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
+## 1.3.0 (Unreleased)
 
 ### Features Added
+
+- Upgraded the service API version to `2026-11-01`.
 
 ### Breaking Changes
 
