@@ -25,7 +25,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 builder.AddOpenTelemetry(options =>
                 {
                     options.AddProcessor(new MainAgentAttributionLogProcessor());
-                    options.AddProcessor(new InMemoryLogRecordProcessor(exportedItems));
+                    options.AddInMemoryExporter(exportedItems);
                 });
             });
 
@@ -51,7 +51,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 builder.AddOpenTelemetry(options =>
                 {
                     options.AddProcessor(new MainAgentAttributionLogProcessor());
-                    options.AddProcessor(new InMemoryLogRecordProcessor(exportedItems));
+                    options.AddInMemoryExporter(exportedItems);
                 });
             });
 
@@ -87,7 +87,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 builder.AddOpenTelemetry(options =>
                 {
                     options.AddProcessor(new MainAgentAttributionLogProcessor());
-                    options.AddProcessor(new InMemoryLogRecordProcessor(exportedItems));
+                    options.AddInMemoryExporter(exportedItems);
                 });
             });
 
@@ -118,7 +118,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 builder.AddOpenTelemetry(options =>
                 {
                     options.AddProcessor(new MainAgentAttributionLogProcessor());
-                    options.AddProcessor(new InMemoryLogRecordProcessor(exportedItems));
+                    options.AddInMemoryExporter(exportedItems);
                 });
             });
 
@@ -155,7 +155,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 {
                     options.AddProcessor(new PreSetAttributeProcessor(MainAgentName, "UserSetBot"));
                     options.AddProcessor(new MainAgentAttributionLogProcessor());
-                    options.AddProcessor(new InMemoryLogRecordProcessor(exportedItems));
+                    options.AddInMemoryExporter(exportedItems);
                 });
             });
 
@@ -200,7 +200,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 builder.AddOpenTelemetry(options =>
                 {
                     options.AddProcessor(new MainAgentAttributionLogProcessor());
-                    options.AddProcessor(new InMemoryLogRecordProcessor(exportedItems));
+                    options.AddInMemoryExporter(exportedItems);
                 });
             });
 
@@ -230,7 +230,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 builder.AddOpenTelemetry(options =>
                 {
                     options.AddProcessor(new MainAgentAttributionLogProcessor());
-                    options.AddProcessor(new InMemoryLogRecordProcessor(exportedItems));
+                    options.AddInMemoryExporter(exportedItems);
                 });
             });
 
@@ -259,7 +259,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 builder.AddOpenTelemetry(options =>
                 {
                     options.AddProcessor(new MainAgentAttributionLogProcessor());
-                    options.AddProcessor(new InMemoryLogRecordProcessor(exportedItems));
+                    options.AddInMemoryExporter(exportedItems);
                 });
             });
 
@@ -288,7 +288,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 builder.AddOpenTelemetry(options =>
                 {
                     options.AddProcessor(new MainAgentAttributionLogProcessor());
-                    options.AddProcessor(new InMemoryLogRecordProcessor(exportedItems));
+                    options.AddInMemoryExporter(exportedItems);
                 });
             });
 
@@ -306,6 +306,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var log = exportedItems[0];
             AssertDoesNotContainAttribute(log, GenAiFoundryProjectId);
             AssertDoesNotContainAttribute(log, GenAiAzureAiProjectId);
+        }
+
+        [Fact]
+        public void OnEnd_ConsecutiveLogsRetainIndependentAttributes()
+        {
+            var exportedItems = new List<LogRecord>();
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    options.AddProcessor(new MainAgentAttributionLogProcessor());
+                    options.AddInMemoryExporter(exportedItems);
+                });
+            });
+            var logger = loggerFactory.CreateLogger<MainAgentAttributionLogProcessorTests>();
+            using var activity = new Activity("TestActivity");
+            activity.SetTag(MainAgentName, "FirstBot");
+            activity.Start();
+
+            logger.LogInformation("First log");
+            activity.SetTag(MainAgentName, "SecondBot");
+            logger.LogInformation("Second log");
+            loggerFactory.Dispose();
+
+            Assert.Equal(2, exportedItems.Count);
+            Assert.NotSame(exportedItems[0], exportedItems[1]);
+            AssertContainsAttribute(exportedItems[0], MainAgentName, "FirstBot");
+            AssertContainsAttribute(exportedItems[1], MainAgentName, "SecondBot");
         }
 
         private static void AssertContainsAttribute(LogRecord logRecord, string key, object expectedValue)
@@ -333,35 +361,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             foreach (var kvp in logRecord.Attributes)
             {
                 Assert.NotEqual(key, kvp.Key);
-            }
-        }
-
-        /// <summary>
-        /// Simple in-memory processor that captures log records for test assertions.
-        /// </summary>
-        private class InMemoryLogRecordProcessor : BaseProcessor<LogRecord>
-        {
-            private readonly List<LogRecord> _exportedItems;
-
-            public InMemoryLogRecordProcessor(List<LogRecord> exportedItems)
-            {
-                _exportedItems = exportedItems;
-            }
-
-            public override void OnEnd(LogRecord data)
-            {
-                // Snapshot attributes before the LogRecord may be recycled.
-                var snapshot = new List<KeyValuePair<string, object?>>();
-                if (data.Attributes != null)
-                {
-                    foreach (var kvp in data.Attributes)
-                    {
-                        snapshot.Add(kvp);
-                    }
-                }
-
-                data.Attributes = snapshot;
-                _exportedItems.Add(data);
             }
         }
 

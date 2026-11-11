@@ -8,6 +8,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry;
@@ -19,7 +20,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         private const int Version = 2;
 
-        internal static (List<TelemetryItem> TelemetryItems, TelemetrySchemaTypeCounter TelemetrySchemaTypeCounter) OtelToAzureMonitorMetrics(Batch<Metric> batch, AzureMonitorResource? resource, string instrumentationKey)
+        internal static (List<TelemetryItem> TelemetryItems, TelemetrySchemaTypeCounter TelemetrySchemaTypeCounter) OtelToAzureMonitorMetrics(Batch<Metric> batch, AzureMonitorResource? resource, string instrumentationKey, bool isInternalTelemetry = false)
         {
             List<TelemetryItem> telemetryItems = new();
 
@@ -37,6 +38,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                                 BaseData = new MetricsData(Version, metric, metricPoint)
                             }
                         };
+                        if (isInternalTelemetry)
+                        {
+                            RemoveNetworkStatsContext(telemetryItem, metric);
+                        }
                         telemetryItems.Add(telemetryItem);
                     }
                     catch (Exception ex)
@@ -57,11 +62,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// <remarks>
         /// Routing is per <see cref="MetricPoint"/>, not per <see cref="Metric"/>: one instrument's
         /// points carry different dimension values, so a single instrument can feed several endpoints.
-        /// Internal stats outside the selected meter use the configured default route.
+        /// Internal stats outside the selected meter use the configured default route,
+        /// except Network stats whose destination is resolved from their request host.
         /// </remarks>
         internal static void OtelToAzureMonitorMetricsMultiEndpoint(
             Batch<Metric> batch, AzureMonitorResource? resource, EndpointRouteBatch routeBatch,
-            ConnectionVars? defaultMetricRoute = null, string? routedMeterName = null)
+            ConnectionVars? defaultMetricRoute = null, string? routedMeterName = null,
+            Func<string, ConnectionVars?>? networkStatsDestination = null)
         {
             int collected = 0;
             int rejected = 0;
@@ -72,6 +79,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 // Informational learns what is being dropped and why without the per-point firehose.
                 var instrumentRejection = RoutingRejectionReason.None;
                 var useDefaultRoute = defaultMetricRoute != null && metric.MeterName != routedMeterName;
+                var routeNetworkStats = networkStatsDestination != null && metric.MeterName == StatsbeatConstants.NetworkSdkStatsMeterName;
 
                 foreach (ref readonly var metricPoint in metric.GetMetricPoints())
                 {
@@ -81,7 +89,28 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         string? ingestionEndpoint;
                         string? cloudRole = null;
                         bool isAad = false;
-                        if (useDefaultRoute)
+                        if (routeNetworkStats)
+                        {
+                            string? host = null;
+                            foreach (var tag in metricPoint.Tags)
+                            {
+                                if (tag.Key == "host")
+                                {
+                                    host = tag.Value as string;
+                                    break;
+                                }
+                            }
+
+                            // Overflow points have lost their host, so they cannot be routed safely.
+                            var destination = host == null ? null : networkStatsDestination!(host);
+                            if (destination == null)
+                            {
+                                continue;
+                            }
+                            instrumentationKey = destination.InstrumentationKey;
+                            ingestionEndpoint = destination.IngestionEndpoint;
+                        }
+                        else if (useDefaultRoute)
                         {
                             instrumentationKey = defaultMetricRoute!.InstrumentationKey;
                             ingestionEndpoint = defaultMetricRoute.IngestionEndpoint;
@@ -116,6 +145,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         {
                             telemetryItem.SetCloudRole(cloudRole!);
                         }
+                        else
+                        {
+                            RemoveNetworkStatsContext(telemetryItem, metric);
+                        }
 
                         routeBatch.GetOrAdd(ingestionEndpoint, isAad).Add(telemetryItem);
                         collected++;
@@ -138,6 +171,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             if (collected != 0 || rejected != 0)
             {
                 AzureMonitorExporterEventSource.Log.RoutedExportSummary(routeBatch.Sequence, collected, routeBatch.Count, rejected);
+            }
+        }
+
+        private static void RemoveNetworkStatsContext(TelemetryItem item, Metric metric)
+        {
+            if (metric.MeterName == StatsbeatConstants.NetworkSdkStatsMeterName)
+            {
+                item.Tags.Remove(ContextTagKeys.AiCloudRole.ToString());
+                item.Tags.Remove(ContextTagKeys.AiCloudRoleInstance.ToString());
             }
         }
 

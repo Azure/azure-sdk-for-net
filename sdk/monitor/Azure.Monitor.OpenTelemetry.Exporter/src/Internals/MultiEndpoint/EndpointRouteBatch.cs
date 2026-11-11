@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
@@ -84,7 +85,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
             _count = 0;
         }
 
-        internal sealed class Group
+        internal sealed class Group : INetworkSdkStatsBatch
         {
             private readonly List<TelemetryItem> _telemetryItems = new();
             private readonly Dictionary<string, int> _itemCountsByInstrumentationKey = new(StringComparer.Ordinal);
@@ -118,6 +119,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiEndpoint
             internal IReadOnlyDictionary<string, int> ItemCountsByInstrumentationKey => _itemCountsByInstrumentationKey;
 
             internal Dictionary<string, int>.KeyCollection InstrumentationKeys => _itemCountsByInstrumentationKey.Keys;
+
+            int INetworkSdkStatsBatch.Count => _telemetryItems.Count;
+            IEnumerable<string> INetworkSdkStatsBatch.InstrumentationKeys => InstrumentationKeys;
+            IReadOnlyDictionary<string, int> INetworkSdkStatsBatch.ItemCountsByInstrumentationKey => ItemCountsByInstrumentationKey;
+            string? INetworkSdkStatsBatch.GetInstrumentationKey(int index) => _telemetryItems[index].InstrumentationKey;
 
             internal void Add(TelemetryItem telemetryItem)
             {

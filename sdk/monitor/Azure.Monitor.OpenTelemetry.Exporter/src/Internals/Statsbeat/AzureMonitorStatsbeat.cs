@@ -56,7 +56,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         internal MeterProvider? _statsbeatMeterProvider;
 
-        private volatile bool _isDisposed;
+        private int _isDisposed;
 
         // Monotonic throttle for the Attach observable gauge so it emits at most once per
         // AttachEmissionInterval even though the shared reader collects every 15 min.
@@ -123,11 +123,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 ? GetAttachStatsbeat : _multiEndpointStats.GetMeasurements;
             _attachInstrument = s_attachMeter.CreateObservableGauge(StatsbeatConstants.AttachStatsbeatMetricName, collectAttach);
 
-            if (_collectOtherStats)
+            if (_collectOtherStats || multiEndpointEnabled)
             {
                 try
                 {
-                    NetworkSdkStatsManager = new NetworkSdkStatsManager(connectionStringVars, platform);
+                    NetworkSdkStatsManager = new NetworkSdkStatsManager(connectionStringVars, platform, multiEndpointEnabled);
                 }
                 catch
                 {
@@ -204,13 +204,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             catch (Exception ex)
             {
                 _multiEndpointStats!.Dispose();
+                NetworkSdkStatsManager?.Dispose();
                 AzureMonitorExporterEventSource.Log.StatsbeatFailed(ex);
             }
         }
 
         private void CompleteMultiEndpointInitialization()
         {
-            if (_isDisposed)
+            if (Volatile.Read(ref _isDisposed) != 0)
             {
                 _multiEndpointStats!.Dispose();
                 return;
@@ -227,8 +228,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 catch
                 {
                     _multiEndpointStats.Dispose();
+                    NetworkSdkStatsManager?.Dispose();
                     throw;
                 }
+            }
+            else
+            {
+                NetworkSdkStatsManager?.Dispose();
             }
         }
 
@@ -250,6 +256,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                     case SdkStatsConfigStatus.Disabled:
                         // Explicit remote kill switch. Honor it: do not build the
                         // MeterProvider. FetchAsync already logged the reason.
+                        NetworkSdkStatsManager?.Dispose();
                         return;
                     case SdkStatsConfigStatus.Fallback:
                     default:
@@ -325,12 +332,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             var builder = Sdk.CreateMeterProviderBuilder()
                 .AddMeter(StatsbeatConstants.AttachStatsbeatMeterName);
 
+            if (NetworkSdkStatsManager != null)
+            {
+                builder.AddMeter(StatsbeatConstants.NetworkSdkStatsMeterName);
+            }
+
             if (_collectOtherStats && (_multiEndpointStats == null || _multiEndpointStats.DefaultConnectionString != null))
             {
                 builder.AddMeter(
                     StatsbeatConstants.FeatureStatsbeatMeterName,
                     StatsbeatConstants.DistroFeatureSdkStatsMeterName,
-                    StatsbeatConstants.NetworkSdkStatsMeterName,
                     StatsbeatConstants.DistroNetworkSdkStatsMeterName);
             }
 
@@ -338,6 +349,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 // Another stats owner's reader must not consume this owner's Attach throttle.
                 .AddView(instrument => instrument.Meter.Name != StatsbeatConstants.AttachStatsbeatMeterName
                     ? null : ReferenceEquals(instrument, _attachInstrument) ? attachView : MetricStreamConfiguration.Drop)
+                .AddView(instrument => instrument.Meter.Name != StatsbeatConstants.NetworkSdkStatsMeterName
+                    || NetworkSdkStatsManager?.Owns(instrument) == true ? null : MetricStreamConfiguration.Drop)
                 .AddReader(_multiEndpointStats?.CreateReader(_networkExportIntervalMilliseconds)
                     ?? new PeriodicExportingMetricReader(
                         AzureMonitorMetricExporter.CreateForInternalTelemetry(CreateExporterOptions(connectionString!)),
@@ -348,7 +361,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             // A full fence, so the disposed flag below cannot be read before this is visible.
             Interlocked.Exchange(ref _statsbeatMeterProvider, meterProvider);
 
-            if (!_isDisposed)
+            if (Volatile.Read(ref _isDisposed) == 0)
             {
                 return;
             }
@@ -615,19 +628,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         public void Dispose()
         {
-            _isDisposed = true;
+            if (Interlocked.Exchange(ref _isDisposed, 1) != 0)
+            {
+                return;
+            }
 
             var meterProvider = Interlocked.Exchange(ref _statsbeatMeterProvider, null);
             if (meterProvider == null)
             {
                 _multiEndpointStats?.Dispose();
+                NetworkSdkStatsManager?.Dispose();
                 return;
             }
 
             DisposeInBackground(meterProvider);
         }
 
-        private static void DisposeInBackground(MeterProvider meterProvider)
+        private void DisposeInBackground(MeterProvider meterProvider)
         {
             // Disposing the meter provider exports one last time, which would put an ingestion round
             // trip on the process exit path. Statsbeat is internal telemetry with no offline storage
@@ -641,6 +658,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 catch (Exception)
                 {
                     // The process is going away; there is nothing useful to report.
+                }
+                finally
+                {
+                    NetworkSdkStatsManager?.Dispose();
                 }
             });
         }
