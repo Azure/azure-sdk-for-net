@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Tests
         [TestCase("2025-06-05", true)]
         [TestCase("2026-10-05-preview", false)]
         [TestCase("2026-10-05-preview", true)]
-        public async Task DiagnosticOperationsPreserveGaContract(string apiVersion, bool async)
+        public async Task DiagnosticOperationsPreserveGaWireContract(string apiVersion, bool async)
         {
             ResourceIdentifier id = ComputeRecommenderDiagnosticResource.CreateResourceIdentifier(SubscriptionId, AzureLocation.EastUS);
             var metadataResponse = new MockResponse(200);
