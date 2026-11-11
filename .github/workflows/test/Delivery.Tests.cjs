@@ -30,11 +30,11 @@ test('requires complete paged thread and oversized patch delivery for this invoc
   await assert.rejects(async () => verifyDelivery(s, items, brokenResults, nonce, broken), /delivery/i);
 });
 
-test('empty source still needs an explicit successful page', async () => {
+test('even an empty thread history needs an explicit successful page', async () => {
   const s = snapshot();
-  const item = { id: 'file:0', file: { filename: 'empty.cs', status: 'added' } };
+  const item = { id: 'thread:0', thread: { id: 'empty', comments: [] } };
   const req = requiredInputs(s, item)[0];
-  const record = receipt(s, item, req, 0, 0, 0);
+  const record = receipt(s, item, req, 0, req.content.length, req.content.length);
   const results = [{ id: item.id, status: 'complete', delivery_tokens: [record.token] }];
   await assert.rejects(async () => verifyDelivery(s, [item], results, nonce, []), /delivery/i);
   await assert.doesNotReject(async () => verifyDelivery(s, [item], results, nonce, [record]));
@@ -63,12 +63,12 @@ test('rejects forged, malformed, or incomplete delivery evidence', async () => {
 
 test('receipt identities compare ordinally, not by Unicode normalization', async () => {
   const s = snapshot();
-  const item = { id: 'file:0', file: { filename: 'é.cs', status: 'added' } };
+  const item = { id: 'thread:é', thread: { id: 't', comments: [{ body: 'history' }] } };
   const req = requiredInputs(s, item)[0];
-  const row = receipt(s, item, req, 0, 0, 0);
+  const row = receipt(s, item, req, 0, req.content.length, req.content.length);
   const result = [{ id: item.id, status: 'complete', delivery_tokens: [row.token] }];
   await assert.doesNotReject(async () => verifyDelivery(s, [item], result, nonce, [row]));
-  await assert.rejects(async () => verifyDelivery(s, [item], result, nonce, [{ ...row, key: row.key.replace('é', 'e\u0301') }]), /delivery/i);
+  await assert.rejects(async () => verifyDelivery(s, [item], result, nonce, [{ ...row, item: row.item.replace('é', 'e\u0301') }]), /delivery/i);
 });
 
 test('rejects an expired or invalid delivery deadline', async () => {
@@ -83,12 +83,15 @@ test('unrequired delivery tokens preserve the original permissive string behavio
   await assert.doesNotReject(async () => verifyDelivery(s, [item], [{ id: item.id, status: 'complete', delivery_tokens: ['not a receipt'] }], nonce, []));
 });
 
-test('embedded patches need no receipt; omitted, removed and renamed files require correct source sides', () => {
+test('source reads are model-attested; oversized patches still require delivery', () => {
   const s = snapshot();
   const file = (status, patch, previous_filename) => ({ id: 'file:0', file: { filename: 'new.cs', status, ...(patch === undefined ? {} : { patch }), ...(previous_filename ? { previous_filename } : {}) } });
-  assert.deepEqual(requiredInputs(s, file('modified', 'diff')), []);
-  assert.deepEqual(requiredInputs(s, file('added', undefined)).map(x => x.key), [`source:${s.head_sha}:new.cs`]);
-  assert.deepEqual(requiredInputs(s, file('removed', 'diff')).map(x => x.key), [`source:${s.base_sha}:new.cs`]);
-  assert.deepEqual(requiredInputs(s, file('renamed', 'diff', 'old.cs')).map(x => x.key), [`source:${s.base_sha}:old.cs`, `source:${s.head_sha}:new.cs`]);
-  assert.deepEqual(requiredInputs(s, file('modified', undefined)).map(x => x.key), [`source:${s.base_sha}:new.cs`, `source:${s.head_sha}:new.cs`]);
+  for (const item of [file('modified', 'diff'), file('added'), file('modified'), file('removed', 'diff'), file('renamed', 'diff', 'old.cs')]) {
+    assert.deepEqual(requiredInputs(s, item), []);
+  }
+  for (const item of [file('added', 'x'.repeat(50000)), file('removed', 'x'.repeat(50000)), file('renamed', 'x'.repeat(50000), 'old.cs')]) {
+    assert.deepEqual(requiredInputs(s, item).map(x => x.kind), ['patch']);
+  }
+  assert.throws(() => requiredInputs(s, file('renamed', 'diff')), /source path/i);
+  assert.throws(() => requiredInputs(s, file('unknown')), /unsupported/i);
 });

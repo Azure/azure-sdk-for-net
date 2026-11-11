@@ -20,21 +20,10 @@ function requiredInputs(snapshot, item) {
     if (Buffer.byteLength(file.patch) > MAX_BATCH_BYTES) result.push({ key: `patch:${digest(file.patch)}`, kind: 'patch', content: file.patch });
     // Otherwise the exact patch is embedded in the prompt by the controller.
   }
-  const source = (ref, name) => {
-    if (typeof name !== 'string' || !name) throw new Error('Missing source path for delivery.');
-    result.push({ key: `source:${ref}:${name}`, kind: 'source', ref, path: name });
-  };
-  if (file.status === 'removed') source(snapshot.base_sha, file.filename);
-  else if (file.status === 'renamed') {
-    source(snapshot.base_sha, file.previous_filename);
-    source(snapshot.head_sha, file.filename);
-  } else if (file.patch === undefined) {
-    if (file.status === 'added') source(snapshot.head_sha, file.filename);
-    else if (file.status === 'modified') {
-      source(snapshot.base_sha, file.filename);
-      source(snapshot.head_sha, file.filename);
-    } else throw new Error('Unsupported file status for omitted patch delivery.');
-  }
+  // Source is read through GitHub MCP and is model-attested, not receipted.
+  // Preserve malformed-rename and unsupported-omitted-patch validation.
+  if (file.status === 'renamed' && (typeof file.previous_filename !== 'string' || !file.previous_filename)) throw new Error('Missing source path for delivery.');
+  if (file.patch === undefined && !['added', 'modified', 'removed', 'renamed'].includes(file.status)) throw new Error('Unsupported file status for omitted patch delivery.');
   return result;
 }
 

@@ -297,6 +297,26 @@ test('empty review persists a complete progress ledger', async () => {
   assert.deepEqual(persisted, ledger);
 });
 
+test('workers use captured repository identities and GitHub MCP for source reads', () => {
+  const s = snapshot(1);
+  s.base_repo = 'Azure/azure-sdk-for-net';
+  s.head_repo = 'fork/azure-sdk-for-net';
+  s.files[0] = { filename: 'new.cs', previous_filename: 'old.cs', status: 'renamed' };
+  const prompt = workerPrompt('Trusted rules.', s, makeWorklist(s), 'a'.repeat(32));
+  assert.match(prompt, /get_file_contents/);
+  assert.match(prompt, /head_repo/);
+  assert.match(prompt, /base_repo/);
+  assert.ok(prompt.includes(s.head_repo) && prompt.includes(s.base_repo));
+  assert.match(prompt, /head for additions, base for removals, and both base and head for modifications and renames/);
+  assert.match(prompt, /previous_filename at base for renames/);
+  assert.match(prompt, /base repository may be tried only at that same head SHA/);
+  assert.match(prompt, /inaccessible resource link/);
+  assert.match(prompt, /blocked/i);
+  assert.match(prompt, /Source reads are model-attested/);
+  assert.match(prompt, /read-review-input/);
+  assert.doesNotMatch(prompt, /read-review-source/);
+});
+
 test('large shared histories and a large patch are not inlined into each bounded prompt', () => {
   const s = snapshot(1); s.threads[0].comments[0].body = 'history'.repeat(200000);
   s.reviews = [{ body: 'prior review'.repeat(200000) }]; s.files[0].patch = 'large patch'.repeat(200000);

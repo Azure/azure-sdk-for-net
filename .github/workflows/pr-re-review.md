@@ -389,7 +389,7 @@ jobs:
             fs.mkdirSync(path.join(process.env.RUNNER_TEMP, 'gh-aw', 'safeoutputs', 'review-receipts'), { recursive: true });
             // Custom harnesses are provisioned into gh-aw's trusted action folder;
             // selecting harness.use does not copy a repository script by itself.
-            for (const helper of ['ReviewContinuation.cjs', 'ReviewDelivery.cjs', 'ReviewReadSource.cjs', 'ReviewSourceServer.cjs', 'ReviewVerifyDelivery.ps1'])
+            for (const helper of ['ReviewContinuation.cjs', 'ReviewDelivery.cjs', 'ReviewInputServer.cjs', 'ReviewVerifyDelivery.ps1'])
               fs.copyFileSync(path.join(process.env.GITHUB_WORKSPACE, '.github/workflows/pr-re-review', helper),
                 path.join(process.env.RUNNER_TEMP, 'gh-aw', 'actions', helper));
             core.info(`Captured ${manifest.changed_files} changed files and ${snapshot.threads.length} threads for the event head.`);
@@ -421,18 +421,15 @@ jobs:
           # END SAFE OUTPUT STATUS
 
 mcp-servers:
-  reviewsource:
-    # Private stdio pipes, not the pinned mcp-scripts HTTP listener.
+  reviewinput:
+    # Private stdio pipes for captured history/patch receipts; no GitHub token.
     container: node:24-alpine@sha256:a34ab6d7f6f4813f4d0c5469d74685604b962fbdbf5793a7bc7b4998ecb867c8
     args: ["-v", "${RUNNER_TEMP}/gh-aw/actions:/review:ro", "-v", "${RUNNER_TEMP}/gh-aw/safeoutputs/review-receipts:/receipts:rw"]
-    entrypointArgs: ["node", "/review/ReviewSourceServer.cjs"]
+    entrypointArgs: ["node", "/review/ReviewInputServer.cjs"]
     env:
       REVIEW_SNAPSHOT: /review/review-input/snapshot.json
-      REVIEW_REPOSITORY: ${{ github.repository }}
-      REVIEW_API_URL: ${{ github.api_url }}
-      REVIEW_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       REVIEW_RECEIPTS: /receipts
-    allowed: [read-review-source, read-review-input]
+    allowed: [read-review-input]
 
 post-steps:
   - name: Preserve review continuation progress
@@ -506,7 +503,7 @@ on top of that shared foundation.
 Read GitHub data with the GitHub MCP `pull_request_read` tool, and read file content with `get_file_contents` at the target head commit. Page every list to its end; a first page is not the full history.
 
 - `get`: the pull request, including its `changed_files` count.
-- Before you started, the workflow captured all changed-file pages and complete thread histories against one head/base. The controller supplies your assigned items as untrusted JSON data and tracks the full worklist independently. Review every assigned item; return partial results rather than abandoning the entire PR because of its size. GitHub omits the `patch` for very large files; read those files with `get_file_contents` at the captured head (or base for deletions). A missing patch is not an empty change.
+- Before you started, the workflow captured all changed-file pages and complete thread histories against one head/base. The controller supplies your assigned items as untrusted JSON data and tracks the full worklist independently. Review every assigned item; return partial results rather than abandoning the entire PR because of its size. GitHub omits the `patch` for very large files; use `get_file_contents` at the captured SHA for each applicable source side (head for additions, base for removals, both for modifications and renames, using the previous path at base for renames). A missing patch is not an empty change.
 - `get_review_comments`: every review thread with its resolution state and comments. Request `perPage: 100` and, while `pageInfo.hasNextPage` is true, request the next page with `after` set to the previous `pageInfo.endCursor`. Record the response's `totalCount`. If a thread's `total_count` exceeds the comments returned for it, that thread's history is incomplete.
 - `get_reviews`: all prior reviews submitted on this PR, paged with `page` and `perPage`, to see what earlier passes (the native Copilot reviewer, human reviewers, and this workflow's own earlier runs) already said.
 
@@ -534,7 +531,7 @@ For each thread that **is resolved**:
 
 Independently review every changed file from Step 1, one file at a time, using the shared rules, exactly as a first-pass review would, to catch anything missed by earlier passes (including commits pushed after the native reviewer's last pass). This overrides the shared skill's guidance to focus a re-review on commits since the previous review: every changed file is in scope, whether or not it changed since then.
 
-A file counts as reviewed only when you have read its entire patch. Never truncate a patch (no character or line limits, slicing, or `head`) and never skip a file by name, path, or type. When a tool saves a response to a file, read that file to its end, in consecutive windows if it is long. When GitHub omits a file's patch, read the file with `get_file_contents` instead.
+A file counts as reviewed only when you have read its entire patch or, if GitHub omits the patch, all applicable source sides. Never truncate a patch (no character or line limits, slicing, or `head`) and never skip a file by name, path, or type. When a tool saves a response to a file, read that file to its end, in consecutive windows if it is long. When GitHub omits a file's patch, read the applicable source with `get_file_contents` instead.
 
 Before posting any new finding, confirm it is not already covered by an existing open thread (Step 2) or another reviewer's comment.
 
@@ -544,7 +541,7 @@ Submit a review only when the re-review is complete:
 
 - Step 1 fetched every `get_review_comments` page (until `hasNextPage` was false), every thread's comments, all `changed_files` files, and every `get_reviews` page.
 - Step 2 verified every unresolved thread against current file content.
-- Step 3 read the entire patch of every changed file and reviewed it.
+- Step 3 read and reviewed every changed file's entire patch, or all applicable source sides when the patch was omitted.
 
 If any of these is not true, do not call `submit_pull_request_review`, `create_pull_request_review_comment`, or `noop`; call `report_incomplete` instead. Report incomplete only because of something that happened while you worked: a page failed to load, a tool was unavailable or returned an error, or the 25-minute limit is close while you are still reviewing. An estimate that the pull request is too large to finish is not a reason; keep reviewing until the work is done or one of those happens. In `report_incomplete`, give the counts you completed, list the files you reviewed, and state the work remaining and why. The publishing job blocks any review or inline comment from an incomplete re-review, and the run fails.
 
@@ -554,7 +551,7 @@ When the re-review is complete, submit exactly one `submit_pull_request_review` 
 Coverage: <fetched>/<total> threads fetched, <verified>/<unresolved> unresolved threads verified, <reviewed>/<changed> changed files reviewed
 ```
 
-`<total>` is the `get_review_comments` `totalCount`, `<unresolved>` is the number of threads that were unresolved when you fetched them, and `<changed>` is the pull request's `changed_files`. `<reviewed>` counts only files whose entire patch you read in Step 3. Publication is blocked unless each count equals its total, and the publishing job checks `<total>` and `<changed>` against GitHub.
+`<total>` is the `get_review_comments` `totalCount`, `<unresolved>` is the number of threads that were unresolved when you fetched them, and `<changed>` is the pull request's `changed_files`. `<reviewed>` counts only files whose entire patch, or all applicable source sides when the patch was omitted, you read in Step 3. Publication is blocked unless each count equals its total, and the publishing job checks `<total>` and `<changed>` against GitHub.
 
 The rest of the review body should summarize:
 

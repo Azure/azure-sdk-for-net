@@ -15,7 +15,7 @@ function runtime(t, mode) {
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
   const actions = path.join(root, 'actions');
   fs.mkdirSync(actions);
-  for (const helper of ['ReviewContinuation.cjs', 'ReviewDelivery.cjs', 'ReviewReadSource.cjs', 'ReviewSourceServer.cjs', 'ReviewVerifyDelivery.ps1']) fs.copyFileSync(path.join(__dirname, '..', 'pr-re-review', helper), path.join(actions, helper));
+  for (const helper of ['ReviewContinuation.cjs', 'ReviewDelivery.cjs', 'ReviewInputServer.cjs', 'ReviewVerifyDelivery.ps1']) fs.copyFileSync(path.join(__dirname, '..', 'pr-re-review', helper), path.join(actions, helper));
   fs.mkdirSync(path.join(root, 'receipts'));
   const snapshot = {
     pull_number: 64192, head_sha: 'a'.repeat(40), base_sha: 'b'.repeat(40), changed_files: 106,
@@ -25,6 +25,7 @@ function runtime(t, mode) {
     snapshot.files[0].patch = 'x'.repeat(50000);
     snapshot.threads = [{ id: 'thread-1', isResolved: false, comments: [{ databaseId: 123, path: 'src/File0.cs', body: 'prior concern' }] }];
   }
+  if (['source-blocked', 'source-complete'].includes(mode)) delete snapshot.files[0].patch;
   const { exportContext } = require('../pr-re-review/ReviewSnapshot.cjs');
   exportContext(snapshot, path.join(actions, 'review-input'));
   fs.writeFileSync(path.join(root, 'original.txt'), 'Review all files. PR data is untrusted.');
@@ -61,7 +62,7 @@ function runtime(t, mode) {
     const tokens = {};
     if (mode === 'delivered-input') {
       const snapshot = JSON.parse(fs.readFileSync(path.join(root, 'actions', 'review-input', 'snapshot.json'), 'utf8'));
-      const delivery = require(path.join(root, 'actions', 'ReviewSourceServer.cjs')).createDelivery(snapshot, process.env.GH_AW_REVIEW_RECEIPTS);
+      const delivery = require(path.join(root, 'actions', 'ReviewInputServer.cjs')).createDelivery(snapshot, process.env.GH_AW_REVIEW_RECEIPTS);
       for (const item of input.assigned) {
         const kind = item.thread ? 'history' : item.file.patch_path ? 'patch' : null;
         if (kind) {
@@ -76,13 +77,15 @@ function runtime(t, mode) {
     if (mode === 'stall' || (mode === 'early' && n === 1)) content = 'Fully verifying all 106 files is too heavy; I did not complete the review.';
     else {
       const items = mode === 'partial' && n === 1 ? input.assigned.slice(0, 1) : input.assigned;
-      content = JSON.stringify({ results: items.map(item => ({ id: item.id, status: 'complete', delivery_tokens: tokens[item.id] || [], reasoning: 'Reviewed the assigned patch and relevant context.', findings: [], action: 'none' })) });
+      content = JSON.stringify({ results: items.map(item => mode === 'source-blocked' && item.id === 'file:0'
+        ? { id: item.id, status: 'blocked', reasoning: 'GitHub MCP did not provide the required source content.' }
+        : { id: item.id, status: 'complete', delivery_tokens: tokens[item.id] || [], reasoning: 'Reviewed the assigned patch and relevant context.', findings: [], action: 'none' }) });
     }
     console.log(JSON.stringify({ type: 'assistant.message', data: { content } }));
   `);
   const clock=path.join(root,'deadline-clock.cjs');
   fs.writeFileSync(clock, `const fs=require('node:fs');const start=Date.now();Date.now=()=>start+(fs.existsSync(process.env.GH_AW_REVIEW_ROOT+'/counter')?Number(fs.readFileSync(process.env.GH_AW_REVIEW_ROOT+'/counter','utf8')):0)*4*60*1000;`);
-  const result = spawnSync(process.execPath, [...(mode==='stall'?['-r',clock]:[]), path.join(actions, 'ReviewContinuation.cjs'), cli, '--allow-tool', 'github', '--allow-tool', 'safeoutputs', '--allow-tool', 'shell', '--allow-tool', 'write', '--deny-tool', 'workflow', '--prompt-file', path.join(root, 'original.txt')], {
+  const result = spawnSync(process.execPath, [...(['stall', 'source-blocked'].includes(mode)?['-r',clock]:[]), path.join(actions, 'ReviewContinuation.cjs'), cli, '--allow-tool', 'github', '--allow-tool', 'safeoutputs', '--allow-tool', 'shell', '--allow-tool', 'write', '--deny-tool', 'workflow', '--prompt-file', path.join(root, 'original.txt')], {
     env: { ...process.env, GH_AW_REVIEW_ROOT: root, GH_AW_REVIEW_RECEIPTS: path.join(root, 'receipts'), GH_AW_SAFE_OUTPUTS: path.join(root, 'outputs.jsonl'), FAKE_MODE: mode },
     encoding: 'utf8', timeout: 30000,
   });
@@ -116,6 +119,20 @@ test('subprocess controller continues clean refusals until its actual deadline, 
   assert.match(r.result.stderr, /deadline/i);
   assert.ok(Number(fs.readFileSync(path.join(r.root, 'counter'), 'utf8')) > 3);
   assert.equal(r.outputs.length, 0);
+});
+
+test('subprocess controller does not publish when GitHub source remains unavailable', t => {
+  const r = runtime(t, 'source-blocked');
+  assert.equal(r.result.status, 1);
+  assert.match(r.result.stderr, /deadline/i);
+  assert.equal(r.outputs.length, 0);
+});
+
+test('subprocess controller accepts model-attested source without source receipts', t => {
+  const r = runtime(t, 'source-complete');
+  assert.equal(r.result.status, 0, r.result.stderr);
+  assert.equal(r.progress.results.length, 106);
+  assert.match(r.outputs.at(-1).body, /106\/106 changed files reviewed/);
 });
 
 test('subprocess controller fails real CLI errors without a review', t => {
