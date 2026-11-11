@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -281,11 +280,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(FoundryAutoUpgrade))
-            {
-                writer.WritePropertyName("foundryAutoUpgrade"u8);
-                writer.WriteObjectValue(FoundryAutoUpgrade, options);
-            }
             if (Optional.IsDefined(AllowProjectManagement))
             {
                 writer.WritePropertyName("allowProjectManagement"u8);
@@ -311,46 +305,21 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CapabilitySettings))
+            if (Optional.IsCollectionDefined(TrustedCertificateSources))
             {
-                writer.WritePropertyName("capabilitySettings"u8);
-                writer.WriteObjectValue(CapabilitySettings, options);
-            }
-            if (Optional.IsCollectionDefined(AgentHostingConfigurations))
-            {
-                writer.WritePropertyName("agentHostingConfigurations"u8);
-                writer.WriteStartArray();
-                foreach (AgentHostingConfiguration item in AgentHostingConfigurations)
+                if (TrustedCertificateSources != null)
                 {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(CostControlIds))
-            {
-                writer.WritePropertyName("costControlIds"u8);
-                writer.WriteStartArray();
-                foreach (ResourceIdentifier item in CostControlIds)
-                {
-                    if (item == null)
+                    writer.WritePropertyName("trustedCertificateSources"u8);
+                    writer.WriteStartArray();
+                    foreach (TrustedCertificateSource item in TrustedCertificateSources)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WriteObjectValue(item, options);
                     }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(CostControlConnections, _costControlConnectionsIsDefined))
-            {
-                if (CostControlConnections != null)
-                {
-                    writer.WritePropertyName("costControlConnections"u8);
-                    writer.WriteObjectValue(CostControlConnections, options);
+                    writer.WriteEndArray();
                 }
                 else
                 {
-                    writer.WriteNull("costControlConnections"u8);
+                    writer.WriteNull("trustedCertificateSources"u8);
                 }
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -427,15 +396,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             AbusePenalty abusePenalty = default;
             RaiMonitorConfig raiMonitorConfig = default;
             IList<AIFoundryNetworkInjection> aiFoundryNetworkInjections = default;
-            FoundryAutoUpgrade foundryAutoUpgrade = default;
             bool? allowProjectManagement = default;
             string defaultProject = default;
             IList<string> associatedProjects = default;
-            CognitiveServicesAgentCapabilitySettings capabilitySettings = default;
-            IList<AgentHostingConfiguration> agentHostingConfigurations = default;
-            IList<ResourceIdentifier> costControlIds = default;
-            bool costControlConnectionsIsDefined = false;
-            CostControlConnections costControlConnections = default;
+            IList<TrustedCertificateSource> trustedCertificateSources = new ChangeTrackingList<TrustedCertificateSource>();
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -760,15 +724,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     aiFoundryNetworkInjections = array;
                     continue;
                 }
-                if (prop.NameEquals("foundryAutoUpgrade"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    foundryAutoUpgrade = FoundryAutoUpgrade.DeserializeFoundryAutoUpgrade(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("allowProjectManagement"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -804,59 +759,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     associatedProjects = array;
                     continue;
                 }
-                if (prop.NameEquals("capabilitySettings"u8))
+                if (prop.NameEquals("trustedCertificateSources"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        trustedCertificateSources = null;
                         continue;
                     }
-                    capabilitySettings = CognitiveServicesAgentCapabilitySettings.DeserializeCognitiveServicesAgentCapabilitySettings(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("agentHostingConfigurations"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<AgentHostingConfiguration> array = new List<AgentHostingConfiguration>();
+                    List<TrustedCertificateSource> array = new List<TrustedCertificateSource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AgentHostingConfiguration.DeserializeAgentHostingConfiguration(item, options));
+                        array.Add(TrustedCertificateSource.DeserializeTrustedCertificateSource(item, options));
                     }
-                    agentHostingConfigurations = array;
-                    continue;
-                }
-                if (prop.NameEquals("costControlIds"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(new ResourceIdentifier(item.GetString()));
-                        }
-                    }
-                    costControlIds = array;
-                    continue;
-                }
-                if (prop.NameEquals("costControlConnections"u8))
-                {
-                    costControlConnectionsIsDefined = true;
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        costControlConnections = null;
-                        continue;
-                    }
-                    costControlConnections = CostControlConnections.DeserializeCostControlConnections(prop.Value, options);
+                    trustedCertificateSources = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -897,18 +812,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 abusePenalty,
                 raiMonitorConfig,
                 aiFoundryNetworkInjections ?? new ChangeTrackingList<AIFoundryNetworkInjection>(),
-                foundryAutoUpgrade,
                 allowProjectManagement,
                 defaultProject,
                 associatedProjects ?? new ChangeTrackingList<string>(),
-                capabilitySettings,
-                agentHostingConfigurations ?? new ChangeTrackingList<AgentHostingConfiguration>(),
-                costControlIds ?? new ChangeTrackingList<ResourceIdentifier>(),
-                costControlConnections,
-                additionalBinaryDataProperties)
-            {
-                _costControlConnectionsIsDefined = costControlConnectionsIsDefined
-            };
+                trustedCertificateSources,
+                additionalBinaryDataProperties);
         }
     }
 }
