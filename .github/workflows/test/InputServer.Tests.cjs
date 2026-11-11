@@ -51,6 +51,38 @@ test('trusted reader records only delivered history and patch pages for the exac
   await assert.doesNotReject(async () => verifyDelivery(snapshot, items, results, nonce, rows));
 });
 
+test('patch pages preserve UTF-16 boundaries inside a surrogate pair', async t => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'review-unicode-'));
+  t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
+  const patch = 'x'.repeat(3999) + '😀' + 'y'.repeat(46000);
+  const snapshot = { head_sha: 'a'.repeat(40), base_sha: 'b'.repeat(40), files: [{ filename: 'f.cs', status: 'modified', patch }], threads: [] };
+  const nonce = 'a'.repeat(32), item = { id: 'file:0', file: snapshot.files[0] };
+  const delivery = createDelivery(snapshot, dir), tokens = [], pages = [];
+  let offset = 0;
+  do {
+    const response = await handle({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name: 'read-review-input', arguments: { item: item.id, nonce, kind: 'patch', offset } } }, delivery);
+    const page = JSON.parse(response.content[0].text);
+    pages.push(page.content); tokens.push(page.delivery_token); offset = page.next_offset;
+  } while (offset !== null);
+  assert.equal(pages[0].charCodeAt(3999), 0xd83d);
+  assert.equal(pages[1].charCodeAt(0), 0xde00);
+  assert.equal(pages.join(''), patch);
+  const rows = fs.readFileSync(path.join(dir, nonce + '.jsonl'), 'utf8').trim().split('\n').map(JSON.parse);
+  await assert.doesNotReject(async () => verifyDelivery(snapshot, [item], [{ id: item.id, status: 'complete', delivery_tokens: tokens }], nonce, rows));
+});
+
+test('patch pages preserve isolated UTF-16 surrogates in captured input', async t => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'review-unicode-'));
+  t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
+  const patch = 'x'.repeat(3999) + '\ud83d' + 'y'.repeat(46000);
+  const snapshot = { head_sha: 'a'.repeat(40), base_sha: 'b'.repeat(40), files: [{ filename: 'f.cs', status: 'modified', patch }], threads: [] };
+  const delivery = createDelivery(snapshot, dir), nonce = 'b'.repeat(32);
+  const response = await handle({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name: 'read-review-input', arguments: { item: 'file:0', nonce, kind: 'patch', offset: 0 } } }, delivery);
+  const page = JSON.parse(response.content[0].text);
+  assert.equal(page.content.charCodeAt(3999), 0xd83d);
+  assert.equal(page.content, patch.slice(0, 4000));
+});
+
 test('a generated page cannot count when its response was dropped', async t => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'review-dropped-'));
   t.after(() => fs.rmSync(dir, { recursive: true, force: true }));

@@ -397,9 +397,21 @@ Describe 'Compiled re-review publication guard' {
         $publish | Should -BeGreaterThan $guard
     }
 
+    It 'installs reply receipt handling after validation and before safe outputs' {
+        $guard = [array]::IndexOf($script:StepNames, 'Require complete re-review coverage before publishing')
+        $install = [array]::IndexOf($script:StepNames, 'Install applied reply receipt adapter')
+        $publish = [array]::IndexOf($script:StepNames, 'Process Safe Outputs')
+        $install | Should -BeGreaterThan $guard
+        $publish | Should -BeGreaterThan $install
+        $step = Get-Step 'Install applied reply receipt adapter'
+        Get-StepProperty $step 'shell' | Should -BeExactly 'pwsh'
+        Get-StepProperty $step 'run' | Should -Match 'Install-ReviewReceipts\.ps1'
+    }
+
     It '<Name> has no condition or continue-on-error that could bypass a failed guard' -ForEach @(
         @{ Name = 'Checkout trusted re-review publication guard' }
         @{ Name = 'Require complete re-review coverage before publishing' }
+        @{ Name = 'Install applied reply receipt adapter' }
         @{ Name = 'Process Safe Outputs' }
     ) {
         $step = Get-Step $Name

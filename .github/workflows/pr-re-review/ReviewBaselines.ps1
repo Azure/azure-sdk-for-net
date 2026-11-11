@@ -1,8 +1,9 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
-# Compare captured central ApiCompat baseline XML. Input and output are JSON on
-# standard streams; never execute PR content or resolve XML entities.
+# Compare captured central ApiCompat XML as a multiset and report each added
+# suppression with nearby comment context. JSON travels over standard streams;
+# never execute PR content or resolve XML entities.
 $ErrorActionPreference = 'Stop'
 [Console]::InputEncoding = [System.Text.UTF8Encoding]::new($false)
 [Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)

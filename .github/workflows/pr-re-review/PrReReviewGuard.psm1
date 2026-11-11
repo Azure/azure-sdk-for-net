@@ -3,6 +3,7 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
+# Validate review coverage and live GitHub totals before any buffered publication.
 $ErrorActionPreference = 'Stop'
 
 # pr-re-review.md asks the agent for this line verbatim; PrReReviewGuard.Tests.ps1 keeps the two in sync.

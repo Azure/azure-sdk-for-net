@@ -317,6 +317,28 @@ test('workers use captured repository identities and GitHub MCP for source reads
   assert.doesNotMatch(prompt, /read-review-source/);
 });
 
+test('workers reuse captured review context without mandatory per-batch refetch', () => {
+  const fs = require('node:fs'); const path = require('node:path');
+  const workflow = fs.readFileSync(path.join(__dirname, '..', 'pr-re-review.md'), 'utf8');
+  const step = workflow.split('## Step 1 - Gather review history\n')[1].split('## Step 2 - Verify every existing thread')[0];
+  assert.match(step, /captured context index/i);
+  assert.match(step, /captured prior reviews/i);
+  assert.match(step, /read-review-input/i);
+  assert.match(step, /all captured thread histories before proposing a new finding/i);
+  assert.match(step, /author.*timestamps.*is_outdated/i);
+  assert.match(step, /publishedAt/);
+  assert.match(step, /submittedAt/);
+  assert.match(step, /later public timestamp/i);
+  assert.match(step, /substantive edits.*updatedAt/i);
+  assert.match(step, /get_review_comments/);
+  assert.match(step, /`after`/);
+  assert.doesNotMatch(step, /^- `get_review_comments`: every review thread/m);
+  assert.doesNotMatch(step, /^- `get_reviews`: all prior reviews/m);
+  const step4 = workflow.split('## Step 4 - Confirm coverage, then submit one review')[1];
+  assert.match(step4, /captured thread count/i);
+  assert.doesNotMatch(step4, /`<total>` is the `get_review_comments`/);
+});
+
 test('large shared histories and a large patch are not inlined into each bounded prompt', () => {
   const s = snapshot(1); s.threads[0].comments[0].body = 'history'.repeat(200000);
   s.reviews = [{ body: 'prior review'.repeat(200000) }]; s.files[0].patch = 'large patch'.repeat(200000);

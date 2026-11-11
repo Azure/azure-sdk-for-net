@@ -1,7 +1,8 @@
 'use strict';
 
-// The controller owns assignments and accepted results. The model cannot make
-// the queue smaller by estimating that the PR is too large or changing totals.
+// gh-aw harness adapter and controller: assign review batches, continue unfinished
+// work, supervise workers and gate publication on a complete validated ledger.
+// A model's size estimate cannot shrink the worklist or change coverage totals.
 const fs = require('node:fs');
 const path = require('node:path');
 const { spawn } = require('node:child_process');

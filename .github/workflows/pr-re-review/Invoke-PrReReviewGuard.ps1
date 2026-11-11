@@ -3,6 +3,7 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
+# Trusted publication entry point: validate agent output against current PR totals.
 [CmdletBinding()]
 param()
 

@@ -5,7 +5,7 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const { spawn } = require('node:child_process');
-const { once } = require('node:events');
+const { once, EventEmitter } = require('node:events');
 
 const actions = process.env.GH_AW_TEST_ACTIONS_DIR;
 assert.ok(actions, 'Pinned process runner required.');
@@ -23,16 +23,44 @@ function alive(pid) {
 }
 function kill(pid) { if (pid) { try { process.kill(-pid, 'SIGKILL'); } catch { /* already stopped */ } } }
 async function waitForFile(filename, child) {
-  if (fs.existsSync(filename)) return;
+  const ready = () => {
+    try {
+      const value = fs.readFileSync(filename, 'utf8');
+      return /^[1-9][0-9]*$/.test(value) && Number.isSafeInteger(Number(value));
+    } catch (error) {
+      if (error.code === 'ENOENT') return false;
+      throw error;
+    }
+  };
+  if (ready()) return;
   await new Promise((resolve, reject) => {
-    const watcher = fs.watch(path.dirname(filename), () => { if (fs.existsSync(filename)) finish(); });
+    let finished = false;
+    const watcher = fs.watch(path.dirname(filename), () => { try { if (ready()) finish(); } catch (error) { finish(error); } });
     const timer = setTimeout(() => finish(new Error('CLI did not become ready')), 10000);
     const onExit = () => finish(new Error('Controller exited before CLI startup'));
-    function finish(error) { watcher.close(); clearTimeout(timer); child.removeListener('exit', onExit); error ? reject(error) : resolve(); }
+    function finish(error) {
+      if (finished) return;
+      finished = true; watcher.close(); clearTimeout(timer); child.removeListener('exit', onExit);
+      error ? reject(error) : resolve();
+    }
     child.once('exit', onExit);
-    if (fs.existsSync(filename)) finish();
+    try { if (ready()) finish(); } catch (error) { finish(error); }
   });
 }
+
+test('does not treat an empty PID file as a ready CLI', { skip: process.platform === 'win32', timeout: 10000 }, async t => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'review-ready-'));
+  const pidFile = path.join(root, 'pid');
+  const child = new EventEmitter();
+  t.after(() => { child.emit('exit'); fs.rmSync(root, { recursive: true, force: true }); });
+  fs.writeFileSync(pidFile, '');
+  let settled = false;
+  const ready = waitForFile(pidFile, child).then(() => { settled = true; });
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(settled, false, 'An empty PID file must not signal readiness');
+  fs.writeFileSync(pidFile, String(process.pid));
+  await ready;
+});
 
 test('escalates to SIGKILL after bounded grace when the owned harness ignores TERM', { skip: process.platform === 'win32', timeout: 20000 }, async t => {
   const root=fs.mkdtempSync(path.join(os.tmpdir(),'review-escalation-'));
@@ -54,7 +82,7 @@ for (const mode of ['deadline', 'SIGTERM', 'SIGINT']) {
       fs.rmSync(root, { recursive: true, force: true });
     });
     const cli = path.join(root, 'fake-cli.cjs');
-    fs.writeFileSync(cli, `const fs=require('node:fs');fs.writeFileSync(${JSON.stringify(path.join(root, 'cli.pid'))},String(process.pid));process.on('SIGTERM',()=>{fs.writeFileSync(${JSON.stringify(path.join(root, 'term.receipt'))},'SIGTERM');process.exit(0)});setInterval(()=>{},1000);`);
+    fs.writeFileSync(cli, `const fs=require('node:fs');const pidFile=${JSON.stringify(path.join(root, 'cli.pid'))};process.on('SIGTERM',()=>{fs.writeFileSync(${JSON.stringify(path.join(root, 'term.receipt'))},'SIGTERM');process.exit(0)});fs.writeFileSync(pidFile+'.tmp',String(process.pid));fs.renameSync(pidFile+'.tmp',pidFile);setInterval(()=>{},1000);`);
     const harness = path.join(root, 'harness.cjs');
     fs.writeFileSync(harness, `const fs=require('node:fs');fs.writeFileSync(${JSON.stringify(path.join(root, 'harness.pid'))},String(process.pid));const {runProcess}=require(${JSON.stringify(path.join(actions, 'process_runner.cjs'))});runProcess({command:process.execPath,args:[${JSON.stringify(cli)}],attempt:0,log:()=>{}}).then(result=>{process.exitCode=result.exitCode;});`);
     const entry = path.join(root, 'controller.cjs');

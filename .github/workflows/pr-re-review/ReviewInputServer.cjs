@@ -1,5 +1,6 @@
 'use strict';
-// Private stdio transport only: the MCP gateway owns the process pipes.
+// Serve captured history and oversized-patch pages over private MCP stdio and
+// record nonce-bound delivery receipts. This backend has no GitHub token or listener.
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');

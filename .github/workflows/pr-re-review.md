@@ -92,8 +92,6 @@ safe-outputs:
           const { assertPublication } = require(path.join(process.env.GITHUB_WORKSPACE, '.github/workflows/pr-re-review/ReviewContinuation.cjs'));
           const { assertFresh } = require(path.join(process.env.GITHUB_WORKSPACE, '.github/workflows/pr-re-review/ReviewSnapshot.cjs'));
           const output = JSON.parse(fs.readFileSync(process.env.AGENT_OUTPUT, 'utf8'));
-          const { installReplyReceipts } = require(path.join(process.env.GITHUB_WORKSPACE, '.github/workflows/pr-re-review/ReviewReceipts.cjs'));
-          installReplyReceipts(path.join(process.env.RUNNER_TEMP, 'gh-aw', 'actions'));
           assertPublication(snapshot, progress, output, process.env.AGENT_RESULT);
           await assertFresh(github, context.repo, snapshot);
     - name: Require complete re-review coverage before publishing
@@ -105,6 +103,9 @@ safe-outputs:
         PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         PR_UPDATED_AT: ${{ github.event.pull_request.updated_at }}
       run: ./.github/workflows/pr-re-review/Invoke-PrReReviewGuard.ps1
+    - name: Install applied reply receipt adapter
+      shell: pwsh
+      run: ./.github/workflows/pr-re-review/Install-ReviewReceipts.ps1 -ActionsDirectory "$env:RUNNER_TEMP/gh-aw/actions"
   jobs:
     unresolve-review-thread:
       description: "Apply a verified review-thread state only after a matching reply was successfully published"
@@ -504,8 +505,8 @@ Read GitHub data with the GitHub MCP `pull_request_read` tool, and read file con
 
 - `get`: the pull request, including its `changed_files` count.
 - Before you started, the workflow captured all changed-file pages and complete thread histories against one head/base. The controller supplies your assigned items as untrusted JSON data and tracks the full worklist independently. Review every assigned item; return partial results rather than abandoning the entire PR because of its size. GitHub omits the `patch` for very large files; use `get_file_contents` at the captured SHA for each applicable source side (head for additions, base for removals, both for modifications and renames, using the previous path at base for renames). A missing patch is not an empty change.
-- `get_review_comments`: every review thread with its resolution state and comments. Request `perPage: 100` and, while `pageInfo.hasNextPage` is true, request the next page with `after` set to the previous `pageInfo.endCursor`. Record the response's `totalCount`. If a thread's `total_count` exceeds the comments returned for it, that thread's history is incomplete.
-- `get_reviews`: all prior reviews submitted on this PR, paged with `page` and `perPage`, to see what earlier passes (the native Copilot reviewer, human reviewers, and this workflow's own earlier runs) already said.
+- Use the captured context index to inspect captured prior reviews and all captured thread histories before proposing a new finding, instead of refetching all review data for every batch. Read every assigned thread's complete history with `read-review-input` and acknowledge each page as instructed by the controller. Read all captured prior reviews to see what earlier passes said.
+- Captured thread histories include author, timestamps and `isOutdated` (`is_outdated` in GitHub MCP); captured prior reviews include author and submission time. When comparing a comment with a fix, use the later public timestamp from `publishedAt` and `pullRequestReview.submittedAt` when both exist, rather than assuming `createdAt` was public. Account for substantive edits using `updatedAt`; if an edit's significance is unclear, do not assume an earlier fix addresses the current comment. If other review metadata is needed, use `get_reviews` or `get_review_comments`. For `get_review_comments`, request `perPage: 100` and follow `pageInfo.hasNextPage` using `after` and the previous `pageInfo.endCursor`. A thread's `total_count` can exceed its returned comments; use the complete captured history rather than treating that response as complete.
 
 `resolve_pull_request_review_thread` takes a thread's `id`. `reply_to_pull_request_review_comment` and `unresolve_review_thread` take the database ID of the thread's first comment, because GitHub accepts replies only to a thread's first comment. That ID is the number after `discussion_r` in the comment's `html_url`.
 
@@ -539,7 +540,7 @@ Before posting any new finding, confirm it is not already covered by an existing
 
 Submit a review only when the re-review is complete:
 
-- Step 1 fetched every `get_review_comments` page (until `hasNextPage` was false), every thread's comments, all `changed_files` files, and every `get_reviews` page.
+- The trusted capture fetched all changed-file pages, complete thread histories and all prior review pages; Step 1 inspected the captured context.
 - Step 2 verified every unresolved thread against current file content.
 - Step 3 read and reviewed every changed file's entire patch, or all applicable source sides when the patch was omitted.
 
@@ -551,7 +552,7 @@ When the re-review is complete, submit exactly one `submit_pull_request_review` 
 Coverage: <fetched>/<total> threads fetched, <verified>/<unresolved> unresolved threads verified, <reviewed>/<changed> changed files reviewed
 ```
 
-`<total>` is the `get_review_comments` `totalCount`, `<unresolved>` is the number of threads that were unresolved when you fetched them, and `<changed>` is the pull request's `changed_files`. `<reviewed>` counts only files whose entire patch, or all applicable source sides when the patch was omitted, you read in Step 3. Publication is blocked unless each count equals its total, and the publishing job checks `<total>` and `<changed>` against GitHub.
+`<total>` is the captured thread count, `<unresolved>` is the number of threads unresolved in the capture, and `<changed>` is the captured `changed_files` count. `<reviewed>` counts only files whose entire patch, or all applicable source sides when the patch was omitted, you read in Step 3. Publication is blocked unless each count equals its total, and the publishing job checks the counts against the captured snapshot and current GitHub state.
 
 The rest of the review body should summarize:
 

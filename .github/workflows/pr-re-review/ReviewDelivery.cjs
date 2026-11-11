@@ -1,7 +1,8 @@
 'use strict';
 
-// The MCP backend records delivered pages in a directory mounted read-only in
-// the worker sandbox. A fresh nonce makes receipts specific to one invocation.
+// Define required history/patch inputs using the reader's JavaScript encoding,
+// then invoke the PowerShell receipt verifier with bounded process supervision.
+// The receipt directory is read-only to workers; each invocation has a fresh nonce.
 const crypto = require('node:crypto');
 const MAX_BATCH_BYTES = 48000;
 const digest = value => crypto.createHash('sha256').update(value).digest('hex');

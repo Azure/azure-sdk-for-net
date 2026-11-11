@@ -1,7 +1,7 @@
 'use strict';
 
-// Called by the trusted capture step, not by a review worker. Compare full
-// immutable blobs: GitHub's PR patch can be absent or truncated.
+// Trusted GitHub adapter: fetch and verify immutable ApiCompat baseline blobs,
+// then invoke the PowerShell comparator. GitHub's PR patch may be absent or truncated.
 const crypto = require('node:crypto');
 const path = require('node:path');
 const { spawnSync } = require('node:child_process');
