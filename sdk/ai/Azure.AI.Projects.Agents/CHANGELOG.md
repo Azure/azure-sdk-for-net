@@ -1,8 +1,6 @@
 # Release History
 
-## 3.0.0-beta.7 (Unreleased)
-
-### Features Added
+## 3.0.0 (20926-11-11)
 
 ### Breaking Changes
 - `AzureFunctionDefinitionFunction` was removed, please use the same class from `Azure.AI.Extensions.OpenAI`.
@@ -12,8 +10,6 @@
 
 ### Bugs Fixed
 - Fixed the cancellation of `ToolboxRecord` update.
-
-### Other Changes
 
 ## 3.0.0-beta.6 (2026-10-30)
 

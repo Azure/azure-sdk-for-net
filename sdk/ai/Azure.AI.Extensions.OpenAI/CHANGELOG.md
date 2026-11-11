@@ -1,8 +1,6 @@
 # Release History
 
-## 3.0.0-beta.7 (Unreleased)
-
-### Features Added
+## 3.0.0 (2026-11-11)
 
 ### Breaking Changes
 - Removed the synchronous `ProjectResponsesClient.CreateResponseStreaming` overloads. Use `CreateResponseStreamingAsync` and asynchronous enumeration.
@@ -12,8 +10,6 @@
   before enumerating updates.
 - The `ProjectConversationsClient` constructor now accepts `ConversationClientOptions` instead of `OpenAIClientOptions`.
 - `ProjectResponsesClient.GetResponseStreamingAsync` now yields strongly typed response items.
-
-### Bugs Fixed
 
 ### Other Changes
 - Updated the `OpenAI` package dependency to `2.15.0`. See the [OpenAI 2.15.0 release notes](https://github.com/openai/openai-dotnet/blob/OpenAI_2.15.0/CHANGELOG.md#2150-2026-11-04) for the upstream breaking changes to experimental APIs, including the async-only streaming methods that `ProjectResponsesClient` inherits.
