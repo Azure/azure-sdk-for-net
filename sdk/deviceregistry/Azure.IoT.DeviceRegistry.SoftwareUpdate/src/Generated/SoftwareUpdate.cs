@@ -174,7 +174,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="importUpdateRequest"/> is null. </exception>
-        public virtual Operation ImportUpdate(WaitUntil waitUntil, ImportUpdateRequest importUpdateRequest, CancellationToken cancellationToken = default)
+        public virtual Operation ImportUpdate(WaitUntil waitUntil, ImportUpdateContent importUpdateRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(importUpdateRequest, nameof(importUpdateRequest));
 
@@ -193,7 +193,7 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="importUpdateRequest"/> is null. </exception>
-        public virtual async Task<Operation> ImportUpdateAsync(WaitUntil waitUntil, ImportUpdateRequest importUpdateRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> ImportUpdateAsync(WaitUntil waitUntil, ImportUpdateContent importUpdateRequest, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(importUpdateRequest, nameof(importUpdateRequest));
 

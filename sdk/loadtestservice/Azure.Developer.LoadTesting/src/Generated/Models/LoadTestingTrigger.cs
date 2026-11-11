@@ -20,11 +20,9 @@ namespace Azure.Developer.LoadTesting
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LoadTestingTrigger"/>. </summary>
-        /// <param name="displayName"> The name of the trigger. </param>
         /// <param name="kind"> The type of the trigger. </param>
-        private protected LoadTestingTrigger(string displayName, TriggerType kind)
+        private protected LoadTestingTrigger(TriggerType kind)
         {
-            DisplayName = displayName;
             Kind = kind;
         }
 

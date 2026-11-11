@@ -15,11 +15,6 @@ namespace Azure.Analytics.OnlineExperimentation
     /// <summary> An event property value aggregated by a metric. </summary>
     public partial class AggregatedValue : IJsonModel<AggregatedValue>
     {
-        /// <summary> Initializes a new instance of <see cref="AggregatedValue"/> for deserialization. </summary>
-        internal AggregatedValue()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual AggregatedValue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

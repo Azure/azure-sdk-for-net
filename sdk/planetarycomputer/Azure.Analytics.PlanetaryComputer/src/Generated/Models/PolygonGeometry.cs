@@ -15,13 +15,9 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class PolygonGeometry : GeoJsonGeometry
     {
         /// <summary> Initializes a new instance of <see cref="PolygonGeometry"/>. </summary>
-        /// <param name="coordinates"> The coordinates of the polygon. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public PolygonGeometry(IEnumerable<IList<IList<float>>> coordinates) : base(GeometryKind.Polygon)
+        public PolygonGeometry() : base(GeometryKind.Polygon)
         {
-            Argument.AssertNotNull(coordinates, nameof(coordinates));
-
-            Coordinates = coordinates.ToList();
+            Coordinates = new ChangeTrackingList<IList<IList<float>>>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PolygonGeometry"/>. </summary>
@@ -32,6 +28,16 @@ namespace Azure.Analytics.PlanetaryComputer
         internal PolygonGeometry(GeometryKind @type, IList<float> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<IList<IList<float>>> coordinates) : base(@type, boundingBox, additionalBinaryDataProperties)
         {
             Coordinates = coordinates;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PolygonGeometry"/>. </summary>
+        /// <param name="coordinates"> The coordinates of the polygon. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
+        public PolygonGeometry(IEnumerable<IList<IList<float>>> coordinates) : this()
+        {
+            Argument.AssertNotNull(coordinates, nameof(coordinates));
+
+            Coordinates = coordinates.ToList();
         }
 
         /// <summary> The coordinates of the polygon. </summary>

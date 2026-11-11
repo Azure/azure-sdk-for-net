@@ -116,7 +116,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(model, nameof(model));
 
-            CreateAgentRequest spreadModel = new CreateAgentRequest(
+            CreateAgentContent spreadModel = new CreateAgentContent(
                 model,
                 name,
                 description,
@@ -161,7 +161,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(model, nameof(model));
 
-            CreateAgentRequest spreadModel = new CreateAgentRequest(
+            CreateAgentContent spreadModel = new CreateAgentContent(
                 model,
                 name,
                 description,
@@ -235,7 +235,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
-            UpdateAgentRequest spreadModel = new UpdateAgentRequest(
+            UpdateAgentContent spreadModel = new UpdateAgentContent(
                 model,
                 name,
                 description,
@@ -281,7 +281,7 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
 
-            UpdateAgentRequest spreadModel = new UpdateAgentRequest(
+            UpdateAgentContent spreadModel = new UpdateAgentContent(
                 model,
                 name,
                 description,
@@ -413,7 +413,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<ThreadRun> CreateThreadAndRun(string assistantId, PersistentAgentThreadCreationOptions thread = default, string overrideModelName = default, string overrideInstructions = default, IEnumerable<ToolDefinition> overrideTools = default, ToolResources toolResources = default, bool? stream = default, float? temperature = default, float? topP = default, int? maxPromptTokens = default, int? maxCompletionTokens = default, Truncation truncationStrategy = default, BinaryData toolChoice = default, BinaryData responseFormat = default, bool? parallelToolCalls = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            CreateThreadAndRunRequest spreadModel = new CreateThreadAndRunRequest(
+            CreateThreadAndRunContent spreadModel = new CreateThreadAndRunContent(
                 assistantId,
                 thread,
                 overrideModelName,
@@ -475,7 +475,7 @@ namespace Azure.AI.Agents.Persistent
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<ThreadRun>> CreateThreadAndRunAsync(string assistantId, PersistentAgentThreadCreationOptions thread = default, string overrideModelName = default, string overrideInstructions = default, IEnumerable<ToolDefinition> overrideTools = default, ToolResources toolResources = default, bool? stream = default, float? temperature = default, float? topP = default, int? maxPromptTokens = default, int? maxCompletionTokens = default, Truncation truncationStrategy = default, BinaryData toolChoice = default, BinaryData responseFormat = default, bool? parallelToolCalls = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            CreateThreadAndRunRequest spreadModel = new CreateThreadAndRunRequest(
+            CreateThreadAndRunContent spreadModel = new CreateThreadAndRunContent(
                 assistantId,
                 thread,
                 overrideModelName,

@@ -182,7 +182,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
                 return null;
             }
 
-            CreateMessageRequest createMessageRequest = DeserializeCreateMessageRequest(content);
+            CreateMessageContent createMessageRequest = DeserializeCreateMessageRequest(content);
             string evnt;
             if (s_traceContent)
             {
@@ -412,64 +412,64 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             return scope;
         }
 
-        private static CreateAgentRequest DeserializeCreateAgentRequest(RequestContent content)
+        private static CreateAgentContent DeserializeCreateAgentRequest(RequestContent content)
         {
             // Convert RequestContent to a JSON string
             using var stream = new MemoryStream();
             content.WriteTo(stream, CancellationToken.None);
             stream.Position = 0;
 
-            // Parse the JSON into a CreateAgentRequest object
+            // Parse the JSON into a CreateAgentContent object
             using var document = JsonDocument.Parse(stream);
-            return CreateAgentRequest.DeserializeCreateAgentRequest(document.RootElement, new System.ClientModel.Primitives.ModelReaderWriterOptions("W"));
+            return CreateAgentContent.DeserializeCreateAgentContent(document.RootElement, new System.ClientModel.Primitives.ModelReaderWriterOptions("W"));
         }
 
-        private static CreateMessageRequest DeserializeCreateMessageRequest(RequestContent content)
+        private static CreateMessageContent DeserializeCreateMessageRequest(RequestContent content)
         {
             // Convert RequestContent to a JSON string
             using var stream = new MemoryStream();
             content.WriteTo(stream, CancellationToken.None);
             stream.Position = 0;
 
-            // Parse the JSON into a CreateMessageRequest object
+            // Parse the JSON into a CreateMessageContent object
             using var document = JsonDocument.Parse(stream);
-            return CreateMessageRequest.DeserializeCreateMessageRequest(document.RootElement, new System.ClientModel.Primitives.ModelReaderWriterOptions("W"));
+            return CreateMessageContent.DeserializeCreateMessageContent(document.RootElement, new System.ClientModel.Primitives.ModelReaderWriterOptions("W"));
         }
 
-        private static CreateRunRequest DeserializeCreateRunRequest(RequestContent content)
+        private static CreateRunContent DeserializeCreateRunRequest(RequestContent content)
         {
             // Convert RequestContent to a JSON string
             using var stream = new MemoryStream();
             content.WriteTo(stream, CancellationToken.None);
             stream.Position = 0;
 
-            // Parse the JSON into a CreateMessageRequest object
+            // Parse the JSON into a CreateMessageContent object
             using var document = JsonDocument.Parse(stream);
-            return CreateRunRequest.DeserializeCreateRunRequest(document.RootElement, new System.ClientModel.Primitives.ModelReaderWriterOptions("W"));
+            return CreateRunContent.DeserializeCreateRunContent(document.RootElement, new System.ClientModel.Primitives.ModelReaderWriterOptions("W"));
         }
 
-        private static CreateThreadAndRunRequest DeserializeCreateThreadAndRunRequest(RequestContent content)
+        private static CreateThreadAndRunContent DeserializeCreateThreadAndRunRequest(RequestContent content)
         {
             // Convert RequestContent to a JSON string
             using var stream = new MemoryStream();
             content.WriteTo(stream, CancellationToken.None);
             stream.Position = 0;
 
-            // Parse the JSON into a CreateMessageRequest object
+            // Parse the JSON into a CreateMessageContent object
             using var document = JsonDocument.Parse(stream);
-            return CreateThreadAndRunRequest.DeserializeCreateThreadAndRunRequest(document.RootElement, new System.ClientModel.Primitives.ModelReaderWriterOptions("W"));
+            return CreateThreadAndRunContent.DeserializeCreateThreadAndRunContent(document.RootElement, new System.ClientModel.Primitives.ModelReaderWriterOptions("W"));
         }
 
-        private static SubmitToolOutputsToRunRequest DeserializeSubmitToolOutputsToRunRequest(RequestContent content)
+        private static SubmitToolOutputsToRunContent DeserializeSubmitToolOutputsToRunRequest(RequestContent content)
         {
             // Convert RequestContent to a JSON string
             using var stream = new MemoryStream();
             content.WriteTo(stream, CancellationToken.None);
             stream.Position = 0;
 
-            // Parse the JSON into a CreateMessageRequest object
+            // Parse the JSON into a CreateMessageContent object
             using var document = JsonDocument.Parse(stream);
-            return SubmitToolOutputsToRunRequest.DeserializeSubmitToolOutputsToRunRequest(document.RootElement, new System.ClientModel.Primitives.ModelReaderWriterOptions("W"));
+            return SubmitToolOutputsToRunContent.DeserializeSubmitToolOutputsToRunContent(document.RootElement, new System.ClientModel.Primitives.ModelReaderWriterOptions("W"));
         }
 
         private OpenTelemetryScope(string activityName, Uri endpoint, string operationName = null)

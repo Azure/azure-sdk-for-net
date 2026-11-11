@@ -9,8 +9,10 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="eventName"> Name of the event to observe. </param>
         /// <param name="rateCondition"> The event contributes to the rate numerator if it satisfies this condition. </param>
         public EventRateMetricDefinition(string eventName, string rateCondition)
-            : this(new ObservedEvent(eventName), rateCondition)
+            : this()
         {
+            Event = new ObservedEvent { EventName = eventName };
+            RateCondition = rateCondition;
         }
     }
 }

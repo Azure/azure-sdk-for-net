@@ -16,11 +16,6 @@ namespace Azure.Template
     /// <summary> A widget. </summary>
     public partial class WidgetSuite : IJsonModel<WidgetSuite>
     {
-        /// <summary> Initializes a new instance of <see cref="WidgetSuite"/> for deserialization. </summary>
-        internal WidgetSuite()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual WidgetSuite PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
