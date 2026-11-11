@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="complianceDetails"> The compliance details for the given dimension. </param>
         /// <param name="evaluatedOn"> The snapshot timestamp stored for this resource and dimension, in RFC3339 format. </param>
         /// <param name="sources"> Distinct evaluation sources for this resource and dimension in the same snapshot. An empty array means that the state has no underlying evaluation. </param>
-        internal SovereignViewDimensionDetail(SovereignViewComplianceDimension dimension, PolicyComplianceState state, IEnumerable<SovereignViewComplianceDetail> complianceDetails, DateTimeOffset evaluatedOn, IEnumerable<SovereignViewResourceEvaluationSource> sources)
+        internal SovereignViewDimensionDetail(SovereignViewComplianceDimension dimension, SovereignViewPolicyComplianceState state, IEnumerable<SovereignViewComplianceDetail> complianceDetails, DateTimeOffset evaluatedOn, IEnumerable<SovereignViewResourceEvaluationSource> sources)
         {
             Dimension = dimension;
             State = state;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="evaluatedOn"> The snapshot timestamp stored for this resource and dimension, in RFC3339 format. </param>
         /// <param name="sources"> Distinct evaluation sources for this resource and dimension in the same snapshot. An empty array means that the state has no underlying evaluation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewDimensionDetail(SovereignViewComplianceDimension dimension, PolicyComplianceState state, IList<SovereignViewComplianceDetail> complianceDetails, DateTimeOffset evaluatedOn, IList<SovereignViewResourceEvaluationSource> sources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewDimensionDetail(SovereignViewComplianceDimension dimension, SovereignViewPolicyComplianceState state, IList<SovereignViewComplianceDetail> complianceDetails, DateTimeOffset evaluatedOn, IList<SovereignViewResourceEvaluationSource> sources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Dimension = dimension;
             State = state;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         public SovereignViewComplianceDimension Dimension { get; }
 
         /// <summary> The compliance state of the resource for the dimension. </summary>
-        public PolicyComplianceState State { get; }
+        public SovereignViewPolicyComplianceState State { get; }
 
         /// <summary> The compliance details for the given dimension. </summary>
         public IList<SovereignViewComplianceDetail> ComplianceDetails { get; }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sovereign.Models
 
         /// <summary> Initializes a new instance of <see cref="SovereignViewReportStatus"/>. </summary>
         /// <param name="state"> The current compliance report generation state. </param>
-        internal SovereignViewReportStatus(ReportState state)
+        internal SovereignViewReportStatus(SovereignViewReportState state)
         {
             State = state;
         }
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="state"> The current compliance report generation state. </param>
         /// <param name="nextAttemptOn"> The next scheduled evaluation time, in RFC3339 format. May not be available for all report states. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewReportStatus(ReportState state, DateTimeOffset? nextAttemptOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewReportStatus(SovereignViewReportState state, DateTimeOffset? nextAttemptOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             NextAttemptOn = nextAttemptOn;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         }
 
         /// <summary> The current compliance report generation state. </summary>
-        public ReportState State { get; }
+        public SovereignViewReportState State { get; }
 
         /// <summary> The next scheduled evaluation time, in RFC3339 format. May not be available for all report states. </summary>
         public DateTimeOffset? NextAttemptOn { get; }

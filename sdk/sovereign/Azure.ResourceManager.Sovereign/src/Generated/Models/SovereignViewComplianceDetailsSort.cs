@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Sovereign.Models
 
             Field = @field;
             Direction = direction;
-            SortingOrder = new ChangeTrackingList<PolicyComplianceState>();
+            SortingOrder = new ChangeTrackingList<SovereignViewPolicyComplianceState>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SovereignViewComplianceDetailsSort"/>. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="direction"> The direction to sort in. </param>
         /// <param name="sortingOrder"> Explicit ordering of policy compliance states to apply when sorting on a compliance-state field. The states are ranked in the order listed. When provided for a compliance-state field, this takes precedence over `direction`, which is ignored for that field. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewComplianceDetailsSort(string @field, SovereignViewComplianceDetailsSortDirection direction, IList<PolicyComplianceState> sortingOrder, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewComplianceDetailsSort(string @field, SovereignViewComplianceDetailsSortDirection direction, IList<SovereignViewPolicyComplianceState> sortingOrder, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Field = @field;
             Direction = direction;
@@ -50,6 +50,6 @@ namespace Azure.ResourceManager.Sovereign.Models
         public SovereignViewComplianceDetailsSortDirection Direction { get; }
 
         /// <summary> Explicit ordering of policy compliance states to apply when sorting on a compliance-state field. The states are ranked in the order listed. When provided for a compliance-state field, this takes precedence over `direction`, which is ignored for that field. </summary>
-        public IList<PolicyComplianceState> SortingOrder { get; }
+        public IList<SovereignViewPolicyComplianceState> SortingOrder { get; }
     }
 }

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Sovereign.Models
             {
                 writer.WritePropertyName("sortingOrder"u8);
                 writer.WriteStartArray();
-                foreach (PolicyComplianceState item in SortingOrder)
+                foreach (SovereignViewPolicyComplianceState item in SortingOrder)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Sovereign.Models
             }
             string @field = default;
             SovereignViewComplianceDetailsSortDirection direction = default;
-            IList<PolicyComplianceState> sortingOrder = default;
+            IList<SovereignViewPolicyComplianceState> sortingOrder = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -157,10 +157,10 @@ namespace Azure.ResourceManager.Sovereign.Models
                     {
                         continue;
                     }
-                    List<PolicyComplianceState> array = new List<PolicyComplianceState>();
+                    List<SovereignViewPolicyComplianceState> array = new List<SovereignViewPolicyComplianceState>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new PolicyComplianceState(item.GetString()));
+                        array.Add(new SovereignViewPolicyComplianceState(item.GetString()));
                     }
                     sortingOrder = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SovereignViewComplianceDetailsSort(@field, direction, sortingOrder ?? new ChangeTrackingList<PolicyComplianceState>(), additionalBinaryDataProperties);
+            return new SovereignViewComplianceDetailsSort(@field, direction, sortingOrder ?? new ChangeTrackingList<SovereignViewPolicyComplianceState>(), additionalBinaryDataProperties);
         }
     }
 }

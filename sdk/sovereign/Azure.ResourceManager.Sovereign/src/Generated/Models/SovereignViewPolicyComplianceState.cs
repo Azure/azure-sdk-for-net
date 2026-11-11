@@ -12,7 +12,7 @@ using Azure.ResourceManager.Sovereign;
 namespace Azure.ResourceManager.Sovereign.Models
 {
     /// <summary> Supported compliance states for the policy initiatives. </summary>
-    public readonly partial struct PolicyComplianceState : IEquatable<PolicyComplianceState>
+    public readonly partial struct SovereignViewPolicyComplianceState : IEquatable<SovereignViewPolicyComplianceState>
     {
         private readonly string _value;
         /// <summary> The resource is compliant with respect to the given policy. </summary>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <summary> The resource is in a compliance state other than Compliant, NonCompliant, Conflict, NotApplicable, or NotEvaluated. </summary>
         private const string OthersValue = "Others";
 
-        /// <summary> Initializes a new instance of <see cref="PolicyComplianceState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SovereignViewPolicyComplianceState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PolicyComplianceState(string value)
+        public SovereignViewPolicyComplianceState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -41,50 +41,50 @@ namespace Azure.ResourceManager.Sovereign.Models
         }
 
         /// <summary> The resource is compliant with respect to the given policy. </summary>
-        public static PolicyComplianceState Compliant { get; } = new PolicyComplianceState(CompliantValue);
+        public static SovereignViewPolicyComplianceState Compliant { get; } = new SovereignViewPolicyComplianceState(CompliantValue);
 
         /// <summary> The resource is not compliant with respect to the given policy. </summary>
-        public static PolicyComplianceState NonCompliant { get; } = new PolicyComplianceState(NonCompliantValue);
+        public static SovereignViewPolicyComplianceState NonCompliant { get; } = new SovereignViewPolicyComplianceState(NonCompliantValue);
 
         /// <summary> The resource is in a conflict with respect to the given policy. </summary>
-        public static PolicyComplianceState Conflict { get; } = new PolicyComplianceState(ConflictValue);
+        public static SovereignViewPolicyComplianceState Conflict { get; } = new SovereignViewPolicyComplianceState(ConflictValue);
 
         /// <summary> The resource is in a state that is not applicable to the given policy. </summary>
-        public static PolicyComplianceState NotApplicable { get; } = new PolicyComplianceState(NotApplicableValue);
+        public static SovereignViewPolicyComplianceState NotApplicable { get; } = new SovereignViewPolicyComplianceState(NotApplicableValue);
 
         /// <summary> The resource has not been evaluated for compliance with respect to the given policy. </summary>
-        public static PolicyComplianceState NotEvaluated { get; } = new PolicyComplianceState(NotEvaluatedValue);
+        public static SovereignViewPolicyComplianceState NotEvaluated { get; } = new SovereignViewPolicyComplianceState(NotEvaluatedValue);
 
         /// <summary> The resource is non-compliant for Business Continuity, but a validated actionable escape path is available. </summary>
-        public static PolicyComplianceState Constrained { get; } = new PolicyComplianceState(ConstrainedValue);
+        public static SovereignViewPolicyComplianceState Constrained { get; } = new SovereignViewPolicyComplianceState(ConstrainedValue);
 
         /// <summary> The resource is in a compliance state other than Compliant, NonCompliant, Conflict, NotApplicable, or NotEvaluated. </summary>
-        public static PolicyComplianceState Others { get; } = new PolicyComplianceState(OthersValue);
+        public static SovereignViewPolicyComplianceState Others { get; } = new SovereignViewPolicyComplianceState(OthersValue);
 
-        /// <summary> Determines if two <see cref="PolicyComplianceState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SovereignViewPolicyComplianceState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(PolicyComplianceState left, PolicyComplianceState right) => left.Equals(right);
+        public static bool operator ==(SovereignViewPolicyComplianceState left, SovereignViewPolicyComplianceState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="PolicyComplianceState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SovereignViewPolicyComplianceState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(PolicyComplianceState left, PolicyComplianceState right) => !left.Equals(right);
+        public static bool operator !=(SovereignViewPolicyComplianceState left, SovereignViewPolicyComplianceState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="PolicyComplianceState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SovereignViewPolicyComplianceState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyComplianceState(string value) => new PolicyComplianceState(value);
+        public static implicit operator SovereignViewPolicyComplianceState(string value) => new SovereignViewPolicyComplianceState(value);
 
-        /// <summary> Converts a string to a <see cref="PolicyComplianceState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SovereignViewPolicyComplianceState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator PolicyComplianceState?(string value) => value == null ? null : new PolicyComplianceState(value);
+        public static implicit operator SovereignViewPolicyComplianceState?(string value) => value == null ? null : new SovereignViewPolicyComplianceState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is PolicyComplianceState other && Equals(other);
+        public override bool Equals(object obj) => obj is SovereignViewPolicyComplianceState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(PolicyComplianceState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SovereignViewPolicyComplianceState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

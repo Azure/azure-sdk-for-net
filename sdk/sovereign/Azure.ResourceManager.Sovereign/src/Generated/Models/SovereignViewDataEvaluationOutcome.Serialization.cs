@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 return null;
             }
             ResourceIdentifier resourceId = default;
-            PolicyComplianceState state = default;
+            SovereignViewPolicyComplianceState state = default;
             string actualValue = default;
             string expectedValue = default;
             string reason = default;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 }
                 if (prop.NameEquals("state"u8))
                 {
-                    state = new PolicyComplianceState(prop.Value.GetString());
+                    state = new SovereignViewPolicyComplianceState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("actualValue"u8))

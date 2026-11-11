@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Sovereign.Models
             }
             ResourceIdentifier resourceId = default;
             string parentResourceId = default;
-            string location = default;
+            AzureLocation location = default;
             IList<SovereignViewDimensionDetail> dimensionDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    location = prop.Value.GetString();
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dimensionDetails"u8))

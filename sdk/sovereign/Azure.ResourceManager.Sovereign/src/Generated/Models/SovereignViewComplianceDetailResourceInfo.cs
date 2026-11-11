@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="resourceId"> The resource identifier. </param>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="dimensionDetails"> The compliance details for the resource across the dimensions. </param>
-        internal SovereignViewComplianceDetailResourceInfo(ResourceIdentifier resourceId, string location, IEnumerable<SovereignViewDimensionDetail> dimensionDetails)
+        internal SovereignViewComplianceDetailResourceInfo(ResourceIdentifier resourceId, AzureLocation location, IEnumerable<SovereignViewDimensionDetail> dimensionDetails)
         {
             ResourceId = resourceId;
             Location = location;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="location"> The location of the resource. </param>
         /// <param name="dimensionDetails"> The compliance details for the resource across the dimensions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewComplianceDetailResourceInfo(ResourceIdentifier resourceId, string parentResourceId, string location, IList<SovereignViewDimensionDetail> dimensionDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewComplianceDetailResourceInfo(ResourceIdentifier resourceId, string parentResourceId, AzureLocation location, IList<SovereignViewDimensionDetail> dimensionDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             ParentResourceId = parentResourceId;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         public string ParentResourceId { get; }
 
         /// <summary> The location of the resource. </summary>
-        public string Location { get; }
+        public AzureLocation Location { get; }
 
         /// <summary> The compliance details for the resource across the dimensions. </summary>
         public IList<SovereignViewDimensionDetail> DimensionDetails { get; }

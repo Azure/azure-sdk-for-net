@@ -128,14 +128,14 @@ namespace Azure.ResourceManager.Sovereign.Models
             {
                 return null;
             }
-            ReportState state = default;
+            SovereignViewReportState state = default;
             DateTimeOffset? nextAttemptOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("state"u8))
                 {
-                    state = new ReportState(prop.Value.GetString());
+                    state = new SovereignViewReportState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("nextAttempt"u8))

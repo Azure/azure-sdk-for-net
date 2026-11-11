@@ -12,7 +12,7 @@ using Azure.ResourceManager.Sovereign;
 namespace Azure.ResourceManager.Sovereign.Models
 {
     /// <summary> The compliance report generation state. </summary>
-    public readonly partial struct ReportState : IEquatable<ReportState>
+    public readonly partial struct SovereignViewReportState : IEquatable<SovereignViewReportState>
     {
         private readonly string _value;
         /// <summary> The compliance report is being generated for the first time. </summary>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <summary> The compliance report generation is blocked. </summary>
         private const string BlockedValue = "Blocked";
 
-        /// <summary> Initializes a new instance of <see cref="ReportState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SovereignViewReportState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ReportState(string value)
+        public SovereignViewReportState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -41,50 +41,50 @@ namespace Azure.ResourceManager.Sovereign.Models
         }
 
         /// <summary> The compliance report is being generated for the first time. </summary>
-        public static ReportState Generating { get; } = new ReportState(GeneratingValue);
+        public static SovereignViewReportState Generating { get; } = new SovereignViewReportState(GeneratingValue);
 
         /// <summary> No compliance data is available yet. </summary>
-        public static ReportState NoDataYet { get; } = new ReportState(NoDataYetValue);
+        public static SovereignViewReportState NoDataYet { get; } = new SovereignViewReportState(NoDataYetValue);
 
         /// <summary> The compliance report is up to date. </summary>
-        public static ReportState UpToDate { get; } = new ReportState(UpToDateValue);
+        public static SovereignViewReportState UpToDate { get; } = new SovereignViewReportState(UpToDateValue);
 
         /// <summary> The compliance report generation is being retried. </summary>
-        public static ReportState Retrying { get; } = new ReportState(RetryingValue);
+        public static SovereignViewReportState Retrying { get; } = new SovereignViewReportState(RetryingValue);
 
         /// <summary> The compliance report is being refreshed. </summary>
-        public static ReportState Refreshing { get; } = new ReportState(RefreshingValue);
+        public static SovereignViewReportState Refreshing { get; } = new SovereignViewReportState(RefreshingValue);
 
         /// <summary> The compliance report is stale and pending refresh. </summary>
-        public static ReportState Stale { get; } = new ReportState(StaleValue);
+        public static SovereignViewReportState Stale { get; } = new SovereignViewReportState(StaleValue);
 
         /// <summary> The compliance report generation is blocked. </summary>
-        public static ReportState Blocked { get; } = new ReportState(BlockedValue);
+        public static SovereignViewReportState Blocked { get; } = new SovereignViewReportState(BlockedValue);
 
-        /// <summary> Determines if two <see cref="ReportState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SovereignViewReportState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(ReportState left, ReportState right) => left.Equals(right);
+        public static bool operator ==(SovereignViewReportState left, SovereignViewReportState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="ReportState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SovereignViewReportState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(ReportState left, ReportState right) => !left.Equals(right);
+        public static bool operator !=(SovereignViewReportState left, SovereignViewReportState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="ReportState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SovereignViewReportState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReportState(string value) => new ReportState(value);
+        public static implicit operator SovereignViewReportState(string value) => new SovereignViewReportState(value);
 
-        /// <summary> Converts a string to a <see cref="ReportState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SovereignViewReportState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator ReportState?(string value) => value == null ? null : new ReportState(value);
+        public static implicit operator SovereignViewReportState?(string value) => value == null ? null : new SovereignViewReportState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is ReportState other && Equals(other);
+        public override bool Equals(object obj) => obj is SovereignViewReportState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(ReportState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SovereignViewReportState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

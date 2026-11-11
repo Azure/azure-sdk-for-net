@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Sovereign.Models
             ResourceIdentifier resourceId = default;
             SovereignViewComplianceDimension dimension = default;
             DateTimeOffset evaluatedOn = default;
-            PolicyComplianceState state = default;
+            SovereignViewPolicyComplianceState state = default;
             IList<SovereignViewDataEvaluation> evaluations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 }
                 if (prop.NameEquals("state"u8))
                 {
-                    state = new PolicyComplianceState(prop.Value.GetString());
+                    state = new SovereignViewPolicyComplianceState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("evaluations"u8))

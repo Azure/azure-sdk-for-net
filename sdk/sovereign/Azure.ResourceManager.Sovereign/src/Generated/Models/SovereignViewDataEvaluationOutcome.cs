@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sovereign.Models
 
         /// <summary> Initializes a new instance of <see cref="SovereignViewDataEvaluationOutcome"/>. </summary>
         /// <param name="state"> The compliance state of the outcome. </param>
-        internal SovereignViewDataEvaluationOutcome(PolicyComplianceState state)
+        internal SovereignViewDataEvaluationOutcome(SovereignViewPolicyComplianceState state)
         {
             State = state;
         }
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         /// <param name="additionalInfo"> Additional remediation or explanatory information, in the service default language. Clients that need localized text should resolve additionalInfoCodeId instead. </param>
         /// <param name="additionalInfoCodeId"> The stable, language-neutral code that identifies the additional information. Clients use this code to look up the localized additional information string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SovereignViewDataEvaluationOutcome(ResourceIdentifier resourceId, PolicyComplianceState state, string actualValue, string expectedValue, string reason, string reasonCodeId, string additionalInfo, string additionalInfoCodeId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SovereignViewDataEvaluationOutcome(ResourceIdentifier resourceId, SovereignViewPolicyComplianceState state, string actualValue, string expectedValue, string reason, string reasonCodeId, string additionalInfo, string additionalInfoCodeId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             State = state;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sovereign.Models
         public ResourceIdentifier ResourceId { get; }
 
         /// <summary> The compliance state of the outcome. </summary>
-        public PolicyComplianceState State { get; }
+        public SovereignViewPolicyComplianceState State { get; }
 
         /// <summary> The actual value observed by the evaluation. </summary>
         public string ActualValue { get; }

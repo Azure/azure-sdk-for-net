@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Sovereign.Models
             writer.WriteStringValue(Dimension.ToString());
             writer.WritePropertyName("states"u8);
             writer.WriteStartArray();
-            foreach (PolicyComplianceState item in States)
+            foreach (SovereignViewPolicyComplianceState item in States)
             {
                 writer.WriteStringValue(item.ToString());
             }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                 return null;
             }
             SovereignViewComplianceDimension dimension = default;
-            IList<PolicyComplianceState> states = default;
+            IList<SovereignViewPolicyComplianceState> states = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.Sovereign.Models
                 }
                 if (prop.NameEquals("states"u8))
                 {
-                    List<PolicyComplianceState> array = new List<PolicyComplianceState>();
+                    List<SovereignViewPolicyComplianceState> array = new List<SovereignViewPolicyComplianceState>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new PolicyComplianceState(item.GetString()));
+                        array.Add(new SovereignViewPolicyComplianceState(item.GetString()));
                     }
                     states = array;
                     continue;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Sovereign.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SovereignViewComplianceDetailsDimensionFilter(dimension, states ?? new ChangeTrackingList<PolicyComplianceState>(), additionalBinaryDataProperties);
+            return new SovereignViewComplianceDetailsDimensionFilter(dimension, states ?? new ChangeTrackingList<SovereignViewPolicyComplianceState>(), additionalBinaryDataProperties);
         }
     }
 }
