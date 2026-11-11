@@ -71,7 +71,7 @@ public class StreamingUpstreamHandler : ResponseHandler
         bool upstreamFailed = false;
 
         await foreach (StreamingResponseUpdate update in
-            _upstream.CreateResponseStreamingAsync(options, cancellationToken))
+            await _upstream.CreateResponseStreamingAsync(options, cancellationToken))
         {
             // Skip lifecycle events — we own the response envelope.
             if (update is StreamingResponseCreatedUpdate

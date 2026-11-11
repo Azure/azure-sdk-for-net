@@ -796,7 +796,7 @@ public class SdkRoundTripTests
         configureOptions?.Invoke(opts);
 
         var updates = new List<StreamingResponseUpdate>();
-        await foreach (var update in sdkClient.CreateResponseStreamingAsync(opts))
+        await foreach (var update in await sdkClient.CreateResponseStreamingAsync(opts))
         {
             updates.Add(update);
         }

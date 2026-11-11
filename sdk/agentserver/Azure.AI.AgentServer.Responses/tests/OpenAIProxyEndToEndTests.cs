@@ -235,7 +235,7 @@ public class OpenAIProxyEndToEndTests
             // Collect all text from upstream streaming updates
             var fullText = new StringBuilder();
             await foreach (StreamingResponseUpdate update in
-                _upstream.CreateResponseStreamingAsync(options, cancellationToken))
+                await _upstream.CreateResponseStreamingAsync(options, cancellationToken))
             {
                 if (update is StreamingResponseOutputTextDeltaUpdate delta)
                 {
@@ -461,7 +461,7 @@ public class OpenAIProxyEndToEndTests
             [ResponseContentPart.CreateInputTextPart("What's the weather?")]));
 
         var updates = new List<StreamingResponseUpdate>();
-        await foreach (var update in sdkClient.CreateResponseStreamingAsync(opts))
+        await foreach (var update in await sdkClient.CreateResponseStreamingAsync(opts))
         {
             updates.Add(update);
         }
@@ -732,7 +732,7 @@ public class OpenAIProxyEndToEndTests
             bool upstreamFailed = false;
 
             await foreach (StreamingResponseUpdate update in
-                _upstream.CreateResponseStreamingAsync(options, cancellationToken))
+                await _upstream.CreateResponseStreamingAsync(options, cancellationToken))
             {
                 if (update is StreamingResponseCreatedUpdate
                     or StreamingResponseInProgressUpdate)

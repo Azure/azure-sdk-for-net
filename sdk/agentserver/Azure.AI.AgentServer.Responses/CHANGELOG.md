@@ -97,7 +97,7 @@
   Responses ownership across restart.
 
 ### Other Changes
-- The package now depends on `OpenAI` 2.14.0 or later and on `Azure.AI.Extensions.OpenAI`,
+- The package now depends on `OpenAI` 2.15.0 or later and on `Azure.AI.Extensions.OpenAI`,
   because their types appear in its public API. Applications that pin an older `OpenAI` version
   must raise it.
 - Request validation now covers eight more tool types from the Foundry spec (`a2a`,
