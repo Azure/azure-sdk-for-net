@@ -1,8 +1,11 @@
 # Release History
 
-## 1.4.0-beta.6 (Unreleased)
+## 1.4.0-beta.6 (2026-11-10)
 
 ### Features Added
+
+- Added managed identity support to autoscale settings.
+- Added tenant action group management and test notification operations.
 
 ### Breaking Changes
 
@@ -11,8 +14,6 @@
 ### Bugs Fixed
 
 - Restored generated diagnostic setting operations, model serialization, and model factory support instead of throwing compatibility stubs.
-
-### Other Changes
 
 ## 1.4.0-beta.5 (2026-06-13)
 
