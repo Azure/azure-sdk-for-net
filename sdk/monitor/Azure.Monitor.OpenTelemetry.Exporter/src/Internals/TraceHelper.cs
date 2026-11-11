@@ -123,7 +123,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         }
 
                         var group = routeBatch.GetOrAdd(ingestionEndpoint, EndpointRouting.IsAadRoute(ref activityTagsProcessor.MappedTags));
-                        var telemetryItems = group.TelemetryItems;
 
                         // The _APPRESOURCEPREVIEW_ envelope is withheld: it describes the host
                         // process and would be filed as the destination's own application.
@@ -133,7 +132,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                         if (activity.Events.Any())
                         {
-                            AddTelemetryFromActivityEvents(activity, telemetryItem, telemetryItems, telemetrySchemaTypeCounter: null);
+                            AddTelemetryFromActivityEvents(activity, telemetryItem, telemetryItems: null, telemetrySchemaTypeCounter: null, group);
                         }
 
                         switch (activity.GetTelemetryType())
@@ -160,7 +159,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                                 break;
                         }
 
-                        telemetryItems.Add(telemetryItem);
+                        group.Add(telemetryItem);
 
                         // Counted once the envelope exists, so a conversion that throws is not
                         // reported as collected.
@@ -351,7 +350,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return activity.DisplayName;
         }
 
-        private static void AddTelemetryFromActivityEvents(Activity activity, TelemetryItem telemetryItem, List<TelemetryItem> telemetryItems, TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter)
+        private static void AddTelemetryFromActivityEvents(Activity activity, TelemetryItem telemetryItem, List<TelemetryItem>? telemetryItems, TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter, EndpointRouteBatch.Group? routeGroup = null)
         {
             foreach (ref readonly var @event in activity.EnumerateEvents())
             {
@@ -364,7 +363,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         {
                             var exceptionTelemetryItem = new TelemetryItem("Exception", telemetryItem, activity.SpanId, activity.Kind, @event.Timestamp);
                             exceptionTelemetryItem.Data = exceptionData;
-                            telemetryItems.Add(exceptionTelemetryItem);
+                            if (routeGroup != null)
+                            {
+                                routeGroup.Add(exceptionTelemetryItem);
+                            }
+                            else
+                            {
+                                telemetryItems!.Add(exceptionTelemetryItem);
+                            }
                             if (telemetrySchemaTypeCounter != null)
                             {
                                 telemetrySchemaTypeCounter._exceptionCount++;
@@ -378,7 +384,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         {
                             var traceTelemetryItem = new TelemetryItem("Message", telemetryItem, activity.SpanId, activity.Kind, @event.Timestamp);
                             traceTelemetryItem.Data = messageData;
-                            telemetryItems.Add(traceTelemetryItem);
+                            if (routeGroup != null)
+                            {
+                                routeGroup.Add(traceTelemetryItem);
+                            }
+                            else
+                            {
+                                telemetryItems!.Add(traceTelemetryItem);
+                            }
                             if (telemetrySchemaTypeCounter != null)
                             {
                                 telemetrySchemaTypeCounter._traceCount++;

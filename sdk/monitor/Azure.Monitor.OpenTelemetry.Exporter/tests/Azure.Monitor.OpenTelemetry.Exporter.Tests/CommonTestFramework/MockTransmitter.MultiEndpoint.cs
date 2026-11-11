@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
