@@ -43,6 +43,11 @@ function fixture(t, mode) {
     }
     if (process.env.FAKE_MODE === 'invalid') { process.stdout.write('invalid'); process.exit(0); }
     if (process.env.FAKE_MODE === 'error') { process.stderr.write('verifier failure'); process.exit(3); }
+    if (process.env.FAKE_MODE === 'no-input') {
+      process.on('SIGTERM', () => { fs.writeFileSync(process.env.TERM_FILE, 'term'); process.exit(0); });
+      publishPid(process.pid); setInterval(() => {}, 1000);
+      return;
+    }
     if (process.env.FAKE_MODE === 'flood') {
       process.on('SIGTERM', () => {}); process.stdin.resume();
       setInterval(() => process.stdout.write('x'.repeat(8192)), 1);
@@ -84,7 +89,8 @@ function fixture(t, mode) {
       global.setTimeout = (fn, delay, ...args) => originalTimeout(fn, delay === 30000 ? 1000 : delay, ...args);
     }
     const { verifyDelivery } = require(${JSON.stringify(deliveryModule)});
-    verifyDelivery({ head_sha: 'a'.repeat(40), base_sha: 'b'.repeat(40) }, [], [], '1'.repeat(32), [], process.env.FAKE_MODE === 'short-deadline' ? { deadline: Date.now() + 500 } : undefined)
+    const snapshot = { head_sha: 'a'.repeat(40), base_sha: 'b'.repeat(40), ...(process.env.FAKE_MODE === 'no-input' ? { large: 'x'.repeat(8 * 1024 * 1024) } : {}) };
+    verifyDelivery(snapshot, [], [], '1'.repeat(32), [], process.env.FAKE_MODE === 'short-deadline' ? { deadline: Date.now() + 500 } : undefined)
       .then(() => { if (process.env.FAKE_MODE === 'silent-success') { console.log('accepted'); process.exitCode = 0; } else { console.error('Unexpected success'); process.exitCode = 2; } })
       .catch(error => { console.log(error.message); process.exitCode = 1; });
   `);
@@ -244,6 +250,19 @@ for (const mode of ['descendant', 'escaped']) test(`cancellation remains bounded
   ]).finally(() => clearTimeout(timer));
   assert.equal(result[0], 1);
   assert.match(stdout, /cancelled by SIGTERM/);
+});
+
+test('cancellation stays bounded when the verifier does not read a large input', { skip: process.platform === 'win32', timeout: 6000 }, async t => {
+  const { child, pidFile, termFile } = fixture(t, 'no-input');
+  const closed = once(child, 'close');
+  await waitForFile(pidFile, child);
+  const pid = Number(fs.readFileSync(pidFile, 'utf8'));
+  child.kill('SIGTERM');
+  let timer;
+  const [code] = await Promise.race([closed, new Promise((_, reject) => { timer = setTimeout(() => reject(new Error('Large-input cancellation did not finish promptly')), 2500); })]).finally(() => clearTimeout(timer));
+  assert.equal(code, 1);
+  assert.equal(fs.readFileSync(termFile, 'utf8'), 'term');
+  assert.throws(() => process.kill(pid, 0), { code: 'ESRCH' });
 });
 
 test('verifier timeout terminates a stubborn subprocess and fails closed', { skip: process.platform === 'win32', timeout: 6000 }, async t => {

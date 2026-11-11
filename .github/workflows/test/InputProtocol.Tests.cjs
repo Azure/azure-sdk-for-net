@@ -11,7 +11,7 @@ test('rejects JSON-RPC coercion, unknown-key collisions and invalid page types',
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'input-protocol-'));
   t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
   const snapshot = { files: [], threads: [{ id: 't', comments: [{ path: 'a.cs', body: 'history' }] }] };
-  const delivery = createDelivery(t, snapshot, dir);
+  const delivery = await createDelivery(t, snapshot, dir);
   const nonce = 'a'.repeat(32), args = { item: 'thread:0', kind: 'history', nonce };
   await assert.rejects(delivery.handle({ jsonrpc: true, method: 'ping' }), /Invalid JSON-RPC/);
   await assert.rejects(delivery.handle({ jsonrpc: '2.0', method: 'tools/call', params: { name: [], arguments: args } }), /Unsupported/);
@@ -34,7 +34,7 @@ test('rejects JSON-RPC coercion, unknown-key collisions and invalid page types',
 test('stdio handles notifications and malformed requests without hanging', async t => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'input-stdio-'));
   t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
-  const delivery = createDelivery(t, { files: [], threads: [] }, dir);
+  const delivery = await createDelivery(t, { files: [], threads: [] }, dir);
   assert.deepEqual(await delivery.handle({ jsonrpc: '2.0', method: 'ping' }), {});
   delivery.notify({ jsonrpc: '2.0', method: 'notifications/initialized' });
   assert.deepEqual(await delivery.handle({ jsonrpc: '2.0', method: 'ping' }), {});
@@ -51,7 +51,7 @@ test('tampered oversized patches and index keys cannot produce accepted receipts
   for (const changed of ['patch', 'key']) {
     const dir = fs.mkdtempSync(path.join(os.tmpdir(), `input-${changed}-`));
     t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
-    const delivery = createDelivery(t, snapshot, dir, { beforeStart: context => {
+    const delivery = await createDelivery(t, snapshot, dir, { beforeStart: context => {
       const name = path.join(context, changed === 'patch' ? 'snapshot.json' : 'delivery-index.json');
       const data = JSON.parse(fs.readFileSync(name, 'utf8'));
       if (changed === 'patch') data.files[0].patch = 'y'.repeat(50000);
@@ -68,7 +68,7 @@ test('a tampered index snapshot cannot authenticate receipts', async t => {
   t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
   const snapshot = { files: [], threads: [{ id: 't', comments: [{ path: 'a.cs', body: 'history' }] }] };
   const nonce = 'c'.repeat(32), item = { id: 'thread:0', thread: snapshot.threads[0] };
-  const delivery = createDelivery(t, snapshot, dir, { beforeStart: context => {
+  const delivery = await createDelivery(t, snapshot, dir, { beforeStart: context => {
     const name = path.join(context, 'delivery-index.json');
     const index = JSON.parse(fs.readFileSync(name, 'utf8'));
     index.snapshot = '0'.repeat(64);
@@ -83,7 +83,7 @@ test('rejects a tampered captured thread before issuing a receipt', async t => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'input-tamper-'));
   t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
   const snapshot = { files: [], threads: [{ id: 't', comments: [{ path: 'a.cs', body: 'history' }] }] };
-  const delivery = createDelivery(t, snapshot, dir);
+  const delivery = await createDelivery(t, snapshot, dir);
   fs.writeFileSync(path.join(dir, 'input', 'thread-0.json'), '{"body":"tampered"}');
   await assert.rejects(delivery.page({ item: 'thread:0', kind: 'history', nonce: 'a'.repeat(32) }), /does not match/);
   assert.ok(!fs.existsSync(path.join(dir, 'a'.repeat(32) + '.jsonl')));

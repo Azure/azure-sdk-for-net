@@ -2,7 +2,8 @@
 const assert = require('node:assert/strict');
 const { test } = require('node:test');
 const crypto = require('node:crypto');
-const { requiredInputs, verifyDelivery, snapshotDigest } = require('../pr-re-review/ReviewDelivery.cjs');
+const { verifyDelivery, snapshotDigest } = require('../pr-re-review/ReviewDelivery.cjs');
+const { requiredInputs } = require('./TestDeliveryReference.cjs');
 
 const snapshot = () => ({ head_sha: 'a'.repeat(40), base_sha: 'b'.repeat(40), files: [], threads: [] });
 const nonce = '1'.repeat(32);
@@ -28,6 +29,24 @@ test('requires complete paged thread and oversized patch delivery for this invoc
   const broken = [receipt(s, thread, req[0], 0, 2, req[0].content.length), receipt(s, thread, req[0], 3, req[0].content.length, req[0].content.length), receipts[1]];
   const brokenResults = [{ ...results[0], delivery_tokens: broken.slice(0, 2).map(row => row.token) }, results[1]];
   await assert.rejects(async () => verifyDelivery(s, items, brokenResults, nonce, broken), /delivery/i);
+});
+
+test('receipt verification rejects tampered captured index and history', async t => {
+  const fs = require('node:fs'), os = require('node:os'), path = require('node:path');
+  const { createDelivery } = require('./TestInputServer.cjs');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'delivery-independent-'));
+  const s = snapshot(); s.threads = [{ id: 'real', comments: [{ body: 'original history' }] }];
+  const assignment = { id: 'thread:0', thread: s.threads[0] };
+  const delivery = await createDelivery(t, s, dir, { beforeStart: context => {
+    const altered = '{"tampered":true}', indexPath = path.join(context, 'delivery-index.json');
+    const index = JSON.parse(fs.readFileSync(indexPath, 'utf8'));
+    index.items['thread:0'][0].key = 'history:' + crypto.createHash('sha256').update(altered).digest('hex');
+    fs.writeFileSync(indexPath, JSON.stringify(index)); fs.writeFileSync(path.join(context, 'thread-0.json'), altered);
+  } });
+  t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
+  const page = await delivery.page({ item: 'thread:0', kind: 'history', nonce, offset: 0, limit: 4000 });
+  const rows = fs.readFileSync(path.join(dir, `${nonce}.jsonl`), 'utf8').trim().split('\n').map(JSON.parse);
+  await assert.rejects(verifyDelivery(s, [assignment], [{ id: assignment.id, status: 'complete', delivery_tokens: [page.delivery_token] }], nonce, rows), /delivery/i);
 });
 
 test('even an empty thread history needs an explicit successful page', async () => {
@@ -83,15 +102,24 @@ test('unrequired delivery tokens preserve the original permissive string behavio
   await assert.doesNotReject(async () => verifyDelivery(s, [item], [{ id: item.id, status: 'complete', delivery_tokens: ['not a receipt'] }], nonce, []));
 });
 
+test('unrequired timestamp-shaped tokens retain the original date-parsing rejection', async () => {
+  const s = snapshot();
+  const item = { id: 'file:0', file: { filename: 'small.cs', status: 'modified', patch: 'diff' } };
+  await assert.rejects(verifyDelivery(s, [item], [{ id: item.id, status: 'complete', delivery_tokens: ['2024-01-01T00:00:00Z'] }], nonce, []), /delivery/i);
+});
+
 test('source reads are model-attested; oversized patches still require delivery', () => {
+  const { spawnSync } = require('node:child_process'), path = require('node:path');
   const s = snapshot();
   const file = (status, patch, previous_filename) => ({ id: 'file:0', file: { filename: 'new.cs', status, ...(patch === undefined ? {} : { patch }), ...(previous_filename ? { previous_filename } : {}) } });
-  for (const item of [file('modified', 'diff'), file('added'), file('modified'), file('removed', 'diff'), file('renamed', 'diff', 'old.cs')]) {
-    assert.deepEqual(requiredInputs(s, item), []);
-  }
-  for (const item of [file('added', 'x'.repeat(50000)), file('removed', 'x'.repeat(50000)), file('renamed', 'x'.repeat(50000), 'old.cs')]) {
-    assert.deepEqual(requiredInputs(s, item).map(x => x.kind), ['patch']);
-  }
-  assert.throws(() => requiredInputs(s, file('renamed', 'diff')), /source path/i);
-  assert.throws(() => requiredInputs(s, file('unknown')), /unsupported/i);
+  const noDelivery = [file('modified', 'diff'), file('added'), file('modified'), file('removed', 'diff'), file('renamed', 'diff', 'old.cs')];
+  const oversized = [file('added', 'x'.repeat(50000)), file('removed', 'x'.repeat(50000)), file('renamed', 'x'.repeat(50000), 'old.cs')];
+  const items = [...noDelivery, ...oversized, file('renamed', 'diff'), file('unknown')];
+  const result = spawnSync(process.env.GH_AW_REVIEW_PWSH || 'pwsh', ['-NoLogo', '-NoProfile', '-NonInteractive', '-File', path.join(__dirname, 'Invoke-DeliveryInputs.ps1')], { input: JSON.stringify(items), encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
+  assert.equal(result.status, 0, result.stderr);
+  const actual = JSON.parse(result.stdout);
+  noDelivery.forEach((item, index) => { assert.deepEqual(actual[index].value, []); assert.deepEqual(actual[index].value, requiredInputs(s, item)); });
+  oversized.forEach((item, index) => { const selected = actual[index + noDelivery.length].value; assert.deepEqual(selected.map(x => x.kind), ['patch']); assert.deepEqual(selected, requiredInputs(s, item)); });
+  assert.match(actual.at(-2).error, /source path/i);
+  assert.match(actual.at(-1).error, /unsupported/i);
 });

@@ -11,7 +11,7 @@ const { verifyDelivery } = require('../pr-re-review/ReviewDelivery.cjs');
 test('private input transport exposes only history and patch delivery', async t => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'review-discovery-'));
   t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
-  const delivery = createDelivery(t, { files: [], threads: [], reviews: [] }, dir);
+  const delivery = await createDelivery(t, { files: [], threads: [], reviews: [] }, dir);
   const init = await handle({ jsonrpc: '2.0', id: 1, method: 'initialize' }, delivery);
   assert.equal(init.protocolVersion, '2024-11-05');
   const listed = await handle({ jsonrpc: '2.0', id: 2, method: 'tools/list' }, delivery);
@@ -29,7 +29,7 @@ test('trusted reader records only delivered history and patch pages for the exac
     files: [{ filename: 'new.cs', status: 'modified', patch: 'x'.repeat(50000) }],
     threads: [{ id: 't', comments: [{ body: 'history' }] }],
   };
-  const delivery = createDelivery(t, snapshot, dir), nonce = 'a'.repeat(32);
+  const delivery = await createDelivery(t, snapshot, dir), nonce = 'a'.repeat(32);
   const call = args => handle({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name: 'read-review-input', arguments: args } }, delivery);
   const items = [{ id: 'thread:0', thread: snapshot.threads[0] }, { id: 'file:0', file: snapshot.files[0] }];
   const first = JSON.parse((await call({ item: 'thread:0', nonce, kind: 'history', limit: 5 })).content[0].text);
@@ -70,7 +70,7 @@ test('patch pages preserve UTF-16 boundaries inside a surrogate pair', async t =
   const patch = 'x'.repeat(3999) + '😀' + 'y'.repeat(46000);
   const snapshot = { head_sha: 'a'.repeat(40), base_sha: 'b'.repeat(40), files: [{ filename: 'f.cs', status: 'modified', patch }], threads: [] };
   const nonce = 'a'.repeat(32), item = { id: 'file:0', file: snapshot.files[0] };
-  const delivery = createDelivery(t, snapshot, dir), tokens = [], pages = [];
+  const delivery = await createDelivery(t, snapshot, dir), tokens = [], pages = [];
   let offset = 0;
   do {
     const response = await handle({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name: 'read-review-input', arguments: { item: item.id, nonce, kind: 'patch', offset } } }, delivery);
@@ -89,7 +89,7 @@ test('patch pages preserve isolated UTF-16 surrogates in captured input', async 
   t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
   const patch = 'x'.repeat(3999) + '\ud83d' + 'y'.repeat(46000);
   const snapshot = { head_sha: 'a'.repeat(40), base_sha: 'b'.repeat(40), files: [{ filename: 'f.cs', status: 'modified', patch }], threads: [] };
-  const delivery = createDelivery(t, snapshot, dir), nonce = 'b'.repeat(32);
+  const delivery = await createDelivery(t, snapshot, dir), nonce = 'b'.repeat(32);
   const response = await handle({ jsonrpc: '2.0', id: 1, method: 'tools/call', params: { name: 'read-review-input', arguments: { item: 'file:0', nonce, kind: 'patch', offset: 0 } } }, delivery);
   const page = JSON.parse(response.content[0].text);
   assert.equal(page.content.charCodeAt(3999), 0xd83d);
@@ -101,7 +101,7 @@ test('page text keeps valid Unicode readable and escapes isolated surrogates', a
   t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
   const patch = 'é😀\ud83d\u0085\u2028\u2029\\u2028' + 'x'.repeat(50000);
   const snapshot = { files: [{ filename: 'f.cs', status: 'modified', patch }], threads: [] };
-  const delivery = createDelivery(t, snapshot, dir);
+  const delivery = await createDelivery(t, snapshot, dir);
   const response = await delivery.handle({ jsonrpc: '2.0', method: 'tools/call', params: { name: 'read-review-input', arguments: { item: 'file:0', nonce: 'a'.repeat(32), kind: 'patch' } } });
   const text = response.content[0].text;
   assert.ok(text.includes('é😀'));
@@ -114,7 +114,7 @@ test('a generated page cannot count when its response was dropped', async t => {
   t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
   const snapshot = { head_sha: 'a'.repeat(40), base_sha: 'b'.repeat(40), files: [], threads: [{ id: 't', comments: [{ body: 'history' }] }] };
   const nonce = 'a'.repeat(32), item = { id: 'thread:0', thread: snapshot.threads[0] };
-  await createDelivery(t, snapshot, dir).page({ item: item.id, nonce, kind: 'history' }); // The response is dropped before reaching the worker.
+  await (await createDelivery(t, snapshot, dir)).page({ item: item.id, nonce, kind: 'history' }); // The response is dropped before reaching the worker.
   const rows = fs.readFileSync(path.join(dir, nonce + '.jsonl'), 'utf8').trim().split('\n').map(JSON.parse);
   await assert.rejects(async () => verifyDelivery(snapshot, [item], [{ id: item.id, status: 'complete' }], nonce, rows), /delivery/i);
 });

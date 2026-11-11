@@ -6,9 +6,9 @@ const readline = require('node:readline');
 const { spawn } = require('node:child_process');
 const { exportContext } = require('../pr-re-review/ReviewSnapshot.cjs');
 
-function createDelivery(t, snapshot, directory, { beforeStart = () => {} } = {}) {
+async function createDelivery(t, snapshot, directory, { beforeStart = () => {} } = {}) {
   const context = path.join(directory, 'input');
-  exportContext(snapshot, context);
+  await exportContext(snapshot, context);
   beforeStart(context);
   const child = spawn(process.env.GH_AW_REVIEW_PWSH || 'pwsh', ['-NoLogo', '-NoProfile', '-NonInteractive', '-File', path.join(__dirname, '..', 'pr-re-review', 'ReviewInputServer.ps1')], {
     env: { ...process.env, REVIEW_SNAPSHOT: path.join(context, 'snapshot.json'), REVIEW_RECEIPTS: directory }, stdio: ['pipe', 'pipe', 'pipe'],

@@ -3,6 +3,7 @@
 // Trusted GitHub adapter: capture paginated PR history at pinned commits and
 // recheck mutable state before publication or thread mutation. PR text remains
 // untrusted; this module never executes PR-derived code.
+const CAPTURE_TIMEOUT_MS = 22 * 60 * 1000;
 const QUERY = `query($owner:String!,$repo:String!,$number:Int!,$after:String){
   repository(owner:$owner,name:$repo){pullRequest(number:$number){
     reviewThreads(first:100,after:$after){totalCount pageInfo{hasNextPage endCursor} nodes{
@@ -68,7 +69,7 @@ async function captureReviewState(github, repo, files, { includeReviews = true }
   return { ...files, head_repo: before.head.repo?.full_name || `${repo.owner}/${repo.repo}`, base_repo: before.base.repo?.full_name || `${repo.owner}/${repo.repo}`, threads, reviews: reviews.map(r => ({ id: r.id, body: r.body, state: r.state, commit_id: r.commit_id, author: r.user?.login ?? null, submittedAt: r.submitted_at ?? null, url: r.html_url ?? null, authorAssociation: r.author_association ?? null })) };
 }
 
-async function captureContext(github, repo, files) {
+async function captureContext(github, repo, files, { timeoutMs = CAPTURE_TIMEOUT_MS } = {}) {
   const snapshot = await captureReviewState(github, repo, files);
   // GitHub's PR diff is merge-base-to-head; the base tip remains the freshness anchor.
   const comparison = await github.request('GET /repos/{owner}/{repo}/compare/{basehead}', {
@@ -81,14 +82,17 @@ async function captureContext(github, repo, files) {
   snapshot.diff_base_sha = diffBase;
   // Baselines are immutable at the captured SHAs; fetch and validate them once.
   // Only filename metadata is needed by the PowerShell capture, not large patches or histories.
-  const { spawnSync } = require('node:child_process');
-  const path = require('node:path');
+  const { runPowerShell } = require('./ReviewDelivery.cjs');
   const input = { repo, snapshot: { head_sha: snapshot.head_sha, base_sha: snapshot.base_sha,
     diff_base_sha: snapshot.diff_base_sha, head_repo: snapshot.head_repo,
     files: snapshot.files.map(({ filename, previous_filename, status }) => ({ filename, previous_filename, status })) } };
-  const result = spawnSync(process.env.GH_AW_REVIEW_PWSH || 'pwsh', ['-NoLogo', '-NoProfile', '-NonInteractive', '-File', path.join(__dirname, 'ReviewBaselines.ps1'), '-Capture'],
-    { input: JSON.stringify(input), encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
-  if (result.error || result.status !== 0) throw new Error(`Cannot capture baselines: ${result.error?.message || result.stderr}`);
+  if (!Number.isSafeInteger(timeoutMs) || timeoutMs <= 0) throw new Error('Invalid baseline capture deadline.');
+  let result;
+  try {
+    result = await runPowerShell('ReviewBaselines.ps1', JSON.stringify(input), {
+      scriptArgs: ['-Capture'], timeoutMs, timeoutReason: 'Baseline capture timed out.', label: 'Baseline capture', maxOutputBytes: 16 * 1024 * 1024,
+    });
+  } catch (error) { throw new Error(`Cannot capture baselines: ${error.message}`); }
   const inventory = JSON.parse(result.stdout);
   if (!Array.isArray(inventory)) throw new Error('Invalid baseline comparison output.');
   snapshot.baseline_suppressions = inventory;
@@ -124,21 +128,32 @@ async function assertMutationFresh(github, repo, snapshot, rootIds, receipts) {
   }
 }
 
-function exportContext(snapshot, directory) {
+async function exportContext(snapshot, directory, { timeoutMs = CAPTURE_TIMEOUT_MS } = {}) {
   const fs = require('node:fs'); const path = require('node:path');
-  const { snapshotDigest, requiredInputs } = require('./ReviewDelivery.cjs');
+  const { MAX_BATCH_BYTES, snapshotDigest, runPowerShell } = require('./ReviewDelivery.cjs');
   fs.mkdirSync(directory, { recursive: true });
   const write = (name, value) => fs.writeFileSync(path.join(directory, name), JSON.stringify(value, null, 2), { mode: 0o644 });
-  const delivery = { snapshot: snapshotDigest(snapshot), items: {} };
-  const captureInputs = item => { delivery.items[item.id] = requiredInputs(snapshot, item).map(({ key, kind }) => ({ key, kind })); };
+  if (!Number.isSafeInteger(timeoutMs) || timeoutMs <= 0) throw new Error('Invalid delivery capture deadline.');
+  const result = await runPowerShell('Export-ReviewDeliveryIndex.ps1', JSON.stringify({ snapshot, maxBatchBytes: MAX_BATCH_BYTES }), {
+    timeoutMs, timeoutReason: 'Delivery index capture timed out.', label: 'Delivery index capture',
+    maxOutputBytes: Math.max(16 * 1024 * 1024, (snapshot.files.length + snapshot.threads.length) * 256 + 1024 * 1024),
+  });
+  let delivery;
+  try { delivery = JSON.parse(result.stdout); } catch { throw new Error('Invalid captured delivery index.'); }
+  if (!delivery || delivery.snapshot !== snapshotDigest(snapshot) || !delivery.items || typeof delivery.items !== 'object' || Array.isArray(delivery.items)) throw new Error('Invalid captured delivery index.');
+  const expectedItems = [...snapshot.files.map((_, i) => [`file:${i}`, 'patch']), ...snapshot.threads.map((_, i) => [`thread:${i}`, 'history'])];
+  if (Object.keys(delivery.items).length !== expectedItems.length) throw new Error('Invalid captured delivery assignments.');
+  for (const [id, kind] of expectedItems) {
+    const inputs = delivery.items[id];
+    if (!Object.hasOwn(delivery.items, id) || !Array.isArray(inputs) || inputs.length > 1 || (kind === 'history' && inputs.length !== 1) ||
+        inputs.some(input => !input || input.kind !== kind || typeof input.key !== 'string' || !new RegExp(`^${kind}:[a-f0-9]{64}$`).test(input.key))) throw new Error('Invalid captured delivery assignments.');
+  }
   write('snapshot.json', snapshot);
   const files = snapshot.files.map((file, index) => {
-    captureInputs({ id: `file:${index}`, file });
     if (file.patch !== undefined) fs.writeFileSync(path.join(directory, `file-${index}.patch`), file.patch, { mode: 0o644 });
     return { id: `file:${index}`, filename: file.filename, status: file.status, previous_filename: file.previous_filename, patch_path: file.patch !== undefined ? path.join(directory, `file-${index}.patch`) : null };
   });
   const threads = snapshot.threads.map((thread, index) => {
-    captureInputs({ id: `thread:${index}`, thread });
     write(`thread-${index}.json`, thread);
     return { id: `thread:${index}`, thread_id: thread.id, isResolved: thread.isResolved, path: thread.comments[0].path, history_path: path.join(directory, `thread-${index}.json`) };
   });

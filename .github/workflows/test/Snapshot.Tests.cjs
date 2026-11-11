@@ -188,7 +188,7 @@ test('exports captured thread histories and prior reviews for worker context', a
   t.after(() => fs.rmSync(directory, { recursive: true, force: true }));
   const f = fixture();
   const snapshot = await captureContext(f.github, { owner: 'Azure', repo: 'azure-sdk-for-net' }, files);
-  exportContext(snapshot, directory);
+  await exportContext(snapshot, directory);
   const index = JSON.parse(fs.readFileSync(path.join(directory, 'index.json'), 'utf8'));
   assert.equal(index.threads.length, 1);
   assert.equal(index.reviews.length, 1);
@@ -197,17 +197,19 @@ test('exports captured thread histories and prior reviews for worker context', a
   assert.deepEqual(JSON.parse(fs.readFileSync(index.reviews[0].history_path, 'utf8')), snapshot.reviews[0]);
 });
 
-test('exports canonical required-input keys for the private reader', t => {
+test('exports canonical required-input keys for the private reader', async t => {
   const fs = require('node:fs'); const os = require('node:os'); const path = require('node:path');
-  const { requiredInputs, snapshotDigest } = require('../pr-re-review/ReviewDelivery.cjs');
+  const { snapshotDigest } = require('../pr-re-review/ReviewDelivery.cjs');
+  const { requiredInputs } = require('./TestDeliveryReference.cjs');
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'delivery-index-'));
   t.after(() => fs.rmSync(directory, { recursive: true, force: true }));
   const snapshot = {
     head_sha: 'a'.repeat(40), base_sha: 'b'.repeat(40),
-    files: [{ filename: 'small.cs', status: 'modified', patch: 'short' }, { filename: 'big.cs', status: 'modified', patch: 'x'.repeat(50000) + '\ud83d' }, { filename: 'source.cs', status: 'modified' }],
-    threads: [{ id: 'one', comments: [{ path: 'small.cs', body: '😀' }] }], reviews: [],
+    files: [{ filename: 'small.cs', status: 'modified', patch: 'short' }, { filename: 'big.cs', status: 'modified', patch: 'x'.repeat(50000) + '\ud83d' }, { filename: 'source.cs', status: 'modified' },
+      { filename: 'boundary.cs', status: 'added', patch: 'x'.repeat(48000) }, { filename: 'above.cs', status: 'added', patch: 'é'.repeat(24000) + 'x' }],
+    threads: [{ id: 'one', comments: [{ path: 'small.cs', body: '😀' }] }, { 10: 'integer key', 2: 'first', id: 'surrogate', comments: [{ body: '\ud800 and \\ slash' }] }], reviews: [],
   };
-  exportContext(snapshot, directory);
+  await exportContext(snapshot, directory);
   const index = JSON.parse(fs.readFileSync(path.join(directory, 'delivery-index.json'), 'utf8'));
   assert.equal(index.snapshot, snapshotDigest(snapshot));
   for (const [kind, values] of [['file', snapshot.files], ['thread', snapshot.threads]]) values.forEach((value, i) => {
@@ -217,7 +219,41 @@ test('exports canonical required-input keys for the private reader', t => {
   assert.deepEqual(index.items['file:0'], []);
   assert.deepEqual(index.items['file:2'], []);
   assert.equal(index.items['file:1'][0].kind, 'patch');
+  assert.deepEqual(index.items['file:3'], []);
+  assert.equal(index.items['file:4'][0].kind, 'patch');
   assert.equal(index.items['thread:0'][0].kind, 'history');
+  assert.equal(index.items['thread:1'][0].kind, 'history');
+});
+
+test('capture rejects incomplete or malformed delivery index responses', async t => {
+  const fs = require('node:fs'); const os = require('node:os'); const path = require('node:path');
+  const delivery = require('../pr-re-review/ReviewDelivery.cjs'); const { snapshotDigest } = delivery;
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'delivery-bad-index-'));
+  const originalRunner = delivery.runPowerShell;
+  t.after(() => { delivery.runPowerShell = originalRunner; fs.rmSync(directory, { recursive: true, force: true }); });
+  const snapshot = { files: [{ filename: 'f', status: 'added' }], threads: [{ id: 't', comments: [] }], reviews: [] };
+  const valid = { snapshot: snapshotDigest(snapshot), items: { 'file:0': [], 'thread:0': [{ kind: 'history', key: 'history:' + 'a'.repeat(64) }] } };
+  for (const bad of [
+    { ...valid, snapshot: '0'.repeat(64) },
+    { ...valid, items: { 'file:0': [] } },
+    { ...valid, items: { ...valid.items, 'thread:0': [] } },
+    { ...valid, items: { ...valid.items, 'thread:0': [{ kind: 'patch', key: 'patch:' + 'a'.repeat(64) }] } },
+    { ...valid, items: { ...valid.items, 'file:1': [] } },
+  ]) {
+    delivery.runPowerShell = async () => ({ stdout: JSON.stringify(bad), stderr: '' });
+    await assert.rejects(exportContext(snapshot, directory), /invalid captured delivery/i);
+    assert.equal(fs.existsSync(path.join(directory, 'delivery-index.json')), false);
+  }
+});
+
+test('capture fails closed for malformed omitted-patch status and rename', async t => {
+  const fs = require('node:fs'); const os = require('node:os'); const path = require('node:path');
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'delivery-invalid-'));
+  t.after(() => fs.rmSync(directory, { recursive: true, force: true }));
+  for (const file of [{ filename: 'f', status: 'modified\0' }, { filename: 'f', status: 'renamed' }]) {
+    await assert.rejects(exportContext({ files: [file], threads: [], reviews: [] }, directory), /unsupported|source path/i);
+    assert.equal(fs.existsSync(path.join(directory, 'delivery-index.json')), false);
+  }
 });
 
 test('captures all thread pages and previous reviews', async () => {

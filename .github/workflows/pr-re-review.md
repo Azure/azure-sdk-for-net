@@ -405,11 +405,11 @@ jobs:
             const reviewRoot = '/tmp/gh-aw/pr-re-review';
             fs.mkdirSync(reviewRoot, { recursive: true });
             fs.writeFileSync(path.join(reviewRoot, 'snapshot.json'), JSON.stringify(snapshot), { mode: 0o644 });
-            exportContext(snapshot, path.join(process.env.RUNNER_TEMP, 'gh-aw', 'actions', 'review-input')); // Read-only in the worker sandbox.
+            await exportContext(snapshot, path.join(process.env.RUNNER_TEMP, 'gh-aw', 'actions', 'review-input')); // Read-only in the worker sandbox.
             fs.mkdirSync(path.join(process.env.RUNNER_TEMP, 'gh-aw', 'safeoutputs', 'review-receipts'), { recursive: true });
             // Custom harnesses are provisioned into gh-aw's trusted action folder;
             // selecting harness.use does not copy a repository script by itself.
-            for (const helper of ['ReviewContinuation.cjs', 'ReviewDelivery.cjs', 'ReviewInputServer.ps1', 'ReviewVerifyDelivery.ps1'])
+            for (const helper of ['ReviewContinuation.cjs', 'ReviewDelivery.cjs', 'ReviewInputServer.ps1', 'ReviewVerifyDelivery.ps1', 'ReviewSerialization.psm1'])
               fs.copyFileSync(path.join(process.env.GITHUB_WORKSPACE, '.github/workflows/pr-re-review', helper),
                 path.join(process.env.RUNNER_TEMP, 'gh-aw', 'actions', helper));
             core.info(`Captured ${manifest.changed_files} changed files and ${snapshot.threads.length} threads for the event head.`);

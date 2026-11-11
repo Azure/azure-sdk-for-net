@@ -4,7 +4,8 @@ const assert = require('node:assert/strict');
 const { test } = require('node:test');
 const { runQueue, makeWorklist, nextBatch, buildOutputs, assertPublication, workerArguments, parseWorkerResult, workerPrompt } = require('../pr-re-review/ReviewContinuation.cjs');
 const crypto = require('node:crypto');
-const { requiredInputs, snapshotDigest } = require('../pr-re-review/ReviewDelivery.cjs');
+const { snapshotDigest } = require('../pr-re-review/ReviewDelivery.cjs');
+const { requiredInputs } = require('./TestDeliveryReference.cjs');
 
 const snapshot = (count = 106) => ({
   pull_number: 64192, head_sha: 'a'.repeat(40), base_sha: 'b'.repeat(40), diff_base_sha: 'b'.repeat(40), changed_files: count,
@@ -416,4 +417,9 @@ test('trusted helper checkout precedes capture on a clean agent runner', () => {
   const capture = workflow.indexOf('name: Capture all changed-file pages');
   const checkout = workflow.indexOf('name: Checkout trusted review helpers');
   assert.ok(checkout >= 0 && checkout < capture, 'No checkout from another job can supply these helper files.');
+  const end = workflow.indexOf('name: Preserve trusted review input before agent execution', capture);
+  assert.ok(end > capture, 'The capture step must precede input preservation.');
+  const captureStep = workflow.slice(capture, end);
+  assert.match(captureStep, /for \(const helper of \[[^\]]*'ReviewSerialization\.psm1'[^\]]*\]\)/, 'The capture step must copy the delivery module.');
+  assert.ok(captureStep.includes('await exportContext('), 'Capture must finish before the workflow proceeds.');
 });
