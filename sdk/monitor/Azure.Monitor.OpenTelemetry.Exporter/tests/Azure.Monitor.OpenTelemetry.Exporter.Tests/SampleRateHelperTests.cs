@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Xunit;
 
@@ -23,6 +24,32 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void FromSamplingRatioKeepsSubPercentRatesAboveZero()
         {
             Assert.Equal(0.1, SampleRateHelper.FromSamplingRatio(0.001F), precision: 5);
+        }
+
+        [Theory]
+        [InlineData(0.025F, 2.0)]
+        [InlineData(0.045F, 4.0)]
+        public void FromSamplingRatioRoundsInSinglePrecision(float samplingRatio, double expected)
+        {
+            Assert.Equal(expected, SampleRateHelper.FromSamplingRatio(samplingRatio));
+        }
+
+        /// <summary>
+        /// Fixed-ratio users must see the envelope sampleRate earlier releases sent, which was
+        /// <c>(float)Math.Round(SamplingRatio * 100)</c>, for every ratio that did not round to zero.
+        /// </summary>
+        [Fact]
+        public void FromSamplingRatioMatchesEarlierReleases()
+        {
+            for (int i = 1; i <= 1000; i++)
+            {
+                float samplingRatio = i / 1000F;
+                float previous = (float)Math.Round(samplingRatio * 100);
+                if (previous > 0)
+                {
+                    Assert.True(previous == (float)SampleRateHelper.FromSamplingRatio(samplingRatio), $"Ratio {samplingRatio:R}: expected {previous}, got {SampleRateHelper.FromSamplingRatio(samplingRatio)}");
+                }
+            }
         }
 
         [Fact]

@@ -44,18 +44,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private void AddSampleRate(LogRecord logRecord)
         {
-            var attributes = logRecord.Attributes;
-            if (attributes != null)
-            {
-                foreach (var attribute in attributes)
-                {
-                    if (attribute.Key == SemanticConventions.AttributeMicrosoftSampleRate)
-                    {
-                        return;
-                    }
-                }
-            }
-
             // OnEnd runs synchronously on the logging call, where the log's trace context was taken
             // from Activity.Current. A record whose context was set some other way falls back.
             var activity = Activity.Current;
@@ -65,9 +53,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     ? spanSampleRate
                     : _fallbackSampleRate;
 
+            // Checked before touching the attributes so unsampled traffic, the common case, costs nothing.
             if (!SampleRateHelper.IsReportable(sampleRate))
             {
                 return;
+            }
+
+            var attributes = logRecord.Attributes;
+            if (attributes != null)
+            {
+                for (int i = 0; i < attributes.Count; i++)
+                {
+                    if (attributes[i].Key == SemanticConventions.AttributeMicrosoftSampleRate)
+                    {
+                        return;
+                    }
+                }
             }
 
             var merged = new List<KeyValuePair<string, object?>>((attributes?.Count ?? 0) + 1);
