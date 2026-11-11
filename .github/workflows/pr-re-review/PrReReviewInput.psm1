@@ -76,6 +76,33 @@ function Get-PrReReviewHeadContent {
     return $content
 }
 
+function Get-PrReReviewLocalDiff {
+    param([Parameter(Mandatory)][AllowEmptyString()][string]$Old, [Parameter(Mandatory)][AllowEmptyString()][string]$New)
+
+    $directory = Join-Path ([IO.Path]::GetTempPath()) "pr-re-review-diff-$([guid]::NewGuid())"
+    [void][IO.Directory]::CreateDirectory($directory)
+    try {
+        $oldPath = Join-Path $directory 'old'
+        $newPath = Join-Path $directory 'new'
+        $encoding = [Text.UTF8Encoding]::new($false)
+        [IO.File]::WriteAllText($oldPath, $Old, $encoding)
+        [IO.File]::WriteAllText($newPath, $New, $encoding)
+        $output = & git -c core.autocrlf=false diff --no-index --no-color --no-ext-diff --unified=3 -- $oldPath $newPath
+        # git diff --no-index exits 1 when the files differ.
+        if ($LASTEXITCODE -gt 1) {
+            throw "git diff --no-index failed with exit code $LASTEXITCODE."
+        }
+        $lines = [string[]]@($output)
+        for ($start = 0; $start -lt $lines.Count -and !$lines[$start].StartsWith('@@'); $start++) { }
+        if ($start -eq $lines.Count) {
+            return ''
+        }
+        return ($lines[$start..($lines.Count - 1)] -join "`n")
+    } finally {
+        Remove-Item -LiteralPath $directory -Recurse -Force -ErrorAction SilentlyContinue
+    }
+}
+
 function Export-PrReReviewInput {
     param(
         [Parameter(Mandatory)][AllowEmptyCollection()][object[]]$Files,
@@ -145,8 +172,19 @@ function Export-PrReReviewInput {
                 }
                 $previousPath = if ($file.previous_filename) { [string]$file.previous_filename } else { [string]$file.filename }
                 $previous = Get-PrReReviewHeadContent -Repository $Repository -HeadSha $MergeBaseSha -Path $previousPath
-                $baseText = if ($null -eq $previous) { 'The file has no text content at the merge base.' } else { $previous }
-                "GitHub returned no patch; full content at the merge base ($previousPath):`n$baseText`n$headText"
+                # GitHub also omits patches for small changes to files with very long lines, such as compiled
+                # workflow locks, so diff the text locally instead of exporting both full copies.
+                if ($null -ne $previous -and $null -ne $content) {
+                    $diff = Get-PrReReviewLocalDiff -Old $previous -New $content
+                    if ($diff) {
+                        "GitHub returned no patch; this diff from the merge base ($previousPath) to the head commit was computed locally.`n$diff"
+                    } else {
+                        "GitHub returned no patch, and the file's text is identical at the merge base ($previousPath) and the head commit."
+                    }
+                } else {
+                    $baseText = if ($null -eq $previous) { 'The file has no text content at the merge base.' } else { $previous }
+                    "GitHub returned no patch; full content at the merge base ($previousPath):`n$baseText`n$headText"
+                }
             }
         }
 

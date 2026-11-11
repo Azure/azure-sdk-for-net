@@ -72,6 +72,19 @@ Describe 'Export-PrReReviewInput' {
         $inputText | Should -Match '// deleted declaration'
     }
 
+    It 'exports a local diff instead of both full copies when a modified file has no patch' {
+        Mock -ModuleName PrReReviewInput Get-PrReReviewHeadContent {
+            $changed = if ($HeadSha -eq 'abc1234') { 'line 1500 changed' } else { 'line 1500' }
+            (@(1..1499 | ForEach-Object { "line $_" }) + $changed + @(1501..2000 | ForEach-Object { "line $_" })) -join "`n"
+        }
+        $export = Invoke-Export @(New-ChangedFile 'src/Changed.cs' -Status 'modified' -Patch $null)
+        $export.Files[0].readFiles.Count | Should -Be 1
+        $inputText = & $export.Read $export.Files[0]
+        $inputText | Should -Match '(?m)^@@ -1497,7 \+1497,7 @@'
+        $inputText | Should -Match '(?m)^-line 1500$'
+        $inputText | Should -Match '(?m)^\+line 1500 changed$'
+    }
+
     It 'uses the previous path at the merge base when a renamed file has no patch' {
         Mock -ModuleName PrReReviewInput Get-PrReReviewHeadContent { "content of $Path at $HeadSha" }
         $file = New-ChangedFile 'src/New.cs' -Status 'renamed' -Patch $null
