@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -326,20 +325,22 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CostControlIds))
+            if (Optional.IsCollectionDefined(TrustedCertificateSources))
             {
-                writer.WritePropertyName("costControlIds"u8);
-                writer.WriteStartArray();
-                foreach (ResourceIdentifier item in CostControlIds)
+                if (TrustedCertificateSources != null)
                 {
-                    if (item == null)
+                    writer.WritePropertyName("trustedCertificateSources"u8);
+                    writer.WriteStartArray();
+                    foreach (TrustedCertificateSource item in TrustedCertificateSources)
                     {
-                        writer.WriteNullValue();
-                        continue;
+                        writer.WriteObjectValue(item, options);
                     }
-                    writer.WriteStringValue(item);
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("trustedCertificateSources"u8);
+                }
             }
             if (Optional.IsDefined(CostControlConnections, _costControlConnectionsIsDefined))
             {
@@ -433,7 +434,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             IList<string> associatedProjects = default;
             CognitiveServicesAgentCapabilitySettings capabilitySettings = default;
             IList<AgentHostingConfiguration> agentHostingConfigurations = default;
-            IList<ResourceIdentifier> costControlIds = default;
+            IList<TrustedCertificateSource> trustedCertificateSources = new ChangeTrackingList<TrustedCertificateSource>();
             bool costControlConnectionsIsDefined = false;
             CostControlConnections costControlConnections = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -827,25 +828,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     agentHostingConfigurations = array;
                     continue;
                 }
-                if (prop.NameEquals("costControlIds"u8))
+                if (prop.NameEquals("trustedCertificateSources"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        trustedCertificateSources = null;
                         continue;
                     }
-                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                    List<TrustedCertificateSource> array = new List<TrustedCertificateSource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(new ResourceIdentifier(item.GetString()));
-                        }
+                        array.Add(TrustedCertificateSource.DeserializeTrustedCertificateSource(item, options));
                     }
-                    costControlIds = array;
+                    trustedCertificateSources = array;
                     continue;
                 }
                 if (prop.NameEquals("costControlConnections"u8))
@@ -903,7 +898,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 associatedProjects ?? new ChangeTrackingList<string>(),
                 capabilitySettings,
                 agentHostingConfigurations ?? new ChangeTrackingList<AgentHostingConfiguration>(),
-                costControlIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                trustedCertificateSources,
                 costControlConnections,
                 additionalBinaryDataProperties)
             {

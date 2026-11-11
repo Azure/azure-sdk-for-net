@@ -85,10 +85,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             writer.WriteStringValue(PolicyTargetKind.ToString());
             writer.WritePropertyName("policy"u8);
             writer.WriteObjectValue(Policy, options);
-            if (Optional.IsDefined(Annotations))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
-                writer.WriteObjectValue(Annotations, options);
+                writer.WriteStartObject();
+                foreach (var item in Annotations)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -135,7 +141,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             RaiAcsPolicyTarget policyTarget = default;
             RaiAcsPolicyTargetKind policyTargetKind = default;
             RaiAcsPolicyBinding policy = default;
-            RaiAcsEmptyObject annotations = default;
+            IDictionary<string, RaiAcsAnnotationBinding> annotations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,7 +166,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    annotations = RaiAcsEmptyObject.DeserializeRaiAcsEmptyObject(prop.Value, options);
+                    Dictionary<string, RaiAcsAnnotationBinding> dictionary = new Dictionary<string, RaiAcsAnnotationBinding>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, RaiAcsAnnotationBinding.DeserializeRaiAcsAnnotationBinding(prop0.Value, options));
+                    }
+                    annotations = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
@@ -168,7 +179,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RaiAcsInterventionPoint(policyTarget, policyTargetKind, policy, annotations, additionalBinaryDataProperties);
+            return new RaiAcsInterventionPoint(policyTarget, policyTargetKind, policy, annotations ?? new ChangeTrackingDictionary<string, RaiAcsAnnotationBinding>(), additionalBinaryDataProperties);
         }
     }
 }

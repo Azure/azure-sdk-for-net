@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private ToolControls _toolControls;
+        private bool _toolControlsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesProjectProperties"/>. </summary>
         public CognitiveServicesProjectProperties()
@@ -30,8 +32,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="endpoints"> The list of endpoint for this Cognitive Services Project. </param>
         /// <param name="isDefault"> Indicates whether the project is the default project for the account. </param>
         /// <param name="capabilitySettings"> Effective agent capability settings for the project. Optional partial override of the account defaults; omitted fields inherit from the parent account when present. Settable only at create time. </param>
+        /// <param name="toolControls"> The project-level tool access policy. Omitting this property in a PUT request clears the policy. In PATCH requests, omission preserves the policy and an explicit null clears it. Responses omit this property when no policy is configured. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesProjectProperties(ServiceAccountProvisioningState? provisioningState, string displayName, string description, IReadOnlyDictionary<string, string> endpoints, bool? isDefault, CognitiveServicesAgentCapabilitySettings capabilitySettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesProjectProperties(ServiceAccountProvisioningState? provisioningState, string displayName, string description, IReadOnlyDictionary<string, string> endpoints, bool? isDefault, CognitiveServicesAgentCapabilitySettings capabilitySettings, ToolControls toolControls, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
@@ -39,6 +42,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Endpoints = endpoints;
             IsDefault = isDefault;
             CapabilitySettings = capabilitySettings;
+            _toolControls = toolControls;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -65,5 +69,20 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Effective agent capability settings for the project. Optional partial override of the account defaults; omitted fields inherit from the parent account when present. Settable only at create time. </summary>
         [WirePath("capabilitySettings")]
         public CognitiveServicesAgentCapabilitySettings CapabilitySettings { get; set; }
+
+        /// <summary> The project-level tool access policy. Omitting this property in a PUT request clears the policy. In PATCH requests, omission preserves the policy and an explicit null clears it. Responses omit this property when no policy is configured. </summary>
+        [WirePath("toolControls")]
+        public ToolControls ToolControls
+        {
+            get
+            {
+                return _toolControls;
+            }
+            set
+            {
+                _toolControls = value;
+                _toolControlsIsDefined = true;
+            }
+        }
     }
 }
