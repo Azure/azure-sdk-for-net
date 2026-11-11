@@ -8,10 +8,9 @@ const path = require('node:path');
 const { spawn } = require('node:child_process');
 const crypto = require('node:crypto');
 const { StringDecoder } = require('node:string_decoder');
-const { verifyDelivery } = require('./ReviewDelivery.cjs');
+const { verifyDelivery, snapshotDigest, MAX_BATCH_BYTES } = require('./ReviewDelivery.cjs');
 
 const MAX_BATCH_ITEMS = 8;
-const MAX_BATCH_BYTES = 48000;
 // The pinned runner needs 5s shutdown grace plus up to 2s pipe draining to
 // terminate the separately detached CLI group that only it owns.
 const WORKER_SHUTDOWN_GRACE_MS = 10000;
@@ -189,7 +188,7 @@ function assertPublication(snapshot, progress, output, agentResult) {
   // failed/tainted batch publish replies or thread actions, even if it wrote a
   // plausible progress file. The job result comes from Actions, not the model.
   if (agentResult !== 'success') throw new Error('Review controller did not complete successfully; refusing all publication.');
-  const digest = crypto.createHash('sha256').update(JSON.stringify(snapshot)).digest('hex');
+  const digest = snapshotDigest(snapshot);
   if (progress.snapshot_sha256 !== digest || progress.head_sha !== snapshot.head_sha || progress.base_sha !== snapshot.base_sha) {
     throw new Error('Review progress does not belong to the captured snapshot.');
   }
@@ -331,7 +330,7 @@ async function main() {
   const contextRoot = process.env.GH_AW_REVIEW_CONTEXT || path.join(__dirname, 'review-input');
   const snapshot = JSON.parse(fs.readFileSync(path.join(contextRoot, 'snapshot.json'), 'utf8'));
   const work = makeWorklist(snapshot);
-  const digest = crypto.createHash('sha256').update(JSON.stringify(snapshot)).digest('hex');
+  const digest = snapshotDigest(snapshot);
   const harness = path.join(__dirname, 'copilot_harness.cjs');
   const softDeadline = Date.now() + 22 * 60 * 1000;
   let invocation = 0;

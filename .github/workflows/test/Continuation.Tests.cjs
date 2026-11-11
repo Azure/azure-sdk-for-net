@@ -2,8 +2,9 @@
 
 const assert = require('node:assert/strict');
 const { test } = require('node:test');
-const { runQueue, makeWorklist, buildOutputs, assertPublication, workerArguments, parseWorkerResult, workerPrompt } = require('../pr-re-review/ReviewContinuation.cjs');
+const { runQueue, makeWorklist, nextBatch, buildOutputs, assertPublication, workerArguments, parseWorkerResult, workerPrompt } = require('../pr-re-review/ReviewContinuation.cjs');
 const crypto = require('node:crypto');
+const { requiredInputs, snapshotDigest } = require('../pr-re-review/ReviewDelivery.cjs');
 
 const snapshot = (count = 106) => ({
   pull_number: 64192, head_sha: 'a'.repeat(40), base_sha: 'b'.repeat(40), changed_files: count,
@@ -102,6 +103,42 @@ test('batches by patch size as well as file count without dropping oversized fil
   assert.ok(Math.max(...sizes) <= 8);
 });
 
+test('batches at the exact serialized UTF-8 limit and isolates oversized files', () => {
+  const item = (index, bytes, multibyte = false) => {
+    const value = { id: `file:${index}`, file: { filename: `src/${index}.cs`, status: 'modified', patch: '' } };
+    const remaining = bytes - Buffer.byteLength(JSON.stringify(value));
+    assert.ok(remaining >= 0);
+    value.file.patch = multibyte ? 'é'.repeat(Math.floor(remaining / 2)) + (remaining % 2 ? 'x' : '') : 'x'.repeat(remaining);
+    assert.equal(Buffer.byteLength(JSON.stringify(value)), bytes);
+    return value;
+  };
+  const small = item(0, 24000), at = item(1, 24000, true), over = item(1, 24001, true);
+  const huge = item(0, 48001), next = item(1, 100);
+  assert.deepEqual(nextBatch([small, at]), [small, at]);
+  assert.deepEqual(nextBatch([small, over]), [small]);
+  assert.deepEqual(nextBatch([huge, next]), [huge]);
+  assert.deepEqual(nextBatch([next]), [next]);
+});
+
+test('offloading and receipt requirements agree at UTF-8 byte boundaries', () => {
+  for (const patch of ['x'.repeat(47999), 'x'.repeat(48000), 'x'.repeat(48001), 'é'.repeat(23999) + 'x', 'é'.repeat(24000), 'é'.repeat(24000) + 'x']) {
+    const s = snapshot(1); s.threads = []; s.files[0].patch = patch;
+    const item = makeWorklist(s)[0], bytes = Buffer.byteLength(patch);
+    const context = JSON.parse(workerPrompt('', s, [item], 'a'.repeat(32)).split('\n').at(-1));
+    const assigned = context.assigned[0].file, requirements = requiredInputs(s, item);
+    if (bytes <= 48000) {
+      assert.equal(assigned.patch, patch);
+      assert.equal(assigned.patch_path, undefined);
+      assert.deepEqual(requirements, []);
+    } else {
+      assert.equal(assigned.patch, undefined);
+      assert.match(assigned.patch_path, /file-0\.patch$/);
+      assert.equal(requirements.length, 1);
+      assert.equal(requirements[0].kind, 'patch');
+    }
+  }
+});
+
 test('omitted patches and deleted/renamed files remain explicit work items', () => {
   const s = snapshot(3);
   delete s.files[0].patch;
@@ -178,6 +215,18 @@ test('verifies all prior threads before starting the fresh full-file pass', asyn
   });
   assert.deepEqual(order[0], ['thread:0']);
   assert.ok(order[1].every(id => id.startsWith('file:')));
+});
+
+test('publication identity matches canonical snapshot digest with Unicode and property ordering', () => {
+  const s = snapshot(1); s.files[0].filename = 'src/é😀.cs'; s.files[0].patch = 'hé😀\ud83d';
+  const progress = { ...complete(makeWorklist(s)), head_sha: s.head_sha, base_sha: s.base_sha,
+    snapshot_sha256: crypto.createHash('sha256').update(JSON.stringify(s)).digest('hex') };
+  assert.equal(snapshotDigest(s), progress.snapshot_sha256);
+  const output = { items: buildOutputs(s, progress), errors: [] };
+  assert.doesNotThrow(() => assertPublication(s, progress, output, 'success'));
+  const reordered = { base_sha: s.base_sha, ...s };
+  assert.notEqual(snapshotDigest(reordered), progress.snapshot_sha256);
+  assert.throws(() => assertPublication(reordered, progress, output, 'success'), /captured snapshot/);
 });
 
 test('publication rejects every write from a failed or incomplete controller', () => {

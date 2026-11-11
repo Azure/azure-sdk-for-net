@@ -1,9 +1,10 @@
 'use strict';
 
-// Define required history/patch inputs using the reader's JavaScript encoding,
-// then invoke the PowerShell receipt verifier with bounded process supervision.
+// Define canonical snapshot hashes and history/patch input requirements, then
+// invoke the PowerShell receipt verifier with bounded process supervision.
 // The receipt directory is read-only to workers; each invocation has a fresh nonce.
 const crypto = require('node:crypto');
+// Keep batch sizing and the threshold for receipt-backed offloading aligned.
 const MAX_BATCH_BYTES = 48000;
 const digest = value => crypto.createHash('sha256').update(value).digest('hex');
 const snapshotDigest = snapshot => digest(JSON.stringify(snapshot));
@@ -116,4 +117,4 @@ async function verifyDelivery(snapshot, batch, results, nonce, receipts, { deadl
     child.stdin.end(payload);
   });
 }
-module.exports = { snapshotDigest, requiredInputs, verifyDelivery };
+module.exports = { MAX_BATCH_BYTES, snapshotDigest, requiredInputs, verifyDelivery };
