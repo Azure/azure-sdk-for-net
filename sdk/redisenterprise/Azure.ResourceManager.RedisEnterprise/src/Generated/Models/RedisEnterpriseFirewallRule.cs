@@ -12,16 +12,16 @@ using Azure.ResourceManager.RedisEnterprise;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> A firewall rule associated with the cluster. </summary>
-    public partial class FirewallRule
+    public partial class RedisEnterpriseFirewallRule
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FirewallRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseFirewallRule"/>. </summary>
         /// <param name="name"> The name of the firewall rule, unique within the cluster ignoring case. Must be 1-80 characters and contain only letters, numbers, hyphens, or underscores. </param>
         /// <param name="sourceAddressPrefix"> An IPv4 address (for example, "203.0.113.1"), IPv4 CIDR prefix (for example, "203.0.113.0/24"), or Azure service tag (for example, "AzureCloud"). IPv6 addresses are not supported. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="sourceAddressPrefix"/> is null. </exception>
-        public FirewallRule(string name, string sourceAddressPrefix)
+        public RedisEnterpriseFirewallRule(string name, string sourceAddressPrefix)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(sourceAddressPrefix, nameof(sourceAddressPrefix));
@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             SourceAddressPrefix = sourceAddressPrefix;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FirewallRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseFirewallRule"/>. </summary>
         /// <param name="name"> The name of the firewall rule, unique within the cluster ignoring case. Must be 1-80 characters and contain only letters, numbers, hyphens, or underscores. </param>
         /// <param name="sourceAddressPrefix"> An IPv4 address (for example, "203.0.113.1"), IPv4 CIDR prefix (for example, "203.0.113.0/24"), or Azure service tag (for example, "AzureCloud"). IPv6 addresses are not supported. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FirewallRule(string name, string sourceAddressPrefix, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RedisEnterpriseFirewallRule(string name, string sourceAddressPrefix, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             SourceAddressPrefix = sourceAddressPrefix;

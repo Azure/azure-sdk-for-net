@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// Firewall rule changes cannot be combined with scaling or encryption changes in the same update request.
         /// </summary>
         [WirePath("properties.firewallRules")]
-        public IList<FirewallRule> FirewallRules
+        public IList<RedisEnterpriseFirewallRule> FirewallRules
         {
             get
             {

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
                 location: AzureLocation.EastUS,
                 sku: new RedisEnterpriseSku(RedisEnterpriseSkuName.BalancedB1),
                 publicNetworkAccess: RedisEnterprisePublicNetworkAccess.Enabled,
-                firewallRules: new[] { new FirewallRule("allow-source", sourceAddressPrefix) });
+                firewallRules: new[] { new RedisEnterpriseFirewallRule("allow-source", sourceAddressPrefix) });
 
             BinaryData json = ModelReaderWriter.Write(data, WireOptions, AzureResourceManagerRedisEnterpriseContext.Default);
             using JsonDocument document = JsonDocument.Parse(json);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             if (!useFactory && state != "omitted")
             {
                 data.FirewallRules.Clear();
-                foreach (FirewallRule rule in CreateFirewallRules(state))
+                foreach (RedisEnterpriseFirewallRule rule in CreateFirewallRules(state))
                 {
                     data.FirewallRules.Add(rule);
                 }
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             if (!useFactory && state != "omitted")
             {
                 patch.FirewallRules.Clear();
-                foreach (FirewallRule rule in CreateFirewallRules(state))
+                foreach (RedisEnterpriseFirewallRule rule in CreateFirewallRules(state))
                 {
                     patch.FirewallRules.Add(rule);
                 }
@@ -208,14 +208,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             var data = new RedisEnterpriseClusterData(
                 AzureLocation.EastUS, new RedisEnterpriseSku(RedisEnterpriseSkuName.BalancedB1));
             var patch = new RedisEnterpriseClusterPatch();
-            IList<FirewallRule> rules = isPatch ? patch.FirewallRules : data.FirewallRules;
+            IList<RedisEnterpriseFirewallRule> rules = isPatch ? patch.FirewallRules : data.FirewallRules;
             if (action == "clear")
             {
                 rules.Clear();
             }
             else if (action == "remove-last")
             {
-                var rule = new FirewallRule("allow-ip", "203.0.113.1");
+                var rule = new RedisEnterpriseFirewallRule("allow-ip", "203.0.113.1");
                 rules.Add(rule);
                 rules.Remove(rule);
             }
@@ -237,15 +237,15 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             var patch = new RedisEnterpriseClusterPatch();
             if (isPatch)
             {
-                patch.FirewallRules.Add(new FirewallRule("old-rule", "203.0.113.1"));
+                patch.FirewallRules.Add(new RedisEnterpriseFirewallRule("old-rule", "203.0.113.1"));
                 patch.FirewallRules.Clear();
-                patch.FirewallRules.Add(new FirewallRule("replacement", "198.51.100.1"));
+                patch.FirewallRules.Add(new RedisEnterpriseFirewallRule("replacement", "198.51.100.1"));
             }
             else
             {
-                data.FirewallRules.Add(new FirewallRule("old-rule", "203.0.113.1"));
+                data.FirewallRules.Add(new RedisEnterpriseFirewallRule("old-rule", "203.0.113.1"));
                 data.FirewallRules.Clear();
-                data.FirewallRules.Add(new FirewallRule("replacement", "198.51.100.1"));
+                data.FirewallRules.Add(new RedisEnterpriseFirewallRule("replacement", "198.51.100.1"));
             }
 
             BinaryData json = isPatch
@@ -287,11 +287,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
         {
             var patch = useFactory
                 ? ArmRedisEnterpriseModelFactory.RedisEnterpriseClusterPatch(
-                    firewallRules: new[] { new FirewallRule("allow-subnet", "203.0.113.0/24") })
+                    firewallRules: new[] { new RedisEnterpriseFirewallRule("allow-subnet", "203.0.113.0/24") })
                 : new RedisEnterpriseClusterPatch();
             if (!useFactory)
             {
-                patch.FirewallRules.Add(new FirewallRule("allow-subnet", "203.0.113.0/24"));
+                patch.FirewallRules.Add(new RedisEnterpriseFirewallRule("allow-subnet", "203.0.113.0/24"));
             }
 
             using JsonDocument document = JsonDocument.Parse(
@@ -302,9 +302,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             Assert.AreEqual("203.0.113.0/24", rules[0].GetProperty("sourceAddressPrefix").GetString());
         }
 
-        private static IList<FirewallRule> CreateFirewallRules(string state)
-            => state == "empty" ? Array.Empty<FirewallRule>()
-                : new[] { new FirewallRule("allow-ip", "203.0.113.1"), new FirewallRule("allow-subnet", "203.0.113.0/24") };
+        private static IList<RedisEnterpriseFirewallRule> CreateFirewallRules(string state)
+            => state == "empty" ? Array.Empty<RedisEnterpriseFirewallRule>()
+                : new[] { new RedisEnterpriseFirewallRule("allow-ip", "203.0.113.1"), new RedisEnterpriseFirewallRule("allow-subnet", "203.0.113.0/24") };
 
         private static void AssertFirewallRulesWireState(BinaryData json, string state, string publicNetworkAccess)
         {

@@ -403,10 +403,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> A firewall rule associated with the cluster. </summary>
         /// <param name="name"> The name of the firewall rule, unique within the cluster ignoring case. Must be 1-80 characters and contain only letters, numbers, hyphens, or underscores. </param>
         /// <param name="sourceAddressPrefix"> An IPv4 address (for example, "203.0.113.1"), IPv4 CIDR prefix (for example, "203.0.113.0/24"), or Azure service tag (for example, "AzureCloud"). IPv6 addresses are not supported. </param>
-        /// <returns> A new <see cref="Models.FirewallRule"/> instance for mocking. </returns>
-        public static FirewallRule FirewallRule(string name = default, string sourceAddressPrefix = default)
+        /// <returns> A new <see cref="Models.RedisEnterpriseFirewallRule"/> instance for mocking. </returns>
+        public static RedisEnterpriseFirewallRule RedisEnterpriseFirewallRule(string name = default, string sourceAddressPrefix = default)
         {
-            return new FirewallRule(name, sourceAddressPrefix, default);
+            return new RedisEnterpriseFirewallRule(name, sourceAddressPrefix, default);
         }
 
         /// <summary> SKU parameters supplied to the create Redis Enterprise cluster operation. </summary>

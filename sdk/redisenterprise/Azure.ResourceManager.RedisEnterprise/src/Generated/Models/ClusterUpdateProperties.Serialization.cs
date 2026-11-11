@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             RedisEnterpriseTlsVersion? minimumTlsVersion = default;
             ClusterPropertiesEncryption encryption = default;
             MaintenanceConfiguration maintenanceConfiguration = default;
-            IList<FirewallRule> firewallRules = default;
+            IList<RedisEnterpriseFirewallRule> firewallRules = default;
             string hostName = default;
             RedisEnterpriseProvisioningStatus? provisioningState = default;
             RedisEnterpriseRedundancyMode? redundancyMode = default;
@@ -173,10 +173,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    List<FirewallRule> array = new List<FirewallRule>();
+                    List<RedisEnterpriseFirewallRule> array = new List<RedisEnterpriseFirewallRule>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(FirewallRule.DeserializeFirewallRule(item, options));
+                        array.Add(RedisEnterpriseFirewallRule.DeserializeRedisEnterpriseFirewallRule(item, options));
                     }
                     firewallRules = array;
                     continue;
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 minimumTlsVersion,
                 encryption,
                 maintenanceConfiguration,
-                firewallRules ?? new ChangeTrackingList<FirewallRule>(),
+                firewallRules ?? new ChangeTrackingList<RedisEnterpriseFirewallRule>(),
                 hostName,
                 provisioningState,
                 redundancyMode,

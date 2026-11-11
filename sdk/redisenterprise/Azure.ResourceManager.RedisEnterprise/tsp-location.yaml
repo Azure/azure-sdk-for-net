@@ -1,5 +1,5 @@
 directory: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise
-commit: d041be265dd43bd327700a880c4632952b03aab7
+commit: 3a620920ff6388258a1fa9ba4ff07a91deb95965
 repo: Azure/azure-rest-api-specs
 additionalDirectories:
 

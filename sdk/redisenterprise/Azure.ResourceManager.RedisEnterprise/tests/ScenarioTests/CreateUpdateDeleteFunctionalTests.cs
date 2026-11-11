@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             Collection = ResourceGroup.GetRedisEnterpriseClusters();
         }
 
-        private RedisEnterpriseClusterData CreateFirewallClusterData(params FirewallRule[] rules)
+        private RedisEnterpriseClusterData CreateFirewallClusterData(params RedisEnterpriseFirewallRule[] rules)
         {
             var data = new RedisEnterpriseClusterData(
                 DefaultLocation,
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             {
                 PublicNetworkAccess = RedisEnterprisePublicNetworkAccess.Enabled
             };
-            foreach (FirewallRule rule in rules)
+            foreach (RedisEnterpriseFirewallRule rule in rules)
             {
                 data.FirewallRules.Add(rule);
             }
             return data;
         }
 
-        private static void AssertFirewallRules(RedisEnterpriseClusterResource cluster, params FirewallRule[] expected)
+        private static void AssertFirewallRules(RedisEnterpriseClusterResource cluster, params RedisEnterpriseFirewallRule[] expected)
         {
             Assert.That(cluster.Data.FirewallRules, Is.Not.Null);
             Assert.That(
@@ -290,9 +290,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
                 string clusterName = Recording.GenerateAssetName("RedisFirewall");
                 var initialRules = new[]
                 {
-                    new FirewallRule("allow-ip", "203.0.113.1"),
-                    new FirewallRule("allow-subnet", "203.0.113.0/24"),
-                    new FirewallRule("allow-service", "AzureCloud")
+                    new RedisEnterpriseFirewallRule("allow-ip", "203.0.113.1"),
+                    new RedisEnterpriseFirewallRule("allow-subnet", "203.0.113.0/24"),
+                    new RedisEnterpriseFirewallRule("allow-service", "AzureCloud")
                 };
                 var data = CreateFirewallClusterData(initialRules);
                 var cluster = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data)).Value;
@@ -307,11 +307,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
 
                 var replacementRules = new[]
                 {
-                    new FirewallRule("allow-ip", "203.0.113.2"),
-                    new FirewallRule("allow-new-subnet", "198.51.100.0/24")
+                    new RedisEnterpriseFirewallRule("allow-ip", "203.0.113.2"),
+                    new RedisEnterpriseFirewallRule("allow-new-subnet", "198.51.100.0/24")
                 };
                 var replacement = new RedisEnterpriseClusterPatch();
-                foreach (FirewallRule rule in replacementRules)
+                foreach (RedisEnterpriseFirewallRule rule in replacementRules)
                 {
                     replacement.FirewallRules.Add(rule);
                 }
@@ -357,12 +357,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             {
                 string clusterName = Recording.GenerateAssetName("RedisFirewall");
                 var data = CreateFirewallClusterData(
-                    new FirewallRule("allow-ip", "203.0.113.1"),
-                    new FirewallRule("allow-subnet", "203.0.113.0/24"));
+                    new RedisEnterpriseFirewallRule("allow-ip", "203.0.113.1"),
+                    new RedisEnterpriseFirewallRule("allow-subnet", "203.0.113.0/24"));
                 var cluster = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data)).Value;
                 AssertFirewallRules(cluster, data.FirewallRules.ToArray());
 
-                var replacementRule = new FirewallRule("allow-ip", "198.51.100.1");
+                var replacementRule = new RedisEnterpriseFirewallRule("allow-ip", "198.51.100.1");
                 data.FirewallRules.Clear();
                 data.FirewallRules.Add(replacementRule);
                 cluster = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data)).Value;
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             try
             {
                 string clusterName = Recording.GenerateAssetName("RedisFirewall");
-                var rule = new FirewallRule("allow-ip", "203.0.113.1");
+                var rule = new RedisEnterpriseFirewallRule("allow-ip", "203.0.113.1");
                 var data = CreateFirewallClusterData(rule);
                 var cluster = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data)).Value;
                 AssertFirewallRules(cluster, rule);
@@ -436,9 +436,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
                 };
                 if (specifyFirewallRules)
                 {
-                    enablePublicNetworkAccess.FirewallRules.Add(new FirewallRule("allow-new-ip", "198.51.100.1"));
+                    enablePublicNetworkAccess.FirewallRules.Add(new RedisEnterpriseFirewallRule("allow-new-ip", "198.51.100.1"));
                 }
-                FirewallRule[] expectedRules = enablePublicNetworkAccess.FirewallRules.ToArray();
+                RedisEnterpriseFirewallRule[] expectedRules = enablePublicNetworkAccess.FirewallRules.ToArray();
                 cluster = (await cluster.UpdateAsync(WaitUntil.Completed, enablePublicNetworkAccess)).Value;
                 AssertFirewallRules(cluster, expectedRules);
                 cluster = (await cluster.GetAsync()).Value;
