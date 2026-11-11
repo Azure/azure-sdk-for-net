@@ -44,6 +44,10 @@ namespace Azure.Compute.Batch
             {
                 Version = version;
             }
+            if (section["Audience"] is string audience)
+            {
+                Audience = new BatchAudience(audience);
+            }
             ConfigureLogging();
         }
 

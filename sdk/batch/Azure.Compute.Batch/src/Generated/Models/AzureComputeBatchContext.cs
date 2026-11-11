@@ -158,7 +158,6 @@ namespace Azure.Compute.Batch
     [ModelReaderWriterBuildable(typeof(OutputFileDestination))]
     [ModelReaderWriterBuildable(typeof(OutputFileUploadConfig))]
     [ModelReaderWriterBuildable(typeof(OutputFileUploadHeader))]
-    [ModelReaderWriterBuildable(typeof(Placement))]
     [ModelReaderWriterBuildable(typeof(ProxyAgentSettings))]
     [ModelReaderWriterBuildable(typeof(RecentBatchJob))]
     [ModelReaderWriterBuildable(typeof(ResiliencyPolicy))]
@@ -182,6 +181,7 @@ namespace Azure.Compute.Batch
     [ModelReaderWriterBuildable(typeof(WindowsConfiguration))]
     [ModelReaderWriterBuildable(typeof(WindowsUserConfiguration))]
     [ModelReaderWriterBuildable(typeof(ZoneAllocationPolicy))]
+    [ModelReaderWriterBuildable(typeof(ZonePlacement))]
     public partial class AzureComputeBatchContext : ModelReaderWriterContext
     {
     }

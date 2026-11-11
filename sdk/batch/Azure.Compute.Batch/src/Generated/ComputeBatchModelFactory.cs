@@ -151,7 +151,7 @@ namespace Azure.Compute.Batch
         /// On PATCH, omitting resiliencyPolicy preserves the existing resiliency policy independently of whether placement is supplied.
         /// </param>
         /// <returns> A new <see cref="Batch.VirtualMachineConfiguration"/> instance for mocking. </returns>
-        public static VirtualMachineConfiguration VirtualMachineConfiguration(BatchVmImageReference imageReference = default, string nodeAgentSkuId = default, WindowsConfiguration windowsConfiguration = default, IEnumerable<DataDisk> dataDisks = default, string licenseType = default, BatchContainerConfiguration containerConfiguration = default, DiskEncryptionConfiguration diskEncryptionConfiguration = default, BatchNodePlacementConfiguration nodePlacementConfiguration = default, IEnumerable<VMExtension> extensions = default, BatchOsDisk osDisk = default, SecurityProfile securityProfile = default, ServiceArtifactReference serviceArtifactReference = default, HardwareProfile hardwareProfile = default, Placement placement = default, ResiliencyPolicy resiliencyPolicy = default)
+        public static VirtualMachineConfiguration VirtualMachineConfiguration(BatchVmImageReference imageReference = default, string nodeAgentSkuId = default, WindowsConfiguration windowsConfiguration = default, IEnumerable<DataDisk> dataDisks = default, string licenseType = default, BatchContainerConfiguration containerConfiguration = default, DiskEncryptionConfiguration diskEncryptionConfiguration = default, BatchNodePlacementConfiguration nodePlacementConfiguration = default, IEnumerable<VMExtension> extensions = default, BatchOsDisk osDisk = default, SecurityProfile securityProfile = default, ServiceArtifactReference serviceArtifactReference = default, HardwareProfile hardwareProfile = default, ZonePlacement placement = default, ResiliencyPolicy resiliencyPolicy = default)
         {
             dataDisks ??= new ChangeTrackingList<DataDisk>();
             extensions ??= new ChangeTrackingList<VMExtension>();
@@ -271,7 +271,7 @@ namespace Azure.Compute.Batch
         /// <param name="registryServerUri"> The registry URL. If omitted, the default is "docker.io". </param>
         /// <param name="identityReference"> The reference to the user assigned identity to use to access an Azure Container Registry instead of username and password. </param>
         /// <returns> A new <see cref="Batch.ContainerRegistryReference"/> instance for mocking. </returns>
-        public static ContainerRegistryReference ContainerRegistryReference(string username = default, string password = default, Uri registryServerUri = default, BatchNodeIdentityReference identityReference = default)
+        public static ContainerRegistryReference ContainerRegistryReference(string username = default, string password = default, string registryServerUri = default, BatchNodeIdentityReference identityReference = default)
         {
             return new ContainerRegistryReference(username, password, registryServerUri, identityReference, additionalBinaryDataProperties: null);
         }
@@ -460,10 +460,10 @@ namespace Azure.Compute.Batch
 
         /// <summary> The placement policy for Compute Nodes in a Pool. </summary>
         /// <param name="zonePlacementPolicy"> The zone placement policy. Auto delegates zone selection and balancing to the Virtual Machine Scale Set. </param>
-        /// <returns> A new <see cref="Batch.Placement"/> instance for mocking. </returns>
-        public static Placement Placement(ZonePlacementPolicyType zonePlacementPolicy = default)
+        /// <returns> A new <see cref="Batch.ZonePlacement"/> instance for mocking. </returns>
+        public static ZonePlacement ZonePlacement(ZonePlacementPolicyType zonePlacementPolicy = default)
         {
-            return new Placement(zonePlacementPolicy, additionalBinaryDataProperties: null);
+            return new ZonePlacement(zonePlacementPolicy, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The resiliency policy for Compute Nodes in a Pool. </summary>
@@ -2725,7 +2725,7 @@ namespace Azure.Compute.Batch
         /// <param name="frontendPort"> The public port number of the endpoint. </param>
         /// <param name="backendPort"> The backend port number of the endpoint. </param>
         /// <returns> A new <see cref="Batch.InboundEndpoint"/> instance for mocking. </returns>
-        public static InboundEndpoint InboundEndpoint(string name = default, InboundEndpointProtocol protocol = default, IPAddress publicIpAddress = default, string publicFqdn = default, int frontendPort = default, int backendPort = default)
+        public static InboundEndpoint InboundEndpoint(string name = default, InboundEndpointProtocol protocol = default, string publicIpAddress = default, string publicFqdn = default, int frontendPort = default, int backendPort = default)
         {
             return new InboundEndpoint(
                 name,

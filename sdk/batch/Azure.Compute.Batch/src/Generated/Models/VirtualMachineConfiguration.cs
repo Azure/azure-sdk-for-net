@@ -66,7 +66,7 @@ namespace Azure.Compute.Batch
         /// On PATCH, omitting resiliencyPolicy preserves the existing resiliency policy independently of whether placement is supplied.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineConfiguration(BatchVmImageReference imageReference, string nodeAgentSkuId, WindowsConfiguration windowsConfiguration, IList<DataDisk> dataDisks, string licenseType, BatchContainerConfiguration containerConfiguration, DiskEncryptionConfiguration diskEncryptionConfiguration, BatchNodePlacementConfiguration nodePlacementConfiguration, IList<VMExtension> extensions, BatchOsDisk osDisk, SecurityProfile securityProfile, ServiceArtifactReference serviceArtifactReference, HardwareProfile hardwareProfile, Placement placement, ResiliencyPolicy resiliencyPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineConfiguration(BatchVmImageReference imageReference, string nodeAgentSkuId, WindowsConfiguration windowsConfiguration, IList<DataDisk> dataDisks, string licenseType, BatchContainerConfiguration containerConfiguration, DiskEncryptionConfiguration diskEncryptionConfiguration, BatchNodePlacementConfiguration nodePlacementConfiguration, IList<VMExtension> extensions, BatchOsDisk osDisk, SecurityProfile securityProfile, ServiceArtifactReference serviceArtifactReference, HardwareProfile hardwareProfile, ZonePlacement placement, ResiliencyPolicy resiliencyPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImageReference = imageReference;
             NodeAgentSkuId = nodeAgentSkuId;
@@ -138,7 +138,7 @@ namespace Azure.Compute.Batch
         /// On Pool creation, if placement is omitted, Batch uses nodePlacementConfiguration when it is specified; otherwise, the Pool uses Regional placement, which provides no availability zone distribution guarantee. This property cannot be combined with nodePlacementConfiguration.
         /// On PATCH, omitting placement preserves the existing placement policy, including when virtualMachineConfiguration is supplied.
         /// </summary>
-        public Placement Placement { get; set; }
+        public ZonePlacement Placement { get; set; }
 
         /// <summary>
         /// The resiliency policy for Compute Nodes in the Pool. This property requires placement.zonePlacementPolicy to be Auto.

@@ -20,7 +20,6 @@ namespace Azure.Compute.Batch
         private const string TerminateValue = "terminate";
         /// <summary> Allow currently running Tasks to complete. Schedule no new Tasks while waiting. Deallocate the Compute Node when all Tasks have completed. </summary>
         private const string TaskCompletionValue = "taskcompletion";
-        private const string RetainedDataValue = "retaineddata";
 
         /// <summary> Initializes a new instance of <see cref="BatchNodeDeallocateOption"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -40,9 +39,6 @@ namespace Azure.Compute.Batch
 
         /// <summary> Allow currently running Tasks to complete. Schedule no new Tasks while waiting. Deallocate the Compute Node when all Tasks have completed. </summary>
         public static BatchNodeDeallocateOption TaskCompletion { get; } = new BatchNodeDeallocateOption(TaskCompletionValue);
-
-        /// <summary> Gets the RetainedData. </summary>
-        public static BatchNodeDeallocateOption RetainedData { get; } = new BatchNodeDeallocateOption(RetainedDataValue);
 
         /// <summary> Determines if two <see cref="BatchNodeDeallocateOption"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

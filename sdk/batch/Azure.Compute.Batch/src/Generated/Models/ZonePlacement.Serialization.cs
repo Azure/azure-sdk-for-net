@@ -13,56 +13,56 @@ using System.Text.Json;
 namespace Azure.Compute.Batch
 {
     /// <summary> The placement policy for Compute Nodes in a Pool. </summary>
-    public partial class Placement : IJsonModel<Placement>
+    public partial class ZonePlacement : IJsonModel<ZonePlacement>
     {
-        /// <summary> Initializes a new instance of <see cref="Placement"/> for deserialization. </summary>
-        internal Placement()
+        /// <summary> Initializes a new instance of <see cref="ZonePlacement"/> for deserialization. </summary>
+        internal ZonePlacement()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Placement PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ZonePlacement PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Placement>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ZonePlacement>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePlacement(document.RootElement, options);
+                        return DeserializeZonePlacement(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Placement)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ZonePlacement)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Placement>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ZonePlacement>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Placement)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ZonePlacement)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Placement>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ZonePlacement>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Placement IPersistableModel<Placement>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ZonePlacement IPersistableModel<ZonePlacement>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Placement>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ZonePlacement>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Placement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ZonePlacement>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -73,10 +73,10 @@ namespace Azure.Compute.Batch
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Placement>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ZonePlacement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Placement)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ZonePlacement)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("zonePlacementPolicy"u8);
             writer.WriteStringValue(ZonePlacementPolicy.ToString());
@@ -99,24 +99,24 @@ namespace Azure.Compute.Batch
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Placement IJsonModel<Placement>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ZonePlacement IJsonModel<ZonePlacement>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Placement JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ZonePlacement JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Placement>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ZonePlacement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Placement)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ZonePlacement)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePlacement(document.RootElement, options);
+            return DeserializeZonePlacement(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static Placement DeserializePlacement(JsonElement element, ModelReaderWriterOptions options)
+        internal static ZonePlacement DeserializeZonePlacement(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -136,7 +136,7 @@ namespace Azure.Compute.Batch
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new Placement(zonePlacementPolicy, additionalBinaryDataProperties);
+            return new ZonePlacement(zonePlacementPolicy, additionalBinaryDataProperties);
         }
     }
 }

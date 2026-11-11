@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.Compute.Batch
 {
     /// <summary> The placement policy for Compute Nodes in a Pool. </summary>
-    public partial class Placement
+    public partial class ZonePlacement
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Placement"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ZonePlacement"/>. </summary>
         /// <param name="zonePlacementPolicy"> The zone placement policy. Auto delegates zone selection and balancing to the Virtual Machine Scale Set. </param>
-        public Placement(ZonePlacementPolicyType zonePlacementPolicy)
+        public ZonePlacement(ZonePlacementPolicyType zonePlacementPolicy)
         {
             ZonePlacementPolicy = zonePlacementPolicy;
         }
 
-        /// <summary> Initializes a new instance of <see cref="Placement"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ZonePlacement"/>. </summary>
         /// <param name="zonePlacementPolicy"> The zone placement policy. Auto delegates zone selection and balancing to the Virtual Machine Scale Set. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Placement(ZonePlacementPolicyType zonePlacementPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ZonePlacement(ZonePlacementPolicyType zonePlacementPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ZonePlacementPolicy = zonePlacementPolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

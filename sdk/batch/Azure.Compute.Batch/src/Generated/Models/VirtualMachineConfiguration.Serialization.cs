@@ -215,7 +215,7 @@ namespace Azure.Compute.Batch
             SecurityProfile securityProfile = default;
             ServiceArtifactReference serviceArtifactReference = default;
             HardwareProfile hardwareProfile = default;
-            Placement placement = default;
+            ZonePlacement placement = default;
             ResiliencyPolicy resiliencyPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -341,7 +341,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    placement = Placement.DeserializePlacement(prop.Value, options);
+                    placement = ZonePlacement.DeserializeZonePlacement(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("resiliencyPolicy"u8))
