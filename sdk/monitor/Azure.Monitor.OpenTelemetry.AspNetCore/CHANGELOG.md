@@ -13,6 +13,9 @@
 
 - `OTEL_SERVICE_NAME` and `OTEL_RESOURCE_ATTRIBUTES` now take precedence over resource attributes detected by the Azure App Service, Container Apps, and VM resource detectors. Applications that set these variables will see Cloud Role Name and/or Cloud Role Instance change in Application Insights to the configured values.
 
+- Fixed `itemCount` in Application Insights when telemetry is sampled. Previously, with rate-limited sampling (`TracesPerSecond`, the default) kept requests and dependencies always had `itemCount` 1. When `SamplingRatio` was also set, `itemCount` was taken from `SamplingRatio` even though rate-limited sampling was the one in effect. Each item now reports the rate its span was actually sampled at, and logs kept by trace-based log sampling report the rate of their span. See the `Azure.Monitor.OpenTelemetry.Exporter` changelog for details.
+  ([#59110](https://github.com/Azure/azure-sdk-for-net/issues/59110))
+
 ### Other Changes
 
 ## 1.6.0 (2026-07-27)

@@ -70,7 +70,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
         /// <summary>
         /// Extension methods to simplify registering of <see cref="AzureMonitorTraceExporter"/> with <see cref="MockTransmitter"/> for unit tests.
         /// </summary>
-        internal static TracerProviderBuilder AddAzureMonitorTraceExporterForTest(this TracerProviderBuilder builder, out List<TelemetryItem> telemetryItems, Action<AzureMonitorExporterOptions>? configure = null)
+        /// <param name="builder">The builder to register the exporter on.</param>
+        /// <param name="telemetryItems">Receives the exported envelopes.</param>
+        /// <param name="configure">Configures the exporter options.</param>
+        /// <param name="sampler">Overrides the default <see cref="ApplicationInsightsSampler"/> built from the configured ratio.</param>
+        internal static TracerProviderBuilder AddAzureMonitorTraceExporterForTest(this TracerProviderBuilder builder, out List<TelemetryItem> telemetryItems, Action<AzureMonitorExporterOptions>? configure = null, Sampler? sampler = null)
         {
             if (builder == null)
             {
@@ -82,7 +86,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             var options = new AzureMonitorExporterOptions();
             configure?.Invoke(options);
 
-            builder.SetSampler(new ApplicationInsightsSampler(options.SamplingRatio));
+            builder.SetSampler(sampler ?? new ApplicationInsightsSampler(options.SamplingRatio));
 
             return builder.AddProcessor(new SimpleActivityExportProcessor(new AzureMonitorTraceExporter(options, new MockTransmitter(telemetryItems))));
         }

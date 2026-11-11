@@ -635,6 +635,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Contains("ikey-traceless", routed);
         }
 
+        [Fact]
+        public void RoutedLogsCarryTheirSampleRate()
+        {
+            var telemetryItems = Convert(
+                Emit(Ikey("ikey-a"), Endpoint(EastUs), SampleRate(25f)),
+                Emit(Ikey("ikey-a"), Endpoint(EastUs)))[0].TelemetryItems;
+
+            Assert.Equal(25f, telemetryItems[0].SampleRate);
+            Assert.Null(telemetryItems[1].SampleRate);
+            Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftSampleRate, ((MessageData)telemetryItems[0].Data.BaseData).Properties.Keys);
+        }
+
+        /// <summary>
+        /// Availability attributes are read in a second pass that rebuilds the log context, so the
+        /// sample rate must survive it.
+        /// </summary>
+        [Fact]
+        public void AvailabilityLogsCarryTheirSampleRate()
+        {
+            var telemetryItem = Assert.Single(ConvertSingleEndpoint(
+                "ikey-a",
+                Emit(AvailabilityMarkers().Concat(new[] { SampleRate(25f) }).ToArray())));
+
+            Assert.Equal("Availability", telemetryItem.Name);
+            Assert.Equal(25f, telemetryItem.SampleRate);
+            Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftSampleRate, ((AvailabilityData)telemetryItem.Data.BaseData).Properties.Keys);
+        }
+
         /// <summary>
         /// On a persist-only shutdown a routed log still goes through the multi-endpoint
         /// <see cref="IMultiEndpointTransmitter.Track"/> path (not <c>TrackAsync</c>), exercising the
@@ -751,6 +779,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private static KeyValuePair<string, object?> CloudRole(object? value)
             => new(SemanticConventions.AttributeMicrosoftMultiEndpointCloudRole, value);
+
+        private static KeyValuePair<string, object?> SampleRate(object? value)
+            => new(SemanticConventions.AttributeMicrosoftSampleRate, value);
 
         private static AzureMonitorResource CreateResource()
             => ResourceBuilder.CreateDefault()

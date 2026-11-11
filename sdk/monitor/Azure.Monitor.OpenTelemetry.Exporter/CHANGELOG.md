@@ -28,6 +28,12 @@
 - Uploading telemetry from offline storage (at startup, on retry, and at shutdown) is no longer recorded as an HTTP dependency by HttpClient instrumentation.
   ([#63821](https://github.com/Azure/azure-sdk-for-net/issues/63821))
 - Fixed `LogFilteringProcessor` behavior in .net 11 when `RandomTraceId` is set. ([64084](https://github.com/Azure/azure-sdk-for-net/pull/64084))
+- Fixed the envelope `sampleRate` (shown as `itemCount` in Application Insights) for sampled telemetry. ([#59110](https://github.com/Azure/azure-sdk-for-net/issues/59110))
+  - Requests, dependencies, and exceptions recorded on spans now use the `microsoft.sample_rate` value stamped on each span by the sampler, instead of always deriving it from `SamplingRatio`. Previously, with rate-limited sampling (`TracesPerSecond`), `itemCount` was always 1. If `SamplingRatio` was also set, `itemCount` came from `SamplingRatio` even though rate-limited sampling was in effect.
+  - The fixed-rate sampler now also stamps `microsoft.sample_rate` on the spans it keeps when `SamplingRatio` is below 1.
+  - When a span has no `microsoft.sample_rate`, for example with a custom sampler, `SamplingRatio` is still used if `TracesPerSecond` is not set. Otherwise no sample rate is reported.
+  - With trace-based log sampling (`EnableTraceBasedLogsSampler`, the default), logs kept because their span was sampled in now carry that span's sample rate. Logs without a span are unchanged.
+  - `microsoft.sample_rate` no longer appears in custom dimensions on requests, dependencies, or logs. It is now sent as the envelope `sampleRate`.
 
 ### Other Changes
 

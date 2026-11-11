@@ -205,7 +205,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             var exporter = new AzureMonitorLogExporter(options);
             BaseProcessor<LogRecord> processor = options.EnableTraceBasedLogsSampler
-                ? new LogFilteringProcessor(exporter)
+                ? new LogFilteringProcessor(exporter, SampleRateHelper.GetFallbackSampleRate(options))
                 : new AzureMonitorBatchLogRecordExportProcessor(exporter);
 
             loggerOptions.AddProcessor(new MainAgentAttributionLogProcessor());
@@ -279,7 +279,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 // TODO: Do we need provide an option to alter BatchExportLogRecordProcessorOptions?
                 var exporter = new AzureMonitorLogExporter(exporterOptions);
                 BaseProcessor<LogRecord> exportProcessor = exporterOptions.EnableTraceBasedLogsSampler
-                    ? new LogFilteringProcessor(exporter)
+                    ? new LogFilteringProcessor(exporter, SampleRateHelper.GetFallbackSampleRate(exporterOptions))
                     : new AzureMonitorBatchLogRecordExportProcessor(exporter);
 
                 return new CompositeProcessor<LogRecord>(new BaseProcessor<LogRecord>[]
