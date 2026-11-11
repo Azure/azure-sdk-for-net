@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
+#nullable disable
 
 using System.Collections.Generic;
 using Azure.ResourceManager.RedisEnterprise.Models;
@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// Disabling public network access also clears existing rules.
         /// Firewall rule changes cannot be combined with scaling or encryption changes in the same request.
         /// </summary>
-        public IList<FirewallRule>? FirewallRules
+        public IList<FirewallRule> FirewallRules
         {
             get => (Properties ??= new ClusterCreateProperties(default)).FirewallRules;
             set => (Properties ??= new ClusterCreateProperties(default)).SetFirewallRules(value);

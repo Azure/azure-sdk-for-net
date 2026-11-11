@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RedisEnterprise
     {
         public RedisEnterpriseClusterData(Azure.Core.AzureLocation location, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSku sku) { }
         public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseCustomerManagedKeyEncryption CustomerManagedKeyEncryption { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.RedisEnterprise.Models.FirewallRule>? FirewallRules { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.RedisEnterprise.Models.FirewallRule> FirewallRules { get { throw null; } set { } }
         public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseHighAvailability? HighAvailability { get { throw null; } set { } }
         public string HostName { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     {
         public RedisEnterpriseClusterPatch() { }
         public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseCustomerManagedKeyEncryption CustomerManagedKeyEncryption { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.RedisEnterprise.Models.FirewallRule>? FirewallRules { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.RedisEnterprise.Models.FirewallRule> FirewallRules { get { throw null; } set { } }
         public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseHighAvailability? HighAvailability { get { throw null; } set { } }
         public string HostName { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
