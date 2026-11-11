@@ -189,6 +189,72 @@ namespace Azure.Search.Documents.Tests.Models
             Assert.AreEqual(12, serialized.RootElement.GetProperty("reasoningTokens").GetInt32());
         }
 
+        [Test]
+        public void AgenticReasoningFactorySupportsOmittedAndNamedArguments()
+        {
+            KnowledgeBaseAgenticReasoningActivityRecord record =
+                SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord();
+            Assert.AreEqual(0, record.Id);
+            Assert.IsNull(record.ElapsedMs);
+            Assert.IsNull(record.Error);
+            Assert.IsNull(record.ReasoningTokens);
+            Assert.IsNull(record.RetrievalReasoningEffort);
+
+            Assert.AreEqual(1, SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1).Id);
+            Assert.AreEqual(100, SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, 100).ElapsedMs);
+            Assert.AreEqual(100, SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(elapsedMs: 100).ElapsedMs);
+            Assert.AreEqual(12, SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(reasoningTokens: 12).ReasoningTokens);
+
+            KnowledgeBaseErrorDetail error = SearchModelFactory.KnowledgeBaseErrorDetail("test", "message");
+            record = SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, 100, error, 12);
+            Assert.AreEqual(100, record.ElapsedMs);
+            Assert.AreSame(error, record.Error);
+            Assert.AreEqual(12, record.ReasoningTokens);
+
+            KnowledgeRetrievalMinimalReasoningEffort effort = new KnowledgeRetrievalMinimalReasoningEffort();
+            Assert.AreSame(effort, SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(retrievalReasoningEffort: effort).RetrievalReasoningEffort);
+        }
+
+        [Test]
+        public void AgenticReasoningFactorySupportsNullArguments()
+        {
+            KnowledgeBaseAgenticReasoningActivityRecord[] records =
+            {
+                SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, null),
+                SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, null, null),
+                SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, null, null, null),
+                SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, null, null, null, null)
+            };
+
+            foreach (KnowledgeBaseAgenticReasoningActivityRecord record in records)
+            {
+                Assert.AreEqual(1, record.Id);
+                Assert.IsNull(record.ElapsedMs);
+                Assert.IsNull(record.Error);
+                Assert.IsNull(record.ReasoningTokens);
+                Assert.IsNull(record.RetrievalReasoningEffort);
+            }
+        }
+
+        [Test]
+        public void AgenticReasoningFactoryPreservesTimestampAndWarningArguments()
+        {
+            DateTimeOffset startedOn = new DateTimeOffset(2026, 10, 1, 1, 0, 0, TimeSpan.Zero);
+            DateTimeOffset completedOn = startedOn.AddMilliseconds(100);
+            KnowledgeBaseErrorDetail error = SearchModelFactory.KnowledgeBaseErrorDetail("test", "message");
+            KnowledgeBaseAgenticReasoningActivityRecord record =
+                SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord(1, startedOn, completedOn, 100, error, "warning", 12);
+
+            Assert.AreEqual(1, record.Id);
+            Assert.AreEqual(startedOn, record.StartedOn);
+            Assert.AreEqual(completedOn, record.CompletedOn);
+            Assert.AreEqual(100, record.ElapsedMs);
+            Assert.AreSame(error, record.Error);
+            Assert.AreEqual("warning", record.Warning);
+            Assert.AreEqual(12, record.ReasoningTokens);
+            Assert.IsNull(record.RetrievalReasoningEffort);
+        }
+
         [TestCase("imageBinary", "base64Image", "aW1hZ2U=")]
         [TestCase("imageUrl", "url", "https://example.com/image.png")]
         public void ImageQueryPersistencePreservesUnknownProperties(string kind, string property, string value)

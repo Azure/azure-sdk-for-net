@@ -29,11 +29,35 @@ namespace Azure.Search.Documents.Models
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/> instance for mocking. </returns>
         [Obsolete("retrievalReasoningEffort is not returned by any service version this library targets. Use the overload without it.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KnowledgeBaseAgenticReasoningActivityRecord KnowledgeBaseAgenticReasoningActivityRecord(int id, int? elapsedMs, KnowledgeBaseErrorDetail error, int? reasoningTokens, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort)
+        public static KnowledgeBaseAgenticReasoningActivityRecord KnowledgeBaseAgenticReasoningActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, int? reasoningTokens = default, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default)
         {
-            KnowledgeBaseAgenticReasoningActivityRecord record = KnowledgeBaseAgenticReasoningActivityRecord(id: id, elapsedMs: elapsedMs, error: error, reasoningTokens: reasoningTokens);
+            KnowledgeBaseAgenticReasoningActivityRecord record = KnowledgeBaseAgenticReasoningActivityRecord(id, startedOn: null, completedOn: null, elapsedMs, error, warning: null, reasoningTokens);
             record.RetrievalReasoningEffort = retrievalReasoningEffort;
             return record;
+        }
+
+        /// <summary> Represents an agentic reasoning activity record. </summary>
+        /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="startedOn"> The time at which the activity started. </param>
+        /// <param name="completedOn"> The time at which the activity completed. </param>
+        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
+        /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
+        /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
+        /// <param name="reasoningTokens"> The number of input tokens for agentic reasoning. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/> instance for mocking. </returns>
+        /// <remarks> All arguments are required to keep calls that omit arguments unambiguous with the 12.0.0 overload. </remarks>
+        public static KnowledgeBaseAgenticReasoningActivityRecord KnowledgeBaseAgenticReasoningActivityRecord(int id, DateTimeOffset? startedOn, DateTimeOffset? completedOn, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, int? reasoningTokens)
+        {
+            return new KnowledgeBaseAgenticReasoningActivityRecord(
+                id,
+                KnowledgeBaseActivityRecordType.AgenticReasoning,
+                startedOn,
+                completedOn,
+                elapsedMs,
+                error,
+                warning,
+                additionalBinaryDataProperties: null,
+                reasoningTokens);
         }
 
         /// <summary> Specifies an Azure Machine Learning endpoint deployed via the Azure AI Foundry Model Catalog for generating the vector embedding of a query string. </summary>

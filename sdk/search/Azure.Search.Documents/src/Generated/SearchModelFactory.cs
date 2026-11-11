@@ -4183,29 +4183,6 @@ namespace Azure.Search.Documents.Models
                 model);
         }
 
-        /// <summary> Represents an agentic reasoning activity record. </summary>
-        /// <param name="id"> The ID of the activity record. </param>
-        /// <param name="startedOn"> The time at which the activity started. </param>
-        /// <param name="completedOn"> The time at which the activity completed. </param>
-        /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
-        /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
-        /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
-        /// <param name="reasoningTokens"> The number of input tokens for agentic reasoning. </param>
-        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseAgenticReasoningActivityRecord KnowledgeBaseAgenticReasoningActivityRecord(int id = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, int? reasoningTokens = default)
-        {
-            return new KnowledgeBaseAgenticReasoningActivityRecord(
-                id,
-                KnowledgeBaseActivityRecordType.AgenticReasoning,
-                startedOn,
-                completedOn,
-                elapsedMs,
-                error,
-                warning,
-                additionalBinaryDataProperties: null,
-                reasoningTokens);
-        }
-
         /// <summary>
         /// Base type for references.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBases.Models.KnowledgeBaseAzureBlobReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseFileReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedOneLakeReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedSharePointReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedSqlReference"/>, <see cref="KnowledgeBases.Models.KnowledgeBaseSearchIndexReference"/>, and <see cref="KnowledgeBases.Models.KnowledgeBaseWebReference"/>.

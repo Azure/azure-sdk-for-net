@@ -28,6 +28,7 @@
 
 ### Bugs Fixed
 
+- Restored the 12.0.0 optional arguments on `SearchModelFactory.KnowledgeBaseAgenticReasoningActivityRecord`. The overload accepting activity timestamps and a warning requires all arguments to avoid ambiguity with existing calls.
 - Fixed explicit `AddSearchClient`, `AddSearchIndexClient`, and `AddSearchIndexerClient` registrations with `TokenCredential`, including `DefaultAzureCredential`. ([#63072](https://github.com/Azure/azure-sdk-for-net/issues/63072))
 - Resource listing methods now honor `AsPages(pageSizeHint)` on initial and continuation requests while preserving the service-provided cursor.
 - Fixed indexing configuration round trips, including `RefreshAllAcls`, markdown settings, custom dictionary entries, and the legacy `IndexingParameters.Configuration` adapter on deserialized models.
