@@ -1487,6 +1487,126 @@ namespace Azure.Generator.Mgmt.Tests
                 "Independent custom properties must block outer safe flatten even when the inner wrapper was already flattened.");
         }
 
+        [TestCase("private", false)]
+        [TestCase("private", true)]
+        [TestCase("internal", false)]
+        [TestCase("internal", true)]
+        [TestCase("", false)]
+        [TestCase("private protected", false)]
+        [TestCase("public", false)]
+        [TestCase("public", true)]
+        [TestCase("protected", false)]
+        [TestCase("protected internal", false)]
+        public void TestSafeFlattenWithStaticCustomizedProperty(string visibility, bool nested)
+        {
+            var leafModel = InputFactory.Model("LeafModel", properties:
+                [InputFactory.Property("leaf", InputPrimitiveType.String, isRequired: true, serializedName: "leaf")]);
+            InputType valueType = nested ? leafModel : InputPrimitiveType.String;
+            var wrapperModel = InputFactory.Model("WrapperModel", properties:
+                [InputFactory.Property("value", valueType, isRequired: true, serializedName: "value")]);
+            var parentModel = InputFactory.Model("ParentModel", properties:
+                [InputFactory.Property("wrapper", wrapperModel, isRequired: true, serializedName: "wrapper")]);
+            var customization = $$"""
+                namespace Samples.Models
+                {
+                    public partial class WrapperModel
+                    {
+                        {{visibility}} static string Helper => "default";
+                    }
+                }
+                """;
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, wrapperModel, leafModel],
+                customizationSources: [customization]);
+            var wrapperProvider = plugin.Object.TypeFactory.CreateModel(wrapperModel)!;
+            var helper = wrapperProvider.CustomCodeView?.Properties.SingleOrDefault(p => p.Name == "Helper");
+            Assert.That(helper, Is.Not.Null);
+            Assert.That(helper!.Modifiers.HasFlag(MethodSignatureModifiers.Static), Is.True);
+            Assert.That(helper.WireInfo, Is.Null);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            RunVisitors(parentProvider);
+
+            AssertSafeFlattenApplied(parentProvider, $"{visibility} static property");
+            var flattened = parentProvider.Properties.OfType<FlattenedPropertyProvider>().Single();
+            Assert.That(flattened.Name, Is.EqualTo(nested ? "WrapperValueLeaf" : "WrapperValue"));
+            Assert.That(flattened.OriginalProperty.Modifiers.HasFlag(MethodSignatureModifiers.Static), Is.False);
+            Assert.That(flattened.WireInfo?.SerializedName, Is.EqualTo(nested ? "leaf" : "value"));
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void TestFlattenSkipsStaticPropertyWithWireInfo(bool explicitFlatten)
+        {
+            var wrapperModel = InputFactory.Model("WrapperModel", properties:
+                [
+                    InputFactory.Property("value", InputPrimitiveType.String, isRequired: true, serializedName: "value"),
+                    InputFactory.Property("helper", InputPrimitiveType.String, isRequired: true, serializedName: "helper")
+                ]);
+            var wrapperProperty = InputFactory.Property("wrapper", wrapperModel, isRequired: true, serializedName: "wrapper");
+            if (explicitFlatten)
+            {
+                ApplyFlattenDecorator(wrapperProperty);
+            }
+            var parentModel = InputFactory.Model("ParentModel", properties: [wrapperProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [parentModel, wrapperModel]);
+            var wrapperProvider = plugin.Object.TypeFactory.CreateModel(wrapperModel)!;
+            var helper = wrapperProvider.Properties.Single(p => p.Name == "Helper");
+            Assert.That(helper.WireInfo, Is.Not.Null);
+            helper.Update(modifiers: helper.Modifiers | MethodSignatureModifiers.Static);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            RunVisitors(parentProvider);
+
+            AssertSafeFlattenApplied(parentProvider, explicitFlatten ? "explicit flatten" : "safe flatten");
+            var flattened = parentProvider.Properties.OfType<FlattenedPropertyProvider>().Single();
+            Assert.That(flattened.Name, Is.EqualTo(explicitFlatten ? "Value" : "WrapperValue"));
+            Assert.That(flattened.OriginalProperty.Name, Is.EqualTo("Value"));
+            Assert.That(flattened.WireInfo?.SerializedName, Is.EqualTo("value"));
+        }
+
+        [Test]
+        public void TestSafeFlattenWithStaticExplicitInterfaceProperty()
+        {
+            var wrapperModel = InputFactory.Model("WrapperModel", properties:
+                [InputFactory.Property("value", InputPrimitiveType.String, isRequired: true, serializedName: "value")]);
+            var parentModel = InputFactory.Model("ParentModel", properties:
+                [InputFactory.Property("wrapper", wrapperModel, isRequired: true, serializedName: "wrapper")]);
+            var customization = """
+                namespace Samples.Models
+                {
+                    public interface IStaticHelper
+                    {
+                        static abstract string Helper { get; }
+                    }
+
+                    public partial class WrapperModel : IStaticHelper
+                    {
+                        static string IStaticHelper.Helper => "default";
+                    }
+                }
+                """;
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, wrapperModel],
+                customizationSources: [customization]);
+            var wrapperProvider = plugin.Object.TypeFactory.CreateModel(wrapperModel)!;
+            var customProperties = wrapperProvider.CustomCodeView?.Properties ?? [];
+            var helper = customProperties.SingleOrDefault(p =>
+                p.Name.EndsWith("IStaticHelper.Helper", StringComparison.Ordinal));
+            Assert.That(helper, Is.Not.Null,
+                $"Customization properties: {string.Join(", ", customProperties.Select(p => $"{p.Name} ({p.Modifiers})"))}");
+            Assert.That(helper!.Modifiers.HasFlag(MethodSignatureModifiers.Static), Is.True);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            RunVisitors(parentProvider);
+
+            AssertSafeFlattenApplied(parentProvider, "static explicit interface property");
+            Assert.That(parentProvider.Properties.OfType<FlattenedPropertyProvider>().Single().Name, Is.EqualTo("WrapperValue"));
+        }
+
         private static void RunVisitors(ModelProvider model)
         {
             var visitTypeCore = typeof(LibraryVisitor).GetMethod(

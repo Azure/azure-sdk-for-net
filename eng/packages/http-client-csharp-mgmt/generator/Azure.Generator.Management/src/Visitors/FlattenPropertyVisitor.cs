@@ -123,7 +123,9 @@ namespace Azure.Generator.Management.Visitors
         }
 
         private static bool IsEffectiveModelProperty(PropertyProvider property)
-            => !IsObsoleteProperty(property) && !IsJsonPatchProperty(property);
+            => !IsObsoleteProperty(property)
+                && !IsJsonPatchProperty(property)
+                && !property.Modifiers.HasFlag(MethodSignatureModifiers.Static);
 
 #pragma warning disable SCME0001 // JsonPatch is experimental.
         private static bool IsJsonPatchProperty(PropertyProvider property)
@@ -584,8 +586,8 @@ namespace Azure.Generator.Management.Visitors
                         continue;
                     }
 
-                    // Count independent properties regardless of visibility, but do not count a
-                    // backing wrapper again when its data is already represented by flattened properties.
+                    // Count independent instance properties, but do not count a backing wrapper
+                    // again when its data is already represented by flattened properties.
                     var flattenedWrappers = innerProperties.OfType<FlattenedPropertyProvider>()
                         .Select(p => p.FlattenedProperty).ToHashSet();
                     var effectiveProperties = innerProperties
