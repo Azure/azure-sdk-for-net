@@ -66,13 +66,13 @@ namespace Azure.AI.Projects
         /// <description> <see cref="TracesEvalRunDataSource"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="AzureAITraceDataSourceEvalRunDataSource"/>. </description>
+        /// <description> <see cref="TraceSourceEvalRunDataSource"/>. </description>
         /// </item>
         /// <item>
         /// <description> <see cref="TracesPreviewEvalRunDataSource"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="AzureAITraceDataSourcePreviewEvalRunDataSource"/>. </description>
+        /// <description> <see cref="TraceSourcePreviewEvalRunDataSource"/>. </description>
         /// </item>
         /// </list>
         /// </remarks>

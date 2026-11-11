@@ -9,7 +9,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Base class for run data sources with discriminator support.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureAITraceDataSourceEvalRunDataSource"/>, <see cref="AzureAITraceDataSourcePreviewEvalRunDataSource"/>, <see cref="EvalCsvRunDataSource"/>, <see cref="TargetCompletionEvalRunDataSource"/>, <see cref="TracesEvalRunDataSource"/>, <see cref="TracesPreviewEvalRunDataSource"/>, <see cref="UserConversationSimulationEvalRunDataSource"/>, and <see cref="UserConversationSimulationPreviewEvalRunDataSource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CsvEvalRunDataSource"/>, <see cref="TargetCompletionEvalRunDataSource"/>, <see cref="TraceSourceEvalRunDataSource"/>, <see cref="TraceSourcePreviewEvalRunDataSource"/>, <see cref="TracesEvalRunDataSource"/>, <see cref="TracesPreviewEvalRunDataSource"/>, <see cref="UserConversationSimulationEvalRunDataSource"/>, and <see cref="UserConversationSimulationPreviewEvalRunDataSource"/>.
     /// </summary>
     public abstract partial class EvalRunDataSource
     {
@@ -18,19 +18,23 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="EvalRunDataSource"/>. </summary>
         /// <param name="type"> The data source type discriminator. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         private protected EvalRunDataSource(string @type)
         {
             Type = @type;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="EvalRunDataSource"/>. </summary>
         /// <param name="type"> The data source type discriminator. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal EvalRunDataSource(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> The data source type discriminator. </summary>
         internal string Type { get; set; }

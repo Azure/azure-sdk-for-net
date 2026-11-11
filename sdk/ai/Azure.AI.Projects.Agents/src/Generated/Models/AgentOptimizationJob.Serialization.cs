@@ -202,7 +202,7 @@ namespace Azure.AI.Projects.Agents
             }
             string id = default;
             AgentOptimizationJobResult result = default;
-            AgentOptimizationJobStatus status = default;
+            AgentsJobStatus status = default;
             FoundryOpenAIError error = default;
             string displayName = default;
             AgentOptimizationTargetConfiguration targetConfiguration = default;
@@ -231,7 +231,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new AgentOptimizationJobStatus(prop.Value.GetString());
+                    status = new AgentsJobStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("error"u8))

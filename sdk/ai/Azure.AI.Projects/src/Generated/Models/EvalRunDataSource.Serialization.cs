@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// Base class for run data sources with discriminator support.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureAITraceDataSourceEvalRunDataSource"/>, <see cref="AzureAITraceDataSourcePreviewEvalRunDataSource"/>, <see cref="EvalCsvRunDataSource"/>, <see cref="TargetCompletionEvalRunDataSource"/>, <see cref="TracesEvalRunDataSource"/>, <see cref="TracesPreviewEvalRunDataSource"/>, <see cref="UserConversationSimulationEvalRunDataSource"/>, and <see cref="UserConversationSimulationPreviewEvalRunDataSource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CsvEvalRunDataSource"/>, <see cref="TargetCompletionEvalRunDataSource"/>, <see cref="TraceSourceEvalRunDataSource"/>, <see cref="TraceSourcePreviewEvalRunDataSource"/>, <see cref="TracesEvalRunDataSource"/>, <see cref="TracesPreviewEvalRunDataSource"/>, <see cref="UserConversationSimulationEvalRunDataSource"/>, and <see cref="UserConversationSimulationPreviewEvalRunDataSource"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownEvalRunDataSource))]
     public abstract partial class EvalRunDataSource : IJsonModel<EvalRunDataSource>
@@ -22,6 +22,7 @@ namespace Azure.AI.Projects
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected virtual EvalRunDataSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EvalRunDataSource>)this).GetFormatFromOptions(options) : options.Format;
@@ -36,8 +37,10 @@ namespace Azure.AI.Projects
                     throw new FormatException($"The model {nameof(EvalRunDataSource)} does not support reading '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EvalRunDataSource>)this).GetFormatFromOptions(options) : options.Format;
@@ -49,28 +52,38 @@ namespace Azure.AI.Projects
                     throw new FormatException($"The model {nameof(EvalRunDataSource)} does not support writing '{options.Format}' format.");
             }
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         BinaryData IPersistableModel<EvalRunDataSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         EvalRunDataSource IPersistableModel<EvalRunDataSource>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         string IPersistableModel<EvalRunDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         void IJsonModel<EvalRunDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EvalRunDataSource>)this).GetFormatFromOptions(options) : options.Format;
@@ -96,13 +109,17 @@ namespace Azure.AI.Projects
                 }
             }
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         EvalRunDataSource IJsonModel<EvalRunDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         protected virtual EvalRunDataSource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<EvalRunDataSource>)this).GetFormatFromOptions(options) : options.Format;
@@ -113,9 +130,11 @@ namespace Azure.AI.Projects
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEvalRunDataSource(document.RootElement, options);
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal static EvalRunDataSource DeserializeEvalRunDataSource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -126,14 +145,14 @@ namespace Azure.AI.Projects
             {
                 switch (discriminator.GetString())
                 {
-                    case "azure_ai_trace_data_source":
-                        return AzureAITraceDataSourceEvalRunDataSource.DeserializeAzureAITraceDataSourceEvalRunDataSource(element, options);
-                    case "azure_ai_trace_data_source_preview":
-                        return AzureAITraceDataSourcePreviewEvalRunDataSource.DeserializeAzureAITraceDataSourcePreviewEvalRunDataSource(element, options);
                     case "csv":
-                        return EvalCsvRunDataSource.DeserializeEvalCsvRunDataSource(element, options);
+                        return CsvEvalRunDataSource.DeserializeCsvEvalRunDataSource(element, options);
                     case "azure_ai_target_completions":
                         return TargetCompletionEvalRunDataSource.DeserializeTargetCompletionEvalRunDataSource(element, options);
+                    case "azure_ai_trace_data_source":
+                        return TraceSourceEvalRunDataSource.DeserializeTraceSourceEvalRunDataSource(element, options);
+                    case "azure_ai_trace_data_source_preview":
+                        return TraceSourcePreviewEvalRunDataSource.DeserializeTraceSourcePreviewEvalRunDataSource(element, options);
                     case "azure_ai_traces":
                         return TracesEvalRunDataSource.DeserializeTracesEvalRunDataSource(element, options);
                     case "azure_ai_traces_preview":
@@ -146,5 +165,6 @@ namespace Azure.AI.Projects
             }
             return UnknownEvalRunDataSource.DeserializeUnknownEvalRunDataSource(element, options);
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
     }
 }

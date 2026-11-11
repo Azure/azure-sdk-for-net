@@ -4,12 +4,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using Azure.AI.Projects.Evaluation;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Preview form of `azure_ai_user_conversation_simulation`. Returned only for rules backed by existing preview schedules; rejected on create and update. </summary>
+    [Experimental("AAIP001")]
     public partial class UserConversationSimulationPreviewEvalRunDataSource : EvalRunDataSource
     {
         /// <summary> Initializes a new instance of <see cref="UserConversationSimulationPreviewEvalRunDataSource"/>. </summary>

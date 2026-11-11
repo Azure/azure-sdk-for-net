@@ -13,10 +13,10 @@ namespace Azure.AI.Projects
     /// A CSV data source for evaluation runs.
     /// See [evaluation datasets](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/evaluation-datasets).
     /// </summary>
-    public partial class EvalCsvRunDataSource : EvalRunDataSource, IJsonModel<EvalCsvRunDataSource>
+    public partial class CsvEvalRunDataSource : EvalRunDataSource, IJsonModel<CsvEvalRunDataSource>
     {
-        /// <summary> Initializes a new instance of <see cref="EvalCsvRunDataSource"/> for deserialization. </summary>
-        internal EvalCsvRunDataSource()
+        /// <summary> Initializes a new instance of <see cref="CsvEvalRunDataSource"/> for deserialization. </summary>
+        internal CsvEvalRunDataSource()
         {
         }
 
@@ -24,45 +24,45 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EvalRunDataSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EvalCsvRunDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CsvEvalRunDataSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeEvalCsvRunDataSource(document.RootElement, options);
+                        return DeserializeCsvEvalRunDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EvalCsvRunDataSource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CsvEvalRunDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EvalCsvRunDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CsvEvalRunDataSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(EvalCsvRunDataSource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CsvEvalRunDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<EvalCsvRunDataSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CsvEvalRunDataSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EvalCsvRunDataSource IPersistableModel<EvalCsvRunDataSource>.Create(BinaryData data, ModelReaderWriterOptions options) => (EvalCsvRunDataSource)PersistableModelCreateCore(data, options);
+        CsvEvalRunDataSource IPersistableModel<CsvEvalRunDataSource>.Create(BinaryData data, ModelReaderWriterOptions options) => (CsvEvalRunDataSource)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<EvalCsvRunDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CsvEvalRunDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<EvalCsvRunDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CsvEvalRunDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -73,10 +73,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EvalCsvRunDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CsvEvalRunDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EvalCsvRunDataSource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CsvEvalRunDataSource)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("source"u8);
@@ -85,24 +85,24 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        EvalCsvRunDataSource IJsonModel<EvalCsvRunDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EvalCsvRunDataSource)JsonModelCreateCore(ref reader, options);
+        CsvEvalRunDataSource IJsonModel<CsvEvalRunDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CsvEvalRunDataSource)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EvalRunDataSource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<EvalCsvRunDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CsvEvalRunDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EvalCsvRunDataSource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CsvEvalRunDataSource)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEvalCsvRunDataSource(document.RootElement, options);
+            return DeserializeCsvEvalRunDataSource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static EvalCsvRunDataSource DeserializeEvalCsvRunDataSource(JsonElement element, ModelReaderWriterOptions options)
+        internal static CsvEvalRunDataSource DeserializeCsvEvalRunDataSource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -128,7 +128,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EvalCsvRunDataSource(@type, additionalBinaryDataProperties, source);
+            return new CsvEvalRunDataSource(@type, additionalBinaryDataProperties, source);
         }
     }
 }

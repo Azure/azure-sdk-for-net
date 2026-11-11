@@ -862,7 +862,7 @@ namespace Azure.AI.Projects.Agents
         public Azure.AI.Projects.Agents.AgentOptimizationModelConfiguration OptimizationModelConfiguration { get { throw null; } set { } }
         public Azure.AI.Projects.Agents.AgentOptimizationJobResult Result { get { throw null; } }
         public System.TimeSpan RunDurationMs { get { throw null; } }
-        public Azure.AI.Projects.Agents.AgentOptimizationJobStatus Status { get { throw null; } }
+        public Azure.AI.Projects.Agents.AgentsJobStatus Status { get { throw null; } }
         public Azure.AI.Projects.Agents.AgentOptimizationTargetConfiguration TargetConfiguration { get { throw null; } set { } }
         public System.DateTimeOffset UpdatedOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Warnings { get { throw null; } }
@@ -965,27 +965,6 @@ namespace Azure.AI.Projects.Agents
         public virtual System.ClientModel.AsyncCollectionResult<Azure.AI.Projects.Agents.AgentOptimizationJob> GetAllAsync(int? limit = default(int?), Azure.AI.Projects.Agents.AgentListOrder? order = default(Azure.AI.Projects.Agents.AgentListOrder?), string after = null, string before = null, Azure.AI.Projects.Agents.AgentsJobStatus? status = default(Azure.AI.Projects.Agents.AgentsJobStatus?), string agentName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> GetAsync(string jobId, System.ClientModel.Primitives.RequestOptions options) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult<Azure.AI.Projects.Agents.AgentOptimizationJob>> GetAsync(string jobId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AgentOptimizationJobStatus : System.IEquatable<Azure.AI.Projects.Agents.AgentOptimizationJobStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AgentOptimizationJobStatus(string value) { throw null; }
-        public static Azure.AI.Projects.Agents.AgentOptimizationJobStatus Cancelled { get { throw null; } }
-        public static Azure.AI.Projects.Agents.AgentOptimizationJobStatus Failed { get { throw null; } }
-        public static Azure.AI.Projects.Agents.AgentOptimizationJobStatus InProgress { get { throw null; } }
-        public static Azure.AI.Projects.Agents.AgentOptimizationJobStatus Queued { get { throw null; } }
-        public static Azure.AI.Projects.Agents.AgentOptimizationJobStatus Skipped { get { throw null; } }
-        public static Azure.AI.Projects.Agents.AgentOptimizationJobStatus Succeeded { get { throw null; } }
-        public bool Equals(Azure.AI.Projects.Agents.AgentOptimizationJobStatus other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Projects.Agents.AgentOptimizationJobStatus left, Azure.AI.Projects.Agents.AgentOptimizationJobStatus right) { throw null; }
-        public static implicit operator Azure.AI.Projects.Agents.AgentOptimizationJobStatus (string value) { throw null; }
-        public static implicit operator Azure.AI.Projects.Agents.AgentOptimizationJobStatus? (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Projects.Agents.AgentOptimizationJobStatus left, Azure.AI.Projects.Agents.AgentOptimizationJobStatus right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class AgentOptimizationJobTokenUsage : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Agents.AgentOptimizationJobTokenUsage>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Agents.AgentOptimizationJobTokenUsage>
     {
@@ -5732,7 +5711,7 @@ namespace Azure.AI.Projects.Agents
         public static Azure.AI.Projects.Agents.AgentOptimizationFoundrySkillOutputReference AgentOptimizationFoundrySkillOutputReference(string name = null, string version = null) { throw null; }
         public static Azure.AI.Projects.Agents.AgentOptimizationFoundrySkillReference AgentOptimizationFoundrySkillReference(string name = null, string version = null) { throw null; }
         public static Azure.AI.Projects.Agents.AgentOptimizationInstructionsMutation AgentOptimizationInstructionsMutation(string value = null) { throw null; }
-        public static Azure.AI.Projects.Agents.AgentOptimizationJob AgentOptimizationJob(string id = null, Azure.AI.Projects.Agents.AgentOptimizationJobResult result = null, Azure.AI.Projects.Agents.AgentOptimizationJobStatus status = default(Azure.AI.Projects.Agents.AgentOptimizationJobStatus), Azure.AI.Projects.Agents.FoundryOpenAIError error = null, string displayName = null, Azure.AI.Projects.Agents.AgentOptimizationTargetConfiguration targetConfiguration = null, Azure.AI.Projects.Agents.AgentOptimizationModelConfiguration optimizationModelConfiguration = null, Azure.AI.Projects.Agents.AgentOptimizationConfigurationBase optimizationConfiguration = null, System.TimeSpan runDurationMs = default(System.TimeSpan), System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset updatedOn = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<string> warnings = null) { throw null; }
+        public static Azure.AI.Projects.Agents.AgentOptimizationJob AgentOptimizationJob(string id = null, Azure.AI.Projects.Agents.AgentOptimizationJobResult result = null, Azure.AI.Projects.Agents.AgentsJobStatus status = default(Azure.AI.Projects.Agents.AgentsJobStatus), Azure.AI.Projects.Agents.FoundryOpenAIError error = null, string displayName = null, Azure.AI.Projects.Agents.AgentOptimizationTargetConfiguration targetConfiguration = null, Azure.AI.Projects.Agents.AgentOptimizationModelConfiguration optimizationModelConfiguration = null, Azure.AI.Projects.Agents.AgentOptimizationConfigurationBase optimizationConfiguration = null, System.TimeSpan runDurationMs = default(System.TimeSpan), System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset updatedOn = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<string> warnings = null) { throw null; }
         public static Azure.AI.Projects.Agents.AgentOptimizationJobLatency AgentOptimizationJobLatency(Azure.AI.Projects.Agents.AgentOptimizationStage stage = default(Azure.AI.Projects.Agents.AgentOptimizationStage), string model = null, System.TimeSpan avgLatencyMs = default(System.TimeSpan), long callCount = (long)0) { throw null; }
         public static Azure.AI.Projects.Agents.AgentOptimizationJobResult AgentOptimizationJobResult(Azure.AI.Projects.Agents.AgentOptimizationResultCandidateSummary candidateSummary = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.AgentOptimizationJobTokenUsage> tokenUsage = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.AgentOptimizationJobLatency> latencyMetrics = null, Azure.AI.Projects.Agents.AgentOptimizationTerminationReason? terminationReason = default(Azure.AI.Projects.Agents.AgentOptimizationTerminationReason?)) { throw null; }
         public static Azure.AI.Projects.Agents.AgentOptimizationJobTokenUsage AgentOptimizationJobTokenUsage(Azure.AI.Projects.Agents.AgentOptimizationStage stage = default(Azure.AI.Projects.Agents.AgentOptimizationStage), string model = null, long? inputTokens = default(long?), long? outputTokens = default(long?), long? totalTokens = default(long?), long? cachedTokens = default(long?), long? reasoningTokens = default(long?)) { throw null; }

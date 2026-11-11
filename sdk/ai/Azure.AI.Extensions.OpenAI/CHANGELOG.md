@@ -11,7 +11,7 @@
 ### Other Changes
 
 - No user-facing API changes.
-- Regenerated from `foundry/snap-20261109` at [`134c3c4624ca04410c740d1230a82cba31595be9`](https://github.com/Azure/azure-rest-api-specs/tree/134c3c4624ca04410c740d1230a82cba31595be9), using OpenAI TypeSpec 1.34.1.
+- Regenerated from `foundry/snap-20261109` at [`3a17de2b4c2b23eec9e2f0985dbe5f6e2f417e0b`](https://github.com/Azure/azure-rest-api-specs/tree/3a17de2b4c2b23eec9e2f0985dbe5f6e2f417e0b), using OpenAI TypeSpec 1.34.1.
 
 ## 3.0.0-beta.6 (2026-10-30)
 
