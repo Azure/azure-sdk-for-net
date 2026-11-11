@@ -9,7 +9,7 @@ const { once } = require('node:events');
 
 const actions = process.env.GH_AW_TEST_ACTIONS_DIR;
 assert.ok(actions, 'Pinned process runner required.');
-const controllerModule = path.join(__dirname, 'ReviewContinuation.cjs');
+const controllerModule = path.join(__dirname, '..', 'pr-re-review', 'ReviewContinuation.cjs');
 const { runProcess } = require(controllerModule);
 
 function alive(pid) {

@@ -2,7 +2,7 @@
 
 const assert = require('node:assert/strict');
 const { test } = require('node:test');
-const { runQueue, makeWorklist, buildOutputs, assertPublication, workerArguments, parseWorkerResult, workerPrompt } = require('./ReviewContinuation.cjs');
+const { runQueue, makeWorklist, buildOutputs, assertPublication, workerArguments, parseWorkerResult, workerPrompt } = require('../pr-re-review/ReviewContinuation.cjs');
 const crypto = require('node:crypto');
 
 const snapshot = (count = 106) => ({

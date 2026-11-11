@@ -44,7 +44,7 @@ async function captureBaselines(github, repo, snapshot) {
     pair.push({ path: file.filename, base, head });
   }
   if (!pair.length) return [];
-  const result = spawnSync('python3', [path.join(__dirname, 'ReviewBaselines.py')], { input: JSON.stringify(pair), encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
+  const result = spawnSync('pwsh', ['-NoLogo', '-NoProfile', '-NonInteractive', '-File', path.join(__dirname, 'ReviewBaselines.ps1')], { input: JSON.stringify(pair), encoding: 'utf8', maxBuffer: 16 * 1024 * 1024 });
   if (result.error || result.status !== 0) throw new Error(`Cannot compare captured baselines: ${result.error?.message || result.stderr}`);
   const parsed = JSON.parse(result.stdout);
   if (!Array.isArray(parsed)) throw new Error('Invalid baseline comparison output.');

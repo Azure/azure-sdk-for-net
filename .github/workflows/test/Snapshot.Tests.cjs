@@ -1,7 +1,7 @@
 'use strict';
 const assert = require('node:assert/strict');
 const { test } = require('node:test');
-const { captureContext, assertFresh, assertMutationFresh } = require('./ReviewSnapshot.cjs');
+const { captureContext, assertFresh, assertMutationFresh } = require('../pr-re-review/ReviewSnapshot.cjs');
 const files = { pull_number: 64192, head_sha: 'a'.repeat(40), base_sha: 'b'.repeat(40), changed_files: 106, files: [] };
 const thread = i => ({ id: `thread-${i}`, isResolved: false, comments: { nodes: [{ databaseId: i + 1, body: 'finding', path: 'src/F.cs' }], pageInfo: { hasNextPage: false, endCursor: null } } });
 function fixture(count = 1, extra = {}) {

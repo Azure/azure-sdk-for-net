@@ -5,7 +5,7 @@
 
 $ErrorActionPreference = 'Stop'
 
-# pr-re-review.md asks the agent for this line verbatim; Guard.Tests.ps1 keeps the two in sync.
+# pr-re-review.md asks the agent for this line verbatim; PrReReviewGuard.Tests.ps1 keeps the two in sync.
 $script:CoverageTemplate = 'Coverage: <fetched>/<total> threads fetched, <verified>/<unresolved> unresolved threads verified, <reviewed>/<changed> changed files reviewed'
 $script:CoveragePattern = '^coverage\s*:\s*(?<fetched>[0-9]{1,6})\s*/\s*(?<total>[0-9]{1,6})\s+threads\s+fetched\s*,\s*(?<verified>[0-9]{1,6})\s*/\s*(?<unresolved>[0-9]{1,6})\s+unresolved\s+threads\s+verified\s*,\s*(?<reviewed>[0-9]{1,6})\s*/\s*(?<changed>[0-9]{1,6})\s+changed\s+files\s+reviewed\s*\.?$'
 # The same output types that shared/agent-output-validation.md fails the run on.

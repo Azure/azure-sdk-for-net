@@ -1,7 +1,7 @@
 'use strict';
 const {test}=require('node:test'); const assert=require('node:assert/strict');
 const fs=require('node:fs'),path=require('node:path'),os=require('node:os');
-const {installReplyReceipts}=require('./ReviewReceipts.cjs');
+const {installReplyReceipts}=require('../pr-re-review/ReviewReceipts.cjs');
 test('successful reply IDs survive the real pinned manifest extraction and serialization',async t=>{
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'rereview-receipt-'));t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));
  fs.writeFileSync(path.join(dir,'reply_to_pr_review_comment.cjs'),"exports.HANDLER_TYPE='reply_to_pull_request_review_comment';exports.main=async()=>async()=>({success:true,comment_id:123,reply_id:456});");

@@ -5,7 +5,7 @@
 # Licensed under the MIT License.
 
 BeforeAll {
-    $script:GuardDirectory = $PSScriptRoot
+    $script:GuardDirectory = Join-Path $PSScriptRoot '..' 'pr-re-review'
     $script:RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..' '..' '..')).Path
     $script:Complete = 'Coverage: 64/64 threads fetched, 14/14 unresolved threads verified, 32/32 changed files reviewed'
     $script:HeadSha = 'a' * 40
@@ -100,7 +100,7 @@ BeforeAll {
 
 Describe 'Assert-PrReReviewOutput' {
     BeforeAll {
-        Import-Module (Join-Path $PSScriptRoot 'PrReReviewGuard.psm1') -Force
+        Import-Module (Join-Path $script:GuardDirectory 'PrReReviewGuard.psm1') -Force
     }
 
     It 'rejects run 40400877253, which reviewed 50 of 64 threads and skipped Steps 2 and 3' {
@@ -243,7 +243,7 @@ Describe 'Assert-PrReReviewOutput' {
 
 Describe 'Get-PrReReviewTotals' {
     BeforeAll {
-        Import-Module (Join-Path $PSScriptRoot 'PrReReviewGuard.psm1') -Force
+        Import-Module (Join-Path $script:GuardDirectory 'PrReReviewGuard.psm1') -Force
         $script:TotalsArguments = @{ Repository = 'Azure/azure-sdk-for-net'; Number = 63126; AnalyzedHeadSha = $script:HeadSha; Since = '2026-11-03T00:35:00Z'; Token = 'token' }
     }
 
@@ -325,7 +325,7 @@ Describe 'Invoke-PrReReviewGuard.ps1' {
 
 Describe 'Compiled re-review publication guard' {
     BeforeAll {
-        Import-Module (Join-Path $PSScriptRoot 'PrReReviewGuard.psm1') -Force
+        Import-Module (Join-Path $script:GuardDirectory 'PrReReviewGuard.psm1') -Force
         $script:Steps = Get-CompiledSteps
         $script:StepNames = [string[]]@($script:Steps | ForEach-Object Name)
 
@@ -431,7 +431,7 @@ Describe 'Compiled re-review publication guard' {
 
 Describe 'Re-review prompt' {
     BeforeAll {
-        Import-Module (Join-Path $PSScriptRoot 'PrReReviewGuard.psm1') -Force
+        Import-Module (Join-Path $script:GuardDirectory 'PrReReviewGuard.psm1') -Force
         $script:Frontmatter, $script:PromptBody = ([IO.File]::ReadAllText((Join-Path $script:GuardDirectory '..' 'pr-re-review.md')) -split '(?m)^---\s*$', 3)[1, 2]
         $script:Step4 = [regex]::Match($script:PromptBody, '(?ms)^## Step 4\b.*?(?=^## |\z)').Value
     }

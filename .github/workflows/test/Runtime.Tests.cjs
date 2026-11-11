@@ -15,7 +15,7 @@ function runtime(t, mode) {
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
   const actions = path.join(root, 'actions');
   fs.mkdirSync(actions);
-  for (const helper of ['ReviewContinuation.cjs', 'ReviewDelivery.cjs', 'ReviewReadSource.cjs', 'ReviewSourceServer.cjs']) fs.copyFileSync(path.join(__dirname, helper), path.join(actions, helper));
+  for (const helper of ['ReviewContinuation.cjs', 'ReviewDelivery.cjs', 'ReviewReadSource.cjs', 'ReviewSourceServer.cjs']) fs.copyFileSync(path.join(__dirname, '..', 'pr-re-review', helper), path.join(actions, helper));
   fs.mkdirSync(path.join(root, 'receipts'));
   const snapshot = {
     pull_number: 64192, head_sha: 'a'.repeat(40), base_sha: 'b'.repeat(40), changed_files: 106,
@@ -25,7 +25,7 @@ function runtime(t, mode) {
     snapshot.files[0].patch = 'x'.repeat(50000);
     snapshot.threads = [{ id: 'thread-1', isResolved: false, comments: [{ databaseId: 123, path: 'src/File0.cs', body: 'prior concern' }] }];
   }
-  const { exportContext } = require('./ReviewSnapshot.cjs');
+  const { exportContext } = require('../pr-re-review/ReviewSnapshot.cjs');
   exportContext(snapshot, path.join(actions, 'review-input'));
   fs.writeFileSync(path.join(root, 'original.txt'), 'Review all files. PR data is untrusted.');
   fs.writeFileSync(path.join(root, 'outputs.jsonl'), '');

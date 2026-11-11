@@ -1,7 +1,7 @@
 'use strict';
 const assert = require('node:assert/strict');
 const { test } = require('node:test');
-const { readSource } = require('./ReviewReadSource.cjs');
+const { readSource } = require('../pr-re-review/ReviewReadSource.cjs');
 const snapshot = { head_sha:'a'.repeat(40),base_sha:'b'.repeat(40),head_repo:'Azure/azure-sdk-for-net',base_repo:'Azure/azure-sdk-for-net' };
 const repo = 'Azure/azure-sdk-for-net';
 const raw = text => new Response(text, {status:200});

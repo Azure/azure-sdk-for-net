@@ -14,7 +14,7 @@ A completion result is still a model review conclusion, not proof of comprehensi
 CI provisions the pinned gh-aw setup helpers for handler/receipt tests. To run the Node suites locally, point `GH_AW_TEST_ACTIONS_DIR` at those same helpers:
 
 ```bash
-GH_AW_TEST_ACTIONS_DIR=/path/to/pinned/gh-aw/setup/js node --test .github/workflows/pr-re-review/*.Tests.cjs .github/workflows/test/pr-re-review-unresolve-thread.test.cjs
+GH_AW_TEST_ACTIONS_DIR=/path/to/pinned/gh-aw/setup/js node --test .github/workflows/test/*.Tests.cjs .github/workflows/test/pr-re-review-unresolve-thread.test.cjs
 ```
 
-Run the existing Pester suites under this directory and `.github/workflows/test`, and compile `pr-re-review.md` with the pinned gh-aw version after workflow changes. Subprocess fixtures reproduce the 106-file clean early-stop case without inference or GitHub writes; they do not establish hosted end-to-end review quality.
+Run the Pester suites under `.github/workflows/test`, and compile `pr-re-review.md` with the pinned gh-aw version after workflow changes. Subprocess fixtures reproduce the 106-file clean early-stop case without inference or GitHub writes; they do not establish hosted end-to-end review quality.

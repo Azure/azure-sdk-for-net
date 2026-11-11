@@ -2,7 +2,7 @@
 const assert = require('node:assert/strict');
 const { test } = require('node:test');
 const crypto = require('node:crypto');
-const { requiredInputs, verifyDelivery, snapshotDigest } = require('./ReviewDelivery.cjs');
+const { requiredInputs, verifyDelivery, snapshotDigest } = require('../pr-re-review/ReviewDelivery.cjs');
 
 const snapshot = () => ({ head_sha: 'a'.repeat(40), base_sha: 'b'.repeat(40), files: [], threads: [] });
 const nonce = '1'.repeat(32);

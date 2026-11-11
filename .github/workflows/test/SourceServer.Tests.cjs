@@ -1,8 +1,8 @@
 'use strict';
 const {test}=require('node:test'); const assert=require('node:assert/strict');
 const fs=require('node:fs'),path=require('node:path');
-const {handle,createDelivery}=require('./ReviewSourceServer.cjs');
-const {verifyDelivery}=require('./ReviewDelivery.cjs');
+const {handle,createDelivery}=require('../pr-re-review/ReviewSourceServer.cjs');
+const {verifyDelivery}=require('../pr-re-review/ReviewDelivery.cjs');
 const os=require('node:os');
 test('source transport exposes only read-only requests over private stdio',async()=>{
  const init=await handle({jsonrpc:'2.0',id:1,method:'initialize'},()=>{});assert.equal(init.protocolVersion,'2024-11-05');
