@@ -53,7 +53,7 @@ namespace Azure.AI.Projects
         /// <description> <see cref="CreateEvalJsonlRunDataSource"/>. </description>
         /// </item>
         /// <item>
-        /// <description> <see cref="EvalCsvRunDataSource"/>. </description>
+        /// <description> <see cref="CsvEvalRunDataSource"/>. </description>
         /// </item>
         /// <item>
         /// <description> <see cref="CreateEvalCompletionsRunDataSource"/>. </description>

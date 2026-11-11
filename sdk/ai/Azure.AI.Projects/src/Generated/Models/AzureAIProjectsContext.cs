@@ -63,8 +63,6 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(AzureAIAgentTarget))]
     [ModelReaderWriterBuildable(typeof(AzureAIModelTarget))]
     [ModelReaderWriterBuildable(typeof(AzureAISearchIndex))]
-    [ModelReaderWriterBuildable(typeof(AzureAITraceDataSourceEvalRunDataSource))]
-    [ModelReaderWriterBuildable(typeof(AzureAITraceDataSourcePreviewEvalRunDataSource))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.AzureOpenAIModelConfiguration is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AzureOpenAIModelConfiguration))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.AzureOpenAIModelConfiguration is experimental and may change in future versions.
@@ -90,6 +88,7 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(CreateEvalCompletionsRunDataSourceSamplingParams))]
     [ModelReaderWriterBuildable(typeof(CreateEvalJsonlRunDataSource))]
     [ModelReaderWriterBuildable(typeof(CronTrigger))]
+    [ModelReaderWriterBuildable(typeof(CsvEvalRunDataSource))]
     [ModelReaderWriterBuildable(typeof(CustomRoutineTrigger))]
     [ModelReaderWriterBuildable(typeof(DailyRecurrenceSchedule))]
     [ModelReaderWriterBuildable(typeof(DataGenerationJob))]
@@ -127,7 +126,6 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(EndpointBasedEvaluatorDefinition))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Evaluation.EndpointBasedEvaluatorDefinition is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(EvalCsvFileIdSource))]
-    [ModelReaderWriterBuildable(typeof(EvalCsvRunDataSource))]
     [ModelReaderWriterBuildable(typeof(EvalItem))]
     [ModelReaderWriterBuildable(typeof(EvalJsonlFileContentSource))]
     [ModelReaderWriterBuildable(typeof(EvalJsonlFileContentSourceContent))]
@@ -399,7 +397,13 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(TracesEvalRunDataSource))]
     [ModelReaderWriterBuildable(typeof(TracesEvaluatorGenerationJobSource))]
     [ModelReaderWriterBuildable(typeof(TraceSource))]
+    [ModelReaderWriterBuildable(typeof(TraceSourceEvalRunDataSource))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.TraceSourcePreviewEvalRunDataSource is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(TraceSourcePreviewEvalRunDataSource))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.TraceSourcePreviewEvalRunDataSource is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.TracesPreviewEvalRunDataSource is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(TracesPreviewEvalRunDataSource))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.TracesPreviewEvalRunDataSource is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(UnknownAIProjectConnectionBaseCredential))]
     [ModelReaderWriterBuildable(typeof(UnknownAIProjectDataset))]
     [ModelReaderWriterBuildable(typeof(UnknownAIProjectDeployment))]
@@ -438,7 +442,9 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(UserConversationSimulationEvalRunDataSource))]
     [ModelReaderWriterBuildable(typeof(UserConversationSimulationInlineTestCasesSource))]
     [ModelReaderWriterBuildable(typeof(UserConversationSimulationInterruptionConfiguration))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.UserConversationSimulationPreviewEvalRunDataSource is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(UserConversationSimulationPreviewEvalRunDataSource))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.UserConversationSimulationPreviewEvalRunDataSource is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(UserConversationSimulationTestCase))]
     [ModelReaderWriterBuildable(typeof(UserConversationSimulationUserBehaviorConfiguration))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.UserEvaluatorDiagnosticActor is experimental and may change in future versions.

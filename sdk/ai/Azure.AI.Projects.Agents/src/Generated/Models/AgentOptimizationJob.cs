@@ -41,7 +41,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="updatedOn"> The timestamp when the job was last updated, represented in Unix time. </param>
         /// <param name="warnings"> Non-fatal warnings emitted during optimization. Omitted when no warnings were produced. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentOptimizationJob(string id, AgentOptimizationJobResult result, AgentOptimizationJobStatus status, FoundryOpenAIError error, string displayName, AgentOptimizationTargetConfiguration targetConfiguration, AgentOptimizationModelConfiguration optimizationModelConfiguration, AgentOptimizationConfigurationBase optimizationConfiguration, TimeSpan runDurationMs, DateTimeOffset createdOn, DateTimeOffset updatedOn, IReadOnlyList<string> warnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentOptimizationJob(string id, AgentOptimizationJobResult result, AgentsJobStatus status, FoundryOpenAIError error, string displayName, AgentOptimizationTargetConfiguration targetConfiguration, AgentOptimizationModelConfiguration optimizationModelConfiguration, AgentOptimizationConfigurationBase optimizationConfiguration, TimeSpan runDurationMs, DateTimeOffset createdOn, DateTimeOffset updatedOn, IReadOnlyList<string> warnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Result = result;
@@ -65,7 +65,7 @@ namespace Azure.AI.Projects.Agents
         public AgentOptimizationJobResult Result { get; }
 
         /// <summary> Current lifecycle status. </summary>
-        public AgentOptimizationJobStatus Status { get; }
+        public AgentsJobStatus Status { get; }
 
         /// <summary> Human-readable label. Omitted when no label is needed; it has no uniqueness, routing, or idempotency semantics. </summary>
         public string DisplayName { get; set; }

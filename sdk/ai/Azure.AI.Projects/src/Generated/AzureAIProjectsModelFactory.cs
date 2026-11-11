@@ -1011,7 +1011,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Base class for run data sources with discriminator support.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AzureAITraceDataSourceEvalRunDataSource"/>, <see cref="Projects.AzureAITraceDataSourcePreviewEvalRunDataSource"/>, <see cref="Projects.EvalCsvRunDataSource"/>, <see cref="Projects.TargetCompletionEvalRunDataSource"/>, <see cref="Projects.TracesEvalRunDataSource"/>, <see cref="Projects.TracesPreviewEvalRunDataSource"/>, <see cref="Projects.UserConversationSimulationEvalRunDataSource"/>, and <see cref="Projects.UserConversationSimulationPreviewEvalRunDataSource"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.CsvEvalRunDataSource"/>, <see cref="Projects.TargetCompletionEvalRunDataSource"/>, <see cref="Projects.TraceSourceEvalRunDataSource"/>, <see cref="Projects.TraceSourcePreviewEvalRunDataSource"/>, <see cref="Projects.TracesEvalRunDataSource"/>, <see cref="Projects.TracesPreviewEvalRunDataSource"/>, <see cref="Projects.UserConversationSimulationEvalRunDataSource"/>, and <see cref="Projects.UserConversationSimulationPreviewEvalRunDataSource"/>.
         /// </summary>
         /// <param name="type"> The data source type discriminator. </param>
         /// <returns> A new <see cref="Projects.EvalRunDataSource"/> instance for mocking. </returns>
@@ -1033,6 +1033,7 @@ namespace Azure.AI.Projects
         /// <param name="maxTraces"> Sampling limit applied to traces retrieved for evaluation. </param>
         /// <param name="ingestionDelaySeconds"> The delay to apply for ingestion when querying traces. </param>
         /// <returns> A new <see cref="Projects.TracesPreviewEvalRunDataSource"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static TracesPreviewEvalRunDataSource TracesPreviewEvalRunDataSource(IEnumerable<string> traceIds = default, IEnumerable<string> conversationIds = default, string agentId = default, string agentName = default, int? lookbackHours = default, DateTimeOffset? endsOn = default, int? maxTraces = default, TimeSpan? ingestionDelaySeconds = default)
         {
             traceIds ??= new ChangeTrackingList<string>();
@@ -1056,14 +1057,14 @@ namespace Azure.AI.Projects
         /// See [create an evaluation dataset from traces](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/traces-to-dataset?tabs=python).
         /// </summary>
         /// <param name="traceSource"> The trace source that defines how traces are selected for evaluation. </param>
-        /// <returns> A new <see cref="Projects.AzureAITraceDataSourceEvalRunDataSource"/> instance for mocking. </returns>
-        public static AzureAITraceDataSourceEvalRunDataSource AzureAITraceDataSourceEvalRunDataSource(TraceSource traceSource = default)
+        /// <returns> A new <see cref="Projects.TraceSourceEvalRunDataSource"/> instance for mocking. </returns>
+        public static TraceSourceEvalRunDataSource TraceSourceEvalRunDataSource(TraceSource traceSource = default)
         {
-            return new AzureAITraceDataSourceEvalRunDataSource("azure_ai_trace_data_source", additionalBinaryDataProperties: null, traceSource);
+            return new TraceSourceEvalRunDataSource("azure_ai_trace_data_source", additionalBinaryDataProperties: null, traceSource);
         }
 
         /// <summary>
-        /// Base class for polymorphic trace sources nested within an AzureAITraceDataSourceEvalRunDataSource.
+        /// Base class for polymorphic trace sources nested within a TraceSourceEvalRunDataSource.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.AgentFilterTraceSource"/>, <see cref="Projects.ConversationIdTraceSource"/>, and <see cref="Projects.TraceIdTraceSource"/>.
         /// </summary>
         /// <param name="type"> The discriminator that identifies which kind of trace source this is. </param>
@@ -1118,10 +1119,11 @@ namespace Azure.AI.Projects
 
         /// <summary> Preview form of `azure_ai_trace_data_source`. Returned only for rules backed by existing preview schedules; rejected on create and update. </summary>
         /// <param name="traceSource"> The trace source that defines how traces are selected for evaluation. </param>
-        /// <returns> A new <see cref="Projects.AzureAITraceDataSourcePreviewEvalRunDataSource"/> instance for mocking. </returns>
-        public static AzureAITraceDataSourcePreviewEvalRunDataSource AzureAITraceDataSourcePreviewEvalRunDataSource(TraceSource traceSource = default)
+        /// <returns> A new <see cref="Projects.TraceSourcePreviewEvalRunDataSource"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static TraceSourcePreviewEvalRunDataSource TraceSourcePreviewEvalRunDataSource(TraceSource traceSource = default)
         {
-            return new AzureAITraceDataSourcePreviewEvalRunDataSource("azure_ai_trace_data_source_preview", additionalBinaryDataProperties: null, traceSource);
+            return new TraceSourcePreviewEvalRunDataSource("azure_ai_trace_data_source_preview", additionalBinaryDataProperties: null, traceSource);
         }
 
         /// <summary>
@@ -1380,6 +1382,7 @@ namespace Azure.AI.Projects
         /// <param name="defaultSimulationConfiguration"> Default configuration for generating simulated user conversations and persisting their output. Conversation properties in a test case's `simulation_configuration` override the corresponding defaults. </param>
         /// <param name="dataMapping"> Maps JSONL dataset attributes to user conversation simulation inputs when their names differ from the defaults. The default attribute names are `test_case_id`, `test_case_category`, `test_case_description`, and `simulation_configuration`, matching `UserConversationSimulationTestCase`. Omit when the dataset uses these names or when using `inline_user_conversation_simulation`. </param>
         /// <returns> A new <see cref="Projects.UserConversationSimulationPreviewEvalRunDataSource"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
         public static UserConversationSimulationPreviewEvalRunDataSource UserConversationSimulationPreviewEvalRunDataSource(BinaryData source = default, EvaluationTarget target = default, EvaluationModelConfiguration modelConfiguration = default, UserConversationSimulationDefaultConfiguration defaultSimulationConfiguration = default, IDictionary<string, string> dataMapping = default)
         {
             dataMapping ??= new ChangeTrackingDictionary<string, string>();
@@ -1399,10 +1402,10 @@ namespace Azure.AI.Projects
         /// See [evaluation datasets](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/evaluation-datasets).
         /// </summary>
         /// <param name="source"> The source of the CSV data, either inline content or a file reference. </param>
-        /// <returns> A new <see cref="Projects.EvalCsvRunDataSource"/> instance for mocking. </returns>
-        public static EvalCsvRunDataSource EvalCsvRunDataSource(EvalCsvFileIdSource source = default)
+        /// <returns> A new <see cref="Projects.CsvEvalRunDataSource"/> instance for mocking. </returns>
+        public static CsvEvalRunDataSource CsvEvalRunDataSource(EvalCsvFileIdSource source = default)
         {
-            return new EvalCsvRunDataSource("csv", additionalBinaryDataProperties: null, source);
+            return new CsvEvalRunDataSource("csv", additionalBinaryDataProperties: null, source);
         }
 
         /// <summary> Represents a reference to an uploaded CSV file used as a source for evaluation data. </summary>

@@ -4,10 +4,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> Preview form of `azure_ai_traces`. Returned only for rules backed by existing preview schedules; rejected on create and update. </summary>
+    [Experimental("AAIP001")]
     public partial class TracesPreviewEvalRunDataSource : EvalRunDataSource
     {
         /// <summary> Initializes a new instance of <see cref="TracesPreviewEvalRunDataSource"/>. </summary>

@@ -11,23 +11,23 @@ namespace Azure.AI.Projects
     /// A CSV data source for evaluation runs.
     /// See [evaluation datasets](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/evaluation-datasets).
     /// </summary>
-    public partial class EvalCsvRunDataSource : EvalRunDataSource
+    public partial class CsvEvalRunDataSource : EvalRunDataSource
     {
-        /// <summary> Initializes a new instance of <see cref="EvalCsvRunDataSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CsvEvalRunDataSource"/>. </summary>
         /// <param name="source"> The source of the CSV data, either inline content or a file reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="source"/> is null. </exception>
-        public EvalCsvRunDataSource(EvalCsvFileIdSource source) : base("csv")
+        public CsvEvalRunDataSource(EvalCsvFileIdSource source) : base("csv")
         {
             Argument.AssertNotNull(source, nameof(source));
 
             Source = source;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EvalCsvRunDataSource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CsvEvalRunDataSource"/>. </summary>
         /// <param name="type"> The data source type discriminator. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="source"> The source of the CSV data, either inline content or a file reference. </param>
-        internal EvalCsvRunDataSource(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, EvalCsvFileIdSource source) : base(@type, additionalBinaryDataProperties)
+        internal CsvEvalRunDataSource(string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, EvalCsvFileIdSource source) : base(@type, additionalBinaryDataProperties)
         {
             Source = source;
         }

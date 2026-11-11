@@ -20,7 +20,7 @@
 ### Breaking Changes
 - The preview `ProjectsAgentsModelFactory.VoiceAgentDefinition` overload containing `postCall` now requires all arguments to avoid ambiguous calls to the optional GA overload. For named-argument usage, create the GA definition and then set its preview `PostCall` property. The full positional preview signature is retained.
 - `VoiceAgentTransferRouting.RingTimeoutSeconds` now uses `TimeSpan?` instead of `int?`; JSON continues to use seconds.
-- `AgentOptimizationJob.Status` again uses `AgentOptimizationJobStatus`, including the `Skipped` state. Existing list filters continue to accept `AgentsJobStatus` for compatibility.
+- `AgentOptimizationJob.Status` now uses the shared `AgentsJobStatus`. The `AgentOptimizationJobStatus` type and its named `Skipped` value were removed; existing list filters continue to accept `AgentsJobStatus`.
 - Realtime voice definitions now emit the required `sub_protocol` discriminator with the value `realtime`.
 - `VoiceAgentSubagentConfig` is now an abstract base class. Use `VoiceAgentDelegateSubagentConfig` for referenced agents or `VoiceAgentInlineSubagentConfig` for inline handoff graphs.
 - Telephony binding creation now accepts `TelephonyBinding` provider-specific models instead of the removed create-content models. Binding status fields and the binding-list status filter were removed.
@@ -46,7 +46,7 @@
 - Added Voice Agent REST administration, read-only telephony inspection, and campaign inspection samples, including typed address configuration without dispatching calls.
 
 ### Other Changes
-- Regenerated from `foundry/snap-20261109` at [`134c3c4624ca04410c740d1230a82cba31595be9`](https://github.com/Azure/azure-rest-api-specs/tree/134c3c4624ca04410c740d1230a82cba31595be9), using OpenAI TypeSpec 1.34.1.
+- Regenerated from `foundry/snap-20261109` at [`3a17de2b4c2b23eec9e2f0985dbe5f6e2f417e0b`](https://github.com/Azure/azure-rest-api-specs/tree/3a17de2b4c2b23eec9e2f0985dbe5f6e2f417e0b), using OpenAI TypeSpec 1.34.1.
 
 ## 3.0.0-beta.6 (2026-10-30)
 

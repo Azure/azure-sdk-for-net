@@ -18,6 +18,8 @@
 ### Breaking Changes
 
 - Realtime connection options no longer allow overriding the client-managed `Authorization` header; these overrides throw `ArgumentException`. Conditional Voice Agents preview opt-ins may be supplied explicitly through the `Foundry-Features` header or `foundry_features` query.
+- Renamed `EvalCsvRunDataSource` to `CsvEvalRunDataSource`, `AzureAITraceDataSourceEvalRunDataSource` to `TraceSourceEvalRunDataSource`, and `AzureAITraceDataSourcePreviewEvalRunDataSource` to `TraceSourcePreviewEvalRunDataSource`, including their model-factory methods.
+- `EndpointEvaluatorSchemaVersion`, `TracesPreviewEvalRunDataSource`, and `UserConversationSimulationPreviewEvalRunDataSource` now require the `AAIP001` experimental opt-in.
 - `EvaluationsDimension.Weight` is nullable again. Dimensions now also expose `Allowed`, `GeneratedWeight`, and `IsAlwaysApplicable`.
 - `EvaluatorGenerationArtifacts.Reference` now uses `VersionedDatasetReference` instead of the removed `DatasetReference` model, retaining the required dataset version.
 - `AgentInsightMonitors.GetInsights` and `GetInsightsAsync` now serialize category, severity, and status collections to the plural `categories`, `severities`, and `statuses` query parameters.
@@ -42,7 +44,7 @@
 ### Other Changes
 
 - Agent Insights requests again include the required `AgentInsights=V1Preview` feature header.
-- Regenerated from `foundry/snap-20261109` at [`134c3c4624ca04410c740d1230a82cba31595be9`](https://github.com/Azure/azure-rest-api-specs/tree/134c3c4624ca04410c740d1230a82cba31595be9), using OpenAI TypeSpec 1.34.1.
+- Regenerated from `foundry/snap-20261109` at [`3a17de2b4c2b23eec9e2f0985dbe5f6e2f417e0b`](https://github.com/Azure/azure-rest-api-specs/tree/3a17de2b4c2b23eec9e2f0985dbe5f6e2f417e0b), using OpenAI TypeSpec 1.34.1.
 
 ## 3.0.0-beta.6 (2026-10-30)
 

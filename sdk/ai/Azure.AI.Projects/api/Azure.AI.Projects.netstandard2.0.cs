@@ -1105,8 +1105,6 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.Evaluation.AzureAIAgentTarget AzureAIAgentTarget(string name, string version, System.Collections.Generic.IEnumerable<Azure.AI.Projects.ToolDescription> toolDescriptions, System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseTool> tools) { throw null; }
         public static Azure.AI.Projects.Evaluation.AzureAIModelTarget AzureAIModelTarget(string model = null, Azure.AI.Projects.Evaluation.ModelSamplingParams samplingParams = null) { throw null; }
         public static Azure.AI.Projects.AzureAISearchIndex AzureAISearchIndex(string id = null, string name = null, string version = null, string description = null, System.Collections.Generic.IDictionary<string, string> tags = null, string connectionName = null, string indexName = null, Azure.AI.Projects.AIProjectIndexFieldMapping fieldMapping = null) { throw null; }
-        public static Azure.AI.Projects.AzureAITraceDataSourceEvalRunDataSource AzureAITraceDataSourceEvalRunDataSource(Azure.AI.Projects.TraceSource traceSource = null) { throw null; }
-        public static Azure.AI.Projects.AzureAITraceDataSourcePreviewEvalRunDataSource AzureAITraceDataSourcePreviewEvalRunDataSource(Azure.AI.Projects.TraceSource traceSource = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.AzureOpenAIModelConfiguration AzureOpenAIModelConfiguration(string modelDeploymentName = null) { throw null; }
         public static Azure.AI.Projects.BlobReferenceSasCredential BlobReferenceSasCredential(System.Uri sasUri = null) { throw null; }
         public static Azure.AI.Projects.BlobReferenceSasCredential BlobReferenceSasCredential(System.Uri sasUri, string type) { throw null; }
@@ -1129,6 +1127,7 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.CreateEvalCompletionsRunDataSourceSamplingParams CreateEvalCompletionsRunDataSourceSamplingParams(Azure.AI.Projects.ReasoningEffort? reasoningEffort = default(Azure.AI.Projects.ReasoningEffort?), double? temperature = default(double?), long? maxCompletionTokens = default(long?), double? topP = default(double?), long? seed = default(long?), System.BinaryData responseFormat = null, System.Collections.Generic.IEnumerable<Azure.AI.Projects.ChatCompletionTool> tools = null) { throw null; }
         public static Azure.AI.Projects.CreateEvalJsonlRunDataSource CreateEvalJsonlRunDataSource(System.BinaryData source = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.CronTrigger CronTrigger(string expression = null, string timeZone = null, System.DateTimeOffset? startTime = default(System.DateTimeOffset?), System.DateTimeOffset? endTime = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.AI.Projects.CsvEvalRunDataSource CsvEvalRunDataSource(Azure.AI.Projects.EvalCsvFileIdSource source = null) { throw null; }
         public static Azure.AI.Projects.CustomRoutineTrigger CustomRoutineTrigger(string provider = null, string eventName = null, System.Collections.Generic.IDictionary<string, System.BinaryData> parameters = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.DailyRecurrenceSchedule DailyRecurrenceSchedule(System.Collections.Generic.IEnumerable<int> hours = null) { throw null; }
         public static Azure.AI.Projects.DataGenerationJobConfiguration DataGenerationJobConfiguration(string type = null, float? trainSplit = default(float?), Azure.AI.Projects.DataGenerationModelOptions modelOptions = null) { throw null; }
@@ -1152,7 +1151,6 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.EmbeddingConfiguration EmbeddingConfiguration(string modelDeploymentName = null, string embeddingField = null) { throw null; }
         public static Azure.AI.Projects.Evaluation.EndpointBasedEvaluatorDefinition EndpointBasedEvaluatorDefinition(System.BinaryData initParameters = null, System.BinaryData dataSchema = null, System.Collections.Generic.IDictionary<string, Azure.AI.Projects.Evaluation.EvaluatorMetric> metrics = null, string connectionName = null, Azure.AI.Projects.EndpointEvaluatorSchemaVersion? schemaVersion = default(Azure.AI.Projects.EndpointEvaluatorSchemaVersion?)) { throw null; }
         public static Azure.AI.Projects.EvalCsvFileIdSource EvalCsvFileIdSource(string id = null) { throw null; }
-        public static Azure.AI.Projects.EvalCsvRunDataSource EvalCsvRunDataSource(Azure.AI.Projects.EvalCsvFileIdSource source = null) { throw null; }
         public static Azure.AI.Projects.EvalItem EvalItem(Azure.AI.Projects.CreateEvalResponsesRunDataSourceInputMessagesTemplateTemplateRole role = Azure.AI.Projects.CreateEvalResponsesRunDataSourceInputMessagesTemplateTemplateRole.User, System.BinaryData content = null, Azure.AI.Projects.EvalItemType? type = default(Azure.AI.Projects.EvalItemType?)) { throw null; }
         public static Azure.AI.Projects.EvalJsonlFileContentSource EvalJsonlFileContentSource(System.Collections.Generic.IEnumerable<Azure.AI.Projects.EvalJsonlFileContentSourceContent> content = null) { throw null; }
         public static Azure.AI.Projects.EvalJsonlFileContentSourceContent EvalJsonlFileContentSourceContent(System.Collections.Generic.IDictionary<string, System.BinaryData> item = null, System.Collections.Generic.IDictionary<string, System.BinaryData> sample = null) { throw null; }
@@ -1303,6 +1301,8 @@ namespace Azure.AI.Projects
         public static Azure.AI.Projects.TracesEvalRunDataSource TracesEvalRunDataSource(System.Collections.Generic.IEnumerable<string> traceIds = null, System.Collections.Generic.IEnumerable<string> conversationIds = null, string agentId = null, string agentName = null, int? lookbackHours = default(int?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), int? maxTraces = default(int?), System.TimeSpan? ingestionDelaySeconds = default(System.TimeSpan?)) { throw null; }
         public static Azure.AI.Projects.TracesEvaluatorGenerationJobSource TracesEvaluatorGenerationJobSource(string description = null, string agentId = null, string agentName = null, string agentVersion = null, System.DateTimeOffset startsOn = default(System.DateTimeOffset), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<string> traceIds = null) { throw null; }
         public static Azure.AI.Projects.TraceSource TraceSource(string type = null) { throw null; }
+        public static Azure.AI.Projects.TraceSourceEvalRunDataSource TraceSourceEvalRunDataSource(Azure.AI.Projects.TraceSource traceSource = null) { throw null; }
+        public static Azure.AI.Projects.TraceSourcePreviewEvalRunDataSource TraceSourcePreviewEvalRunDataSource(Azure.AI.Projects.TraceSource traceSource = null) { throw null; }
         public static Azure.AI.Projects.TracesPreviewEvalRunDataSource TracesPreviewEvalRunDataSource(System.Collections.Generic.IEnumerable<string> traceIds = null, System.Collections.Generic.IEnumerable<string> conversationIds = null, string agentId = null, string agentName = null, int? lookbackHours = default(int?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), int? maxTraces = default(int?), System.TimeSpan? ingestionDelaySeconds = default(System.TimeSpan?)) { throw null; }
         public static Azure.AI.Projects.UpdateModelVersionOptions UpdateModelVersionOptions(string description = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.AI.Projects.UserConversationSimulationAudioEffectsConfiguration UserConversationSimulationAudioEffectsConfiguration(System.Collections.Generic.IEnumerable<Azure.AI.Projects.UserConversationSimulationAudioEffect> effects = null, int? volumePercentage = default(int?)) { throw null; }
@@ -1337,34 +1337,6 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.AzureAISearchIndex System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureAISearchIndex>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureAISearchIndex>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureAISearchIndex>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AzureAITraceDataSourceEvalRunDataSource : Azure.AI.Projects.EvalRunDataSource, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AzureAITraceDataSourceEvalRunDataSource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureAITraceDataSourceEvalRunDataSource>
-    {
-        public AzureAITraceDataSourceEvalRunDataSource() { }
-        public Azure.AI.Projects.TraceSource TraceSource { get { throw null; } set { } }
-        protected override Azure.AI.Projects.EvalRunDataSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.AI.Projects.EvalRunDataSource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.AzureAITraceDataSourceEvalRunDataSource System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AzureAITraceDataSourceEvalRunDataSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AzureAITraceDataSourceEvalRunDataSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.AzureAITraceDataSourceEvalRunDataSource System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureAITraceDataSourceEvalRunDataSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureAITraceDataSourceEvalRunDataSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureAITraceDataSourceEvalRunDataSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AzureAITraceDataSourcePreviewEvalRunDataSource : Azure.AI.Projects.EvalRunDataSource, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AzureAITraceDataSourcePreviewEvalRunDataSource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureAITraceDataSourcePreviewEvalRunDataSource>
-    {
-        public AzureAITraceDataSourcePreviewEvalRunDataSource() { }
-        public Azure.AI.Projects.TraceSource TraceSource { get { throw null; } set { } }
-        protected override Azure.AI.Projects.EvalRunDataSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.AI.Projects.EvalRunDataSource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.AzureAITraceDataSourcePreviewEvalRunDataSource System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AzureAITraceDataSourcePreviewEvalRunDataSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.AzureAITraceDataSourcePreviewEvalRunDataSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.AzureAITraceDataSourcePreviewEvalRunDataSource System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureAITraceDataSourcePreviewEvalRunDataSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureAITraceDataSourcePreviewEvalRunDataSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.AzureAITraceDataSourcePreviewEvalRunDataSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class BlobReferenceSasCredential : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.BlobReferenceSasCredential>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.BlobReferenceSasCredential>
     {
@@ -1573,6 +1545,20 @@ namespace Azure.AI.Projects
         Assistant = 1,
         System = 2,
         Developer = 3,
+    }
+    public partial class CsvEvalRunDataSource : Azure.AI.Projects.EvalRunDataSource, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.CsvEvalRunDataSource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.CsvEvalRunDataSource>
+    {
+        public CsvEvalRunDataSource(Azure.AI.Projects.EvalCsvFileIdSource source) { }
+        public Azure.AI.Projects.EvalCsvFileIdSource Source { get { throw null; } set { } }
+        protected override Azure.AI.Projects.EvalRunDataSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.EvalRunDataSource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.CsvEvalRunDataSource System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.CsvEvalRunDataSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.CsvEvalRunDataSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.CsvEvalRunDataSource System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.CsvEvalRunDataSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.CsvEvalRunDataSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.CsvEvalRunDataSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CustomRoutineTrigger : Azure.AI.Projects.RoutineTrigger, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.CustomRoutineTrigger>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.CustomRoutineTrigger>
     {
@@ -1979,20 +1965,6 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.EvalCsvFileIdSource System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvalCsvFileIdSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvalCsvFileIdSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvalCsvFileIdSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class EvalCsvRunDataSource : Azure.AI.Projects.EvalRunDataSource, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.EvalCsvRunDataSource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvalCsvRunDataSource>
-    {
-        public EvalCsvRunDataSource(Azure.AI.Projects.EvalCsvFileIdSource source) { }
-        public Azure.AI.Projects.EvalCsvFileIdSource Source { get { throw null; } set { } }
-        protected override Azure.AI.Projects.EvalRunDataSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected override Azure.AI.Projects.EvalRunDataSource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Projects.EvalCsvRunDataSource System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.EvalCsvRunDataSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.EvalCsvRunDataSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Projects.EvalCsvRunDataSource System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvalCsvRunDataSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvalCsvRunDataSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvalCsvRunDataSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EvalItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.EvalItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.EvalItem>
     {
@@ -3912,6 +3884,34 @@ namespace Azure.AI.Projects
         Azure.AI.Projects.TraceSource System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TraceSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TraceSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TraceSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TraceSourceEvalRunDataSource : Azure.AI.Projects.EvalRunDataSource, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.TraceSourceEvalRunDataSource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TraceSourceEvalRunDataSource>
+    {
+        public TraceSourceEvalRunDataSource() { }
+        public Azure.AI.Projects.TraceSource TraceSource { get { throw null; } set { } }
+        protected override Azure.AI.Projects.EvalRunDataSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.EvalRunDataSource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.TraceSourceEvalRunDataSource System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.TraceSourceEvalRunDataSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.TraceSourceEvalRunDataSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.TraceSourceEvalRunDataSource System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TraceSourceEvalRunDataSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TraceSourceEvalRunDataSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TraceSourceEvalRunDataSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class TraceSourcePreviewEvalRunDataSource : Azure.AI.Projects.EvalRunDataSource, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.TraceSourcePreviewEvalRunDataSource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TraceSourcePreviewEvalRunDataSource>
+    {
+        public TraceSourcePreviewEvalRunDataSource() { }
+        public Azure.AI.Projects.TraceSource TraceSource { get { throw null; } set { } }
+        protected override Azure.AI.Projects.EvalRunDataSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.AI.Projects.EvalRunDataSource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Projects.TraceSourcePreviewEvalRunDataSource System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.TraceSourcePreviewEvalRunDataSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.TraceSourcePreviewEvalRunDataSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Projects.TraceSourcePreviewEvalRunDataSource System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TraceSourcePreviewEvalRunDataSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TraceSourcePreviewEvalRunDataSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TraceSourcePreviewEvalRunDataSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TracesPreviewEvalRunDataSource : Azure.AI.Projects.EvalRunDataSource, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.TracesPreviewEvalRunDataSource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.TracesPreviewEvalRunDataSource>
     {

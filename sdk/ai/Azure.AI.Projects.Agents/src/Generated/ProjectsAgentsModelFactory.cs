@@ -4429,7 +4429,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="updatedOn"> The timestamp when the job was last updated, represented in Unix time. </param>
         /// <param name="warnings"> Non-fatal warnings emitted during optimization. Omitted when no warnings were produced. </param>
         /// <returns> A new <see cref="Agents.AgentOptimizationJob"/> instance for mocking. </returns>
-        public static AgentOptimizationJob AgentOptimizationJob(string id = default, AgentOptimizationJobResult result = default, AgentOptimizationJobStatus status = default, FoundryOpenAIError error = default, string displayName = default, AgentOptimizationTargetConfiguration targetConfiguration = default, AgentOptimizationModelConfiguration optimizationModelConfiguration = default, AgentOptimizationConfigurationBase optimizationConfiguration = default, TimeSpan runDurationMs = default, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default, IEnumerable<string> warnings = default)
+        public static AgentOptimizationJob AgentOptimizationJob(string id = default, AgentOptimizationJobResult result = default, AgentsJobStatus status = default, FoundryOpenAIError error = default, string displayName = default, AgentOptimizationTargetConfiguration targetConfiguration = default, AgentOptimizationModelConfiguration optimizationModelConfiguration = default, AgentOptimizationConfigurationBase optimizationConfiguration = default, TimeSpan runDurationMs = default, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default, IEnumerable<string> warnings = default)
         {
             warnings ??= new ChangeTrackingList<string>();
 

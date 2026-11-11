@@ -11,9 +11,11 @@ namespace Azure.AI.Projects
     public partial class ConversationsDataGenerationJobConfiguration : DataGenerationJobConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="ConversationsDataGenerationJobConfiguration"/>. </summary>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         public ConversationsDataGenerationJobConfiguration() : base(DataGenerationJobKind.Conversations)
         {
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Initializes a new instance of <see cref="ConversationsDataGenerationJobConfiguration"/>. </summary>
         /// <param name="type"> The data generation job type. </param>
@@ -24,6 +26,7 @@ namespace Azure.AI.Projects
         /// <param name="generateTestCaseDescription"> Whether to generate an AI-authored test-case description for each reconstructed conversation. This is a preview feature. If omitted, the service defaults to `false`. When true, requires a nonempty `model_options.model`. Model options must be omitted when neither description nor rubric generation is enabled. </param>
         /// <param name="generateTestCaseRubric"> Whether to generate test-case rubric dimensions for each reconstructed conversation. This is a preview feature. When true, requires a nonempty `model_options.model`. Model options must be omitted when neither description nor rubric generation is enabled. </param>
         /// <param name="modelOptions"> The model used to generate test-case descriptions or rubric dimensions. Required with a nonempty `model` when `generate_test_case_description` or `generate_test_case_rubric` is true; must be omitted otherwise. </param>
+#pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal ConversationsDataGenerationJobConfiguration(DataGenerationJobKind @type, float? trainSplit, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? maxSamples, bool? redactPrivateContent, bool? generateTestCaseDescription, bool? generateTestCaseRubric, DataGenerationModelOptions modelOptions) : base(@type, trainSplit, modelOptions, additionalBinaryDataProperties)
         {
             MaxSamples = maxSamples;
@@ -31,6 +34,7 @@ namespace Azure.AI.Projects
             GenerateTestCaseDescription = generateTestCaseDescription;
             GenerateTestCaseRubric = generateTestCaseRubric;
         }
+#pragma warning restore AAIP001 // Model initialization and serialization support experimental members and variants.
 
         /// <summary> Maximum number of whole conversations to generate, up to service-defined limits. If omitted, sampling is turned off. </summary>
         public int? MaxSamples { get; set; }
