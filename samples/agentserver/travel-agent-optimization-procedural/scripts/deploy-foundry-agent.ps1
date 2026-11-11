@@ -44,7 +44,7 @@ function Write-Step($msg) { Write-Host "`n=== $msg ===" -ForegroundColor Cyan }
 Write-Step "1/5 dotnet publish"
 Push-Location $ProjectRoot
 try {
-    # Sample is multi-targeted (net8.0 + net10.0); the Dockerfile uses the
+    # Sample is multi-targeted (net10.0 + net11.0); the Dockerfile uses the
     # net10.0 runtime image, so publish for net10.0 explicitly.
     dotnet publish -c Release -f net10.0 -o (Join-Path $ProjectRoot 'publish') --nologo
     if ($LASTEXITCODE -ne 0) { throw "dotnet publish failed" }
