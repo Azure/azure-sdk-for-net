@@ -85,6 +85,13 @@ Describe 'Export-PrReReviewInput' {
         $inputText | Should -Match '(?m)^\+line 1500 changed$'
     }
 
+    It 'leaves a zero exit code after a local diff so the pwsh step does not fail' {
+        Mock -ModuleName PrReReviewInput Get-PrReReviewHeadContent { if ($HeadSha -eq 'abc1234') { '// new declaration' } else { '// deleted declaration' } }
+        $global:LASTEXITCODE = 0
+        $null = Invoke-Export @(New-ChangedFile 'src/Changed.cs' -Status 'modified' -Patch $null)
+        $global:LASTEXITCODE | Should -Be 0
+    }
+
     It 'uses the previous path at the merge base when a renamed file has no patch' {
         Mock -ModuleName PrReReviewInput Get-PrReReviewHeadContent { "content of $Path at $HeadSha" }
         $file = New-ChangedFile 'src/New.cs' -Status 'renamed' -Patch $null

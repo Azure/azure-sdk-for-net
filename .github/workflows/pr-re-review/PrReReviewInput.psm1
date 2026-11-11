@@ -88,10 +88,12 @@ function Get-PrReReviewLocalDiff {
         [IO.File]::WriteAllText($oldPath, $Old, $encoding)
         [IO.File]::WriteAllText($newPath, $New, $encoding)
         $output = & git -c core.autocrlf=false diff --no-index --no-color --no-ext-diff --unified=3 -- $oldPath $newPath
-        # git diff --no-index exits 1 when the files differ.
+        # git diff --no-index exits 1 when the files differ, and a pwsh step in GitHub Actions exits
+        # with $LASTEXITCODE, so reset it once that result is accepted.
         if ($LASTEXITCODE -gt 1) {
             throw "git diff --no-index failed with exit code $LASTEXITCODE."
         }
+        $global:LASTEXITCODE = 0
         $lines = [string[]]@($output)
         for ($start = 0; $start -lt $lines.Count -and !$lines[$start].StartsWith('@@'); $start++) { }
         if ($start -eq $lines.Count) {
