@@ -31,9 +31,10 @@ called end of life (EOL).
   when .NET 12 ships, libraries move from `net10.0` to `net12.0`, and Core
   packages move from `net10.0` to `net12.0` and `net10.0`.
 - ✅ **YOU MAY** add another supported framework, LTS or STS, to a package when
-  the benefit justifies it. For example, System.ClientModel targets `net9.0` so
-  `JsonPatch` can look up keys by `ReadOnlySpan<byte>` with
-  `Dictionary<TKey, TValue>.GetAlternateLookup`.
+  the benefit justifies it, such as using an API from that release or opting in
+  to runtime performance improvements that only apply to code targeting it. For
+  example, System.ClientModel targets `net9.0` so `JsonPatch` can look up keys
+  by `ReadOnlySpan<byte>` with `Dictionary<TKey, TValue>.GetAlternateLookup`.
 - ✅ **DO** remove a framework from package targets 6 months after it reaches
   end of support. For example, .NET 8 and .NET 9 reach end of support in
   November 2026, so Core packages drop `net8.0` and System.ClientModel drops
