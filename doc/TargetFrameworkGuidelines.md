@@ -18,36 +18,27 @@ called end of life (EOL).
 
 ## Package targets
 
-| Packages | Targets |
-|----------|---------|
+| Packages | Required targets |
+|----------|------------------|
 | Libraries (`SupportsNetStandard20`, on by default for `Azure.*` projects) | `netstandard2.0` and the current LTS |
-| Core packages: Azure.Core, System.ClientModel, and Azure.Core.Experimental | `netstandard2.0`, the current LTS, and the previous LTS until it reaches end of support |
+| Core packages: Azure.Core, System.ClientModel, and Azure.Core.Experimental | `netstandard2.0`, the current LTS, and the previous LTS until 6 months after it reaches end of support |
 | Analyzers and source generators | `netstandard2.0` only |
 | Code generator projects (`IsGeneratorLibrary`) | The current LTS only |
 
 - ✅ **DO** adopt a new LTS as soon as it ships and the CI agent images include
-  its SDK (see [CI agent images](#ci-agent-images)). Libraries replace their
-  `netX.0` targets with it. Core packages add it and keep the outgoing LTS as
-  their previous LTS. For example, when .NET 12 ships, libraries move from
-  `net10.0` to `net12.0`, and Core packages move from `net10.0` to `net12.0` and
-  `net10.0`.
-- ✅ **DO** remove a .NET version from every package's targets when it reaches
-  end of support, in the same change that removes it from the test targets. For
-  example, .NET 8 and .NET 9 reach end of support as .NET 11 ships, so Core
-  packages drop `net8.0` and System.ClientModel drops `net9.0`.
-- ❌ **DO NOT** add repository-wide package targets when an STS ships.
-
-### STS targets
-
-- ✅ **YOU MAY** add an STS target to a package whose code uses an API that
-  first shipped in that release. For example, System.ClientModel targets
-  `net9.0` so `JsonPatch` can look up keys by `ReadOnlySpan<byte>` with
+  its SDK (see [CI agent images](#ci-agent-images)). It becomes the current LTS
+  for every package, and Core packages keep the outgoing LTS as their previous
+  LTS. For example, when .NET 12 ships, libraries move from `net10.0` to
+  `net12.0`, and Core packages move from `net10.0` to `net12.0` and `net10.0`.
+- ✅ **YOU MAY** add another supported framework, LTS or STS, to a package when
+  the benefit justifies it. For example, System.ClientModel targets `net9.0` so
+  `JsonPatch` can look up keys by `ReadOnlySpan<byte>` with
   `Dictionary<TKey, TValue>.GetAlternateLookup`.
-- ❌ **DO NOT** add an STS target only for runtime performance. Apps get runtime
-  improvements from the runtime they run on, whatever framework a package
-  targets.
-
-STS targets are removed by the same rules as any other `netX.0` target.
+- ✅ **DO** remove a framework from package targets 6 months after it reaches
+  end of support. For example, .NET 8 and .NET 9 reach end of support in
+  November 2026, so Core packages drop `net8.0` and System.ClientModel drops
+  `net9.0` in May 2027.
+- ❌ **DO NOT** add repository-wide package targets when an STS ships.
 
 ## Test targets
 
@@ -59,19 +50,21 @@ matrix covers the same set.
   ships.
 - ✅ **DO** remove versions that have reached end of support in the same change.
 
+Package targets stay for 6 months after their version leaves the test targets.
+
 ## Timeline
 
 How targets change over the next four releases:
 
 | Release | Libraries | Core packages | Tests |
 |---------|-----------|---------------|-------|
-| .NET 11 (STS), Nov 2026 | `net10.0` | `net10.0` | `net10.0`, `net11.0` |
+| .NET 11 (STS), Nov 2026 | `net10.0`, `net8.0` until May 2027 | `net10.0`, `net8.0` until May 2027 | `net10.0`, `net11.0` |
 | .NET 12 (LTS), Nov 2027 | `net12.0` | `net12.0`, `net10.0` | `net10.0`, `net11.0`, `net12.0` |
-| .NET 13 (STS), Nov 2028 | `net12.0` | `net12.0` | `net12.0`, `net13.0` |
+| .NET 13 (STS), Nov 2028 | `net12.0` | `net12.0`, `net10.0` until May 2029 | `net12.0`, `net13.0` |
 | .NET 14 (LTS), Nov 2029 | `net14.0` | `net14.0`, `net12.0` | `net12.0`, `net13.0`, `net14.0` |
 
 All packages also target `netstandard2.0`, and tests also run on .NET Framework
-on Windows. Package-specific STS targets are not shown.
+on Windows. Optional targets are not shown.
 
 ## global.json
 
@@ -94,9 +87,8 @@ Once the agent images include the new SDK:
 
 1. `global.json`: move `sdk.version` to the new SDK.
 2. `eng/Directory.Build.Common.props`: update `AllActiveCurrentTargetFrameworks`
-   for the test targets, and remove the previous LTS that Core packages target
-   once it reaches end of support. For an LTS, also update `LtsTargetFramework`,
-   make the outgoing LTS the previous LTS that Core packages target, and update
+   for the test targets. For an LTS, also update `LtsTargetFramework`, make the
+   outgoing LTS the previous LTS that Core packages target, and update
    `ApiCompatRunnableTargetFramework`, which must be a framework that
    already-released packages contain.
 3. `eng/pipelines/templates/stages/platform-matrix.json`: add and remove
@@ -106,9 +98,8 @@ Once the agent images include the new SDK:
    test framework older than the `global.json` SDK.
 5. `eng/centralpackagemanagement/`: update package versions conditioned on a
    framework, such as `Microsoft.AspNetCore.Mvc.Testing`.
-6. Search the repo for the removed frameworks and old SDKs (for example
-   `net8.0`, `net9.0`, and `8.0.x`) to catch package-specific targets, such as
-   System.ClientModel's `net9.0`, and scripts, samples, and tools that hard-code
+6. Search the repo for the removed test frameworks and old SDKs (for example
+   `net8.0` and `8.0.x`) to catch scripts, samples, and tools that hard-code
    them.
 7. Update API listings (`api/<Package>.<framework>.cs`) for packages whose
    targets changed. `eng/scripts/Export-API.ps1` generates listings for added
@@ -120,3 +111,12 @@ Once the agent images include the new SDK:
 8. When the BCL package versions move to the new major, move the framework in
    the built-in package removal in `eng/Directory.Build.Common.targets` to
    match.
+
+Six months after a version reaches end of support:
+
+1. Remove its package targets: the previous LTS that Core packages target in
+   `eng/Directory.Build.Common.props`, and package-specific targets such as
+   System.ClientModel's `net9.0`.
+2. Delete the API listings for the removed framework.
+3. Search the repo for the framework to catch anything else that still targets
+   it.
