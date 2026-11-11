@@ -323,6 +323,19 @@ test('capture fails closed for malformed omitted-patch status and rename', async
   }
 });
 
+test('freshness subprocess failure and malformed output fail closed', async t => {
+  const f = fixture();
+  const repo = { owner: 'Azure', repo: 'azure-sdk-for-net' };
+  const snapshot = await captureContext(f.github, repo, files);
+  const delivery = require('../pr-re-review/ReviewDelivery.cjs');
+  const originalRunner = delivery.runPowerShell;
+  t.after(() => { delivery.runPowerShell = originalRunner; });
+  delivery.runPowerShell = async script => { assert.equal(script, 'ReviewFreshness.ps1'); return { stdout:'unexpected', stderr:'' }; };
+  await assert.rejects(assertFresh(f.github, repo, snapshot), /freshness verification failed/i);
+  delivery.runPowerShell = async () => { throw new Error('Freshness verification cancelled by SIGTERM.'); };
+  await assert.rejects(assertMutationFresh(f.github, repo, snapshot, [], []), /freshness verification cancelled/i);
+});
+
 test('captures all thread pages and previous reviews', async () => {
   const f = fixture(106);
   const s = await captureContext(f.github, { owner: 'Azure', repo: 'azure-sdk-for-net' }, files);

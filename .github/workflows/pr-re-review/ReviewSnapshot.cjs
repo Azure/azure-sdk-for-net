@@ -107,25 +107,24 @@ async function assertFresh(github, repo, snapshot) {
   // Reread thread state/history too. Reuse capture rather than trusting the
   // agent's assertion that its old thread-resolution decisions are still current.
   const current = await captureReviewState(github, repo, snapshot);
-  if (JSON.stringify(current.threads) !== JSON.stringify(snapshot.threads)) throw new Error('Review thread state or history changed before publication.');
-  if (JSON.stringify(current.reviews) !== JSON.stringify(snapshot.reviews)) throw new Error('Review history changed before publication.');
-  if (current.head_repo !== snapshot.head_repo || current.base_repo !== snapshot.base_repo) throw new Error('Source repository identity changed before publication.');
+  await checkFreshness('publication', snapshot, current);
 }
 
 async function assertMutationFresh(github, repo, snapshot, rootIds, receipts) {
   // Mutation freshness compares the targeted threads, not the review list.
   const current=await captureReviewState(github,repo,snapshot,{includeReviews:false});
-  const byId=new Map(current.threads.map(thread=>[thread.id,thread]));
-  for(const root of rootIds) {
-    const expected=snapshot.threads.find(thread=>thread.comments[0].databaseId===root);
-    const actual=expected && byId.get(expected.id);
-    const ownIds=new Set(receipts.filter(item=>item.type==='reply_to_pull_request_review_comment' && item.provider==='github' && item.id===root && Number.isSafeInteger(item.metadata?.reply_id) && item.metadata.reply_id>0).map(item=>item.metadata.reply_id));
-    if(!ownIds.size)throw new Error(`Missing applied reply identity for thread root ${root}.`);
-    if(!actual)throw new Error(`Captured thread ${root} is no longer available.`);
-    if(!actual.comments.some(comment=>ownIds.has(comment.databaseId)))throw new Error(`Applied reply for ${root} is no longer visible.`);
-    const withoutOwnReplies={...actual,comments:actual.comments.filter(comment=>!ownIds.has(comment.databaseId))};
-    if(JSON.stringify(withoutOwnReplies)!==JSON.stringify(expected))throw new Error(`Thread ${root} changed after publication; refusing stale mutation.`);
-  }
+  await checkFreshness('mutation', snapshot, current, { rootIds, receipts });
+}
+
+async function checkFreshness(mode, expected, current, extra = {}) {
+  const { runPowerShell } = require('./ReviewDelivery.cjs');
+  // Only freshness-relevant state is sent; baseline inventory and patches do not need refetching.
+  const compact = state => mode === 'mutation' ? { threads: state.threads } :
+    { threads: state.threads, reviews: state.reviews, head_repo: state.head_repo, base_repo: state.base_repo };
+  const result = await runPowerShell('ReviewFreshness.ps1', JSON.stringify({ mode, expected: compact(expected), current: compact(current), ...extra }), {
+    timeoutMs: CAPTURE_TIMEOUT_MS, timeoutReason: 'Freshness verification timed out.', label: 'Freshness verification', maxOutputBytes: 4096,
+  });
+  if (result.stdout !== '{}') throw new Error(result.stderr || 'Freshness verification failed.');
 }
 
 async function exportContext(snapshot, directory, { timeoutMs = CAPTURE_TIMEOUT_MS } = {}) {
