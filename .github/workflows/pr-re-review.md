@@ -390,7 +390,7 @@ jobs:
             fs.mkdirSync(path.join(process.env.RUNNER_TEMP, 'gh-aw', 'safeoutputs', 'review-receipts'), { recursive: true });
             // Custom harnesses are provisioned into gh-aw's trusted action folder;
             // selecting harness.use does not copy a repository script by itself.
-            for (const helper of ['ReviewContinuation.cjs', 'ReviewDelivery.cjs', 'ReviewInputServer.cjs', 'ReviewVerifyDelivery.ps1'])
+            for (const helper of ['ReviewContinuation.cjs', 'ReviewDelivery.cjs', 'ReviewInputServer.ps1', 'ReviewVerifyDelivery.ps1'])
               fs.copyFileSync(path.join(process.env.GITHUB_WORKSPACE, '.github/workflows/pr-re-review', helper),
                 path.join(process.env.RUNNER_TEMP, 'gh-aw', 'actions', helper));
             core.info(`Captured ${manifest.changed_files} changed files and ${snapshot.threads.length} threads for the event head.`);
@@ -424,9 +424,9 @@ jobs:
 mcp-servers:
   reviewinput:
     # Private stdio pipes for captured history/patch receipts; no GitHub token.
-    container: node:24-alpine@sha256:a34ab6d7f6f4813f4d0c5469d74685604b962fbdbf5793a7bc7b4998ecb867c8
+    container: mcr.microsoft.com/dotnet/runtime-deps:10.0-noble@sha256:ebb73a172b49758c6de2462305e872ea0cb37ad3ca27cc0d86bc48b6271eaace
     args: ["-v", "${RUNNER_TEMP}/gh-aw/actions:/review:ro", "-v", "${RUNNER_TEMP}/gh-aw/safeoutputs/review-receipts:/receipts:rw"]
-    entrypointArgs: ["node", "/review/ReviewInputServer.cjs"]
+    entrypointArgs: ["/review/pwsh/pwsh", "-NoLogo", "-NoProfile", "-NonInteractive", "-File", "/review/ReviewInputServer.ps1"]
     env:
       REVIEW_SNAPSHOT: /review/review-input/snapshot.json
       REVIEW_RECEIPTS: /receipts

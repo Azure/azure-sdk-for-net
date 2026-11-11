@@ -15,7 +15,7 @@ function runtime(t, mode) {
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
   const actions = path.join(root, 'actions');
   fs.mkdirSync(actions);
-  for (const helper of ['ReviewContinuation.cjs', 'ReviewDelivery.cjs', 'ReviewInputServer.cjs', 'ReviewVerifyDelivery.ps1']) fs.copyFileSync(path.join(__dirname, '..', 'pr-re-review', helper), path.join(actions, helper));
+  for (const helper of ['ReviewContinuation.cjs', 'ReviewDelivery.cjs', 'ReviewInputServer.ps1', 'ReviewVerifyDelivery.ps1']) fs.copyFileSync(path.join(__dirname, '..', 'pr-re-review', helper), path.join(actions, helper));
   fs.mkdirSync(path.join(root, 'receipts'));
   const snapshot = {
     pull_number: 64192, head_sha: 'a'.repeat(40), base_sha: 'b'.repeat(40), changed_files: 106,
@@ -62,13 +62,25 @@ function runtime(t, mode) {
     const tokens = {};
     if (mode === 'delivered-input') {
       const snapshot = JSON.parse(fs.readFileSync(path.join(root, 'actions', 'review-input', 'snapshot.json'), 'utf8'));
-      const delivery = require(path.join(root, 'actions', 'ReviewInputServer.cjs')).createDelivery(snapshot, process.env.GH_AW_REVIEW_RECEIPTS);
+      const { requiredInputs } = require(path.join(root, 'actions', 'ReviewDelivery.cjs'));
+      const requests = [], requestItems = [];
       for (const item of input.assigned) {
-        const kind = item.thread ? 'history' : item.file.patch_path ? 'patch' : null;
-        if (kind) {
-          let offset = 0; tokens[item.id] = [];
-          do { const page = delivery.page({ item: item.id, nonce: input.delivery_nonce, kind, offset }); tokens[item.id].push(page.delivery_token); offset = page.next_offset; } while (offset !== null);
+        const [type, index] = item.id.split(':');
+        const assigned = type === 'thread' ? { id: item.id, thread: snapshot.threads[Number(index)] } : { id: item.id, file: snapshot.files[Number(index)] };
+        for (const required of requiredInputs(snapshot, assigned)) {
+          tokens[item.id] = [];
+          for (let offset = 0; offset < required.content.length || offset === 0; offset += 4000) {
+            requests.push(JSON.stringify({ jsonrpc: '2.0', id: requests.length + 1, method: 'tools/call', params: { name: 'read-review-input', arguments: { item: item.id, nonce: input.delivery_nonce, kind: required.kind, offset } } }));
+            requestItems.push(item.id);
+          }
         }
+      }
+      if (requests.length) {
+        const result = require('node:child_process').spawnSync(process.env.GH_AW_REVIEW_PWSH || 'pwsh', ['-NoLogo', '-NoProfile', '-NonInteractive', '-File', path.join(root, 'actions', 'ReviewInputServer.ps1')], { input: requests.join('\\n') + '\\n', encoding: 'utf8', env: { ...process.env, REVIEW_SNAPSHOT: path.join(root, 'actions', 'review-input', 'snapshot.json'), REVIEW_RECEIPTS: process.env.GH_AW_REVIEW_RECEIPTS } });
+        if (result.status !== 0) throw new Error(result.stderr || 'Input server failed');
+        const responses = result.stdout.trim().split('\\n').map(line => JSON.parse(line));
+        if (responses.length !== requests.length || responses.some(response => response.error)) throw new Error('Input server did not deliver the requested pages');
+        responses.forEach((response, i) => tokens[requestItems[i]].push(JSON.parse(response.result.content[0].text).delivery_token));
       }
     }
     if (mode === 'error') process.exit(4);

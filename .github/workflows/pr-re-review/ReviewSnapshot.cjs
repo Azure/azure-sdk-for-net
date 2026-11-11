@@ -106,14 +106,19 @@ async function assertMutationFresh(github, repo, snapshot, rootIds, receipts) {
 
 function exportContext(snapshot, directory) {
   const fs = require('node:fs'); const path = require('node:path');
+  const { snapshotDigest, requiredInputs } = require('./ReviewDelivery.cjs');
   fs.mkdirSync(directory, { recursive: true });
   const write = (name, value) => fs.writeFileSync(path.join(directory, name), JSON.stringify(value, null, 2), { mode: 0o644 });
+  const delivery = { snapshot: snapshotDigest(snapshot), items: {} };
+  const captureInputs = item => { delivery.items[item.id] = requiredInputs(snapshot, item).map(({ key, kind }) => ({ key, kind })); };
   write('snapshot.json', snapshot);
   const files = snapshot.files.map((file, index) => {
+    captureInputs({ id: `file:${index}`, file });
     if (file.patch !== undefined) fs.writeFileSync(path.join(directory, `file-${index}.patch`), file.patch, { mode: 0o644 });
     return { id: `file:${index}`, filename: file.filename, status: file.status, previous_filename: file.previous_filename, patch_path: file.patch !== undefined ? path.join(directory, `file-${index}.patch`) : null };
   });
   const threads = snapshot.threads.map((thread, index) => {
+    captureInputs({ id: `thread:${index}`, thread });
     write(`thread-${index}.json`, thread);
     return { id: `thread:${index}`, thread_id: thread.id, isResolved: thread.isResolved, path: thread.comments[0].path, history_path: path.join(directory, `thread-${index}.json`) };
   });
@@ -122,6 +127,7 @@ function exportContext(snapshot, directory) {
     return { id: review.id, state: review.state, history_path: path.join(directory, `review-${index}.json`) };
   });
   write('index.json', { head_sha: snapshot.head_sha, base_sha: snapshot.base_sha, files, threads, reviews });
+  write('delivery-index.json', delivery);
 }
 
 module.exports = { captureContext, assertFresh, assertMutationFresh, exportContext };

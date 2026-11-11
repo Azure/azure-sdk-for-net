@@ -129,6 +129,29 @@ test('exports captured thread histories and prior reviews for worker context', a
   assert.deepEqual(JSON.parse(fs.readFileSync(index.reviews[0].history_path, 'utf8')), snapshot.reviews[0]);
 });
 
+test('exports canonical required-input keys for the private reader', t => {
+  const fs = require('node:fs'); const os = require('node:os'); const path = require('node:path');
+  const { requiredInputs, snapshotDigest } = require('../pr-re-review/ReviewDelivery.cjs');
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'delivery-index-'));
+  t.after(() => fs.rmSync(directory, { recursive: true, force: true }));
+  const snapshot = {
+    head_sha: 'a'.repeat(40), base_sha: 'b'.repeat(40),
+    files: [{ filename: 'small.cs', status: 'modified', patch: 'short' }, { filename: 'big.cs', status: 'modified', patch: 'x'.repeat(50000) + '\ud83d' }, { filename: 'source.cs', status: 'modified' }],
+    threads: [{ id: 'one', comments: [{ path: 'small.cs', body: '😀' }] }], reviews: [],
+  };
+  exportContext(snapshot, directory);
+  const index = JSON.parse(fs.readFileSync(path.join(directory, 'delivery-index.json'), 'utf8'));
+  assert.equal(index.snapshot, snapshotDigest(snapshot));
+  for (const [kind, values] of [['file', snapshot.files], ['thread', snapshot.threads]]) values.forEach((value, i) => {
+    const id = `${kind}:${i}`;
+    assert.deepEqual(index.items[id], requiredInputs(snapshot, { id, [kind]: value }).map(({ key, kind }) => ({ key, kind })));
+  });
+  assert.deepEqual(index.items['file:0'], []);
+  assert.deepEqual(index.items['file:2'], []);
+  assert.equal(index.items['file:1'][0].kind, 'patch');
+  assert.equal(index.items['thread:0'][0].kind, 'history');
+});
+
 test('captures all thread pages and previous reviews', async () => {
   const f = fixture(106);
   const s = await captureContext(f.github, { owner: 'Azure', repo: 'azure-sdk-for-net' }, files);
