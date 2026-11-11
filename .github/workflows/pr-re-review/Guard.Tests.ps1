@@ -293,9 +293,9 @@ Describe 'Assert-PrReReviewOutput' {
         { Assert-PrReReviewOutput (New-AgentOutput @(New-Review "Done.`n$Line")) -Expected $expected } | Should -Throw -ExpectedMessage $Message
     }
 
-    It 'does not hold a run to the changed-file total of a head pushed after it' {
+    It 'refuses to publish a review of a head that moved during the run' {
         $expected = @{ AnalyzedHeadSha = $script:HeadSha; HeadSha = 'b' * 40; ChangedFiles = 40; ThreadsBefore = 64; ThreadsNow = 64 }
-        Assert-PrReReviewOutput (New-AgentOutput @(New-Review "Done.`n$script:Complete")) -Expected $expected | Should -BeLike '*not checked*'
+        { Assert-PrReReviewOutput (New-AgentOutput @(New-Review "Done.`n$script:Complete")) -Expected $expected } | Should -Throw -ExpectedMessage '*head moved*stale publication*'
     }
 }
 
