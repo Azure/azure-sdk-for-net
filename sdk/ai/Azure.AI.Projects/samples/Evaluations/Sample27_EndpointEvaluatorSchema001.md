@@ -1,6 +1,6 @@
 # Sample of using an endpoint-based evaluator with legacy schema 0.0.1 in Azure.AI.Projects.
 
-**Legacy:** This sample uses the older endpoint contract schema version `0.0.1`, for endpoints that already implement it. `0.0.1` is also what the service uses when `SchemaVersion` is not set. For new evaluators, use schema version `0.0.2` instead, as shown in [Sample26_EndpointEvaluator](./Sample26_EndpointEvaluator.md).
+**Legacy schema 0.0.1:** This sample is for endpoints that already implement this contract. `0.0.1` is also what the service uses when `SchemaVersion` is not set. For new evaluators, use schema version `0.0.2` instead, as shown in [Sample26_EndpointEvaluator](./Sample26_EndpointEvaluator.md).
 
 **Note:** Endpoint-based evaluators are an experimental feature. To use them, disable the `AAIP001` warning.
 

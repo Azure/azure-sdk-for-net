@@ -15,7 +15,7 @@ using OpenAI.Evals;
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
 #pragma warning disable AAIP001
 
-// Legacy endpoint contract 0.0.1; new evaluators should use 0.0.2 (see Sample_EndpointEvaluator).
+// Legacy schema 0.0.1 endpoint contract; new evaluators should use 0.0.2 (see Sample_EndpointEvaluator).
 // Needs a customer-hosted scoring endpoint behind an existing project connection, so it is never recorded.
 [LiveOnly]
 public class Sample_EndpointEvaluatorSchema001 : EvaluationSampleBase
