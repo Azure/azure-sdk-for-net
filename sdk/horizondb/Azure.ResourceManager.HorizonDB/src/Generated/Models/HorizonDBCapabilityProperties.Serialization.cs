@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 return null;
             }
             HorizonDBProvisioningState? provisioningState = default;
-            ClusterCapability clusterCapabilities = default;
-            PoolCapability poolCapabilities = default;
+            HorizonDBClusterCapability clusterCapabilities = default;
+            HorizonDBPoolCapability poolCapabilities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -148,12 +148,12 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 }
                 if (prop.NameEquals("clusterCapabilities"u8))
                 {
-                    clusterCapabilities = ClusterCapability.DeserializeClusterCapability(prop.Value, options);
+                    clusterCapabilities = HorizonDBClusterCapability.DeserializeHorizonDBClusterCapability(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("poolCapabilities"u8))
                 {
-                    poolCapabilities = PoolCapability.DeserializePoolCapability(prop.Value, options);
+                    poolCapabilities = HorizonDBPoolCapability.DeserializeHorizonDBPoolCapability(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

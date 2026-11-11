@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="provisioningState"> The provisioning state of the cluster. </param>
         /// <param name="readWritePool"> The pool currently designated to host the cluster's read-write node. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBClusterProperties(PostgreSqlVersion? postgreSqlVersion, ClusterCreateMode? creationMode, DateTimeOffset? pointInTimeOn, ResourceIdentifier creationSourceClusterResourceId, string creationSourceClusterLocation, Network network, BackupProperties backup, HorizonDBClusterDataEncryption dataEncryption, AiModelManagementStatus? aiModelManagement, ClusterState state, HorizonDBProvisioningState provisioningState, ReadWritePoolProperties readWritePool, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBClusterProperties(PostgreSqlVersion? postgreSqlVersion, HorizonDBClusterCreateMode? creationMode, DateTimeOffset? pointInTimeOn, ResourceIdentifier creationSourceClusterResourceId, string creationSourceClusterLocation, Network network, HorizonDBClusterBackupProperties backup, HorizonDBClusterDataEncryption dataEncryption, AiModelManagementStatus? aiModelManagement, HorizonDBClusterState state, HorizonDBProvisioningState provisioningState, ReadWritePoolProperties readWritePool, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PostgreSqlVersion = postgreSqlVersion;
             CreationMode = creationMode;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public PostgreSqlVersion? PostgreSqlVersion { get; set; }
 
         /// <summary> The mode used to create the cluster. When this property is omitted while creating a new cluster, the service records Create. PointInTimeRestore creates a new cluster from an available backup; pointInTimeUtc and creationSourceClusterResourceId are then required, postgreSqlVersion must be omitted because it is obtained from the backup metadata, and creationSourceClusterLocation is required when the source and target cluster locations differ. During PointInTimeRestore creation, the service ignores the requested backup.geoRedundancy value and configures the new cluster with the same geo-redundancy setting as the source cluster. This property is immutable and is returned as creation provenance. On replacement, omission preserves the recorded value, resubmitting the same value is accepted, and changing it is rejected. </summary>
-        public ClusterCreateMode? CreationMode { get; set; }
+        public HorizonDBClusterCreateMode? CreationMode { get; set; }
 
         /// <summary> The requested point in time, in UTC. This property is required in every PointInTimeRestore request. For a same-location restore, the service restores the latest backup available at or before this value. For a cross-location restore, the service requires but ignores this value and restores the latest available backup; cross-location responses omit this property. This property must be absent for other creation modes or when creationMode is omitted and can only be specified during resource creation. </summary>
         public DateTimeOffset? PointInTimeOn { get; set; }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         internal Network Network { get; set; }
 
         /// <summary> The backup configuration for the cluster. </summary>
-        public BackupProperties Backup { get; set; }
+        public HorizonDBClusterBackupProperties Backup { get; set; }
 
         /// <summary> The data encryption configuration for the cluster. When omitted during initial cluster creation, the service uses SystemManaged encryption. When supplied during initial cluster creation, type is required. For PUT updates of an existing cluster, type may be omitted; if provided, it must match the existing encryption type. The encryption type is selected at cluster creation; switching between SystemManaged and AzureKeyVault after creation is not supported. </summary>
         public HorizonDBClusterDataEncryption DataEncryption { get; set; }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public AiModelManagementStatus? AiModelManagement { get; set; }
 
         /// <summary> Current state of the cluster. </summary>
-        public ClusterState State { get; }
+        public HorizonDBClusterState State { get; }
 
         /// <summary> The provisioning state of the cluster. </summary>
         public HorizonDBProvisioningState ProvisioningState { get; }

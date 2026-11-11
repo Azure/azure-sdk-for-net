@@ -162,8 +162,8 @@ namespace Azure.ResourceManager.HorizonDB.Models
             ResourceIdentifier identityResourceId = default;
             ChangeDataCaptureIdentityAssignmentState effectiveState = default;
             ChangeDataCaptureIdentityActivationState activationState = default;
-            string principalId = default;
-            string tenantId = default;
+            Guid principalId = default;
+            Guid tenantId = default;
             HorizonDBProvisioningState? provisioningState = default;
             ChangeDataCaptureIdentityValidationStatus validation = default;
             ChangeDataCaptureStatus status = default;
@@ -187,12 +187,12 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 }
                 if (prop.NameEquals("principalId"u8))
                 {
-                    principalId = prop.Value.GetString();
+                    principalId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tenantId"u8))
                 {
-                    tenantId = prop.Value.GetString();
+                    tenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

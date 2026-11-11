@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="parameterGroupResourceId"> The Azure resource ID of the corresponding default or customer-created parameter group to associate with the existing pool. </param>
         /// <param name="applyMethod"> Determines when dynamic parameter changes from the associated parameter group become effective. Static parameter changes always require a customer-initiated pool Restart, regardless of this value. Stop followed by Start and scheduled maintenance do not apply pending parameter changes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PoolParameterGroupReferencePatch(ResourceIdentifier parameterGroupResourceId, ParameterApplyMethod? applyMethod, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PoolParameterGroupReferencePatch(ResourceIdentifier parameterGroupResourceId, HorizonDBParameterApplyMethod? applyMethod, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ParameterGroupResourceId = parameterGroupResourceId;
             ApplyMethod = applyMethod;
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public ResourceIdentifier ParameterGroupResourceId { get; set; }
 
         /// <summary> Determines when dynamic parameter changes from the associated parameter group become effective. Static parameter changes always require a customer-initiated pool Restart, regardless of this value. Stop followed by Start and scheduled maintenance do not apply pending parameter changes. </summary>
-        public ParameterApplyMethod? ApplyMethod { get; set; }
+        public HorizonDBParameterApplyMethod? ApplyMethod { get; set; }
     }
 }

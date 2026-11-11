@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 return null;
             }
             PoolComputeModelType @type = default;
-            ComputeProcessorType computeProcessor = default;
+            HorizonDBComputeProcessorType computeProcessor = default;
             int computeGeneration = default;
             int vCores = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 }
                 if (prop.NameEquals("computeProcessor"u8))
                 {
-                    computeProcessor = new ComputeProcessorType(prop.Value.GetString());
+                    computeProcessor = new HorizonDBComputeProcessorType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("computeGeneration"u8))

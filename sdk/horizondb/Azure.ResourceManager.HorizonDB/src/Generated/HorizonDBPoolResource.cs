@@ -734,11 +734,11 @@ namespace Azure.ResourceManager.HorizonDB
             }
         }
 
-        /// <summary> Gets a collection of FirewallRules in the <see cref="HorizonDBPoolResource"/>. </summary>
-        /// <returns> An object representing collection of FirewallRules and their operations over a FirewallRuleResource. </returns>
-        public virtual FirewallRuleCollection GetFirewallRules()
+        /// <summary> Gets a collection of HorizonDBFirewallRules in the <see cref="HorizonDBPoolResource"/>. </summary>
+        /// <returns> An object representing collection of HorizonDBFirewallRules and their operations over a HorizonDBFirewallRuleResource. </returns>
+        public virtual HorizonDBFirewallRuleCollection GetHorizonDBFirewallRules()
         {
-            return GetCachedClient(client => new FirewallRuleCollection(client, Id));
+            return GetCachedClient(client => new HorizonDBFirewallRuleCollection(client, Id));
         }
 
         /// <summary> Gets information about a HorizonDB pool firewall rule. </summary>
@@ -747,11 +747,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<FirewallRuleResource>> GetFirewallRuleAsync(string firewallRuleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HorizonDBFirewallRuleResource>> GetHorizonDBFirewallRuleAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            return await GetFirewallRules().GetAsync(firewallRuleName, cancellationToken).ConfigureAwait(false);
+            return await GetHorizonDBFirewallRules().GetAsync(firewallRuleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets information about a HorizonDB pool firewall rule. </summary>
@@ -760,31 +760,18 @@ namespace Azure.ResourceManager.HorizonDB
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<FirewallRuleResource> GetFirewallRule(string firewallRuleName, CancellationToken cancellationToken = default)
+        public virtual Response<HorizonDBFirewallRuleResource> GetHorizonDBFirewallRule(string firewallRuleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(firewallRuleName, nameof(firewallRuleName));
 
-            return GetFirewallRules().Get(firewallRuleName, cancellationToken);
+            return GetHorizonDBFirewallRules().Get(firewallRuleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MaintenanceEvents in the <see cref="HorizonDBPoolResource"/>. </summary>
-        /// <returns> An object representing collection of MaintenanceEvents and their operations over a MaintenanceEventResource. </returns>
-        public virtual MaintenanceEventCollection GetMaintenanceEvents()
+        /// <summary> Gets a collection of HorizonDBMaintenanceEvents in the <see cref="HorizonDBPoolResource"/>. </summary>
+        /// <returns> An object representing collection of HorizonDBMaintenanceEvents and their operations over a HorizonDBMaintenanceEventResource. </returns>
+        public virtual HorizonDBMaintenanceEventCollection GetHorizonDBMaintenanceEvents()
         {
-            return GetCachedClient(client => new MaintenanceEventCollection(client, Id));
-        }
-
-        /// <summary> Gets information about a maintenance event for a HorizonDB pool. </summary>
-        /// <param name="maintenanceEventId"> The identifier of the maintenance event. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="maintenanceEventId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="maintenanceEventId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<MaintenanceEventResource>> GetMaintenanceEventAsync(string maintenanceEventId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(maintenanceEventId, nameof(maintenanceEventId));
-
-            return await GetMaintenanceEvents().GetAsync(maintenanceEventId, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new HorizonDBMaintenanceEventCollection(client, Id));
         }
 
         /// <summary> Gets information about a maintenance event for a HorizonDB pool. </summary>
@@ -793,11 +780,24 @@ namespace Azure.ResourceManager.HorizonDB
         /// <exception cref="ArgumentNullException"> <paramref name="maintenanceEventId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="maintenanceEventId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<MaintenanceEventResource> GetMaintenanceEvent(string maintenanceEventId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HorizonDBMaintenanceEventResource>> GetHorizonDBMaintenanceEventAsync(string maintenanceEventId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(maintenanceEventId, nameof(maintenanceEventId));
 
-            return GetMaintenanceEvents().Get(maintenanceEventId, cancellationToken);
+            return await GetHorizonDBMaintenanceEvents().GetAsync(maintenanceEventId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets information about a maintenance event for a HorizonDB pool. </summary>
+        /// <param name="maintenanceEventId"> The identifier of the maintenance event. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="maintenanceEventId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="maintenanceEventId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HorizonDBMaintenanceEventResource> GetHorizonDBMaintenanceEvent(string maintenanceEventId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(maintenanceEventId, nameof(maintenanceEventId));
+
+            return GetHorizonDBMaintenanceEvents().Get(maintenanceEventId, cancellationToken);
         }
 
         /// <summary> Gets a collection of HorizonDBNodes in the <see cref="HorizonDBPoolResource"/>. </summary>

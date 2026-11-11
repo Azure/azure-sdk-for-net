@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> Initializes a new instance of <see cref="HorizonDBPoolPatch"/>. </summary>
         /// <param name="properties"> The properties that can be updated for a HorizonDB pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBPoolPatch(PoolPropertiesForPatchUpdate properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBPoolPatch(HorizonDBPoolPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The properties that can be updated for a HorizonDB pool. </summary>
-        public PoolPropertiesForPatchUpdate Properties { get; set; }
+        public HorizonDBPoolPatchProperties Properties { get; set; }
     }
 }

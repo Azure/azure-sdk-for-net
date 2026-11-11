@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 return null;
             }
-            PoolPropertiesForPatchUpdate properties = default;
+            HorizonDBPoolPatchProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    properties = PoolPropertiesForPatchUpdate.DeserializePoolPropertiesForPatchUpdate(prop.Value, options);
+                    properties = HorizonDBPoolPatchProperties.DeserializeHorizonDBPoolPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

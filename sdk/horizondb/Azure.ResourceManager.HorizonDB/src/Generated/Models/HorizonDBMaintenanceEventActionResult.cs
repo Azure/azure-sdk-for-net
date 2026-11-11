@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="isAppliedNow"> Indicates whether the maintenance event was requested to be applied immediately. The value is true for apply-now and false for reschedule. </param>
         /// <param name="lastUpdatedOn"> The time when this maintenance event record was last updated, in UTC. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBMaintenanceEventActionResult(string maintenanceEventId, ResourceIdentifier poolResourceId, MaintenanceEventStatus? status, DateTimeOffset? plannedStartsOn, DateTimeOffset? plannedEndsOn, bool? isAppliedNow, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBMaintenanceEventActionResult(string maintenanceEventId, ResourceIdentifier poolResourceId, HorizonDBMaintenanceEventStatus? status, DateTimeOffset? plannedStartsOn, DateTimeOffset? plannedEndsOn, bool? isAppliedNow, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaintenanceEventId = maintenanceEventId;
             PoolResourceId = poolResourceId;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public ResourceIdentifier PoolResourceId { get; }
 
         /// <summary> The status of the maintenance event. </summary>
-        public MaintenanceEventStatus? Status { get; }
+        public HorizonDBMaintenanceEventStatus? Status { get; }
 
         /// <summary> The planned start time of the maintenance event in UTC. </summary>
         public DateTimeOffset? PlannedStartsOn { get; }

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (LogFileData item in Value)
+            foreach (HorizonDBLogFileData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 return null;
             }
-            IList<LogFileData> value = default;
+            IList<HorizonDBLogFileData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<LogFileData> array = new List<LogFileData>();
+                    List<HorizonDBLogFileData> array = new List<HorizonDBLogFileData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LogFileData.DeserializeLogFileData(item, options));
+                        array.Add(HorizonDBLogFileData.DeserializeHorizonDBLogFileData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LogFileListResult(value ?? new ChangeTrackingList<LogFileData>(), nextLink, additionalBinaryDataProperties);
+            return new LogFileListResult(value ?? new ChangeTrackingList<HorizonDBLogFileData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

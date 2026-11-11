@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 return null;
             }
             ResourceIdentifier parameterGroupResourceId = default;
-            ParameterApplyMethod applyMethod = default;
-            ParameterGroupSyncStatus? syncStatus = default;
+            HorizonDBParameterApplyMethod applyMethod = default;
+            HorizonDBParameterGroupSyncStatus? syncStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 }
                 if (prop.NameEquals("applyMethod"u8))
                 {
-                    applyMethod = new ParameterApplyMethod(prop.Value.GetString());
+                    applyMethod = new HorizonDBParameterApplyMethod(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("syncStatus"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    syncStatus = new ParameterGroupSyncStatus(prop.Value.GetString());
+                    syncStatus = new HorizonDBParameterGroupSyncStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

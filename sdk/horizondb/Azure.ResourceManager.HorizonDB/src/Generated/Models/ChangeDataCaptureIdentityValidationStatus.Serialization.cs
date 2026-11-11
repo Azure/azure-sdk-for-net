@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ValidatedAtUtc))
+            if (options.Format != "W" && Optional.IsDefined(ValidatedOn))
             {
                 writer.WritePropertyName("validatedAtUtc"u8);
-                writer.WriteStringValue(ValidatedAtUtc.Value, "O");
+                writer.WriteStringValue(ValidatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 return null;
             }
             ChangeDataCaptureIdentityValidationState state = default;
-            DateTimeOffset? validatedAtUtc = default;
+            DateTimeOffset? validatedOn = default;
             ResponseError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    validatedAtUtc = prop.Value.GetDateTimeOffset("O");
+                    validatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("error"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new ChangeDataCaptureIdentityValidationStatus(state, validatedAtUtc, error, additionalBinaryDataProperties);
+            return new ChangeDataCaptureIdentityValidationStatus(state, validatedOn, error, additionalBinaryDataProperties);
         }
     }
 }

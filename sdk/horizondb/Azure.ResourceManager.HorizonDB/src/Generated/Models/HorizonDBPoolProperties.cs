@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="scheduledMaintenance"> The scheduled maintenance configuration for the pool. The properties available depend on the selected maintenance management type. </param>
         /// <param name="provisioningState"> The provisioning state of the pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBPoolProperties(PoolState? state, PoolComputeModel computeModel, int nodeCount, PoolHighAvailability highAvailability, PoolParameterGroupReference parameterGroup, ScheduledMaintenanceProperties scheduledMaintenance, HorizonDBProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBPoolProperties(HorizonDBPoolState? state, PoolComputeModel computeModel, int nodeCount, PoolHighAvailability highAvailability, PoolParameterGroupReference parameterGroup, HorizonDBScheduledMaintenanceProperties scheduledMaintenance, HorizonDBProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             ComputeModel = computeModel;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> Current state of the pool. </summary>
-        public PoolState? State { get; }
+        public HorizonDBPoolState? State { get; }
 
         /// <summary> The required compute model for the HorizonDB pool. </summary>
         public PoolComputeModel ComputeModel { get; set; }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public PoolParameterGroupReference ParameterGroup { get; set; }
 
         /// <summary> The scheduled maintenance configuration for the pool. The properties available depend on the selected maintenance management type. </summary>
-        public ScheduledMaintenanceProperties ScheduledMaintenance { get; set; }
+        public HorizonDBScheduledMaintenanceProperties ScheduledMaintenance { get; set; }
 
         /// <summary> The provisioning state of the pool. </summary>
         public HorizonDBProvisioningState? ProvisioningState { get; }

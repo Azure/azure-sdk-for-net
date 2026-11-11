@@ -528,11 +528,11 @@ namespace Azure.ResourceManager.HorizonDB
             }
         }
 
-        /// <summary> Gets a collection of IdentityAssignments in the <see cref="ChangeDataCaptureDestinationResource"/>. </summary>
-        /// <returns> An object representing collection of IdentityAssignments and their operations over a IdentityAssignmentResource. </returns>
-        public virtual IdentityAssignmentCollection GetIdentityAssignments()
+        /// <summary> Gets a collection of ChangeDataCaptureIdentityAssignments in the <see cref="ChangeDataCaptureDestinationResource"/>. </summary>
+        /// <returns> An object representing collection of ChangeDataCaptureIdentityAssignments and their operations over a ChangeDataCaptureIdentityAssignmentResource. </returns>
+        public virtual ChangeDataCaptureIdentityAssignmentCollection GetChangeDataCaptureIdentityAssignments()
         {
-            return GetCachedClient(client => new IdentityAssignmentCollection(client, Id));
+            return GetCachedClient(client => new ChangeDataCaptureIdentityAssignmentCollection(client, Id));
         }
 
         /// <summary> Gets a change data capture identity assignment. </summary>
@@ -541,11 +541,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<IdentityAssignmentResource>> GetIdentityAssignmentAsync(string assignmentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ChangeDataCaptureIdentityAssignmentResource>> GetChangeDataCaptureIdentityAssignmentAsync(string assignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assignmentName, nameof(assignmentName));
 
-            return await GetIdentityAssignments().GetAsync(assignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetChangeDataCaptureIdentityAssignments().GetAsync(assignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a change data capture identity assignment. </summary>
@@ -554,11 +554,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<IdentityAssignmentResource> GetIdentityAssignment(string assignmentName, CancellationToken cancellationToken = default)
+        public virtual Response<ChangeDataCaptureIdentityAssignmentResource> GetChangeDataCaptureIdentityAssignment(string assignmentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assignmentName, nameof(assignmentName));
 
-            return GetIdentityAssignments().Get(assignmentName, cancellationToken);
+            return GetChangeDataCaptureIdentityAssignments().Get(assignmentName, cancellationToken);
         }
     }
 }

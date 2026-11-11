@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             }
             string maintenanceEventId = default;
             ResourceIdentifier poolResourceId = default;
-            MaintenanceEventStatus? status = default;
+            HorizonDBMaintenanceEventStatus? status = default;
             DateTimeOffset? plannedStartsOn = default;
             DateTimeOffset? plannedEndsOn = default;
             bool? isAppliedNow = default;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    status = new MaintenanceEventStatus(prop.Value.GetString());
+                    status = new HorizonDBMaintenanceEventStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("plannedStartTimeUtc"u8))

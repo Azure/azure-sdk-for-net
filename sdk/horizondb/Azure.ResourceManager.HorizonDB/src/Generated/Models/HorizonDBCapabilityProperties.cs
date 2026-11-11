@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="clusterCapabilities"> The Cluster capabilities available in the region. </param>
         /// <param name="poolCapabilities"> The Pool capabilities available in the region, including processor, generation, and compute-model details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBCapabilityProperties(HorizonDBProvisioningState? provisioningState, ClusterCapability clusterCapabilities, PoolCapability poolCapabilities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBCapabilityProperties(HorizonDBProvisioningState? provisioningState, HorizonDBClusterCapability clusterCapabilities, HorizonDBPoolCapability poolCapabilities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ClusterCapabilities = clusterCapabilities;
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public HorizonDBProvisioningState? ProvisioningState { get; }
 
         /// <summary> The Cluster capabilities available in the region. </summary>
-        public ClusterCapability ClusterCapabilities { get; }
+        public HorizonDBClusterCapability ClusterCapabilities { get; }
 
         /// <summary> The Pool capabilities available in the region, including processor, generation, and compute-model details. </summary>
-        public PoolCapability PoolCapabilities { get; }
+        public HorizonDBPoolCapability PoolCapabilities { get; }
     }
 }

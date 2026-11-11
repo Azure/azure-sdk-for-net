@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (IdentityAssignmentData item in Value)
+            foreach (ChangeDataCaptureIdentityAssignmentData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 return null;
             }
-            IList<IdentityAssignmentData> value = default;
+            IList<ChangeDataCaptureIdentityAssignmentData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<IdentityAssignmentData> array = new List<IdentityAssignmentData>();
+                    List<ChangeDataCaptureIdentityAssignmentData> array = new List<ChangeDataCaptureIdentityAssignmentData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IdentityAssignmentData.DeserializeIdentityAssignmentData(item, options));
+                        array.Add(ChangeDataCaptureIdentityAssignmentData.DeserializeChangeDataCaptureIdentityAssignmentData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new IdentityAssignmentListResult(value ?? new ChangeTrackingList<IdentityAssignmentData>(), nextLink, additionalBinaryDataProperties);
+            return new IdentityAssignmentListResult(value ?? new ChangeTrackingList<ChangeDataCaptureIdentityAssignmentData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

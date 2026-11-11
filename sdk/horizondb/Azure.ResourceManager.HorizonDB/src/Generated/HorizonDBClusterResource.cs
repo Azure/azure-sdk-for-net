@@ -1000,11 +1000,11 @@ namespace Azure.ResourceManager.HorizonDB
             return GetMicrosoftEntraAdministrators().Get(objectId, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a <see cref="PasswordAuthenticationResource"/> along with the instance operations that can be performed on it in the <see cref="HorizonDBClusterResource"/>. </summary>
-        /// <returns> Returns a <see cref="PasswordAuthenticationResource"/> object. </returns>
-        public virtual PasswordAuthenticationResource GetPasswordAuthentication()
+        /// <summary> Gets an object representing a <see cref="HorizonDBPasswordAuthenticationResource"/> along with the instance operations that can be performed on it in the <see cref="HorizonDBClusterResource"/>. </summary>
+        /// <returns> Returns a <see cref="HorizonDBPasswordAuthenticationResource"/> object. </returns>
+        public virtual HorizonDBPasswordAuthenticationResource GetHorizonDBPasswordAuthentication()
         {
-            return new PasswordAuthenticationResource(Client, Id.AppendChildResource("authentications", "passwordMethod"));
+            return new HorizonDBPasswordAuthenticationResource(Client, Id.AppendChildResource("authentications", "passwordMethod"));
         }
 
         /// <summary> Gets an object representing a <see cref="MicrosoftEntraAuthenticationResource"/> along with the instance operations that can be performed on it in the <see cref="HorizonDBClusterResource"/>. </summary>
@@ -1120,11 +1120,11 @@ namespace Azure.ResourceManager.HorizonDB
             return GetHorizonDBEndpoints().Get(endpointName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LogCaptureConfigurations in the <see cref="HorizonDBClusterResource"/>. </summary>
-        /// <returns> An object representing collection of LogCaptureConfigurations and their operations over a LogCaptureConfigurationResource. </returns>
-        public virtual LogCaptureConfigurationCollection GetLogCaptureConfigurations()
+        /// <summary> Gets a collection of HorizonDBLogCaptureConfigurations in the <see cref="HorizonDBClusterResource"/>. </summary>
+        /// <returns> An object representing collection of HorizonDBLogCaptureConfigurations and their operations over a HorizonDBLogCaptureConfigurationResource. </returns>
+        public virtual HorizonDBLogCaptureConfigurationCollection GetHorizonDBLogCaptureConfigurations()
         {
-            return GetCachedClient(client => new LogCaptureConfigurationCollection(client, Id));
+            return GetCachedClient(client => new HorizonDBLogCaptureConfigurationCollection(client, Id));
         }
 
         /// <summary> Gets a log capture configuration for a HorizonDB cluster. </summary>
@@ -1133,11 +1133,11 @@ namespace Azure.ResourceManager.HorizonDB
         /// <exception cref="ArgumentNullException"> <paramref name="logCaptureConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="logCaptureConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<LogCaptureConfigurationResource>> GetLogCaptureConfigurationAsync(string logCaptureConfigurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HorizonDBLogCaptureConfigurationResource>> GetHorizonDBLogCaptureConfigurationAsync(string logCaptureConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(logCaptureConfigurationName, nameof(logCaptureConfigurationName));
 
-            return await GetLogCaptureConfigurations().GetAsync(logCaptureConfigurationName, cancellationToken).ConfigureAwait(false);
+            return await GetHorizonDBLogCaptureConfigurations().GetAsync(logCaptureConfigurationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a log capture configuration for a HorizonDB cluster. </summary>
@@ -1146,31 +1146,18 @@ namespace Azure.ResourceManager.HorizonDB
         /// <exception cref="ArgumentNullException"> <paramref name="logCaptureConfigurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="logCaptureConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<LogCaptureConfigurationResource> GetLogCaptureConfiguration(string logCaptureConfigurationName, CancellationToken cancellationToken = default)
+        public virtual Response<HorizonDBLogCaptureConfigurationResource> GetHorizonDBLogCaptureConfiguration(string logCaptureConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(logCaptureConfigurationName, nameof(logCaptureConfigurationName));
 
-            return GetLogCaptureConfigurations().Get(logCaptureConfigurationName, cancellationToken);
+            return GetHorizonDBLogCaptureConfigurations().Get(logCaptureConfigurationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LogFiles in the <see cref="HorizonDBClusterResource"/>. </summary>
-        /// <returns> An object representing collection of LogFiles and their operations over a LogFileResource. </returns>
-        public virtual LogFileCollection GetLogFiles()
+        /// <summary> Gets a collection of HorizonDBLogFiles in the <see cref="HorizonDBClusterResource"/>. </summary>
+        /// <returns> An object representing collection of HorizonDBLogFiles and their operations over a HorizonDBLogFileResource. </returns>
+        public virtual HorizonDBLogFileCollection GetHorizonDBLogFiles()
         {
-            return GetCachedClient(client => new LogFileCollection(client, Id));
-        }
-
-        /// <summary> Gets metadata for a captured HorizonDB log file. </summary>
-        /// <param name="logFileName"> The name of the LogFile. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="logFileName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="logFileName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<LogFileResource>> GetLogFileAsync(string logFileName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(logFileName, nameof(logFileName));
-
-            return await GetLogFiles().GetAsync(logFileName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new HorizonDBLogFileCollection(client, Id));
         }
 
         /// <summary> Gets metadata for a captured HorizonDB log file. </summary>
@@ -1179,11 +1166,24 @@ namespace Azure.ResourceManager.HorizonDB
         /// <exception cref="ArgumentNullException"> <paramref name="logFileName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="logFileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<LogFileResource> GetLogFile(string logFileName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HorizonDBLogFileResource>> GetHorizonDBLogFileAsync(string logFileName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(logFileName, nameof(logFileName));
 
-            return GetLogFiles().Get(logFileName, cancellationToken);
+            return await GetHorizonDBLogFiles().GetAsync(logFileName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets metadata for a captured HorizonDB log file. </summary>
+        /// <param name="logFileName"> The name of the LogFile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="logFileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="logFileName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HorizonDBLogFileResource> GetHorizonDBLogFile(string logFileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(logFileName, nameof(logFileName));
+
+            return GetHorizonDBLogFiles().Get(logFileName, cancellationToken);
         }
     }
 }

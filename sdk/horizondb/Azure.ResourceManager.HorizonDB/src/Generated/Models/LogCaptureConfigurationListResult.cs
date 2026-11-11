@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Initializes a new instance of <see cref="LogCaptureConfigurationListResult"/>. </summary>
         /// <param name="value"> The LogCaptureConfiguration items on this page. </param>
-        internal LogCaptureConfigurationListResult(IEnumerable<LogCaptureConfigurationData> value)
+        internal LogCaptureConfigurationListResult(IEnumerable<HorizonDBLogCaptureConfigurationData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="value"> The LogCaptureConfiguration items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LogCaptureConfigurationListResult(IList<LogCaptureConfigurationData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LogCaptureConfigurationListResult(IList<HorizonDBLogCaptureConfigurationData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> The LogCaptureConfiguration items on this page. </summary>
-        public IList<LogCaptureConfigurationData> Value { get; }
+        public IList<HorizonDBLogCaptureConfigurationData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

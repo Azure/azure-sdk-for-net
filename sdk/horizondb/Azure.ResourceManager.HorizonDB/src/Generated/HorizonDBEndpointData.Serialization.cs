@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HorizonDB
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            EndpointProperties properties = default;
+            HorizonDBEndpointProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.HorizonDB
                     {
                         continue;
                     }
-                    properties = EndpointProperties.DeserializeEndpointProperties(prop.Value, options);
+                    properties = HorizonDBEndpointProperties.DeserializeHorizonDBEndpointProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

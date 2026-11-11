@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 return null;
             }
-            ScheduledMaintenanceManagementType? maintenanceManagementType = default;
+            HorizonDBScheduledMaintenanceManagementType? maintenanceManagementType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    maintenanceManagementType = new ScheduledMaintenanceManagementType(prop.Value.GetString());
+                    maintenanceManagementType = new HorizonDBScheduledMaintenanceManagementType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

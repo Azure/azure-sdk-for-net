@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="documentationLink"> Link to parameter documentation. </param>
         /// <param name="unit"> The unit of measurement for the parameter. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBParameterProperties(string name, string description, string value, string defaultValue, ParameterValueSource? valueSource, string dataType, string allowedValues, bool? isDynamic, bool? isReadOnly, Uri documentationLink, string unit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBParameterProperties(string name, string description, string value, string defaultValue, HorizonDBParameterValueSource? valueSource, string dataType, string allowedValues, bool? isDynamic, bool? isReadOnly, Uri documentationLink, string unit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public string DefaultValue { get; }
 
         /// <summary> The source of the effective parameter value. UserOverride means that the value was explicitly supplied by the user, even when it equals defaultValue. </summary>
-        public ParameterValueSource? ValueSource { get; }
+        public HorizonDBParameterValueSource? ValueSource { get; }
 
         /// <summary> The data type of the parameter. </summary>
         public string DataType { get; }

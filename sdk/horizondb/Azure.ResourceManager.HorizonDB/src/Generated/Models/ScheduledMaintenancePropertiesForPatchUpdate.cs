@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <summary> Initializes a new instance of <see cref="ScheduledMaintenancePropertiesForPatchUpdate"/>. </summary>
         /// <param name="maintenanceManagementType"> Specifies whether scheduled maintenance is managed by the system or by the user. When scheduledMaintenance is supplied, this property is required by the service. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledMaintenancePropertiesForPatchUpdate(ScheduledMaintenanceManagementType? maintenanceManagementType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledMaintenancePropertiesForPatchUpdate(HorizonDBScheduledMaintenanceManagementType? maintenanceManagementType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaintenanceManagementType = maintenanceManagementType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies whether scheduled maintenance is managed by the system or by the user. When scheduledMaintenance is supplied, this property is required by the service. </summary>
-        public ScheduledMaintenanceManagementType? MaintenanceManagementType { get; set; }
+        public HorizonDBScheduledMaintenanceManagementType? MaintenanceManagementType { get; set; }
     }
 }

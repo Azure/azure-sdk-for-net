@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="role"> The current role performed by the node within its pool. </param>
         /// <param name="availabilityZone"> The availability zone in which the node is deployed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HorizonDBNodeProperties(NodeRole role, string availabilityZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HorizonDBNodeProperties(HorizonDBNodeRole role, string availabilityZone, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Role = role;
             AvailabilityZone = availabilityZone;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> The current role performed by the node within its pool. </summary>
-        public NodeRole Role { get; }
+        public HorizonDBNodeRole Role { get; }
 
         /// <summary> The availability zone in which the node is deployed. </summary>
         public string AvailabilityZone { get; }

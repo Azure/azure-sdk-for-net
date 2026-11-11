@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (LogCaptureConfigurationData item in Value)
+            foreach (HorizonDBLogCaptureConfigurationData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 return null;
             }
-            IList<LogCaptureConfigurationData> value = default;
+            IList<HorizonDBLogCaptureConfigurationData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<LogCaptureConfigurationData> array = new List<LogCaptureConfigurationData>();
+                    List<HorizonDBLogCaptureConfigurationData> array = new List<HorizonDBLogCaptureConfigurationData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LogCaptureConfigurationData.DeserializeLogCaptureConfigurationData(item, options));
+                        array.Add(HorizonDBLogCaptureConfigurationData.DeserializeHorizonDBLogCaptureConfigurationData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LogCaptureConfigurationListResult(value ?? new ChangeTrackingList<LogCaptureConfigurationData>(), nextLink, additionalBinaryDataProperties);
+            return new LogCaptureConfigurationListResult(value ?? new ChangeTrackingList<HorizonDBLogCaptureConfigurationData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="principalType"> The type of Microsoft Entra principal to map to the PostgreSQL role. </param>
         /// <param name="tenantId"> The identifier of the Microsoft Entra tenant containing the principal to map, represented as an RFC 4122 GUID. If omitted, this value defaults to the tenant of the subscription. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MicrosoftEntraAdministratorPropertiesForAdd(string principalName, HorizonDBPrincipalType principalType, string tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MicrosoftEntraAdministratorPropertiesForAdd(string principalName, HorizonDBPrincipalType principalType, Guid? tenantId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrincipalName = principalName;
             PrincipalType = principalType;
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public HorizonDBPrincipalType PrincipalType { get; }
 
         /// <summary> The identifier of the Microsoft Entra tenant containing the principal to map, represented as an RFC 4122 GUID. If omitted, this value defaults to the tenant of the subscription. </summary>
-        public string TenantId { get; set; }
+        public Guid? TenantId { get; set; }
     }
 }

@@ -147,12 +147,12 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 return null;
             }
-            PoolState? state = default;
+            HorizonDBPoolState? state = default;
             PoolComputeModel computeModel = default;
             int nodeCount = default;
             PoolHighAvailability highAvailability = default;
             PoolParameterGroupReference parameterGroup = default;
-            ScheduledMaintenanceProperties scheduledMaintenance = default;
+            HorizonDBScheduledMaintenanceProperties scheduledMaintenance = default;
             HorizonDBProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    state = new PoolState(prop.Value.GetString());
+                    state = new HorizonDBPoolState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("computeModel"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    scheduledMaintenance = ScheduledMaintenanceProperties.DeserializeScheduledMaintenanceProperties(prop.Value, options);
+                    scheduledMaintenance = HorizonDBScheduledMaintenanceProperties.DeserializeHorizonDBScheduledMaintenanceProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

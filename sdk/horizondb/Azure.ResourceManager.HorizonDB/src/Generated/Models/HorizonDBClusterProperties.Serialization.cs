@@ -178,15 +178,15 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 return null;
             }
             PostgreSqlVersion? postgreSqlVersion = default;
-            ClusterCreateMode? creationMode = default;
+            HorizonDBClusterCreateMode? creationMode = default;
             DateTimeOffset? pointInTimeOn = default;
             ResourceIdentifier creationSourceClusterResourceId = default;
             string creationSourceClusterLocation = default;
             Network network = default;
-            BackupProperties backup = default;
+            HorizonDBClusterBackupProperties backup = default;
             HorizonDBClusterDataEncryption dataEncryption = default;
             AiModelManagementStatus? aiModelManagement = default;
-            ClusterState state = default;
+            HorizonDBClusterState state = default;
             HorizonDBProvisioningState provisioningState = default;
             ReadWritePoolProperties readWritePool = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    creationMode = new ClusterCreateMode(prop.Value.GetString());
+                    creationMode = new HorizonDBClusterCreateMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("pointInTimeUtc"u8))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    backup = BackupProperties.DeserializeBackupProperties(prop.Value, options);
+                    backup = HorizonDBClusterBackupProperties.DeserializeHorizonDBClusterBackupProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("dataEncryption"u8))
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 }
                 if (prop.NameEquals("state"u8))
                 {
-                    state = new ClusterState(prop.Value.GetString());
+                    state = new HorizonDBClusterState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))

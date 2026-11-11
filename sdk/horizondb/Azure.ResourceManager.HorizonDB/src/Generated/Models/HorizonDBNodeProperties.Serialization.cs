@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 return null;
             }
-            NodeRole role = default;
+            HorizonDBNodeRole role = default;
             string availabilityZone = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("role"u8))
                 {
-                    role = new NodeRole(prop.Value.GetString());
+                    role = new HorizonDBNodeRole(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("availabilityZone"u8))

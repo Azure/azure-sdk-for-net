@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Initializes a new instance of <see cref="ChangeDataCaptureIdentityValidationStatus"/>. </summary>
         /// <param name="state"> The current validation state. </param>
-        /// <param name="validatedAtUtc"> The date and time, in UTC, when validation most recently completed. </param>
+        /// <param name="validatedOn"> The date and time, in UTC, when validation most recently completed. </param>
         /// <param name="error"> The customer-safe validation error when validation failed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChangeDataCaptureIdentityValidationStatus(ChangeDataCaptureIdentityValidationState state, DateTimeOffset? validatedAtUtc, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChangeDataCaptureIdentityValidationStatus(ChangeDataCaptureIdentityValidationState state, DateTimeOffset? validatedOn, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
-            ValidatedAtUtc = validatedAtUtc;
+            ValidatedOn = validatedOn;
             Error = error;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public ChangeDataCaptureIdentityValidationState State { get; }
 
         /// <summary> The date and time, in UTC, when validation most recently completed. </summary>
-        public DateTimeOffset? ValidatedAtUtc { get; }
+        public DateTimeOffset? ValidatedOn { get; }
 
         /// <summary> The customer-safe validation error when validation failed. </summary>
         public ResponseError Error { get; }

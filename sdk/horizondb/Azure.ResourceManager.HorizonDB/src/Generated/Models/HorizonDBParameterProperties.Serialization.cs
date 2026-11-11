@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             string description = default;
             string value = default;
             string defaultValue = default;
-            ParameterValueSource? valueSource = default;
+            HorizonDBParameterValueSource? valueSource = default;
             string dataType = default;
             string allowedValues = default;
             bool? isDynamic = default;
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    valueSource = new ParameterValueSource(prop.Value.GetString());
+                    valueSource = new HorizonDBParameterValueSource(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("dataType"u8))

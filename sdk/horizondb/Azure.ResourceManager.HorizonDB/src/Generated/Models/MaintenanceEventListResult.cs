@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Initializes a new instance of <see cref="MaintenanceEventListResult"/>. </summary>
         /// <param name="value"> The MaintenanceEvent items on this page. </param>
-        internal MaintenanceEventListResult(IEnumerable<MaintenanceEventData> value)
+        internal MaintenanceEventListResult(IEnumerable<HorizonDBMaintenanceEventData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="value"> The MaintenanceEvent items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceEventListResult(IList<MaintenanceEventData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaintenanceEventListResult(IList<HorizonDBMaintenanceEventData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         }
 
         /// <summary> The MaintenanceEvent items on this page. </summary>
-        public IList<MaintenanceEventData> Value { get; }
+        public IList<HorizonDBMaintenanceEventData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

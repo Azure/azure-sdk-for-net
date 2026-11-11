@@ -72,12 +72,12 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
             return new HorizonDBCapabilityResource(Client, Id.AppendProviderResource("Microsoft.HorizonDb", "locations", "default"));
         }
 
-        /// <summary> Gets a collection of DefaultParameterGroups in the <see cref="SubscriptionResource"/>. </summary>
+        /// <summary> Gets a collection of HorizonDBDefaultParameterGroups in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
-        /// <returns> An object representing collection of DefaultParameterGroups and their operations over a DefaultParameterGroupResource. </returns>
-        public virtual DefaultParameterGroupCollection GetDefaultParameterGroups(AzureLocation location)
+        /// <returns> An object representing collection of HorizonDBDefaultParameterGroups and their operations over a HorizonDBDefaultParameterGroupResource. </returns>
+        public virtual HorizonDBDefaultParameterGroupCollection GetHorizonDBDefaultParameterGroups(AzureLocation location)
         {
-            return new DefaultParameterGroupCollection(Client, Id, location);
+            return new HorizonDBDefaultParameterGroupCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DefaultParameterGroupResource>> GetDefaultParameterGroupAsync(AzureLocation location, string name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HorizonDBDefaultParameterGroupResource>> GetHorizonDBDefaultParameterGroupAsync(AzureLocation location, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return await GetDefaultParameterGroups(location).GetAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetHorizonDBDefaultParameterGroups(location).GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DefaultParameterGroupResource> GetDefaultParameterGroup(AzureLocation location, string name, CancellationToken cancellationToken = default)
+        public virtual Response<HorizonDBDefaultParameterGroupResource> GetHorizonDBDefaultParameterGroup(AzureLocation location, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            return GetDefaultParameterGroups(location).Get(name, cancellationToken);
+            return GetHorizonDBDefaultParameterGroups(location).Get(name, cancellationToken);
         }
 
         /// <summary>

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (DefaultParameterGroupData item in Value)
+            foreach (HorizonDBDefaultParameterGroupData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 return null;
             }
-            IList<DefaultParameterGroupData> value = default;
+            IList<HorizonDBDefaultParameterGroupData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<DefaultParameterGroupData> array = new List<DefaultParameterGroupData>();
+                    List<HorizonDBDefaultParameterGroupData> array = new List<HorizonDBDefaultParameterGroupData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DefaultParameterGroupData.DeserializeDefaultParameterGroupData(item, options));
+                        array.Add(HorizonDBDefaultParameterGroupData.DeserializeHorizonDBDefaultParameterGroupData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new DefaultParameterGroupListResult(value ?? new ChangeTrackingList<DefaultParameterGroupData>(), nextLink, additionalBinaryDataProperties);
+            return new DefaultParameterGroupListResult(value ?? new ChangeTrackingList<HorizonDBDefaultParameterGroupData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

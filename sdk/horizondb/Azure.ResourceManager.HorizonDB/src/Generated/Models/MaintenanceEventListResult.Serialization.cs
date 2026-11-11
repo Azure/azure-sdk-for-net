@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (MaintenanceEventData item in Value)
+            foreach (HorizonDBMaintenanceEventData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.HorizonDB.Models
             {
                 return null;
             }
-            IList<MaintenanceEventData> value = default;
+            IList<HorizonDBMaintenanceEventData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<MaintenanceEventData> array = new List<MaintenanceEventData>();
+                    List<HorizonDBMaintenanceEventData> array = new List<HorizonDBMaintenanceEventData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceEventData.DeserializeMaintenanceEventData(item, options));
+                        array.Add(HorizonDBMaintenanceEventData.DeserializeHorizonDBMaintenanceEventData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MaintenanceEventListResult(value ?? new ChangeTrackingList<MaintenanceEventData>(), nextLink, additionalBinaryDataProperties);
+            return new MaintenanceEventListResult(value ?? new ChangeTrackingList<HorizonDBMaintenanceEventData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

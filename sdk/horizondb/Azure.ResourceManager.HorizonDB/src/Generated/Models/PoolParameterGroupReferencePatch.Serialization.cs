@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                 return null;
             }
             ResourceIdentifier parameterGroupResourceId = default;
-            ParameterApplyMethod? applyMethod = default;
+            HorizonDBParameterApplyMethod? applyMethod = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     {
                         continue;
                     }
-                    applyMethod = new ParameterApplyMethod(prop.Value.GetString());
+                    applyMethod = new HorizonDBParameterApplyMethod(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

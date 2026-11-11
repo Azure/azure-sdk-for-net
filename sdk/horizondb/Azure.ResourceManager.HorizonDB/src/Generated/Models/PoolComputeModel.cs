@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="computeProcessor"> The processor type for the compute model. </param>
         /// <param name="computeGeneration"> The compute generation for the compute model. </param>
         /// <param name="vCores"> The number of vCores. Allowed values are 1 through 192. </param>
-        public PoolComputeModel(PoolComputeModelType @type, ComputeProcessorType computeProcessor, int computeGeneration, int vCores)
+        public PoolComputeModel(PoolComputeModelType @type, HorizonDBComputeProcessorType computeProcessor, int computeGeneration, int vCores)
         {
             Type = @type;
             ComputeProcessor = computeProcessor;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="computeGeneration"> The compute generation for the compute model. </param>
         /// <param name="vCores"> The number of vCores. Allowed values are 1 through 192. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PoolComputeModel(PoolComputeModelType @type, ComputeProcessorType computeProcessor, int computeGeneration, int vCores, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PoolComputeModel(PoolComputeModelType @type, HorizonDBComputeProcessorType computeProcessor, int computeGeneration, int vCores, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             ComputeProcessor = computeProcessor;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public PoolComputeModelType Type { get; set; }
 
         /// <summary> The processor type for the compute model. </summary>
-        public ComputeProcessorType ComputeProcessor { get; set; }
+        public HorizonDBComputeProcessorType ComputeProcessor { get; set; }
 
         /// <summary> The compute generation for the compute model. </summary>
         public int ComputeGeneration { get; set; }

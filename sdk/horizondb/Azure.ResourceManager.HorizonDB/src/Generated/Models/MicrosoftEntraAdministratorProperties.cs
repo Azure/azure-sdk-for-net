@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="tenantId"> The identifier of the Microsoft Entra tenant containing the mapped principal, represented as an RFC 4122 GUID. If omitted, this value defaults to the tenant of the subscription. </param>
         /// <param name="provisioningState"> The provisioning state of the PostgreSQL role and Microsoft Entra principal mapping. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MicrosoftEntraAdministratorProperties(string principalName, HorizonDBPrincipalType principalType, string objectId, string tenantId, HorizonDBProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MicrosoftEntraAdministratorProperties(string principalName, HorizonDBPrincipalType principalType, Guid? objectId, Guid? tenantId, HorizonDBProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PrincipalName = principalName;
             PrincipalType = principalType;
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public HorizonDBPrincipalType PrincipalType { get; }
 
         /// <summary> The Microsoft Entra object identifier of the principal mapped to the PostgreSQL role, represented as an RFC 4122 GUID. On PUT requests, this value comes from the URI path parameter. </summary>
-        public string ObjectId { get; }
+        public Guid? ObjectId { get; }
 
         /// <summary> The identifier of the Microsoft Entra tenant containing the mapped principal, represented as an RFC 4122 GUID. If omitted, this value defaults to the tenant of the subscription. </summary>
-        public string TenantId { get; }
+        public Guid? TenantId { get; }
 
         /// <summary> The provisioning state of the PostgreSQL role and Microsoft Entra principal mapping. </summary>
         public HorizonDBProvisioningState? ProvisioningState { get; }

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="validation"> The latest validation result for this identity assignment. </param>
         /// <param name="status"> Customer-safe health information for the identity assignment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChangeDataCaptureIdentityAssignmentProperties(ResourceIdentifier identityResourceId, ChangeDataCaptureIdentityAssignmentState effectiveState, ChangeDataCaptureIdentityActivationState activationState, string principalId, string tenantId, HorizonDBProvisioningState? provisioningState, ChangeDataCaptureIdentityValidationStatus validation, ChangeDataCaptureStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChangeDataCaptureIdentityAssignmentProperties(ResourceIdentifier identityResourceId, ChangeDataCaptureIdentityAssignmentState effectiveState, ChangeDataCaptureIdentityActivationState activationState, Guid principalId, Guid tenantId, HorizonDBProvisioningState? provisioningState, ChangeDataCaptureIdentityValidationStatus validation, ChangeDataCaptureStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IdentityResourceId = identityResourceId;
             EffectiveState = effectiveState;
@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public ChangeDataCaptureIdentityActivationState ActivationState { get; }
 
         /// <summary> The Microsoft Entra principal ID resolved from the user-assigned managed identity, represented as an RFC 4122 GUID. </summary>
-        public string PrincipalId { get; }
+        public Guid PrincipalId { get; }
 
         /// <summary> The Microsoft Entra tenant ID resolved from the user-assigned managed identity, represented as an RFC 4122 GUID. </summary>
-        public string TenantId { get; }
+        public Guid TenantId { get; }
 
         /// <summary> The provisioning state of the latest identity-assignment mutation. </summary>
         public HorizonDBProvisioningState? ProvisioningState { get; }
