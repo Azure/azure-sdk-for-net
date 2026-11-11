@@ -663,16 +663,21 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 Response<BlobContainerInfo> containerResponse = _containerClient.Create(
-                    publicAccessType: (Blobs.Models.PublicAccessType?)options?.PublicAccessType ?? Blobs.Models.PublicAccessType.None,
-                    metadata: options?.Metadata,
-                    encryptionScopeOptions: options?.EncryptionScopeOptions.ToBlobContainerEncryptionScopeOptions(),
+                    new BlobContainerCreateOptions
+                    {
+                        PublicAccessType = (Blobs.Models.PublicAccessType?)options?.PublicAccessType ?? Blobs.Models.PublicAccessType.None,
+                        Metadata = options?.Metadata,
+                        EncryptionScopeOptions = options?.EncryptionScopeOptions.ToBlobContainerEncryptionScopeOptions(),
+                        RequestPriority = options?.RequestPriority,
+                    },
                     cancellationToken: cancellationToken);
 
                 return Response.FromValue(
                     new FileSystemInfo()
                     {
                         ETag = containerResponse.Value.ETag,
-                        LastModified = containerResponse.Value.LastModified
+                        LastModified = containerResponse.Value.LastModified,
+                        EffectiveRequestPriority = containerResponse.Value.EffectiveRequestPriority
                     },
                     containerResponse.GetRawResponse());
             }
@@ -725,9 +730,13 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 Response<BlobContainerInfo> containerResponse = await _containerClient.CreateAsync(
-                    publicAccessType: (Blobs.Models.PublicAccessType?)options?.PublicAccessType ?? Blobs.Models.PublicAccessType.None,
-                    metadata: options?.Metadata,
-                    encryptionScopeOptions: options?.EncryptionScopeOptions.ToBlobContainerEncryptionScopeOptions(),
+                    new BlobContainerCreateOptions
+                    {
+                        PublicAccessType = (Blobs.Models.PublicAccessType?)options?.PublicAccessType ?? Blobs.Models.PublicAccessType.None,
+                        Metadata = options?.Metadata,
+                        EncryptionScopeOptions = options?.EncryptionScopeOptions.ToBlobContainerEncryptionScopeOptions(),
+                        RequestPriority = options?.RequestPriority,
+                    },
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
@@ -735,7 +744,8 @@ namespace Azure.Storage.Files.DataLake
                     new FileSystemInfo()
                     {
                         ETag = containerResponse.Value.ETag,
-                        LastModified = containerResponse.Value.LastModified
+                        LastModified = containerResponse.Value.LastModified,
+                        EffectiveRequestPriority = containerResponse.Value.EffectiveRequestPriority
                     },
                     containerResponse.GetRawResponse());
             }
@@ -943,9 +953,13 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Start();
                 Response<BlobContainerInfo> containerResponse = _containerClient.CreateIfNotExists(
-                    publicAccessType: (Blobs.Models.PublicAccessType?)options?.PublicAccessType ?? Blobs.Models.PublicAccessType.None,
-                    metadata: options?.Metadata,
-                    encryptionScopeOptions: options?.EncryptionScopeOptions.ToBlobContainerEncryptionScopeOptions(),
+                    new BlobContainerCreateIfNotExistsOptions
+                    {
+                        PublicAccessType = (Blobs.Models.PublicAccessType?)options?.PublicAccessType ?? Blobs.Models.PublicAccessType.None,
+                        Metadata = options?.Metadata,
+                        EncryptionScopeOptions = options?.EncryptionScopeOptions.ToBlobContainerEncryptionScopeOptions(),
+                        RequestPriority = options?.RequestPriority,
+                    },
                     cancellationToken: cancellationToken);
 
                 if (containerResponse == default)
@@ -957,7 +971,8 @@ namespace Azure.Storage.Files.DataLake
                     new FileSystemInfo()
                     {
                         ETag = containerResponse.Value.ETag,
-                        LastModified = containerResponse.Value.LastModified
+                        LastModified = containerResponse.Value.LastModified,
+                        EffectiveRequestPriority = containerResponse.Value.EffectiveRequestPriority
                     },
                     containerResponse.GetRawResponse());
             }
@@ -1008,9 +1023,13 @@ namespace Azure.Storage.Files.DataLake
             {
                 scope.Start();
                 Response<BlobContainerInfo> containerResponse = await _containerClient.CreateIfNotExistsAsync(
-                    publicAccessType: (Blobs.Models.PublicAccessType?)options?.PublicAccessType ?? Blobs.Models.PublicAccessType.None,
-                    metadata: options?.Metadata,
-                    encryptionScopeOptions: options?.EncryptionScopeOptions.ToBlobContainerEncryptionScopeOptions(),
+                    new BlobContainerCreateIfNotExistsOptions
+                    {
+                        PublicAccessType = (Blobs.Models.PublicAccessType?)options?.PublicAccessType ?? Blobs.Models.PublicAccessType.None,
+                        Metadata = options?.Metadata,
+                        EncryptionScopeOptions = options?.EncryptionScopeOptions.ToBlobContainerEncryptionScopeOptions(),
+                        RequestPriority = options?.RequestPriority,
+                    },
                     cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 if (containerResponse == default)
@@ -1022,7 +1041,8 @@ namespace Azure.Storage.Files.DataLake
                     new FileSystemInfo()
                     {
                         ETag = containerResponse.Value.ETag,
-                        LastModified = containerResponse.Value.LastModified
+                        LastModified = containerResponse.Value.LastModified,
+                        EffectiveRequestPriority = containerResponse.Value.EffectiveRequestPriority
                     },
                     containerResponse.GetRawResponse());
             }
@@ -1200,7 +1220,7 @@ namespace Azure.Storage.Files.DataLake
 
         #region Delete
         /// <summary>
-        /// The <see cref="Delete"/> operation marks the specified
+        /// The <see cref="Delete(DataLakeRequestConditions, CancellationToken)"/> operation marks the specified
         /// file system for deletion.
         ///
         /// For more information, see
@@ -1234,6 +1254,7 @@ namespace Azure.Storage.Files.DataLake
         /// request is accepted.  After this period, all operations on the file system and
         /// its paths fail with status code 404 (Not Found).
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response Delete(
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -1268,7 +1289,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="DeleteAsync"/> operation marks the specified
+        /// The <see cref="DeleteAsync(DataLakeRequestConditions, CancellationToken)"/> operation marks the specified
         /// file system for deletion.
         ///
         /// For more information, see
@@ -1302,6 +1323,7 @@ namespace Azure.Storage.Files.DataLake
         /// request is accepted.  After this period, all operations on the file system and
         /// its paths fail with status code 404 (Not Found).
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response> DeleteAsync(
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -1335,11 +1357,134 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
+
+        /// <summary>
+        /// The <see cref="Delete(DataLakeFileSystemDeleteOptions, CancellationToken)"/> operation marks the specified
+        /// file system for deletion. The file system and any paths contained within it are later deleted during garbage collection.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
+        /// Delete Container</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully marking for deletion.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual Response Delete(
+            DataLakeFileSystemDeleteOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(Delete)}");
+
+            options?.Conditions.ValidateConditionsNotPresent(
+                invalidConditions:
+                    DataLakeRequestConditionProperty.TagConditions
+                    | DataLakeRequestConditionProperty.IfMatch
+                    | DataLakeRequestConditionProperty.IfNoneMatch,
+                operationName: nameof(DataLakeFileClient.Delete),
+                parameterName: nameof(DataLakeFileSystemDeleteOptions.Conditions));
+
+            try
+            {
+                scope.Start();
+
+                return _containerClient.Delete(
+                    new BlobContainerDeleteOptions
+                    {
+                        Conditions = options?.Conditions.ToBlobRequestConditions(),
+                        RequestPriority = options?.RequestPriority
+                    },
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="DeleteAsync(DataLakeFileSystemDeleteOptions, CancellationToken)"/> operation marks the specified
+        /// file system for deletion. The file system and any paths contained within it are later deleted during garbage collection.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
+        /// Delete Container</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully marking for deletion.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual async Task<Response> DeleteAsync(
+            DataLakeFileSystemDeleteOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(Delete)}");
+
+            options?.Conditions.ValidateConditionsNotPresent(
+                invalidConditions:
+                    DataLakeRequestConditionProperty.TagConditions
+                    | DataLakeRequestConditionProperty.IfMatch
+                    | DataLakeRequestConditionProperty.IfNoneMatch,
+                operationName: nameof(DataLakeFileClient.Delete),
+                parameterName: nameof(DataLakeFileSystemDeleteOptions.Conditions));
+
+            try
+            {
+                scope.Start();
+
+                return await _containerClient.DeleteAsync(
+                    new BlobContainerDeleteOptions
+                    {
+                        Conditions = options?.Conditions.ToBlobRequestConditions(),
+                        RequestPriority = options?.RequestPriority
+                    },
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
         #endregion Delete
 
         #region Delete If Exists
         /// <summary>
-        /// The <see cref="DeleteIfExists"/> operation marks the specified
+        /// The <see cref="DeleteIfExists(DataLakeRequestConditions, CancellationToken)"/> operation marks the specified
         /// file system for deletion if it exists.
         ///
         /// For more information, see
@@ -1373,6 +1518,7 @@ namespace Azure.Storage.Files.DataLake
         /// request is accepted.  After this period, all operations on the file system and
         /// its paths fail with status code 404 (Not Found).
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<bool> DeleteIfExists(
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -1407,7 +1553,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="DeleteIfExistsAsync"/> operation marks the specified
+        /// The <see cref="DeleteIfExistsAsync(DataLakeRequestConditions, CancellationToken)"/> operation marks the specified
         /// file system for deletion if it exists.
         ///
         /// For more information, see
@@ -1441,6 +1587,7 @@ namespace Azure.Storage.Files.DataLake
         /// request is accepted.  After this period, all operations on the file system and
         /// its paths fail with status code 404 (Not Found).
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<bool>> DeleteIfExistsAsync(
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -1466,11 +1613,134 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
+
+        /// <summary>
+        /// The <see cref="DeleteIfExists(DataLakeFileSystemDeleteIfExistsOptions, CancellationToken)"/> operation marks the specified
+        /// file system for deletion if it exists.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
+        /// Delete Container</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully marking for deletion.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual Response<bool> DeleteIfExists(
+            DataLakeFileSystemDeleteIfExistsOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(DeleteIfExists)}");
+
+            options?.Conditions.ValidateConditionsNotPresent(
+                invalidConditions:
+                    DataLakeRequestConditionProperty.TagConditions
+                    | DataLakeRequestConditionProperty.IfMatch
+                    | DataLakeRequestConditionProperty.IfNoneMatch,
+                operationName: nameof(DataLakeFileClient.Delete),
+                parameterName: nameof(DataLakeFileSystemDeleteIfExistsOptions.Conditions));
+
+            try
+            {
+                scope.Start();
+
+                return _containerClient.DeleteIfExists(
+                    new BlobContainerDeleteIfExistsOptions
+                    {
+                        Conditions = options?.Conditions.ToBlobRequestConditions(),
+                        RequestPriority = options?.RequestPriority
+                    },
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="DeleteIfExistsAsync(DataLakeFileSystemDeleteIfExistsOptions, CancellationToken)"/> operation marks the specified
+        /// file system for deletion if it exists.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
+        /// Delete Container</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully marking for deletion.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual async Task<Response<bool>> DeleteIfExistsAsync(
+            DataLakeFileSystemDeleteIfExistsOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(DeleteIfExists)}");
+
+            options?.Conditions.ValidateConditionsNotPresent(
+                invalidConditions:
+                    DataLakeRequestConditionProperty.TagConditions
+                    | DataLakeRequestConditionProperty.IfMatch
+                    | DataLakeRequestConditionProperty.IfNoneMatch,
+                operationName: nameof(DataLakeFileClient.Delete),
+                parameterName: nameof(DataLakeFileSystemDeleteIfExistsOptions.Conditions));
+
+            try
+            {
+                scope.Start();
+
+                return await _containerClient.DeleteIfExistsAsync(
+                    new BlobContainerDeleteIfExistsOptions
+                    {
+                        Conditions = options?.Conditions.ToBlobRequestConditions(),
+                        RequestPriority = options?.RequestPriority
+                    },
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
         #endregion Delete If Exists
 
         #region Exists
         /// <summary>
-        /// The <see cref="Exists"/> operation can be called on a
+        /// The <see cref="Exists(CancellationToken)"/> operation can be called on a
         /// <see cref="DataLakeFileClient"/> to see if the associated
         /// file system exists on the storage account in the storage service.
         /// </summary>
@@ -1490,6 +1760,7 @@ namespace Azure.Storage.Files.DataLake
         /// <see cref="CreateIfNotExists(DataLakeFileSystemCreateOptions, CancellationToken)"/>
         /// instead.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<bool> Exists(
             CancellationToken cancellationToken = default)
         {
@@ -1514,7 +1785,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="ExistsAsync"/> operation can be called on a
+        /// The <see cref="ExistsAsync(CancellationToken)"/> operation can be called on a
         /// <see cref="DataLakeFileSystemClient"/> to see if the associated
         /// file system exists on the storage account in the storage service.
         /// </summary>
@@ -1534,6 +1805,7 @@ namespace Azure.Storage.Files.DataLake
         /// <see cref="CreateIfNotExistsAsync(DataLakeFileSystemCreateOptions, CancellationToken)"/>
         /// instead.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<bool>> ExistsAsync(
             CancellationToken cancellationToken = default)
         {
@@ -1556,11 +1828,110 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
+
+        /// <summary>
+        /// The <see cref="Exists(DataLakeFileSystemExistsOptions, CancellationToken)"/> operation can be called on a
+        /// <see cref="DataLakeFileSystemClient"/> to see if the associated
+        /// file system exists on the storage account in the storage service.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the file system exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual Response<bool> Exists(
+            DataLakeFileSystemExistsOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(Exists)}");
+
+            try
+            {
+                scope.Start();
+
+                return _containerClient.Exists(
+                    new BlobContainerExistsOptions
+                    {
+                        RequestPriority = options?.RequestPriority
+                    },
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ExistsAsync(DataLakeFileSystemExistsOptions, CancellationToken)"/> operation can be called on a
+        /// <see cref="DataLakeFileSystemClient"/> to see if the associated
+        /// file system exists on the storage account in the storage service.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the file system exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual async Task<Response<bool>> ExistsAsync(
+            DataLakeFileSystemExistsOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(Exists)}");
+
+            try
+            {
+                scope.Start();
+
+                return await _containerClient.ExistsAsync(
+                    new BlobContainerExistsOptions
+                    {
+                        RequestPriority = options?.RequestPriority
+                    },
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
         #endregion Exists
 
         #region GetProperties
         /// <summary>
-        /// The <see cref="GetProperties"/> operation returns all
+        /// The <see cref="GetProperties(DataLakeRequestConditions, CancellationToken)"/> operation returns all
         /// user-defined metadata and system properties for the specified
         /// file system. The data returned does not include the file system's
         /// list of paths.
@@ -1587,6 +1958,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<FileSystemProperties> GetProperties(
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -1617,7 +1989,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="GetPropertiesAsync"/> operation returns all
+        /// The <see cref="GetPropertiesAsync(DataLakeRequestConditions, CancellationToken)"/> operation returns all
         /// user-defined metadata and system properties for the specified
         /// file system. The data returned does not include the file system's
         /// list of paths.
@@ -1644,6 +2016,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<FileSystemProperties>> GetPropertiesAsync(
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -1673,11 +2046,132 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
+
+        /// <summary>
+        /// The <see cref="GetProperties(DataLakeFileSystemGetPropertiesOptions, CancellationToken)"/> operation returns all
+        /// user-defined metadata and system properties for the specified
+        /// file system. The data returned does not include the file system's
+        /// list of paths.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-container-properties">
+        /// Get Container Properties</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSystemProperties}"/> describing the
+        /// file system and its properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual Response<FileSystemProperties> GetProperties(
+            DataLakeFileSystemGetPropertiesOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(GetProperties)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<BlobContainerProperties> containerResponse = _containerClient.GetProperties(
+                    new BlobContainerGetPropertiesOptions
+                    {
+                        Conditions = options?.Conditions.ToBlobRequestConditions(),
+                        RequestPriority = options?.RequestPriority
+                    },
+                    cancellationToken);
+
+                return Response.FromValue(
+                    containerResponse.Value.ToFileSystemProperties(),
+                    containerResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetPropertiesAsync(DataLakeFileSystemGetPropertiesOptions, CancellationToken)"/> operation returns all
+        /// user-defined metadata and system properties for the specified
+        /// file system. The data returned does not include the file system's
+        /// list of paths.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/get-container-properties">
+        /// Get Container Properties</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSystemProperties}"/> describing the
+        /// file system and its properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual async Task<Response<FileSystemProperties>> GetPropertiesAsync(
+            DataLakeFileSystemGetPropertiesOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(GetProperties)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<BlobContainerProperties> containerResponse = await _containerClient.GetPropertiesAsync(
+                    new BlobContainerGetPropertiesOptions
+                    {
+                        Conditions = options?.Conditions.ToBlobRequestConditions(),
+                        RequestPriority = options?.RequestPriority
+                    },
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    containerResponse.Value.ToFileSystemProperties(),
+                    containerResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
         #endregion GetProperties
 
         #region SetMetadata
         /// <summary>
-        /// The <see cref="SetMetadata"/> operation sets one or more
+        /// The <see cref="SetMetadata(Metadata, DataLakeRequestConditions, CancellationToken)"/> operation sets one or more
         /// user-defined name-value pairs for the specified file system.
         ///
         /// For more information, see
@@ -1704,6 +2198,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<FileSystemInfo> SetMetadata(
             Metadata metadata,
             DataLakeRequestConditions conditions = default,
@@ -1740,7 +2235,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="SetMetadataAsync"/> operation sets one or more
+        /// The <see cref="SetMetadataAsync(Metadata, DataLakeRequestConditions, CancellationToken)"/> operation sets one or more
         /// user-defined name-value pairs for the specified file system.
         ///
         /// For more information, see
@@ -1767,6 +2262,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<FileSystemInfo>> SetMetadataAsync(
             Metadata metadata,
             DataLakeRequestConditions conditions = default,
@@ -1789,6 +2285,141 @@ namespace Azure.Storage.Files.DataLake
                     {
                         ETag = response.Value.ETag,
                         LastModified = response.Value.LastModified
+                    },
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="SetMetadata(Metadata, DataLakeFileSystemSetMetadataOptions, CancellationToken)"/> operation sets one or more
+        /// user-defined name-value pairs for the specified file system.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-container-metadata">
+        /// Set Container Metadata</see>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Custom metadata to set for this file system.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSystemInfo}"/> if successful.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual Response<FileSystemInfo> SetMetadata(
+            Metadata metadata,
+            DataLakeFileSystemSetMetadataOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(SetMetadata)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<BlobContainerInfo> response = _containerClient.SetMetadata(
+                    metadata,
+                    new BlobContainerSetMetadataOptions
+                    {
+                        Conditions = options?.Conditions.ToBlobRequestConditions(),
+                        RequestPriority = options?.RequestPriority
+                    },
+                    cancellationToken);
+
+                return Response.FromValue(
+                    new FileSystemInfo()
+                    {
+                        ETag = response.Value.ETag,
+                        LastModified = response.Value.LastModified,
+                        EffectiveRequestPriority = response.Value.EffectiveRequestPriority
+                    },
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="SetMetadataAsync(Metadata, DataLakeFileSystemSetMetadataOptions, CancellationToken)"/> operation sets one or more
+        /// user-defined name-value pairs for the specified file system.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-container-metadata">
+        /// Set Container Metadata</see>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Custom metadata to set for this file system.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSystemInfo}"/> if successful.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual async Task<Response<FileSystemInfo>> SetMetadataAsync(
+            Metadata metadata,
+            DataLakeFileSystemSetMetadataOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(SetMetadata)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<BlobContainerInfo> response = await _containerClient.SetMetadataAsync(
+                    metadata,
+                    new BlobContainerSetMetadataOptions
+                    {
+                        Conditions = options?.Conditions.ToBlobRequestConditions(),
+                        RequestPriority = options?.RequestPriority
+                    },
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    new FileSystemInfo()
+                    {
+                        ETag = response.Value.ETag,
+                        LastModified = response.Value.LastModified,
+                        EffectiveRequestPriority = response.Value.EffectiveRequestPriority
                     },
                     response.GetRawResponse());
             }
@@ -1841,6 +2472,7 @@ namespace Azure.Storage.Files.DataLake
                 options?.Recursive,
                 options?.UserPrincipalName,
                 options?.StartFrom,
+                options?.RequestPriority,
                 $"{nameof(DataLakeFileSystemClient)}.{nameof(GetPaths)}")
                 .ToSyncCollection(cancellationToken);
 
@@ -1879,6 +2511,7 @@ namespace Azure.Storage.Files.DataLake
                 options?.Recursive,
                 options?.UserPrincipalName,
                 options?.StartFrom,
+                options?.RequestPriority,
                 $"{nameof(DataLakeFileSystemClient)}.{nameof(GetPaths)}")
             .ToAsyncCollection(cancellationToken);
 
@@ -1934,6 +2567,7 @@ namespace Azure.Storage.Files.DataLake
                 recursive,
                 userPrincipalName,
                 beginFrom: default,
+                requestPriority: null,
                 $"{nameof(DataLakeFileSystemClient)}.{nameof(GetPaths)}")
                 .ToSyncCollection(cancellationToken);
 
@@ -1988,6 +2622,7 @@ namespace Azure.Storage.Files.DataLake
                 recursive,
                 userPrincipalName,
                 beginFrom: default,
+                requestPriority: null,
                 $"{nameof(DataLakeFileSystemClient)}.{nameof(GetPaths)}")
             .ToAsyncCollection(cancellationToken);
 
@@ -2033,6 +2668,9 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="beginFrom">
         /// Optional. A relative path within the specified directory where the listing will start from.
         /// </param>
+        /// <param name="requestPriority">
+        /// Optional. The request priority, from 0 through 7.
+        /// </param>
         /// <param name="operationName">
         /// The name of the operation.
         /// </param>
@@ -2060,6 +2698,7 @@ namespace Azure.Storage.Files.DataLake
             string continuation,
             int? maxResults,
             string beginFrom,
+            int? requestPriority,
             string operationName,
             bool async,
             CancellationToken cancellationToken)
@@ -2084,6 +2723,7 @@ namespace Azure.Storage.Files.DataLake
                     if (async)
                     {
                         response = await FileSystemRestClient.GetPathsAsync(
+                            requestPriority: requestPriority,
                             recursive: recursive,
                             continuation: continuation,
                             path: path,
@@ -2096,6 +2736,7 @@ namespace Azure.Storage.Files.DataLake
                     else
                     {
                         response = FileSystemRestClient.GetPaths(
+                            requestPriority: requestPriority,
                             recursive: recursive,
                             continuation: continuation,
                             path: path,
@@ -2438,7 +3079,7 @@ namespace Azure.Storage.Files.DataLake
 
         #region Delete Directory
         /// <summary>
-        /// The <see cref="DeleteDirectory"/> operation marks the specified path
+        /// The <see cref="DeleteDirectory(string, DataLakeRequestConditions, CancellationToken)"/> operation marks the specified path
         /// deletion.
         ///
         /// For more information, see
@@ -2465,6 +3106,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response DeleteDirectory(
             string path,
             DataLakeRequestConditions conditions = default,
@@ -2493,7 +3135,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="DeleteDirectoryAsync"/> deletes a directory in this file system.
+        /// The <see cref="DeleteDirectoryAsync(string, DataLakeRequestConditions, CancellationToken)"/> deletes a directory in this file system.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
@@ -2519,6 +3161,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response> DeleteDirectoryAsync(
             string path,
             DataLakeRequestConditions conditions = default,
@@ -2533,6 +3176,111 @@ namespace Azure.Storage.Files.DataLake
                 return await GetDirectoryClient(path).DeleteAsync(
                     recursive: true,
                     conditions,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="DeleteDirectory(string, DataLakeDirectoryDeleteOptions, CancellationToken)"/> deletes a directory in this file system.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
+        /// Delete Path</see>.
+        /// </summary>
+        /// <param name="path">
+        /// The path to the directory to delete.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully marking for deletion.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual Response DeleteDirectory(
+            string path,
+            DataLakeDirectoryDeleteOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(DeleteDirectory)}");
+
+            try
+            {
+                scope.Start();
+
+                return GetDirectoryClient(path).Delete(
+                    options,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="DeleteDirectoryAsync(string, DataLakeDirectoryDeleteOptions, CancellationToken)"/> deletes a directory in this file system.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
+        /// Delete Path</see>.
+        /// </summary>
+        /// <param name="path">
+        /// The path to the directory to delete.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully marking for deletion.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual async Task<Response> DeleteDirectoryAsync(
+            string path,
+            DataLakeDirectoryDeleteOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(DeleteDirectory)}");
+
+            try
+            {
+                scope.Start();
+
+                return await GetDirectoryClient(path).DeleteAsync(
+                    options,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -2860,7 +3608,7 @@ namespace Azure.Storage.Files.DataLake
 
         #region Delete File
         /// <summary>
-        /// The <see cref="DeleteFile"/> deletes a file in this file system.
+        /// The <see cref="DeleteFile(string, DataLakeRequestConditions, CancellationToken)"/> deletes a file in this file system.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
@@ -2886,6 +3634,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response DeleteFile(
             string path,
             DataLakeRequestConditions conditions = default,
@@ -2913,7 +3662,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="DeleteFileAsync"/> deletes a file in this file system.
+        /// The <see cref="DeleteFileAsync(string, DataLakeRequestConditions, CancellationToken)"/> deletes a file in this file system.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
@@ -2939,6 +3688,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response> DeleteFileAsync(
             string path,
             DataLakeRequestConditions conditions = default,
@@ -2965,11 +3715,116 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
+
+        /// <summary>
+        /// The <see cref="DeleteFile(string, DataLakeFileDeleteOptions, CancellationToken)"/> deletes a file in this file system.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
+        /// Delete Path</see>.
+        /// </summary>
+        /// <param name="path">
+        /// The path to the file to delete.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual Response DeleteFile(
+            string path,
+            DataLakeFileDeleteOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(DeleteFile)}");
+
+            try
+            {
+                scope.Start();
+
+                return GetFileClient(path).Delete(
+                    options,
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="DeleteFileAsync(string, DataLakeFileDeleteOptions, CancellationToken)"/> deletes a file in this file system.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
+        /// Delete Path</see>.
+        /// </summary>
+        /// <param name="path">
+        /// The path to the file to delete.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully deleting.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual async Task<Response> DeleteFileAsync(
+            string path,
+            DataLakeFileDeleteOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(DeleteFile)}");
+
+            try
+            {
+                scope.Start();
+
+                return await GetFileClient(path).DeleteAsync(
+                    options,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
         #endregion Delete File
 
         #region GetAccessPolicy
         /// <summary>
-        /// The <see cref="GetAccessPolicy"/> operation gets the
+        /// The <see cref="GetAccessPolicy(DataLakeRequestConditions, CancellationToken)"/> operation gets the
         /// permissions for this file system. The permissions indicate whether
         /// file system data may be accessed publicly.
         ///
@@ -2995,6 +3850,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<FileSystemAccessPolicy> GetAccessPolicy(
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -3025,7 +3881,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="GetAccessPolicyAsync"/> operation gets the
+        /// The <see cref="GetAccessPolicyAsync(DataLakeRequestConditions, CancellationToken)"/> operation gets the
         /// permissions for this file system. The permissions indicate whether
         /// file system data may be accessed publicly.
         ///
@@ -3051,6 +3907,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<FileSystemAccessPolicy>> GetAccessPolicyAsync(
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -3080,11 +3937,130 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
+
+        /// <summary>
+        /// The <see cref="GetAccessPolicy(DataLakeFileSystemGetAccessPolicyOptions, CancellationToken)"/> operation gets the
+        /// permissions for this file system. The permissions indicate whether
+        /// file system data may be accessed publicly.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-container-acl">
+        /// Get Container ACL</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSystemAccessPolicy}"/> describing
+        /// the file system's access policy.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual Response<FileSystemAccessPolicy> GetAccessPolicy(
+            DataLakeFileSystemGetAccessPolicyOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(GetAccessPolicy)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<BlobContainerAccessPolicy> response = _containerClient.GetAccessPolicy(
+                    new BlobContainerGetAccessPolicyOptions
+                    {
+                        Conditions = options?.Conditions.ToBlobRequestConditions(),
+                        RequestPriority = options?.RequestPriority
+                    },
+                    cancellationToken);
+
+                return Response.FromValue(
+                    response.Value.ToFileSystemAccessPolicy(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetAccessPolicyAsync(DataLakeFileSystemGetAccessPolicyOptions, CancellationToken)"/> operation gets the
+        /// permissions for this file system. The permissions indicate whether
+        /// file system data may be accessed publicly.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-container-acl">
+        /// Get Container ACL</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSystemAccessPolicy}"/> describing
+        /// the file system's access policy.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual async Task<Response<FileSystemAccessPolicy>> GetAccessPolicyAsync(
+            DataLakeFileSystemGetAccessPolicyOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(GetAccessPolicy)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<BlobContainerAccessPolicy> response = await _containerClient.GetAccessPolicyAsync(
+                    new BlobContainerGetAccessPolicyOptions
+                    {
+                        Conditions = options?.Conditions.ToBlobRequestConditions(),
+                        RequestPriority = options?.RequestPriority
+                    },
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.Value.ToFileSystemAccessPolicy(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
         #endregion GetAccessPolicy
 
         #region SetAccessPolicy
         /// <summary>
-        /// The <see cref="SetAccessPolicy"/> operation sets the
+        /// The <see cref="SetAccessPolicy(Models.PublicAccessType, IEnumerable{DataLakeSignedIdentifier}, DataLakeRequestConditions, CancellationToken)"/> operation sets the
         /// permissions for the specified file system. The permissions indicate
         /// whether file system data may be accessed publicly.
         ///
@@ -3127,6 +4103,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual Response<FileSystemInfo> SetAccessPolicy(
             Models.PublicAccessType accessType = Models.PublicAccessType.None,
@@ -3166,7 +4143,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="SetAccessPolicyAsync"/> operation sets the
+        /// The <see cref="SetAccessPolicyAsync(Models.PublicAccessType, IEnumerable{DataLakeSignedIdentifier}, DataLakeRequestConditions, CancellationToken)"/> operation sets the
         /// permissions for the specified file system. The permissions indicate
         /// whether the file system data may be accessed publicly.
         ///
@@ -3209,6 +4186,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual async Task<Response<FileSystemInfo>> SetAccessPolicyAsync(
             Models.PublicAccessType accessType = Models.PublicAccessType.None,
@@ -3234,6 +4212,141 @@ namespace Azure.Storage.Files.DataLake
                     {
                         ETag = containerResponse.Value.ETag,
                         LastModified = containerResponse.Value.LastModified
+                    },
+                    containerResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="SetAccessPolicy(DataLakeFileSystemSetAccessPolicyOptions, CancellationToken)"/> operation sets the
+        /// permissions for the specified file system. The permissions indicate
+        /// whether file system data may be accessed publicly.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-container-acl">
+        /// Set Container ACL</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSystemInfo}"/> describing the
+        /// updated file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
+        public virtual Response<FileSystemInfo> SetAccessPolicy(
+            DataLakeFileSystemSetAccessPolicyOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(SetAccessPolicy)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<BlobContainerInfo> containerResponse = _containerClient.SetAccessPolicy(
+                    new BlobContainerSetAccessPolicyOptions
+                    {
+                        AccessType = (Blobs.Models.PublicAccessType)(options?.AccessType ?? Models.PublicAccessType.None),
+                        Permissions = options?.Permissions.ToBlobSignedIdentifiers(),
+                        Conditions = options?.Conditions.ToBlobRequestConditions(),
+                        RequestPriority = options?.RequestPriority
+                    },
+                    cancellationToken);
+
+                return Response.FromValue(
+                    new FileSystemInfo()
+                    {
+                        ETag = containerResponse.Value.ETag,
+                        LastModified = containerResponse.Value.LastModified,
+                        EffectiveRequestPriority = containerResponse.Value.EffectiveRequestPriority
+                    },
+                    containerResponse.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="SetAccessPolicyAsync(DataLakeFileSystemSetAccessPolicyOptions, CancellationToken)"/> operation sets the
+        /// permissions for the specified file system. The permissions indicate
+        /// whether file system data may be accessed publicly.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-container-acl">
+        /// Set Container ACL</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{FileSystemInfo}"/> describing the
+        /// updated file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
+        public virtual async Task<Response<FileSystemInfo>> SetAccessPolicyAsync(
+            DataLakeFileSystemSetAccessPolicyOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakeFileSystemClient)}.{nameof(SetAccessPolicy)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<BlobContainerInfo> containerResponse = await _containerClient.SetAccessPolicyAsync(
+                    new BlobContainerSetAccessPolicyOptions
+                    {
+                        AccessType = (Blobs.Models.PublicAccessType)(options?.AccessType ?? Models.PublicAccessType.None),
+                        Permissions = options?.Permissions.ToBlobSignedIdentifiers(),
+                        Conditions = options?.Conditions.ToBlobRequestConditions(),
+                        RequestPriority = options?.RequestPriority
+                    },
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    new FileSystemInfo()
+                    {
+                        ETag = containerResponse.Value.ETag,
+                        LastModified = containerResponse.Value.LastModified,
+                        EffectiveRequestPriority = containerResponse.Value.EffectiveRequestPriority
                     },
                     containerResponse.GetRawResponse());
             }
@@ -3694,14 +4807,70 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<PathDeletedItem> GetDeletedPaths(
             string pathPrefix = default,
             CancellationToken cancellationToken = default)
             => new GetDeletedPathAsyncCollection(
                 this,
                 pathPrefix,
+                requestPriority: null,
                 $"{nameof(DataLakeFileSystemClient)}.{nameof(GetDeletedPaths)}")
                 .ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// Gets the paths that have recently been soft deleted in this file system.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Pageable{PathDeletedItem}"/> describing the deleted paths in the file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Pageable<PathDeletedItem> GetDeletedPaths(
+            DataLakeFileSystemGetDeletedPathsOptions options,
+            CancellationToken cancellationToken = default)
+            => new GetDeletedPathAsyncCollection(
+                this,
+                options?.PathPrefix,
+                options?.RequestPriority,
+                $"{nameof(DataLakeFileSystemClient)}.{nameof(GetDeletedPaths)}")
+                .ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// Gets the paths that have recently been soft deleted in this file system.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{PathDeletedItem}"/> describing the deleted paths in the file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual AsyncPageable<PathDeletedItem> GetDeletedPathsAsync(
+            DataLakeFileSystemGetDeletedPathsOptions options,
+            CancellationToken cancellationToken = default)
+            => new GetDeletedPathAsyncCollection(
+                this,
+                options?.PathPrefix,
+                options?.RequestPriority,
+                $"{nameof(DataLakeFileSystemClient)}.{nameof(GetDeletedPaths)}")
+                .ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// Gets the paths that have recently been soft deleted in this file system.
@@ -3723,12 +4892,14 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<PathDeletedItem> GetDeletedPathsAsync(
             string pathPrefix = default,
             CancellationToken cancellationToken = default)
             => new GetDeletedPathAsyncCollection(
                 this,
                 pathPrefix,
+                requestPriority: null,
                 $"{nameof(DataLakeFileSystemClient)}.{nameof(GetDeletedPaths)}")
                 .ToAsyncCollection(cancellationToken);
 
@@ -3736,6 +4907,7 @@ namespace Azure.Storage.Files.DataLake
             string pathPrefix,
             string continuation,
             int? maxResults,
+            int? requestPriority,
             string operationName,
             bool async,
             CancellationToken cancellationToken)
@@ -3763,6 +4935,7 @@ namespace Azure.Storage.Files.DataLake
                     if (async)
                     {
                         response = await BlobFileSystemRestClient.GetBlobHierarchySegmentAsync(
+                            requestPriority: requestPriority,
                             delimiter: null,
                             prefix: pathPrefix,
                             marker: continuation,
@@ -3776,6 +4949,7 @@ namespace Azure.Storage.Files.DataLake
                     else
                     {
                         response = BlobFileSystemRestClient.GetBlobHierarchySegment(
+                            requestPriority: requestPriority,
                             delimiter: null,
                             prefix: pathPrefix,
                             marker: continuation,
@@ -3814,7 +4988,7 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="deletionId">
         /// Required.  The deletion ID associated with the soft deleted path.
-        /// You can get soft deleted paths and their assocaited deletion IDs with <see cref="GetDeletedPathsAsync"/>.
+        /// You can get soft deleted paths and their assocaited deletion IDs with <see cref="GetDeletedPathsAsync(string, CancellationToken)"/>.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -3830,6 +5004,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<DataLakePathClient> UndeletePath(
             string deletedPath,
             string deletionId,
@@ -3837,6 +5012,7 @@ namespace Azure.Storage.Files.DataLake
             => UndeletePathInternal(
                 deletedPath,
                 deletionId,
+                requestPriority: null,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -3849,7 +5025,79 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         /// <param name="deletionId">
         /// Required.  The deletion ID associated with the soft deleted path.
-        /// You can get soft deleted paths and their associated deletion IDs with <see cref="GetDeletedPathsAsync"/>.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakePathClient}"/> pointed at the newly restored path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<DataLakePathClient> UndeletePath(
+            string deletedPath,
+            string deletionId,
+            DataLakeFileSystemUndeletePathOptions options,
+            CancellationToken cancellationToken = default)
+            => UndeletePathInternal(
+                deletedPath,
+                deletionId,
+                options?.RequestPriority,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Restores a soft deleted path.
+        /// </summary>
+        /// <param name="deletedPath">
+        /// Required.  The path of the deleted path.
+        /// </param>
+        /// <param name="deletionId">
+        /// Required.  The deletion ID associated with the soft deleted path.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakePathClient}"/> pointed at the newly restored path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DataLakePathClient>> UndeletePathAsync(
+            string deletedPath,
+            string deletionId,
+            DataLakeFileSystemUndeletePathOptions options,
+            CancellationToken cancellationToken = default)
+            => await UndeletePathInternal(
+                deletedPath,
+                deletionId,
+                options?.RequestPriority,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// Restores a soft deleted path.
+        /// </summary>
+        /// <param name="deletedPath">
+        /// Required.  The path of the deleted path.
+        /// </param>
+        /// <param name="deletionId">
+        /// Required.  The deletion ID associated with the soft deleted path.
+        /// You can get soft deleted paths and their associated deletion IDs with <see cref="GetDeletedPathsAsync(string, CancellationToken)"/>.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -3865,6 +5113,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<DataLakePathClient>> UndeletePathAsync(
             string deletedPath,
             string deletionId,
@@ -3872,6 +5121,7 @@ namespace Azure.Storage.Files.DataLake
             => await UndeletePathInternal(
                 deletedPath,
                 deletionId,
+                requestPriority: null,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -3879,6 +5129,7 @@ namespace Azure.Storage.Files.DataLake
         internal async Task<Response<DataLakePathClient>> UndeletePathInternal(
             string deletedPath,
             string deletionId,
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -3896,6 +5147,7 @@ namespace Azure.Storage.Files.DataLake
                     if (async)
                     {
                         response = await pathClient.BlobPathRestClient.UndeleteAsync(
+                            requestPriority: requestPriority,
                             timeout: null,
                             undeleteSource: undeleteSource,
                             cancellationToken: cancellationToken)
@@ -3904,6 +5156,7 @@ namespace Azure.Storage.Files.DataLake
                     else
                     {
                         response = pathClient.BlobPathRestClient.Undelete(
+                            requestPriority: requestPriority,
                             timeout: null,
                             undeleteSource: undeleteSource,
                             cancellationToken: cancellationToken);

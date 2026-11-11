@@ -12,5 +12,10 @@ namespace Azure.Storage.Blobs.Models
         /// If a legal hold is enabled on the blob.
         /// </summary>
         public bool HasLegalHold { get; internal set; }
+
+        /// <summary>
+        /// The request priority the service applied to this request.
+        /// </summary>
+        public int? EffectiveRequestPriority { get; internal set; }
     }
 }

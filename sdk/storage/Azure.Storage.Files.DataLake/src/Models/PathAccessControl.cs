@@ -33,6 +33,11 @@ namespace Azure.Storage.Files.DataLake.Models
         public IEnumerable<PathAccessControlItem> AccessControlList { get; internal set; }
 
         /// <summary>
+        /// The request priority the service applied to this request.
+        /// </summary>
+        public int? EffectiveRequestPriority { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of PathAccessControl instances.
         /// You can use DataLakeModelFactory.PathAccessControl instead.
         /// </summary>

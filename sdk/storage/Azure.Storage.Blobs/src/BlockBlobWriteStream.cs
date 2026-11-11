@@ -20,6 +20,7 @@ namespace Azure.Storage.Blobs
         private readonly BlobHttpHeaders _blobHttpHeaders;
         private readonly IDictionary<string, string> _metadata;
         private readonly IDictionary<string, string> _tags;
+        private readonly int? _requestPriority;
 
         public BlockBlobWriteStream(
             BlockBlobClient blockBlobClient,
@@ -30,7 +31,8 @@ namespace Azure.Storage.Blobs
             BlobHttpHeaders blobHttpHeaders,
             IDictionary<string, string> metadata,
             IDictionary<string, string> tags,
-            UploadTransferValidationOptions transferValidation
+            UploadTransferValidationOptions transferValidation,
+            int? requestPriority
             ) : base(
                 position,
                 bufferSize,
@@ -38,6 +40,7 @@ namespace Azure.Storage.Blobs
                 transferValidation
                 )
         {
+            _requestPriority = requestPriority;
             ValidateBufferSize(bufferSize);
             _blockBlobClient = blockBlobClient;
             _conditions = conditions ?? new BlobRequestConditions();
@@ -74,6 +77,7 @@ namespace Azure.Storage.Blobs
                     validationOptions,
                     conditions: conditions,
                     progressHandler: _progressHandler,
+                    requestPriority: _requestPriority,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -95,6 +99,7 @@ namespace Azure.Storage.Blobs
                 accessTier: default,
                 immutabilityPolicy: default,
                 legalHold: default,
+                requestPriority: _requestPriority,
                 async: async,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);

@@ -20,7 +20,7 @@ namespace Azure.Storage.Queues
 
         private static ResponseClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
 
-        internal HttpMessage CreateSetPropertiesRequest(RequestContent content, int? timeout, RequestContext context)
+        internal HttpMessage CreateSetPropertiesRequest(RequestContent content, int? requestPriority, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -38,12 +38,16 @@ namespace Azure.Storage.Queues
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             request.Headers.SetValue("Content-Type", "application/xml");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateGetPropertiesRequest(int? timeout, RequestContext context)
+        internal HttpMessage CreateGetPropertiesRequest(int? requestPriority, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -61,11 +65,15 @@ namespace Azure.Storage.Queues
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             request.Headers.SetValue("Accept", "application/xml");
             return message;
         }
 
-        internal HttpMessage CreateGetStatisticsRequest(int? timeout, RequestContext context)
+        internal HttpMessage CreateGetStatisticsRequest(int? requestPriority, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -83,11 +91,15 @@ namespace Azure.Storage.Queues
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             request.Headers.SetValue("Accept", "application/xml");
             return message;
         }
 
-        internal HttpMessage CreateGetUserDelegationKeyRequest(RequestContent content, int? timeout, RequestContext context)
+        internal HttpMessage CreateGetUserDelegationKeyRequest(RequestContent content, int? requestPriority, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -106,12 +118,16 @@ namespace Azure.Storage.Queues
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             request.Headers.SetValue("Accept", "application/xml");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateGetQueuesSegmentRequest(string prefix, string marker, int? maxresults, int? timeout, IEnumerable<string> include, RequestContext context)
+        internal HttpMessage CreateGetQueuesSegmentRequest(int? requestPriority, string prefix, string marker, int? maxresults, int? timeout, IEnumerable<string> include, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -143,6 +159,10 @@ namespace Azure.Storage.Queues
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             request.Headers.SetValue("Accept", "application/xml");
             return message;

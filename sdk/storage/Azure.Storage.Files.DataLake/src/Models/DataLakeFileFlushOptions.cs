@@ -61,5 +61,11 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Proposed lease ID. Valid with <see cref="DataLakeLeaseAction.Acquire"/> and <see cref="DataLakeLeaseAction.AcquireRelease"/>.
         /// </summary>
         public string ProposedLeaseId { get; set; }
+
+        /// <summary>
+        /// Optional. Sets the priority of this request, from 0 through 7.
+        /// If not set, or if the value is outside that range, the service uses 3.
+        /// </summary>
+        public int? RequestPriority { get; set; }
     }
 }

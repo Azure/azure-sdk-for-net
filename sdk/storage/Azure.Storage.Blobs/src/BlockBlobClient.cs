@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -838,6 +838,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="operationName">
         /// The name of the calling operation.
         /// </param>
+        /// <param name="requestPriority">
+        /// Optional. Sets the priority of this request, from 0 through 7.
+        /// If not set, or if the value is outside that range, the service uses 3.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -867,6 +871,7 @@ namespace Azure.Storage.Blobs.Specialized
             IProgress<long> progressHandler,
             UploadTransferValidationOptions transferValidationOverride,
             string operationName,
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -923,6 +928,7 @@ namespace Azure.Storage.Blobs.Specialized
                         response = await BlockBlobRestClient.UploadAsync(
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             content: RequestContent.Create(content),
+                            requestPriority: requestPriority,
                             blobContentType: blobHttpHeaders?.ContentType,
                             blobContentEncoding: blobHttpHeaders?.ContentEncoding,
                             blobContentLanguage: blobHttpHeaders?.ContentLanguage,
@@ -960,6 +966,7 @@ namespace Azure.Storage.Blobs.Specialized
                         response = BlockBlobRestClient.Upload(
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             content: RequestContent.Create(content),
+                            requestPriority: requestPriority,
                             blobContentType: blobHttpHeaders?.ContentType,
                             blobContentEncoding: blobHttpHeaders?.ContentEncoding,
                             blobContentLanguage: blobHttpHeaders?.ContentLanguage,
@@ -1082,6 +1089,7 @@ namespace Azure.Storage.Blobs.Specialized
                 transactionalContentHash.ToValidationOptions(),
                 conditions,
                 progressHandler,
+                default,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1157,6 +1165,7 @@ namespace Azure.Storage.Blobs.Specialized
                 transactionalContentHash.ToValidationOptions(),
                 conditions,
                 progressHandler,
+                default,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1212,6 +1221,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.TransferValidation,
                 options?.Conditions,
                 options?.ProgressHandler,
+                options?.RequestPriority,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1266,6 +1276,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.TransferValidation,
                 options?.Conditions,
                 options?.ProgressHandler,
+                options?.RequestPriority,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1301,6 +1312,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="transferValidationOverride">
         /// Override for client configured transfer validation options.
         /// </param>
+        /// <param name="requestPriority">
+        /// Optional. Sets the priority of this request, from 0 through 7.
+        /// If not set, or if the value is outside that range, the service uses 3.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1324,6 +1339,7 @@ namespace Azure.Storage.Blobs.Specialized
             UploadTransferValidationOptions transferValidationOverride,
             BlobRequestConditions conditions,
             IProgress<long> progressHandler,
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1382,6 +1398,7 @@ namespace Azure.Storage.Blobs.Specialized
                             blockId: base64BlockId,
                             contentLength: contentLength,
                             content: RequestContent.Create(content),
+                            requestPriority: requestPriority,
                             transactionalContentCrc64: hashResult?.StorageCrc64AsArray is { } crc64Async
                                 ? BinaryData.FromBytes(crc64Async)
                                 : null,
@@ -1404,6 +1421,7 @@ namespace Azure.Storage.Blobs.Specialized
                             blockId: base64BlockId,
                             contentLength: contentLength,
                             content: RequestContent.Create(content),
+                            requestPriority: requestPriority,
                             transactionalContentCrc64: hashResult?.StorageCrc64AsArray is { } crc64Sync
                                 ? BinaryData.FromBytes(crc64Sync)
                                 : null,
@@ -1496,6 +1514,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.SourceAuthentication,
                 options?.SourceShareTokenIntent,
                 options?.SourceCustomerProvidedKey,
+                requestPriority: options?.RequestPriority,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1556,6 +1575,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.SourceAuthentication,
                 options?.SourceShareTokenIntent,
                 options?.SourceCustomerProvidedKey,
+                requestPriority: options?.RequestPriority,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1643,6 +1663,7 @@ namespace Azure.Storage.Blobs.Specialized
                 sourceAuthentication: default,
                 sourceShareTokenIntent: default,
                 sourceCustomerProvidedKey: default,
+                requestPriority: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1730,6 +1751,7 @@ namespace Azure.Storage.Blobs.Specialized
                 sourceAuthentication: default,
                 sourceShareTokenIntent: default,
                 sourceCustomerProvidedKey: default,
+                requestPriority: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1792,6 +1814,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="sourceCustomerProvidedKey">
         /// Optional. Specifies the source customer provided key to use to encrypt the source blob.
         /// </param>
+        /// <param name="requestPriority">
+        /// Optional. Sets the priority of this request, from 0 through 7.
+        /// If not set, or if the value is outside that range, the service uses 3.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1819,6 +1845,7 @@ namespace Azure.Storage.Blobs.Specialized
             HttpAuthorization sourceAuthentication,
             FileShareTokenIntent? sourceShareTokenIntent,
             CustomerProvidedKey? sourceCustomerProvidedKey,
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1865,6 +1892,7 @@ namespace Azure.Storage.Blobs.Specialized
                             blockId: base64BlockId,
                             contentLength: 0,
                             sourceUrl: sourceUri.AbsoluteUri,
+                            requestPriority: requestPriority,
                             sourceRange: sourceRange.ToString(),
                             sourceContentMd5: sourceContentHash is { } srcMd5Async
                                 ? BinaryData.FromBytes(srcMd5Async)
@@ -1894,6 +1922,7 @@ namespace Azure.Storage.Blobs.Specialized
                             blockId: base64BlockId,
                             contentLength: 0,
                             sourceUrl: sourceUri.AbsoluteUri,
+                            requestPriority: requestPriority,
                             sourceRange: sourceRange.ToString(),
                             sourceContentMd5: sourceContentHash is { } srcMd5Async
                                 ? BinaryData.FromBytes(srcMd5Async)
@@ -1995,6 +2024,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.AccessTier,
                 options?.ImmutabilityPolicy,
                 options?.LegalHold,
+                requestPriority: options?.RequestPriority,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -2073,6 +2103,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessTier: accessTier,
                 immutabilityPolicy: default,
                 legalHold: default,
+                requestPriority: default,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -2135,6 +2166,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.AccessTier,
                 options?.ImmutabilityPolicy,
                 options?.LegalHold,
+                requestPriority: options?.RequestPriority,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2213,6 +2245,7 @@ namespace Azure.Storage.Blobs.Specialized
                 accessTier: accessTier,
                 immutabilityPolicy: default,
                 legalHold: default,
+                requestPriority: default,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -2273,6 +2306,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Note that is parameter is only applicable to a blob within a container that
         /// has immutable storage with versioning enabled.
         /// </param>
+        /// <param name="requestPriority">
+        /// Optional. Sets the priority of this request, from 0 through 7.
+        /// If not set, or if the value is outside that range, the service uses 3.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2299,6 +2336,7 @@ namespace Azure.Storage.Blobs.Specialized
             AccessTier? accessTier,
             BlobImmutabilityPolicy immutabilityPolicy,
             bool? legalHold,
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2338,6 +2376,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         response = await BlockBlobRestClient.CommitBlockListAsync(
                             blocks: blocks,
+                            requestPriority: requestPriority,
                             blobCacheControl: blobHttpHeaders?.CacheControl,
                             blobContentType: blobHttpHeaders?.ContentType,
                             blobContentEncoding: blobHttpHeaders?.ContentEncoding,
@@ -2366,6 +2405,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         response = BlockBlobRestClient.CommitBlockList(
                             blocks: blocks,
+                            requestPriority: requestPriority,
                             blobCacheControl: blobHttpHeaders?.CacheControl,
                             blobContentType: blobHttpHeaders?.ContentType,
                             blobContentEncoding: blobHttpHeaders?.ContentEncoding,
@@ -2411,7 +2451,47 @@ namespace Azure.Storage.Blobs.Specialized
 
         #region GetBlockList
         /// <summary>
-        /// The <see cref="GetBlockList"/> operation operation retrieves
+        /// The <see cref="GetBlockList(BlockBlobGetBlockListOptions, CancellationToken)"/> operation operation retrieves
+        /// the list of blocks that have been uploaded as part of a block blob.
+        /// There are two block lists maintained for a blob.  The Committed
+        /// Block list has blocks that have been successfully committed to a
+        /// given blob with <see cref="CommitBlockList(IEnumerable{string}, CommitBlockListOptions, CancellationToken)"/>.
+        /// The Uncommitted Block list has blocks that have been uploaded for a
+        /// blob using <see cref="StageBlock(string, Stream,  byte[], BlobRequestConditions, IProgress{long}, CancellationToken)"/>, but that have not yet
+        /// been committed.  These blocks are stored in Azure in association
+        /// with a blob, but do not yet form part of the blob.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlockList}"/> describing requested
+        /// block list.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual Response<BlockList> GetBlockList(
+            BlockBlobGetBlockListOptions options,
+            CancellationToken cancellationToken = default) =>
+            GetBlockListInternal(
+                options?.BlockListTypes ?? BlockListTypes.All,
+                options?.Snapshot,
+                options?.Conditions,
+                options?.RequestPriority,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="GetBlockList(BlockBlobGetBlockListOptions, CancellationToken)"/> operation operation retrieves
         /// the list of blocks that have been uploaded as part of a block blob.
         /// There are two block lists maintained for a blob.  The Committed
         /// Block list has blocks that have been successfully committed to a
@@ -2450,6 +2530,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlockList> GetBlockList(
             BlockListTypes blockListTypes = BlockListTypes.All,
             string snapshot = default,
@@ -2459,12 +2540,53 @@ namespace Azure.Storage.Blobs.Specialized
                 blockListTypes,
                 snapshot,
                 conditions,
+                default,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="GetBlockListAsync"/> operation operation retrieves
+        /// The <see cref="GetBlockListAsync(BlockBlobGetBlockListOptions, CancellationToken)"/> operation operation retrieves
+        /// the list of blocks that have been uploaded as part of a block blob.
+        /// There are two block lists maintained for a blob.  The Committed
+        /// Block list has blocks that have been successfully committed to a
+        /// given blob with <see cref="CommitBlockListAsync(IEnumerable{string}, CommitBlockListOptions, CancellationToken)"/>.
+        /// The Uncommitted Block list has blocks that have been uploaded for a
+        /// blob using <see cref="StageBlockAsync(string, Stream,  byte[], BlobRequestConditions, IProgress{long}, CancellationToken)"/>, but that have not yet
+        /// been committed.  These blocks are stored in Azure in association
+        /// with a blob, but do not yet form part of the blob.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlockList}"/> describing requested
+        /// block list.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual async Task<Response<BlockList>> GetBlockListAsync(
+            BlockBlobGetBlockListOptions options,
+            CancellationToken cancellationToken = default) =>
+            await GetBlockListInternal(
+                options?.BlockListTypes ?? BlockListTypes.All,
+                options?.Snapshot,
+                options?.Conditions,
+                options?.RequestPriority,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="GetBlockListAsync(BlockBlobGetBlockListOptions, CancellationToken)"/> operation operation retrieves
         /// the list of blocks that have been uploaded as part of a block blob.
         /// There are two block lists maintained for a blob.  The Committed
         /// Block list has blocks that have been successfully committed to a
@@ -2503,6 +2625,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlockList>> GetBlockListAsync(
             BlockListTypes blockListTypes = BlockListTypes.All,
             string snapshot = default,
@@ -2512,6 +2635,7 @@ namespace Azure.Storage.Blobs.Specialized
                 blockListTypes,
                 snapshot,
                 conditions,
+                default,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2542,6 +2666,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional <see cref="BlobRequestConditions"/> to add
         /// conditions on retrieving the block list.
         /// </param>
+        /// <param name="requestPriority">
+        /// Optional. Sets the priority of this request, from 0 through 7.
+        /// If not set, or if the value is outside that range, the service uses 3.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2563,6 +2691,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlockListTypes blockListTypes,
             string snapshot,
             BlobRequestConditions conditions,
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2598,6 +2727,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         response = await BlockBlobRestClient.GetBlockListAsync(
                             listType: blockListTypes.ToBlockListType(),
+                            requestPriority: requestPriority,
                             snapshot: snapshot,
                             leaseId: conditions?.LeaseId,
                             ifTags: conditions?.TagConditions,
@@ -2608,6 +2738,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         response = BlockBlobRestClient.GetBlockList(
                             listType: blockListTypes.ToBlockListType(),
+                            requestPriority: requestPriority,
                             snapshot: snapshot,
                             leaseId: conditions?.LeaseId,
                             ifTags: conditions?.TagConditions,
@@ -2776,6 +2907,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await BlockBlobRestClient.QueryAsync(
+                            requestPriority: options?.RequestPriority,
                             leaseId: options?.Conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
@@ -2789,6 +2921,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = BlockBlobRestClient.Query(
+                            requestPriority: options?.RequestPriority,
                             leaseId: options?.Conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
@@ -2957,6 +3090,7 @@ namespace Azure.Storage.Blobs.Specialized
                     progressHandler: default,
                     transferValidationOverride: new() { ChecksumAlgorithm = StorageChecksumAlgorithm.None },
                     operationName: default,
+                    requestPriority: options?.RequestPriority,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -2976,7 +3110,8 @@ namespace Azure.Storage.Blobs.Specialized
                     blobHttpHeaders: options?.HttpHeaders,
                     metadata: options?.Metadata,
                     tags: options?.Tags,
-                    options?.TransferValidation ?? ClientConfiguration.TransferValidation.Upload
+                    options?.TransferValidation ?? ClientConfiguration.TransferValidation.Upload,
+                    requestPriority: options?.RequestPriority
                     );
             }
             catch (Exception ex)
@@ -3256,6 +3391,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         response = await BlockBlobRestClient.UploadBlobFromUriAsync(
                             copySource: copySource.AbsoluteUri,
+                            requestPriority: options?.RequestPriority,
                             blobContentType: options?.HttpHeaders?.ContentType,
                             blobContentEncoding: options?.HttpHeaders?.ContentEncoding,
                             blobContentLanguage: options?.HttpHeaders?.ContentLanguage,
@@ -3296,6 +3432,7 @@ namespace Azure.Storage.Blobs.Specialized
                     {
                         response = BlockBlobRestClient.UploadBlobFromUri(
                             copySource: copySource.AbsoluteUri,
+                            requestPriority: options?.RequestPriority,
                             blobContentType: options?.HttpHeaders?.ContentType,
                             blobContentEncoding: options?.HttpHeaders?.ContentEncoding,
                             blobContentLanguage: options?.HttpHeaders?.ContentLanguage,
@@ -3381,6 +3518,7 @@ namespace Azure.Storage.Blobs.Specialized
                         progressHandler,
                         validationOptions,
                         operationName,
+                        args?.RequestPriority,
                         async,
                         cancellationToken).ConfigureAwait(false),
                 SingleUploadBinaryData = async (content, args, progressHandler, validationOptions, operationName, async, cancellationToken)
@@ -3396,6 +3534,7 @@ namespace Azure.Storage.Blobs.Specialized
                         progressHandler,
                         validationOptions,
                         operationName,
+                        args?.RequestPriority,
                         async,
                         cancellationToken).ConfigureAwait(false),
                 UploadPartitionStreaming = async (stream, offset, blockId, args, progressHandler, validationOptions, async, cancellationToken)
@@ -3416,6 +3555,7 @@ namespace Azure.Storage.Blobs.Specialized
                             validationOptions,
                             conditions,
                             progressHandler,
+                            args?.RequestPriority,
                             async,
                             cancellationToken).ConfigureAwait(false);
                 },
@@ -3440,6 +3580,7 @@ namespace Azure.Storage.Blobs.Specialized
                                 validationOptions,
                                 conditions,
                                 progressHandler,
+                                args?.RequestPriority,
                                 async,
                                 cancellationToken).ConfigureAwait(false);
                     }
@@ -3454,6 +3595,7 @@ namespace Azure.Storage.Blobs.Specialized
                         args?.AccessTier,
                         args?.ImmutabilityPolicy,
                         args?.LegalHold,
+                        args?.RequestPriority,
                         async,
                         cancellationToken).ConfigureAwait(false),
                 Scope = operationName => client.ClientConfiguration.ClientDiagnostics.CreateScope(operationName

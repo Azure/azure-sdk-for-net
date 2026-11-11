@@ -32,7 +32,36 @@ namespace Azure.Storage.Blobs.Models
             string versionId = default,
             string encryptionKeySha256 = default,
             string encryptionScope = default,
-            long blobSequenceNumber = default)
+            long blobSequenceNumber = default,
+            int? effectiveRequestPriority = default)
+        {
+            return new BlobContentInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                ContentHash = contentHash,
+                ContentCrc64 = contentCrc64,
+                VersionId = versionId,
+                EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
+                BlobSequenceNumber = blobSequenceNumber,
+                EffectiveRequestPriority = effectiveRequestPriority,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlobContentInfo instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobContentInfo BlobContentInfo(
+            ETag eTag,
+            DateTimeOffset lastModified,
+            byte[] contentHash,
+            byte[] contentCrc64,
+            string versionId,
+            string encryptionKeySha256,
+            string encryptionScope,
+            long blobSequenceNumber)
         {
             return new BlobContentInfo()
             {
@@ -117,6 +146,37 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobAppendInfo instance for mocking.
         /// </summary>
+        public static BlobAppendInfo BlobAppendInfo(
+            ETag eTag = default,
+            DateTimeOffset lastModified = default,
+            byte[] contentHash = default,
+            byte[] contentCrc64 = default,
+            string blobAppendOffset = default,
+            int blobCommittedBlockCount = default,
+            bool isServerEncrypted = default,
+            string encryptionKeySha256 = default,
+            string encryptionScope = default,
+            int? effectiveRequestPriority = default)
+        {
+            return new BlobAppendInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                ContentHash = contentHash,
+                ContentCrc64 = contentCrc64,
+                BlobAppendOffset = blobAppendOffset,
+                BlobCommittedBlockCount = blobCommittedBlockCount,
+                IsServerEncrypted = isServerEncrypted,
+                EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
+                EffectiveRequestPriority = effectiveRequestPriority,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlobAppendInfo instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobAppendInfo BlobAppendInfo(
             ETag eTag,
             DateTimeOffset lastModified,
@@ -217,7 +277,8 @@ namespace Azure.Storage.Blobs.Models
             DateTimeOffset lastAccessed = default,
             BlobImmutabilityPolicy immutabilityPolicy = default,
             bool hasLegalHold = default,
-            string smartAccessTier = default)
+            string smartAccessTier = default,
+            int? effectiveRequestPriority = default)
                 => new BlobProperties(
                     lastModified: lastModified,
                     createdOn: createdOn,
@@ -263,7 +324,106 @@ namespace Azure.Storage.Blobs.Models
                     lastAccessed: lastAccessed,
                     immutabilityPolicy: immutabilityPolicy,
                     hasLegalHold: hasLegalHold,
-                    smartAccessTier: smartAccessTier);
+                    smartAccessTier: smartAccessTier,
+                    effectiveRequestPriority: effectiveRequestPriority);
+
+        /// <summary>
+        /// Creates a new BlobProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobProperties BlobProperties(
+            DateTimeOffset lastModified,
+            LeaseStatus leaseStatus,
+            long contentLength,
+            string contentType,
+            ETag eTag,
+            LeaseState leaseState,
+            string contentEncoding,
+            string contentDisposition,
+            string contentLanguage,
+            string cacheControl,
+            long blobSequenceNumber,
+            LeaseDurationType leaseDuration,
+            string acceptRanges,
+            string destinationSnapshot,
+            int blobCommittedBlockCount,
+            bool isIncrementalCopy,
+            bool isServerEncrypted,
+            CopyStatus? blobCopyStatus,
+            string encryptionKeySha256,
+            Uri copySource,
+            string encryptionScope,
+            string copyProgress,
+            string accessTier,
+            string copyId,
+            bool accessTierInferred,
+            string copyStatusDescription,
+            string archiveStatus,
+            DateTimeOffset copyCompletedOn,
+            DateTimeOffset accessTierChangedOn,
+            BlobType blobType,
+            string versionId,
+            IList<ObjectReplicationPolicy> objectReplicationSourceProperties,
+            bool isLatestVersion,
+            string objectReplicationDestinationPolicyId,
+            long tagCount,
+            IDictionary<string, string> metadata,
+            DateTimeOffset expiresOn,
+            DateTimeOffset createdOn,
+            bool isSealed,
+            string rehydratePriority,
+            byte[] contentHash,
+            DateTimeOffset lastAccessed,
+            BlobImmutabilityPolicy immutabilityPolicy,
+            bool hasLegalHold,
+            string smartAccessTier)
+                => new BlobProperties(
+                    lastModified: lastModified,
+                    createdOn: createdOn,
+                    metadata: metadata,
+                    objectReplicationDestinationPolicyId: objectReplicationDestinationPolicyId,
+                    objectReplicationSourceProperties: objectReplicationSourceProperties,
+                    blobType: blobType,
+                    copyCompletedOn: copyCompletedOn,
+                    copyStatusDescription: copyStatusDescription,
+                    copyId: copyId,
+                    copyProgress: copyProgress,
+                    copySource: copySource,
+                    blobCopyStatus: blobCopyStatus,
+                    isIncrementalCopy: isIncrementalCopy,
+                    destinationSnapshot: destinationSnapshot,
+                    leaseDuration: leaseDuration,
+                    leaseState: leaseState,
+                    leaseStatus: leaseStatus,
+                    contentLength: contentLength,
+                    contentType: contentType,
+                    eTag: eTag,
+                    contentHash: contentHash,
+                    contentEncoding: contentEncoding,
+                    contentDisposition: contentDisposition,
+                    contentLanguage: contentLanguage,
+                    cacheControl: cacheControl,
+                    blobSequenceNumber: blobSequenceNumber,
+                    acceptRanges: acceptRanges,
+                    blobCommittedBlockCount: blobCommittedBlockCount,
+                    isServerEncrypted: isServerEncrypted,
+                    encryptionKeySha256: encryptionKeySha256,
+                    encryptionScope: encryptionScope,
+                    accessTier: accessTier,
+                    accessTierInferred: accessTierInferred,
+                    archiveStatus: archiveStatus,
+                    accessTierChangedOn: accessTierChangedOn,
+                    versionId: versionId,
+                    isLatestVersion: isLatestVersion,
+                    tagCount: tagCount,
+                    expiresOn: expiresOn,
+                    isSealed: isSealed,
+                    rehydratePriority: rehydratePriority,
+                    lastAccessed: lastAccessed,
+                    immutabilityPolicy: immutabilityPolicy,
+                    hasLegalHold: hasLegalHold,
+                    smartAccessTier: smartAccessTier,
+                    effectiveRequestPriority: default);
 
         /// <summary>
         /// Creates a new BlobProperties instance for mocking.
@@ -359,7 +519,8 @@ namespace Azure.Storage.Blobs.Models
                     lastAccessed: lastAccessed,
                     immutabilityPolicy: immutabilityPolicy,
                     hasLegalHold: hasLegalHold,
-                    smartAccessTier: default); // Not provided, see non-deprecated model
+                    smartAccessTier: default, // Not provided, see non-deprecated model
+                    effectiveRequestPriority: default); // Not provided, see non-deprecated model
 
         /// <summary>
         /// Creates a new BlobProperties instance for mocking.
@@ -455,7 +616,8 @@ namespace Azure.Storage.Blobs.Models
                     lastAccessed: lastAccessed,
                     immutabilityPolicy: immutabilityPolicy,
                     hasLegalHold: hasLegalHold,
-                    smartAccessTier: default); // Not provided, see non-deprecated model
+                    smartAccessTier: default, // Not provided, see non-deprecated model
+                    effectiveRequestPriority: default); // Not provided, see non-deprecated model
 
         /// <summary>
         /// Creates a new BlobProperties instance for mocking.
@@ -549,7 +711,8 @@ namespace Azure.Storage.Blobs.Models
                     lastAccessed: lastAccessed,
                     immutabilityPolicy: new BlobImmutabilityPolicy(), // Not provided, see non-deprecated model
                     hasLegalHold: false, // Not provided, see non-deprecated model
-                    smartAccessTier: default); // Not provided, see non-deprecated model
+                    smartAccessTier: default, // Not provided, see non-deprecated model
+                    effectiveRequestPriority: default); // Not provided, see non-deprecated model
 
         /// <summary>
         /// Creates a new BlobProperties instance for mocking.
@@ -642,7 +805,8 @@ namespace Azure.Storage.Blobs.Models
                     lastAccessed: default, // Not provided, see non-deprecated model
                     immutabilityPolicy: new BlobImmutabilityPolicy(), // Not provided, see non-deprecated model
                     hasLegalHold: false, // Not provided, see non-deprecated model
-                    smartAccessTier: default); // Not provided, see non-deprecated model
+                    smartAccessTier: default, // Not provided, see non-deprecated model
+                    effectiveRequestPriority: default); // Not provided, see non-deprecated model
 
         /// <summary>
         /// Creates a new BlobProperties instance for mocking.
@@ -727,7 +891,8 @@ namespace Azure.Storage.Blobs.Models
                     lastAccessed: default, // Not provided, see non-deprecated model
                     immutabilityPolicy: new BlobImmutabilityPolicy(), // Not provided, see non-deprecated model
                     hasLegalHold: false, // Not provided, see non-deprecated model
-                    smartAccessTier: default); // Not provided, see non-deprecated model
+                    smartAccessTier: default, // Not provided, see non-deprecated model
+                    effectiveRequestPriority: default); // Not provided, see non-deprecated model
 
         /// <summary>
         /// Creates a new BlobProperties instance for mocking.
@@ -811,7 +976,8 @@ namespace Azure.Storage.Blobs.Models
                     lastAccessed: default, // Not provided, see non-deprecated model
                     immutabilityPolicy: new BlobImmutabilityPolicy(), // Not provided, see non-deprecated model
                     hasLegalHold: false, // Not provided, see non-deprecated model
-                    smartAccessTier: default); // Not provided, see non-deprecated model
+                    smartAccessTier: default, // Not provided, see non-deprecated model
+                    effectiveRequestPriority: default); // Not provided, see non-deprecated model
         #endregion
 
         #region BlobItemProperties
@@ -1217,6 +1383,27 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlockInfo instance for mocking.
         /// </summary>
         public static BlockInfo BlockInfo(
+            byte[] contentHash = default,
+            byte[] contentCrc64 = default,
+            string encryptionKeySha256 = default,
+            string encryptionScope = default,
+            int? effectiveRequestPriority = default)
+        {
+            return new BlockInfo()
+            {
+                ContentHash = contentHash,
+                ContentCrc64 = contentCrc64,
+                EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
+                EffectiveRequestPriority = effectiveRequestPriority,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlockInfo instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlockInfo BlockInfo(
             byte[] contentHash,
             byte[] contentCrc64,
             string encryptionKeySha256,
@@ -1251,6 +1438,33 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new PageInfo instance for mocking.
         /// </summary>
+        public static PageInfo PageInfo(
+            ETag eTag = default,
+            DateTimeOffset lastModified = default,
+            byte[] contentHash = default,
+            byte[] contentCrc64 = default,
+            long blobSequenceNumber = default,
+            string encryptionKeySha256 = default,
+            string encryptionScope = default,
+            int? effectiveRequestPriority = default)
+        {
+            return new PageInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                ContentHash = contentHash,
+                ContentCrc64 = contentCrc64,
+                BlobSequenceNumber = blobSequenceNumber,
+                EncryptionKeySha256 = encryptionKeySha256,
+                EncryptionScope = encryptionScope,
+                EffectiveRequestPriority = effectiveRequestPriority,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new PageInfo instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static PageInfo PageInfo(
             ETag eTag,
             DateTimeOffset lastModified,
@@ -1299,8 +1513,8 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobContainerProperties instance for mocking.
         /// </summary>
         public static BlobContainerProperties BlobContainerProperties(
-            DateTimeOffset lastModified,
-            ETag eTag,
+            DateTimeOffset lastModified = default,
+            ETag eTag = default,
             LeaseState? leaseState = default,
             LeaseDurationType? leaseDuration = default,
             PublicAccessType? publicAccess = default,
@@ -1311,7 +1525,46 @@ namespace Azure.Storage.Blobs.Models
             DateTimeOffset? deletedOn = default,
             int? remainingRetentionDays = default,
             IDictionary<string, string> metadata = default,
-            bool? hasLegalHold = default)
+            bool? hasLegalHold = default,
+            int? effectiveRequestPriority = default)
+        {
+            return new BlobContainerProperties()
+            {
+                LastModified = lastModified,
+                ETag = eTag,
+                LeaseState = leaseState,
+                LeaseDuration = leaseDuration,
+                PublicAccess = publicAccess,
+                HasImmutabilityPolicy = hasImmutabilityPolicy,
+                LeaseStatus = leaseStatus,
+                DefaultEncryptionScope = defaultEncryptionScope,
+                PreventEncryptionScopeOverride = preventEncryptionScopeOverride,
+                DeletedOn = deletedOn,
+                RemainingRetentionDays = remainingRetentionDays,
+                Metadata = metadata,
+                HasLegalHold = hasLegalHold,
+                EffectiveRequestPriority = effectiveRequestPriority,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlobContainerProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobContainerProperties BlobContainerProperties(
+            DateTimeOffset lastModified,
+            ETag eTag,
+            LeaseState? leaseState,
+            LeaseDurationType? leaseDuration,
+            PublicAccessType? publicAccess,
+            bool? hasImmutabilityPolicy,
+            LeaseStatus? leaseStatus,
+            string defaultEncryptionScope,
+            bool? preventEncryptionScopeOverride,
+            DateTimeOffset? deletedOn,
+            int? remainingRetentionDays,
+            IDictionary<string, string> metadata,
+            bool? hasLegalHold)
         {
             return new BlobContainerProperties()
             {
@@ -1427,6 +1680,29 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobCopyInfo instance for mocking.
         /// </summary>
+        public static BlobCopyInfo BlobCopyInfo(
+            ETag eTag = default,
+            DateTimeOffset lastModified = default,
+            string versionId = default,
+            string copyId = default,
+            CopyStatus copyStatus = default,
+            int? effectiveRequestPriority = default)
+        {
+            return new BlobCopyInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                VersionId = versionId,
+                CopyId = copyId,
+                CopyStatus = copyStatus,
+                EffectiveRequestPriority = effectiveRequestPriority,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlobCopyInfo instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobCopyInfo BlobCopyInfo(
             ETag eTag,
             DateTimeOffset lastModified,
@@ -1547,6 +1823,29 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobSnapshotInfo instance for mocking.
         /// </summary>
         public static BlobSnapshotInfo BlobSnapshotInfo(
+            string snapshot = default,
+            ETag eTag = default,
+            DateTimeOffset lastModified = default,
+            string versionId = default,
+            bool isServerEncrypted = default,
+            int? effectiveRequestPriority = default)
+        {
+            return new BlobSnapshotInfo()
+            {
+                Snapshot = snapshot,
+                ETag = eTag,
+                LastModified = lastModified,
+                VersionId = versionId,
+                IsServerEncrypted = isServerEncrypted,
+                EffectiveRequestPriority = effectiveRequestPriority,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlobSnapshotInfo instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobSnapshotInfo BlobSnapshotInfo(
             string snapshot,
             ETag eTag,
             DateTimeOffset lastModified,
@@ -1622,6 +1921,23 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobContainerInfo instance for mocking.
         /// </summary>
         public static BlobContainerInfo BlobContainerInfo(
+            ETag eTag = default,
+            DateTimeOffset lastModified = default,
+            int? effectiveRequestPriority = default)
+        {
+            return new BlobContainerInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                EffectiveRequestPriority = effectiveRequestPriority,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlobContainerInfo instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobContainerInfo BlobContainerInfo(
             Azure.ETag eTag,
             System.DateTimeOffset lastModified)
         {
@@ -1668,6 +1984,19 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new GetBlobTagResult instance for mocking.
         /// </summary>
+        public static GetBlobTagResult GetBlobTagResult(
+            Tags tags = default,
+            int? effectiveRequestPriority = default)
+            => new GetBlobTagResult
+            {
+                Tags = tags,
+                EffectiveRequestPriority = effectiveRequestPriority
+            };
+
+        /// <summary>
+        /// Creates a new GetBlobTagResult instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static GetBlobTagResult GetBlobTagResult(Tags tags)
             => new GetBlobTagResult
             {
@@ -1776,7 +2105,99 @@ namespace Azure.Storage.Blobs.Models
             DateTimeOffset accessTierChangedOn = default,
             string smartAccessTier = default,
             ETag eTag = default,
-            DownloadHint? downloadHint = default)
+            DownloadHint? downloadHint = default,
+            int? effectiveRequestPriority = default)
+        {
+            BlobDownloadDetails details = BlobDownloadDetails(
+                blobType: blobType,
+                contentLength: contentLength,
+                contentType: contentType,
+                contentHash: contentHash,
+                lastModified: lastModified,
+                metadata: metadata,
+                contentRange: contentRange,
+                contentEncoding: contentEncoding,
+                cacheControl: cacheControl,
+                contentDisposition: contentDisposition,
+                contentLanguage: contentLanguage,
+                blobSequenceNumber: blobSequenceNumber,
+                copyCompletedOn: copyCompletedOn,
+                copyStatusDescription: copyStatusDescription,
+                copyId: copyId,
+                copyProgress: copyProgress,
+                copySource: copySource,
+                copyStatus: copyStatus,
+                leaseDuration: leaseDuration,
+                leaseState: leaseState,
+                leaseStatus: leaseStatus,
+                acceptRanges: acceptRanges,
+                blobCommittedBlockCount: blobCommittedBlockCount,
+                isServerEncrypted: isServerEncrypted,
+                encryptionKeySha256: encryptionKeySha256,
+                encryptionScope: encryptionScope,
+                blobContentHash: blobContentHash,
+                tagCount: tagCount,
+                versionId: versionId,
+                isSealed: isSealed,
+                objectReplicationSourceProperties: objectReplicationSourceProperties,
+                objectReplicationDestinationPolicy: objectReplicationDestinationPolicy,
+                hasLegalHold: hasLegalHold,
+                createdOn: createdOn,
+                accessTier: accessTier,
+                accessTierInferred: accessTierInferred,
+                accessTierChangedOn: accessTierChangedOn,
+                smartAccessTier: smartAccessTier,
+                eTag: eTag,
+                downloadHint: downloadHint);
+            details.EffectiveRequestPriority = effectiveRequestPriority;
+            return details;
+        }
+
+        /// <summary>
+        /// Creates a new BlobDownloadDetails instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobDownloadDetails BlobDownloadDetails(
+            BlobType blobType,
+            long contentLength,
+            string contentType,
+            byte[] contentHash,
+            DateTimeOffset lastModified,
+            IDictionary<string, string> metadata,
+            string contentRange,
+            string contentEncoding,
+            string cacheControl,
+            string contentDisposition,
+            string contentLanguage,
+            long blobSequenceNumber,
+            DateTimeOffset copyCompletedOn,
+            string copyStatusDescription,
+            string copyId,
+            string copyProgress,
+            Uri copySource,
+            CopyStatus copyStatus,
+            LeaseDurationType leaseDuration,
+            LeaseState leaseState,
+            LeaseStatus leaseStatus,
+            string acceptRanges,
+            int blobCommittedBlockCount,
+            bool isServerEncrypted,
+            string encryptionKeySha256,
+            string encryptionScope,
+            byte[] blobContentHash,
+            long tagCount,
+            string versionId,
+            bool isSealed,
+            IList<ObjectReplicationPolicy> objectReplicationSourceProperties,
+            string objectReplicationDestinationPolicy,
+            bool hasLegalHold,
+            DateTimeOffset createdOn,
+            string accessTier,
+            bool accessTierInferred,
+            DateTimeOffset accessTierChangedOn,
+            string smartAccessTier,
+            ETag eTag,
+            DownloadHint? downloadHint)
             => new BlobDownloadDetails
             {
                 BlobType = blobType,
@@ -2208,6 +2629,25 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new AccountInfo instance for mocking.
         /// </summary>
         public static AccountInfo AccountInfo(
+            SkuName skuName = default,
+            AccountKind accountKind = default,
+            bool isHierarchicalNamespaceEnabled = default,
+            int? effectiveRequestPriority = default)
+        {
+            return new AccountInfo()
+            {
+                SkuName = skuName,
+                AccountKind = accountKind,
+                IsHierarchicalNamespaceEnabled = isHierarchicalNamespaceEnabled,
+                EffectiveRequestPriority = effectiveRequestPriority,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new AccountInfo instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AccountInfo AccountInfo(
             SkuName skuName,
             AccountKind accountKind,
             bool isHierarchicalNamespaceEnabled)
@@ -2241,6 +2681,27 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobContainerAccessPolicy instance for mocking.
         /// </summary>
         public static BlobContainerAccessPolicy BlobContainerAccessPolicy(
+            PublicAccessType blobPublicAccess = default,
+            ETag eTag = default,
+            DateTimeOffset lastModified = default,
+            IEnumerable<BlobSignedIdentifier> signedIdentifiers = default,
+            int? effectiveRequestPriority = default)
+        {
+            return new BlobContainerAccessPolicy()
+            {
+                BlobPublicAccess = blobPublicAccess,
+                ETag = eTag,
+                LastModified = lastModified,
+                SignedIdentifiers = signedIdentifiers,
+                EffectiveRequestPriority = effectiveRequestPriority,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlobContainerAccessPolicy instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobContainerAccessPolicy BlobContainerAccessPolicy(
             PublicAccessType blobPublicAccess,
             ETag eTag,
             DateTimeOffset lastModified,
@@ -2260,6 +2721,25 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new PageBlobInfo instance for mocking.
         /// </summary>
+        public static PageBlobInfo PageBlobInfo(
+            ETag eTag = default,
+            DateTimeOffset lastModified = default,
+            long blobSequenceNumber = default,
+            int? effectiveRequestPriority = default)
+        {
+            return new PageBlobInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                BlobSequenceNumber = blobSequenceNumber,
+                EffectiveRequestPriority = effectiveRequestPriority,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new PageBlobInfo instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static PageBlobInfo PageBlobInfo(
             ETag eTag,
             DateTimeOffset lastModified,
@@ -2312,6 +2792,27 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobInfo instance for mocking.
         /// </summary>
         public static BlobInfo BlobInfo(
+            ETag eTag = default,
+            DateTimeOffset lastModified = default,
+            long blobSequenceNumber = default,
+            string versionId = default,
+            int? effectiveRequestPriority = default)
+        {
+            return new BlobInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                BlobSequenceNumber = blobSequenceNumber,
+                VersionId = versionId,
+                EffectiveRequestPriority = effectiveRequestPriority,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlobInfo instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobInfo BlobInfo(
             Azure.ETag eTag,
             System.DateTimeOffset lastModified)
         {
@@ -2327,6 +2828,25 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new BlobLease instance for mocking.
         /// </summary>
+        public static BlobLease BlobLease(
+            ETag eTag = default,
+            DateTimeOffset lastModified = default,
+            string leaseId = default,
+            int? effectiveRequestPriority = default)
+        {
+            return new BlobLease()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                LeaseId = leaseId,
+                EffectiveRequestPriority = effectiveRequestPriority,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlobLease instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobLease BlobLease(
             Azure.ETag eTag,
             System.DateTimeOffset lastModified,
@@ -2346,7 +2866,21 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlobServiceStatistics instance for mocking.
         /// </summary>
         public static BlobServiceStatistics BlobServiceStatistics(
-            Azure.Storage.Blobs.Models.BlobGeoReplication geoReplication = default)
+            BlobGeoReplication geoReplication = default,
+            int? effectiveRequestPriority = default)
+        {
+            return new BlobServiceStatistics(geoReplication)
+            {
+                EffectiveRequestPriority = effectiveRequestPriority,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlobServiceStatistics instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlobServiceStatistics BlobServiceStatistics(
+            Azure.Storage.Blobs.Models.BlobGeoReplication geoReplication)
         {
             return new BlobServiceStatistics(geoReplication);
         }
@@ -2357,8 +2891,25 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new BlockList instance for mocking.
         /// </summary>
         public static BlockList BlockList(
-            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobBlock> committedBlocks = default,
-            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobBlock> uncommittedBlocks = default)
+            IEnumerable<BlobBlock> committedBlocks = default,
+            IEnumerable<BlobBlock> uncommittedBlocks = default,
+            int? effectiveRequestPriority = default)
+        {
+            return new BlockList()
+            {
+                CommittedBlocks = committedBlocks,
+                UncommittedBlocks = uncommittedBlocks,
+                EffectiveRequestPriority = effectiveRequestPriority,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new BlockList instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static BlockList BlockList(
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobBlock> committedBlocks,
+            System.Collections.Generic.IEnumerable<Azure.Storage.Blobs.Models.BlobBlock> uncommittedBlocks)
         {
             return new BlockList()
             {
@@ -2380,7 +2931,36 @@ namespace Azure.Storage.Blobs.Models
             string value = default,
             DateTimeOffset signedExpiresOn = default,
             DateTimeOffset signedStartsOn = default,
-            string signedDelegatedUserTenantId = default)
+            string signedDelegatedUserTenantId = default,
+            int? effectiveRequestPriority = default)
+        {
+            return new UserDelegationKey(
+                signedObjectId,
+                signedTenantId,
+                signedStartsOn,
+                signedExpiresOn,
+                signedService,
+                signedVersion,
+                signedDelegatedUserTenantId,
+                value)
+            {
+                EffectiveRequestPriority = effectiveRequestPriority,
+            };
+        }
+
+        /// <summary>
+        /// Creates a new UserDelegationKey instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static UserDelegationKey UserDelegationKey(
+            string signedObjectId,
+            string signedTenantId,
+            string signedService,
+            string signedVersion,
+            string value,
+            DateTimeOffset signedExpiresOn,
+            DateTimeOffset signedStartsOn,
+            string signedDelegatedUserTenantId)
         {
             return new UserDelegationKey(
                 signedObjectId,
@@ -2859,6 +3439,29 @@ namespace Azure.Storage.Blobs.Models
         /// Creates a new PageRangesInfo instance for mocking.
         /// </summary>
         public static PageRangesInfo PageRangesInfo(
+            DateTimeOffset lastModified = default,
+            ETag eTag = default,
+            long blobContentLength = default,
+            IEnumerable<HttpRange> pageRanges = default,
+            IEnumerable<HttpRange> clearRanges = default,
+            int? effectiveRequestPriority = default)
+        {
+            return new PageRangesInfo
+            {
+                LastModified = lastModified,
+                ETag = eTag,
+                BlobContentLength = blobContentLength,
+                PageRanges = pageRanges,
+                ClearRanges = clearRanges,
+                EffectiveRequestPriority = effectiveRequestPriority
+            };
+        }
+
+        /// <summary>
+        /// Creates a new PageRangesInfo instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PageRangesInfo PageRangesInfo(
             DateTimeOffset lastModified,
             ETag eTag,
             long blobContentLength,
@@ -2880,11 +3483,35 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Creates a new <see cref="Models.BlobLegalHoldResult"/> instance for mocking.
         /// </summary>
+        public static BlobLegalHoldResult BlobLegalHoldResult(
+            bool hasLegalHold = default,
+            int? effectiveRequestPriority = default)
+            => new BlobLegalHoldResult()
+            {
+                HasLegalHold = hasLegalHold,
+                EffectiveRequestPriority = effectiveRequestPriority
+            };
+
+        /// <summary>
+        /// Creates a new <see cref="Models.BlobLegalHoldResult"/> instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static BlobLegalHoldResult BlobLegalHoldResult(bool hasLegalHold)
             => new BlobLegalHoldResult()
             {
                 HasLegalHold = hasLegalHold
             };
+        #endregion
+
+        #region ReleasedObjectInfo
+        /// <summary>
+        /// Creates a new <see cref="Models.ReleasedObjectInfo"/> instance for mocking.
+        /// </summary>
+        public static ReleasedObjectInfo ReleasedObjectInfo(
+            ETag eTag = default,
+            DateTimeOffset lastModified = default,
+            int? effectiveRequestPriority = default)
+            => new ReleasedObjectInfo(eTag, lastModified, effectiveRequestPriority);
         #endregion
 
         #region PageRangeItem

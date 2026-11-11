@@ -16,7 +16,7 @@ namespace Azure.Storage.Queues
 
         private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
-        internal HttpMessage CreateUpdateRequest(string messageId, string popReceipt, int visibilityTimeout, RequestContent content, int? timeout, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(string messageId, string popReceipt, int visibilityTimeout, RequestContent content, int? requestPriority, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -36,6 +36,10 @@ namespace Azure.Storage.Queues
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             if (content != null)
             {
                 request.Headers.SetValue("Content-Type", "application/xml");
@@ -44,7 +48,7 @@ namespace Azure.Storage.Queues
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string messageId, string popReceipt, int? timeout, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(string messageId, string popReceipt, int? requestPriority, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -62,6 +66,10 @@ namespace Azure.Storage.Queues
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             return message;
         }

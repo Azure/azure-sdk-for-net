@@ -38,5 +38,11 @@ namespace Azure.Storage.Blobs.Models
         /// Optional. The delegated user tenant id in Azure AD.
         /// </summary>
         public string DelegatedUserTenantId { get; set; }
+
+        /// <summary>
+        /// Optional. Sets the priority of this request, from 0 through 7.
+        /// If not set, or if the value is outside that range, the service uses 3.
+        /// </summary>
+        public int? RequestPriority { get; set; }
     }
 }

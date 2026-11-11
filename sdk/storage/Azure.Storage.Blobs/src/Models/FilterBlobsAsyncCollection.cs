@@ -13,19 +13,24 @@ namespace Azure.Storage.Blobs.Models
         private readonly BlobServiceClient _serviceClient;
         private readonly BlobContainerClient _containerClient;
         private readonly string _expression;
+        private readonly int? _requestPriority;
 
         public FilterBlobsAsyncCollection(
             BlobServiceClient serviceClient,
-            string expression)
+            string expression,
+            int? requestPriority)
         {
+            _requestPriority = requestPriority;
             _serviceClient = serviceClient;
             _expression = expression;
         }
 
         public FilterBlobsAsyncCollection(
             BlobContainerClient containerClient,
-            string expression)
+            string expression,
+            int? requestPriority)
         {
+            _requestPriority = requestPriority;
             _containerClient = containerClient;
             _expression = expression;
         }
@@ -43,6 +48,7 @@ namespace Azure.Storage.Blobs.Models
                     marker: continuationToken,
                     expression: _expression,
                     pageSizeHint: pageSizeHint,
+                    requestPriority: _requestPriority,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -53,6 +59,7 @@ namespace Azure.Storage.Blobs.Models
                     marker: continuationToken,
                     expression: _expression,
                     pageSizeHint: pageSizeHint,
+                    requestPriority: _requestPriority,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);

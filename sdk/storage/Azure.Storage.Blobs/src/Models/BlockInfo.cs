@@ -37,6 +37,11 @@ namespace Azure.Storage.Blobs.Models
         public string EncryptionScope { get; internal set; }
 
         /// <summary>
+        /// The request priority the service applied to this request.
+        /// </summary>
+        public int? EffectiveRequestPriority { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of BlockInfo instances.
         /// You can use BlobsModelFactory.BlockInfo instead.
         /// </summary>

@@ -26,6 +26,11 @@ namespace Azure.Storage.Blobs.Models
         public ETag ETag { get; internal set; }
 
         /// <summary>
+        /// The request priority the service applied to this request.
+        /// </summary>
+        public int? EffectiveRequestPriority { get; internal set; }
+
+        /// <summary>
         /// The size of the blob in bytes.
         /// </summary>
         public long BlobContentLength { get; internal set; }

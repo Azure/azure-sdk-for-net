@@ -35,6 +35,11 @@ namespace Azure.Storage.Files.DataLake.Models
         public IEnumerable<DataLakeSignedIdentifier> SignedIdentifiers { get; internal set; }
 
         /// <summary>
+        /// The request priority the service applied to the request, from 0 through 7.
+        /// </summary>
+        public int? EffectiveRequestPriority { get; internal set; }
+
+        /// <summary>
         /// Creates a new FileSystemAccessPolicy instance.
         /// </summary>
         public FileSystemAccessPolicy()

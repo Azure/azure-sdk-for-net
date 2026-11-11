@@ -251,6 +251,7 @@ namespace Azure.Storage.Blobs.Test
                             s_progress,
                             It.IsNotNull<UploadTransferValidationOptions>(),
                             default,
+                            It.IsAny<int?>(),
                             true,
                             s_cancellationToken))
                     .ReturnsAsync(s_response);
@@ -268,6 +269,7 @@ namespace Azure.Storage.Blobs.Test
                     s_progress,
                     It.IsNotNull<UploadTransferValidationOptions>(),
                     default,
+                    It.IsAny<int?>(),
                     false,
                     s_cancellationToken))
                     .ReturnsAsync(s_response);
@@ -347,9 +349,10 @@ namespace Azure.Storage.Blobs.Test
                     IsAny<UploadTransferValidationOptions>(),
                     IsAny<BlobRequestConditions>(),
                     IsAny<IProgress<long>>(),
+                    It.IsAny<int?>(),
                     _async,
                     s_cancellationToken
-                )).Returns<string, Stream, UploadTransferValidationOptions, BlobRequestConditions, IProgress<long>, bool, CancellationToken>(sink.StageInternal);
+                )).Returns<string, Stream, UploadTransferValidationOptions, BlobRequestConditions, IProgress<long>, int?, bool, CancellationToken>(sink.StageInternal);
 
             clientMock.Setup(
                 c => c.CommitBlockListInternal(
@@ -361,9 +364,10 @@ namespace Azure.Storage.Blobs.Test
                     s_accessTier,
                     s_immutabilityPolicy,
                     s_legalHold,
+                    It.IsAny<int?>(),
                     _async,
                     s_cancellationToken
-                )).Returns<IEnumerable<string>, BlobHttpHeaders, Dictionary<string, string>, Dictionary<string, string>, BlobRequestConditions, AccessTier?, BlobImmutabilityPolicy, bool?, bool, CancellationToken>(sink.CommitInternal);
+                )).Returns<IEnumerable<string>, BlobHttpHeaders, Dictionary<string, string>, Dictionary<string, string>, BlobRequestConditions, AccessTier?, BlobImmutabilityPolicy, bool?, int?, bool, CancellationToken>(sink.CommitInternal);
         }
 
         private static void AssertStaged(StagingSink sink, TestStream stream)
@@ -397,6 +401,7 @@ namespace Azure.Storage.Blobs.Test
                 AccessTier? accessTier,
                 BlobImmutabilityPolicy immutabilityPolicy,
                 bool? legalHold,
+                int? requestPriority,
                 bool async,
                 CancellationToken cancellationToken)
             {
@@ -405,7 +410,7 @@ namespace Azure.Storage.Blobs.Test
                 return s_response;
             }
 
-            public async Task<Response<BlockInfo>> StageInternal(string s, Stream stream, UploadTransferValidationOptions validationOptions, BlobRequestConditions conditions, IProgress<long> progressHandler, bool async, CancellationToken cancellationToken)
+            public async Task<Response<BlockInfo>> StageInternal(string s, Stream stream, UploadTransferValidationOptions validationOptions, BlobRequestConditions conditions, IProgress<long> progressHandler, int? requestPriority, bool async, CancellationToken cancellationToken)
             {
                 if (async)
                 {

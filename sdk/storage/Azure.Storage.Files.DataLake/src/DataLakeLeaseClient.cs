@@ -1,7 +1,8 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -96,7 +97,7 @@ namespace Azure.Storage.Files.DataLake
 
         #region Acquire
         /// <summary>
-        /// The <see cref="Acquire"/> operation acquires a lease on
+        /// The <see cref="Acquire(TimeSpan, RequestConditions, CancellationToken)"/> operation acquires a lease on
         /// the path or file system.  The lease <paramref name="duration"/> must
         /// be between 15 to 60 seconds, or infinite (-1).
         ///
@@ -114,7 +115,7 @@ namespace Azure.Storage.Files.DataLake
         /// Specifies the duration of the lease, in seconds, or specify
         /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires.
         /// A non-infinite lease can be between 15 and 60 seconds.
-        /// A lease duration cannot be changed using <see cref="RenewAsync"/> or <see cref="ChangeAsync"/>.
+        /// A lease duration cannot be changed using <see cref="RenewAsync(RequestConditions, CancellationToken)"/> or <see cref="ChangeAsync(string, RequestConditions, CancellationToken)"/>.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="RequestConditions"/> to add
@@ -133,6 +134,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<DataLakeLease> Acquire(
             TimeSpan duration,
             RequestConditions conditions = default,
@@ -165,7 +167,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="AcquireAsync"/> operation acquires a lease on
+        /// The <see cref="AcquireAsync(TimeSpan, RequestConditions, CancellationToken)"/> operation acquires a lease on
         /// the path or file system.  The lease <paramref name="duration"/> must
         /// be between 15 to 60 seconds, or infinite (-1).
         ///
@@ -183,7 +185,7 @@ namespace Azure.Storage.Files.DataLake
         /// Specifies the duration of the lease, in seconds, or specify
         /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires.
         /// A non-infinite lease can be between 15 and 60 seconds.
-        /// A lease duration cannot be changed using <see cref="RenewAsync"/> or <see cref="ChangeAsync"/>.
+        /// A lease duration cannot be changed using <see cref="RenewAsync(RequestConditions, CancellationToken)"/> or <see cref="ChangeAsync(string, RequestConditions, CancellationToken)"/>.
         /// </param>
         /// <param name="conditions">
         /// Optional <see cref="RequestConditions"/> to add
@@ -202,6 +204,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<DataLakeLease>> AcquireAsync(
             TimeSpan duration,
             RequestConditions conditions = default,
@@ -233,11 +236,137 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
+        /// <summary>
+        /// The <see cref="Acquire(TimeSpan, DataLakeLeaseAcquireOptions, CancellationToken)"/>
+        /// operation acquires a lease on the path or file system.  The lease
+        /// <paramref name="duration"/> must be between 15 to 60 seconds, or infinite (-1).
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
+        /// </summary>
+        /// <param name="duration">
+        /// Specifies the duration of the lease, in seconds, or specify
+        /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires.
+        /// A non-infinite lease can be between 15 and 60 seconds.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{Lease}"/> describing the lease.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<DataLakeLease> Acquire(
+            TimeSpan duration,
+            DataLakeLeaseAcquireOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeLeaseClient)}.{nameof(Acquire)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobLease> response = _blobLeaseClient.Acquire(
+                    duration,
+                    new Blobs.Models.BlobLeaseAcquireOptions
+                    {
+                        Conditions = options?.Conditions,
+                        RequestPriority = options?.RequestPriority,
+                    },
+                    cancellationToken);
+
+                return Response.FromValue(
+                    response.Value.ToDataLakeLease(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="AcquireAsync(TimeSpan, DataLakeLeaseAcquireOptions, CancellationToken)"/>
+        /// operation acquires a lease on the path or file system.  The lease
+        /// <paramref name="duration"/> must be between 15 to 60 seconds, or infinite (-1).
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
+        /// </summary>
+        /// <param name="duration">
+        /// Specifies the duration of the lease, in seconds, or specify
+        /// <see cref="InfiniteLeaseDuration"/> for a lease that never expires.
+        /// A non-infinite lease can be between 15 and 60 seconds.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{Lease}"/> describing the lease.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DataLakeLease>> AcquireAsync(
+            TimeSpan duration,
+            DataLakeLeaseAcquireOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeLeaseClient)}.{nameof(Acquire)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobLease> response = await _blobLeaseClient.AcquireAsync(
+                    duration,
+                    new Blobs.Models.BlobLeaseAcquireOptions
+                    {
+                        Conditions = options?.Conditions,
+                        RequestPriority = options?.RequestPriority,
+                    },
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.Value.ToDataLakeLease(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
         #endregion Acquire
 
         #region Renew
         /// <summary>
-        /// The <see cref="Renew"/> operation renews the path or
+        /// The <see cref="Renew(RequestConditions, CancellationToken)"/> operation renews the path or
         /// file system's previously-acquired lease.
         ///
         /// The lease can be renewed if the leaseId
@@ -267,6 +396,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<DataLakeLease> Renew(
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -297,7 +427,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="RenewAsync"/> operation renews the path or
+        /// The <see cref="RenewAsync(RequestConditions, CancellationToken)"/> operation renews the path or
         /// file system's previously-acquired lease.
         ///
         /// The lease can be renewed if the leaseId
@@ -327,6 +457,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<DataLakeLease>> RenewAsync(
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -355,11 +486,121 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
+        /// <summary>
+        /// The <see cref="Renew(DataLakeLeaseRenewOptions, CancellationToken)"/> operation renews the path or
+        /// file system's previously-acquired lease.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{Lease}"/> describing the lease.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<DataLakeLease> Renew(
+            DataLakeLeaseRenewOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeLeaseClient)}.{nameof(Renew)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobLease> response = _blobLeaseClient.Renew(
+                    new Blobs.Models.BlobLeaseRenewOptions
+                    {
+                        Conditions = options?.Conditions,
+                        RequestPriority = options?.RequestPriority,
+                    },
+                    cancellationToken);
+
+                return Response.FromValue(
+                    response.Value.ToDataLakeLease(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="RenewAsync(DataLakeLeaseRenewOptions, CancellationToken)"/> operation renews the path or
+        /// file system's previously-acquired lease.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{Lease}"/> describing the lease.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DataLakeLease>> RenewAsync(
+            DataLakeLeaseRenewOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeLeaseClient)}.{nameof(Renew)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobLease> response = await _blobLeaseClient.RenewAsync(
+                    new Blobs.Models.BlobLeaseRenewOptions
+                    {
+                        Conditions = options?.Conditions,
+                        RequestPriority = options?.RequestPriority,
+                    },
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.Value.ToDataLakeLease(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
         #endregion Renew
 
         #region Release
         /// <summary>
-        /// The <see cref="Release"/> operation releases the
+        /// The <see cref="Release(RequestConditions, CancellationToken)"/> operation releases the
         /// file system or path's previously-acquired lease.
         ///
         /// The lease may be released if the <see cref="LeaseId"/>
@@ -389,6 +630,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<ReleasedObjectInfo> Release(
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -419,7 +661,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="ReleaseAsync"/> operation releases the
+        /// The <see cref="ReleaseAsync(RequestConditions, CancellationToken)"/> operation releases the
         /// file system or path's previously-acquired lease.
         ///
         /// The lease may be released if the <see cref="LeaseId"/>
@@ -449,6 +691,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<ReleasedObjectInfo>> ReleaseAsync(
             RequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -478,11 +721,123 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
+        /// <summary>
+        /// The <see cref="Release(DataLakeLeaseReleaseOptions, CancellationToken)"/> operation releases the
+        /// file system or path's previously-acquired lease.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ReleasedObjectInfo}"/> describing the
+        /// updated path or file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<ReleasedObjectInfo> Release(
+            DataLakeLeaseReleaseOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeLeaseClient)}.{nameof(Release)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.ReleasedObjectInfo> response = _blobLeaseClient.Release(
+                    new Blobs.Models.BlobLeaseReleaseOptions
+                    {
+                        Conditions = options?.Conditions,
+                        RequestPriority = options?.RequestPriority,
+                    },
+                    cancellationToken);
+
+                return Response.FromValue(
+                    new ReleasedObjectInfo(response.Value.ETag, response.Value.LastModified, response.Value.EffectiveRequestPriority),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ReleaseAsync(DataLakeLeaseReleaseOptions, CancellationToken)"/> operation releases the
+        /// file system or path's previously-acquired lease.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ReleasedObjectInfo}"/> describing the
+        /// updated path or file system.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<ReleasedObjectInfo>> ReleaseAsync(
+            DataLakeLeaseReleaseOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeLeaseClient)}.{nameof(Release)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.ReleasedObjectInfo> response = await _blobLeaseClient.ReleaseAsync(
+                    new Blobs.Models.BlobLeaseReleaseOptions
+                    {
+                        Conditions = options?.Conditions,
+                        RequestPriority = options?.RequestPriority,
+                    },
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    new ReleasedObjectInfo(response.Value.ETag, response.Value.LastModified, response.Value.EffectiveRequestPriority),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
         #endregion Release
 
         #region Change
         /// <summary>
-        /// The <see cref="Change"/> operation changes the lease
+        /// The <see cref="Change(string, RequestConditions, CancellationToken)"/> operation changes the lease
         /// of an active lease.  A change must include the current
         /// <see cref="LeaseId"/> and a new <paramref name="proposedId"/>.
         ///
@@ -512,6 +867,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<DataLakeLease> Change(
             string proposedId,
             RequestConditions conditions = default,
@@ -544,7 +900,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="ChangeAsync"/> operation changes the lease
+        /// The <see cref="ChangeAsync(string, RequestConditions, CancellationToken)"/> operation changes the lease
         /// of an active lease.  A change must include the current
         /// <see cref="LeaseId"/> and a new <paramref name="proposedId"/>.
         ///
@@ -574,6 +930,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<DataLakeLease>> ChangeAsync(
             string proposedId,
             RequestConditions conditions = default,
@@ -605,11 +962,133 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
+        /// <summary>
+        /// The <see cref="Change(string, DataLakeLeaseChangeOptions, CancellationToken)"/> operation changes the lease
+        /// of an active lease.  A change must include the current
+        /// <see cref="LeaseId"/> and a new <paramref name="proposedId"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
+        /// </summary>
+        /// <param name="proposedId">
+        /// An optional proposed lease ID, in a GUID string format.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{Lease}"/> describing the lease.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<DataLakeLease> Change(
+            string proposedId,
+            DataLakeLeaseChangeOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeLeaseClient)}.{nameof(Change)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobLease> response = _blobLeaseClient.Change(
+                    proposedId,
+                    new Blobs.Models.BlobLeaseChangeOptions
+                    {
+                        Conditions = options?.Conditions,
+                        RequestPriority = options?.RequestPriority,
+                    },
+                    cancellationToken);
+
+                return Response.FromValue(
+                    response.Value.ToDataLakeLease(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ChangeAsync(string, DataLakeLeaseChangeOptions, CancellationToken)"/> operation changes the lease
+        /// of an active lease.  A change must include the current
+        /// <see cref="LeaseId"/> and a new <paramref name="proposedId"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
+        /// </summary>
+        /// <param name="proposedId">
+        /// An optional proposed lease ID, in a GUID string format.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{Lease}"/> describing the lease.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DataLakeLease>> ChangeAsync(
+            string proposedId,
+            DataLakeLeaseChangeOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeLeaseClient)}.{nameof(Change)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobLease> response = await _blobLeaseClient.ChangeAsync(
+                    proposedId,
+                    new Blobs.Models.BlobLeaseChangeOptions
+                    {
+                        Conditions = options?.Conditions,
+                        RequestPriority = options?.RequestPriority,
+                    },
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.Value.ToDataLakeLease(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
         #endregion Change
 
         #region Break
         /// <summary>
-        /// The <see cref="Break"/> operation breaks the path or
+        /// The <see cref="Break(TimeSpan?, RequestConditions, CancellationToken)"/> operation breaks the path or
         /// file system's previously-acquired lease (if it exists).
         ///
         /// Once a lease is broken, it cannot be renewed.  Any authorized
@@ -617,7 +1096,7 @@ namespace Azure.Storage.Files.DataLake
         /// specify a matching lease ID.  When a lease is broken, the lease
         /// break <paramref name="breakPeriod"/> is allowed to elapse,
         /// during which time no lease operation except
-        /// <see cref="Break"/> and <see cref="Release"/> can be
+        /// <see cref="Break(TimeSpan?, RequestConditions, CancellationToken)"/> and <see cref="Release(RequestConditions, CancellationToken)"/> can be
         /// performed on the path or file system.  When a lease is successfully
         /// broken, the response indicates the interval in seconds until a new
         /// lease can be acquired.
@@ -657,6 +1136,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<DataLakeLease> Break(
             TimeSpan? breakPeriod = default,
             RequestConditions conditions = default,
@@ -689,7 +1169,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="BreakAsync"/> operation breaks the path or
+        /// The <see cref="BreakAsync(TimeSpan?, RequestConditions, CancellationToken)"/> operation breaks the path or
         /// file system's previously-acquired lease (if it exists).
         ///
         /// Once a lease is broken, it cannot be renewed.  Any authorized
@@ -697,7 +1177,7 @@ namespace Azure.Storage.Files.DataLake
         /// specify a matching lease ID.  When a lease is broken, the lease
         /// break <paramref name="breakPeriod"/> is allowed to elapse,
         /// during which time no lease operation except
-        /// <see cref="BreakAsync"/> and <see cref="ReleaseAsync"/> can be
+        /// <see cref="BreakAsync(TimeSpan?, RequestConditions, CancellationToken)"/> and <see cref="ReleaseAsync(RequestConditions, CancellationToken)"/> can be
         /// performed on the path or file system.  When a lease is successfully
         /// broken, the response indicates the interval in seconds until a new
         /// lease can be acquired.
@@ -737,6 +1217,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<DataLakeLease>> BreakAsync(
             TimeSpan? breakPeriod = default,
            RequestConditions conditions = default,
@@ -752,6 +1233,118 @@ namespace Azure.Storage.Files.DataLake
                     breakPeriod,
                     conditions,
                     cancellationToken).ConfigureAwait(false);
+
+                return Response.FromValue(
+                    response.Value.ToDataLakeLease(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        /// <summary>
+        /// The <see cref="Break(DataLakeLeaseBreakOptions, CancellationToken)"/> operation breaks the path or
+        /// file system's previously-acquired lease (if it exists).
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{Lease}"/> describing the broken lease.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<DataLakeLease> Break(
+            DataLakeLeaseBreakOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeLeaseClient)}.{nameof(Break)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobLease> response = _blobLeaseClient.Break(
+                    new Blobs.Models.BlobLeaseBreakOptions
+                    {
+                        BreakPeriod = options?.BreakPeriod,
+                        Conditions = options?.Conditions,
+                        RequestPriority = options?.RequestPriority,
+                    },
+                    cancellationToken);
+
+                return Response.FromValue(
+                    response.Value.ToDataLakeLease(),
+                    response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="BreakAsync(DataLakeLeaseBreakOptions, CancellationToken)"/> operation breaks the path or
+        /// file system's previously-acquired lease (if it exists).
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/lease-container">
+        /// Lease Container</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{Lease}"/> describing the broken lease.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DataLakeLease>> BreakAsync(
+            DataLakeLeaseBreakOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DataLakeLeaseClient)}.{nameof(Break)}");
+
+            try
+            {
+                scope.Start();
+
+                Response<Blobs.Models.BlobLease> response = await _blobLeaseClient.BreakAsync(
+                    new Blobs.Models.BlobLeaseBreakOptions
+                    {
+                        BreakPeriod = options?.BreakPeriod,
+                        Conditions = options?.Conditions,
+                        RequestPriority = options?.RequestPriority,
+                    },
+                    cancellationToken)
+                    .ConfigureAwait(false);
 
                 return Response.FromValue(
                     response.Value.ToDataLakeLease(),

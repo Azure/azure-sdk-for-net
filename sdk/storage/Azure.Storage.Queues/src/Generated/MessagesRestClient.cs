@@ -52,6 +52,10 @@ namespace Azure.Storage.Queues
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="numberOfMessages">
         /// A nonzero integer value that specifies the number of messages to
         /// retrieve from the queue, up to a maximum of 32. If fewer are visible, the
@@ -70,13 +74,13 @@ namespace Azure.Storage.Queues
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Dequeue(int? numberOfMessages, int? visibilityTimeout, int? timeout, RequestContext context)
+        public virtual Response Dequeue(int? requestPriority, int? numberOfMessages, int? visibilityTimeout, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("MessagesRestClient.Dequeue");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDequeueRequest(numberOfMessages, visibilityTimeout, timeout, context);
+                using HttpMessage message = CreateDequeueRequest(requestPriority, numberOfMessages, visibilityTimeout, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -94,6 +98,10 @@ namespace Azure.Storage.Queues
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="numberOfMessages">
         /// A nonzero integer value that specifies the number of messages to
         /// retrieve from the queue, up to a maximum of 32. If fewer are visible, the
@@ -112,13 +120,13 @@ namespace Azure.Storage.Queues
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DequeueAsync(int? numberOfMessages, int? visibilityTimeout, int? timeout, RequestContext context)
+        public virtual async Task<Response> DequeueAsync(int? requestPriority, int? numberOfMessages, int? visibilityTimeout, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("MessagesRestClient.Dequeue");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDequeueRequest(numberOfMessages, visibilityTimeout, timeout, context);
+                using HttpMessage message = CreateDequeueRequest(requestPriority, numberOfMessages, visibilityTimeout, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -129,6 +137,10 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> Retrieves one or more messages from the front of the queue. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="numberOfMessages">
         /// A nonzero integer value that specifies the number of messages to
         /// retrieve from the queue, up to a maximum of 32. If fewer are visible, the
@@ -146,13 +158,17 @@ namespace Azure.Storage.Queues
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ReceivedMessages> Dequeue(int? numberOfMessages = default, int? visibilityTimeout = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response<ReceivedMessages> Dequeue(int? requestPriority = default, int? numberOfMessages = default, int? visibilityTimeout = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = Dequeue(numberOfMessages, visibilityTimeout, timeout, cancellationToken.ToRequestContext());
+            Response result = Dequeue(requestPriority, numberOfMessages, visibilityTimeout, timeout, cancellationToken.ToRequestContext());
             return Response.FromValue((ReceivedMessages)result, result);
         }
 
         /// <summary> Retrieves one or more messages from the front of the queue. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="numberOfMessages">
         /// A nonzero integer value that specifies the number of messages to
         /// retrieve from the queue, up to a maximum of 32. If fewer are visible, the
@@ -170,9 +186,9 @@ namespace Azure.Storage.Queues
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ReceivedMessages>> DequeueAsync(int? numberOfMessages = default, int? visibilityTimeout = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ReceivedMessages>> DequeueAsync(int? requestPriority = default, int? numberOfMessages = default, int? visibilityTimeout = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = await DequeueAsync(numberOfMessages, visibilityTimeout, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await DequeueAsync(requestPriority, numberOfMessages, visibilityTimeout, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ReceivedMessages)result, result);
         }
 
@@ -184,6 +200,10 @@ namespace Azure.Storage.Queues
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
@@ -191,13 +211,13 @@ namespace Azure.Storage.Queues
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Clear(int? timeout, RequestContext context)
+        public virtual Response Clear(int? requestPriority, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("MessagesRestClient.Clear");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateClearRequest(timeout, context);
+                using HttpMessage message = CreateClearRequest(requestPriority, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -215,6 +235,10 @@ namespace Azure.Storage.Queues
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
@@ -222,13 +246,13 @@ namespace Azure.Storage.Queues
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ClearAsync(int? timeout, RequestContext context)
+        public virtual async Task<Response> ClearAsync(int? requestPriority, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("MessagesRestClient.Clear");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateClearRequest(timeout, context);
+                using HttpMessage message = CreateClearRequest(requestPriority, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -239,27 +263,35 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> Deletes all messages from the specified queue. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Clear(int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response Clear(int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return Clear(timeout, cancellationToken.ToRequestContext());
+            return Clear(requestPriority, timeout, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes all messages from the specified queue. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> ClearAsync(int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ClearAsync(int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return await ClearAsync(timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await ClearAsync(requestPriority, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -273,6 +305,10 @@ namespace Azure.Storage.Queues
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="visibilityTimeout">
         /// Specifies the new visibility timeout value, in seconds, relative to server time. A specified value must be
         /// larger than or equal to 1 second, and cannot be larger than 7 days. The visibility timeout of a message
@@ -292,13 +328,13 @@ namespace Azure.Storage.Queues
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Enqueue(RequestContent content, int? visibilityTimeout = default, int? messageTimeToLive = default, int? timeout = default, RequestContext context = null)
+        public virtual Response Enqueue(RequestContent content, int? requestPriority = default, int? visibilityTimeout = default, int? messageTimeToLive = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("MessagesRestClient.Enqueue");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateEnqueueRequest(content, visibilityTimeout, messageTimeToLive, timeout, context);
+                using HttpMessage message = CreateEnqueueRequest(content, requestPriority, visibilityTimeout, messageTimeToLive, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -319,6 +355,10 @@ namespace Azure.Storage.Queues
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="visibilityTimeout">
         /// Specifies the new visibility timeout value, in seconds, relative to server time. A specified value must be
         /// larger than or equal to 1 second, and cannot be larger than 7 days. The visibility timeout of a message
@@ -338,13 +378,13 @@ namespace Azure.Storage.Queues
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> EnqueueAsync(RequestContent content, int? visibilityTimeout = default, int? messageTimeToLive = default, int? timeout = default, RequestContext context = null)
+        public virtual async Task<Response> EnqueueAsync(RequestContent content, int? requestPriority = default, int? visibilityTimeout = default, int? messageTimeToLive = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("MessagesRestClient.Enqueue");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateEnqueueRequest(content, visibilityTimeout, messageTimeToLive, timeout, context);
+                using HttpMessage message = CreateEnqueueRequest(content, requestPriority, visibilityTimeout, messageTimeToLive, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -363,6 +403,10 @@ namespace Azure.Storage.Queues
         /// The queue message. The message must be in a format that can be included in an XML request with UTF-8
         /// encoding. The encoded message can be up to 64 KB in size.
         /// </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="visibilityTimeout">
         /// Specifies the new visibility timeout value, in seconds, relative to server time. A specified value must be
         /// larger than or equal to 1 second, and cannot be larger than 7 days. The visibility timeout of a message
@@ -381,9 +425,9 @@ namespace Azure.Storage.Queues
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ListOfSentMessage> Enqueue(QueueMessage queueMessage, int? visibilityTimeout = default, int? messageTimeToLive = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response<ListOfSentMessage> Enqueue(QueueMessage queueMessage, int? requestPriority = default, int? visibilityTimeout = default, int? messageTimeToLive = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = Enqueue(queueMessage, visibilityTimeout, messageTimeToLive, timeout, cancellationToken.ToRequestContext());
+            Response result = Enqueue(queueMessage, requestPriority, visibilityTimeout, messageTimeToLive, timeout, cancellationToken.ToRequestContext());
             return Response.FromValue((ListOfSentMessage)result, result);
         }
 
@@ -396,6 +440,10 @@ namespace Azure.Storage.Queues
         /// The queue message. The message must be in a format that can be included in an XML request with UTF-8
         /// encoding. The encoded message can be up to 64 KB in size.
         /// </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="visibilityTimeout">
         /// Specifies the new visibility timeout value, in seconds, relative to server time. A specified value must be
         /// larger than or equal to 1 second, and cannot be larger than 7 days. The visibility timeout of a message
@@ -414,9 +462,9 @@ namespace Azure.Storage.Queues
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ListOfSentMessage>> EnqueueAsync(QueueMessage queueMessage, int? visibilityTimeout = default, int? messageTimeToLive = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ListOfSentMessage>> EnqueueAsync(QueueMessage queueMessage, int? requestPriority = default, int? visibilityTimeout = default, int? messageTimeToLive = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = await EnqueueAsync(queueMessage, visibilityTimeout, messageTimeToLive, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await EnqueueAsync(queueMessage, requestPriority, visibilityTimeout, messageTimeToLive, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ListOfSentMessage)result, result);
         }
 
@@ -428,6 +476,10 @@ namespace Azure.Storage.Queues
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="numberOfMessages">
         /// A nonzero integer value that specifies the number of messages to
         /// retrieve from the queue, up to a maximum of 32. If fewer are visible, the
@@ -441,13 +493,13 @@ namespace Azure.Storage.Queues
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Peek(int? numberOfMessages, int? timeout, RequestContext context)
+        public virtual Response Peek(int? requestPriority, int? numberOfMessages, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("MessagesRestClient.Peek");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePeekRequest(numberOfMessages, timeout, context);
+                using HttpMessage message = CreatePeekRequest(requestPriority, numberOfMessages, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -465,6 +517,10 @@ namespace Azure.Storage.Queues
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="numberOfMessages">
         /// A nonzero integer value that specifies the number of messages to
         /// retrieve from the queue, up to a maximum of 32. If fewer are visible, the
@@ -478,13 +534,13 @@ namespace Azure.Storage.Queues
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> PeekAsync(int? numberOfMessages, int? timeout, RequestContext context)
+        public virtual async Task<Response> PeekAsync(int? requestPriority, int? numberOfMessages, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("MessagesRestClient.Peek");
             scope.Start();
             try
             {
-                using HttpMessage message = CreatePeekRequest(numberOfMessages, timeout, context);
+                using HttpMessage message = CreatePeekRequest(requestPriority, numberOfMessages, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -495,6 +551,10 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> Retrieves one or more messages from the front of the queue, but does not alter the visibility of the message. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="numberOfMessages">
         /// A nonzero integer value that specifies the number of messages to
         /// retrieve from the queue, up to a maximum of 32. If fewer are visible, the
@@ -507,13 +567,17 @@ namespace Azure.Storage.Queues
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<PeekedMessages> Peek(int? numberOfMessages = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response<PeekedMessages> Peek(int? requestPriority = default, int? numberOfMessages = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = Peek(numberOfMessages, timeout, cancellationToken.ToRequestContext());
+            Response result = Peek(requestPriority, numberOfMessages, timeout, cancellationToken.ToRequestContext());
             return Response.FromValue((PeekedMessages)result, result);
         }
 
         /// <summary> Retrieves one or more messages from the front of the queue, but does not alter the visibility of the message. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="numberOfMessages">
         /// A nonzero integer value that specifies the number of messages to
         /// retrieve from the queue, up to a maximum of 32. If fewer are visible, the
@@ -526,9 +590,9 @@ namespace Azure.Storage.Queues
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<PeekedMessages>> PeekAsync(int? numberOfMessages = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PeekedMessages>> PeekAsync(int? requestPriority = default, int? numberOfMessages = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = await PeekAsync(numberOfMessages, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await PeekAsync(requestPriority, numberOfMessages, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((PeekedMessages)result, result);
         }
     }

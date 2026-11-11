@@ -21,6 +21,7 @@ namespace Azure.Storage.Blobs.Models
         private readonly Uri _previousSnapshotUri;
         private readonly PageBlobRequestConditions _requestConditions;
         private readonly string _operationName;
+        private readonly int? _requestPriority;
 
         public GetPageRangesAsyncCollection(
             bool diff,
@@ -30,8 +31,10 @@ namespace Azure.Storage.Blobs.Models
             string previousSnapshot,
             Uri previousSnapshotUri,
             PageBlobRequestConditions requestConditions,
-            string operationName)
+            string operationName,
+            int? requestPriority)
         {
+            _requestPriority = requestPriority;
             _diff = diff;
             _client = client;
             _range = range;
@@ -62,6 +65,7 @@ namespace Azure.Storage.Blobs.Models
                         previousSnapshot: _previousSnapshot,
                         previousSnapshotUri: _previousSnapshotUri,
                         conditions: _requestConditions,
+                        requestPriority: _requestPriority,
                         async: true,
                         operationName: _operationName,
                         cancellationToken: cancellationToken)
@@ -77,6 +81,7 @@ namespace Azure.Storage.Blobs.Models
                         previousSnapshot: _previousSnapshot,
                         previousSnapshotUri: _previousSnapshotUri,
                         conditions: _requestConditions,
+                        requestPriority: _requestPriority,
                         async: false,
                         operationName: _operationName,
                         cancellationToken: cancellationToken)
@@ -101,6 +106,7 @@ namespace Azure.Storage.Blobs.Models
                         range: _range,
                         snapshot: _snapshot,
                         conditions: _requestConditions,
+                        requestPriority: _requestPriority,
                         async: true,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -113,6 +119,7 @@ namespace Azure.Storage.Blobs.Models
                         range: _range,
                         snapshot: _snapshot,
                         conditions: _requestConditions,
+                        requestPriority: _requestPriority,
                         async: false,
                         cancellationToken: cancellationToken)
                         .EnsureCompleted();

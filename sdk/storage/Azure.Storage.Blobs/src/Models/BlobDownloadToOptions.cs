@@ -44,5 +44,11 @@ namespace Azure.Storage.Blobs.Models
         /// <see cref="LayoutAwareRouting.Enabled"/> to opt in.
         /// </summary>
         public LayoutAwareRouting LayoutAwareRouting { get; set; } = LayoutAwareRouting.Auto;
+
+        /// <summary>
+        /// Optional. Sets the priority of this request, from 0 through 7.
+        /// If not set, or if the value is outside that range, the service uses 3.
+        /// </summary>
+        public int? RequestPriority { get; set; }
     }
 }

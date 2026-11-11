@@ -15,6 +15,7 @@ namespace Azure.Storage.Blobs
         private readonly PageBlobClient _pageBlobClient;
         private readonly PageBlobRequestConditions _conditions;
         private long _writeIndex;
+        private readonly int? _requestPriority;
 
         public PageBlobWriteStream(
             PageBlobClient pageBlobClient,
@@ -22,7 +23,8 @@ namespace Azure.Storage.Blobs
             long position,
             PageBlobRequestConditions conditions,
             IProgress<long> progressHandler,
-            UploadTransferValidationOptions transferValidation
+            UploadTransferValidationOptions transferValidation,
+            int? requestPriority
             ) : base(
                 position,
                 bufferSize,
@@ -30,6 +32,7 @@ namespace Azure.Storage.Blobs
                 transferValidation
                 )
         {
+            _requestPriority = requestPriority;
             ValidateBufferSize(bufferSize);
             ValidatePosition(position);
             _pageBlobClient = pageBlobClient;
@@ -52,6 +55,7 @@ namespace Azure.Storage.Blobs
                     validationOptions,
                     _conditions,
                     _progressHandler,
+                    requestPriority: _requestPriority,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);

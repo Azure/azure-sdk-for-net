@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -102,6 +102,45 @@ namespace Azure.Storage.Files.DataLake.Models
                 EncryptionContext = encryptionContext,
                 AccessControlList = accessControlList
             };
+
+        /// <summary>
+        /// Creates a new FileDownloadDetails instance for mocking.
+        /// </summary>
+        public static FileDownloadDetails FileDownloadDetails(
+            DateTimeOffset lastModified,
+            IDictionary<string, string> metadata,
+            string contentRange,
+            ETag eTag,
+            string contentEncoding,
+            string cacheControl,
+            string contentDisposition,
+            string contentLanguage,
+            DateTimeOffset copyCompletionTime,
+            string copyStatusDescription,
+            string copyId,
+            string copyProgress,
+            Uri copySource,
+            CopyStatus copyStatus,
+            DataLakeLeaseDuration leaseDuration,
+            DataLakeLeaseState leaseState,
+            DataLakeLeaseStatus leaseStatus,
+            string acceptRanges,
+            bool isServerEncrypted,
+            string encryptionKeySha256,
+            byte[] contentHash,
+            DateTimeOffset createdOn,
+            string encryptionContext,
+            IList<PathAccessControlItem> accessControlList,
+            int? effectiveRequestPriority)
+        {
+            FileDownloadDetails details = FileDownloadDetails(
+                lastModified, metadata, contentRange, eTag, contentEncoding, cacheControl, contentDisposition,
+                contentLanguage, copyCompletionTime, copyStatusDescription, copyId, copyProgress, copySource,
+                copyStatus, leaseDuration, leaseState, leaseStatus, acceptRanges, isServerEncrypted,
+                encryptionKeySha256, contentHash, createdOn, encryptionContext, accessControlList);
+            details.EffectiveRequestPriority = effectiveRequestPriority;
+            return details;
+        }
 
         /// <summary>
         /// Creates a new <see cref="Models.FileDownloadDetails"/> instance for mocking.
@@ -284,8 +323,23 @@ namespace Azure.Storage.Files.DataLake.Models
 
         #region FileSystemInfo
         /// <summary>
-        /// Creates a new <see cref="FileSystemInfo"/> instance for mocking.
+        /// Creates a new <see cref="Models.FileSystemInfo"/> instance for mocking.
         /// </summary>
+        public static FileSystemInfo FileSystemInfo(
+            ETag etag = default,
+            DateTimeOffset lastModified = default,
+            int? effectiveRequestPriority = default)
+            => new FileSystemInfo()
+            {
+                ETag = etag,
+                LastModified = lastModified,
+                EffectiveRequestPriority = effectiveRequestPriority
+            };
+
+        /// <summary>
+        /// Creates a new <see cref="Models.FileSystemInfo"/> instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static FileSystemInfo FileSystemInfo(
             ETag etag,
             DateTimeOffset lastModified)
@@ -342,7 +396,41 @@ namespace Azure.Storage.Files.DataLake.Models
             ETag eTag = default,
             IDictionary<string, string> metadata = default,
             DateTimeOffset? deletedOn = default,
-            int? remainingRetentionDays = default)
+            int? remainingRetentionDays = default,
+            int? effectiveRequestPriority = default)
+        {
+            FileSystemProperties properties = FileSystemProperties(
+                lastModified,
+                leaseStatus,
+                leaseState,
+                leaseDuration,
+                publicAccess,
+                hasImmutabilityPolicy,
+                hasLegalHold,
+                eTag,
+                metadata,
+                deletedOn,
+                remainingRetentionDays);
+            properties.EffectiveRequestPriority = effectiveRequestPriority;
+            return properties;
+        }
+
+        /// <summary>
+        /// Creates a new FileSystemProperties instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static FileSystemProperties FileSystemProperties(
+            DateTimeOffset lastModified,
+            DataLakeLeaseStatus? leaseStatus,
+            DataLakeLeaseState? leaseState,
+            DataLakeLeaseDuration? leaseDuration,
+            PublicAccessType? publicAccess,
+            bool? hasImmutabilityPolicy,
+            bool? hasLegalHold,
+            ETag eTag,
+            IDictionary<string, string> metadata,
+            DateTimeOffset? deletedOn,
+            int? remainingRetentionDays)
             => new FileSystemProperties()
             {
                 LastModified = lastModified,
@@ -389,6 +477,25 @@ namespace Azure.Storage.Files.DataLake.Models
         /// Creates a new <see cref="DataLakeLease"/> instance for mocking.
         /// </summary>
         public static DataLakeLease Lease(
+            ETag eTag = default,
+            DateTimeOffset lastModified = default,
+            string leaseId = default,
+            int? leaseTime = default,
+            int? effectiveRequestPriority = default)
+            => new DataLakeLease()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                LeaseId = leaseId,
+                LeaseTime = leaseTime,
+                EffectiveRequestPriority = effectiveRequestPriority
+            };
+
+        /// <summary>
+        /// Creates a new <see cref="DataLakeLease"/> instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataLakeLease Lease(
             ETag eTag,
             DateTimeOffset lastModified,
             string leaseId,
@@ -404,7 +511,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
         #region PathAccessControl
         /// <summary>
-        /// Creates a new <see cref="PathAccessControl"/> instance for mocking.
+        /// Creates a new <see cref="Models.PathAccessControl"/> instance for mocking.
         /// </summary>
         public static PathAccessControl PathAccessControl(
             string owner,
@@ -418,11 +525,26 @@ namespace Azure.Storage.Files.DataLake.Models
                 Permissions = permissions,
                 AccessControlList = acl
             };
+
+        /// <summary>
+        /// Creates a new <see cref="Models.PathAccessControl"/> instance for mocking.
+        /// </summary>
+        public static PathAccessControl PathAccessControl(
+            string owner,
+            string group,
+            PathPermissions permissions,
+            IList<PathAccessControlItem> acl,
+            int? effectiveRequestPriority)
+        {
+            PathAccessControl accessControl = PathAccessControl(owner, group, permissions, acl);
+            accessControl.EffectiveRequestPriority = effectiveRequestPriority;
+            return accessControl;
+        }
         #endregion PathAccessControl
 
         #region PathSystemProperties
         /// <summary>
-        /// Creates a new <see cref="PathSystemProperties"/> instance for mocking.
+        /// Creates a new <see cref="Models.PathSystemProperties"/> instance for mocking.
         /// </summary>
         public static PathSystemProperties PathSystemProperties(
             DateTimeOffset? creationTime,
@@ -454,6 +576,43 @@ namespace Azure.Storage.Files.DataLake.Models
                 Group = group,
                 Permissions = permissions
             };
+
+        /// <summary>
+        /// Creates a new <see cref="Models.PathSystemProperties"/> instance for mocking.
+        /// </summary>
+        public static PathSystemProperties PathSystemProperties(
+            DateTimeOffset? creationTime,
+            DateTimeOffset? lastModifiedTime,
+            ETag eTag,
+            long? contentLength,
+            bool? isDirectory,
+            bool? isServerEncrypted,
+            string encryptionKeySha256,
+            DateTimeOffset? expiresOn,
+            string encryptionScope,
+            string encryptionContext,
+            string owner,
+            string group,
+            PathPermissions permissions,
+            int? effectiveRequestPriority)
+        {
+            PathSystemProperties properties = PathSystemProperties(
+                creationTime,
+                lastModifiedTime,
+                eTag,
+                contentLength,
+                isDirectory,
+                isServerEncrypted,
+                encryptionKeySha256,
+                expiresOn,
+                encryptionScope,
+                encryptionContext,
+                owner,
+                group,
+                permissions);
+            properties.EffectiveRequestPriority = effectiveRequestPriority;
+            return properties;
+        }
         #endregion PathSystemProperties
 
         #region PathContentInfo
@@ -506,8 +665,23 @@ namespace Azure.Storage.Files.DataLake.Models
 
         #region PathInfo
         /// <summary>
-        /// Creates a new <see cref="PathInfo"/> instance for mocking.
+        /// Creates a new <see cref="Models.PathInfo"/> instance for mocking.
         /// </summary>
+        public static PathInfo PathInfo(
+            ETag eTag = default,
+            DateTimeOffset lastModified = default,
+            int? effectiveRequestPriority = default)
+            => new PathInfo()
+            {
+                ETag = eTag,
+                LastModified = lastModified,
+                EffectiveRequestPriority = effectiveRequestPriority
+            };
+
+        /// <summary>
+        /// Creates a new <see cref="Models.PathInfo"/> instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static PathInfo PathInfo(
             ETag eTag,
             DateTimeOffset lastModified)
@@ -517,6 +691,17 @@ namespace Azure.Storage.Files.DataLake.Models
                 LastModified = lastModified
             };
         #endregion PathInfo
+
+        #region ReleasedObjectInfo
+        /// <summary>
+        /// Creates a new <see cref="Models.ReleasedObjectInfo"/> instance for mocking.
+        /// </summary>
+        public static ReleasedObjectInfo ReleasedObjectInfo(
+            ETag eTag = default,
+            DateTimeOffset lastModified = default,
+            int? effectiveRequestPriority = default)
+            => new ReleasedObjectInfo(eTag, lastModified, effectiveRequestPriority);
+        #endregion ReleasedObjectInfo
 
         #region PathItem
         /// <summary>
@@ -682,6 +867,58 @@ namespace Azure.Storage.Files.DataLake.Models
                 SmartAccessTier = smartAccessTier,
                 AccessTierInferred = accessTierInferred
             };
+
+        /// <summary>
+        /// Creates a new PathProperties instance for mocking.
+        /// </summary>
+        public static PathProperties PathProperties(
+            DateTimeOffset lastModified,
+            DateTimeOffset creationTime,
+            IDictionary<string, string> metadata,
+            DateTimeOffset copyCompletionTime,
+            string copyStatusDescription,
+            string copyId,
+            string copyProgress,
+            Uri copySource,
+            CopyStatus copyStatus,
+            bool isIncrementalCopy,
+            DataLakeLeaseDuration leaseDuration,
+            DataLakeLeaseState leaseState,
+            DataLakeLeaseStatus leaseStatus,
+            long contentLength,
+            string contentType,
+            ETag eTag,
+            byte[] contentHash,
+            string contentEncoding,
+            string contentDisposition,
+            string contentLanguage,
+            string cacheControl,
+            string acceptRanges,
+            bool isServerEncrypted,
+            string encryptionKeySha256,
+            string accessTier,
+            string archiveStatus,
+            DateTimeOffset accessTierChangeTime,
+            bool isDirectory,
+            string encryptionContext,
+            string owner,
+            string group,
+            string permissions,
+            IList<PathAccessControlItem> accessControlList,
+            string smartAccessTier,
+            bool accessTierInferred,
+            int? effectiveRequestPriority)
+        {
+            PathProperties properties = PathProperties(
+                lastModified, creationTime, metadata, copyCompletionTime, copyStatusDescription, copyId, copyProgress,
+                copySource, copyStatus, isIncrementalCopy, leaseDuration, leaseState, leaseStatus, contentLength,
+                contentType, eTag, contentHash, contentEncoding, contentDisposition, contentLanguage, cacheControl,
+                acceptRanges, isServerEncrypted, encryptionKeySha256, accessTier, archiveStatus, accessTierChangeTime,
+                isDirectory, encryptionContext, owner, group, permissions, accessControlList, smartAccessTier,
+                accessTierInferred);
+            properties.EffectiveRequestPriority = effectiveRequestPriority;
+            return properties;
+        }
 
         /// <summary>
         /// Creates a new PathProperties instance for mocking.
@@ -1039,7 +1276,35 @@ namespace Azure.Storage.Files.DataLake.Models
             string signedService = default,
             string signedVersion = default,
             string signedDelegatedUserTenantId = default,
-            string value = default)
+            string value = default,
+            int? effectiveRequestPriority = default)
+        {
+            UserDelegationKey key = UserDelegationKey(
+                signedObjectId,
+                signedTenantId,
+                signedStart,
+                signedExpiry,
+                signedService,
+                signedVersion,
+                signedDelegatedUserTenantId,
+                value);
+            key.EffectiveRequestPriority = effectiveRequestPriority;
+            return key;
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="Models.UserDelegationKey"/> instance for mocking.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static UserDelegationKey UserDelegationKey(
+            string signedObjectId,
+            string signedTenantId,
+            DateTimeOffset signedStart,
+            DateTimeOffset signedExpiry,
+            string signedService,
+            string signedVersion,
+            string signedDelegatedUserTenantId,
+            string value)
             => new UserDelegationKey()
             {
                 SignedObjectId = signedObjectId,
@@ -1103,6 +1368,18 @@ namespace Azure.Storage.Files.DataLake.Models
             => new GetPathTagResult()
             {
                 Tags = tags
+            };
+
+        /// <summary>
+        /// Creates a new GetPathTagResult for mocking.
+        /// </summary>
+        public static GetPathTagResult GetPathTagResult(
+            Tags tags,
+            int? effectiveRequestPriority)
+            => new GetPathTagResult()
+            {
+                Tags = tags,
+                EffectiveRequestPriority = effectiveRequestPriority
             };
         #endregion GetPathTagResult
 
@@ -1241,6 +1518,21 @@ namespace Azure.Storage.Files.DataLake.Models
                 LastModified = lastModified,
                 SignedIdentifiers = signedIdentifiers
             };
+
+        /// <summary>
+        /// Creates a new <see cref="Models.FileSystemAccessPolicy"/> instance for mocking.
+        /// </summary>
+        public static FileSystemAccessPolicy FileSystemAccessPolicy(
+            PublicAccessType dataLakePublicAccess,
+            ETag eTag,
+            DateTimeOffset lastModified,
+            IEnumerable<DataLakeSignedIdentifier> signedIdentifiers,
+            int? effectiveRequestPriority)
+        {
+            FileSystemAccessPolicy policy = FileSystemAccessPolicy(dataLakePublicAccess, eTag, lastModified, signedIdentifiers);
+            policy.EffectiveRequestPriority = effectiveRequestPriority;
+            return policy;
+        }
         #endregion FileSystemAccessPolicy
 
         #region PathDeletedItem

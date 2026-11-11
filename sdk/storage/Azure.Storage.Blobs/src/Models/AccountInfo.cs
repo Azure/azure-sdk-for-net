@@ -24,6 +24,11 @@ namespace Azure.Storage.Blobs.Models
         public bool IsHierarchicalNamespaceEnabled { get; internal set; }
 
         /// <summary>
+        /// The request priority the service applied to this request.
+        /// </summary>
+        public int? EffectiveRequestPriority { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of AccountInfo instances.
         /// You can use BlobsModelFactory.AccountInfo instead.
         /// </summary>

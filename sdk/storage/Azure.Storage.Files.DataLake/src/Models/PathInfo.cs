@@ -23,6 +23,11 @@ namespace Azure.Storage.Files.DataLake.Models
         public DateTimeOffset LastModified { get; internal set; }
 
         /// <summary>
+        /// The request priority the service applied to this request.
+        /// </summary>
+        public int? EffectiveRequestPriority { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of PathInfo instances.
         /// You can use DataLakeModelFactory.PathInfo instead.
         /// </summary>

@@ -1,0 +1,49 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+
+namespace Azure.Storage.Blobs.Models
+{
+    /// <summary>
+    /// Optional parameters for PageBlobClient.GetManagedDiskPageRangesDiff.
+    /// </summary>
+    public class PageBlobGetManagedDiskPageRangesDiffOptions
+    {
+        /// <summary>
+        /// Optionally specifies the range of bytes over which to list ranges,
+        /// inclusively. If omitted, then all ranges for the blob are returned.
+        /// </summary>
+        public HttpRange? Range { get; set; }
+
+        /// <summary>
+        /// Optionally specifies the blob snapshot to retrieve page ranges
+        /// information from. For more information on working with blob snapshots,
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/creating-a-snapshot-of-a-blob">
+        /// Create a snapshot of a blob</see>.
+        /// </summary>
+        public string Snapshot { get; set; }
+
+        /// <summary>
+        /// This parameter only works with managed disk storage accounts.
+        /// Specifies that the response will contain only pages that were
+        /// changed between target blob and previous snapshot.  Changed pages
+        /// include both updated and cleared pages. The target blob may be a
+        /// snapshot, as long as the snapshot specified by
+        /// <see cref="PreviousSnapshotUri"/> is the older of the two.
+        /// </summary>
+        public Uri PreviousSnapshotUri { get; set; }
+
+        /// <summary>
+        /// Optional <see cref="PageBlobRequestConditions"/> to add
+        /// conditions on getting page ranges for the this blob.
+        /// </summary>
+        public PageBlobRequestConditions Conditions { get; set; }
+
+        /// <summary>
+        /// Optional. Sets the priority of this request, from 0 through 7.
+        /// If not set, or if the value is outside that range, the service uses 3.
+        /// </summary>
+        public int? RequestPriority { get; set; }
+    }
+}

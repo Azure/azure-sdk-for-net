@@ -22,7 +22,7 @@ namespace Azure.Storage.Queues
 
         private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
-        internal HttpMessage CreateDequeueRequest(int? numberOfMessages, int? visibilityTimeout, int? timeout, RequestContext context)
+        internal HttpMessage CreateDequeueRequest(int? requestPriority, int? numberOfMessages, int? visibilityTimeout, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -47,11 +47,15 @@ namespace Azure.Storage.Queues
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             request.Headers.SetValue("Accept", "application/xml");
             return message;
         }
 
-        internal HttpMessage CreateClearRequest(int? timeout, RequestContext context)
+        internal HttpMessage CreateClearRequest(int? requestPriority, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -68,10 +72,14 @@ namespace Azure.Storage.Queues
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             return message;
         }
 
-        internal HttpMessage CreateEnqueueRequest(RequestContent content, int? visibilityTimeout, int? messageTimeToLive, int? timeout, RequestContext context)
+        internal HttpMessage CreateEnqueueRequest(RequestContent content, int? requestPriority, int? visibilityTimeout, int? messageTimeToLive, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -97,12 +105,16 @@ namespace Azure.Storage.Queues
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             request.Headers.SetValue("Accept", "application/xml");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreatePeekRequest(int? numberOfMessages, int? timeout, RequestContext context)
+        internal HttpMessage CreatePeekRequest(int? requestPriority, int? numberOfMessages, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -123,6 +135,10 @@ namespace Azure.Storage.Queues
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             request.Headers.SetValue("Accept", "application/xml");
             return message;

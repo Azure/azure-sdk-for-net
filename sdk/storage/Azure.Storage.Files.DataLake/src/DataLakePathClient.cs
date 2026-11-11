@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -852,6 +852,7 @@ namespace Azure.Storage.Files.DataLake
                 expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
                 encryptionContext: options?.EncryptionContext,
                 conditions: options?.Conditions,
+                requestPriority: options?.RequestPriority,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -904,6 +905,7 @@ namespace Azure.Storage.Files.DataLake
                 expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
                 encryptionContext: options?.EncryptionContext,
                 conditions: options?.Conditions,
+                requestPriority: options?.RequestPriority,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -987,6 +989,7 @@ namespace Azure.Storage.Files.DataLake
                 expiresOn: null,
                 encryptionContext: null,
                 conditions: conditions,
+                requestPriority: null,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1070,13 +1073,14 @@ namespace Azure.Storage.Files.DataLake
                 expiresOn: null,
                 encryptionContext: null,
                 conditions: conditions,
+                requestPriority: null,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
         }
 
         /// <summary>
-        /// The <see cref="CreateInternal(PathResourceType, PathHttpHeaders, Metadata, string, string, string, string, IList{PathAccessControlItem}, string, TimeSpan?, TimeSpan?, DateTimeOffset?, string, DataLakeRequestConditions, bool, CancellationToken)"/>
+        /// The <see cref="CreateInternal(PathResourceType, PathHttpHeaders, Metadata, string, string, string, string, IList{PathAccessControlItem}, string, TimeSpan?, TimeSpan?, DateTimeOffset?, string, DataLakeRequestConditions, int?, bool, CancellationToken)"/>
         /// operation creates a file or directory.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
@@ -1136,6 +1140,9 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="encryptionContext">
         /// Encryption context.
         /// </param>
+        /// <param name="requestPriority">
+        /// Optional. The request priority, from 0 through 7.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1168,6 +1175,7 @@ namespace Azure.Storage.Files.DataLake
             DateTimeOffset? expiresOn,
             string encryptionContext,
             DataLakeRequestConditions conditions,
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1242,6 +1250,7 @@ namespace Azure.Storage.Files.DataLake
                     if (async)
                     {
                         response = await PathRestClient.CreateAsync(
+                            requestPriority: requestPriority,
                             resource: resourceType,
                             cacheControl: httpHeaders?.CacheControl,
                             contentEncoding: httpHeaders?.ContentEncoding,
@@ -1270,6 +1279,7 @@ namespace Azure.Storage.Files.DataLake
                     else
                     {
                         response = PathRestClient.Create(
+                            requestPriority: requestPriority,
                             resource: resourceType,
                             cacheControl: httpHeaders?.CacheControl,
                             contentEncoding: httpHeaders?.ContentEncoding,
@@ -1359,6 +1369,7 @@ namespace Azure.Storage.Files.DataLake
                     timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
                     expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
                     encryptionContext: options?.EncryptionContext,
+                    requestPriority: options?.RequestPriority,
                     async: false,
                     cancellationToken: cancellationToken)
                     .EnsureCompleted();
@@ -1407,6 +1418,7 @@ namespace Azure.Storage.Files.DataLake
                 timeToExpire: options?.ScheduleDeletionOptions?.TimeToExpire,
                 expiresOn: options?.ScheduleDeletionOptions?.ExpiresOn,
                 encryptionContext: options?.EncryptionContext,
+                requestPriority: options?.RequestPriority,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -1480,6 +1492,7 @@ namespace Azure.Storage.Files.DataLake
                     timeToExpire: null,
                     expiresOn: null,
                     encryptionContext: null,
+                    requestPriority: null,
                     async: false,
                     cancellationToken: cancellationToken)
                     .EnsureCompleted();
@@ -1553,12 +1566,13 @@ namespace Azure.Storage.Files.DataLake
                 timeToExpire: null,
                 expiresOn: null,
                 encryptionContext: null,
+                requestPriority: null,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="CreateIfNotExistsInternal(PathResourceType, PathHttpHeaders, Metadata, string, string, string, string, IList{PathAccessControlItem}, string, TimeSpan?, TimeSpan?, DateTimeOffset?, string, bool, CancellationToken)"/>
+        /// The <see cref="CreateIfNotExistsInternal(PathResourceType, PathHttpHeaders, Metadata, string, string, string, string, IList{PathAccessControlItem}, string, TimeSpan?, TimeSpan?, DateTimeOffset?, string, int?, bool, CancellationToken)"/>
         /// operation creates a file or directory.  If the file or directory already exists, it is not changed.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
@@ -1614,6 +1628,9 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="encryptionContext">
         /// Encryption context.
         /// </param>
+        /// <param name="requestPriority">
+        /// Optional. The request priority, from 0 through 7.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1645,6 +1662,7 @@ namespace Azure.Storage.Files.DataLake
             TimeSpan? timeToExpire,
             DateTimeOffset? expiresOn,
             string encryptionContext,
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1667,6 +1685,7 @@ namespace Azure.Storage.Files.DataLake
                     expiresOn: expiresOn,
                     encryptionContext: encryptionContext,
                     conditions: conditions,
+                    requestPriority: requestPriority,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -1682,7 +1701,7 @@ namespace Azure.Storage.Files.DataLake
 
         #region Exists
         /// <summary>
-        /// The <see cref="Exists"/> operation can be called on a
+        /// The <see cref="Exists(CancellationToken)"/> operation can be called on a
         /// <see cref="DataLakePathClient"/> to see if the associated
         /// file or director exists in the file system.
         /// </summary>
@@ -1708,6 +1727,7 @@ namespace Azure.Storage.Files.DataLake
         /// call DirectoryClient.Exists on a path that is not a directory,
         /// Exists will return true.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<bool> Exists(
             CancellationToken cancellationToken = default)
         {
@@ -1731,7 +1751,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="ExistsAsync"/> operation can be called on a
+        /// The <see cref="ExistsAsync(CancellationToken)"/> operation can be called on a
         /// <see cref="DataLakePathClient"/> to see if the associated
         /// file or directory exists in the file system.
         /// </summary>
@@ -1757,6 +1777,7 @@ namespace Azure.Storage.Files.DataLake
         /// call DirectoryClient.Exists on a path that is not a directory,
         /// Exists will return true.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<bool>> ExistsAsync(
             CancellationToken cancellationToken = default)
         {
@@ -1778,11 +1799,93 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
+        /// <summary>
+        /// The <see cref="Exists(DataLakePathExistsOptions, CancellationToken)"/> operation can be called on a
+        /// <see cref="DataLakePathClient"/> to see if the associated file or directory exists in the file system.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the file or directory exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<bool> Exists(
+            DataLakePathExistsOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(Exists)}");
+            try
+            {
+                scope.Start();
+                return _blockBlobClient.Exists(
+                    new Blobs.Models.BlobExistsOptions { RequestPriority = options?.RequestPriority },
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="ExistsAsync(DataLakePathExistsOptions, CancellationToken)"/> operation can be called on a
+        /// <see cref="DataLakePathClient"/> to see if the associated file or directory exists in the file system.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the file or directory exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<bool>> ExistsAsync(
+            DataLakePathExistsOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(Exists)}");
+            try
+            {
+                scope.Start();
+                return await _blockBlobClient.ExistsAsync(
+                    new Blobs.Models.BlobExistsOptions { RequestPriority = options?.RequestPriority },
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
         #endregion Exists
 
         #region Delete
         /// <summary>
-        /// The <see cref="Delete"/> operation marks the specified path
+        /// The <see cref="Delete(bool?, DataLakeRequestConditions, CancellationToken)"/> operation marks the specified path
         /// deletion.
         ///
         /// For more information, see
@@ -1810,6 +1913,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response Delete(
             bool? recursive = default,
             DataLakeRequestConditions conditions = default,
@@ -1818,13 +1922,80 @@ namespace Azure.Storage.Files.DataLake
             return DeleteInternal(
                 recursive,
                 conditions,
+                requestPriority: null,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
         }
 
         /// <summary>
-        /// The <see cref="DeleteAsync"/> operation marks the specified path
+        /// The <see cref="Delete(DataLakePathDeleteOptions, CancellationToken)"/> operation marks the specified path
+        /// deletion.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
+        /// Delete Path</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully marking for deletion.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response Delete(
+            DataLakePathDeleteOptions options,
+            CancellationToken cancellationToken = default)
+            => DeleteInternal(
+                options?.Recursive,
+                options?.Conditions,
+                options?.RequestPriority,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="DeleteAsync(DataLakePathDeleteOptions, CancellationToken)"/> operation marks the specified path
+        /// deletion.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
+        /// Delete Path</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully marking for deletion.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response> DeleteAsync(
+            DataLakePathDeleteOptions options,
+            CancellationToken cancellationToken = default)
+            => await DeleteInternal(
+                options?.Recursive,
+                options?.Conditions,
+                options?.RequestPriority,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DeleteAsync(bool?, DataLakeRequestConditions, CancellationToken)"/> operation marks the specified path
         /// deletion.
         ///
         /// For more information, see
@@ -1852,6 +2023,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response> DeleteAsync(
             bool? recursive = default,
             DataLakeRequestConditions conditions = default,
@@ -1860,6 +2032,7 @@ namespace Azure.Storage.Files.DataLake
             return await DeleteInternal(
                 recursive,
                 conditions,
+                requestPriority: null,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1881,6 +2054,9 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
         /// deleting this path.
         /// </param>
+        /// <param name="requestPriority">
+        /// Optional. The request priority, from 0 through 7.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1900,6 +2076,7 @@ namespace Azure.Storage.Files.DataLake
         private async Task<Response> DeleteInternal(
             bool? recursive,
             DataLakeRequestConditions conditions,
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1935,6 +2112,7 @@ namespace Azure.Storage.Files.DataLake
                         if (async)
                         {
                             response = await PathRestClient.DeleteAsync(
+                                requestPriority: requestPriority,
                                 recursive: recursive,
                                 continuation: continuation,
                                 leaseId: conditions?.LeaseId,
@@ -1946,6 +2124,7 @@ namespace Azure.Storage.Files.DataLake
                         else
                         {
                             response = PathRestClient.Delete(
+                                requestPriority: requestPriority,
                                 recursive: recursive,
                                 continuation: continuation,
                                 leaseId: conditions?.LeaseId,
@@ -1976,7 +2155,7 @@ namespace Azure.Storage.Files.DataLake
 
         #region Delete If Exists
         /// <summary>
-        /// The <see cref="DeleteIfExists"/> operation marks the specified path
+        /// The <see cref="DeleteIfExists(bool?, DataLakeRequestConditions, CancellationToken)"/> operation marks the specified path
         /// for deletion, if the path exists.
         ///
         /// For more information, see
@@ -2004,6 +2183,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<bool> DeleteIfExists(
             bool? recursive = default,
             DataLakeRequestConditions conditions = default,
@@ -2011,12 +2191,79 @@ namespace Azure.Storage.Files.DataLake
             => DeleteIfExistsInternal(
                 recursive,
                 conditions,
+                requestPriority: null,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="DeleteIfExistsAsync"/> operation marks the specified path
+        /// The <see cref="DeleteIfExists(DataLakePathDeleteOptions, CancellationToken)"/> operation marks the specified path
+        /// deletion, if the path exists.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
+        /// Delete Path</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully marking for deletion.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<bool> DeleteIfExists(
+            DataLakePathDeleteOptions options,
+            CancellationToken cancellationToken = default)
+            => DeleteIfExistsInternal(
+                options?.Recursive,
+                options?.Conditions,
+                options?.RequestPriority,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="DeleteIfExistsAsync(DataLakePathDeleteOptions, CancellationToken)"/> operation marks the specified path
+        /// deletion, if the path exists.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/delete">
+        /// Delete Path</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully marking for deletion.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<bool>> DeleteIfExistsAsync(
+            DataLakePathDeleteOptions options,
+            CancellationToken cancellationToken = default)
+            => await DeleteIfExistsInternal(
+                options?.Recursive,
+                options?.Conditions,
+                options?.RequestPriority,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DeleteIfExistsAsync(bool?, DataLakeRequestConditions, CancellationToken)"/> operation marks the specified path
         /// deletion, if the path exists.
         ///
         /// For more information, see
@@ -2044,6 +2291,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<bool>> DeleteIfExistsAsync(
             bool? recursive = default,
             DataLakeRequestConditions conditions = default,
@@ -2051,6 +2299,7 @@ namespace Azure.Storage.Files.DataLake
             => await DeleteIfExistsInternal(
                 recursive,
                 conditions,
+                requestPriority: null,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2071,6 +2320,9 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
         /// deleting this path.
         /// </param>
+        /// <param name="requestPriority">
+        /// Optional. The request priority, from 0 through 7.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2090,6 +2342,7 @@ namespace Azure.Storage.Files.DataLake
         private async Task<Response<bool>> DeleteIfExistsInternal(
             bool? recursive,
             DataLakeRequestConditions conditions,
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2100,6 +2353,7 @@ namespace Azure.Storage.Files.DataLake
                 Response response = await DeleteInternal(
                     recursive: recursive,
                     conditions: conditions,
+                    requestPriority: requestPriority,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -2126,7 +2380,7 @@ namespace Azure.Storage.Files.DataLake
 
         #region Rename
         /// <summary>
-        /// The <see cref="Rename"/> operation renames a file or directory.
+        /// The <see cref="Rename(string, string, DataLakeRequestConditions, DataLakeRequestConditions, CancellationToken)"/> operation renames a file or directory.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
@@ -2159,6 +2413,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<DataLakePathClient> Rename(
             string destinationPath,
             string destinationFileSystem = default,
@@ -2171,13 +2426,86 @@ namespace Azure.Storage.Files.DataLake
                 destinationFileSystem: destinationFileSystem,
                 sourceConditions: sourceConditions,
                 destinationConditions: destinationConditions,
+                requestPriority: null,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
         }
 
         /// <summary>
-        /// The <see cref="RenameAsync"/> operation renames a file or directory.
+        /// The <see cref="Rename(string, DataLakePathRenameOptions, CancellationToken)"/> operation renames a file or directory.
+        ///
+        /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
+        /// </summary>
+        /// <param name="destinationPath">
+        /// The destination path to rename the path to.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakePathClient}"/> for the renamed path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<DataLakePathClient> Rename(
+            string destinationPath,
+            DataLakePathRenameOptions options,
+            CancellationToken cancellationToken = default)
+            => RenameInternal(
+                destinationPath: destinationPath,
+                destinationFileSystem: options?.DestinationFileSystem,
+                sourceConditions: options?.SourceConditions,
+                destinationConditions: options?.DestinationConditions,
+                requestPriority: options?.RequestPriority,
+                async: false,
+                cancellationToken: cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="RenameAsync(string, DataLakePathRenameOptions, CancellationToken)"/> operation renames a file or directory.
+        ///
+        /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
+        /// </summary>
+        /// <param name="destinationPath">
+        /// The destination path to rename the path to.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{DataLakePathClient}"/> for the renamed path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<DataLakePathClient>> RenameAsync(
+            string destinationPath,
+            DataLakePathRenameOptions options,
+            CancellationToken cancellationToken = default)
+            => await RenameInternal(
+                destinationPath: destinationPath,
+                destinationFileSystem: options?.DestinationFileSystem,
+                sourceConditions: options?.SourceConditions,
+                destinationConditions: options?.DestinationConditions,
+                requestPriority: options?.RequestPriority,
+                async: true,
+                cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="RenameAsync(string, string, DataLakeRequestConditions, DataLakeRequestConditions, CancellationToken)"/> operation renames a file or directory.
         ///
         /// For more information, see https://docs.microsoft.com/en-us/rest/api/storageservices/datalakestoragegen2/path/create.
         /// </summary>
@@ -2210,6 +2538,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<DataLakePathClient>> RenameAsync(
             string destinationPath,
             string destinationFileSystem = default,
@@ -2222,6 +2551,7 @@ namespace Azure.Storage.Files.DataLake
                 destinationFileSystem: destinationFileSystem,
                 sourceConditions: sourceConditions,
                 destinationConditions: destinationConditions,
+                requestPriority: null,
                 async: true,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
@@ -2247,6 +2577,9 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on the creation of this file or directory.
         /// </param>
+        /// <param name="requestPriority">
+        /// Optional. The request priority, from 0 through 7.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2269,6 +2602,7 @@ namespace Azure.Storage.Files.DataLake
             string destinationFileSystem,
             DataLakeRequestConditions sourceConditions,
             DataLakeRequestConditions destinationConditions,
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2354,6 +2688,7 @@ namespace Azure.Storage.Files.DataLake
                     if (async)
                     {
                         response = await destPathClient.PathRestClient.CreateAsync(
+                            requestPriority: requestPriority,
                             mode: PathRenameMode.Legacy,
                             renameSource: renameSource,
                             leaseId: destinationConditions?.LeaseId,
@@ -2369,6 +2704,7 @@ namespace Azure.Storage.Files.DataLake
                     else
                     {
                         response = destPathClient.PathRestClient.Create(
+                            requestPriority: requestPriority,
                             mode: PathRenameMode.Legacy,
                             renameSource: renameSource,
                             leaseId: destinationConditions?.LeaseId,
@@ -2402,7 +2738,7 @@ namespace Azure.Storage.Files.DataLake
 
         #region Get Access Control
         /// <summary>
-        /// The <see cref="GetAccessControl"/> operation returns the
+        /// The <see cref="GetAccessControl(bool?, DataLakeRequestConditions, CancellationToken)"/> operation returns the
         /// access control data for a path.
         ///
         /// For more information, see
@@ -2435,6 +2771,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<PathAccessControl> GetAccessControl(
             bool? userPrincipalName = default,
             DataLakeRequestConditions conditions = default,
@@ -2443,13 +2780,14 @@ namespace Azure.Storage.Files.DataLake
             return GetAccessControlInternal(
                 userPrincipalName,
                 conditions,
+                requestPriority: null,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
         }
 
         /// <summary>
-        /// The <see cref="GetAccessControlAsync"/> operation returns the
+        /// The <see cref="GetAccessControlAsync(bool?, DataLakeRequestConditions, CancellationToken)"/> operation returns the
         /// access control data for a path.
         ///
         /// For more information, see
@@ -2482,6 +2820,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<PathAccessControl>> GetAccessControlAsync(
             bool? userPrincipalName = default,
             DataLakeRequestConditions conditions = default,
@@ -2490,6 +2829,7 @@ namespace Azure.Storage.Files.DataLake
             return await GetAccessControlInternal(
                 userPrincipalName,
                 conditions,
+                requestPriority: null,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2515,6 +2855,9 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="DataLakeRequestConditions"/> to add
         /// conditions on getting the path's access control.
         /// </param>
+        /// <param name="requestPriority">
+        /// Optional. The request priority, from 0 through 7.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2535,6 +2878,7 @@ namespace Azure.Storage.Files.DataLake
         private async Task<Response<PathAccessControl>> GetAccessControlInternal(
             bool? userPrincipalName,
             DataLakeRequestConditions conditions,
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2555,6 +2899,7 @@ namespace Azure.Storage.Files.DataLake
                     if (async)
                     {
                         response = await PathRestClient.GetPropertiesAsync(
+                            requestPriority: requestPriority,
                             action: PathGetPropertiesAction.GetAccessControl,
                              upn: userPrincipalName,
                              leaseId: conditions?.LeaseId,
@@ -2565,6 +2910,7 @@ namespace Azure.Storage.Files.DataLake
                     else
                     {
                         response = PathRestClient.GetProperties(
+                            requestPriority: requestPriority,
                             action: PathGetPropertiesAction.GetAccessControl,
                              upn: userPrincipalName,
                              leaseId: conditions?.LeaseId,
@@ -2589,11 +2935,70 @@ namespace Azure.Storage.Files.DataLake
                 }
             }
         }
+        /// <summary>
+        /// The <see cref="GetAccessControl(DataLakePathGetAccessControlOptions, CancellationToken)"/> operation returns the
+        /// access control data for a path.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathAccessControl}"/> describing the
+        /// path's access control.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<PathAccessControl> GetAccessControl(
+            DataLakePathGetAccessControlOptions options,
+            CancellationToken cancellationToken = default)
+            => GetAccessControlInternal(
+                options?.UserPrincipalName,
+                options?.Conditions,
+                options?.RequestPriority,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="GetAccessControlAsync(DataLakePathGetAccessControlOptions, CancellationToken)"/> operation returns the
+        /// access control data for a path.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathAccessControl}"/> describing the
+        /// path's access control.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<PathAccessControl>> GetAccessControlAsync(
+            DataLakePathGetAccessControlOptions options,
+            CancellationToken cancellationToken = default)
+            => await GetAccessControlInternal(
+                options?.UserPrincipalName,
+                options?.Conditions,
+                options?.RequestPriority,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
         #endregion Get Access Control
 
         #region Set Access Control
         /// <summary>
-        /// The <see cref="SetAccessControlList"/> operation sets the
+        /// The <see cref="SetAccessControlList(IList{PathAccessControlItem}, string, string, DataLakeRequestConditions, CancellationToken)"/> operation sets the
         /// Access Control on a path
         ///
         /// For more information, see
@@ -2627,6 +3032,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual Response<PathInfo> SetAccessControlList(
             IList<PathAccessControlItem> accessControlList,
@@ -2640,13 +3046,14 @@ namespace Azure.Storage.Files.DataLake
                     owner,
                     group,
                     conditions,
+                    requestPriority: null,
                     async: false,
                     cancellationToken)
                     .EnsureCompleted();
         }
 
         /// <summary>
-        /// The <see cref="SetAccessControlListAsync"/> operation sets the
+        /// The <see cref="SetAccessControlListAsync(IList{PathAccessControlItem}, string, string, DataLakeRequestConditions, CancellationToken)"/> operation sets the
         /// Access Control on a path
         ///
         /// For more information, see
@@ -2680,6 +3087,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual async Task<Response<PathInfo>> SetAccessControlListAsync(
             IList<PathAccessControlItem> accessControlList,
@@ -2693,6 +3101,7 @@ namespace Azure.Storage.Files.DataLake
                 owner,
                 group,
                 conditions,
+                requestPriority: null,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2719,6 +3128,9 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
         /// setting the the path's access control.
         /// </param>
+        /// <param name="requestPriority">
+        /// Optional. The request priority, from 0 through 7.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2741,6 +3153,7 @@ namespace Azure.Storage.Files.DataLake
             string owner,
             string group,
             DataLakeRequestConditions conditions,
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2765,6 +3178,7 @@ namespace Azure.Storage.Files.DataLake
                     if (async)
                     {
                         response = await PathRestClient.SetAccessControlAsync(
+                            requestPriority: requestPriority,
                             leaseId: conditions?.LeaseId,
                             owner: owner,
                             group: group,
@@ -2776,6 +3190,7 @@ namespace Azure.Storage.Files.DataLake
                     else
                     {
                         response = PathRestClient.SetAccessControl(
+                            requestPriority: requestPriority,
                             leaseId: conditions?.LeaseId,
                             owner: owner,
                             group: group,
@@ -2801,8 +3216,80 @@ namespace Azure.Storage.Files.DataLake
                 }
             }
         }
-        #endregion Set Access Control
+        /// <summary>
+        /// The <see cref="SetAccessControlList(IList{PathAccessControlItem}, DataLakePathSetAccessControlListOptions, CancellationToken)"/>
+        /// operation sets the Access Control on a path.
+        /// </summary>
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the updated
+        /// path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
+        public virtual Response<PathInfo> SetAccessControlList(
+            IList<PathAccessControlItem> accessControlList,
+            DataLakePathSetAccessControlListOptions options,
+            CancellationToken cancellationToken = default)
+            => SetAccessControlListInternal(
+                accessControlList,
+                options?.Owner,
+                options?.Group,
+                options?.Conditions,
+                options?.RequestPriority,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
 
+        /// <summary>
+        /// The <see cref="SetAccessControlListAsync(IList{PathAccessControlItem}, DataLakePathSetAccessControlListOptions, CancellationToken)"/>
+        /// operation sets the Access Control on a path.
+        /// </summary>
+        /// <param name="accessControlList">
+        /// The POSIX access control list for the file or directory.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the updated
+        /// path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
+        public virtual async Task<Response<PathInfo>> SetAccessControlListAsync(
+            IList<PathAccessControlItem> accessControlList,
+            DataLakePathSetAccessControlListOptions options,
+            CancellationToken cancellationToken = default)
+            => await SetAccessControlListInternal(
+                accessControlList,
+                options?.Owner,
+                options?.Group,
+                options?.Conditions,
+                options?.RequestPriority,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+        #endregion Set Access Control
         #region Set Access Control Recursive
         /// <summary>
         /// The <see cref="SetAccessControlRecursive"/> operation sets the
@@ -3176,6 +3663,7 @@ namespace Azure.Storage.Files.DataLake
                                 {
                                     response = await PathRestClient.SetAccessControlRecursiveAsync(
                                         mode: mode.ToSerialString(),
+                                        requestPriority: options?.RequestPriority,
                                         continuation: continuationToken,
                                         forceFlag: options?.ContinueOnFailure,
                                         maxRecords: options?.BatchSize,
@@ -3187,6 +3675,7 @@ namespace Azure.Storage.Files.DataLake
                                 {
                                     response = PathRestClient.SetAccessControlRecursive(
                                         mode: mode.ToSerialString(),
+                                        requestPriority: options?.RequestPriority,
                                         continuation: continuationToken,
                                         forceFlag: options?.ContinueOnFailure,
                                         maxRecords: options?.BatchSize,
@@ -3307,7 +3796,7 @@ namespace Azure.Storage.Files.DataLake
 
         #region Set Permissions
         /// <summary>
-        /// The <see cref="SetPermissions"/> operation sets the
+        /// The <see cref="SetPermissions(PathPermissions, string, string, DataLakeRequestConditions, CancellationToken)"/> operation sets the
         /// file permissions on a path.
         ///
         /// For more information, see
@@ -3341,6 +3830,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual Response<PathInfo> SetPermissions(
             PathPermissions permissions,
@@ -3354,13 +3844,14 @@ namespace Azure.Storage.Files.DataLake
                 owner,
                 group,
                 conditions,
+                requestPriority: null,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
         }
 
         /// <summary>
-        /// The <see cref="SetPermissionsAsync"/> operation sets the
+        /// The <see cref="SetPermissionsAsync(PathPermissions, string, string, DataLakeRequestConditions, CancellationToken)"/> operation sets the
         /// file permissions on a path.
         ///
         /// For more information, see
@@ -3394,6 +3885,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual async Task<Response<PathInfo>> SetPermissionsAsync(
             PathPermissions permissions,
@@ -3407,6 +3899,7 @@ namespace Azure.Storage.Files.DataLake
                 owner,
                 group,
                 conditions,
+                requestPriority: null,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -3433,6 +3926,9 @@ namespace Azure.Storage.Files.DataLake
         /// Optional <see cref="DataLakeRequestConditions"/> to add conditions on
         /// setting the the path's access control.
         /// </param>
+        /// <param name="requestPriority">
+        /// Optional. The request priority, from 0 through 7.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -3455,6 +3951,7 @@ namespace Azure.Storage.Files.DataLake
             string owner,
             string group,
             DataLakeRequestConditions conditions,
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -3479,6 +3976,7 @@ namespace Azure.Storage.Files.DataLake
                     if (async)
                     {
                         response = await PathRestClient.SetAccessControlAsync(
+                            requestPriority: requestPriority,
                             leaseId: conditions?.LeaseId,
                             owner: owner,
                             group: group,
@@ -3490,6 +3988,7 @@ namespace Azure.Storage.Files.DataLake
                     else
                     {
                         response = PathRestClient.SetAccessControl(
+                            requestPriority: requestPriority,
                             leaseId: conditions?.LeaseId,
                             owner: owner,
                             group: group,
@@ -3515,6 +4014,79 @@ namespace Azure.Storage.Files.DataLake
                 }
             }
         }
+        /// <summary>
+        /// The <see cref="SetPermissions(PathPermissions, DataLakePathSetPermissionsOptions, CancellationToken)"/>
+        /// operation sets the file permissions on a path.
+        /// </summary>
+        /// <param name="permissions">
+        /// The POSIX access permissions for the file owner, the file owning group, and others.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the updated
+        /// path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
+        public virtual Response<PathInfo> SetPermissions(
+            PathPermissions permissions,
+            DataLakePathSetPermissionsOptions options,
+            CancellationToken cancellationToken = default)
+            => SetPermissionsInternal(
+                permissions,
+                options?.Owner,
+                options?.Group,
+                options?.Conditions,
+                options?.RequestPriority,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="SetPermissionsAsync(PathPermissions, DataLakePathSetPermissionsOptions, CancellationToken)"/>
+        /// operation sets the file permissions on a path.
+        /// </summary>
+        /// <param name="permissions">
+        /// The POSIX access permissions for the file owner, the file owning group, and others.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the updated
+        /// path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
+        public virtual async Task<Response<PathInfo>> SetPermissionsAsync(
+            PathPermissions permissions,
+            DataLakePathSetPermissionsOptions options,
+            CancellationToken cancellationToken = default)
+            => await SetPermissionsInternal(
+                permissions,
+                options?.Owner,
+                options?.Group,
+                options?.Conditions,
+                options?.RequestPriority,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
         #endregion Set Permission
 
         #region Get System Properties
@@ -3640,6 +4212,7 @@ namespace Azure.Storage.Files.DataLake
                     if (async)
                     {
                         response = await PathRestClient.GetPropertiesAsync(
+                            requestPriority: options?.RequestPriority,
                             action: PathGetPropertiesAction.GetStatus,
                             leaseId: options?.RequestConditions?.LeaseId,
                             requestConditions: options?.RequestConditions,
@@ -3649,6 +4222,7 @@ namespace Azure.Storage.Files.DataLake
                     else
                     {
                         response = PathRestClient.GetProperties(
+                            requestPriority: options?.RequestPriority,
                             action: PathGetPropertiesAction.GetStatus,
                             leaseId: options?.RequestConditions?.LeaseId,
                             requestConditions: options?.RequestConditions,
@@ -3676,7 +4250,7 @@ namespace Azure.Storage.Files.DataLake
 
         #region Get Properties
         /// <summary>
-        /// The <see cref="GetProperties"/> operation returns all
+        /// The <see cref="GetProperties(DataLakeRequestConditions, CancellationToken)"/> operation returns all
         /// user-defined metadata, standard HTTP properties, and system
         /// properties for the path. It does not return the content of the
         /// path.
@@ -3703,6 +4277,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<PathProperties> GetProperties(
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -3733,7 +4308,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="GetPropertiesAsync"/> operation returns all
+        /// The <see cref="GetPropertiesAsync(DataLakeRequestConditions, CancellationToken)"/> operation returns all
         /// user-defined metadata, standard HTTP properties, and system
         /// properties for the path. It does not return the content of the
         /// path.
@@ -3760,6 +4335,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<PathProperties>> GetPropertiesAsync(
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -3789,11 +4365,103 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
+        /// <summary>
+        /// The <see cref="GetProperties(DataLakePathGetPropertiesOptions, CancellationToken)"/> operation returns all
+        /// user-defined metadata, standard HTTP properties, and system properties for the path.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathProperties}"/> describing the path's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<PathProperties> GetProperties(
+            DataLakePathGetPropertiesOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(GetProperties)}");
+            try
+            {
+                scope.Start();
+                Response<Blobs.Models.BlobProperties> response = _blockBlobClient.GetProperties(
+                    new Blobs.Models.BlobGetPropertiesOptions
+                    {
+                        Conditions = options?.Conditions.ToBlobRequestConditions(),
+                        RequestPriority = options?.RequestPriority,
+                    },
+                    cancellationToken);
+                return Response.FromValue(response.ToPathProperties(), response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetPropertiesAsync(DataLakePathGetPropertiesOptions, CancellationToken)"/> operation returns all
+        /// user-defined metadata, standard HTTP properties, and system properties for the path.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathProperties}"/> describing the path's properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<PathProperties>> GetPropertiesAsync(
+            DataLakePathGetPropertiesOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(GetProperties)}");
+            try
+            {
+                scope.Start();
+                Response<Blobs.Models.BlobProperties> response = await _blockBlobClient.GetPropertiesAsync(
+                    new Blobs.Models.BlobGetPropertiesOptions
+                    {
+                        Conditions = options?.Conditions.ToBlobRequestConditions(),
+                        RequestPriority = options?.RequestPriority,
+                    },
+                    cancellationToken)
+                    .ConfigureAwait(false);
+                return Response.FromValue(response.ToPathProperties(), response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
         #endregion Get Properties
 
         #region Set Http Headers
         /// <summary>
-        /// The <see cref="SetHttpHeaders"/> operation sets system
+        /// The <see cref="SetHttpHeaders(PathHttpHeaders, DataLakeRequestConditions, CancellationToken)"/> operation sets system
         /// properties on the path.
         ///
         /// For more information, see
@@ -3821,6 +4489,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<PathInfo> SetHttpHeaders(
             PathHttpHeaders httpHeaders = default,
             DataLakeRequestConditions conditions = default,
@@ -3853,7 +4522,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="SetHttpHeadersAsync"/> operation sets system
+        /// The <see cref="SetHttpHeadersAsync(PathHttpHeaders, DataLakeRequestConditions, CancellationToken)"/> operation sets system
         /// properties on the PATH.
         ///
         /// For more information, see
@@ -3881,6 +4550,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<PathInfo>> SetHttpHeadersAsync(
             PathHttpHeaders httpHeaders = default,
             DataLakeRequestConditions conditions = default,
@@ -3912,11 +4582,105 @@ namespace Azure.Storage.Files.DataLake
                 scope.Dispose();
             }
         }
+        /// <summary>
+        /// The <see cref="SetHttpHeaders(DataLakePathSetHttpHeadersOptions, CancellationToken)"/> operation sets system
+        /// properties on the path.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the updated path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<PathInfo> SetHttpHeaders(
+            DataLakePathSetHttpHeadersOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(SetHttpHeaders)}");
+            try
+            {
+                scope.Start();
+                Response<Blobs.Models.BlobInfo> response = _blockBlobClient.SetHttpHeaders(
+                    new Blobs.Models.BlobSetHttpHeadersOptions
+                    {
+                        HttpHeaders = options?.HttpHeaders.ToBlobHttpHeaders(),
+                        Conditions = options?.Conditions.ToBlobRequestConditions(),
+                        RequestPriority = options?.RequestPriority,
+                    },
+                    cancellationToken);
+                return Response.FromValue(response.Value.ToPathInfo(), response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="SetHttpHeadersAsync(DataLakePathSetHttpHeadersOptions, CancellationToken)"/> operation sets system
+        /// properties on the path.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the updated path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<PathInfo>> SetHttpHeadersAsync(
+            DataLakePathSetHttpHeadersOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(SetHttpHeaders)}");
+            try
+            {
+                scope.Start();
+                Response<Blobs.Models.BlobInfo> response = await _blockBlobClient.SetHttpHeadersAsync(
+                    new Blobs.Models.BlobSetHttpHeadersOptions
+                    {
+                        HttpHeaders = options?.HttpHeaders.ToBlobHttpHeaders(),
+                        Conditions = options?.Conditions.ToBlobRequestConditions(),
+                        RequestPriority = options?.RequestPriority,
+                    },
+                    cancellationToken)
+                    .ConfigureAwait(false);
+                return Response.FromValue(response.Value.ToPathInfo(), response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
         #endregion Set Http Headers
 
         #region Set Metadata
         /// <summary>
-        /// The <see cref="SetMetadata"/> operation sets user-defined
+        /// The <see cref="SetMetadata(Metadata, DataLakeRequestConditions, CancellationToken)"/> operation sets user-defined
         /// metadata for the specified path as one or more name-value pairs.
         ///
         /// For more information, see
@@ -3944,6 +4708,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<PathInfo> SetMetadata(
             Metadata metadata,
             DataLakeRequestConditions conditions = default,
@@ -3976,7 +4741,7 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary>
-        /// The <see cref="SetMetadataAsync"/> operation sets user-defined
+        /// The <see cref="SetMetadataAsync(Metadata, DataLakeRequestConditions, CancellationToken)"/> operation sets user-defined
         /// metadata for the specified path as one or more name-value pairs.
         ///
         ///For more information, see
@@ -4004,6 +4769,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<PathInfo>> SetMetadataAsync(
             Metadata metadata,
             DataLakeRequestConditions conditions = default,
@@ -4024,6 +4790,108 @@ namespace Azure.Storage.Files.DataLake
                 return Response.FromValue(
                     response.Value.ToPathInfo(),
                     response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        /// <summary>
+        /// The <see cref="SetMetadata(Metadata, DataLakePathSetMetadataOptions, CancellationToken)"/> operation sets user-defined
+        /// metadata for the specified path as one or more name-value pairs.
+        /// </summary>
+        /// <param name="metadata">
+        /// Custom metadata to set for this path.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the updated path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<PathInfo> SetMetadata(
+            Metadata metadata,
+            DataLakePathSetMetadataOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(SetMetadata)}");
+            try
+            {
+                scope.Start();
+                Response<Blobs.Models.BlobInfo> response = _blockBlobClient.SetMetadata(
+                    metadata,
+                    new Blobs.Models.BlobSetMetadataOptions
+                    {
+                        Conditions = options?.Conditions.ToBlobRequestConditions(),
+                        RequestPriority = options?.RequestPriority,
+                    },
+                    cancellationToken);
+                return Response.FromValue(response.Value.ToPathInfo(), response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="SetMetadataAsync(Metadata, DataLakePathSetMetadataOptions, CancellationToken)"/> operation sets user-defined
+        /// metadata for the specified path as one or more name-value pairs.
+        /// </summary>
+        /// <param name="metadata">
+        /// Custom metadata to set for this path.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{PathInfo}"/> describing the updated path.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<PathInfo>> SetMetadataAsync(
+            Metadata metadata,
+            DataLakePathSetMetadataOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(SetMetadata)}");
+            try
+            {
+                scope.Start();
+                Response<Blobs.Models.BlobInfo> response = await _blockBlobClient.SetMetadataAsync(
+                    metadata,
+                    new Blobs.Models.BlobSetMetadataOptions
+                    {
+                        Conditions = options?.Conditions.ToBlobRequestConditions(),
+                        RequestPriority = options?.RequestPriority,
+                    },
+                    cancellationToken)
+                    .ConfigureAwait(false);
+                return Response.FromValue(response.Value.ToPathInfo(), response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -4063,6 +4931,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<GetPathTagResult> GetTags(
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -4114,6 +4983,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<GetPathTagResult>> GetTagsAsync(
             DataLakeRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
@@ -4129,6 +4999,96 @@ namespace Azure.Storage.Files.DataLake
                 return Response.FromValue(
                     response.Value.ToGetPathTagResult(),
                     response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        /// <summary>
+        /// The <see cref="GetTags(DataLakePathGetTagsOptions, CancellationToken)"/> operation gets the tags associated with the underlying path.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{GetPathTagResult}"/> on successfully getting tags.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response<GetPathTagResult> GetTags(
+            DataLakePathGetTagsOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(GetTags)}");
+            try
+            {
+                scope.Start();
+                Response<Blobs.Models.GetBlobTagResult> response = _blockBlobClient.GetTags(
+                    new Blobs.Models.BlobGetTagsOptions
+                    {
+                        Conditions = options?.Conditions.ToBlobRequestConditions(),
+                        RequestPriority = options?.RequestPriority,
+                    },
+                    cancellationToken);
+                return Response.FromValue(response.Value.ToGetPathTagResult(), response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="GetTagsAsync(DataLakePathGetTagsOptions, CancellationToken)"/> operation gets the tags associated with the underlying path.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{GetPathTagResult}"/> on successfully getting tags.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response<GetPathTagResult>> GetTagsAsync(
+            DataLakePathGetTagsOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(GetTags)}");
+            try
+            {
+                scope.Start();
+                Response<Blobs.Models.GetBlobTagResult> response = await _blockBlobClient.GetTagsAsync(
+                    new Blobs.Models.BlobGetTagsOptions
+                    {
+                        Conditions = options?.Conditions.ToBlobRequestConditions(),
+                        RequestPriority = options?.RequestPriority,
+                    },
+                    cancellationToken)
+                    .ConfigureAwait(false);
+                return Response.FromValue(response.Value.ToGetPathTagResult(), response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -4174,6 +5134,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response SetTags(
             Tags tags,
             DataLakeRequestConditions conditions = default,
@@ -4231,6 +5192,7 @@ namespace Azure.Storage.Files.DataLake
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response> SetTagsAsync(
             Tags tags,
             DataLakeRequestConditions conditions = default,
@@ -4246,6 +5208,104 @@ namespace Azure.Storage.Files.DataLake
                     cancellationToken)
                     .ConfigureAwait(false);
                 return response;
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+        /// <summary>
+        /// The <see cref="SetTags(Tags, DataLakePathSetTagsOptions, CancellationToken)"/> operation sets tags on the underlying path.
+        /// </summary>
+        /// <param name="tags">
+        /// The tags to set on the path.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully setting the path's tags.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual Response SetTags(
+            Tags tags,
+            DataLakePathSetTagsOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(SetTags)}");
+            try
+            {
+                scope.Start();
+                return _blockBlobClient.SetTags(
+                    tags,
+                    new Blobs.Models.BlobSetTagsOptions
+                    {
+                        Conditions = options?.Conditions.ToBlobRequestConditions(),
+                        RequestPriority = options?.RequestPriority,
+                    },
+                    cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+            finally
+            {
+                scope.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// The <see cref="SetTagsAsync(Tags, DataLakePathSetTagsOptions, CancellationToken)"/> operation sets tags on the underlying path.
+        /// </summary>
+        /// <param name="tags">
+        /// The tags to set on the path.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully setting the path's tags.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// </remarks>
+        public virtual async Task<Response> SetTagsAsync(
+            Tags tags,
+            DataLakePathSetTagsOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(DataLakePathClient)}.{nameof(SetTags)}");
+            try
+            {
+                scope.Start();
+                return await _blockBlobClient.SetTagsAsync(
+                    tags,
+                    new Blobs.Models.BlobSetTagsOptions
+                    {
+                        Conditions = options?.Conditions.ToBlobRequestConditions(),
+                        RequestPriority = options?.RequestPriority,
+                    },
+                    cancellationToken)
+                    .ConfigureAwait(false);
             }
             catch (Exception ex)
             {

@@ -11,15 +11,18 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         private readonly DataLakeFileSystemClient _client;
         private readonly string _path;
+        private readonly int? _requestPriority;
         private readonly string _operationName;
 
         public GetDeletedPathAsyncCollection(
             DataLakeFileSystemClient client,
             string path,
+            int? requestPriority,
             string operationName)
         {
             _client = client;
             _path = path;
+            _requestPriority = requestPriority;
             _operationName = operationName;
         }
 
@@ -33,6 +36,7 @@ namespace Azure.Storage.Files.DataLake.Models
                 _path,
                 continuationToken,
                 pageSizeHint,
+                _requestPriority,
                 _operationName,
                 async,
                 cancellationToken)

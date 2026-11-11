@@ -982,7 +982,7 @@ namespace Azure.Storage.Blobs.Test
                 serviceClient.RenameBlobContainerAsync(
                     sourceContainerName: "sourceContainerName",
                     destinationContainerName: "destinationContainerName",
-                    sourceConditions: sourceConditions),
+                    options: new BlobServiceRenameBlobContainerOptions { SourceConditions = sourceConditions }),
                 e =>
                 {
                     Assert.IsTrue(e.Message.Contains($"RenameBlobContainer does not support the {invalidSourceCondition} condition(s)."));
@@ -1055,7 +1055,7 @@ namespace Azure.Storage.Blobs.Test
             BlobContainerClient newContainer = await service.RenameBlobContainerAsync(
                 sourceContainerName: oldContainerName,
                 destinationContainerName: newContainerName,
-                sourceConditions: sourceConditions);
+                options: new BlobServiceRenameBlobContainerOptions { SourceConditions = sourceConditions });
 
             // Assert
             await newContainer.GetPropertiesAsync();
@@ -1087,7 +1087,7 @@ namespace Azure.Storage.Blobs.Test
                 service.RenameBlobContainerAsync(
                     sourceContainerName: oldContainerName,
                     destinationContainerName: newContainerName,
-                    sourceConditions: sourceConditions),
+                    options: new BlobServiceRenameBlobContainerOptions { SourceConditions = sourceConditions }),
                 e => Assert.AreEqual(BlobErrorCode.LeaseNotPresentWithContainerOperation.ToString(), e.ErrorCode));
 
             // Cleanup

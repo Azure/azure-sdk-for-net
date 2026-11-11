@@ -84,13 +84,21 @@ namespace Azure.Storage.Files.DataLake
         public virtual Azure.Response<Azure.Storage.Files.DataLake.DataLakeDirectoryClient> CreateSubDirectory(string path, Azure.Storage.Files.DataLake.Models.PathHttpHeaders httpHeaders, System.Collections.Generic.IDictionary<string, string> metadata, string permissions, string umask, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.DataLakeDirectoryClient>> CreateSubDirectoryAsync(string path, Azure.Storage.Files.DataLake.Models.DataLakePathCreateOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.DataLakeDirectoryClient>> CreateSubDirectoryAsync(string path, Azure.Storage.Files.DataLake.Models.PathHttpHeaders httpHeaders, System.Collections.Generic.IDictionary<string, string> metadata, string permissions, string umask, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.Response Delete(Azure.Storage.Files.DataLake.Models.DataLakeDirectoryDeleteOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(Azure.Storage.Files.DataLake.Models.DataLakeDirectoryDeleteOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteFile(string fileName, Azure.Storage.Files.DataLake.Models.DataLakeFileDeleteOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteFile(string fileName, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteFileAsync(string fileName, Azure.Storage.Files.DataLake.Models.DataLakeFileDeleteOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteFileAsync(string fileName, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> DeleteIfExists(Azure.Storage.Files.DataLake.Models.DataLakeDirectoryDeleteOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> DeleteIfExists(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> DeleteIfExistsAsync(Azure.Storage.Files.DataLake.Models.DataLakeDirectoryDeleteOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> DeleteIfExistsAsync(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteSubDirectory(string path, Azure.Storage.Files.DataLake.Models.DataLakeDirectoryDeleteOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteSubDirectory(string path, string continuation = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteSubDirectoryAsync(string path, Azure.Storage.Files.DataLake.Models.DataLakeDirectoryDeleteOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteSubDirectoryAsync(string path, string continuation = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Uri GenerateSasUri(Azure.Storage.Sas.DataLakeSasBuilder builder) { throw null; }
         public override System.Uri GenerateSasUri(Azure.Storage.Sas.DataLakeSasBuilder builder, out string stringToSign) { throw null; }
@@ -100,27 +108,41 @@ namespace Azure.Storage.Files.DataLake
         public override System.Uri GenerateUserDelegationSasUri(Azure.Storage.Sas.DataLakeSasBuilder builder, Azure.Storage.Files.DataLake.Models.UserDelegationKey userDelegationKey, out string stringToSign) { throw null; }
         public override System.Uri GenerateUserDelegationSasUri(Azure.Storage.Sas.DataLakeSasPermissions permissions, System.DateTimeOffset expiresOn, Azure.Storage.Files.DataLake.Models.UserDelegationKey userDelegationKey) { throw null; }
         public override System.Uri GenerateUserDelegationSasUri(Azure.Storage.Sas.DataLakeSasPermissions permissions, System.DateTimeOffset expiresOn, Azure.Storage.Files.DataLake.Models.UserDelegationKey userDelegationKey, out string stringToSign) { throw null; }
+        public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathAccessControl> GetAccessControl(Azure.Storage.Files.DataLake.Models.DataLakePathGetAccessControlOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathAccessControl> GetAccessControl(bool? userPrincipalName = default(bool?), Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathAccessControl>> GetAccessControlAsync(Azure.Storage.Files.DataLake.Models.DataLakePathGetAccessControlOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathAccessControl>> GetAccessControlAsync(bool? userPrincipalName = default(bool?), Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Storage.Files.DataLake.DataLakeFileClient GetFileClient(string fileName) { throw null; }
         public virtual Azure.Pageable<Azure.Storage.Files.DataLake.Models.PathItem> GetPaths(Azure.Storage.Files.DataLake.Models.DataLakeGetPathsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Storage.Files.DataLake.Models.PathItem> GetPaths(bool recursive, bool userPrincipalName, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Storage.Files.DataLake.Models.PathItem> GetPathsAsync(Azure.Storage.Files.DataLake.Models.DataLakeGetPathsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Storage.Files.DataLake.Models.PathItem> GetPathsAsync(bool recursive, bool userPrincipalName, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathProperties> GetProperties(Azure.Storage.Files.DataLake.Models.DataLakePathGetPropertiesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual new Azure.Response<Azure.Storage.Files.DataLake.Models.PathProperties> GetProperties(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathProperties>> GetPropertiesAsync(Azure.Storage.Files.DataLake.Models.DataLakePathGetPropertiesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathProperties>> GetPropertiesAsync(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Storage.Files.DataLake.DataLakeDirectoryClient GetSubDirectoryClient(string subdirectoryName) { throw null; }
         public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathSystemProperties> GetSystemProperties(Azure.Storage.Files.DataLake.Models.PathGetSystemPropertiesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathSystemProperties>> GetSystemPropertiesAsync(Azure.Storage.Files.DataLake.Models.PathGetSystemPropertiesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual new Azure.Response<Azure.Storage.Files.DataLake.DataLakeDirectoryClient> Rename(string destinationPath, Azure.Storage.Files.DataLake.Models.DataLakePathRenameOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual new Azure.Response<Azure.Storage.Files.DataLake.DataLakeDirectoryClient> Rename(string destinationPath, string destinationFileSystem = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions sourceConditions = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions destinationConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual new System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.DataLakeDirectoryClient>> RenameAsync(string destinationPath, Azure.Storage.Files.DataLake.Models.DataLakePathRenameOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual new System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.DataLakeDirectoryClient>> RenameAsync(string destinationPath, string destinationFileSystem = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions sourceConditions = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions destinationConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetAccessControlList(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList, Azure.Storage.Files.DataLake.Models.DataLakePathSetAccessControlListOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetAccessControlList(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList, string owner = null, string group = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetAccessControlListAsync(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList, Azure.Storage.Files.DataLake.Models.DataLakePathSetAccessControlListOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetAccessControlListAsync(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList, string owner = null, string group = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetHttpHeaders(Azure.Storage.Files.DataLake.Models.DataLakePathSetHttpHeadersOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetHttpHeaders(Azure.Storage.Files.DataLake.Models.PathHttpHeaders httpHeaders = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetHttpHeadersAsync(Azure.Storage.Files.DataLake.Models.DataLakePathSetHttpHeadersOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetHttpHeadersAsync(Azure.Storage.Files.DataLake.Models.PathHttpHeaders httpHeaders = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetMetadata(System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Files.DataLake.Models.DataLakePathSetMetadataOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetMetadata(System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetMetadataAsync(System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Files.DataLake.Models.DataLakePathSetMetadataOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetMetadataAsync(System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetPermissions(Azure.Storage.Files.DataLake.Models.PathPermissions permissions, Azure.Storage.Files.DataLake.Models.DataLakePathSetPermissionsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetPermissions(Azure.Storage.Files.DataLake.Models.PathPermissions permissions = null, string owner = null, string group = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetPermissionsAsync(Azure.Storage.Files.DataLake.Models.PathPermissions permissions, Azure.Storage.Files.DataLake.Models.DataLakePathSetPermissionsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetPermissionsAsync(Azure.Storage.Files.DataLake.Models.PathPermissions permissions = null, string owner = null, string group = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public new Azure.Storage.Files.DataLake.DataLakeDirectoryClient WithCustomerProvidedKey(Azure.Storage.Files.DataLake.Models.DataLakeCustomerProvidedKey? customerProvidedKey) { throw null; }
     }
@@ -151,17 +173,25 @@ namespace Azure.Storage.Files.DataLake
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> CreateIfNotExists(Azure.Storage.Files.DataLake.Models.PathHttpHeaders httpHeaders, System.Collections.Generic.IDictionary<string, string> metadata, string permissions, string umask, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> CreateIfNotExistsAsync(Azure.Storage.Files.DataLake.Models.DataLakePathCreateOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> CreateIfNotExistsAsync(Azure.Storage.Files.DataLake.Models.PathHttpHeaders httpHeaders, System.Collections.Generic.IDictionary<string, string> metadata, string permissions, string umask, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.Response Delete(Azure.Storage.Files.DataLake.Models.DataLakeFileDeleteOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(Azure.Storage.Files.DataLake.Models.DataLakeFileDeleteOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> DeleteIfExists(Azure.Storage.Files.DataLake.Models.DataLakeFileDeleteOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> DeleteIfExists(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> DeleteIfExistsAsync(Azure.Storage.Files.DataLake.Models.DataLakeFileDeleteOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> DeleteIfExistsAsync(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> Flush(long position, Azure.Storage.Files.DataLake.Models.DataLakeFileFlushOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> Flush(long position, bool? retainUncommittedData, bool? close, Azure.Storage.Files.DataLake.Models.PathHttpHeaders httpHeaders, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> FlushAsync(long position, Azure.Storage.Files.DataLake.Models.DataLakeFileFlushOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> FlushAsync(long position, bool? retainUncommittedData, bool? close, Azure.Storage.Files.DataLake.Models.PathHttpHeaders httpHeaders, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathAccessControl> GetAccessControl(Azure.Storage.Files.DataLake.Models.DataLakePathGetAccessControlOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathAccessControl> GetAccessControl(bool? userPrincipalName = default(bool?), Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathAccessControl>> GetAccessControlAsync(Azure.Storage.Files.DataLake.Models.DataLakePathGetAccessControlOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathAccessControl>> GetAccessControlAsync(bool? userPrincipalName = default(bool?), Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathProperties> GetProperties(Azure.Storage.Files.DataLake.Models.DataLakePathGetPropertiesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual new Azure.Response<Azure.Storage.Files.DataLake.Models.PathProperties> GetProperties(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathProperties>> GetPropertiesAsync(Azure.Storage.Files.DataLake.Models.DataLakePathGetPropertiesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathProperties>> GetPropertiesAsync(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathSystemProperties> GetSystemProperties(Azure.Storage.Files.DataLake.Models.PathGetSystemPropertiesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathSystemProperties>> GetSystemPropertiesAsync(Azure.Storage.Files.DataLake.Models.PathGetSystemPropertiesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -203,17 +233,27 @@ namespace Azure.Storage.Files.DataLake
         public virtual System.Threading.Tasks.Task<Azure.Response> ReadToAsync(System.IO.Stream destination, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions, Azure.Storage.StorageTransferOptions transferOptions, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ReadToAsync(string path, Azure.Storage.Files.DataLake.Models.DataLakeFileReadToOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ReadToAsync(string path, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions, Azure.Storage.StorageTransferOptions transferOptions, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual new Azure.Response<Azure.Storage.Files.DataLake.DataLakeFileClient> Rename(string destinationPath, Azure.Storage.Files.DataLake.Models.DataLakePathRenameOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual new Azure.Response<Azure.Storage.Files.DataLake.DataLakeFileClient> Rename(string destinationPath, string destinationFileSystem = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions sourceConditions = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions destinationConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual new System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.DataLakeFileClient>> RenameAsync(string destinationPath, Azure.Storage.Files.DataLake.Models.DataLakePathRenameOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual new System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.DataLakeFileClient>> RenameAsync(string destinationPath, string destinationFileSystem = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions sourceConditions = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions destinationConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> ScheduleDeletion(Azure.Storage.Files.DataLake.Models.DataLakeFileScheduleDeletionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> ScheduleDeletionAsync(Azure.Storage.Files.DataLake.Models.DataLakeFileScheduleDeletionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetAccessControlList(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList, Azure.Storage.Files.DataLake.Models.DataLakePathSetAccessControlListOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetAccessControlList(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList, string owner = null, string group = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetAccessControlListAsync(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList, Azure.Storage.Files.DataLake.Models.DataLakePathSetAccessControlListOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetAccessControlListAsync(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList, string owner = null, string group = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetHttpHeaders(Azure.Storage.Files.DataLake.Models.DataLakePathSetHttpHeadersOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetHttpHeaders(Azure.Storage.Files.DataLake.Models.PathHttpHeaders httpHeaders = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetHttpHeadersAsync(Azure.Storage.Files.DataLake.Models.DataLakePathSetHttpHeadersOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetHttpHeadersAsync(Azure.Storage.Files.DataLake.Models.PathHttpHeaders httpHeaders = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetMetadata(System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Files.DataLake.Models.DataLakePathSetMetadataOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetMetadata(System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetMetadataAsync(System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Files.DataLake.Models.DataLakePathSetMetadataOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetMetadataAsync(System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetPermissions(Azure.Storage.Files.DataLake.Models.PathPermissions permissions, Azure.Storage.Files.DataLake.Models.DataLakePathSetPermissionsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetPermissions(Azure.Storage.Files.DataLake.Models.PathPermissions permissions, string owner = null, string group = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetPermissionsAsync(Azure.Storage.Files.DataLake.Models.PathPermissions permissions, Azure.Storage.Files.DataLake.Models.DataLakePathSetPermissionsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetPermissionsAsync(Azure.Storage.Files.DataLake.Models.PathPermissions permissions, string owner = null, string group = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> Upload(System.IO.Stream content) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> Upload(System.IO.Stream content, Azure.Storage.Files.DataLake.Models.DataLakeFileUploadOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -266,15 +306,25 @@ namespace Azure.Storage.Files.DataLake
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemInfo> CreateIfNotExists(Azure.Storage.Files.DataLake.Models.PublicAccessType publicAccessType, System.Collections.Generic.IDictionary<string, string> metadata, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemInfo>> CreateIfNotExistsAsync(Azure.Storage.Files.DataLake.Models.DataLakeFileSystemCreateOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemInfo>> CreateIfNotExistsAsync(Azure.Storage.Files.DataLake.Models.PublicAccessType publicAccessType, System.Collections.Generic.IDictionary<string, string> metadata, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.Response Delete(Azure.Storage.Files.DataLake.Models.DataLakeFileSystemDeleteOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(Azure.Storage.Files.DataLake.Models.DataLakeFileSystemDeleteOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteDirectory(string path, Azure.Storage.Files.DataLake.Models.DataLakeDirectoryDeleteOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteDirectory(string path, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteDirectoryAsync(string path, Azure.Storage.Files.DataLake.Models.DataLakeDirectoryDeleteOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteDirectoryAsync(string path, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteFile(string path, Azure.Storage.Files.DataLake.Models.DataLakeFileDeleteOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response DeleteFile(string path, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteFileAsync(string path, Azure.Storage.Files.DataLake.Models.DataLakeFileDeleteOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteFileAsync(string path, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> DeleteIfExists(Azure.Storage.Files.DataLake.Models.DataLakeFileSystemDeleteIfExistsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> DeleteIfExists(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> DeleteIfExistsAsync(Azure.Storage.Files.DataLake.Models.DataLakeFileSystemDeleteIfExistsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> DeleteIfExistsAsync(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.Storage.Files.DataLake.Models.DataLakeFileSystemExistsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.Storage.Files.DataLake.Models.DataLakeFileSystemExistsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Uri GenerateSasUri(Azure.Storage.Sas.DataLakeFileSystemSasPermissions permissions, System.DateTimeOffset expiresOn) { throw null; }
         public virtual System.Uri GenerateSasUri(Azure.Storage.Sas.DataLakeFileSystemSasPermissions permissions, System.DateTimeOffset expiresOn, out string stringToSign) { throw null; }
@@ -284,9 +334,13 @@ namespace Azure.Storage.Files.DataLake
         public virtual System.Uri GenerateUserDelegationSasUri(Azure.Storage.Sas.DataLakeFileSystemSasPermissions permissions, System.DateTimeOffset expiresOn, Azure.Storage.Files.DataLake.Models.UserDelegationKey userDelegationKey, out string stringToSign) { throw null; }
         public virtual System.Uri GenerateUserDelegationSasUri(Azure.Storage.Sas.DataLakeSasBuilder builder, Azure.Storage.Files.DataLake.Models.UserDelegationKey userDelegationKey) { throw null; }
         public virtual System.Uri GenerateUserDelegationSasUri(Azure.Storage.Sas.DataLakeSasBuilder builder, Azure.Storage.Files.DataLake.Models.UserDelegationKey userDelegationKey, out string stringToSign) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemAccessPolicy> GetAccessPolicy(Azure.Storage.Files.DataLake.Models.DataLakeFileSystemGetAccessPolicyOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemAccessPolicy> GetAccessPolicy(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemAccessPolicy>> GetAccessPolicyAsync(Azure.Storage.Files.DataLake.Models.DataLakeFileSystemGetAccessPolicyOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemAccessPolicy>> GetAccessPolicyAsync(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Storage.Files.DataLake.Models.PathDeletedItem> GetDeletedPaths(Azure.Storage.Files.DataLake.Models.DataLakeFileSystemGetDeletedPathsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Storage.Files.DataLake.Models.PathDeletedItem> GetDeletedPaths(string pathPrefix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Storage.Files.DataLake.Models.PathDeletedItem> GetDeletedPathsAsync(Azure.Storage.Files.DataLake.Models.DataLakeFileSystemGetDeletedPathsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Storage.Files.DataLake.Models.PathDeletedItem> GetDeletedPathsAsync(string pathPrefix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Storage.Files.DataLake.DataLakeDirectoryClient GetDirectoryClient(string directoryName) { throw null; }
         public virtual Azure.Storage.Files.DataLake.DataLakeFileClient GetFileClient(string fileName) { throw null; }
@@ -295,13 +349,21 @@ namespace Azure.Storage.Files.DataLake
         public virtual Azure.Pageable<Azure.Storage.Files.DataLake.Models.PathItem> GetPaths(string path, bool recursive, bool userPrincipalName, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Storage.Files.DataLake.Models.PathItem> GetPathsAsync(Azure.Storage.Files.DataLake.Models.DataLakeGetPathsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Storage.Files.DataLake.Models.PathItem> GetPathsAsync(string path, bool recursive, bool userPrincipalName, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemProperties> GetProperties(Azure.Storage.Files.DataLake.Models.DataLakeFileSystemGetPropertiesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemProperties> GetProperties(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemProperties>> GetPropertiesAsync(Azure.Storage.Files.DataLake.Models.DataLakeFileSystemGetPropertiesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemProperties>> GetPropertiesAsync(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemInfo> SetAccessPolicy(Azure.Storage.Files.DataLake.Models.DataLakeFileSystemSetAccessPolicyOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemInfo> SetAccessPolicy(Azure.Storage.Files.DataLake.Models.PublicAccessType accessType = Azure.Storage.Files.DataLake.Models.PublicAccessType.None, System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.DataLakeSignedIdentifier> permissions = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemInfo>> SetAccessPolicyAsync(Azure.Storage.Files.DataLake.Models.DataLakeFileSystemSetAccessPolicyOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemInfo>> SetAccessPolicyAsync(Azure.Storage.Files.DataLake.Models.PublicAccessType accessType = Azure.Storage.Files.DataLake.Models.PublicAccessType.None, System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.DataLakeSignedIdentifier> permissions = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemInfo> SetMetadata(System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Files.DataLake.Models.DataLakeFileSystemSetMetadataOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemInfo> SetMetadata(System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemInfo>> SetMetadataAsync(System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Files.DataLake.Models.DataLakeFileSystemSetMetadataOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.FileSystemInfo>> SetMetadataAsync(System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.DataLake.DataLakePathClient> UndeletePath(string deletedPath, string deletionId, Azure.Storage.Files.DataLake.Models.DataLakeFileSystemUndeletePathOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.DataLakePathClient> UndeletePath(string deletedPath, string deletionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.DataLakePathClient>> UndeletePathAsync(string deletedPath, string deletionId, Azure.Storage.Files.DataLake.Models.DataLakeFileSystemUndeletePathOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.DataLakePathClient>> UndeletePathAsync(string deletedPath, string deletionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DataLakeLeaseClient
@@ -313,15 +375,25 @@ namespace Azure.Storage.Files.DataLake
         public virtual string LeaseId { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.DataLakeLease> Acquire(System.TimeSpan duration, Azure.RequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.DataLakeLease> Acquire(System.TimeSpan duration, Azure.Storage.Files.DataLake.Models.DataLakeLeaseAcquireOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.DataLakeLease>> AcquireAsync(System.TimeSpan duration, Azure.RequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.DataLakeLease>> AcquireAsync(System.TimeSpan duration, Azure.Storage.Files.DataLake.Models.DataLakeLeaseAcquireOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.DataLakeLease> Break(Azure.Storage.Files.DataLake.Models.DataLakeLeaseBreakOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.DataLakeLease> Break(System.TimeSpan? breakPeriod = default(System.TimeSpan?), Azure.RequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.DataLakeLease>> BreakAsync(Azure.Storage.Files.DataLake.Models.DataLakeLeaseBreakOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.DataLakeLease>> BreakAsync(System.TimeSpan? breakPeriod = default(System.TimeSpan?), Azure.RequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.DataLakeLease> Change(string proposedId, Azure.RequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.DataLakeLease> Change(string proposedId, Azure.Storage.Files.DataLake.Models.DataLakeLeaseChangeOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.DataLakeLease>> ChangeAsync(string proposedId, Azure.RequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.DataLakeLease>> ChangeAsync(string proposedId, Azure.Storage.Files.DataLake.Models.DataLakeLeaseChangeOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.ReleasedObjectInfo> Release(Azure.RequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.ReleasedObjectInfo> Release(Azure.Storage.Files.DataLake.Models.DataLakeLeaseReleaseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.ReleasedObjectInfo>> ReleaseAsync(Azure.RequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.ReleasedObjectInfo>> ReleaseAsync(Azure.Storage.Files.DataLake.Models.DataLakeLeaseReleaseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.DataLakeLease> Renew(Azure.RequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.DataLakeLease> Renew(Azure.Storage.Files.DataLake.Models.DataLakeLeaseRenewOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.DataLakeLease>> RenewAsync(Azure.RequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.DataLakeLease>> RenewAsync(Azure.Storage.Files.DataLake.Models.DataLakeLeaseRenewOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class DataLakeLeaseClientExtensions
     {
@@ -356,11 +428,17 @@ namespace Azure.Storage.Files.DataLake
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> CreateIfNotExists(Azure.Storage.Files.DataLake.Models.PathResourceType resourceType, Azure.Storage.Files.DataLake.Models.PathHttpHeaders httpHeaders, System.Collections.Generic.IDictionary<string, string> metadata, string permissions, string umask, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> CreateIfNotExistsAsync(Azure.Storage.Files.DataLake.Models.PathResourceType resourceType, Azure.Storage.Files.DataLake.Models.DataLakePathCreateOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> CreateIfNotExistsAsync(Azure.Storage.Files.DataLake.Models.PathResourceType resourceType, Azure.Storage.Files.DataLake.Models.PathHttpHeaders httpHeaders, System.Collections.Generic.IDictionary<string, string> metadata, string permissions, string umask, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.Response Delete(Azure.Storage.Files.DataLake.Models.DataLakePathDeleteOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(bool? recursive = default(bool?), Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(Azure.Storage.Files.DataLake.Models.DataLakePathDeleteOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(bool? recursive = default(bool?), Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> DeleteIfExists(Azure.Storage.Files.DataLake.Models.DataLakePathDeleteOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> DeleteIfExists(bool? recursive = default(bool?), Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> DeleteIfExistsAsync(Azure.Storage.Files.DataLake.Models.DataLakePathDeleteOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> DeleteIfExistsAsync(bool? recursive = default(bool?), Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.Storage.Files.DataLake.Models.DataLakePathExistsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.Storage.Files.DataLake.Models.DataLakePathExistsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Uri GenerateSasUri(Azure.Storage.Sas.DataLakeSasBuilder builder) { throw null; }
         public virtual System.Uri GenerateSasUri(Azure.Storage.Sas.DataLakeSasBuilder builder, out string stringToSign) { throw null; }
@@ -370,31 +448,49 @@ namespace Azure.Storage.Files.DataLake
         public virtual System.Uri GenerateUserDelegationSasUri(Azure.Storage.Sas.DataLakeSasBuilder builder, Azure.Storage.Files.DataLake.Models.UserDelegationKey userDelegationKey, out string stringToSign) { throw null; }
         public virtual System.Uri GenerateUserDelegationSasUri(Azure.Storage.Sas.DataLakeSasPermissions permissions, System.DateTimeOffset expiresOn, Azure.Storage.Files.DataLake.Models.UserDelegationKey userDelegationKey) { throw null; }
         public virtual System.Uri GenerateUserDelegationSasUri(Azure.Storage.Sas.DataLakeSasPermissions permissions, System.DateTimeOffset expiresOn, Azure.Storage.Files.DataLake.Models.UserDelegationKey userDelegationKey, out string stringToSign) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.PathAccessControl> GetAccessControl(Azure.Storage.Files.DataLake.Models.DataLakePathGetAccessControlOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.PathAccessControl> GetAccessControl(bool? userPrincipalName = default(bool?), Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathAccessControl>> GetAccessControlAsync(Azure.Storage.Files.DataLake.Models.DataLakePathGetAccessControlOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathAccessControl>> GetAccessControlAsync(bool? userPrincipalName = default(bool?), Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected internal virtual Azure.Storage.Files.DataLake.DataLakeDirectoryClient GetParentDirectoryClientCore() { throw null; }
         protected internal virtual Azure.Storage.Files.DataLake.DataLakeFileSystemClient GetParentFileSystemClientCore() { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.PathProperties> GetProperties(Azure.Storage.Files.DataLake.Models.DataLakePathGetPropertiesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.PathProperties> GetProperties(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathProperties>> GetPropertiesAsync(Azure.Storage.Files.DataLake.Models.DataLakePathGetPropertiesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathProperties>> GetPropertiesAsync(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.PathSystemProperties> GetSystemProperties(Azure.Storage.Files.DataLake.Models.PathGetSystemPropertiesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathSystemProperties>> GetSystemPropertiesAsync(Azure.Storage.Files.DataLake.Models.PathGetSystemPropertiesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.GetPathTagResult> GetTags(Azure.Storage.Files.DataLake.Models.DataLakePathGetTagsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.GetPathTagResult> GetTags(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.GetPathTagResult>> GetTagsAsync(Azure.Storage.Files.DataLake.Models.DataLakePathGetTagsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.GetPathTagResult>> GetTagsAsync(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.AccessControlChangeResult> RemoveAccessControlRecursive(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.RemovePathAccessControlItem> accessControlList, string continuationToken = null, Azure.Storage.Files.DataLake.Models.AccessControlChangeOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.AccessControlChangeResult>> RemoveAccessControlRecursiveAsync(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.RemovePathAccessControlItem> accessControlList, string continuationToken = null, Azure.Storage.Files.DataLake.Models.AccessControlChangeOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.DataLake.DataLakePathClient> Rename(string destinationPath, Azure.Storage.Files.DataLake.Models.DataLakePathRenameOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.DataLakePathClient> Rename(string destinationPath, string destinationFileSystem = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions sourceConditions = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions destinationConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.DataLakePathClient>> RenameAsync(string destinationPath, Azure.Storage.Files.DataLake.Models.DataLakePathRenameOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.DataLakePathClient>> RenameAsync(string destinationPath, string destinationFileSystem = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions sourceConditions = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions destinationConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetAccessControlList(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList, Azure.Storage.Files.DataLake.Models.DataLakePathSetAccessControlListOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetAccessControlList(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList, string owner = null, string group = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetAccessControlListAsync(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList, Azure.Storage.Files.DataLake.Models.DataLakePathSetAccessControlListOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetAccessControlListAsync(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList, string owner = null, string group = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.AccessControlChangeResult> SetAccessControlRecursive(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList, string continuationToken = null, Azure.Storage.Files.DataLake.Models.AccessControlChangeOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.AccessControlChangeResult>> SetAccessControlRecursiveAsync(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList, string continuationToken = null, Azure.Storage.Files.DataLake.Models.AccessControlChangeOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetHttpHeaders(Azure.Storage.Files.DataLake.Models.DataLakePathSetHttpHeadersOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetHttpHeaders(Azure.Storage.Files.DataLake.Models.PathHttpHeaders httpHeaders = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetHttpHeadersAsync(Azure.Storage.Files.DataLake.Models.DataLakePathSetHttpHeadersOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetHttpHeadersAsync(Azure.Storage.Files.DataLake.Models.PathHttpHeaders httpHeaders = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetMetadata(System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Files.DataLake.Models.DataLakePathSetMetadataOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetMetadata(System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetMetadataAsync(System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Files.DataLake.Models.DataLakePathSetMetadataOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetMetadataAsync(System.Collections.Generic.IDictionary<string, string> metadata, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetPermissions(Azure.Storage.Files.DataLake.Models.PathPermissions permissions, Azure.Storage.Files.DataLake.Models.DataLakePathSetPermissionsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo> SetPermissions(Azure.Storage.Files.DataLake.Models.PathPermissions permissions, string owner = null, string group = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetPermissionsAsync(Azure.Storage.Files.DataLake.Models.PathPermissions permissions, Azure.Storage.Files.DataLake.Models.DataLakePathSetPermissionsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> SetPermissionsAsync(Azure.Storage.Files.DataLake.Models.PathPermissions permissions, string owner = null, string group = null, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response SetTags(System.Collections.Generic.IDictionary<string, string> tags, Azure.Storage.Files.DataLake.Models.DataLakePathSetTagsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SetTags(System.Collections.Generic.IDictionary<string, string> tags, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, Azure.Storage.Files.DataLake.Models.DataLakePathSetTagsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.AccessControlChangeResult> UpdateAccessControlRecursive(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList, string continuationToken = null, Azure.Storage.Files.DataLake.Models.AccessControlChangeOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.AccessControlChangeResult>> UpdateAccessControlRecursiveAsync(System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList, string continuationToken = null, Azure.Storage.Files.DataLake.Models.AccessControlChangeOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -421,25 +517,35 @@ namespace Azure.Storage.Files.DataLake
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.DataLakeFileSystemClient>> CreateFileSystemAsync(string fileSystemName, Azure.Storage.Files.DataLake.Models.DataLakeFileSystemCreateOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.DataLakeFileSystemClient>> CreateFileSystemAsync(string fileSystemName, Azure.Storage.Files.DataLake.Models.PublicAccessType publicAccessType, System.Collections.Generic.IDictionary<string, string> metadata, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual Azure.Response DeleteFileSystem(string fileSystemName, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteFileSystem(string fileSystemName, Azure.Storage.Files.DataLake.Models.DataLakeServiceDeleteFileSystemOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteFileSystemAsync(string fileSystemName, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteFileSystemAsync(string fileSystemName, Azure.Storage.Files.DataLake.Models.DataLakeServiceDeleteFileSystemOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.Uri GenerateAccountSasUri(Azure.Storage.Sas.AccountSasBuilder builder) { throw null; }
         public System.Uri GenerateAccountSasUri(Azure.Storage.Sas.AccountSasBuilder builder, out string stringToSign) { throw null; }
         public System.Uri GenerateAccountSasUri(Azure.Storage.Sas.AccountSasPermissions permissions, System.DateTimeOffset expiresOn, Azure.Storage.Sas.AccountSasResourceTypes resourceTypes) { throw null; }
         public System.Uri GenerateAccountSasUri(Azure.Storage.Sas.AccountSasPermissions permissions, System.DateTimeOffset expiresOn, Azure.Storage.Sas.AccountSasResourceTypes resourceTypes, out string stringToSign) { throw null; }
         public virtual Azure.Storage.Files.DataLake.DataLakeFileSystemClient GetFileSystemClient(string fileSystemName) { throw null; }
+        public virtual Azure.Pageable<Azure.Storage.Files.DataLake.Models.FileSystemItem> GetFileSystems(Azure.Storage.Files.DataLake.Models.DataLakeServiceGetFileSystemsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Storage.Files.DataLake.Models.FileSystemItem> GetFileSystems(Azure.Storage.Files.DataLake.Models.FileSystemTraits traits = Azure.Storage.Files.DataLake.Models.FileSystemTraits.None, Azure.Storage.Files.DataLake.Models.FileSystemStates states = Azure.Storage.Files.DataLake.Models.FileSystemStates.None, string prefix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.Storage.Files.DataLake.Models.FileSystemItem> GetFileSystems(Azure.Storage.Files.DataLake.Models.FileSystemTraits traits, string prefix, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Storage.Files.DataLake.Models.FileSystemItem> GetFileSystemsAsync(Azure.Storage.Files.DataLake.Models.DataLakeServiceGetFileSystemsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Storage.Files.DataLake.Models.FileSystemItem> GetFileSystemsAsync(Azure.Storage.Files.DataLake.Models.FileSystemTraits traits = Azure.Storage.Files.DataLake.Models.FileSystemTraits.None, Azure.Storage.Files.DataLake.Models.FileSystemStates states = Azure.Storage.Files.DataLake.Models.FileSystemStates.None, string prefix = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.Storage.Files.DataLake.Models.FileSystemItem> GetFileSystemsAsync(Azure.Storage.Files.DataLake.Models.FileSystemTraits traits, string prefix, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.DataLakeServiceProperties> GetProperties(Azure.Storage.Files.DataLake.Models.DataLakeServiceGetPropertiesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.DataLakeServiceProperties> GetProperties(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.DataLakeServiceProperties>> GetPropertiesAsync(Azure.Storage.Files.DataLake.Models.DataLakeServiceGetPropertiesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.DataLakeServiceProperties>> GetPropertiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.UserDelegationKey> GetUserDelegationKey(Azure.Storage.Files.DataLake.Models.DataLakeGetUserDelegationKeyOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.Models.UserDelegationKey> GetUserDelegationKey(System.DateTimeOffset? startsOn, System.DateTimeOffset expiresOn, System.Threading.CancellationToken cancellationToken) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.UserDelegationKey>> GetUserDelegationKeyAsync(Azure.Storage.Files.DataLake.Models.DataLakeGetUserDelegationKeyOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.UserDelegationKey>> GetUserDelegationKeyAsync(System.DateTimeOffset? startsOn, System.DateTimeOffset expiresOn, System.Threading.CancellationToken cancellationToken) { throw null; }
+        public virtual Azure.Response SetProperties(Azure.Storage.Files.DataLake.Models.DataLakeServiceProperties properties, Azure.Storage.Files.DataLake.Models.DataLakeServiceSetPropertiesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SetProperties(Azure.Storage.Files.DataLake.Models.DataLakeServiceProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> SetPropertiesAsync(Azure.Storage.Files.DataLake.Models.DataLakeServiceProperties properties, Azure.Storage.Files.DataLake.Models.DataLakeServiceSetPropertiesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SetPropertiesAsync(Azure.Storage.Files.DataLake.Models.DataLakeServiceProperties properties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Storage.Files.DataLake.DataLakeFileSystemClient> UndeleteFileSystem(string deletedFileSystemName, string deleteFileSystemVersion, Azure.Storage.Files.DataLake.Models.DataLakeServiceUndeleteFileSystemOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Storage.Files.DataLake.DataLakeFileSystemClient> UndeleteFileSystem(string deletedFileSystemName, string deleteFileSystemVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.DataLakeFileSystemClient>> UndeleteFileSystemAsync(string deletedFileSystemName, string deleteFileSystemVersion, Azure.Storage.Files.DataLake.Models.DataLakeServiceUndeleteFileSystemOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.DataLakeFileSystemClient>> UndeleteFileSystemAsync(string deletedFileSystemName, string deleteFileSystemVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DataLakeUriBuilder
@@ -484,6 +590,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public bool? ContinueOnFailure { get { throw null; } set { } }
         public int? MaxBatches { get { throw null; } set { } }
         public System.IProgress<Azure.Response<Azure.Storage.Files.DataLake.Models.AccessControlChanges>> ProgressHandler { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public partial struct AccessControlChangeResult
@@ -595,6 +702,12 @@ namespace Azure.Storage.Files.DataLake.Models
         public static bool operator !=(Azure.Storage.Files.DataLake.Models.DataLakeCustomerProvidedKey left, Azure.Storage.Files.DataLake.Models.DataLakeCustomerProvidedKey right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class DataLakeDirectoryDeleteOptions
+    {
+        public DataLakeDirectoryDeleteOptions() { }
+        public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
+    }
     public enum DataLakeEncryptionAlgorithmType
     {
         Aes256 = 0,
@@ -609,7 +722,14 @@ namespace Azure.Storage.Files.DataLake.Models
         public string LeaseId { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
         public string ProposedLeaseId { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
         public Azure.Storage.UploadTransferValidationOptions TransferValidation { get { throw null; } set { } }
+    }
+    public partial class DataLakeFileDeleteOptions
+    {
+        public DataLakeFileDeleteOptions() { }
+        public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
     }
     public enum DataLakeFileExpirationOrigin
     {
@@ -625,6 +745,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public Azure.Storage.Files.DataLake.Models.DataLakeLeaseAction? LeaseAction { get { throw null; } set { } }
         public System.TimeSpan? LeaseDuration { get { throw null; } set { } }
         public string ProposedLeaseId { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
         public bool? RetainUncommittedData { get { throw null; } set { } }
     }
     public partial class DataLakeFileOpenWriteOptions
@@ -634,6 +755,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public bool? Close { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions OpenConditions { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
         public Azure.Storage.UploadTransferValidationOptions TransferValidation { get { throw null; } set { } }
     }
     public partial class DataLakeFileReadOptions
@@ -641,6 +763,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public DataLakeFileReadOptions() { }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
         public Azure.HttpRange Range { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
         public Azure.Storage.DownloadTransferValidationOptions TransferValidation { get { throw null; } set { } }
     }
     public partial class DataLakeFileReadResult
@@ -661,6 +784,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public DataLakeFileReadToOptions() { }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.LayoutAwareRouting LayoutAwareRouting { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
         public Azure.Storage.StorageTransferOptions TransferOptions { get { throw null; } set { } }
         public Azure.Storage.DownloadTransferValidationOptions TransferValidation { get { throw null; } set { } }
     }
@@ -670,6 +794,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public DataLakeFileScheduleDeletionOptions(System.DateTimeOffset? expiresOn) { }
         public DataLakeFileScheduleDeletionOptions(System.TimeSpan timeToExpire, Azure.Storage.Files.DataLake.Models.DataLakeFileExpirationOrigin setRelativeTo) { }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
+        public int? RequestPriority { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeFileExpirationOrigin? SetExpiryRelativeTo { get { throw null; } }
         public System.TimeSpan? TimeToExpire { get { throw null; } }
     }
@@ -679,12 +804,67 @@ namespace Azure.Storage.Files.DataLake.Models
         public Azure.Storage.Files.DataLake.Models.DataLakeFileSystemEncryptionScopeOptions EncryptionScopeOptions { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.PublicAccessType PublicAccessType { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
+    }
+    public partial class DataLakeFileSystemDeleteIfExistsOptions
+    {
+        public DataLakeFileSystemDeleteIfExistsOptions() { }
+        public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
+    }
+    public partial class DataLakeFileSystemDeleteOptions
+    {
+        public DataLakeFileSystemDeleteOptions() { }
+        public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
     }
     public partial class DataLakeFileSystemEncryptionScopeOptions
     {
         public DataLakeFileSystemEncryptionScopeOptions() { }
         public string DefaultEncryptionScope { get { throw null; } set { } }
         public bool PreventEncryptionScopeOverride { get { throw null; } set { } }
+    }
+    public partial class DataLakeFileSystemExistsOptions
+    {
+        public DataLakeFileSystemExistsOptions() { }
+        public int? RequestPriority { get { throw null; } set { } }
+    }
+    public partial class DataLakeFileSystemGetAccessPolicyOptions
+    {
+        public DataLakeFileSystemGetAccessPolicyOptions() { }
+        public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
+    }
+    public partial class DataLakeFileSystemGetDeletedPathsOptions
+    {
+        public DataLakeFileSystemGetDeletedPathsOptions() { }
+        public string PathPrefix { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
+    }
+    public partial class DataLakeFileSystemGetPropertiesOptions
+    {
+        public DataLakeFileSystemGetPropertiesOptions() { }
+        public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
+    }
+    public partial class DataLakeFileSystemSetAccessPolicyOptions
+    {
+        public DataLakeFileSystemSetAccessPolicyOptions() { }
+        public Azure.Storage.Files.DataLake.Models.PublicAccessType AccessType { get { throw null; } set { } }
+        public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
+        public System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.DataLakeSignedIdentifier> Permissions { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
+    }
+    public partial class DataLakeFileSystemSetMetadataOptions
+    {
+        public DataLakeFileSystemSetMetadataOptions() { }
+        public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
+    }
+    public partial class DataLakeFileSystemUndeletePathOptions
+    {
+        public DataLakeFileSystemUndeletePathOptions() { }
+        public int? RequestPriority { get { throw null; } set { } }
     }
     public partial class DataLakeFileUploadOptions
     {
@@ -696,6 +876,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public string Permissions { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakePathScheduleDeletionOptions ScheduleDeletionOptions { get { throw null; } set { } }
         public Azure.Storage.StorageTransferOptions TransferOptions { get { throw null; } set { } }
         public Azure.Storage.UploadTransferValidationOptions TransferValidation { get { throw null; } set { } }
@@ -706,6 +887,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public DataLakeGetPathsOptions() { }
         public string Path { get { throw null; } set { } }
         public bool Recursive { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
         public string StartFrom { get { throw null; } set { } }
         public bool UserPrincipalName { get { throw null; } set { } }
     }
@@ -714,15 +896,23 @@ namespace Azure.Storage.Files.DataLake.Models
         public DataLakeGetUserDelegationKeyOptions(System.DateTimeOffset expiresOn) { }
         public string DelegatedUserTenantId { get { throw null; } set { } }
         public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
         public System.DateTimeOffset? StartsOn { get { throw null; } set { } }
     }
     public partial class DataLakeLease
     {
         internal DataLakeLease() { }
+        public int? EffectiveRequestPriority { get { throw null; } }
         public Azure.ETag ETag { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
         public string LeaseId { get { throw null; } }
         public int? LeaseTime { get { throw null; } }
+    }
+    public partial class DataLakeLeaseAcquireOptions
+    {
+        public DataLakeLeaseAcquireOptions() { }
+        public Azure.RequestConditions Conditions { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
     }
     public enum DataLakeLeaseAction
     {
@@ -731,10 +921,35 @@ namespace Azure.Storage.Files.DataLake.Models
         Release = 2,
         AcquireRelease = 3,
     }
+    public partial class DataLakeLeaseBreakOptions
+    {
+        public DataLakeLeaseBreakOptions() { }
+        public System.TimeSpan? BreakPeriod { get { throw null; } set { } }
+        public Azure.RequestConditions Conditions { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
+    }
+    public partial class DataLakeLeaseChangeOptions
+    {
+        public DataLakeLeaseChangeOptions() { }
+        public Azure.RequestConditions Conditions { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
+    }
     public enum DataLakeLeaseDuration
     {
         Infinite = 0,
         Fixed = 1,
+    }
+    public partial class DataLakeLeaseReleaseOptions
+    {
+        public DataLakeLeaseReleaseOptions() { }
+        public Azure.RequestConditions Conditions { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
+    }
+    public partial class DataLakeLeaseRenewOptions
+    {
+        public DataLakeLeaseRenewOptions() { }
+        public Azure.RequestConditions Conditions { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
     }
     public enum DataLakeLeaseState
     {
@@ -767,20 +982,28 @@ namespace Azure.Storage.Files.DataLake.Models
         public static Azure.Storage.Files.DataLake.Models.FileDownloadDetails FileDownloadDetails(System.DateTimeOffset lastModified, System.Collections.Generic.IDictionary<string, string> metadata, string contentRange, Azure.ETag eTag, string contentEncoding, string cacheControl, string contentDisposition, string contentLanguage, System.DateTimeOffset copyCompletionTime, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, Azure.Storage.Files.DataLake.Models.CopyStatus copyStatus, Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration leaseDuration, Azure.Storage.Files.DataLake.Models.DataLakeLeaseState leaseState, Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus leaseStatus, string acceptRanges, bool isServerEncrypted, string encryptionKeySha256, byte[] contentHash, System.DateTimeOffset createdOn) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.FileDownloadDetails FileDownloadDetails(System.DateTimeOffset lastModified, System.Collections.Generic.IDictionary<string, string> metadata, string contentRange, Azure.ETag eTag, string contentEncoding, string cacheControl, string contentDisposition, string contentLanguage, System.DateTimeOffset copyCompletionTime, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, Azure.Storage.Files.DataLake.Models.CopyStatus copyStatus, Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration leaseDuration, Azure.Storage.Files.DataLake.Models.DataLakeLeaseState leaseState, Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus leaseStatus, string acceptRanges, bool isServerEncrypted, string encryptionKeySha256, byte[] contentHash, System.DateTimeOffset createdOn, string encryptionContext) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.FileDownloadDetails FileDownloadDetails(System.DateTimeOffset lastModified, System.Collections.Generic.IDictionary<string, string> metadata, string contentRange, Azure.ETag eTag, string contentEncoding, string cacheControl, string contentDisposition, string contentLanguage, System.DateTimeOffset copyCompletionTime, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, Azure.Storage.Files.DataLake.Models.CopyStatus copyStatus, Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration leaseDuration, Azure.Storage.Files.DataLake.Models.DataLakeLeaseState leaseState, Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus leaseStatus, string acceptRanges, bool isServerEncrypted, string encryptionKeySha256, byte[] contentHash, System.DateTimeOffset createdOn, string encryptionContext, System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.FileDownloadDetails FileDownloadDetails(System.DateTimeOffset lastModified, System.Collections.Generic.IDictionary<string, string> metadata, string contentRange, Azure.ETag eTag, string contentEncoding, string cacheControl, string contentDisposition, string contentLanguage, System.DateTimeOffset copyCompletionTime, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, Azure.Storage.Files.DataLake.Models.CopyStatus copyStatus, Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration leaseDuration, Azure.Storage.Files.DataLake.Models.DataLakeLeaseState leaseState, Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus leaseStatus, string acceptRanges, bool isServerEncrypted, string encryptionKeySha256, byte[] contentHash, System.DateTimeOffset createdOn, string encryptionContext, System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList, int? effectiveRequestPriority) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.FileDownloadInfo FileDownloadInfo(long contentLength, System.IO.Stream content, byte[] contentHash, Azure.Storage.Files.DataLake.Models.FileDownloadDetails properties) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.FileSystemAccessPolicy FileSystemAccessPolicy(Azure.Storage.Files.DataLake.Models.PublicAccessType dataLakePublicAccess, Azure.ETag eTag, System.DateTimeOffset lastModified, System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.DataLakeSignedIdentifier> signedIdentifiers) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.FileSystemAccessPolicy FileSystemAccessPolicy(Azure.Storage.Files.DataLake.Models.PublicAccessType dataLakePublicAccess, Azure.ETag eTag, System.DateTimeOffset lastModified, System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.DataLakeSignedIdentifier> signedIdentifiers, int? effectiveRequestPriority) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.FileSystemInfo FileSystemInfo(Azure.ETag etag, System.DateTimeOffset lastModified) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.FileSystemInfo FileSystemInfo(Azure.ETag etag = default(Azure.ETag), System.DateTimeOffset lastModified = default(System.DateTimeOffset), int? effectiveRequestPriority = default(int?)) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.FileSystemItem FileSystemItem(string name, Azure.Storage.Files.DataLake.Models.FileSystemProperties properties) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.FileSystemItem FileSystemItem(string name = null, bool? isDeleted = default(bool?), string versionId = null, Azure.Storage.Files.DataLake.Models.FileSystemProperties properties = null) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.FileSystemProperties FileSystemProperties(System.DateTimeOffset lastModified, Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus? leaseStatus, Azure.Storage.Files.DataLake.Models.DataLakeLeaseState? leaseState, Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration? leaseDuration, Azure.Storage.Files.DataLake.Models.PublicAccessType? publicAccess, bool? hasImmutabilityPolicy, bool? hasLegalHold, Azure.ETag eTag) { throw null; }
-        public static Azure.Storage.Files.DataLake.Models.FileSystemProperties FileSystemProperties(System.DateTimeOffset lastModified = default(System.DateTimeOffset), Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus? leaseStatus = default(Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus?), Azure.Storage.Files.DataLake.Models.DataLakeLeaseState? leaseState = default(Azure.Storage.Files.DataLake.Models.DataLakeLeaseState?), Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration? leaseDuration = default(Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration?), Azure.Storage.Files.DataLake.Models.PublicAccessType? publicAccess = default(Azure.Storage.Files.DataLake.Models.PublicAccessType?), bool? hasImmutabilityPolicy = default(bool?), bool? hasLegalHold = default(bool?), Azure.ETag eTag = default(Azure.ETag), System.Collections.Generic.IDictionary<string, string> metadata = null, System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), int? remainingRetentionDays = default(int?)) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.FileSystemProperties FileSystemProperties(System.DateTimeOffset lastModified, Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus? leaseStatus, Azure.Storage.Files.DataLake.Models.DataLakeLeaseState? leaseState, Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration? leaseDuration, Azure.Storage.Files.DataLake.Models.PublicAccessType? publicAccess, bool? hasImmutabilityPolicy, bool? hasLegalHold, Azure.ETag eTag, System.Collections.Generic.IDictionary<string, string> metadata, System.DateTimeOffset? deletedOn, int? remainingRetentionDays) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.FileSystemProperties FileSystemProperties(System.DateTimeOffset lastModified = default(System.DateTimeOffset), Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus? leaseStatus = default(Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus?), Azure.Storage.Files.DataLake.Models.DataLakeLeaseState? leaseState = default(Azure.Storage.Files.DataLake.Models.DataLakeLeaseState?), Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration? leaseDuration = default(Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration?), Azure.Storage.Files.DataLake.Models.PublicAccessType? publicAccess = default(Azure.Storage.Files.DataLake.Models.PublicAccessType?), bool? hasImmutabilityPolicy = default(bool?), bool? hasLegalHold = default(bool?), Azure.ETag eTag = default(Azure.ETag), System.Collections.Generic.IDictionary<string, string> metadata = null, System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), int? remainingRetentionDays = default(int?), int? effectiveRequestPriority = default(int?)) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.GetPathTagResult GetPathTagResult(System.Collections.Generic.IDictionary<string, string> tags) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.GetPathTagResult GetPathTagResult(System.Collections.Generic.IDictionary<string, string> tags, int? effectiveRequestPriority) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.DataLakeLease Lease(Azure.ETag eTag, System.DateTimeOffset lastModified, string leaseId, int? leaseTime) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.DataLakeLease Lease(Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset lastModified = default(System.DateTimeOffset), string leaseId = null, int? leaseTime = default(int?), int? effectiveRequestPriority = default(int?)) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.PathAccessControl PathAccessControl(string owner, string group, Azure.Storage.Files.DataLake.Models.PathPermissions permissions, System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> acl) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.PathAccessControl PathAccessControl(string owner, string group, Azure.Storage.Files.DataLake.Models.PathPermissions permissions, System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> acl, int? effectiveRequestPriority) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.PathContentInfo PathContentInfo(string contentHash, Azure.ETag eTag, System.DateTimeOffset lastModified, string acceptRanges, string cacheControl, string contentDisposition, string contentEncoding, string contentLanguage, long contentLength, string contentRange, string contentType, System.Collections.Generic.IDictionary<string, string> metadata) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.PathCreateInfo PathCreateInfo(Azure.Storage.Files.DataLake.Models.PathInfo pathInfo, string continuation) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.PathDeletedItem PathDeletedItem(string path, string deletionId, System.DateTimeOffset? deletedOn, int? remainingRetentionDays) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.PathInfo PathInfo(Azure.ETag eTag, System.DateTimeOffset lastModified) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.PathInfo PathInfo(Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset lastModified = default(System.DateTimeOffset), int? effectiveRequestPriority = default(int?)) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.PathItem PathItem(string name, bool? isDirectory, System.DateTimeOffset lastModified, Azure.ETag eTag, long? contentLength, string owner, string group, string permissions) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.PathItem PathItem(string name, bool? isDirectory, System.DateTimeOffset lastModified, Azure.ETag eTag, long? contentLength, string owner, string group, string permissions, System.DateTimeOffset? createdOn, System.DateTimeOffset? expiresOn) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.PathItem PathItem(string name, bool? isDirectory, System.DateTimeOffset lastModified, Azure.ETag eTag, long? contentLength, string owner, string group, string permissions, System.DateTimeOffset? createdOn, System.DateTimeOffset? expiresOn, string encryptionContext) { throw null; }
@@ -790,9 +1013,13 @@ namespace Azure.Storage.Files.DataLake.Models
         public static Azure.Storage.Files.DataLake.Models.PathProperties PathProperties(System.DateTimeOffset lastModified, System.DateTimeOffset creationTime, System.Collections.Generic.IDictionary<string, string> metadata, System.DateTimeOffset copyCompletionTime, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, Azure.Storage.Files.DataLake.Models.CopyStatus copyStatus, bool isIncrementalCopy, Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration leaseDuration, Azure.Storage.Files.DataLake.Models.DataLakeLeaseState leaseState, Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus leaseStatus, long contentLength, string contentType, Azure.ETag eTag, byte[] contentHash, string contentEncoding, string contentDisposition, string contentLanguage, string cacheControl, string acceptRanges, bool isServerEncrypted, string encryptionKeySha256, string accessTier, string archiveStatus, System.DateTimeOffset accessTierChangeTime, bool isDirectory, string encryptionContext, string owner, string group, string permissions) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.PathProperties PathProperties(System.DateTimeOffset lastModified, System.DateTimeOffset creationTime, System.Collections.Generic.IDictionary<string, string> metadata, System.DateTimeOffset copyCompletionTime, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, Azure.Storage.Files.DataLake.Models.CopyStatus copyStatus, bool isIncrementalCopy, Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration leaseDuration, Azure.Storage.Files.DataLake.Models.DataLakeLeaseState leaseState, Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus leaseStatus, long contentLength, string contentType, Azure.ETag eTag, byte[] contentHash, string contentEncoding, string contentDisposition, string contentLanguage, string cacheControl, string acceptRanges, bool isServerEncrypted, string encryptionKeySha256, string accessTier, string archiveStatus, System.DateTimeOffset accessTierChangeTime, bool isDirectory, string encryptionContext, string owner, string group, string permissions, System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.PathProperties PathProperties(System.DateTimeOffset lastModified, System.DateTimeOffset creationTime, System.Collections.Generic.IDictionary<string, string> metadata, System.DateTimeOffset copyCompletionTime, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, Azure.Storage.Files.DataLake.Models.CopyStatus copyStatus, bool isIncrementalCopy, Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration leaseDuration, Azure.Storage.Files.DataLake.Models.DataLakeLeaseState leaseState, Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus leaseStatus, long contentLength, string contentType, Azure.ETag eTag, byte[] contentHash, string contentEncoding, string contentDisposition, string contentLanguage, string cacheControl, string acceptRanges, bool isServerEncrypted, string encryptionKeySha256, string accessTier, string archiveStatus, System.DateTimeOffset accessTierChangeTime, bool isDirectory, string encryptionContext, string owner, string group, string permissions, System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList, string smartAccessTier, bool accessTierInferred) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.PathProperties PathProperties(System.DateTimeOffset lastModified, System.DateTimeOffset creationTime, System.Collections.Generic.IDictionary<string, string> metadata, System.DateTimeOffset copyCompletionTime, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, Azure.Storage.Files.DataLake.Models.CopyStatus copyStatus, bool isIncrementalCopy, Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration leaseDuration, Azure.Storage.Files.DataLake.Models.DataLakeLeaseState leaseState, Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus leaseStatus, long contentLength, string contentType, Azure.ETag eTag, byte[] contentHash, string contentEncoding, string contentDisposition, string contentLanguage, string cacheControl, string acceptRanges, bool isServerEncrypted, string encryptionKeySha256, string accessTier, string archiveStatus, System.DateTimeOffset accessTierChangeTime, bool isDirectory, string encryptionContext, string owner, string group, string permissions, System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> accessControlList, string smartAccessTier, bool accessTierInferred, int? effectiveRequestPriority) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.PathSystemProperties PathSystemProperties(System.DateTimeOffset? creationTime, System.DateTimeOffset? lastModifiedTime, Azure.ETag eTag, long? contentLength, bool? isDirectory, bool? isServerEncrypted, string encryptionKeySha256, System.DateTimeOffset? expiresOn, string encryptionScope, string encryptionContext, string owner, string group, Azure.Storage.Files.DataLake.Models.PathPermissions permissions) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.PathSystemProperties PathSystemProperties(System.DateTimeOffset? creationTime, System.DateTimeOffset? lastModifiedTime, Azure.ETag eTag, long? contentLength, bool? isDirectory, bool? isServerEncrypted, string encryptionKeySha256, System.DateTimeOffset? expiresOn, string encryptionScope, string encryptionContext, string owner, string group, Azure.Storage.Files.DataLake.Models.PathPermissions permissions, int? effectiveRequestPriority) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.ReleasedObjectInfo ReleasedObjectInfo(Azure.ETag eTag = default(Azure.ETag), System.DateTimeOffset lastModified = default(System.DateTimeOffset), int? effectiveRequestPriority = default(int?)) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.UserDelegationKey UserDelegationKey(string signedObjectId, string signedTenantId, System.DateTimeOffset signedStart, System.DateTimeOffset signedExpiry, string signedService, string signedVersion, string value) { throw null; }
-        public static Azure.Storage.Files.DataLake.Models.UserDelegationKey UserDelegationKey(string signedObjectId = null, string signedTenantId = null, System.DateTimeOffset signedStart = default(System.DateTimeOffset), System.DateTimeOffset signedExpiry = default(System.DateTimeOffset), string signedService = null, string signedVersion = null, string signedDelegatedUserTenantId = null, string value = null) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.UserDelegationKey UserDelegationKey(string signedObjectId, string signedTenantId, System.DateTimeOffset signedStart, System.DateTimeOffset signedExpiry, string signedService, string signedVersion, string signedDelegatedUserTenantId, string value) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.UserDelegationKey UserDelegationKey(string signedObjectId = null, string signedTenantId = null, System.DateTimeOffset signedStart = default(System.DateTimeOffset), System.DateTimeOffset signedExpiry = default(System.DateTimeOffset), string signedService = null, string signedVersion = null, string signedDelegatedUserTenantId = null, string value = null, int? effectiveRequestPriority = default(int?)) { throw null; }
     }
     public partial class DataLakeOpenReadOptions
     {
@@ -801,6 +1028,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.LayoutAwareRouting LayoutAwareRouting { get { throw null; } set { } }
         public long Position { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
         public Azure.Storage.DownloadTransferValidationOptions TransferValidation { get { throw null; } set { } }
     }
     public partial class DataLakePathCreateOptions
@@ -813,7 +1041,47 @@ namespace Azure.Storage.Files.DataLake.Models
         public System.TimeSpan? LeaseDuration { get { throw null; } set { } }
         public string LeaseId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakePathScheduleDeletionOptions ScheduleDeletionOptions { get { throw null; } set { } }
+    }
+    public partial class DataLakePathDeleteOptions
+    {
+        public DataLakePathDeleteOptions() { }
+        public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
+        public bool? Recursive { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
+    }
+    public partial class DataLakePathExistsOptions
+    {
+        public DataLakePathExistsOptions() { }
+        public int? RequestPriority { get { throw null; } set { } }
+    }
+    public partial class DataLakePathGetAccessControlOptions
+    {
+        public DataLakePathGetAccessControlOptions() { }
+        public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
+        public bool? UserPrincipalName { get { throw null; } set { } }
+    }
+    public partial class DataLakePathGetPropertiesOptions
+    {
+        public DataLakePathGetPropertiesOptions() { }
+        public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
+    }
+    public partial class DataLakePathGetTagsOptions
+    {
+        public DataLakePathGetTagsOptions() { }
+        public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
+    }
+    public partial class DataLakePathRenameOptions
+    {
+        public DataLakePathRenameOptions() { }
+        public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions DestinationConditions { get { throw null; } set { } }
+        public string DestinationFileSystem { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
+        public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions SourceConditions { get { throw null; } set { } }
     }
     public partial class DataLakePathScheduleDeletionOptions
     {
@@ -821,6 +1089,41 @@ namespace Azure.Storage.Files.DataLake.Models
         public DataLakePathScheduleDeletionOptions(System.TimeSpan? timeToExpire) { }
         public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public System.TimeSpan? TimeToExpire { get { throw null; } }
+    }
+    public partial class DataLakePathSetAccessControlListOptions
+    {
+        public DataLakePathSetAccessControlListOptions() { }
+        public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
+        public string Group { get { throw null; } set { } }
+        public string Owner { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
+    }
+    public partial class DataLakePathSetHttpHeadersOptions
+    {
+        public DataLakePathSetHttpHeadersOptions() { }
+        public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
+        public Azure.Storage.Files.DataLake.Models.PathHttpHeaders HttpHeaders { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
+    }
+    public partial class DataLakePathSetMetadataOptions
+    {
+        public DataLakePathSetMetadataOptions() { }
+        public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
+    }
+    public partial class DataLakePathSetPermissionsOptions
+    {
+        public DataLakePathSetPermissionsOptions() { }
+        public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
+        public string Group { get { throw null; } set { } }
+        public string Owner { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
+    }
+    public partial class DataLakePathSetTagsOptions
+    {
+        public DataLakePathSetTagsOptions() { }
+        public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
     }
     public partial class DataLakeQueryArrowField
     {
@@ -873,6 +1176,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public Azure.Storage.Files.DataLake.Models.DataLakeQueryTextOptions InputTextConfiguration { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeQueryTextOptions OutputTextConfiguration { get { throw null; } set { } }
         public System.IProgress<long> ProgressHandler { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
         public event System.Action<Azure.Storage.Files.DataLake.Models.DataLakeQueryError> ErrorHandler { add { } remove { } }
     }
     public partial class DataLakeQueryParquetTextOptions : Azure.Storage.Files.DataLake.Models.DataLakeQueryTextOptions
@@ -895,6 +1199,25 @@ namespace Azure.Storage.Files.DataLake.Models
         public int? Days { get { throw null; } set { } }
         public bool Enabled { get { throw null; } set { } }
     }
+    public partial class DataLakeServiceDeleteFileSystemOptions
+    {
+        public DataLakeServiceDeleteFileSystemOptions() { }
+        public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
+    }
+    public partial class DataLakeServiceGetFileSystemsOptions
+    {
+        public DataLakeServiceGetFileSystemsOptions() { }
+        public string Prefix { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
+        public Azure.Storage.Files.DataLake.Models.FileSystemStates States { get { throw null; } set { } }
+        public Azure.Storage.Files.DataLake.Models.FileSystemTraits Traits { get { throw null; } set { } }
+    }
+    public partial class DataLakeServiceGetPropertiesOptions
+    {
+        public DataLakeServiceGetPropertiesOptions() { }
+        public int? RequestPriority { get { throw null; } set { } }
+    }
     public partial class DataLakeServiceProperties
     {
         public DataLakeServiceProperties() { }
@@ -905,6 +1228,16 @@ namespace Azure.Storage.Files.DataLake.Models
         public Azure.Storage.Files.DataLake.Models.DataLakeAnalyticsLogging Logging { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeMetrics MinuteMetrics { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeStaticWebsite StaticWebsite { get { throw null; } set { } }
+    }
+    public partial class DataLakeServiceSetPropertiesOptions
+    {
+        public DataLakeServiceSetPropertiesOptions() { }
+        public int? RequestPriority { get { throw null; } set { } }
+    }
+    public partial class DataLakeServiceUndeleteFileSystemOptions
+    {
+        public DataLakeServiceUndeleteFileSystemOptions() { }
+        public int? RequestPriority { get { throw null; } set { } }
     }
     public partial class DataLakeSignedIdentifier
     {
@@ -938,6 +1271,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public Azure.Storage.Files.DataLake.Models.CopyStatus CopyStatus { get { throw null; } }
         public string CopyStatusDescription { get { throw null; } }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
+        public int? EffectiveRequestPriority { get { throw null; } }
         public string EncryptionContext { get { throw null; } }
         public string EncryptionKeySha256 { get { throw null; } }
         public Azure.ETag ETag { get { throw null; } }
@@ -960,6 +1294,7 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         public FileSystemAccessPolicy() { }
         public Azure.Storage.Files.DataLake.Models.PublicAccessType DataLakePublicAccess { get { throw null; } }
+        public int? EffectiveRequestPriority { get { throw null; } }
         public Azure.ETag ETag { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
         public System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.DataLakeSignedIdentifier> SignedIdentifiers { get { throw null; } }
@@ -967,6 +1302,7 @@ namespace Azure.Storage.Files.DataLake.Models
     public partial class FileSystemInfo
     {
         internal FileSystemInfo() { }
+        public int? EffectiveRequestPriority { get { throw null; } }
         public Azure.ETag ETag { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
     }
@@ -992,6 +1328,7 @@ namespace Azure.Storage.Files.DataLake.Models
         internal FileSystemProperties() { }
         public string DefaultEncryptionScope { get { throw null; } }
         public System.DateTimeOffset? DeletedOn { get { throw null; } }
+        public int? EffectiveRequestPriority { get { throw null; } }
         public Azure.ETag ETag { get { throw null; } }
         public bool? HasImmutabilityPolicy { get { throw null; } }
         public bool? HasLegalHold { get { throw null; } }
@@ -1020,12 +1357,14 @@ namespace Azure.Storage.Files.DataLake.Models
     public partial class GetPathTagResult
     {
         internal GetPathTagResult() { }
+        public int? EffectiveRequestPriority { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     public partial class PathAccessControl
     {
         internal PathAccessControl() { }
         public System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.PathAccessControlItem> AccessControlList { get { throw null; } }
+        public int? EffectiveRequestPriority { get { throw null; } }
         public string Group { get { throw null; } }
         public string Owner { get { throw null; } }
         public Azure.Storage.Files.DataLake.Models.PathPermissions Permissions { get { throw null; } }
@@ -1090,6 +1429,7 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         public PathGetSystemPropertiesOptions() { }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions RequestConditions { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
     }
     public partial class PathHttpHeaders
     {
@@ -1107,6 +1447,7 @@ namespace Azure.Storage.Files.DataLake.Models
     public partial class PathInfo
     {
         internal PathInfo() { }
+        public int? EffectiveRequestPriority { get { throw null; } }
         public Azure.ETag ETag { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
     }
@@ -1171,6 +1512,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public Azure.Storage.Files.DataLake.Models.CopyStatus CopyStatus { get { throw null; } }
         public string CopyStatusDescription { get { throw null; } }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
+        public int? EffectiveRequestPriority { get { throw null; } }
         public string EncryptionContext { get { throw null; } }
         public string EncryptionKeySha256 { get { throw null; } }
         public string EncryptionScope { get { throw null; } }
@@ -1204,6 +1546,7 @@ namespace Azure.Storage.Files.DataLake.Models
         internal PathSystemProperties() { }
         public long? ContentLength { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public int? EffectiveRequestPriority { get { throw null; } }
         public string EncryptionContext { get { throw null; } }
         public string EncryptionKeySha256 { get { throw null; } }
         public string EncryptionScope { get { throw null; } }
@@ -1236,6 +1579,7 @@ namespace Azure.Storage.Files.DataLake.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ReleasedObjectInfo(Azure.ETag eTag, System.DateTimeOffset lastModified) { throw null; }
+        public int? EffectiveRequestPriority { get { throw null; } }
         public Azure.ETag ETag { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
         public bool Equals(Azure.Storage.Files.DataLake.Models.ReleasedObjectInfo other) { throw null; }
@@ -1267,6 +1611,7 @@ namespace Azure.Storage.Files.DataLake.Models
     public partial class UserDelegationKey
     {
         internal UserDelegationKey() { }
+        public int? EffectiveRequestPriority { get { throw null; } }
         public string SignedDelegatedUserTenantId { get { throw null; } }
         public System.DateTimeOffset SignedExpiresOn { get { throw null; } }
         public string SignedObjectId { get { throw null; } }

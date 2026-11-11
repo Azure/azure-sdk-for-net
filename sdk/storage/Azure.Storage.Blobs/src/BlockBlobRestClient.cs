@@ -19,6 +19,7 @@ namespace Azure.Storage.Blobs
     {
         /// <summary> The Query operation enables users to select/project on blob data by providing simple query expressions. </summary>
         /// <param name="queryRequest"> The query request. </param>
+        /// <param name="requestPriority"> Optional. Sets the priority of this request, from 0 through 7. If not set, or if the value is outside that range, the service uses 3. </param>
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob"&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
@@ -29,14 +30,14 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Stream> Query(QueryRequest queryRequest, string snapshot = default, int? timeout = default, string leaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, RequestConditions requestConditions = default, string ifTags = default, CancellationToken cancellationToken = default)
+        public virtual Response<Stream> Query(QueryRequest queryRequest, int? requestPriority = default, string snapshot = default, int? timeout = default, string leaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, RequestConditions requestConditions = default, string ifTags = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlockBlobRestClient.Query");
             scope.Start();
             try
             {
                 RequestContext context = cancellationToken.ToRequestContext();
-                using HttpMessage message = CreateQueryRequest(queryRequest, snapshot, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), requestConditions, ifTags, context);
+                using HttpMessage message = CreateQueryRequest(queryRequest, requestPriority, snapshot, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), requestConditions, ifTags, context);
                 message.BufferResponse = false;
                 Response response = Pipeline.ProcessMessage(message, context);
                 Stream content = message.ExtractResponseContent();
@@ -51,6 +52,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary> The Query operation enables users to select/project on blob data by providing simple query expressions. </summary>
         /// <param name="queryRequest"> The query request. </param>
+        /// <param name="requestPriority"> Optional. Sets the priority of this request, from 0 through 7. If not set, or if the value is outside that range, the service uses 3. </param>
         /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob"&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
@@ -61,14 +63,14 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Stream>> QueryAsync(QueryRequest queryRequest, string snapshot = default, int? timeout = default, string leaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, RequestConditions requestConditions = default, string ifTags = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Stream>> QueryAsync(QueryRequest queryRequest, int? requestPriority = default, string snapshot = default, int? timeout = default, string leaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, RequestConditions requestConditions = default, string ifTags = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("BlockBlobRestClient.Query");
             scope.Start();
             try
             {
                 RequestContext context = cancellationToken.ToRequestContext();
-                using HttpMessage message = CreateQueryRequest(queryRequest, snapshot, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), requestConditions, ifTags, context);
+                using HttpMessage message = CreateQueryRequest(queryRequest, requestPriority, snapshot, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), requestConditions, ifTags, context);
                 message.BufferResponse = false;
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Stream content = message.ExtractResponseContent();

@@ -53,6 +53,11 @@ namespace Azure.Storage.Files.DataLake.Models
         public string Value { get; internal set; }
 
         /// <summary>
+        /// The request priority the service applied to the request, from 0 through 7.
+        /// </summary>
+        public int? EffectiveRequestPriority { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of UserDelegationKey instances.
         /// You can use DataLakeModelFactory.UserDelegationKey instead.
         /// </summary>
@@ -68,6 +73,7 @@ namespace Azure.Storage.Files.DataLake.Models
             SignedVersion = blobUserDelegationKey.SignedVersion;
             Value = blobUserDelegationKey.Value;
             SignedDelegatedUserTenantId = blobUserDelegationKey.SignedDelegatedUserTenantId;
+            EffectiveRequestPriority = blobUserDelegationKey.EffectiveRequestPriority;
         }
     }
 }

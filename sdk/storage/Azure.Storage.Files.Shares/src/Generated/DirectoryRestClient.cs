@@ -62,6 +62,10 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
@@ -78,13 +82,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Create(int? timeout, IDictionary<string, string> metadata, string filePermission, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermissionFormat, string owner, string @group, string fileMode, string filePropertySemantics, RequestContext context)
+        public virtual Response Create(int? requestPriority, int? timeout, IDictionary<string, string> metadata, string filePermission, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermissionFormat, string owner, string @group, string fileMode, string filePropertySemantics, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(timeout, metadata, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat, owner, @group, fileMode, filePropertySemantics, context);
+                using HttpMessage message = CreateCreateRequest(requestPriority, timeout, metadata, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat, owner, @group, fileMode, filePropertySemantics, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -102,6 +106,10 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
@@ -118,13 +126,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateAsync(int? timeout, IDictionary<string, string> metadata, string filePermission, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermissionFormat, string owner, string @group, string fileMode, string filePropertySemantics, RequestContext context)
+        public virtual async Task<Response> CreateAsync(int? requestPriority, int? timeout, IDictionary<string, string> metadata, string filePermission, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermissionFormat, string owner, string @group, string fileMode, string filePropertySemantics, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(timeout, metadata, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat, owner, @group, fileMode, filePropertySemantics, context);
+                using HttpMessage message = CreateCreateRequest(requestPriority, timeout, metadata, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat, owner, @group, fileMode, filePropertySemantics, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -135,6 +143,10 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Creates a new directory under the specified share or parent directory. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
@@ -150,12 +162,16 @@ namespace Azure.Storage.Files.Shares
         /// <param name="filePropertySemantics"> SMB only. Default value is New. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Create(int? timeout = default, IDictionary<string, string> metadata = default, string filePermission = default, string filePermissionKey = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, FilePermissionFormat? filePermissionFormat = default, string owner = default, string @group = default, string fileMode = default, FilePropertySemantics? filePropertySemantics = default, CancellationToken cancellationToken = default)
+        public virtual Response Create(int? requestPriority = default, int? timeout = default, IDictionary<string, string> metadata = default, string filePermission = default, string filePermissionKey = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, FilePermissionFormat? filePermissionFormat = default, string owner = default, string @group = default, string fileMode = default, FilePropertySemantics? filePropertySemantics = default, CancellationToken cancellationToken = default)
         {
-            return Create(timeout, metadata, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat?.ToSerialString(), owner, @group, fileMode, filePropertySemantics?.ToString(), cancellationToken.ToRequestContext());
+            return Create(requestPriority, timeout, metadata, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat?.ToSerialString(), owner, @group, fileMode, filePropertySemantics?.ToString(), cancellationToken.ToRequestContext());
         }
 
         /// <summary> Creates a new directory under the specified share or parent directory. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
@@ -171,9 +187,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="filePropertySemantics"> SMB only. Default value is New. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> CreateAsync(int? timeout = default, IDictionary<string, string> metadata = default, string filePermission = default, string filePermissionKey = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, FilePermissionFormat? filePermissionFormat = default, string owner = default, string @group = default, string fileMode = default, FilePropertySemantics? filePropertySemantics = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CreateAsync(int? requestPriority = default, int? timeout = default, IDictionary<string, string> metadata = default, string filePermission = default, string filePermissionKey = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, FilePermissionFormat? filePermissionFormat = default, string owner = default, string @group = default, string fileMode = default, FilePropertySemantics? filePropertySemantics = default, CancellationToken cancellationToken = default)
         {
-            return await CreateAsync(timeout, metadata, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat?.ToSerialString(), owner, @group, fileMode, filePropertySemantics?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await CreateAsync(requestPriority, timeout, metadata, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat?.ToSerialString(), owner, @group, fileMode, filePropertySemantics?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -184,18 +200,22 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetProperties(string sharesnapshot, int? timeout, RequestContext context)
+        public virtual Response GetProperties(int? requestPriority, string sharesnapshot, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.GetProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPropertiesRequest(sharesnapshot, timeout, context);
+                using HttpMessage message = CreateGetPropertiesRequest(requestPriority, sharesnapshot, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -213,18 +233,22 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPropertiesAsync(string sharesnapshot, int? timeout, RequestContext context)
+        public virtual async Task<Response> GetPropertiesAsync(int? requestPriority, string sharesnapshot, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.GetProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPropertiesRequest(sharesnapshot, timeout, context);
+                using HttpMessage message = CreateGetPropertiesRequest(requestPriority, sharesnapshot, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -235,23 +259,31 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Returns all system properties for the specified directory, and can also be used to check the existence of a directory. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response GetProperties(string sharesnapshot = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response GetProperties(int? requestPriority = default, string sharesnapshot = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return GetProperties(sharesnapshot, timeout, cancellationToken.ToRequestContext());
+            return GetProperties(requestPriority, sharesnapshot, timeout, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Returns all system properties for the specified directory, and can also be used to check the existence of a directory. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> GetPropertiesAsync(string sharesnapshot = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetPropertiesAsync(int? requestPriority = default, string sharesnapshot = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return await GetPropertiesAsync(sharesnapshot, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await GetPropertiesAsync(requestPriority, sharesnapshot, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -262,17 +294,21 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Delete(int? timeout, RequestContext context)
+        public virtual Response Delete(int? requestPriority, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(timeout, context);
+                using HttpMessage message = CreateDeleteRequest(requestPriority, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -290,17 +326,21 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteAsync(int? timeout, RequestContext context)
+        public virtual async Task<Response> DeleteAsync(int? requestPriority, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(timeout, context);
+                using HttpMessage message = CreateDeleteRequest(requestPriority, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -311,21 +351,29 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Removes the specified empty directory. Note that the directory must be empty before it can be deleted. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Delete(int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response Delete(int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return Delete(timeout, cancellationToken.ToRequestContext());
+            return Delete(requestPriority, timeout, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Removes the specified empty directory. Note that the directory must be empty before it can be deleted. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteAsync(int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteAsync(int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return await DeleteAsync(timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await DeleteAsync(requestPriority, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -336,6 +384,10 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
@@ -350,13 +402,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response SetProperties(int? timeout, string filePermission, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermissionFormat, string owner, string @group, string fileMode, RequestContext context)
+        public virtual Response SetProperties(int? requestPriority, int? timeout, string filePermission, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermissionFormat, string owner, string @group, string fileMode, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.SetProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetPropertiesRequest(timeout, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat, owner, @group, fileMode, context);
+                using HttpMessage message = CreateSetPropertiesRequest(requestPriority, timeout, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat, owner, @group, fileMode, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -374,6 +426,10 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
@@ -388,13 +444,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SetPropertiesAsync(int? timeout, string filePermission, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermissionFormat, string owner, string @group, string fileMode, RequestContext context)
+        public virtual async Task<Response> SetPropertiesAsync(int? requestPriority, int? timeout, string filePermission, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermissionFormat, string owner, string @group, string fileMode, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.SetProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetPropertiesRequest(timeout, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat, owner, @group, fileMode, context);
+                using HttpMessage message = CreateSetPropertiesRequest(requestPriority, timeout, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat, owner, @group, fileMode, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -405,6 +461,10 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Sets properties for the specified directory. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
@@ -418,12 +478,16 @@ namespace Azure.Storage.Files.Shares
         /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response SetProperties(int? timeout = default, string filePermission = default, string filePermissionKey = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, FilePermissionFormat? filePermissionFormat = default, string owner = default, string @group = default, string fileMode = default, CancellationToken cancellationToken = default)
+        public virtual Response SetProperties(int? requestPriority = default, int? timeout = default, string filePermission = default, string filePermissionKey = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, FilePermissionFormat? filePermissionFormat = default, string owner = default, string @group = default, string fileMode = default, CancellationToken cancellationToken = default)
         {
-            return SetProperties(timeout, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat?.ToSerialString(), owner, @group, fileMode, cancellationToken.ToRequestContext());
+            return SetProperties(requestPriority, timeout, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat?.ToSerialString(), owner, @group, fileMode, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Sets properties for the specified directory. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="filePermission"> If specified the permission (security descriptor) shall be set for the directory/file. This header can be used if Permission size is &lt;= 8KB, else x-ms-file-permission-key header shall be used. Default value: Inherit. If SDDL is specified as input, it must have owner, group and dacl. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
@@ -437,9 +501,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> SetPropertiesAsync(int? timeout = default, string filePermission = default, string filePermissionKey = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, FilePermissionFormat? filePermissionFormat = default, string owner = default, string @group = default, string fileMode = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SetPropertiesAsync(int? requestPriority = default, int? timeout = default, string filePermission = default, string filePermissionKey = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, FilePermissionFormat? filePermissionFormat = default, string owner = default, string @group = default, string fileMode = default, CancellationToken cancellationToken = default)
         {
-            return await SetPropertiesAsync(timeout, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat?.ToSerialString(), owner, @group, fileMode, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await SetPropertiesAsync(requestPriority, timeout, filePermission, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermissionFormat?.ToSerialString(), owner, @group, fileMode, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -450,18 +514,22 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response SetMetadata(int? timeout, IDictionary<string, string> metadata, RequestContext context)
+        public virtual Response SetMetadata(int? requestPriority, int? timeout, IDictionary<string, string> metadata, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.SetMetadata");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetMetadataRequest(timeout, metadata, context);
+                using HttpMessage message = CreateSetMetadataRequest(requestPriority, timeout, metadata, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -479,18 +547,22 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SetMetadataAsync(int? timeout, IDictionary<string, string> metadata, RequestContext context)
+        public virtual async Task<Response> SetMetadataAsync(int? requestPriority, int? timeout, IDictionary<string, string> metadata, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.SetMetadata");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetMetadataRequest(timeout, metadata, context);
+                using HttpMessage message = CreateSetMetadataRequest(requestPriority, timeout, metadata, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -501,23 +573,31 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Sets one or more user-defined name-value pairs for the specified directory. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response SetMetadata(int? timeout = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        public virtual Response SetMetadata(int? requestPriority = default, int? timeout = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            return SetMetadata(timeout, metadata, cancellationToken.ToRequestContext());
+            return SetMetadata(requestPriority, timeout, metadata, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Sets one or more user-defined name-value pairs for the specified directory. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> SetMetadataAsync(int? timeout = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SetMetadataAsync(int? requestPriority = default, int? timeout = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            return await SetMetadataAsync(timeout, metadata, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await SetMetadataAsync(requestPriority, timeout, metadata, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -528,6 +608,10 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters the results to return only items whose name begins with the specified prefix. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
@@ -538,13 +622,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetFilesAndDirectoriesSegment(string prefix, string sharesnapshot, string marker, int? maxresults, IEnumerable<ListFilesIncludeType> include, int? timeout, bool? includeExtendedInfo, RequestContext context)
+        public virtual Response GetFilesAndDirectoriesSegment(int? requestPriority, string prefix, string sharesnapshot, string marker, int? maxresults, IEnumerable<ListFilesIncludeType> include, int? timeout, bool? includeExtendedInfo, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.GetFilesAndDirectoriesSegment");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetFilesAndDirectoriesSegmentRequest(prefix, sharesnapshot, marker, maxresults, include, timeout, includeExtendedInfo, context);
+                using HttpMessage message = CreateGetFilesAndDirectoriesSegmentRequest(requestPriority, prefix, sharesnapshot, marker, maxresults, include, timeout, includeExtendedInfo, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -562,6 +646,10 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters the results to return only items whose name begins with the specified prefix. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
@@ -572,13 +660,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetFilesAndDirectoriesSegmentAsync(string prefix, string sharesnapshot, string marker, int? maxresults, IEnumerable<ListFilesIncludeType> include, int? timeout, bool? includeExtendedInfo, RequestContext context)
+        public virtual async Task<Response> GetFilesAndDirectoriesSegmentAsync(int? requestPriority, string prefix, string sharesnapshot, string marker, int? maxresults, IEnumerable<ListFilesIncludeType> include, int? timeout, bool? includeExtendedInfo, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.GetFilesAndDirectoriesSegment");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetFilesAndDirectoriesSegmentRequest(prefix, sharesnapshot, marker, maxresults, include, timeout, includeExtendedInfo, context);
+                using HttpMessage message = CreateGetFilesAndDirectoriesSegmentRequest(requestPriority, prefix, sharesnapshot, marker, maxresults, include, timeout, includeExtendedInfo, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -589,6 +677,10 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Returns a list of files and directories under the specified share or directory. It lists the contents only for a single level of the directory hierarchy. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters the results to return only items whose name begins with the specified prefix. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
@@ -598,13 +690,17 @@ namespace Azure.Storage.Files.Shares
         /// <param name="includeExtendedInfo"> Include extended information. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ListFilesAndDirectoriesSegmentResponse> GetFilesAndDirectoriesSegment(string prefix = default, string sharesnapshot = default, string marker = default, int? maxresults = default, IEnumerable<ListFilesIncludeType> include = default, int? timeout = default, bool? includeExtendedInfo = default, CancellationToken cancellationToken = default)
+        public virtual Response<ListFilesAndDirectoriesSegmentResponse> GetFilesAndDirectoriesSegment(int? requestPriority = default, string prefix = default, string sharesnapshot = default, string marker = default, int? maxresults = default, IEnumerable<ListFilesIncludeType> include = default, int? timeout = default, bool? includeExtendedInfo = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetFilesAndDirectoriesSegment(prefix, sharesnapshot, marker, maxresults, include, timeout, includeExtendedInfo, cancellationToken.ToRequestContext());
+            Response result = GetFilesAndDirectoriesSegment(requestPriority, prefix, sharesnapshot, marker, maxresults, include, timeout, includeExtendedInfo, cancellationToken.ToRequestContext());
             return Response.FromValue((ListFilesAndDirectoriesSegmentResponse)result, result);
         }
 
         /// <summary> Returns a list of files and directories under the specified share or directory. It lists the contents only for a single level of the directory hierarchy. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters the results to return only items whose name begins with the specified prefix. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
@@ -614,9 +710,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="includeExtendedInfo"> Include extended information. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ListFilesAndDirectoriesSegmentResponse>> GetFilesAndDirectoriesSegmentAsync(string prefix = default, string sharesnapshot = default, string marker = default, int? maxresults = default, IEnumerable<ListFilesIncludeType> include = default, int? timeout = default, bool? includeExtendedInfo = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ListFilesAndDirectoriesSegmentResponse>> GetFilesAndDirectoriesSegmentAsync(int? requestPriority = default, string prefix = default, string sharesnapshot = default, string marker = default, int? maxresults = default, IEnumerable<ListFilesIncludeType> include = default, int? timeout = default, bool? includeExtendedInfo = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetFilesAndDirectoriesSegmentAsync(prefix, sharesnapshot, marker, maxresults, include, timeout, includeExtendedInfo, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetFilesAndDirectoriesSegmentAsync(requestPriority, prefix, sharesnapshot, marker, maxresults, include, timeout, includeExtendedInfo, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ListFilesAndDirectoriesSegmentResponse)result, result);
         }
 
@@ -628,6 +724,10 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
@@ -636,13 +736,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetHandles(string marker, int? maxresults, int? timeout, string sharesnapshot, bool? recursive, RequestContext context)
+        public virtual Response GetHandles(int? requestPriority, string marker, int? maxresults, int? timeout, string sharesnapshot, bool? recursive, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.GetHandles");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetHandlesRequest(marker, maxresults, timeout, sharesnapshot, recursive, context);
+                using HttpMessage message = CreateGetHandlesRequest(requestPriority, marker, maxresults, timeout, sharesnapshot, recursive, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -660,6 +760,10 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
@@ -668,13 +772,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetHandlesAsync(string marker, int? maxresults, int? timeout, string sharesnapshot, bool? recursive, RequestContext context)
+        public virtual async Task<Response> GetHandlesAsync(int? requestPriority, string marker, int? maxresults, int? timeout, string sharesnapshot, bool? recursive, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.GetHandles");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetHandlesRequest(marker, maxresults, timeout, sharesnapshot, recursive, context);
+                using HttpMessage message = CreateGetHandlesRequest(requestPriority, marker, maxresults, timeout, sharesnapshot, recursive, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -685,6 +789,10 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Lists handles for directory. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
@@ -692,13 +800,17 @@ namespace Azure.Storage.Files.Shares
         /// <param name="recursive"> Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ListHandlesResponse> GetHandles(string marker = default, int? maxresults = default, int? timeout = default, string sharesnapshot = default, bool? recursive = default, CancellationToken cancellationToken = default)
+        public virtual Response<ListHandlesResponse> GetHandles(int? requestPriority = default, string marker = default, int? maxresults = default, int? timeout = default, string sharesnapshot = default, bool? recursive = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetHandles(marker, maxresults, timeout, sharesnapshot, recursive, cancellationToken.ToRequestContext());
+            Response result = GetHandles(requestPriority, marker, maxresults, timeout, sharesnapshot, recursive, cancellationToken.ToRequestContext());
             return Response.FromValue((ListHandlesResponse)result, result);
         }
 
         /// <summary> Lists handles for directory. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
@@ -706,9 +818,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="recursive"> Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ListHandlesResponse>> GetHandlesAsync(string marker = default, int? maxresults = default, int? timeout = default, string sharesnapshot = default, bool? recursive = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ListHandlesResponse>> GetHandlesAsync(int? requestPriority = default, string marker = default, int? maxresults = default, int? timeout = default, string sharesnapshot = default, bool? recursive = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetHandlesAsync(marker, maxresults, timeout, sharesnapshot, recursive, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetHandlesAsync(requestPriority, marker, maxresults, timeout, sharesnapshot, recursive, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ListHandlesResponse)result, result);
         }
 
@@ -721,6 +833,10 @@ namespace Azure.Storage.Files.Shares
         /// </list>
         /// </summary>
         /// <param name="handleId"> Specifies handle ID opened on the file or directory to be closed. Asterisk ('*') is a wildcard that specifies all handles. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
@@ -728,13 +844,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response ForceCloseHandles(string handleId, int? timeout, string marker, string sharesnapshot, bool? recursive, RequestContext context)
+        public virtual Response ForceCloseHandles(string handleId, int? requestPriority, int? timeout, string marker, string sharesnapshot, bool? recursive, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.ForceCloseHandles");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateForceCloseHandlesRequest(handleId, timeout, marker, sharesnapshot, recursive, context);
+                using HttpMessage message = CreateForceCloseHandlesRequest(handleId, requestPriority, timeout, marker, sharesnapshot, recursive, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -753,6 +869,10 @@ namespace Azure.Storage.Files.Shares
         /// </list>
         /// </summary>
         /// <param name="handleId"> Specifies handle ID opened on the file or directory to be closed. Asterisk ('*') is a wildcard that specifies all handles. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
@@ -760,13 +880,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ForceCloseHandlesAsync(string handleId, int? timeout, string marker, string sharesnapshot, bool? recursive, RequestContext context)
+        public virtual async Task<Response> ForceCloseHandlesAsync(string handleId, int? requestPriority, int? timeout, string marker, string sharesnapshot, bool? recursive, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.ForceCloseHandles");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateForceCloseHandlesRequest(handleId, timeout, marker, sharesnapshot, recursive, context);
+                using HttpMessage message = CreateForceCloseHandlesRequest(handleId, requestPriority, timeout, marker, sharesnapshot, recursive, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -778,28 +898,36 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Closes all handles open for given directory. </summary>
         /// <param name="handleId"> Specifies handle ID opened on the file or directory to be closed. Asterisk ('*') is a wildcard that specifies all handles. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="recursive"> Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response ForceCloseHandles(string handleId, int? timeout = default, string marker = default, string sharesnapshot = default, bool? recursive = default, CancellationToken cancellationToken = default)
+        public virtual Response ForceCloseHandles(string handleId, int? requestPriority = default, int? timeout = default, string marker = default, string sharesnapshot = default, bool? recursive = default, CancellationToken cancellationToken = default)
         {
-            return ForceCloseHandles(handleId, timeout, marker, sharesnapshot, recursive, cancellationToken.ToRequestContext());
+            return ForceCloseHandles(handleId, requestPriority, timeout, marker, sharesnapshot, recursive, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Closes all handles open for given directory. </summary>
         /// <param name="handleId"> Specifies handle ID opened on the file or directory to be closed. Asterisk ('*') is a wildcard that specifies all handles. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="recursive"> Specifies operation should apply to the directory specified in the URI, its files, its subdirectories and their files. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> ForceCloseHandlesAsync(string handleId, int? timeout = default, string marker = default, string sharesnapshot = default, bool? recursive = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ForceCloseHandlesAsync(string handleId, int? requestPriority = default, int? timeout = default, string marker = default, string sharesnapshot = default, bool? recursive = default, CancellationToken cancellationToken = default)
         {
-            return await ForceCloseHandlesAsync(handleId, timeout, marker, sharesnapshot, recursive, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await ForceCloseHandlesAsync(handleId, requestPriority, timeout, marker, sharesnapshot, recursive, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -811,6 +939,10 @@ namespace Azure.Storage.Files.Shares
         /// </list>
         /// </summary>
         /// <param name="renameSource"> Required. Specifies the URI-style path of the source file, up to 2 KB in length. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="replaceIfExists"> Boolean. Default value is false. Set to true to indicate that the destination should be overwritten. </param>
         /// <param name="ignoreReadOnly"> Boolean. Default value is false. Set to true to overwrite the destination even if it has the read-only attribute set. </param>
@@ -827,13 +959,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Rename(string renameSource, int? timeout, bool? replaceIfExists, bool? ignoreReadOnly, string sourceLeaseId, string destinationLeaseId, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermission, string filePermissionFormat, string filePermissionKey, IDictionary<string, string> metadata, RequestContext context)
+        public virtual Response Rename(string renameSource, int? requestPriority, int? timeout, bool? replaceIfExists, bool? ignoreReadOnly, string sourceLeaseId, string destinationLeaseId, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermission, string filePermissionFormat, string filePermissionKey, IDictionary<string, string> metadata, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.Rename");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermission, filePermissionFormat, filePermissionKey, metadata, context);
+                using HttpMessage message = CreateRenameRequest(renameSource, requestPriority, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermission, filePermissionFormat, filePermissionKey, metadata, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -852,6 +984,10 @@ namespace Azure.Storage.Files.Shares
         /// </list>
         /// </summary>
         /// <param name="renameSource"> Required. Specifies the URI-style path of the source file, up to 2 KB in length. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="replaceIfExists"> Boolean. Default value is false. Set to true to indicate that the destination should be overwritten. </param>
         /// <param name="ignoreReadOnly"> Boolean. Default value is false. Set to true to overwrite the destination even if it has the read-only attribute set. </param>
@@ -868,13 +1004,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RenameAsync(string renameSource, int? timeout, bool? replaceIfExists, bool? ignoreReadOnly, string sourceLeaseId, string destinationLeaseId, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermission, string filePermissionFormat, string filePermissionKey, IDictionary<string, string> metadata, RequestContext context)
+        public virtual async Task<Response> RenameAsync(string renameSource, int? requestPriority, int? timeout, bool? replaceIfExists, bool? ignoreReadOnly, string sourceLeaseId, string destinationLeaseId, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermission, string filePermissionFormat, string filePermissionKey, IDictionary<string, string> metadata, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DirectoryRestClient.Rename");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRenameRequest(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermission, filePermissionFormat, filePermissionKey, metadata, context);
+                using HttpMessage message = CreateRenameRequest(renameSource, requestPriority, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermission, filePermissionFormat, filePermissionKey, metadata, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -886,6 +1022,10 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Renames a directory. By default, the destination is overwritten and if the destination already exists and has a read-only attribute set, the operation will fail. </summary>
         /// <param name="renameSource"> Required. Specifies the URI-style path of the source file, up to 2 KB in length. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="replaceIfExists"> Boolean. Default value is false. Set to true to indicate that the destination should be overwritten. </param>
         /// <param name="ignoreReadOnly"> Boolean. Default value is false. Set to true to overwrite the destination even if it has the read-only attribute set. </param>
@@ -901,13 +1041,17 @@ namespace Azure.Storage.Files.Shares
         /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Rename(string renameSource, int? timeout = default, bool? replaceIfExists = default, bool? ignoreReadOnly = default, string sourceLeaseId = default, string destinationLeaseId = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, string filePermission = default, FilePermissionFormat? filePermissionFormat = default, string filePermissionKey = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        public virtual Response Rename(string renameSource, int? requestPriority = default, int? timeout = default, bool? replaceIfExists = default, bool? ignoreReadOnly = default, string sourceLeaseId = default, string destinationLeaseId = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, string filePermission = default, FilePermissionFormat? filePermissionFormat = default, string filePermissionKey = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            return Rename(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermission, filePermissionFormat?.ToSerialString(), filePermissionKey, metadata, cancellationToken.ToRequestContext());
+            return Rename(renameSource, requestPriority, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermission, filePermissionFormat?.ToSerialString(), filePermissionKey, metadata, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Renames a directory. By default, the destination is overwritten and if the destination already exists and has a read-only attribute set, the operation will fail. </summary>
         /// <param name="renameSource"> Required. Specifies the URI-style path of the source file, up to 2 KB in length. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="replaceIfExists"> Boolean. Default value is false. Set to true to indicate that the destination should be overwritten. </param>
         /// <param name="ignoreReadOnly"> Boolean. Default value is false. Set to true to overwrite the destination even if it has the read-only attribute set. </param>
@@ -923,9 +1067,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> RenameAsync(string renameSource, int? timeout = default, bool? replaceIfExists = default, bool? ignoreReadOnly = default, string sourceLeaseId = default, string destinationLeaseId = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, string filePermission = default, FilePermissionFormat? filePermissionFormat = default, string filePermissionKey = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RenameAsync(string renameSource, int? requestPriority = default, int? timeout = default, bool? replaceIfExists = default, bool? ignoreReadOnly = default, string sourceLeaseId = default, string destinationLeaseId = default, string fileAttributes = default, string fileCreationTime = default, string fileLastWriteTime = default, string fileChangeTime = default, string filePermission = default, FilePermissionFormat? filePermissionFormat = default, string filePermissionKey = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            return await RenameAsync(renameSource, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermission, filePermissionFormat?.ToSerialString(), filePermissionKey, metadata, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await RenameAsync(renameSource, requestPriority, timeout, replaceIfExists, ignoreReadOnly, sourceLeaseId, destinationLeaseId, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, filePermission, filePermissionFormat?.ToSerialString(), filePermissionKey, metadata, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
     }
 }

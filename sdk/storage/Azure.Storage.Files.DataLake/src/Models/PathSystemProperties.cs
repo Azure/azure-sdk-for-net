@@ -76,6 +76,11 @@ namespace Azure.Storage.Files.DataLake.Models
         public PathPermissions Permissions { get; internal set; }
 
         /// <summary>
+        /// The request priority the service applied to this request.
+        /// </summary>
+        public int? EffectiveRequestPriority { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of PathSystemProperties instances.
         /// You can use DataLakeModelFactory.PathSystemProperties instead.
         /// </summary>

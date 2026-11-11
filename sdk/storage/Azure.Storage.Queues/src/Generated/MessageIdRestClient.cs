@@ -63,6 +63,10 @@ namespace Azure.Storage.Queues
         /// can be set to a value later than the expiry time.
         /// </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
@@ -70,13 +74,13 @@ namespace Azure.Storage.Queues
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Update(string messageId, string popReceipt, int visibilityTimeout, RequestContent content, int? timeout = default, RequestContext context = null)
+        public virtual Response Update(string messageId, string popReceipt, int visibilityTimeout, RequestContent content, int? requestPriority = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("MessageIdRestClient.Update");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateRequest(messageId, popReceipt, visibilityTimeout, content, timeout, context);
+                using HttpMessage message = CreateUpdateRequest(messageId, popReceipt, visibilityTimeout, content, requestPriority, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -105,6 +109,10 @@ namespace Azure.Storage.Queues
         /// can be set to a value later than the expiry time.
         /// </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
@@ -112,13 +120,13 @@ namespace Azure.Storage.Queues
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateAsync(string messageId, string popReceipt, int visibilityTimeout, RequestContent content, int? timeout = default, RequestContext context = null)
+        public virtual async Task<Response> UpdateAsync(string messageId, string popReceipt, int visibilityTimeout, RequestContent content, int? requestPriority = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("MessageIdRestClient.Update");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUpdateRequest(messageId, popReceipt, visibilityTimeout, content, timeout, context);
+                using HttpMessage message = CreateUpdateRequest(messageId, popReceipt, visibilityTimeout, content, requestPriority, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -143,15 +151,19 @@ namespace Azure.Storage.Queues
         /// The queue message. The message must be in a format that can be included in
         /// an XML request with UTF-8 encoding. The encoded message can be up to 64 KB in size.
         /// </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Update(string messageId, string popReceipt, int visibilityTimeout, QueueMessage queueMessage = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response Update(string messageId, string popReceipt, int visibilityTimeout, QueueMessage queueMessage = default, int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return Update(messageId, popReceipt, visibilityTimeout, queueMessage, timeout, cancellationToken.ToRequestContext());
+            return Update(messageId, popReceipt, visibilityTimeout, queueMessage, requestPriority, timeout, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Updates the visibility timeout of a message. This operation can also be used to update the contents of a message. </summary>
@@ -169,15 +181,19 @@ namespace Azure.Storage.Queues
         /// The queue message. The message must be in a format that can be included in
         /// an XML request with UTF-8 encoding. The encoded message can be up to 64 KB in size.
         /// </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> UpdateAsync(string messageId, string popReceipt, int visibilityTimeout, QueueMessage queueMessage = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UpdateAsync(string messageId, string popReceipt, int visibilityTimeout, QueueMessage queueMessage = default, int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return await UpdateAsync(messageId, popReceipt, visibilityTimeout, queueMessage, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await UpdateAsync(messageId, popReceipt, visibilityTimeout, queueMessage, requestPriority, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -193,6 +209,10 @@ namespace Azure.Storage.Queues
         /// An opaque value required to delete the message. If deletion fails using this
         /// PopReceipt then the message has been dequeued by another client.
         /// </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
@@ -200,13 +220,13 @@ namespace Azure.Storage.Queues
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Delete(string messageId, string popReceipt, int? timeout, RequestContext context)
+        public virtual Response Delete(string messageId, string popReceipt, int? requestPriority, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("MessageIdRestClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(messageId, popReceipt, timeout, context);
+                using HttpMessage message = CreateDeleteRequest(messageId, popReceipt, requestPriority, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -229,6 +249,10 @@ namespace Azure.Storage.Queues
         /// An opaque value required to delete the message. If deletion fails using this
         /// PopReceipt then the message has been dequeued by another client.
         /// </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
@@ -236,13 +260,13 @@ namespace Azure.Storage.Queues
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteAsync(string messageId, string popReceipt, int? timeout, RequestContext context)
+        public virtual async Task<Response> DeleteAsync(string messageId, string popReceipt, int? requestPriority, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("MessageIdRestClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(messageId, popReceipt, timeout, context);
+                using HttpMessage message = CreateDeleteRequest(messageId, popReceipt, requestPriority, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -258,15 +282,19 @@ namespace Azure.Storage.Queues
         /// An opaque value required to delete the message. If deletion fails using this
         /// PopReceipt then the message has been dequeued by another client.
         /// </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Delete(string messageId, string popReceipt, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response Delete(string messageId, string popReceipt, int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return Delete(messageId, popReceipt, timeout, cancellationToken.ToRequestContext());
+            return Delete(messageId, popReceipt, requestPriority, timeout, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes the specified message. </summary>
@@ -275,15 +303,19 @@ namespace Azure.Storage.Queues
         /// An opaque value required to delete the message. If deletion fails using this
         /// PopReceipt then the message has been dequeued by another client.
         /// </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteAsync(string messageId, string popReceipt, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteAsync(string messageId, string popReceipt, int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return await DeleteAsync(messageId, popReceipt, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await DeleteAsync(messageId, popReceipt, requestPriority, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
     }
 }
