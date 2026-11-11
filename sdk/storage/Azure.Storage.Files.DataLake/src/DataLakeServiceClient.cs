@@ -439,7 +439,8 @@ namespace Azure.Storage.Files.DataLake
         {
             return new BlobClientOptions(clientOptions.Version.AsBlobsVersion())
             {
-                Diagnostics = { IsDistributedTracingEnabled = clientDiagnostics.IsActivityEnabled }
+                Diagnostics = { IsDistributedTracingEnabled = clientDiagnostics.IsActivityEnabled },
+                RequestPriority = clientOptions.RequestPriority,
             };
         }
 

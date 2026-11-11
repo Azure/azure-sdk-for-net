@@ -716,6 +716,7 @@ namespace Azure.Storage.Files.DataLake
             {
                 Diagnostics = { IsDistributedTracingEnabled = clientDiagnostics.IsActivityEnabled },
                 CustomerProvidedKey = customerProvidedKey.ToBlobCustomerProvidedKey(),
+                RequestPriority = clientOptions.RequestPriority,
             };
             clientOptions.TransferValidation.CopyTo(options.TransferValidation);
             return options;
@@ -1242,6 +1243,7 @@ namespace Azure.Storage.Files.DataLake
                     if (async)
                     {
                         response = await PathRestClient.CreateAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             resource: resourceType,
                             cacheControl: httpHeaders?.CacheControl,
                             contentEncoding: httpHeaders?.ContentEncoding,
@@ -1270,6 +1272,7 @@ namespace Azure.Storage.Files.DataLake
                     else
                     {
                         response = PathRestClient.Create(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             resource: resourceType,
                             cacheControl: httpHeaders?.CacheControl,
                             contentEncoding: httpHeaders?.ContentEncoding,
@@ -1935,6 +1938,7 @@ namespace Azure.Storage.Files.DataLake
                         if (async)
                         {
                             response = await PathRestClient.DeleteAsync(
+                                requestPriority: ClientConfiguration.RequestPriority,
                                 recursive: recursive,
                                 continuation: continuation,
                                 leaseId: conditions?.LeaseId,
@@ -1946,6 +1950,7 @@ namespace Azure.Storage.Files.DataLake
                         else
                         {
                             response = PathRestClient.Delete(
+                                requestPriority: ClientConfiguration.RequestPriority,
                                 recursive: recursive,
                                 continuation: continuation,
                                 leaseId: conditions?.LeaseId,
@@ -2354,6 +2359,7 @@ namespace Azure.Storage.Files.DataLake
                     if (async)
                     {
                         response = await destPathClient.PathRestClient.CreateAsync(
+                            requestPriority: destPathClient.ClientConfiguration.RequestPriority,
                             mode: PathRenameMode.Legacy,
                             renameSource: renameSource,
                             leaseId: destinationConditions?.LeaseId,
@@ -2369,6 +2375,7 @@ namespace Azure.Storage.Files.DataLake
                     else
                     {
                         response = destPathClient.PathRestClient.Create(
+                            requestPriority: destPathClient.ClientConfiguration.RequestPriority,
                             mode: PathRenameMode.Legacy,
                             renameSource: renameSource,
                             leaseId: destinationConditions?.LeaseId,
@@ -2555,6 +2562,7 @@ namespace Azure.Storage.Files.DataLake
                     if (async)
                     {
                         response = await PathRestClient.GetPropertiesAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             action: PathGetPropertiesAction.GetAccessControl,
                              upn: userPrincipalName,
                              leaseId: conditions?.LeaseId,
@@ -2565,6 +2573,7 @@ namespace Azure.Storage.Files.DataLake
                     else
                     {
                         response = PathRestClient.GetProperties(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             action: PathGetPropertiesAction.GetAccessControl,
                              upn: userPrincipalName,
                              leaseId: conditions?.LeaseId,
@@ -2765,6 +2774,7 @@ namespace Azure.Storage.Files.DataLake
                     if (async)
                     {
                         response = await PathRestClient.SetAccessControlAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             leaseId: conditions?.LeaseId,
                             owner: owner,
                             group: group,
@@ -2776,6 +2786,7 @@ namespace Azure.Storage.Files.DataLake
                     else
                     {
                         response = PathRestClient.SetAccessControl(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             leaseId: conditions?.LeaseId,
                             owner: owner,
                             group: group,
@@ -3175,6 +3186,7 @@ namespace Azure.Storage.Files.DataLake
                                 if (async)
                                 {
                                     response = await PathRestClient.SetAccessControlRecursiveAsync(
+                                        requestPriority: ClientConfiguration.RequestPriority,
                                         mode: mode.ToSerialString(),
                                         continuation: continuationToken,
                                         forceFlag: options?.ContinueOnFailure,
@@ -3186,6 +3198,7 @@ namespace Azure.Storage.Files.DataLake
                                 else
                                 {
                                     response = PathRestClient.SetAccessControlRecursive(
+                                        requestPriority: ClientConfiguration.RequestPriority,
                                         mode: mode.ToSerialString(),
                                         continuation: continuationToken,
                                         forceFlag: options?.ContinueOnFailure,
@@ -3479,6 +3492,7 @@ namespace Azure.Storage.Files.DataLake
                     if (async)
                     {
                         response = await PathRestClient.SetAccessControlAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             leaseId: conditions?.LeaseId,
                             owner: owner,
                             group: group,
@@ -3490,6 +3504,7 @@ namespace Azure.Storage.Files.DataLake
                     else
                     {
                         response = PathRestClient.SetAccessControl(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             leaseId: conditions?.LeaseId,
                             owner: owner,
                             group: group,
@@ -3640,6 +3655,7 @@ namespace Azure.Storage.Files.DataLake
                     if (async)
                     {
                         response = await PathRestClient.GetPropertiesAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             action: PathGetPropertiesAction.GetStatus,
                             leaseId: options?.RequestConditions?.LeaseId,
                             requestConditions: options?.RequestConditions,
@@ -3649,6 +3665,7 @@ namespace Azure.Storage.Files.DataLake
                     else
                     {
                         response = PathRestClient.GetProperties(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             action: PathGetPropertiesAction.GetStatus,
                             leaseId: options?.RequestConditions?.LeaseId,
                             requestConditions: options?.RequestConditions,

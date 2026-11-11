@@ -16,7 +16,7 @@ namespace Azure.Storage.Files.DataLake
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        internal HttpMessage CreateGetFileSystemsRequest(string resource, string prefix, string continuation, int? maxResults, int? timeout, RequestContext context)
+        internal HttpMessage CreateGetFileSystemsRequest(string resource, int? requestPriority, string prefix, string continuation, int? maxResults, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -44,6 +44,10 @@ namespace Azure.Storage.Files.DataLake
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             request.Headers.SetValue("Accept", "application/json");
             return message;

@@ -54,6 +54,10 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="size"> The maximum size for the page blob. Must be aligned to a 512-byte boundary. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="metadata"> The metadata headers. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="tier"> Indicates the tier to be set on the page blob. </param>
@@ -78,13 +82,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Create(long size, IDictionary<string, string> metadata, int? timeout, string tier, string blobContentType, string blobContentEncoding, string blobContentLanguage, BinaryData blobContentMd5, string blobCacheControl, string leaseId, string blobContentDisposition, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, RequestConditions requestConditions, string ifTags, long? blobSequenceNumber, string blobTagsString, DateTimeOffset? immutabilityPolicyExpiry, string immutabilityPolicyMode, bool? legalHold, RequestContext context)
+        public virtual Response Create(long size, int? requestPriority, IDictionary<string, string> metadata, int? timeout, string tier, string blobContentType, string blobContentEncoding, string blobContentLanguage, BinaryData blobContentMd5, string blobCacheControl, string leaseId, string blobContentDisposition, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, RequestConditions requestConditions, string ifTags, long? blobSequenceNumber, string blobTagsString, DateTimeOffset? immutabilityPolicyExpiry, string immutabilityPolicyMode, bool? legalHold, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PageBlobRestClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(size, metadata, timeout, tier, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMd5, blobCacheControl, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, requestConditions, ifTags, blobSequenceNumber, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, context);
+                using HttpMessage message = CreateCreateRequest(size, requestPriority, metadata, timeout, tier, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMd5, blobCacheControl, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, requestConditions, ifTags, blobSequenceNumber, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -103,6 +107,10 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="size"> The maximum size for the page blob. Must be aligned to a 512-byte boundary. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="metadata"> The metadata headers. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="tier"> Indicates the tier to be set on the page blob. </param>
@@ -127,13 +135,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateAsync(long size, IDictionary<string, string> metadata, int? timeout, string tier, string blobContentType, string blobContentEncoding, string blobContentLanguage, BinaryData blobContentMd5, string blobCacheControl, string leaseId, string blobContentDisposition, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, RequestConditions requestConditions, string ifTags, long? blobSequenceNumber, string blobTagsString, DateTimeOffset? immutabilityPolicyExpiry, string immutabilityPolicyMode, bool? legalHold, RequestContext context)
+        public virtual async Task<Response> CreateAsync(long size, int? requestPriority, IDictionary<string, string> metadata, int? timeout, string tier, string blobContentType, string blobContentEncoding, string blobContentLanguage, BinaryData blobContentMd5, string blobCacheControl, string leaseId, string blobContentDisposition, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, RequestConditions requestConditions, string ifTags, long? blobSequenceNumber, string blobTagsString, DateTimeOffset? immutabilityPolicyExpiry, string immutabilityPolicyMode, bool? legalHold, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PageBlobRestClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(size, metadata, timeout, tier, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMd5, blobCacheControl, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, requestConditions, ifTags, blobSequenceNumber, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, context);
+                using HttpMessage message = CreateCreateRequest(size, requestPriority, metadata, timeout, tier, blobContentType, blobContentEncoding, blobContentLanguage, blobContentMd5, blobCacheControl, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, requestConditions, ifTags, blobSequenceNumber, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode, legalHold, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -145,6 +153,10 @@ namespace Azure.Storage.Blobs
 
         /// <summary> Creates a new page blob. </summary>
         /// <param name="size"> The maximum size for the page blob. Must be aligned to a 512-byte boundary. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="metadata"> The metadata headers. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="tier"> Indicates the tier to be set on the page blob. </param>
@@ -168,13 +180,17 @@ namespace Azure.Storage.Blobs
         /// <param name="legalHold"> Indicates whether the blob has a legal hold. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Create(long size, IDictionary<string, string> metadata = default, int? timeout = default, PremiumPageBlobAccessTier? tier = default, string blobContentType = default, string blobContentEncoding = default, string blobContentLanguage = default, BinaryData blobContentMd5 = default, string blobCacheControl = default, string leaseId = default, string blobContentDisposition = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, RequestConditions requestConditions = default, string ifTags = default, long? blobSequenceNumber = default, string blobTagsString = default, DateTimeOffset? immutabilityPolicyExpiry = default, BlobImmutabilityPolicyMode? immutabilityPolicyMode = default, bool? legalHold = default, CancellationToken cancellationToken = default)
+        public virtual Response Create(long size, int? requestPriority = default, IDictionary<string, string> metadata = default, int? timeout = default, PremiumPageBlobAccessTier? tier = default, string blobContentType = default, string blobContentEncoding = default, string blobContentLanguage = default, BinaryData blobContentMd5 = default, string blobCacheControl = default, string leaseId = default, string blobContentDisposition = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, RequestConditions requestConditions = default, string ifTags = default, long? blobSequenceNumber = default, string blobTagsString = default, DateTimeOffset? immutabilityPolicyExpiry = default, BlobImmutabilityPolicyMode? immutabilityPolicyMode = default, bool? legalHold = default, CancellationToken cancellationToken = default)
         {
-            return Create(size, metadata, timeout, tier?.ToString(), blobContentType, blobContentEncoding, blobContentLanguage, blobContentMd5, blobCacheControl, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, requestConditions, ifTags, blobSequenceNumber, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode?.ToSerialString(), legalHold, cancellationToken.ToRequestContext());
+            return Create(size, requestPriority, metadata, timeout, tier?.ToString(), blobContentType, blobContentEncoding, blobContentLanguage, blobContentMd5, blobCacheControl, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, requestConditions, ifTags, blobSequenceNumber, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode?.ToSerialString(), legalHold, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Creates a new page blob. </summary>
         /// <param name="size"> The maximum size for the page blob. Must be aligned to a 512-byte boundary. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="metadata"> The metadata headers. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="tier"> Indicates the tier to be set on the page blob. </param>
@@ -198,9 +214,9 @@ namespace Azure.Storage.Blobs
         /// <param name="legalHold"> Indicates whether the blob has a legal hold. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> CreateAsync(long size, IDictionary<string, string> metadata = default, int? timeout = default, PremiumPageBlobAccessTier? tier = default, string blobContentType = default, string blobContentEncoding = default, string blobContentLanguage = default, BinaryData blobContentMd5 = default, string blobCacheControl = default, string leaseId = default, string blobContentDisposition = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, RequestConditions requestConditions = default, string ifTags = default, long? blobSequenceNumber = default, string blobTagsString = default, DateTimeOffset? immutabilityPolicyExpiry = default, BlobImmutabilityPolicyMode? immutabilityPolicyMode = default, bool? legalHold = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CreateAsync(long size, int? requestPriority = default, IDictionary<string, string> metadata = default, int? timeout = default, PremiumPageBlobAccessTier? tier = default, string blobContentType = default, string blobContentEncoding = default, string blobContentLanguage = default, BinaryData blobContentMd5 = default, string blobCacheControl = default, string leaseId = default, string blobContentDisposition = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, RequestConditions requestConditions = default, string ifTags = default, long? blobSequenceNumber = default, string blobTagsString = default, DateTimeOffset? immutabilityPolicyExpiry = default, BlobImmutabilityPolicyMode? immutabilityPolicyMode = default, bool? legalHold = default, CancellationToken cancellationToken = default)
         {
-            return await CreateAsync(size, metadata, timeout, tier?.ToString(), blobContentType, blobContentEncoding, blobContentLanguage, blobContentMd5, blobCacheControl, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, requestConditions, ifTags, blobSequenceNumber, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode?.ToSerialString(), legalHold, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await CreateAsync(size, requestPriority, metadata, timeout, tier?.ToString(), blobContentType, blobContentEncoding, blobContentLanguage, blobContentMd5, blobCacheControl, leaseId, blobContentDisposition, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, requestConditions, ifTags, blobSequenceNumber, blobTagsString, immutabilityPolicyExpiry, immutabilityPolicyMode?.ToSerialString(), legalHold, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -214,6 +230,10 @@ namespace Azure.Storage.Blobs
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="range"> Specifies the range of the blob to operate on. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="transactionalContentMD5"> Specifies the transactional MD5 hash for the body. </param>
         /// <param name="transactionalContentCrc64"> Specifies the transactional CRC64 hash for the body. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -232,13 +252,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response UploadPages(long contentLength, string range, RequestContent content, BinaryData transactionalContentMD5 = default, BinaryData transactionalContentCrc64 = default, int? timeout = default, string leaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, string encryptionAlgorithm = default, string encryptionScope = default, long? ifSequenceNumberLessThanOrEqualTo = default, long? ifSequenceNumberLessThan = default, long? ifSequenceNumberEqualTo = default, RequestConditions requestConditions = default, string ifTags = default, string structuredBodyType = default, long? structuredContentLength = default, RequestContext context = null)
+        public virtual Response UploadPages(long contentLength, string range, RequestContent content, int? requestPriority = default, BinaryData transactionalContentMD5 = default, BinaryData transactionalContentCrc64 = default, int? timeout = default, string leaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, string encryptionAlgorithm = default, string encryptionScope = default, long? ifSequenceNumberLessThanOrEqualTo = default, long? ifSequenceNumberLessThan = default, long? ifSequenceNumberEqualTo = default, RequestConditions requestConditions = default, string ifTags = default, string structuredBodyType = default, long? structuredContentLength = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PageBlobRestClient.UploadPages");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadPagesRequest(contentLength, range, content, transactionalContentMD5, transactionalContentCrc64, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, structuredBodyType, structuredContentLength, context);
+                using HttpMessage message = CreateUploadPagesRequest(contentLength, range, content, requestPriority, transactionalContentMD5, transactionalContentCrc64, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, structuredBodyType, structuredContentLength, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -259,6 +279,10 @@ namespace Azure.Storage.Blobs
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="range"> Specifies the range of the blob to operate on. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="transactionalContentMD5"> Specifies the transactional MD5 hash for the body. </param>
         /// <param name="transactionalContentCrc64"> Specifies the transactional CRC64 hash for the body. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -277,13 +301,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UploadPagesAsync(long contentLength, string range, RequestContent content, BinaryData transactionalContentMD5 = default, BinaryData transactionalContentCrc64 = default, int? timeout = default, string leaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, string encryptionAlgorithm = default, string encryptionScope = default, long? ifSequenceNumberLessThanOrEqualTo = default, long? ifSequenceNumberLessThan = default, long? ifSequenceNumberEqualTo = default, RequestConditions requestConditions = default, string ifTags = default, string structuredBodyType = default, long? structuredContentLength = default, RequestContext context = null)
+        public virtual async Task<Response> UploadPagesAsync(long contentLength, string range, RequestContent content, int? requestPriority = default, BinaryData transactionalContentMD5 = default, BinaryData transactionalContentCrc64 = default, int? timeout = default, string leaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, string encryptionAlgorithm = default, string encryptionScope = default, long? ifSequenceNumberLessThanOrEqualTo = default, long? ifSequenceNumberLessThan = default, long? ifSequenceNumberEqualTo = default, RequestConditions requestConditions = default, string ifTags = default, string structuredBodyType = default, long? structuredContentLength = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PageBlobRestClient.UploadPages");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadPagesRequest(contentLength, range, content, transactionalContentMD5, transactionalContentCrc64, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, structuredBodyType, structuredContentLength, context);
+                using HttpMessage message = CreateUploadPagesRequest(contentLength, range, content, requestPriority, transactionalContentMD5, transactionalContentCrc64, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, structuredBodyType, structuredContentLength, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -297,6 +321,10 @@ namespace Azure.Storage.Blobs
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="range"> Specifies the range of the blob to operate on. </param>
         /// <param name="body"> The body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="transactionalContentMD5"> Specifies the transactional MD5 hash for the body. </param>
         /// <param name="transactionalContentCrc64"> Specifies the transactional CRC64 hash for the body. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -314,15 +342,19 @@ namespace Azure.Storage.Blobs
         /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response UploadPages(long contentLength, string range, BinaryData body, BinaryData transactionalContentMD5 = default, BinaryData transactionalContentCrc64 = default, int? timeout = default, string leaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, long? ifSequenceNumberLessThanOrEqualTo = default, long? ifSequenceNumberLessThan = default, long? ifSequenceNumberEqualTo = default, RequestConditions requestConditions = default, string ifTags = default, string structuredBodyType = default, long? structuredContentLength = default, CancellationToken cancellationToken = default)
+        public virtual Response UploadPages(long contentLength, string range, BinaryData body, int? requestPriority = default, BinaryData transactionalContentMD5 = default, BinaryData transactionalContentCrc64 = default, int? timeout = default, string leaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, long? ifSequenceNumberLessThanOrEqualTo = default, long? ifSequenceNumberLessThan = default, long? ifSequenceNumberEqualTo = default, RequestConditions requestConditions = default, string ifTags = default, string structuredBodyType = default, long? structuredContentLength = default, CancellationToken cancellationToken = default)
         {
-            return UploadPages(contentLength, range, RequestContent.Create(body), transactionalContentMD5, transactionalContentCrc64, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, structuredBodyType, structuredContentLength, cancellationToken.ToRequestContext());
+            return UploadPages(contentLength, range, RequestContent.Create(body), requestPriority, transactionalContentMD5, transactionalContentCrc64, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, structuredBodyType, structuredContentLength, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Writes a range of pages to the specified page blob. </summary>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="range"> Specifies the range of the blob to operate on. </param>
         /// <param name="body"> The body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="transactionalContentMD5"> Specifies the transactional MD5 hash for the body. </param>
         /// <param name="transactionalContentCrc64"> Specifies the transactional CRC64 hash for the body. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -340,9 +372,9 @@ namespace Azure.Storage.Blobs
         /// <param name="structuredContentLength"> Required if the request body is a structured message. Specifies the length of the blob/file content inside the message body. Will always be smaller than Content-Length. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> UploadPagesAsync(long contentLength, string range, BinaryData body, BinaryData transactionalContentMD5 = default, BinaryData transactionalContentCrc64 = default, int? timeout = default, string leaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, long? ifSequenceNumberLessThanOrEqualTo = default, long? ifSequenceNumberLessThan = default, long? ifSequenceNumberEqualTo = default, RequestConditions requestConditions = default, string ifTags = default, string structuredBodyType = default, long? structuredContentLength = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UploadPagesAsync(long contentLength, string range, BinaryData body, int? requestPriority = default, BinaryData transactionalContentMD5 = default, BinaryData transactionalContentCrc64 = default, int? timeout = default, string leaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, long? ifSequenceNumberLessThanOrEqualTo = default, long? ifSequenceNumberLessThan = default, long? ifSequenceNumberEqualTo = default, RequestConditions requestConditions = default, string ifTags = default, string structuredBodyType = default, long? structuredContentLength = default, CancellationToken cancellationToken = default)
         {
-            return await UploadPagesAsync(contentLength, range, RequestContent.Create(body), transactionalContentMD5, transactionalContentCrc64, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, structuredBodyType, structuredContentLength, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await UploadPagesAsync(contentLength, range, RequestContent.Create(body), requestPriority, transactionalContentMD5, transactionalContentCrc64, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, structuredBodyType, structuredContentLength, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -354,6 +386,10 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="range"> Specifies the range of the blob to operate on. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
@@ -368,13 +404,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response ClearPages(string range, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, long? ifSequenceNumberLessThanOrEqualTo, long? ifSequenceNumberLessThan, long? ifSequenceNumberEqualTo, RequestConditions requestConditions, string ifTags, RequestContext context)
+        public virtual Response ClearPages(string range, int? requestPriority, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, long? ifSequenceNumberLessThanOrEqualTo, long? ifSequenceNumberLessThan, long? ifSequenceNumberEqualTo, RequestConditions requestConditions, string ifTags, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PageBlobRestClient.ClearPages");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateClearPagesRequest(range, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, context);
+                using HttpMessage message = CreateClearPagesRequest(range, requestPriority, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -393,6 +429,10 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="range"> Specifies the range of the blob to operate on. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
@@ -407,13 +447,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ClearPagesAsync(string range, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, long? ifSequenceNumberLessThanOrEqualTo, long? ifSequenceNumberLessThan, long? ifSequenceNumberEqualTo, RequestConditions requestConditions, string ifTags, RequestContext context)
+        public virtual async Task<Response> ClearPagesAsync(string range, int? requestPriority, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, long? ifSequenceNumberLessThanOrEqualTo, long? ifSequenceNumberLessThan, long? ifSequenceNumberEqualTo, RequestConditions requestConditions, string ifTags, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PageBlobRestClient.ClearPages");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateClearPagesRequest(range, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, context);
+                using HttpMessage message = CreateClearPagesRequest(range, requestPriority, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -425,6 +465,10 @@ namespace Azure.Storage.Blobs
 
         /// <summary> Clears a range of pages from the specified page blob. </summary>
         /// <param name="range"> Specifies the range of the blob to operate on. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
@@ -438,13 +482,17 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response ClearPages(string range, int? timeout = default, string leaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, long? ifSequenceNumberLessThanOrEqualTo = default, long? ifSequenceNumberLessThan = default, long? ifSequenceNumberEqualTo = default, RequestConditions requestConditions = default, string ifTags = default, CancellationToken cancellationToken = default)
+        public virtual Response ClearPages(string range, int? requestPriority = default, int? timeout = default, string leaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, long? ifSequenceNumberLessThanOrEqualTo = default, long? ifSequenceNumberLessThan = default, long? ifSequenceNumberEqualTo = default, RequestConditions requestConditions = default, string ifTags = default, CancellationToken cancellationToken = default)
         {
-            return ClearPages(range, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, cancellationToken.ToRequestContext());
+            return ClearPages(range, requestPriority, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Clears a range of pages from the specified page blob. </summary>
         /// <param name="range"> Specifies the range of the blob to operate on. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
@@ -458,9 +506,9 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> ClearPagesAsync(string range, int? timeout = default, string leaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, long? ifSequenceNumberLessThanOrEqualTo = default, long? ifSequenceNumberLessThan = default, long? ifSequenceNumberEqualTo = default, RequestConditions requestConditions = default, string ifTags = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ClearPagesAsync(string range, int? requestPriority = default, int? timeout = default, string leaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, long? ifSequenceNumberLessThanOrEqualTo = default, long? ifSequenceNumberLessThan = default, long? ifSequenceNumberEqualTo = default, RequestConditions requestConditions = default, string ifTags = default, CancellationToken cancellationToken = default)
         {
-            return await ClearPagesAsync(range, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await ClearPagesAsync(range, requestPriority, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -475,6 +523,10 @@ namespace Azure.Storage.Blobs
         /// <param name="sourceRange"> Specifies the bytes of the source. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="range"> Specifies the range of the blob to operate on. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="sourceContentMd5"> Specifies the MD5 hash calculated for the range of bytes that must be read from the copy source. </param>
         /// <param name="sourceContentCrc64"> Specifies the CRC64 calculated for the range of bytes that must be read from the source. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -500,13 +552,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response UploadPagesFromUri(string sourceUrl, string sourceRange, long contentLength, string range, BinaryData sourceContentMd5, BinaryData sourceContentCrc64, int? timeout, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, string leaseId, long? ifSequenceNumberLessThanOrEqualTo, long? ifSequenceNumberLessThan, long? ifSequenceNumberEqualTo, RequestConditions requestConditions, string ifTags, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string copySourceAuthorization, string fileRequestIntent, string sourceEncryptionKey, string sourceEncryptionKeySha256, string sourceEncryptionAlgorithm, RequestContext context)
+        public virtual Response UploadPagesFromUri(string sourceUrl, string sourceRange, long contentLength, string range, int? requestPriority, BinaryData sourceContentMd5, BinaryData sourceContentCrc64, int? timeout, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, string leaseId, long? ifSequenceNumberLessThanOrEqualTo, long? ifSequenceNumberLessThan, long? ifSequenceNumberEqualTo, RequestConditions requestConditions, string ifTags, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string copySourceAuthorization, string fileRequestIntent, string sourceEncryptionKey, string sourceEncryptionKeySha256, string sourceEncryptionAlgorithm, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PageBlobRestClient.UploadPagesFromUri");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadPagesFromUrlRequest(sourceUrl, sourceRange, contentLength, range, sourceContentMd5, sourceContentCrc64, timeout, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent, sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm, context);
+                using HttpMessage message = CreateUploadPagesFromUrlRequest(sourceUrl, sourceRange, contentLength, range, requestPriority, sourceContentMd5, sourceContentCrc64, timeout, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent, sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -528,6 +580,10 @@ namespace Azure.Storage.Blobs
         /// <param name="sourceRange"> Specifies the bytes of the source. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="range"> Specifies the range of the blob to operate on. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="sourceContentMd5"> Specifies the MD5 hash calculated for the range of bytes that must be read from the copy source. </param>
         /// <param name="sourceContentCrc64"> Specifies the CRC64 calculated for the range of bytes that must be read from the source. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -553,13 +609,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UploadPagesFromUriAsync(string sourceUrl, string sourceRange, long contentLength, string range, BinaryData sourceContentMd5, BinaryData sourceContentCrc64, int? timeout, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, string leaseId, long? ifSequenceNumberLessThanOrEqualTo, long? ifSequenceNumberLessThan, long? ifSequenceNumberEqualTo, RequestConditions requestConditions, string ifTags, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string copySourceAuthorization, string fileRequestIntent, string sourceEncryptionKey, string sourceEncryptionKeySha256, string sourceEncryptionAlgorithm, RequestContext context)
+        public virtual async Task<Response> UploadPagesFromUriAsync(string sourceUrl, string sourceRange, long contentLength, string range, int? requestPriority, BinaryData sourceContentMd5, BinaryData sourceContentCrc64, int? timeout, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, string leaseId, long? ifSequenceNumberLessThanOrEqualTo, long? ifSequenceNumberLessThan, long? ifSequenceNumberEqualTo, RequestConditions requestConditions, string ifTags, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string copySourceAuthorization, string fileRequestIntent, string sourceEncryptionKey, string sourceEncryptionKeySha256, string sourceEncryptionAlgorithm, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PageBlobRestClient.UploadPagesFromUri");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadPagesFromUrlRequest(sourceUrl, sourceRange, contentLength, range, sourceContentMd5, sourceContentCrc64, timeout, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent, sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm, context);
+                using HttpMessage message = CreateUploadPagesFromUrlRequest(sourceUrl, sourceRange, contentLength, range, requestPriority, sourceContentMd5, sourceContentCrc64, timeout, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent, sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -574,6 +630,10 @@ namespace Azure.Storage.Blobs
         /// <param name="sourceRange"> Specifies the bytes of the source. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="range"> Specifies the range of the blob to operate on. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="sourceContentMd5"> Specifies the MD5 hash calculated for the range of bytes that must be read from the copy source. </param>
         /// <param name="sourceContentCrc64"> Specifies the CRC64 calculated for the range of bytes that must be read from the source. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -598,9 +658,9 @@ namespace Azure.Storage.Blobs
         /// <param name="sourceEncryptionAlgorithm"> The algorithm used to produce the source encryption key hash. Must be provided if the source encryption key is provided. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response UploadPagesFromUri(string sourceUrl, string sourceRange, long contentLength, string range, BinaryData sourceContentMd5 = default, BinaryData sourceContentCrc64 = default, int? timeout = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, string leaseId = default, long? ifSequenceNumberLessThanOrEqualTo = default, long? ifSequenceNumberLessThan = default, long? ifSequenceNumberEqualTo = default, RequestConditions requestConditions = default, string ifTags = default, DateTimeOffset? sourceIfModifiedSince = default, DateTimeOffset? sourceIfUnmodifiedSince = default, string sourceIfMatch = default, string sourceIfNoneMatch = default, string copySourceAuthorization = default, FileShareTokenIntent? fileRequestIntent = default, string sourceEncryptionKey = default, string sourceEncryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? sourceEncryptionAlgorithm = default, CancellationToken cancellationToken = default)
+        public virtual Response UploadPagesFromUri(string sourceUrl, string sourceRange, long contentLength, string range, int? requestPriority = default, BinaryData sourceContentMd5 = default, BinaryData sourceContentCrc64 = default, int? timeout = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, string leaseId = default, long? ifSequenceNumberLessThanOrEqualTo = default, long? ifSequenceNumberLessThan = default, long? ifSequenceNumberEqualTo = default, RequestConditions requestConditions = default, string ifTags = default, DateTimeOffset? sourceIfModifiedSince = default, DateTimeOffset? sourceIfUnmodifiedSince = default, string sourceIfMatch = default, string sourceIfNoneMatch = default, string copySourceAuthorization = default, FileShareTokenIntent? fileRequestIntent = default, string sourceEncryptionKey = default, string sourceEncryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? sourceEncryptionAlgorithm = default, CancellationToken cancellationToken = default)
         {
-            return UploadPagesFromUri(sourceUrl, sourceRange, contentLength, range, sourceContentMd5, sourceContentCrc64, timeout, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, leaseId, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent?.ToString(), sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm?.ToSerialString(), cancellationToken.ToRequestContext());
+            return UploadPagesFromUri(sourceUrl, sourceRange, contentLength, range, requestPriority, sourceContentMd5, sourceContentCrc64, timeout, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, leaseId, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent?.ToString(), sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm?.ToSerialString(), cancellationToken.ToRequestContext());
         }
 
         /// <summary> Writes a range of pages to the specified page blob where the contents are read from a URL. </summary>
@@ -608,6 +668,10 @@ namespace Azure.Storage.Blobs
         /// <param name="sourceRange"> Specifies the bytes of the source. </param>
         /// <param name="contentLength"> The length of the request. </param>
         /// <param name="range"> Specifies the range of the blob to operate on. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="sourceContentMd5"> Specifies the MD5 hash calculated for the range of bytes that must be read from the copy source. </param>
         /// <param name="sourceContentCrc64"> Specifies the CRC64 calculated for the range of bytes that must be read from the source. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
@@ -632,9 +696,9 @@ namespace Azure.Storage.Blobs
         /// <param name="sourceEncryptionAlgorithm"> The algorithm used to produce the source encryption key hash. Must be provided if the source encryption key is provided. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> UploadPagesFromUriAsync(string sourceUrl, string sourceRange, long contentLength, string range, BinaryData sourceContentMd5 = default, BinaryData sourceContentCrc64 = default, int? timeout = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, string leaseId = default, long? ifSequenceNumberLessThanOrEqualTo = default, long? ifSequenceNumberLessThan = default, long? ifSequenceNumberEqualTo = default, RequestConditions requestConditions = default, string ifTags = default, DateTimeOffset? sourceIfModifiedSince = default, DateTimeOffset? sourceIfUnmodifiedSince = default, string sourceIfMatch = default, string sourceIfNoneMatch = default, string copySourceAuthorization = default, FileShareTokenIntent? fileRequestIntent = default, string sourceEncryptionKey = default, string sourceEncryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? sourceEncryptionAlgorithm = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> UploadPagesFromUriAsync(string sourceUrl, string sourceRange, long contentLength, string range, int? requestPriority = default, BinaryData sourceContentMd5 = default, BinaryData sourceContentCrc64 = default, int? timeout = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, string leaseId = default, long? ifSequenceNumberLessThanOrEqualTo = default, long? ifSequenceNumberLessThan = default, long? ifSequenceNumberEqualTo = default, RequestConditions requestConditions = default, string ifTags = default, DateTimeOffset? sourceIfModifiedSince = default, DateTimeOffset? sourceIfUnmodifiedSince = default, string sourceIfMatch = default, string sourceIfNoneMatch = default, string copySourceAuthorization = default, FileShareTokenIntent? fileRequestIntent = default, string sourceEncryptionKey = default, string sourceEncryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? sourceEncryptionAlgorithm = default, CancellationToken cancellationToken = default)
         {
-            return await UploadPagesFromUriAsync(sourceUrl, sourceRange, contentLength, range, sourceContentMd5, sourceContentCrc64, timeout, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, leaseId, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent?.ToString(), sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm?.ToSerialString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await UploadPagesFromUriAsync(sourceUrl, sourceRange, contentLength, range, requestPriority, sourceContentMd5, sourceContentCrc64, timeout, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, leaseId, ifSequenceNumberLessThanOrEqualTo, ifSequenceNumberLessThan, ifSequenceNumberEqualTo, requestConditions, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent?.ToString(), sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm?.ToSerialString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -645,6 +709,10 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="snapshot"> Specifies the snapshot of the blob. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> Specifies the range of the blob to operate on. </param>
@@ -656,13 +724,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetPageRanges(string snapshot, int? timeout, string range, string leaseId, RequestConditions requestConditions, string ifTags, string marker, int? maxresults, RequestContext context)
+        public virtual Response GetPageRanges(int? requestPriority, string snapshot, int? timeout, string range, string leaseId, RequestConditions requestConditions, string ifTags, string marker, int? maxresults, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PageBlobRestClient.GetPageRanges");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPageRangesRequest(snapshot, timeout, range, leaseId, requestConditions, ifTags, marker, maxresults, context);
+                using HttpMessage message = CreateGetPageRangesRequest(requestPriority, snapshot, timeout, range, leaseId, requestConditions, ifTags, marker, maxresults, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -680,6 +748,10 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="snapshot"> Specifies the snapshot of the blob. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> Specifies the range of the blob to operate on. </param>
@@ -691,13 +763,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPageRangesAsync(string snapshot, int? timeout, string range, string leaseId, RequestConditions requestConditions, string ifTags, string marker, int? maxresults, RequestContext context)
+        public virtual async Task<Response> GetPageRangesAsync(int? requestPriority, string snapshot, int? timeout, string range, string leaseId, RequestConditions requestConditions, string ifTags, string marker, int? maxresults, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PageBlobRestClient.GetPageRanges");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPageRangesRequest(snapshot, timeout, range, leaseId, requestConditions, ifTags, marker, maxresults, context);
+                using HttpMessage message = CreateGetPageRangesRequest(requestPriority, snapshot, timeout, range, leaseId, requestConditions, ifTags, marker, maxresults, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -708,6 +780,10 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Returns the list of valid page ranges for the specified page blob. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="snapshot"> Specifies the snapshot of the blob. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> Specifies the range of the blob to operate on. </param>
@@ -718,13 +794,17 @@ namespace Azure.Storage.Blobs
         /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<PageList> GetPageRanges(string snapshot = default, int? timeout = default, string range = default, string leaseId = default, RequestConditions requestConditions = default, string ifTags = default, string marker = default, int? maxresults = default, CancellationToken cancellationToken = default)
+        public virtual Response<PageList> GetPageRanges(int? requestPriority = default, string snapshot = default, int? timeout = default, string range = default, string leaseId = default, RequestConditions requestConditions = default, string ifTags = default, string marker = default, int? maxresults = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetPageRanges(snapshot, timeout, range, leaseId, requestConditions, ifTags, marker, maxresults, cancellationToken.ToRequestContext());
+            Response result = GetPageRanges(requestPriority, snapshot, timeout, range, leaseId, requestConditions, ifTags, marker, maxresults, cancellationToken.ToRequestContext());
             return Response.FromValue((PageList)result, result);
         }
 
         /// <summary> Returns the list of valid page ranges for the specified page blob. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="snapshot"> Specifies the snapshot of the blob. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> Specifies the range of the blob to operate on. </param>
@@ -735,9 +815,9 @@ namespace Azure.Storage.Blobs
         /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<PageList>> GetPageRangesAsync(string snapshot = default, int? timeout = default, string range = default, string leaseId = default, RequestConditions requestConditions = default, string ifTags = default, string marker = default, int? maxresults = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PageList>> GetPageRangesAsync(int? requestPriority = default, string snapshot = default, int? timeout = default, string range = default, string leaseId = default, RequestConditions requestConditions = default, string ifTags = default, string marker = default, int? maxresults = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetPageRangesAsync(snapshot, timeout, range, leaseId, requestConditions, ifTags, marker, maxresults, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetPageRangesAsync(requestPriority, snapshot, timeout, range, leaseId, requestConditions, ifTags, marker, maxresults, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((PageList)result, result);
         }
 
@@ -749,6 +829,10 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="snapshot"> Specifies the snapshot of the blob. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="prevsnapshot"> Specifies the previous snapshot to be compared in the diff. </param>
@@ -762,13 +846,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetPageRangesDiff(string snapshot, int? timeout, string prevsnapshot, string prevSnapshotUrl, string range, string leaseId, RequestConditions requestConditions, string ifTags, string marker, int? maxresults, RequestContext context)
+        public virtual Response GetPageRangesDiff(int? requestPriority, string snapshot, int? timeout, string prevsnapshot, string prevSnapshotUrl, string range, string leaseId, RequestConditions requestConditions, string ifTags, string marker, int? maxresults, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PageBlobRestClient.GetPageRangesDiff");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPageRangesDiffRequest(snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseId, requestConditions, ifTags, marker, maxresults, context);
+                using HttpMessage message = CreateGetPageRangesDiffRequest(requestPriority, snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseId, requestConditions, ifTags, marker, maxresults, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -786,6 +870,10 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="snapshot"> Specifies the snapshot of the blob. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="prevsnapshot"> Specifies the previous snapshot to be compared in the diff. </param>
@@ -799,13 +887,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPageRangesDiffAsync(string snapshot, int? timeout, string prevsnapshot, string prevSnapshotUrl, string range, string leaseId, RequestConditions requestConditions, string ifTags, string marker, int? maxresults, RequestContext context)
+        public virtual async Task<Response> GetPageRangesDiffAsync(int? requestPriority, string snapshot, int? timeout, string prevsnapshot, string prevSnapshotUrl, string range, string leaseId, RequestConditions requestConditions, string ifTags, string marker, int? maxresults, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PageBlobRestClient.GetPageRangesDiff");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPageRangesDiffRequest(snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseId, requestConditions, ifTags, marker, maxresults, context);
+                using HttpMessage message = CreateGetPageRangesDiffRequest(requestPriority, snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseId, requestConditions, ifTags, marker, maxresults, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -816,6 +904,10 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Returns the list of page ranges in the diff between the specified page blob and the specified previous snapshot. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="snapshot"> Specifies the snapshot of the blob. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="prevsnapshot"> Specifies the previous snapshot to be compared in the diff. </param>
@@ -828,13 +920,17 @@ namespace Azure.Storage.Blobs
         /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<PageList> GetPageRangesDiff(string snapshot = default, int? timeout = default, string prevsnapshot = default, string prevSnapshotUrl = default, string range = default, string leaseId = default, RequestConditions requestConditions = default, string ifTags = default, string marker = default, int? maxresults = default, CancellationToken cancellationToken = default)
+        public virtual Response<PageList> GetPageRangesDiff(int? requestPriority = default, string snapshot = default, int? timeout = default, string prevsnapshot = default, string prevSnapshotUrl = default, string range = default, string leaseId = default, RequestConditions requestConditions = default, string ifTags = default, string marker = default, int? maxresults = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetPageRangesDiff(snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseId, requestConditions, ifTags, marker, maxresults, cancellationToken.ToRequestContext());
+            Response result = GetPageRangesDiff(requestPriority, snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseId, requestConditions, ifTags, marker, maxresults, cancellationToken.ToRequestContext());
             return Response.FromValue((PageList)result, result);
         }
 
         /// <summary> Returns the list of page ranges in the diff between the specified page blob and the specified previous snapshot. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="snapshot"> Specifies the snapshot of the blob. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="prevsnapshot"> Specifies the previous snapshot to be compared in the diff. </param>
@@ -847,9 +943,9 @@ namespace Azure.Storage.Blobs
         /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<PageList>> GetPageRangesDiffAsync(string snapshot = default, int? timeout = default, string prevsnapshot = default, string prevSnapshotUrl = default, string range = default, string leaseId = default, RequestConditions requestConditions = default, string ifTags = default, string marker = default, int? maxresults = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PageList>> GetPageRangesDiffAsync(int? requestPriority = default, string snapshot = default, int? timeout = default, string prevsnapshot = default, string prevSnapshotUrl = default, string range = default, string leaseId = default, RequestConditions requestConditions = default, string ifTags = default, string marker = default, int? maxresults = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetPageRangesDiffAsync(snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseId, requestConditions, ifTags, marker, maxresults, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetPageRangesDiffAsync(requestPriority, snapshot, timeout, prevsnapshot, prevSnapshotUrl, range, leaseId, requestConditions, ifTags, marker, maxresults, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((PageList)result, result);
         }
 
@@ -862,6 +958,10 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="size"> The maximum size for the page blob. Must be aligned to a 512-byte boundary. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
@@ -873,13 +973,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Resize(long size, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, RequestConditions requestConditions, string ifTags, RequestContext context)
+        public virtual Response Resize(long size, int? requestPriority, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, RequestConditions requestConditions, string ifTags, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PageBlobRestClient.Resize");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateResizeRequest(size, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, requestConditions, ifTags, context);
+                using HttpMessage message = CreateResizeRequest(size, requestPriority, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, requestConditions, ifTags, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -898,6 +998,10 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="size"> The maximum size for the page blob. Must be aligned to a 512-byte boundary. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
@@ -909,13 +1013,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ResizeAsync(long size, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, RequestConditions requestConditions, string ifTags, RequestContext context)
+        public virtual async Task<Response> ResizeAsync(long size, int? requestPriority, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, RequestConditions requestConditions, string ifTags, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PageBlobRestClient.Resize");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateResizeRequest(size, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, requestConditions, ifTags, context);
+                using HttpMessage message = CreateResizeRequest(size, requestPriority, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, requestConditions, ifTags, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -927,6 +1031,10 @@ namespace Azure.Storage.Blobs
 
         /// <summary> Changes the size of the specified page blob. </summary>
         /// <param name="size"> The maximum size for the page blob. Must be aligned to a 512-byte boundary. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
@@ -937,13 +1045,17 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Resize(long size, int? timeout = default, string leaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, RequestConditions requestConditions = default, string ifTags = default, CancellationToken cancellationToken = default)
+        public virtual Response Resize(long size, int? requestPriority = default, int? timeout = default, string leaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, RequestConditions requestConditions = default, string ifTags = default, CancellationToken cancellationToken = default)
         {
-            return Resize(size, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, requestConditions, ifTags, cancellationToken.ToRequestContext());
+            return Resize(size, requestPriority, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, requestConditions, ifTags, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Changes the size of the specified page blob. </summary>
         /// <param name="size"> The maximum size for the page blob. Must be aligned to a 512-byte boundary. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="encryptionKey"> Specifies the encryption key to use to encrypt the data provided in the request. </param>
@@ -954,9 +1066,9 @@ namespace Azure.Storage.Blobs
         /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> ResizeAsync(long size, int? timeout = default, string leaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, RequestConditions requestConditions = default, string ifTags = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ResizeAsync(long size, int? requestPriority = default, int? timeout = default, string leaseId = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string encryptionScope = default, RequestConditions requestConditions = default, string ifTags = default, CancellationToken cancellationToken = default)
         {
-            return await ResizeAsync(size, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, requestConditions, ifTags, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await ResizeAsync(size, requestPriority, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), encryptionScope, requestConditions, ifTags, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -968,6 +1080,10 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="sequenceNumberAction"> Required if the blob sequence number is provided. This property indicates how the service should modify the blob's sequence number. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
@@ -976,13 +1092,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response SetSequenceNumber(string sequenceNumberAction, int? timeout = default, string leaseId = default, RequestConditions requestConditions = default, string ifTags = default, long? blobSequenceNumber = default, RequestContext context = null)
+        public virtual Response SetSequenceNumber(string sequenceNumberAction, int? requestPriority = default, int? timeout = default, string leaseId = default, RequestConditions requestConditions = default, string ifTags = default, long? blobSequenceNumber = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PageBlobRestClient.SetSequenceNumber");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetSequenceNumberRequest(sequenceNumberAction, timeout, leaseId, requestConditions, ifTags, blobSequenceNumber, context);
+                using HttpMessage message = CreateSetSequenceNumberRequest(sequenceNumberAction, requestPriority, timeout, leaseId, requestConditions, ifTags, blobSequenceNumber, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1001,6 +1117,10 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="sequenceNumberAction"> Required if the blob sequence number is provided. This property indicates how the service should modify the blob's sequence number. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
@@ -1009,13 +1129,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SetSequenceNumberAsync(string sequenceNumberAction, int? timeout = default, string leaseId = default, RequestConditions requestConditions = default, string ifTags = default, long? blobSequenceNumber = default, RequestContext context = null)
+        public virtual async Task<Response> SetSequenceNumberAsync(string sequenceNumberAction, int? requestPriority = default, int? timeout = default, string leaseId = default, RequestConditions requestConditions = default, string ifTags = default, long? blobSequenceNumber = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PageBlobRestClient.SetSequenceNumber");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetSequenceNumberRequest(sequenceNumberAction, timeout, leaseId, requestConditions, ifTags, blobSequenceNumber, context);
+                using HttpMessage message = CreateSetSequenceNumberRequest(sequenceNumberAction, requestPriority, timeout, leaseId, requestConditions, ifTags, blobSequenceNumber, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1027,6 +1147,10 @@ namespace Azure.Storage.Blobs
 
         /// <summary> Updates the sequence number of the specified page blob. The operation will fail if the specified sequence number is less than the current sequence number of the blob. </summary>
         /// <param name="sequenceNumberAction"> Required if the blob sequence number is provided. This property indicates how the service should modify the blob's sequence number. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
@@ -1034,13 +1158,17 @@ namespace Azure.Storage.Blobs
         /// <param name="blobSequenceNumber"> A value that can be used to track the request. The value of the sequence number must be between 0 and 2^63 - 1. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response SetSequenceNumber(SequenceNumberAction sequenceNumberAction, int? timeout = default, string leaseId = default, RequestConditions requestConditions = default, string ifTags = default, long? blobSequenceNumber = default, CancellationToken cancellationToken = default)
+        public virtual Response SetSequenceNumber(SequenceNumberAction sequenceNumberAction, int? requestPriority = default, int? timeout = default, string leaseId = default, RequestConditions requestConditions = default, string ifTags = default, long? blobSequenceNumber = default, CancellationToken cancellationToken = default)
         {
-            return SetSequenceNumber(sequenceNumberAction.ToSerialString(), timeout, leaseId, requestConditions, ifTags, blobSequenceNumber, cancellationToken.ToRequestContext());
+            return SetSequenceNumber(sequenceNumberAction.ToSerialString(), requestPriority, timeout, leaseId, requestConditions, ifTags, blobSequenceNumber, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Updates the sequence number of the specified page blob. The operation will fail if the specified sequence number is less than the current sequence number of the blob. </summary>
         /// <param name="sequenceNumberAction"> Required if the blob sequence number is provided. This property indicates how the service should modify the blob's sequence number. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
@@ -1048,9 +1176,9 @@ namespace Azure.Storage.Blobs
         /// <param name="blobSequenceNumber"> A value that can be used to track the request. The value of the sequence number must be between 0 and 2^63 - 1. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> SetSequenceNumberAsync(SequenceNumberAction sequenceNumberAction, int? timeout = default, string leaseId = default, RequestConditions requestConditions = default, string ifTags = default, long? blobSequenceNumber = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SetSequenceNumberAsync(SequenceNumberAction sequenceNumberAction, int? requestPriority = default, int? timeout = default, string leaseId = default, RequestConditions requestConditions = default, string ifTags = default, long? blobSequenceNumber = default, CancellationToken cancellationToken = default)
         {
-            return await SetSequenceNumberAsync(sequenceNumberAction.ToSerialString(), timeout, leaseId, requestConditions, ifTags, blobSequenceNumber, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await SetSequenceNumberAsync(sequenceNumberAction.ToSerialString(), requestPriority, timeout, leaseId, requestConditions, ifTags, blobSequenceNumber, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1062,19 +1190,23 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="copySource"> Specifies the name of the source URL for the copy operation. The value should be URL-encoded as it would appear in a request URI. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response CopyIncremental(string copySource, int? timeout, RequestConditions requestConditions, string ifTags, RequestContext context)
+        public virtual Response CopyIncremental(string copySource, int? requestPriority, int? timeout, RequestConditions requestConditions, string ifTags, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PageBlobRestClient.CopyIncremental");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCopyIncrementalRequest(copySource, timeout, requestConditions, ifTags, context);
+                using HttpMessage message = CreateCopyIncrementalRequest(copySource, requestPriority, timeout, requestConditions, ifTags, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1093,19 +1225,23 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="copySource"> Specifies the name of the source URL for the copy operation. The value should be URL-encoded as it would appear in a request URI. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CopyIncrementalAsync(string copySource, int? timeout, RequestConditions requestConditions, string ifTags, RequestContext context)
+        public virtual async Task<Response> CopyIncrementalAsync(string copySource, int? requestPriority, int? timeout, RequestConditions requestConditions, string ifTags, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("PageBlobRestClient.CopyIncremental");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCopyIncrementalRequest(copySource, timeout, requestConditions, ifTags, context);
+                using HttpMessage message = CreateCopyIncrementalRequest(copySource, requestPriority, timeout, requestConditions, ifTags, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1117,26 +1253,34 @@ namespace Azure.Storage.Blobs
 
         /// <summary> Copies a snapshot of the source page blob to a destination page blob. The snapshot is copied such that only the differential changes between the previously copied snapshot are transferred to the destination. </summary>
         /// <param name="copySource"> Specifies the name of the source URL for the copy operation. The value should be URL-encoded as it would appear in a request URI. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response CopyIncremental(string copySource, int? timeout = default, RequestConditions requestConditions = default, string ifTags = default, CancellationToken cancellationToken = default)
+        public virtual Response CopyIncremental(string copySource, int? requestPriority = default, int? timeout = default, RequestConditions requestConditions = default, string ifTags = default, CancellationToken cancellationToken = default)
         {
-            return CopyIncremental(copySource, timeout, requestConditions, ifTags, cancellationToken.ToRequestContext());
+            return CopyIncremental(copySource, requestPriority, timeout, requestConditions, ifTags, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Copies a snapshot of the source page blob to a destination page blob. The snapshot is copied such that only the differential changes between the previously copied snapshot are transferred to the destination. </summary>
         /// <param name="copySource"> Specifies the name of the source URL for the copy operation. The value should be URL-encoded as it would appear in a request URI. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="ifTags"> Specifies a SQL-like where clause on blob tags to operate only on a blob with matching tags. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> CopyIncrementalAsync(string copySource, int? timeout = default, RequestConditions requestConditions = default, string ifTags = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CopyIncrementalAsync(string copySource, int? requestPriority = default, int? timeout = default, RequestConditions requestConditions = default, string ifTags = default, CancellationToken cancellationToken = default)
         {
-            return await CopyIncrementalAsync(copySource, timeout, requestConditions, ifTags, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await CopyIncrementalAsync(copySource, requestPriority, timeout, requestConditions, ifTags, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
     }
 }

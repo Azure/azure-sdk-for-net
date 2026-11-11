@@ -210,7 +210,8 @@ namespace Azure.Storage.Blobs
                 customerProvidedKey: options.CustomerProvidedKey,
                 transferValidation: options.TransferValidation,
                 encryptionScope: options.EncryptionScope,
-                trimBlobNameSlashes: options.TrimBlobNameSlashes);
+                trimBlobNameSlashes: options.TrimBlobNameSlashes,
+                requestPriority: options.RequestPriority);
 
             _authenticationPolicy = StorageClientOptions.GetAuthenticationPolicy(conn.Credentials);
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
@@ -251,7 +252,8 @@ namespace Azure.Storage.Blobs
                 customerProvidedKey: options.CustomerProvidedKey,
                 transferValidation: options.TransferValidation,
                 encryptionScope: options.EncryptionScope,
-                trimBlobNameSlashes: options.TrimBlobNameSlashes);
+                trimBlobNameSlashes: options.TrimBlobNameSlashes,
+                requestPriority: options.RequestPriority);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _containerRestClient = BuildContainerRestClient(blobContainerUri);
@@ -294,7 +296,8 @@ namespace Azure.Storage.Blobs
                 customerProvidedKey: options.CustomerProvidedKey,
                 transferValidation: options.TransferValidation,
                 encryptionScope: options.EncryptionScope,
-                trimBlobNameSlashes: options.TrimBlobNameSlashes);
+                trimBlobNameSlashes: options.TrimBlobNameSlashes,
+                requestPriority: options.RequestPriority);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _containerRestClient = BuildContainerRestClient(blobContainerUri);
@@ -339,7 +342,8 @@ namespace Azure.Storage.Blobs
                 customerProvidedKey: options.CustomerProvidedKey,
                 transferValidation: options.TransferValidation,
                 encryptionScope: options.EncryptionScope,
-                trimBlobNameSlashes: options.TrimBlobNameSlashes);
+                trimBlobNameSlashes: options.TrimBlobNameSlashes,
+                requestPriority: options.RequestPriority);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _containerRestClient = BuildContainerRestClient(blobContainerUri);
@@ -399,7 +403,8 @@ namespace Azure.Storage.Blobs
                 customerProvidedKey: options.CustomerProvidedKey,
                 transferValidation: options.TransferValidation,
                 encryptionScope: options.EncryptionScope,
-                trimBlobNameSlashes: options.TrimBlobNameSlashes);
+                trimBlobNameSlashes: options.TrimBlobNameSlashes,
+                requestPriority: options.RequestPriority);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _containerRestClient = BuildContainerRestClient(blobContainerUri);
@@ -489,7 +494,8 @@ namespace Azure.Storage.Blobs
                     customerProvidedKey: null,
                     transferValidation: options.TransferValidation,
                     encryptionScope: null,
-                    trimBlobNameSlashes: options.TrimBlobNameSlashes),
+                    trimBlobNameSlashes: options.TrimBlobNameSlashes,
+                    requestPriority: options.RequestPriority),
                 clientSideEncryption: null);
         }
 
@@ -1265,6 +1271,7 @@ namespace Azure.Storage.Blobs
                     if (async)
                     {
                         response = await ContainerRestClient.CreateAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             metadata: metadata,
                             access: publicAccessType == PublicAccessType.None ? null : publicAccessType,
                             defaultEncryptionScope: encryptionScopeOptions?.DefaultEncryptionScope,
@@ -1275,6 +1282,7 @@ namespace Azure.Storage.Blobs
                     else
                     {
                         response = ContainerRestClient.Create(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             metadata: metadata,
                             access: publicAccessType == PublicAccessType.None ? null : publicAccessType,
                             defaultEncryptionScope: encryptionScopeOptions?.DefaultEncryptionScope,
@@ -1622,6 +1630,7 @@ namespace Azure.Storage.Blobs
                     if (async)
                     {
                         response = await ContainerRestClient.DeleteAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             leaseId: conditions?.LeaseId,
                             requestConditions: conditions,
                             cancellationToken: cancellationToken)
@@ -1630,6 +1639,7 @@ namespace Azure.Storage.Blobs
                     else
                     {
                         response = ContainerRestClient.Delete(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             leaseId: conditions?.LeaseId,
                             requestConditions: conditions,
                             cancellationToken: cancellationToken);
@@ -1911,6 +1921,7 @@ namespace Azure.Storage.Blobs
                     if (async)
                     {
                         response = await ContainerRestClient.GetPropertiesAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -1918,6 +1929,7 @@ namespace Azure.Storage.Blobs
                     else
                     {
                         response = ContainerRestClient.GetProperties(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken);
                     }
@@ -2085,6 +2097,7 @@ namespace Azure.Storage.Blobs
                     if (async)
                     {
                         response = await ContainerRestClient.SetMetadataAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             leaseId: conditions?.LeaseId,
                             metadata: metadata,
                             requestConditions: conditions,
@@ -2094,6 +2107,7 @@ namespace Azure.Storage.Blobs
                     else
                     {
                         response = ContainerRestClient.SetMetadata(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             leaseId: conditions?.LeaseId,
                             metadata: metadata,
                             requestConditions: conditions,
@@ -2255,6 +2269,7 @@ namespace Azure.Storage.Blobs
                     if (async)
                     {
                         response = await ContainerRestClient.GetAccessPolicyAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -2262,6 +2277,7 @@ namespace Azure.Storage.Blobs
                     else
                     {
                         response = ContainerRestClient.GetAccessPolicy(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken);
                     }
@@ -2498,6 +2514,7 @@ namespace Azure.Storage.Blobs
                     if (async)
                     {
                         response = await ContainerRestClient.SetAccessPolicyAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             containerAcl: sanitizedPermissions != null ? new BlobSignedIdentifiers(sanitizedPermissions) : null,
                             leaseId: conditions?.LeaseId,
                             access: accessType == PublicAccessType.None ? null : accessType,
@@ -2508,6 +2525,7 @@ namespace Azure.Storage.Blobs
                     else
                     {
                         response = ContainerRestClient.SetAccessPolicy(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             containerAcl: sanitizedPermissions != null ? new BlobSignedIdentifiers(sanitizedPermissions) : null,
                             leaseId: conditions?.LeaseId,
                             access: accessType == PublicAccessType.None ? null : accessType,
@@ -2574,6 +2592,7 @@ namespace Azure.Storage.Blobs
                 {
                     scope.Start();
                     Response<CreateSessionResponse> response = ContainerRestClient.CreateSession(
+                        requestPriority: ClientConfiguration.RequestPriority,
                         createSessionConfiguration: config,
                         cancellationToken: cancellationToken);
 
@@ -2634,6 +2653,7 @@ namespace Azure.Storage.Blobs
                 {
                     scope.Start();
                     Response<CreateSessionResponse> response = await ContainerRestClient.CreateSessionAsync(
+                        requestPriority: ClientConfiguration.RequestPriority,
                         createSessionConfiguration: config,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -2937,6 +2957,7 @@ namespace Azure.Storage.Blobs
                         if (async)
                         {
                             arrowResponse = await ContainerRestClient.GetBlobFlatSegmentApacheArrowAsync(
+                                requestPriority: ClientConfiguration.RequestPriority,
                                 prefix: prefix,
                                 marker: marker,
                                 maxresults: pageSizeHint,
@@ -2949,6 +2970,7 @@ namespace Azure.Storage.Blobs
                         else
                         {
                             arrowResponse = ContainerRestClient.GetBlobFlatSegmentApacheArrow(
+                                requestPriority: ClientConfiguration.RequestPriority,
                                 prefix: prefix,
                                 marker: marker,
                                 maxresults: pageSizeHint,
@@ -2986,6 +3008,7 @@ namespace Azure.Storage.Blobs
                         if (async)
                         {
                             response = await ContainerRestClient.GetBlobFlatSegmentAsync(
+                                requestPriority: ClientConfiguration.RequestPriority,
                                 prefix: prefix,
                                 marker: marker,
                                 maxresults: pageSizeHint,
@@ -2997,6 +3020,7 @@ namespace Azure.Storage.Blobs
                         else
                         {
                             response = ContainerRestClient.GetBlobFlatSegment(
+                                requestPriority: ClientConfiguration.RequestPriority,
                                 prefix: prefix,
                                 marker: marker,
                                 maxresults: pageSizeHint,
@@ -3624,6 +3648,7 @@ namespace Azure.Storage.Blobs
                         if (async)
                         {
                             arrowResponse = await ContainerRestClient.GetBlobHierarchySegmentApacheArrowAsync(
+                                requestPriority: ClientConfiguration.RequestPriority,
                                 prefix: prefix,
                                 delimiter: delimiter,
                                 marker: marker,
@@ -3637,6 +3662,7 @@ namespace Azure.Storage.Blobs
                         else
                         {
                             arrowResponse = ContainerRestClient.GetBlobHierarchySegmentApacheArrow(
+                                requestPriority: ClientConfiguration.RequestPriority,
                                 prefix: prefix,
                                 delimiter: delimiter,
                                 marker: marker,
@@ -3675,6 +3701,7 @@ namespace Azure.Storage.Blobs
                         if (async)
                         {
                             response = await ContainerRestClient.GetBlobHierarchySegmentAsync(
+                                requestPriority: ClientConfiguration.RequestPriority,
                                 delimiter: delimiter,
                                 prefix: prefix,
                                 marker: marker,
@@ -3687,6 +3714,7 @@ namespace Azure.Storage.Blobs
                         else
                         {
                             response = ContainerRestClient.GetBlobHierarchySegment(
+                                requestPriority: ClientConfiguration.RequestPriority,
                                 delimiter: delimiter,
                                 prefix: prefix,
                                 marker: marker,
@@ -4248,6 +4276,7 @@ namespace Azure.Storage.Blobs
                     if (async)
                     {
                         response = await destContainerClient.ContainerRestClient.RenameAsync(
+                            requestPriority: destContainerClient.ClientConfiguration.RequestPriority,
                             sourceContainerName: Name,
                             sourceLeaseId: sourceConditions?.LeaseId,
                             cancellationToken: cancellationToken)
@@ -4256,6 +4285,7 @@ namespace Azure.Storage.Blobs
                     else
                     {
                         response = destContainerClient.ContainerRestClient.Rename(
+                            requestPriority: destContainerClient.ClientConfiguration.RequestPriority,
                             sourceContainerName: Name,
                             sourceLeaseId: sourceConditions?.LeaseId,
                             cancellationToken: cancellationToken);
@@ -4372,6 +4402,7 @@ namespace Azure.Storage.Blobs
                     if (async)
                     {
                         response = await ContainerRestClient.FilterBlobsAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             filterExpression: expression,
                             marker: marker,
                             maxresults: pageSizeHint,
@@ -4381,6 +4412,7 @@ namespace Azure.Storage.Blobs
                     else
                     {
                         response = ContainerRestClient.FilterBlobs(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             filterExpression: expression,
                             marker: marker,
                             maxresults: pageSizeHint,
@@ -4505,12 +4537,14 @@ namespace Azure.Storage.Blobs
                     if (async)
                     {
                         response = await ContainerRestClient.GetAccountInfoAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = ContainerRestClient.GetAccountInfo(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             cancellationToken: cancellationToken);
                     }
 

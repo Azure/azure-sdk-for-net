@@ -53,6 +53,10 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> The metadata headers. </param>
         /// <param name="access"> The public access setting for the container. </param>
@@ -61,13 +65,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Create(int? timeout, IDictionary<string, string> metadata, string access, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, RequestContext context)
+        public virtual Response Create(int? requestPriority, int? timeout, IDictionary<string, string> metadata, string access, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(timeout, metadata, access, defaultEncryptionScope, preventEncryptionScopeOverride, context);
+                using HttpMessage message = CreateCreateRequest(requestPriority, timeout, metadata, access, defaultEncryptionScope, preventEncryptionScopeOverride, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -85,6 +89,10 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> The metadata headers. </param>
         /// <param name="access"> The public access setting for the container. </param>
@@ -93,13 +101,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateAsync(int? timeout, IDictionary<string, string> metadata, string access, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, RequestContext context)
+        public virtual async Task<Response> CreateAsync(int? requestPriority, int? timeout, IDictionary<string, string> metadata, string access, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(timeout, metadata, access, defaultEncryptionScope, preventEncryptionScopeOverride, context);
+                using HttpMessage message = CreateCreateRequest(requestPriority, timeout, metadata, access, defaultEncryptionScope, preventEncryptionScopeOverride, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -110,6 +118,10 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Creates a new container in the specified account. If the container with the same name already exists, the operation fails. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> The metadata headers. </param>
         /// <param name="access"> The public access setting for the container. </param>
@@ -117,12 +129,16 @@ namespace Azure.Storage.Blobs
         /// <param name="preventEncryptionScopeOverride"> Whether to prevent encryption scope override. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Create(int? timeout = default, IDictionary<string, string> metadata = default, PublicAccessType? access = default, string defaultEncryptionScope = default, bool? preventEncryptionScopeOverride = default, CancellationToken cancellationToken = default)
+        public virtual Response Create(int? requestPriority = default, int? timeout = default, IDictionary<string, string> metadata = default, PublicAccessType? access = default, string defaultEncryptionScope = default, bool? preventEncryptionScopeOverride = default, CancellationToken cancellationToken = default)
         {
-            return Create(timeout, metadata, access?.ToSerialString(), defaultEncryptionScope, preventEncryptionScopeOverride, cancellationToken.ToRequestContext());
+            return Create(requestPriority, timeout, metadata, access?.ToSerialString(), defaultEncryptionScope, preventEncryptionScopeOverride, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Creates a new container in the specified account. If the container with the same name already exists, the operation fails. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="metadata"> The metadata headers. </param>
         /// <param name="access"> The public access setting for the container. </param>
@@ -130,9 +146,9 @@ namespace Azure.Storage.Blobs
         /// <param name="preventEncryptionScopeOverride"> Whether to prevent encryption scope override. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> CreateAsync(int? timeout = default, IDictionary<string, string> metadata = default, PublicAccessType? access = default, string defaultEncryptionScope = default, bool? preventEncryptionScopeOverride = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CreateAsync(int? requestPriority = default, int? timeout = default, IDictionary<string, string> metadata = default, PublicAccessType? access = default, string defaultEncryptionScope = default, bool? preventEncryptionScopeOverride = default, CancellationToken cancellationToken = default)
         {
-            return await CreateAsync(timeout, metadata, access?.ToSerialString(), defaultEncryptionScope, preventEncryptionScopeOverride, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await CreateAsync(requestPriority, timeout, metadata, access?.ToSerialString(), defaultEncryptionScope, preventEncryptionScopeOverride, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -143,18 +159,22 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetProperties(int? timeout, string leaseId, RequestContext context)
+        public virtual Response GetProperties(int? requestPriority, int? timeout, string leaseId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.GetProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPropertiesRequest(timeout, leaseId, context);
+                using HttpMessage message = CreateGetPropertiesRequest(requestPriority, timeout, leaseId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -172,18 +192,22 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPropertiesAsync(int? timeout, string leaseId, RequestContext context)
+        public virtual async Task<Response> GetPropertiesAsync(int? requestPriority, int? timeout, string leaseId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.GetProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPropertiesRequest(timeout, leaseId, context);
+                using HttpMessage message = CreateGetPropertiesRequest(requestPriority, timeout, leaseId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -194,23 +218,31 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Returns all user-defined metadata and system properties for the specified container. The data returned does not include the container's list of blobs. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response GetProperties(int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
+        public virtual Response GetProperties(int? requestPriority = default, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            return GetProperties(timeout, leaseId, cancellationToken.ToRequestContext());
+            return GetProperties(requestPriority, timeout, leaseId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Returns all user-defined metadata and system properties for the specified container. The data returned does not include the container's list of blobs. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> GetPropertiesAsync(int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetPropertiesAsync(int? requestPriority = default, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            return await GetPropertiesAsync(timeout, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await GetPropertiesAsync(requestPriority, timeout, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -222,13 +254,17 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Delete(int? timeout, string leaseId, RequestConditions requestConditions, RequestContext context)
+        public virtual Response Delete(int? requestPriority, int? timeout, string leaseId, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.Delete");
             scope.Start();
@@ -243,7 +279,7 @@ namespace Azure.Storage.Blobs
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
 
-                using HttpMessage message = CreateDeleteRequest(timeout, leaseId, requestConditions, context);
+                using HttpMessage message = CreateDeleteRequest(requestPriority, timeout, leaseId, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -262,13 +298,17 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteAsync(int? timeout, string leaseId, RequestConditions requestConditions, RequestContext context)
+        public virtual async Task<Response> DeleteAsync(int? requestPriority, int? timeout, string leaseId, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.Delete");
             scope.Start();
@@ -283,7 +323,7 @@ namespace Azure.Storage.Blobs
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
 
-                using HttpMessage message = CreateDeleteRequest(timeout, leaseId, requestConditions, context);
+                using HttpMessage message = CreateDeleteRequest(requestPriority, timeout, leaseId, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -297,28 +337,36 @@ namespace Azure.Storage.Blobs
         /// Deletes the specified container.
         /// When a container is deleted, a container with the same name can't be created for at least 30 seconds. The container might not be available for more than 30 seconds if the service is still processing the request. While the container is being deleted, attempts to create a container of the same name fail with status code 409 (Conflict). The service indicates that the container is being deleted. Operations on blobs within the container, including reads and writes, may continue to succeed for up to 30 seconds after the delete request is accepted. After this period, all operations on the container and its blobs fail with status code 404 (Not Found).
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Delete(int? timeout = default, string leaseId = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        public virtual Response Delete(int? requestPriority = default, int? timeout = default, string leaseId = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return Delete(timeout, leaseId, requestConditions, cancellationToken.ToRequestContext());
+            return Delete(requestPriority, timeout, leaseId, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
         /// Deletes the specified container.
         /// When a container is deleted, a container with the same name can't be created for at least 30 seconds. The container might not be available for more than 30 seconds if the service is still processing the request. While the container is being deleted, attempts to create a container of the same name fail with status code 409 (Conflict). The service indicates that the container is being deleted. Operations on blobs within the container, including reads and writes, may continue to succeed for up to 30 seconds after the delete request is accepted. After this period, all operations on the container and its blobs fail with status code 404 (Not Found).
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteAsync(int? timeout = default, string leaseId = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteAsync(int? requestPriority = default, int? timeout = default, string leaseId = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return await DeleteAsync(timeout, leaseId, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await DeleteAsync(requestPriority, timeout, leaseId, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -329,6 +377,10 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="metadata"> The metadata headers. </param>
@@ -336,7 +388,7 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response SetMetadata(int? timeout, string leaseId, IDictionary<string, string> metadata, RequestConditions requestConditions, RequestContext context)
+        public virtual Response SetMetadata(int? requestPriority, int? timeout, string leaseId, IDictionary<string, string> metadata, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.SetMetadata");
             scope.Start();
@@ -355,7 +407,7 @@ namespace Azure.Storage.Blobs
                     throw new ArgumentException("Service does not support the If-Unmodified-Since header for this operation.");
                 }
 
-                using HttpMessage message = CreateSetMetadataRequest(timeout, leaseId, metadata, requestConditions, context);
+                using HttpMessage message = CreateSetMetadataRequest(requestPriority, timeout, leaseId, metadata, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -373,6 +425,10 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="metadata"> The metadata headers. </param>
@@ -380,7 +436,7 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SetMetadataAsync(int? timeout, string leaseId, IDictionary<string, string> metadata, RequestConditions requestConditions, RequestContext context)
+        public virtual async Task<Response> SetMetadataAsync(int? requestPriority, int? timeout, string leaseId, IDictionary<string, string> metadata, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.SetMetadata");
             scope.Start();
@@ -399,7 +455,7 @@ namespace Azure.Storage.Blobs
                     throw new ArgumentException("Service does not support the If-Unmodified-Since header for this operation.");
                 }
 
-                using HttpMessage message = CreateSetMetadataRequest(timeout, leaseId, metadata, requestConditions, context);
+                using HttpMessage message = CreateSetMetadataRequest(requestPriority, timeout, leaseId, metadata, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -410,27 +466,35 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Sets user-defined metadata for the specified container. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="metadata"> The metadata headers. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response SetMetadata(int? timeout = default, string leaseId = default, IDictionary<string, string> metadata = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        public virtual Response SetMetadata(int? requestPriority = default, int? timeout = default, string leaseId = default, IDictionary<string, string> metadata = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return SetMetadata(timeout, leaseId, metadata, requestConditions, cancellationToken.ToRequestContext());
+            return SetMetadata(requestPriority, timeout, leaseId, metadata, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Sets user-defined metadata for the specified container. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="metadata"> The metadata headers. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> SetMetadataAsync(int? timeout = default, string leaseId = default, IDictionary<string, string> metadata = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SetMetadataAsync(int? requestPriority = default, int? timeout = default, string leaseId = default, IDictionary<string, string> metadata = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return await SetMetadataAsync(timeout, leaseId, metadata, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await SetMetadataAsync(requestPriority, timeout, leaseId, metadata, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -441,18 +505,22 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetAccessPolicy(int? timeout, string leaseId, RequestContext context)
+        public virtual Response GetAccessPolicy(int? requestPriority, int? timeout, string leaseId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.GetAccessPolicy");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAccessPolicyRequest(timeout, leaseId, context);
+                using HttpMessage message = CreateGetAccessPolicyRequest(requestPriority, timeout, leaseId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -470,18 +538,22 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAccessPolicyAsync(int? timeout, string leaseId, RequestContext context)
+        public virtual async Task<Response> GetAccessPolicyAsync(int? requestPriority, int? timeout, string leaseId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.GetAccessPolicy");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAccessPolicyRequest(timeout, leaseId, context);
+                using HttpMessage message = CreateGetAccessPolicyRequest(requestPriority, timeout, leaseId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -492,24 +564,32 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Gets the permissions for the specified container. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BlobSignedIdentifiers> GetAccessPolicy(int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
+        public virtual Response<BlobSignedIdentifiers> GetAccessPolicy(int? requestPriority = default, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetAccessPolicy(timeout, leaseId, cancellationToken.ToRequestContext());
+            Response result = GetAccessPolicy(requestPriority, timeout, leaseId, cancellationToken.ToRequestContext());
             return Response.FromValue((BlobSignedIdentifiers)result, result);
         }
 
         /// <summary> Gets the permissions for the specified container. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BlobSignedIdentifiers>> GetAccessPolicyAsync(int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BlobSignedIdentifiers>> GetAccessPolicyAsync(int? requestPriority = default, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetAccessPolicyAsync(timeout, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetAccessPolicyAsync(requestPriority, timeout, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((BlobSignedIdentifiers)result, result);
         }
 
@@ -522,6 +602,10 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="access"> The public access setting for the container. </param>
@@ -529,7 +613,7 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response SetAccessPolicy(RequestContent content, int? timeout = default, string leaseId = default, string access = default, RequestConditions requestConditions = default, RequestContext context = null)
+        public virtual Response SetAccessPolicy(RequestContent content, int? requestPriority = default, int? timeout = default, string leaseId = default, string access = default, RequestConditions requestConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.SetAccessPolicy");
             scope.Start();
@@ -544,7 +628,7 @@ namespace Azure.Storage.Blobs
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
 
-                using HttpMessage message = CreateSetAccessPolicyRequest(content, timeout, leaseId, access, requestConditions, context);
+                using HttpMessage message = CreateSetAccessPolicyRequest(content, requestPriority, timeout, leaseId, access, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -563,6 +647,10 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="access"> The public access setting for the container. </param>
@@ -570,7 +658,7 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SetAccessPolicyAsync(RequestContent content, int? timeout = default, string leaseId = default, string access = default, RequestConditions requestConditions = default, RequestContext context = null)
+        public virtual async Task<Response> SetAccessPolicyAsync(RequestContent content, int? requestPriority = default, int? timeout = default, string leaseId = default, string access = default, RequestConditions requestConditions = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.SetAccessPolicy");
             scope.Start();
@@ -585,7 +673,7 @@ namespace Azure.Storage.Blobs
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
 
-                using HttpMessage message = CreateSetAccessPolicyRequest(content, timeout, leaseId, access, requestConditions, context);
+                using HttpMessage message = CreateSetAccessPolicyRequest(content, requestPriority, timeout, leaseId, access, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -597,28 +685,36 @@ namespace Azure.Storage.Blobs
 
         /// <summary> Sets the permissions for the specified container. </summary>
         /// <param name="containerAcl"> The access control list for the container. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="access"> The public access setting for the container. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response SetAccessPolicy(BlobSignedIdentifiers containerAcl = default, int? timeout = default, string leaseId = default, PublicAccessType? access = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        public virtual Response SetAccessPolicy(BlobSignedIdentifiers containerAcl = default, int? requestPriority = default, int? timeout = default, string leaseId = default, PublicAccessType? access = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return SetAccessPolicy(containerAcl, timeout, leaseId, access?.ToSerialString(), requestConditions, cancellationToken.ToRequestContext());
+            return SetAccessPolicy(containerAcl, requestPriority, timeout, leaseId, access?.ToSerialString(), requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Sets the permissions for the specified container. </summary>
         /// <param name="containerAcl"> The access control list for the container. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
         /// <param name="access"> The public access setting for the container. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> SetAccessPolicyAsync(BlobSignedIdentifiers containerAcl = default, int? timeout = default, string leaseId = default, PublicAccessType? access = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SetAccessPolicyAsync(BlobSignedIdentifiers containerAcl = default, int? requestPriority = default, int? timeout = default, string leaseId = default, PublicAccessType? access = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return await SetAccessPolicyAsync(containerAcl, timeout, leaseId, access?.ToSerialString(), requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await SetAccessPolicyAsync(containerAcl, requestPriority, timeout, leaseId, access?.ToSerialString(), requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -629,19 +725,23 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="deletedContainerName"> Specifies the name of the deleted container to restore. </param>
         /// <param name="deletedContainerVersion"> Specifies the version of the deleted container to restore. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Restore(string deletedContainerName, string deletedContainerVersion, int? timeout, RequestContext context)
+        public virtual Response Restore(int? requestPriority, string deletedContainerName, string deletedContainerVersion, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.Restore");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRestoreRequest(deletedContainerName, deletedContainerVersion, timeout, context);
+                using HttpMessage message = CreateRestoreRequest(requestPriority, deletedContainerName, deletedContainerVersion, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -659,19 +759,23 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="deletedContainerName"> Specifies the name of the deleted container to restore. </param>
         /// <param name="deletedContainerVersion"> Specifies the version of the deleted container to restore. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RestoreAsync(string deletedContainerName, string deletedContainerVersion, int? timeout, RequestContext context)
+        public virtual async Task<Response> RestoreAsync(int? requestPriority, string deletedContainerName, string deletedContainerVersion, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.Restore");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRestoreRequest(deletedContainerName, deletedContainerVersion, timeout, context);
+                using HttpMessage message = CreateRestoreRequest(requestPriority, deletedContainerName, deletedContainerVersion, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -682,25 +786,33 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Restores the specified previously-deleted container. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="deletedContainerName"> Specifies the name of the deleted container to restore. </param>
         /// <param name="deletedContainerVersion"> Specifies the version of the deleted container to restore. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Restore(string deletedContainerName = default, string deletedContainerVersion = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response Restore(int? requestPriority = default, string deletedContainerName = default, string deletedContainerVersion = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return Restore(deletedContainerName, deletedContainerVersion, timeout, cancellationToken.ToRequestContext());
+            return Restore(requestPriority, deletedContainerName, deletedContainerVersion, timeout, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Restores the specified previously-deleted container. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="deletedContainerName"> Specifies the name of the deleted container to restore. </param>
         /// <param name="deletedContainerVersion"> Specifies the version of the deleted container to restore. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> RestoreAsync(string deletedContainerName = default, string deletedContainerVersion = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RestoreAsync(int? requestPriority = default, string deletedContainerName = default, string deletedContainerVersion = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return await RestoreAsync(deletedContainerName, deletedContainerVersion, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await RestoreAsync(requestPriority, deletedContainerName, deletedContainerVersion, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -712,18 +824,22 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="sourceContainerName"> Specifies the name of the container to rename. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="sourceLeaseId"> A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Rename(string sourceContainerName, string sourceLeaseId, int? timeout, RequestContext context)
+        public virtual Response Rename(string sourceContainerName, int? requestPriority, string sourceLeaseId, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.Rename");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRenameRequest(sourceContainerName, sourceLeaseId, timeout, context);
+                using HttpMessage message = CreateRenameRequest(sourceContainerName, requestPriority, sourceLeaseId, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -742,18 +858,22 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="sourceContainerName"> Specifies the name of the container to rename. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="sourceLeaseId"> A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RenameAsync(string sourceContainerName, string sourceLeaseId, int? timeout, RequestContext context)
+        public virtual async Task<Response> RenameAsync(string sourceContainerName, int? requestPriority, string sourceLeaseId, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.Rename");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRenameRequest(sourceContainerName, sourceLeaseId, timeout, context);
+                using HttpMessage message = CreateRenameRequest(sourceContainerName, requestPriority, sourceLeaseId, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -765,24 +885,32 @@ namespace Azure.Storage.Blobs
 
         /// <summary> Renames the specified existing container. </summary>
         /// <param name="sourceContainerName"> Specifies the name of the container to rename. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="sourceLeaseId"> A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Rename(string sourceContainerName, string sourceLeaseId = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response Rename(string sourceContainerName, int? requestPriority = default, string sourceLeaseId = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return Rename(sourceContainerName, sourceLeaseId, timeout, cancellationToken.ToRequestContext());
+            return Rename(sourceContainerName, requestPriority, sourceLeaseId, timeout, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Renames the specified existing container. </summary>
         /// <param name="sourceContainerName"> Specifies the name of the container to rename. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="sourceLeaseId"> A lease ID for the source path. If specified, the source path must have an active lease and the lease ID must match. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> RenameAsync(string sourceContainerName, string sourceLeaseId = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RenameAsync(string sourceContainerName, int? requestPriority = default, string sourceLeaseId = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return await RenameAsync(sourceContainerName, sourceLeaseId, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await RenameAsync(sourceContainerName, requestPriority, sourceLeaseId, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -794,17 +922,21 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response CreateSession(RequestContent content, int? timeout = default, RequestContext context = null)
+        public virtual Response CreateSession(RequestContent content, int? requestPriority = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.CreateSession");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateSessionRequest(content, timeout, context);
+                using HttpMessage message = CreateCreateSessionRequest(content, requestPriority, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -823,17 +955,21 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateSessionAsync(RequestContent content, int? timeout = default, RequestContext context = null)
+        public virtual async Task<Response> CreateSessionAsync(RequestContent content, int? requestPriority = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.CreateSession");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateSessionRequest(content, timeout, context);
+                using HttpMessage message = CreateCreateSessionRequest(content, requestPriority, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -845,23 +981,31 @@ namespace Azure.Storage.Blobs
 
         /// <summary> The Create Session operation enables users to create a session scoped to a container. </summary>
         /// <param name="createSessionConfiguration"> The configuration used to create the session. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<CreateSessionResponse> CreateSession(CreateSessionConfiguration createSessionConfiguration, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response<CreateSessionResponse> CreateSession(CreateSessionConfiguration createSessionConfiguration, int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = CreateSession(createSessionConfiguration, timeout, cancellationToken.ToRequestContext());
+            Response result = CreateSession(createSessionConfiguration, requestPriority, timeout, cancellationToken.ToRequestContext());
             return Response.FromValue((CreateSessionResponse)result, result);
         }
 
         /// <summary> The Create Session operation enables users to create a session scoped to a container. </summary>
         /// <param name="createSessionConfiguration"> The configuration used to create the session. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<CreateSessionResponse>> CreateSessionAsync(CreateSessionConfiguration createSessionConfiguration, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CreateSessionResponse>> CreateSessionAsync(CreateSessionConfiguration createSessionConfiguration, int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = await CreateSessionAsync(createSessionConfiguration, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await CreateSessionAsync(createSessionConfiguration, requestPriority, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((CreateSessionResponse)result, result);
         }
 
@@ -877,16 +1021,20 @@ namespace Azure.Storage.Blobs
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The value of this header must be multipart/mixed with a batch boundary. Example header value: multipart/mixed; boundary=batch_&lt;GUID&gt;. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response SubmitBatch(long contentLength, RequestContent content, string contentType, int? timeout = default, RequestContext context = null)
+        public virtual Response SubmitBatch(long contentLength, RequestContent content, string contentType, int? timeout = default, int? requestPriority = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.SubmitBatch");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSubmitBatchRequest(contentLength, content, contentType, timeout, context);
+                using HttpMessage message = CreateSubmitBatchRequest(contentLength, content, contentType, timeout, requestPriority, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -908,16 +1056,20 @@ namespace Azure.Storage.Blobs
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The value of this header must be multipart/mixed with a batch boundary. Example header value: multipart/mixed; boundary=batch_&lt;GUID&gt;. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SubmitBatchAsync(long contentLength, RequestContent content, string contentType, int? timeout = default, RequestContext context = null)
+        public virtual async Task<Response> SubmitBatchAsync(long contentLength, RequestContent content, string contentType, int? timeout = default, int? requestPriority = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.SubmitBatch");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSubmitBatchRequest(contentLength, content, contentType, timeout, context);
+                using HttpMessage message = CreateSubmitBatchRequest(contentLength, content, contentType, timeout, requestPriority, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -936,6 +1088,10 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="filterExpression"> Filters the results to return only blobs whose tags match the specified expression. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
@@ -943,13 +1099,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response FilterBlobs(string filterExpression, int? timeout, string marker, int? maxresults, IEnumerable<FilterBlobsIncludeItem> include, RequestContext context)
+        public virtual Response FilterBlobs(string filterExpression, int? requestPriority, int? timeout, string marker, int? maxresults, IEnumerable<FilterBlobsIncludeItem> include, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.FilterBlobs");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateFilterBlobsRequest(filterExpression, timeout, marker, maxresults, include, context);
+                using HttpMessage message = CreateFilterBlobsRequest(filterExpression, requestPriority, timeout, marker, maxresults, include, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -968,6 +1124,10 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="filterExpression"> Filters the results to return only blobs whose tags match the specified expression. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
@@ -975,13 +1135,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> FilterBlobsAsync(string filterExpression, int? timeout, string marker, int? maxresults, IEnumerable<FilterBlobsIncludeItem> include, RequestContext context)
+        public virtual async Task<Response> FilterBlobsAsync(string filterExpression, int? requestPriority, int? timeout, string marker, int? maxresults, IEnumerable<FilterBlobsIncludeItem> include, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.FilterBlobs");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateFilterBlobsRequest(filterExpression, timeout, marker, maxresults, include, context);
+                using HttpMessage message = CreateFilterBlobsRequest(filterExpression, requestPriority, timeout, marker, maxresults, include, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -993,29 +1153,37 @@ namespace Azure.Storage.Blobs
 
         /// <summary> Lists blobs in the specified container whose tags match a given search expression. </summary>
         /// <param name="filterExpression"> Filters the results to return only blobs whose tags match the specified expression. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
         /// <param name="include"> Specify to include additional, optional information. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<FilterBlobSegment> FilterBlobs(string filterExpression, int? timeout = default, string marker = default, int? maxresults = default, IEnumerable<FilterBlobsIncludeItem> include = default, CancellationToken cancellationToken = default)
+        public virtual Response<FilterBlobSegment> FilterBlobs(string filterExpression, int? requestPriority = default, int? timeout = default, string marker = default, int? maxresults = default, IEnumerable<FilterBlobsIncludeItem> include = default, CancellationToken cancellationToken = default)
         {
-            Response result = FilterBlobs(filterExpression, timeout, marker, maxresults, include, cancellationToken.ToRequestContext());
+            Response result = FilterBlobs(filterExpression, requestPriority, timeout, marker, maxresults, include, cancellationToken.ToRequestContext());
             return Response.FromValue((FilterBlobSegment)result, result);
         }
 
         /// <summary> Lists blobs in the specified container whose tags match a given search expression. </summary>
         /// <param name="filterExpression"> Filters the results to return only blobs whose tags match the specified expression. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
         /// <param name="include"> Specify to include additional, optional information. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<FilterBlobSegment>> FilterBlobsAsync(string filterExpression, int? timeout = default, string marker = default, int? maxresults = default, IEnumerable<FilterBlobsIncludeItem> include = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FilterBlobSegment>> FilterBlobsAsync(string filterExpression, int? requestPriority = default, int? timeout = default, string marker = default, int? maxresults = default, IEnumerable<FilterBlobsIncludeItem> include = default, CancellationToken cancellationToken = default)
         {
-            Response result = await FilterBlobsAsync(filterExpression, timeout, marker, maxresults, include, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await FilterBlobsAsync(filterExpression, requestPriority, timeout, marker, maxresults, include, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((FilterBlobSegment)result, result);
         }
 
@@ -1028,13 +1196,17 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="duration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="proposedLeaseId"> The proposed lease ID for the lease. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response AcquireLease(long duration, int? timeout, string proposedLeaseId, RequestConditions requestConditions, RequestContext context)
+        public virtual Response AcquireLease(long duration, int? requestPriority, int? timeout, string proposedLeaseId, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.AcquireLease");
             scope.Start();
@@ -1049,7 +1221,7 @@ namespace Azure.Storage.Blobs
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
 
-                using HttpMessage message = CreateAcquireLeaseRequest(duration, timeout, proposedLeaseId, requestConditions, context);
+                using HttpMessage message = CreateAcquireLeaseRequest(duration, requestPriority, timeout, proposedLeaseId, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1068,13 +1240,17 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="duration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="proposedLeaseId"> The proposed lease ID for the lease. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AcquireLeaseAsync(long duration, int? timeout, string proposedLeaseId, RequestConditions requestConditions, RequestContext context)
+        public virtual async Task<Response> AcquireLeaseAsync(long duration, int? requestPriority, int? timeout, string proposedLeaseId, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.AcquireLease");
             scope.Start();
@@ -1089,7 +1265,7 @@ namespace Azure.Storage.Blobs
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
 
-                using HttpMessage message = CreateAcquireLeaseRequest(duration, timeout, proposedLeaseId, requestConditions, context);
+                using HttpMessage message = CreateAcquireLeaseRequest(duration, requestPriority, timeout, proposedLeaseId, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1101,26 +1277,34 @@ namespace Azure.Storage.Blobs
 
         /// <summary> Requests a new lease on the specified container. </summary>
         /// <param name="duration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="proposedLeaseId"> The proposed lease ID for the lease. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response AcquireLease(long duration, int? timeout = default, string proposedLeaseId = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        public virtual Response AcquireLease(long duration, int? requestPriority = default, int? timeout = default, string proposedLeaseId = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return AcquireLease(duration, timeout, proposedLeaseId, requestConditions, cancellationToken.ToRequestContext());
+            return AcquireLease(duration, requestPriority, timeout, proposedLeaseId, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Requests a new lease on the specified container. </summary>
         /// <param name="duration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="proposedLeaseId"> The proposed lease ID for the lease. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> AcquireLeaseAsync(long duration, int? timeout = default, string proposedLeaseId = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> AcquireLeaseAsync(long duration, int? requestPriority = default, int? timeout = default, string proposedLeaseId = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return await AcquireLeaseAsync(duration, timeout, proposedLeaseId, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await AcquireLeaseAsync(duration, requestPriority, timeout, proposedLeaseId, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1132,12 +1316,16 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="leaseId"> A lease ID for the resource. The resource must have an active lease and the lease ID must match. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response ReleaseLease(string leaseId, int? timeout, RequestConditions requestConditions, RequestContext context)
+        public virtual Response ReleaseLease(string leaseId, int? requestPriority, int? timeout, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.ReleaseLease");
             scope.Start();
@@ -1152,7 +1340,7 @@ namespace Azure.Storage.Blobs
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
 
-                using HttpMessage message = CreateReleaseLeaseRequest(leaseId, timeout, requestConditions, context);
+                using HttpMessage message = CreateReleaseLeaseRequest(leaseId, requestPriority, timeout, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1171,12 +1359,16 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="leaseId"> A lease ID for the resource. The resource must have an active lease and the lease ID must match. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ReleaseLeaseAsync(string leaseId, int? timeout, RequestConditions requestConditions, RequestContext context)
+        public virtual async Task<Response> ReleaseLeaseAsync(string leaseId, int? requestPriority, int? timeout, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.ReleaseLease");
             scope.Start();
@@ -1191,7 +1383,7 @@ namespace Azure.Storage.Blobs
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
 
-                using HttpMessage message = CreateReleaseLeaseRequest(leaseId, timeout, requestConditions, context);
+                using HttpMessage message = CreateReleaseLeaseRequest(leaseId, requestPriority, timeout, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1203,24 +1395,32 @@ namespace Azure.Storage.Blobs
 
         /// <summary> Frees the lease if it's no longer needed, so that another client can immediately acquire a lease against the container. </summary>
         /// <param name="leaseId"> A lease ID for the resource. The resource must have an active lease and the lease ID must match. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response ReleaseLease(string leaseId, int? timeout = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        public virtual Response ReleaseLease(string leaseId, int? requestPriority = default, int? timeout = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return ReleaseLease(leaseId, timeout, requestConditions, cancellationToken.ToRequestContext());
+            return ReleaseLease(leaseId, requestPriority, timeout, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Frees the lease if it's no longer needed, so that another client can immediately acquire a lease against the container. </summary>
         /// <param name="leaseId"> A lease ID for the resource. The resource must have an active lease and the lease ID must match. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> ReleaseLeaseAsync(string leaseId, int? timeout = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ReleaseLeaseAsync(string leaseId, int? requestPriority = default, int? timeout = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return await ReleaseLeaseAsync(leaseId, timeout, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await ReleaseLeaseAsync(leaseId, requestPriority, timeout, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1232,12 +1432,16 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="leaseId"> A lease ID for the resource. The resource must have an active lease and the lease ID must match. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response RenewLease(string leaseId, int? timeout, RequestConditions requestConditions, RequestContext context)
+        public virtual Response RenewLease(string leaseId, int? requestPriority, int? timeout, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.RenewLease");
             scope.Start();
@@ -1252,7 +1456,7 @@ namespace Azure.Storage.Blobs
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
 
-                using HttpMessage message = CreateRenewLeaseRequest(leaseId, timeout, requestConditions, context);
+                using HttpMessage message = CreateRenewLeaseRequest(leaseId, requestPriority, timeout, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1271,12 +1475,16 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="leaseId"> A lease ID for the resource. The resource must have an active lease and the lease ID must match. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RenewLeaseAsync(string leaseId, int? timeout, RequestConditions requestConditions, RequestContext context)
+        public virtual async Task<Response> RenewLeaseAsync(string leaseId, int? requestPriority, int? timeout, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.RenewLease");
             scope.Start();
@@ -1291,7 +1499,7 @@ namespace Azure.Storage.Blobs
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
 
-                using HttpMessage message = CreateRenewLeaseRequest(leaseId, timeout, requestConditions, context);
+                using HttpMessage message = CreateRenewLeaseRequest(leaseId, requestPriority, timeout, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1303,24 +1511,32 @@ namespace Azure.Storage.Blobs
 
         /// <summary> Renews an existing lease. </summary>
         /// <param name="leaseId"> A lease ID for the resource. The resource must have an active lease and the lease ID must match. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response RenewLease(string leaseId, int? timeout = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        public virtual Response RenewLease(string leaseId, int? requestPriority = default, int? timeout = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return RenewLease(leaseId, timeout, requestConditions, cancellationToken.ToRequestContext());
+            return RenewLease(leaseId, requestPriority, timeout, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Renews an existing lease. </summary>
         /// <param name="leaseId"> A lease ID for the resource. The resource must have an active lease and the lease ID must match. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> RenewLeaseAsync(string leaseId, int? timeout = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RenewLeaseAsync(string leaseId, int? requestPriority = default, int? timeout = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return await RenewLeaseAsync(leaseId, timeout, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await RenewLeaseAsync(leaseId, requestPriority, timeout, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1331,13 +1547,17 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="breakPeriod"> Proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. This break period is only used if it is shorter than the time remaining on the lease. If longer, the time remaining on the lease is used. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response BreakLease(int? timeout, RequestConditions requestConditions, long? breakPeriod, RequestContext context)
+        public virtual Response BreakLease(int? requestPriority, int? timeout, RequestConditions requestConditions, long? breakPeriod, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.BreakLease");
             scope.Start();
@@ -1352,7 +1572,7 @@ namespace Azure.Storage.Blobs
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
 
-                using HttpMessage message = CreateBreakLeaseRequest(timeout, requestConditions, breakPeriod, context);
+                using HttpMessage message = CreateBreakLeaseRequest(requestPriority, timeout, requestConditions, breakPeriod, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1370,13 +1590,17 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="breakPeriod"> Proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. This break period is only used if it is shorter than the time remaining on the lease. If longer, the time remaining on the lease is used. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> BreakLeaseAsync(int? timeout, RequestConditions requestConditions, long? breakPeriod, RequestContext context)
+        public virtual async Task<Response> BreakLeaseAsync(int? requestPriority, int? timeout, RequestConditions requestConditions, long? breakPeriod, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.BreakLease");
             scope.Start();
@@ -1391,7 +1615,7 @@ namespace Azure.Storage.Blobs
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
 
-                using HttpMessage message = CreateBreakLeaseRequest(timeout, requestConditions, breakPeriod, context);
+                using HttpMessage message = CreateBreakLeaseRequest(requestPriority, timeout, requestConditions, breakPeriod, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1402,25 +1626,33 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Ends a lease and ensures that another client can't acquire a new lease until the current lease period has expired. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="breakPeriod"> Proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. This break period is only used if it is shorter than the time remaining on the lease. If longer, the time remaining on the lease is used. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response BreakLease(int? timeout = default, RequestConditions requestConditions = default, long? breakPeriod = default, CancellationToken cancellationToken = default)
+        public virtual Response BreakLease(int? requestPriority = default, int? timeout = default, RequestConditions requestConditions = default, long? breakPeriod = default, CancellationToken cancellationToken = default)
         {
-            return BreakLease(timeout, requestConditions, breakPeriod, cancellationToken.ToRequestContext());
+            return BreakLease(requestPriority, timeout, requestConditions, breakPeriod, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Ends a lease and ensures that another client can't acquire a new lease until the current lease period has expired. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="breakPeriod"> Proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. This break period is only used if it is shorter than the time remaining on the lease. If longer, the time remaining on the lease is used. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> BreakLeaseAsync(int? timeout = default, RequestConditions requestConditions = default, long? breakPeriod = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> BreakLeaseAsync(int? requestPriority = default, int? timeout = default, RequestConditions requestConditions = default, long? breakPeriod = default, CancellationToken cancellationToken = default)
         {
-            return await BreakLeaseAsync(timeout, requestConditions, breakPeriod, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await BreakLeaseAsync(requestPriority, timeout, requestConditions, breakPeriod, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1433,12 +1665,16 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="leaseId"> A lease ID for the resource. The resource must have an active lease and the lease ID must match. </param>
         /// <param name="proposedLeaseId"> The proposed lease ID for the lease. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response ChangeLease(string leaseId, string proposedLeaseId, int? timeout, RequestConditions requestConditions, RequestContext context)
+        public virtual Response ChangeLease(string leaseId, string proposedLeaseId, int? requestPriority, int? timeout, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.ChangeLease");
             scope.Start();
@@ -1453,7 +1689,7 @@ namespace Azure.Storage.Blobs
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
 
-                using HttpMessage message = CreateChangeLeaseRequest(leaseId, proposedLeaseId, timeout, requestConditions, context);
+                using HttpMessage message = CreateChangeLeaseRequest(leaseId, proposedLeaseId, requestPriority, timeout, requestConditions, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1473,12 +1709,16 @@ namespace Azure.Storage.Blobs
         /// </summary>
         /// <param name="leaseId"> A lease ID for the resource. The resource must have an active lease and the lease ID must match. </param>
         /// <param name="proposedLeaseId"> The proposed lease ID for the lease. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ChangeLeaseAsync(string leaseId, string proposedLeaseId, int? timeout, RequestConditions requestConditions, RequestContext context)
+        public virtual async Task<Response> ChangeLeaseAsync(string leaseId, string proposedLeaseId, int? requestPriority, int? timeout, RequestConditions requestConditions, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.ChangeLease");
             scope.Start();
@@ -1493,7 +1733,7 @@ namespace Azure.Storage.Blobs
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
 
-                using HttpMessage message = CreateChangeLeaseRequest(leaseId, proposedLeaseId, timeout, requestConditions, context);
+                using HttpMessage message = CreateChangeLeaseRequest(leaseId, proposedLeaseId, requestPriority, timeout, requestConditions, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1506,25 +1746,33 @@ namespace Azure.Storage.Blobs
         /// <summary> Change the ID of an existing lease. </summary>
         /// <param name="leaseId"> A lease ID for the resource. The resource must have an active lease and the lease ID must match. </param>
         /// <param name="proposedLeaseId"> The proposed lease ID for the lease. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response ChangeLease(string leaseId, string proposedLeaseId, int? timeout = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        public virtual Response ChangeLease(string leaseId, string proposedLeaseId, int? requestPriority = default, int? timeout = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return ChangeLease(leaseId, proposedLeaseId, timeout, requestConditions, cancellationToken.ToRequestContext());
+            return ChangeLease(leaseId, proposedLeaseId, requestPriority, timeout, requestConditions, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Change the ID of an existing lease. </summary>
         /// <param name="leaseId"> A lease ID for the resource. The resource must have an active lease and the lease ID must match. </param>
         /// <param name="proposedLeaseId"> The proposed lease ID for the lease. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> ChangeLeaseAsync(string leaseId, string proposedLeaseId, int? timeout = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ChangeLeaseAsync(string leaseId, string proposedLeaseId, int? requestPriority = default, int? timeout = default, RequestConditions requestConditions = default, CancellationToken cancellationToken = default)
         {
-            return await ChangeLeaseAsync(leaseId, proposedLeaseId, timeout, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await ChangeLeaseAsync(leaseId, proposedLeaseId, requestPriority, timeout, requestConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1535,6 +1783,10 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters the results to return only resources whose name begins with the specified prefix. </param>
         /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
@@ -1544,13 +1796,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetBlobFlatSegment(string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, RequestContext context)
+        public virtual Response GetBlobFlatSegment(int? requestPriority, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.GetBlobFlatSegment");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetBlobFlatSegmentRequest(prefix, marker, maxresults, include, timeout, startFrom, context);
+                using HttpMessage message = CreateGetBlobFlatSegmentRequest(requestPriority, prefix, marker, maxresults, include, timeout, startFrom, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1568,6 +1820,10 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters the results to return only resources whose name begins with the specified prefix. </param>
         /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
@@ -1577,13 +1833,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetBlobFlatSegmentAsync(string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, RequestContext context)
+        public virtual async Task<Response> GetBlobFlatSegmentAsync(int? requestPriority, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.GetBlobFlatSegment");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetBlobFlatSegmentRequest(prefix, marker, maxresults, include, timeout, startFrom, context);
+                using HttpMessage message = CreateGetBlobFlatSegmentRequest(requestPriority, prefix, marker, maxresults, include, timeout, startFrom, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1594,6 +1850,10 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Returns a list of the blobs in the specified container. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters the results to return only resources whose name begins with the specified prefix. </param>
         /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
@@ -1602,13 +1862,17 @@ namespace Azure.Storage.Blobs
         /// <param name="startFrom"> Specifies the relative path to list paths from. For non-recursive list, only one entity level is supported; for recursive list, multiple entity levels are supported. (Inclusive). </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ListBlobsFlatSegmentResult> GetBlobFlatSegment(string prefix = default, string marker = default, int? maxresults = default, IEnumerable<ListBlobsIncludeItem> include = default, int? timeout = default, string startFrom = default, CancellationToken cancellationToken = default)
+        public virtual Response<ListBlobsFlatSegmentResult> GetBlobFlatSegment(int? requestPriority = default, string prefix = default, string marker = default, int? maxresults = default, IEnumerable<ListBlobsIncludeItem> include = default, int? timeout = default, string startFrom = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetBlobFlatSegment(prefix, marker, maxresults, include, timeout, startFrom, cancellationToken.ToRequestContext());
+            Response result = GetBlobFlatSegment(requestPriority, prefix, marker, maxresults, include, timeout, startFrom, cancellationToken.ToRequestContext());
             return Response.FromValue((ListBlobsFlatSegmentResult)result, result);
         }
 
         /// <summary> Returns a list of the blobs in the specified container. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters the results to return only resources whose name begins with the specified prefix. </param>
         /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
@@ -1617,9 +1881,9 @@ namespace Azure.Storage.Blobs
         /// <param name="startFrom"> Specifies the relative path to list paths from. For non-recursive list, only one entity level is supported; for recursive list, multiple entity levels are supported. (Inclusive). </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ListBlobsFlatSegmentResult>> GetBlobFlatSegmentAsync(string prefix = default, string marker = default, int? maxresults = default, IEnumerable<ListBlobsIncludeItem> include = default, int? timeout = default, string startFrom = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ListBlobsFlatSegmentResult>> GetBlobFlatSegmentAsync(int? requestPriority = default, string prefix = default, string marker = default, int? maxresults = default, IEnumerable<ListBlobsIncludeItem> include = default, int? timeout = default, string startFrom = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetBlobFlatSegmentAsync(prefix, marker, maxresults, include, timeout, startFrom, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetBlobFlatSegmentAsync(requestPriority, prefix, marker, maxresults, include, timeout, startFrom, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ListBlobsFlatSegmentResult)result, result);
         }
 
@@ -1631,6 +1895,10 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters the results to return only resources whose name begins with the specified prefix. </param>
         /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
@@ -1641,13 +1909,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetBlobFlatSegmentApacheArrow(string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, string endBefore, RequestContext context)
+        public virtual Response GetBlobFlatSegmentApacheArrow(int? requestPriority, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, string endBefore, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.GetBlobFlatSegmentApacheArrow");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetBlobFlatSegmentApacheArrowRequest(prefix, marker, maxresults, include, timeout, startFrom, endBefore, context);
+                using HttpMessage message = CreateGetBlobFlatSegmentApacheArrowRequest(requestPriority, prefix, marker, maxresults, include, timeout, startFrom, endBefore, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1665,6 +1933,10 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters the results to return only resources whose name begins with the specified prefix. </param>
         /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
@@ -1675,13 +1947,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetBlobFlatSegmentApacheArrowAsync(string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, string endBefore, RequestContext context)
+        public virtual async Task<Response> GetBlobFlatSegmentApacheArrowAsync(int? requestPriority, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, string endBefore, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.GetBlobFlatSegmentApacheArrow");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetBlobFlatSegmentApacheArrowRequest(prefix, marker, maxresults, include, timeout, startFrom, endBefore, context);
+                using HttpMessage message = CreateGetBlobFlatSegmentApacheArrowRequest(requestPriority, prefix, marker, maxresults, include, timeout, startFrom, endBefore, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1700,6 +1972,10 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="delimiter"> If specified, the operation returns a BlobPrefix element that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters the results to return only resources whose name begins with the specified prefix. </param>
         /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
@@ -1709,13 +1985,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetBlobHierarchySegment(string delimiter, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, RequestContext context)
+        public virtual Response GetBlobHierarchySegment(string delimiter, int? requestPriority, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.GetBlobHierarchySegment");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetBlobHierarchySegmentRequest(delimiter, prefix, marker, maxresults, include, timeout, startFrom, context);
+                using HttpMessage message = CreateGetBlobHierarchySegmentRequest(delimiter, requestPriority, prefix, marker, maxresults, include, timeout, startFrom, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1734,6 +2010,10 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="delimiter"> If specified, the operation returns a BlobPrefix element that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters the results to return only resources whose name begins with the specified prefix. </param>
         /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
@@ -1743,13 +2023,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetBlobHierarchySegmentAsync(string delimiter, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, RequestContext context)
+        public virtual async Task<Response> GetBlobHierarchySegmentAsync(string delimiter, int? requestPriority, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.GetBlobHierarchySegment");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetBlobHierarchySegmentRequest(delimiter, prefix, marker, maxresults, include, timeout, startFrom, context);
+                using HttpMessage message = CreateGetBlobHierarchySegmentRequest(delimiter, requestPriority, prefix, marker, maxresults, include, timeout, startFrom, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1761,6 +2041,10 @@ namespace Azure.Storage.Blobs
 
         /// <summary> Returns a list of the blobs in the specified container. A delimiter can be used to traverse a virtual hierarchy of blobs as though it were a file system. </summary>
         /// <param name="delimiter"> If specified, the operation returns a BlobPrefix element that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters the results to return only resources whose name begins with the specified prefix. </param>
         /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
@@ -1769,14 +2053,18 @@ namespace Azure.Storage.Blobs
         /// <param name="startFrom"> Specifies the relative path to list paths from. For non-recursive list, only one entity level is supported; for recursive list, multiple entity levels are supported. (Inclusive). </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ListBlobsHierarchySegmentResult> GetBlobHierarchySegment(string delimiter, string prefix = default, string marker = default, int? maxresults = default, IEnumerable<ListBlobsIncludeItem> include = default, int? timeout = default, string startFrom = default, CancellationToken cancellationToken = default)
+        public virtual Response<ListBlobsHierarchySegmentResult> GetBlobHierarchySegment(string delimiter, int? requestPriority = default, string prefix = default, string marker = default, int? maxresults = default, IEnumerable<ListBlobsIncludeItem> include = default, int? timeout = default, string startFrom = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetBlobHierarchySegment(delimiter, prefix, marker, maxresults, include, timeout, startFrom, cancellationToken.ToRequestContext());
+            Response result = GetBlobHierarchySegment(delimiter, requestPriority, prefix, marker, maxresults, include, timeout, startFrom, cancellationToken.ToRequestContext());
             return Response.FromValue((ListBlobsHierarchySegmentResult)result, result);
         }
 
         /// <summary> Returns a list of the blobs in the specified container. A delimiter can be used to traverse a virtual hierarchy of blobs as though it were a file system. </summary>
         /// <param name="delimiter"> If specified, the operation returns a BlobPrefix element that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters the results to return only resources whose name begins with the specified prefix. </param>
         /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
@@ -1785,9 +2073,9 @@ namespace Azure.Storage.Blobs
         /// <param name="startFrom"> Specifies the relative path to list paths from. For non-recursive list, only one entity level is supported; for recursive list, multiple entity levels are supported. (Inclusive). </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ListBlobsHierarchySegmentResult>> GetBlobHierarchySegmentAsync(string delimiter, string prefix = default, string marker = default, int? maxresults = default, IEnumerable<ListBlobsIncludeItem> include = default, int? timeout = default, string startFrom = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ListBlobsHierarchySegmentResult>> GetBlobHierarchySegmentAsync(string delimiter, int? requestPriority = default, string prefix = default, string marker = default, int? maxresults = default, IEnumerable<ListBlobsIncludeItem> include = default, int? timeout = default, string startFrom = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetBlobHierarchySegmentAsync(delimiter, prefix, marker, maxresults, include, timeout, startFrom, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetBlobHierarchySegmentAsync(delimiter, requestPriority, prefix, marker, maxresults, include, timeout, startFrom, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ListBlobsHierarchySegmentResult)result, result);
         }
 
@@ -1800,6 +2088,10 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="delimiter"> If specified, the operation returns a BlobPrefix element that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters the results to return only resources whose name begins with the specified prefix. </param>
         /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
@@ -1810,13 +2102,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetBlobHierarchySegmentApacheArrow(string delimiter, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, string endBefore, RequestContext context)
+        public virtual Response GetBlobHierarchySegmentApacheArrow(string delimiter, int? requestPriority, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, string endBefore, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.GetBlobHierarchySegmentApacheArrow");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetBlobHierarchySegmentApacheArrowRequest(delimiter, prefix, marker, maxresults, include, timeout, startFrom, endBefore, context);
+                using HttpMessage message = CreateGetBlobHierarchySegmentApacheArrowRequest(delimiter, requestPriority, prefix, marker, maxresults, include, timeout, startFrom, endBefore, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1835,6 +2127,10 @@ namespace Azure.Storage.Blobs
         /// </list>
         /// </summary>
         /// <param name="delimiter"> If specified, the operation returns a BlobPrefix element that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters the results to return only resources whose name begins with the specified prefix. </param>
         /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
@@ -1845,13 +2141,13 @@ namespace Azure.Storage.Blobs
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetBlobHierarchySegmentApacheArrowAsync(string delimiter, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, string endBefore, RequestContext context)
+        public virtual async Task<Response> GetBlobHierarchySegmentApacheArrowAsync(string delimiter, int? requestPriority, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, string endBefore, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.GetBlobHierarchySegmentApacheArrow");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetBlobHierarchySegmentApacheArrowRequest(delimiter, prefix, marker, maxresults, include, timeout, startFrom, endBefore, context);
+                using HttpMessage message = CreateGetBlobHierarchySegmentApacheArrowRequest(delimiter, requestPriority, prefix, marker, maxresults, include, timeout, startFrom, endBefore, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1869,17 +2165,21 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetAccountInfo(int? timeout, RequestContext context)
+        public virtual Response GetAccountInfo(int? requestPriority, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.GetAccountInfo");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAccountInfoRequest(timeout, context);
+                using HttpMessage message = CreateGetAccountInfoRequest(requestPriority, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1897,17 +2197,21 @@ namespace Azure.Storage.Blobs
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAccountInfoAsync(int? timeout, RequestContext context)
+        public virtual async Task<Response> GetAccountInfoAsync(int? requestPriority, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.GetAccountInfo");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAccountInfoRequest(timeout, context);
+                using HttpMessage message = CreateGetAccountInfoRequest(requestPriority, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1918,21 +2222,29 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Returns information about the storage account. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response GetAccountInfo(int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response GetAccountInfo(int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return GetAccountInfo(timeout, cancellationToken.ToRequestContext());
+            return GetAccountInfo(requestPriority, timeout, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Returns information about the storage account. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href=\"https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations\"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> GetAccountInfoAsync(int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetAccountInfoAsync(int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return await GetAccountInfoAsync(timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await GetAccountInfoAsync(requestPriority, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
     }
 }

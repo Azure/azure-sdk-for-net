@@ -53,6 +53,10 @@ namespace Azure.Storage.Files.DataLake
         /// </list>
         /// </summary>
         /// <param name="resource"> The value must be "account" for all account operations. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters results to filesystems within the specified prefix. </param>
         /// <param name="continuation"> Optional. When deleting a directory, the number of paths that are deleted with each invocation is limited. If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header. When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
         /// <param name="maxResults"> An optional value that specifies the maximum number of items to return. If omitted or greater than 5,000, the response will include up to 5,000 items. </param>
@@ -60,13 +64,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetFileSystems(string resource, string prefix = default, string continuation = default, int? maxResults = default, int? timeout = default, RequestContext context = null)
+        public virtual Response GetFileSystems(string resource, int? requestPriority = default, string prefix = default, string continuation = default, int? maxResults = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.GetFileSystems");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetFileSystemsRequest(resource, prefix, continuation, maxResults, timeout, context);
+                using HttpMessage message = CreateGetFileSystemsRequest(resource, requestPriority, prefix, continuation, maxResults, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -85,6 +89,10 @@ namespace Azure.Storage.Files.DataLake
         /// </list>
         /// </summary>
         /// <param name="resource"> The value must be "account" for all account operations. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters results to filesystems within the specified prefix. </param>
         /// <param name="continuation"> Optional. When deleting a directory, the number of paths that are deleted with each invocation is limited. If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header. When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
         /// <param name="maxResults"> An optional value that specifies the maximum number of items to return. If omitted or greater than 5,000, the response will include up to 5,000 items. </param>
@@ -92,13 +100,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetFileSystemsAsync(string resource, string prefix = default, string continuation = default, int? maxResults = default, int? timeout = default, RequestContext context = null)
+        public virtual async Task<Response> GetFileSystemsAsync(string resource, int? requestPriority = default, string prefix = default, string continuation = default, int? maxResults = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.GetFileSystems");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetFileSystemsRequest(resource, prefix, continuation, maxResults, timeout, context);
+                using HttpMessage message = CreateGetFileSystemsRequest(resource, requestPriority, prefix, continuation, maxResults, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -110,29 +118,37 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary> List filesystems and their properties in given account. </summary>
         /// <param name="resource"> The value must be "account" for all account operations. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters results to filesystems within the specified prefix. </param>
         /// <param name="continuation"> Optional. When deleting a directory, the number of paths that are deleted with each invocation is limited. If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header. When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
         /// <param name="maxResults"> An optional value that specifies the maximum number of items to return. If omitted or greater than 5,000, the response will include up to 5,000 items. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<FileSystemList> GetFileSystems(AccountResourceType resource, string prefix = default, string continuation = default, int? maxResults = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response<FileSystemList> GetFileSystems(AccountResourceType resource, int? requestPriority = default, string prefix = default, string continuation = default, int? maxResults = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetFileSystems(resource.ToSerialString(), prefix, continuation, maxResults, timeout, cancellationToken.ToRequestContext());
+            Response result = GetFileSystems(resource.ToSerialString(), requestPriority, prefix, continuation, maxResults, timeout, cancellationToken.ToRequestContext());
             return Response.FromValue((FileSystemList)result, result);
         }
 
         /// <summary> List filesystems and their properties in given account. </summary>
         /// <param name="resource"> The value must be "account" for all account operations. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters results to filesystems within the specified prefix. </param>
         /// <param name="continuation"> Optional. When deleting a directory, the number of paths that are deleted with each invocation is limited. If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header. When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
         /// <param name="maxResults"> An optional value that specifies the maximum number of items to return. If omitted or greater than 5,000, the response will include up to 5,000 items. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<FileSystemList>> GetFileSystemsAsync(AccountResourceType resource, string prefix = default, string continuation = default, int? maxResults = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FileSystemList>> GetFileSystemsAsync(AccountResourceType resource, int? requestPriority = default, string prefix = default, string continuation = default, int? maxResults = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetFileSystemsAsync(resource.ToSerialString(), prefix, continuation, maxResults, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetFileSystemsAsync(resource.ToSerialString(), requestPriority, prefix, continuation, maxResults, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((FileSystemList)result, result);
         }
     }

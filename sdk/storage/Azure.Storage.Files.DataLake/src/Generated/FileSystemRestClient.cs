@@ -56,18 +56,22 @@ namespace Azure.Storage.Files.DataLake
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="properties"> Optional. User-defined properties to be stored with the filesystem, in the format of a comma-separated list of name and value pairs "n1=v1, n2=v2, ...", where each value is a base64 encoded string. Note that the string may only contain ASCII characters in the ISO-8859-1 character set. If the filesystem exists, any properties not included in the list will be removed. All properties are removed if the header is omitted. To merge new and existing properties, first get all existing properties and the current E-Tag, then make a conditional request with the E-Tag and include values for all properties. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Create(string properties, int? timeout, RequestContext context)
+        public virtual Response Create(int? requestPriority, string properties, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileSystemRestClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(properties, timeout, context);
+                using HttpMessage message = CreateCreateRequest(requestPriority, properties, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -85,18 +89,22 @@ namespace Azure.Storage.Files.DataLake
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="properties"> Optional. User-defined properties to be stored with the filesystem, in the format of a comma-separated list of name and value pairs "n1=v1, n2=v2, ...", where each value is a base64 encoded string. Note that the string may only contain ASCII characters in the ISO-8859-1 character set. If the filesystem exists, any properties not included in the list will be removed. All properties are removed if the header is omitted. To merge new and existing properties, first get all existing properties and the current E-Tag, then make a conditional request with the E-Tag and include values for all properties. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateAsync(string properties, int? timeout, RequestContext context)
+        public virtual async Task<Response> CreateAsync(int? requestPriority, string properties, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileSystemRestClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(properties, timeout, context);
+                using HttpMessage message = CreateCreateRequest(requestPriority, properties, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -107,23 +115,31 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary> Create a FileSystem rooted at the specified location. If the FileSystem already exists, the operation fails. This operation does not support conditional HTTP requests. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="properties"> Optional. User-defined properties to be stored with the filesystem, in the format of a comma-separated list of name and value pairs "n1=v1, n2=v2, ...", where each value is a base64 encoded string. Note that the string may only contain ASCII characters in the ISO-8859-1 character set. If the filesystem exists, any properties not included in the list will be removed. All properties are removed if the header is omitted. To merge new and existing properties, first get all existing properties and the current E-Tag, then make a conditional request with the E-Tag and include values for all properties. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Create(string properties = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response Create(int? requestPriority = default, string properties = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return Create(properties, timeout, cancellationToken.ToRequestContext());
+            return Create(requestPriority, properties, timeout, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Create a FileSystem rooted at the specified location. If the FileSystem already exists, the operation fails. This operation does not support conditional HTTP requests. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="properties"> Optional. User-defined properties to be stored with the filesystem, in the format of a comma-separated list of name and value pairs "n1=v1, n2=v2, ...", where each value is a base64 encoded string. Note that the string may only contain ASCII characters in the ISO-8859-1 character set. If the filesystem exists, any properties not included in the list will be removed. All properties are removed if the header is omitted. To merge new and existing properties, first get all existing properties and the current E-Tag, then make a conditional request with the E-Tag and include values for all properties. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> CreateAsync(string properties = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CreateAsync(int? requestPriority = default, string properties = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return await CreateAsync(properties, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await CreateAsync(requestPriority, properties, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -134,13 +150,17 @@ namespace Azure.Storage.Files.DataLake
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="properties"> Optional. User-defined properties to be stored with the filesystem, in the format of a comma-separated list of name and value pairs "n1=v1, n2=v2, ...", where each value is a base64 encoded string. Note that the string may only contain ASCII characters in the ISO-8859-1 character set. If the filesystem exists, any properties not included in the list will be removed. All properties are removed if the header is omitted. To merge new and existing properties, first get all existing properties and the current E-Tag, then make a conditional request with the E-Tag and include values for all properties. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response SetProperties(string properties = default, RequestConditions requestConditions = default, int? timeout = default, RequestContext context = null)
+        public virtual Response SetProperties(int? requestPriority = default, string properties = default, RequestConditions requestConditions = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileSystemRestClient.SetProperties");
             scope.Start();
@@ -155,7 +175,7 @@ namespace Azure.Storage.Files.DataLake
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
 
-                using HttpMessage message = CreateSetPropertiesRequest(properties, requestConditions, timeout, context);
+                using HttpMessage message = CreateSetPropertiesRequest(requestPriority, properties, requestConditions, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -173,13 +193,17 @@ namespace Azure.Storage.Files.DataLake
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="properties"> Optional. User-defined properties to be stored with the filesystem, in the format of a comma-separated list of name and value pairs "n1=v1, n2=v2, ...", where each value is a base64 encoded string. Note that the string may only contain ASCII characters in the ISO-8859-1 character set. If the filesystem exists, any properties not included in the list will be removed. All properties are removed if the header is omitted. To merge new and existing properties, first get all existing properties and the current E-Tag, then make a conditional request with the E-Tag and include values for all properties. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SetPropertiesAsync(string properties = default, RequestConditions requestConditions = default, int? timeout = default, RequestContext context = null)
+        public virtual async Task<Response> SetPropertiesAsync(int? requestPriority = default, string properties = default, RequestConditions requestConditions = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileSystemRestClient.SetProperties");
             scope.Start();
@@ -194,7 +218,7 @@ namespace Azure.Storage.Files.DataLake
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
 
-                using HttpMessage message = CreateSetPropertiesRequest(properties, requestConditions, timeout, context);
+                using HttpMessage message = CreateSetPropertiesRequest(requestPriority, properties, requestConditions, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -212,17 +236,21 @@ namespace Azure.Storage.Files.DataLake
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetProperties(int? timeout, RequestContext context)
+        public virtual Response GetProperties(int? requestPriority, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileSystemRestClient.GetProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPropertiesRequest(timeout, context);
+                using HttpMessage message = CreateGetPropertiesRequest(requestPriority, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -240,17 +268,21 @@ namespace Azure.Storage.Files.DataLake
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPropertiesAsync(int? timeout, RequestContext context)
+        public virtual async Task<Response> GetPropertiesAsync(int? requestPriority, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileSystemRestClient.GetProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPropertiesRequest(timeout, context);
+                using HttpMessage message = CreateGetPropertiesRequest(requestPriority, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -261,21 +293,29 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary> All system and user-defined filesystem properties are specified in the response headers. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response GetProperties(int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response GetProperties(int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return GetProperties(timeout, cancellationToken.ToRequestContext());
+            return GetProperties(requestPriority, timeout, cancellationToken.ToRequestContext());
         }
 
         /// <summary> All system and user-defined filesystem properties are specified in the response headers. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> GetPropertiesAsync(int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetPropertiesAsync(int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return await GetPropertiesAsync(timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await GetPropertiesAsync(requestPriority, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -286,12 +326,16 @@ namespace Azure.Storage.Files.DataLake
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Delete(RequestConditions requestConditions, int? timeout, RequestContext context)
+        public virtual Response Delete(int? requestPriority, RequestConditions requestConditions, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileSystemRestClient.Delete");
             scope.Start();
@@ -306,7 +350,7 @@ namespace Azure.Storage.Files.DataLake
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
 
-                using HttpMessage message = CreateDeleteRequest(requestConditions, timeout, context);
+                using HttpMessage message = CreateDeleteRequest(requestPriority, requestConditions, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -324,12 +368,16 @@ namespace Azure.Storage.Files.DataLake
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteAsync(RequestConditions requestConditions, int? timeout, RequestContext context)
+        public virtual async Task<Response> DeleteAsync(int? requestPriority, RequestConditions requestConditions, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileSystemRestClient.Delete");
             scope.Start();
@@ -344,7 +392,7 @@ namespace Azure.Storage.Files.DataLake
                     throw new ArgumentException("Service does not support the If-None-Match header for this operation.");
                 }
 
-                using HttpMessage message = CreateDeleteRequest(requestConditions, timeout, context);
+                using HttpMessage message = CreateDeleteRequest(requestPriority, requestConditions, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -355,23 +403,31 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary> Marks the FileSystem for deletion. When a FileSystem is deleted, a FileSystem with the same identifier cannot be created for at least 30 seconds. While the filesystem is being deleted, attempts to create a filesystem with the same identifier will fail with status code 409 (Conflict), with the service returning additional error information indicating that the filesystem is being deleted. All other operations, including operations on any files or directories within the filesystem, will fail with status code 404 (Not Found) while the filesystem is being deleted. This operation supports conditional HTTP requests. For more information, see [Specifying Conditional Headers for Blob Service Operations](https://learn.microsoft.com/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Delete(RequestConditions requestConditions = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response Delete(int? requestPriority = default, RequestConditions requestConditions = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return Delete(requestConditions, timeout, cancellationToken.ToRequestContext());
+            return Delete(requestPriority, requestConditions, timeout, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Marks the FileSystem for deletion. When a FileSystem is deleted, a FileSystem with the same identifier cannot be created for at least 30 seconds. While the filesystem is being deleted, attempts to create a filesystem with the same identifier will fail with status code 409 (Conflict), with the service returning additional error information indicating that the filesystem is being deleted. All other operations, including operations on any files or directories within the filesystem, will fail with status code 404 (Not Found) while the filesystem is being deleted. This operation supports conditional HTTP requests. For more information, see [Specifying Conditional Headers for Blob Service Operations](https://learn.microsoft.com/rest/api/storageservices/specifying-conditional-headers-for-blob-service-operations). </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteAsync(RequestConditions requestConditions = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteAsync(int? requestPriority = default, RequestConditions requestConditions = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return await DeleteAsync(requestConditions, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await DeleteAsync(requestPriority, requestConditions, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -383,6 +439,10 @@ namespace Azure.Storage.Files.DataLake
         /// </list>
         /// </summary>
         /// <param name="recursive"> Required. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="continuation"> Optional. When deleting a directory, the number of paths that are deleted with each invocation is limited. If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header. When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
         /// <param name="path"> Optional. Filters results to paths within the specified directory. An error occurs if the directory does not exist. </param>
         /// <param name="maxResults"> An optional value that specifies the maximum number of items to return. If omitted or greater than 5,000, the response will include up to 5,000 items. </param>
@@ -392,13 +452,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetPaths(bool recursive, string continuation, string path, int? maxResults, bool? upn, string beginFrom, int? timeout, RequestContext context)
+        public virtual Response GetPaths(bool recursive, int? requestPriority, string continuation, string path, int? maxResults, bool? upn, string beginFrom, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileSystemRestClient.GetPaths");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPathsRequest(recursive, continuation, path, maxResults, upn, beginFrom, timeout, context);
+                using HttpMessage message = CreateGetPathsRequest(recursive, requestPriority, continuation, path, maxResults, upn, beginFrom, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -417,6 +477,10 @@ namespace Azure.Storage.Files.DataLake
         /// </list>
         /// </summary>
         /// <param name="recursive"> Required. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="continuation"> Optional. When deleting a directory, the number of paths that are deleted with each invocation is limited. If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header. When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
         /// <param name="path"> Optional. Filters results to paths within the specified directory. An error occurs if the directory does not exist. </param>
         /// <param name="maxResults"> An optional value that specifies the maximum number of items to return. If omitted or greater than 5,000, the response will include up to 5,000 items. </param>
@@ -426,13 +490,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPathsAsync(bool recursive, string continuation, string path, int? maxResults, bool? upn, string beginFrom, int? timeout, RequestContext context)
+        public virtual async Task<Response> GetPathsAsync(bool recursive, int? requestPriority, string continuation, string path, int? maxResults, bool? upn, string beginFrom, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileSystemRestClient.GetPaths");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPathsRequest(recursive, continuation, path, maxResults, upn, beginFrom, timeout, context);
+                using HttpMessage message = CreateGetPathsRequest(recursive, requestPriority, continuation, path, maxResults, upn, beginFrom, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -444,6 +508,10 @@ namespace Azure.Storage.Files.DataLake
 
         /// <summary> List FileSystem paths and their properties. </summary>
         /// <param name="recursive"> Required. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="continuation"> Optional. When deleting a directory, the number of paths that are deleted with each invocation is limited. If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header. When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
         /// <param name="path"> Optional. Filters results to paths within the specified directory. An error occurs if the directory does not exist. </param>
         /// <param name="maxResults"> An optional value that specifies the maximum number of items to return. If omitted or greater than 5,000, the response will include up to 5,000 items. </param>
@@ -452,14 +520,18 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<PathList> GetPaths(bool recursive, string continuation = default, string path = default, int? maxResults = default, bool? upn = default, string beginFrom = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response<PathList> GetPaths(bool recursive, int? requestPriority = default, string continuation = default, string path = default, int? maxResults = default, bool? upn = default, string beginFrom = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetPaths(recursive, continuation, path, maxResults, upn, beginFrom, timeout, cancellationToken.ToRequestContext());
+            Response result = GetPaths(recursive, requestPriority, continuation, path, maxResults, upn, beginFrom, timeout, cancellationToken.ToRequestContext());
             return Response.FromValue((PathList)result, result);
         }
 
         /// <summary> List FileSystem paths and their properties. </summary>
         /// <param name="recursive"> Required. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="continuation"> Optional. When deleting a directory, the number of paths that are deleted with each invocation is limited. If the number of paths to be deleted exceeds this limit, a continuation token is returned in this response header. When a continuation token is returned in the response, it must be specified in a subsequent invocation of the delete operation to continue deleting the directory. </param>
         /// <param name="path"> Optional. Filters results to paths within the specified directory. An error occurs if the directory does not exist. </param>
         /// <param name="maxResults"> An optional value that specifies the maximum number of items to return. If omitted or greater than 5,000, the response will include up to 5,000 items. </param>
@@ -468,9 +540,9 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<PathList>> GetPathsAsync(bool recursive, string continuation = default, string path = default, int? maxResults = default, bool? upn = default, string beginFrom = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PathList>> GetPathsAsync(bool recursive, int? requestPriority = default, string continuation = default, string path = default, int? maxResults = default, bool? upn = default, string beginFrom = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetPathsAsync(recursive, continuation, path, maxResults, upn, beginFrom, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetPathsAsync(recursive, requestPriority, continuation, path, maxResults, upn, beginFrom, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((PathList)result, result);
         }
 
@@ -482,6 +554,10 @@ namespace Azure.Storage.Files.DataLake
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters results to filesystems within the specified prefix. </param>
         /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
@@ -492,13 +568,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetBlobHierarchySegment(string prefix, string delimiter, string marker, int? maxResults, IEnumerable<ListBlobsIncludeItem> include, string showonly, int? timeout, RequestContext context)
+        public virtual Response GetBlobHierarchySegment(int? requestPriority, string prefix, string delimiter, string marker, int? maxResults, IEnumerable<ListBlobsIncludeItem> include, string showonly, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileSystemRestClient.GetBlobHierarchySegment");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetBlobHierarchySegmentRequest(prefix, delimiter, marker, maxResults, include, showonly, timeout, context);
+                using HttpMessage message = CreateGetBlobHierarchySegmentRequest(requestPriority, prefix, delimiter, marker, maxResults, include, showonly, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -516,6 +592,10 @@ namespace Azure.Storage.Files.DataLake
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters results to filesystems within the specified prefix. </param>
         /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
@@ -526,13 +606,13 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetBlobHierarchySegmentAsync(string prefix, string delimiter, string marker, int? maxResults, IEnumerable<ListBlobsIncludeItem> include, string showonly, int? timeout, RequestContext context)
+        public virtual async Task<Response> GetBlobHierarchySegmentAsync(int? requestPriority, string prefix, string delimiter, string marker, int? maxResults, IEnumerable<ListBlobsIncludeItem> include, string showonly, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("FileSystemRestClient.GetBlobHierarchySegment");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetBlobHierarchySegmentRequest(prefix, delimiter, marker, maxResults, include, showonly, timeout, context);
+                using HttpMessage message = CreateGetBlobHierarchySegmentRequest(requestPriority, prefix, delimiter, marker, maxResults, include, showonly, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -543,6 +623,10 @@ namespace Azure.Storage.Files.DataLake
         }
 
         /// <summary> The List Blobs operation returns a list of the blobs under the specified container. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters results to filesystems within the specified prefix. </param>
         /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
@@ -552,13 +636,17 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ListBlobsHierarchySegmentResult> GetBlobHierarchySegment(string prefix = default, string delimiter = default, string marker = default, int? maxResults = default, IEnumerable<ListBlobsIncludeItem> include = default, ListBlobsShowOnly? showonly = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response<ListBlobsHierarchySegmentResult> GetBlobHierarchySegment(int? requestPriority = default, string prefix = default, string delimiter = default, string marker = default, int? maxResults = default, IEnumerable<ListBlobsIncludeItem> include = default, ListBlobsShowOnly? showonly = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetBlobHierarchySegment(prefix, delimiter, marker, maxResults, include, showonly?.ToString(), timeout, cancellationToken.ToRequestContext());
+            Response result = GetBlobHierarchySegment(requestPriority, prefix, delimiter, marker, maxResults, include, showonly?.ToString(), timeout, cancellationToken.ToRequestContext());
             return Response.FromValue((ListBlobsHierarchySegmentResult)result, result);
         }
 
         /// <summary> The List Blobs operation returns a list of the blobs under the specified container. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters results to filesystems within the specified prefix. </param>
         /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
         /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
@@ -568,9 +656,9 @@ namespace Azure.Storage.Files.DataLake
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://learn.microsoft.com/rest/api/storageservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ListBlobsHierarchySegmentResult>> GetBlobHierarchySegmentAsync(string prefix = default, string delimiter = default, string marker = default, int? maxResults = default, IEnumerable<ListBlobsIncludeItem> include = default, ListBlobsShowOnly? showonly = default, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ListBlobsHierarchySegmentResult>> GetBlobHierarchySegmentAsync(int? requestPriority = default, string prefix = default, string delimiter = default, string marker = default, int? maxResults = default, IEnumerable<ListBlobsIncludeItem> include = default, ListBlobsShowOnly? showonly = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetBlobHierarchySegmentAsync(prefix, delimiter, marker, maxResults, include, showonly?.ToString(), timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetBlobHierarchySegmentAsync(requestPriority, prefix, delimiter, marker, maxResults, include, showonly?.ToString(), timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ListBlobsHierarchySegmentResult)result, result);
         }
     }
