@@ -16,11 +16,11 @@
 - Removed `RetainedData` from `BatchNodeDeallocateOption`, `BatchNodeDeallocationOption`, `BatchNodeRebootKind`, and `BatchNodeReimageOption` because the service no longer supports it. Use `TaskCompletion` and upload task data to Azure Storage instead.
 - Removed `BatchClient.GetPoolUsageMetrics` and `GetPoolUsageMetricsAsync`, including their typed and protocol overloads, and the `BatchPoolUsageMetrics` model and model-factory method, following their removal from the service API.
 - Removed `BatchPoolStatistics.UsageStatistics`, the `BatchPoolUsageStatistics` model, and the associated model-factory APIs, following their removal from the service API.
-- New parameters were inserted into `ComputeBatchModelFactory.BatchNode`, `BatchPool`, `BatchPoolCreateOptions`, and `BatchPoolUpdateOptions`. Existing partially positional calls can fail to compile or bind differently. In particular, `BatchNode` arguments previously passed as `affinityId` and `vmSize` can bind to `publicIPAddress` and `publicIPv6Address`. Use named arguments when migrating these calls.
 - Disk I/O statistics now use JSON numbers instead of strings. Previously persisted models containing string-encoded `diskReadIOps` or `diskWriteIOps` values must be converted to numeric values before deserialization.
 
 ### Bugs Fixed
 
+- Preserved positional argument ordering in `ComputeBatchModelFactory.BatchNode`, `BatchPool`, `BatchPoolCreateOptions`, and `BatchPoolUpdateOptions` by appending new optional parameters and retaining the original binary-compatible overloads.
 - Added `BatchClientOptions.Audience` to support Microsoft Entra authentication in Azure Government, Azure China, and custom clouds while retaining Azure Public Cloud as the default.
 - Fixed deserialization of numeric `diskReadIOps` and `diskWriteIOps` values returned by the service.
 - Fixed shared-key authentication to include the content length when signing POST requests with an empty body.
