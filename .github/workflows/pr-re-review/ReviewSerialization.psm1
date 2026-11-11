@@ -28,6 +28,12 @@ function Test-JsTruthy($Element) {
 function Get-JsDigest([string] $Value) {
     return [Convert]::ToHexString([Security.Cryptography.SHA256]::HashData($script:Utf8.GetBytes($Value))).ToLowerInvariant()
 }
+function ConvertTo-JsJsonText([string] $Json) {
+    # Match JSON.stringify for isolated surrogates and Unicode characters that
+    # Json.NET escapes unnecessarily, without changing literal backslashes.
+    $Json = [regex]::Replace($Json, '[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]', [Text.RegularExpressions.MatchEvaluator]{ param($match) '\u{0:x4}' -f [int][char]$match.Value[0] })
+    return [regex]::Replace($Json, '(?<!\\)((?:\\\\)*)\\u(0085|2028|2029)', [Text.RegularExpressions.MatchEvaluator]{ param($match) $match.Groups[1].Value + [char][Convert]::ToInt32($match.Groups[2].Value, 16) })
+}
 # Element raw text must come from trusted compact JSON.stringify, not arbitrary JSON.
 function Format-JsPrettyJson($Element) {
     $raw = $Element.GetRawText(); $result = [Text.StringBuilder]::new()
@@ -83,4 +89,4 @@ function Get-JsRequiredInputs($Item, [long] $MaxBytes) {
     if ($null -eq $patch -and -not @('added', 'modified', 'removed', 'renamed').Where({ [StringComparer]::Ordinal.Equals($_, $status) }).Count) { throw 'Unsupported file status for omitted patch delivery.' }
     return ,$result.ToArray()
 }
-Export-ModuleMember -Function Get-JsonProperty, Get-JsString, Test-JsTruthy, Get-JsDigest, Format-JsPrettyJson, Get-JsRequiredInputs
+Export-ModuleMember -Function Get-JsonProperty, Get-JsString, Test-JsTruthy, Get-JsDigest, ConvertTo-JsJsonText, Format-JsPrettyJson, Get-JsRequiredInputs

@@ -131,10 +131,12 @@ async function assertMutationFresh(github, repo, snapshot, rootIds, receipts) {
 async function exportContext(snapshot, directory, { timeoutMs = CAPTURE_TIMEOUT_MS } = {}) {
   const fs = require('node:fs'); const path = require('node:path');
   const { MAX_BATCH_BYTES, snapshotDigest, runPowerShell } = require('./ReviewDelivery.cjs');
-  fs.mkdirSync(directory, { recursive: true });
-  const write = (name, value) => fs.writeFileSync(path.join(directory, name), JSON.stringify(value, null, 2), { mode: 0o644 });
   if (!Number.isSafeInteger(timeoutMs) || timeoutMs <= 0) throw new Error('Invalid delivery capture deadline.');
-  const result = await runPowerShell('Export-ReviewDeliveryIndex.ps1', JSON.stringify({ snapshot, maxBatchBytes: MAX_BATCH_BYTES }), {
+  if (!directory) throw new Error('Invalid review context directory.');
+  const marker = '__REVIEW_BASENAME__';
+  const pathPrefix = path.join(directory, marker).slice(0, -marker.length);
+  const normalizedDirectory = path.normalize(directory);
+  const result = await runPowerShell('Export-ReviewContext.ps1', JSON.stringify({ snapshot, maxBatchBytes: MAX_BATCH_BYTES, directory: normalizedDirectory, pathPrefix }), {
     timeoutMs, timeoutReason: 'Delivery index capture timed out.', label: 'Delivery index capture',
     maxOutputBytes: Math.max(16 * 1024 * 1024, (snapshot.files.length + snapshot.threads.length) * 256 + 1024 * 1024),
   });
@@ -148,21 +150,23 @@ async function exportContext(snapshot, directory, { timeoutMs = CAPTURE_TIMEOUT_
     if (!Object.hasOwn(delivery.items, id) || !Array.isArray(inputs) || inputs.length > 1 || (kind === 'history' && inputs.length !== 1) ||
         inputs.some(input => !input || input.kind !== kind || typeof input.key !== 'string' || !new RegExp(`^${kind}:[a-f0-9]{64}$`).test(input.key))) throw new Error('Invalid captured delivery assignments.');
   }
-  write('snapshot.json', snapshot);
-  const files = snapshot.files.map((file, index) => {
-    if (file.patch !== undefined) fs.writeFileSync(path.join(directory, `file-${index}.patch`), file.patch, { mode: 0o644 });
-    return { id: `file:${index}`, filename: file.filename, status: file.status, previous_filename: file.previous_filename, patch_path: file.patch !== undefined ? path.join(directory, `file-${index}.patch`) : null };
-  });
-  const threads = snapshot.threads.map((thread, index) => {
-    write(`thread-${index}.json`, thread);
-    return { id: `thread:${index}`, thread_id: thread.id, isResolved: thread.isResolved, path: thread.comments[0].path, history_path: path.join(directory, `thread-${index}.json`) };
-  });
-  const reviews = (snapshot.reviews || []).map((review, index) => {
-    write(`review-${index}.json`, review);
-    return { id: review.id, state: review.state, history_path: path.join(directory, `review-${index}.json`) };
-  });
-  write('index.json', { head_sha: snapshot.head_sha, base_sha: snapshot.base_sha, diff_base_sha: snapshot.diff_base_sha, files, threads, reviews });
-  write('delivery-index.json', delivery);
+  let capturedSnapshot, capturedIndex, context;
+  try {
+    capturedSnapshot = JSON.parse(fs.readFileSync(path.join(directory, 'snapshot.json'), 'utf8'));
+    capturedIndex = JSON.parse(fs.readFileSync(path.join(directory, 'delivery-index.json'), 'utf8'));
+    context = JSON.parse(fs.readFileSync(path.join(directory, 'index.json'), 'utf8'));
+  } catch { throw new Error('Missing or invalid exported review context.'); }
+  if (snapshotDigest(capturedSnapshot) !== delivery.snapshot || JSON.stringify(capturedIndex) !== JSON.stringify(delivery) ||
+      !context || !Array.isArray(context.files) || context.files.length !== snapshot.files.length ||
+      !Array.isArray(context.threads) || context.threads.length !== snapshot.threads.length ||
+      !Array.isArray(context.reviews) || context.reviews.length !== (snapshot.reviews || []).length) throw new Error('Exported review context does not match the captured snapshot.');
+  for (const [index, review] of (snapshot.reviews || []).entries()) {
+    const expectedPath = path.join(directory, `review-${index}.json`), exported = context.reviews[index];
+    let history;
+    try { history = JSON.parse(fs.readFileSync(expectedPath, 'utf8')); } catch { throw new Error('Missing or invalid exported review history.'); }
+    if (!exported || exported.history_path !== expectedPath || exported.id !== review.id || exported.state !== review.state ||
+        JSON.stringify(history) !== JSON.stringify(review)) throw new Error('Exported review history does not match the captured snapshot.');
+  }
 }
 
 module.exports = { captureContext, assertFresh, assertMutationFresh, exportContext };

@@ -8,6 +8,7 @@ $ErrorActionPreference = 'Stop'
 [Console]::InputEncoding = [Text.UTF8Encoding]::new($false)
 [Console]::OutputEncoding = [Text.UTF8Encoding]::new($false)
 $utf8 = [Text.UTF8Encoding]::new($false)
+Import-Module (Join-Path $PSScriptRoot 'ReviewSerialization.psm1') -Force
 if (-not $env:REVIEW_SNAPSHOT -or -not $env:REVIEW_RECEIPTS) { throw 'Missing private review-input configuration.' }
 $snapshotText = [IO.File]::ReadAllText($env:REVIEW_SNAPSHOT, $utf8)
 $snapshot = [System.Text.Json.JsonDocument]::Parse($snapshotText)
@@ -98,10 +99,7 @@ while ($null -ne ($line = [Console]::In.ReadLine())) {
                 foreach ($entry in $params.GetEnumerator()) { if ($entry.Key -cnotin @('item','nonce','kind','offset','limit')) { throw 'Unsupported review input.' } }
                 $page = Get-Page $params
                 $inner = ConvertTo-Json -InputObject $page -Depth 20 -Compress
-                # Match JSON.stringify: keep valid Unicode readable, escape lone surrogates,
-                # and undo Json.NET's extra escapes without changing literal backslashes.
-                $inner = [regex]::Replace($inner, '[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]', [Text.RegularExpressions.MatchEvaluator]{ param($match) '\u{0:x4}' -f [int][char]$match.Value[0] })
-                $inner = [regex]::Replace($inner, '(?<!\\)((?:\\\\)*)\\u(0085|2028|2029)', [Text.RegularExpressions.MatchEvaluator]{ param($match) $match.Groups[1].Value + [char][Convert]::ToInt32($match.Groups[2].Value, 16) })
+                $inner = ConvertTo-JsJsonText $inner
                 Write-Result $idJson @{content=@(@{type='text';text=$inner})}
                 break
             }
