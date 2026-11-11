@@ -1,28 +1,21 @@
 # Trace Voice Agent realtime sessions
 
-This runnable sample uses the existing Foundry GenAI tracing setting and an OpenTelemetry console
-exporter for a realtime text exchange. It also prints the SDK's payload-free connection and
-session diagnostic logs. The same tracing setup applies to audio and tool interactions; it does
-not require a Voice Agent-specific tracing option.
+Trace a Voice Agent text conversation with OpenTelemetry and print connection logs without
+message payloads. The same setup works for audio and function calls.
 
 ## Prerequisites
 
-- Set `FOUNDRY_PROJECT_ENDPOINT` to your Foundry project endpoint.
-- Set `FOUNDRY_REALTIME_MODEL_NAME` to a realtime-capable model deployment.
-- Authenticate an identity with access to the project, such as `az login` for local development.
-- Reference `Azure.AI.Projects`, `Azure.Identity`, and `OpenTelemetry.Exporter.Console`.
+- Follow the [Realtime prerequisites and authentication guidance](Sample_VoiceAgent.md#prerequisites).
+- Also reference `OpenTelemetry.Exporter.Console`.
 
-Use the namespaces `System`, `System.ClientModel`, `System.Diagnostics`,
-`System.Diagnostics.Tracing`, `System.Threading`, `Azure.AI.Projects`, `Azure.AI.Projects.Agents`,
-`Azure.Core.Diagnostics`, `Azure.Identity`, `OpenAI.Realtime`, `OpenTelemetry`,
-`OpenTelemetry.Resources`, and `OpenTelemetry.Trace`. Suppress experimental diagnostics
-`AAIP001`, `AAIP002`, and `OPENAI002`.
+The [complete sample](../tests/Samples/VoiceAgent/Sample_VoiceAgent_Telemetry.cs) includes the
+required imports and setup.
 
 ## Configure tracing and logging
 
-Configure the existing tracing setting and provider before constructing a client. The sample
-disables message-content recording; explicitly configured AppContext switches take precedence
-over the environment variables shown here.
+Enable tracing before creating the client. Keep message-content recording disabled to avoid
+exporting conversation text. If your application sets the corresponding `AppContext` switches,
+those values take precedence over these environment variables.
 
 ```C# Snippet:Sample_VoiceAgent_Telemetry_Setup
 Environment.SetEnvironmentVariable("AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING", "true");
@@ -38,8 +31,8 @@ using TracerProvider tracerProvider = Sdk.CreateTracerProviderBuilder()
 using ActivitySource applicationSource = new(applicationSourceName);
 ```
 
-Optionally enable the existing Azure EventSource listener to print only Voice Agent realtime
-milestones. These log messages include correlation identifiers, not event payloads.
+To print Voice Agent connection and session logs, add this listener. It logs correlation IDs,
+not message payloads.
 
 ```C# Snippet:Sample_VoiceAgent_Telemetry_Logs
 using AzureEventSourceListener sdkLogs = new((eventData, message) =>
@@ -53,9 +46,8 @@ using AzureEventSourceListener sdkLogs = new((eventData, message) =>
 
 ## Run a stored realtime text exchange
 
-Run the following code in an asynchronous method. It creates a unique temporary agent, requests
-a text response, closes the session, reads and deletes the stored conversation, and deletes the
-agent. It logs event types and REST statuses without printing the conversation text.
+Run this code in an asynchronous method. It saves a text conversation, reads it back, and deletes
+the conversation and temporary agent. It prints event types and HTTP statuses, not conversation text.
 
 ```C# Snippet:Sample_VoiceAgent_Telemetry_Realtime
 string projectEndpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
@@ -139,7 +131,7 @@ tracerProvider.ForceFlush();
 
 ## Inspect correlation and privacy
 
-The console exporter prints the actual Activities with this hierarchy:
+The console exporter shows the session, connection, and response spans in one application trace:
 
 ```text
 voice_agent.sample.realtime
@@ -150,29 +142,25 @@ voice_agent.sample.realtime
   BetaVoiceAgentsConversations.DeleteAgentConversation
 ```
 
-The realtime source is `Azure.AI.Projects.ProjectsRealtimeClient`. Session, connection, and
-response Activities have `ActivityKind.Client` and share the application's trace ID.
-`invoke_agent` includes response status, model, token usage when returned by the service, and
-safe response/conversation identifiers, `gen_ai.agent.type=voice`, and time to the first nonempty
-text or audio delta. Session spans include total input/output audio bytes and the audio
-format/sample rate when reported by the service. Session lifecycle events use the
-`voice_agents.session.created`, `voice_agents.session.updated`, and `voice_agents.session.update`
-names.
-The conversation deletion uses its existing SDK diagnostic scope rather than a new GenAI span.
+The client spans come from `Azure.AI.Projects.ProjectsRealtimeClient`. `invoke_agent` records
+response status, model, response/conversation IDs, token usage, and time to first output when
+available. Session spans include audio byte counts, formats, and sample rates. Realtime spans
+use `gen_ai.agent.type=voice`. Lifecycle events are named `voice_agents.session.created`,
+`voice_agents.session.updated`, and `voice_agents.session.update`.
+Conversation deletion keeps its normal SDK diagnostic scope.
 
-Dispose each session before disposing its tracer provider so session and response Activities
-are completed and exported. Updates are observed as the application consumes the receive loop.
+Keep reading updates to observe events. Dispose the session before the tracer provider so all
+spans can finish and be exported.
 
-Raw audio, credentials, authentication headers, query strings, exception messages, and close
-reasons are not recorded by the realtime instrumentation. Message content requires the existing
-content-recording opt-in; keep it disabled unless you intend to export potentially sensitive
-content. With that opt-in, bounded input transcripts are associated with their audio items,
-and tool-call message parts include names and arguments. Tool result message parts retain
-OpenTelemetry's `response` field. Existing `AIProjectClientOptions.EnableDistributedTracing = false` disables Voice
-Agent tracing, and the existing client logging options control diagnostic logging.
+Realtime instrumentation does not record raw audio, credentials, authentication headers, query
+strings, exception messages, or close reasons. Enable content recording only if you intend to
+export potentially sensitive transcripts and tool arguments/results. Captured content is bounded.
+Use `AIProjectClientOptions.EnableDistributedTracing = false` to disable tracing, and the client's
+logging options to control diagnostic logs.
 
-To run the repository sample, set `CLIENTMODEL_TEST_MODE=Live` and the project/model variables,
-then run from the repository root:
+## Run the repository sample
+
+Set `CLIENTMODEL_TEST_MODE=Live`, then run from the repository root:
 
 ```dotnetcli
 dotnet test sdk\ai\Azure.AI.Projects\tests\Azure.AI.Projects.Tests.csproj -f net8.0 --filter "FullyQualifiedName~Sample_VoiceAgent_Telemetry&Name~VoiceAgentRealtimeTelemetryAsync"

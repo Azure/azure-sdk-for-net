@@ -8,7 +8,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using Microsoft.ClientModel.TestFramework;
+using Microsoft.ClientModel.TestFramework.TestProxy.Admin;
 using NUnit.Framework;
 using OpenAI.Realtime;
 
@@ -18,8 +20,132 @@ namespace Azure.AI.Projects.Agents.Tests;
 
 public class VoiceAgentContractCompatibilityTests
 {
+    private const string LegacyDefaultsPrefix = "MemoryStores=V1Preview,WorkflowAgents=V1Preview,";
+
+    [TestCase(RecordedTestMode.Playback, 1)]
+    [TestCase(RecordedTestMode.Record, 0)]
+    [TestCase(RecordedTestMode.Live, 0)]
+    public void LegacyDefaultVoiceFeatureNormalizationIsPlaybackOnly(RecordedTestMode mode, int expectedCount)
+    {
+        SanitizerFixture fixture = new(mode);
+        ProjectsTestSanitizers.ApplySanitizers(fixture);
+        var sanitizers = fixture.HeaderRegexSanitizers.Where(sanitizer =>
+            sanitizer.Body.Key == "Foundry-Features" &&
+            sanitizer.Body.Regex == ProjectsTestSanitizers.LegacyDefaultVoiceAgentFeaturePattern).ToList();
+
+        Assert.That(sanitizers, Has.Count.EqualTo(expectedCount));
+        Assert.That(fixture.IgnoredHeaders, Does.Not.Contain("Foundry-Features"));
+        Assert.That(fixture.CustomSanitizers.OfType<RemoveHeaderSanitizer>()
+            .Where(sanitizer => sanitizer.Body.HeadersForRemoval == "Foundry-Features"), Is.Empty);
+        if (expectedCount > 0)
+        {
+            Assert.That(sanitizers[0].Body.Value, Is.EqualTo(ProjectsTestSanitizers.LegacyDefaultVoiceAgentFeatureReplacement));
+        }
+    }
+
+    [TestCase(LegacyDefaultsPrefix + "DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview",
+        LegacyDefaultsPrefix + "DraftAgents=V1Preview,ModelRouterControls=V1Preview")]
+    [TestCase(LegacyDefaultsPrefix + "Routines=V2Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview,GitHubCopilot=V1Preview",
+        LegacyDefaultsPrefix + "Routines=V2Preview,DraftAgents=V1Preview,ModelRouterControls=V1Preview,GitHubCopilot=V1Preview")]
+    [TestCase("VoiceAgents=V1Preview", "VoiceAgents=V1Preview")]
+    [TestCase("Insights=V1Preview,VoiceAgents=V1Preview", "Insights=V1Preview,VoiceAgents=V1Preview")]
+    [TestCase("DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview",
+        "DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview")]
+    [TestCase(LegacyDefaultsPrefix + "DraftAgents=V1Preview,ModelRouterControls=V1Preview,VoiceAgents=V1Preview",
+        LegacyDefaultsPrefix + "DraftAgents=V1Preview,ModelRouterControls=V1Preview,VoiceAgents=V1Preview")]
+    [TestCase(LegacyDefaultsPrefix + "DraftAgents=V1Preview,VoiceAgents=V2Preview,ModelRouterControls=V1Preview",
+        LegacyDefaultsPrefix + "DraftAgents=V1Preview,VoiceAgents=V2Preview,ModelRouterControls=V1Preview")]
+    [TestCase(LegacyDefaultsPrefix + "OtherDraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview",
+        LegacyDefaultsPrefix + "OtherDraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview")]
+    [TestCase(LegacyDefaultsPrefix + "DraftAgents=V1Preview,OtherVoiceAgents=V1Preview,ModelRouterControls=V1Preview",
+        LegacyDefaultsPrefix + "DraftAgents=V1Preview,OtherVoiceAgents=V1Preview,ModelRouterControls=V1Preview")]
+    [TestCase(LegacyDefaultsPrefix + "DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1PreviewExtra",
+        LegacyDefaultsPrefix + "DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1PreviewExtra")]
+    public void LegacyDefaultVoiceNormalizationPreservesOtherFlagsAndExplicitOptIns(string value, string expected)
+    {
+        string normalized = Regex.Replace(value, ProjectsTestSanitizers.LegacyDefaultVoiceAgentFeaturePattern,
+            ProjectsTestSanitizers.LegacyDefaultVoiceAgentFeatureReplacement);
+        Assert.That(normalized, Is.EqualTo(expected));
+        Assert.That(Regex.Replace(normalized, ProjectsTestSanitizers.LegacyDefaultVoiceAgentFeaturePattern,
+            ProjectsTestSanitizers.LegacyDefaultVoiceAgentFeatureReplacement), Is.EqualTo(expected));
+    }
+
+    [TestCase(RecordedTestMode.Playback, 1)]
+    [TestCase(RecordedTestMode.Record, 0)]
+    [TestCase(RecordedTestMode.Live, 0)]
+    public void LegacyVoiceHistoryHeaderRemovalIsPlaybackOnlyAndFixtureScoped(RecordedTestMode mode, int expectedCount)
+    {
+        SanitizerFixture fixture = new(mode);
+        ProjectsTestSanitizers.ApplySanitizers(fixture);
+        string[] ignoredBefore = fixture.IgnoredHeaders.ToArray();
+        var customBefore = fixture.CustomSanitizers.ToArray();
+        var headersBefore = fixture.HeaderRegexSanitizers.ToArray();
+        var bodiesBefore = fixture.BodyRegexSanitizers.ToArray();
+        var urisBefore = fixture.UriRegexSanitizers.ToArray();
+
+        ProjectsTestSanitizers.ApplyLegacyVoiceHistoryRecordingHeaders(fixture);
+
+        var additions = fixture.CustomSanitizers.Except(customBefore).ToArray();
+        var removers = additions.OfType<RemoveHeaderSanitizer>().ToArray();
+        Assert.That(additions, Has.Length.EqualTo(expectedCount));
+        Assert.That(removers, Has.Length.EqualTo(expectedCount));
+        if (expectedCount > 0)
+        {
+            Assert.That(removers[0].Body.HeadersForRemoval, Is.EqualTo("Foundry-Features"));
+        }
+        Assert.Multiple(() =>
+        {
+            Assert.That(fixture.IgnoredHeaders, Is.EquivalentTo(ignoredBefore));
+            Assert.That(customBefore.Except(fixture.CustomSanitizers), Is.Empty);
+            Assert.That(fixture.HeaderRegexSanitizers, Is.EqualTo(headersBefore));
+            Assert.That(fixture.BodyRegexSanitizers, Is.EqualTo(bodiesBefore));
+            Assert.That(fixture.UriRegexSanitizers, Is.EqualTo(urisBefore));
+        });
+    }
+
+    [TestCase(RecordedTestMode.Playback, 1)]
+    [TestCase(RecordedTestMode.Record, 0)]
+    [TestCase(RecordedTestMode.Live, 0)]
+    public void LegacySkillsRouteNormalizationIsPlaybackOnly(RecordedTestMode mode, int expectedCount)
+    {
+        SanitizerFixture fixture = new(mode);
+        ProjectsTestSanitizers.ApplySanitizers(fixture);
+        var sanitizers = fixture.UriRegexSanitizers
+            .Where(sanitizer => sanitizer.Body.Regex == ProjectsTestSanitizers.LegacySkillsPathPattern).ToList();
+        Assert.That(sanitizers, Has.Count.EqualTo(expectedCount));
+        if (expectedCount > 0)
+        {
+            Assert.That(sanitizers[0].Body.Value, Is.EqualTo(ProjectsTestSanitizers.LegacySkillsPathReplacement));
+        }
+    }
+
+    [TestCase("https://example.test/api/projects/project/openai/v1/skills?limit=3&order=asc&api-version=v1",
+        "https://example.test/api/projects/project/skills?limit=3&order=asc&api-version=v1")]
+    [TestCase("https://example.test/api/projects/project/openai/v1/skills/skill/versions?api-version=v1",
+        "https://example.test/api/projects/project/skills/skill/versions?api-version=v1")]
+    [TestCase("https://example.test/api/projects/project/openai/v1/skills/skill/versions/1/content",
+        "https://example.test/api/projects/project/skills/skill/versions/1/content")]
+    [TestCase("https://example.test/api/projects/skills/openai/v1/skills",
+        "https://example.test/api/projects/skills/skills")]
+    [TestCase("https://example.test/api/projects/project/skills?api-version=v1",
+        "https://example.test/api/projects/project/skills?api-version=v1")]
+    [TestCase("https://example.test/api/projects/project/skills_extra",
+        "https://example.test/api/projects/project/skills_extra")]
+    [TestCase("https://example.test/api/projects/project/agents/skills",
+        "https://example.test/api/projects/project/agents/skills")]
+    [TestCase("https://example.test/skills/skill",
+        "https://example.test/skills/skill")]
+    [TestCase("https://example.test/api/projects/project/agents?next=/api/projects/other/skills",
+        "https://example.test/api/projects/project/agents?next=/api/projects/other/skills")]
+    public void LegacySkillsRecordingRoutesPreserveOtherPaths(string uri, string expected)
+    {
+        string normalized = Regex.Replace(uri, ProjectsTestSanitizers.LegacySkillsPathPattern,
+            ProjectsTestSanitizers.LegacySkillsPathReplacement);
+        Assert.That(normalized, Is.EqualTo(expected));
+    }
+
     [Test]
-    public void GeneratedSkillsRequestsUseLegacyPreviewRoutes()
+    public void GeneratedSkillsRequestsUseProjectRoutesWithoutPlaybackNormalization()
     {
         ProjectAgentSkills client = new(null, ClientPipeline.Create(),
             new Uri("https://example.test/api/projects/project"), "v1");
@@ -72,6 +198,11 @@ public class VoiceAgentContractCompatibilityTests
     [TestCase(typeof(SipTelephonyBinding))]
     [TestCase(typeof(TelephonyCampaign))]
     [TestCase(typeof(VoiceAgentPostCallConfig))]
+    [TestCase(typeof(VoiceAgentPostCallDestination))]
+    [TestCase(typeof(VoiceAgentPostCallDestinationType))]
+    [TestCase(typeof(VoiceAgentPostCallIncludeOption))]
+    [TestCase(typeof(VoiceAgentEventGridPostCallDestination))]
+    [TestCase(typeof(VoiceAgentRoutinePostCallDestination))]
     public void RequiredVoicePreviewTypesRetainOptIn(Type type)
     {
         Assert.That(type.GetCustomAttribute<ExperimentalAttribute>()?.DiagnosticId, Is.EqualTo("AAIP001"));
@@ -82,6 +213,35 @@ public class VoiceAgentContractCompatibilityTests
     {
         Assert.That(typeof(VoiceAgentDefinition).GetProperty(nameof(VoiceAgentDefinition.PostCall))
             .GetCustomAttribute<ExperimentalAttribute>()?.DiagnosticId, Is.EqualTo("AAIP001"));
+    }
+
+    [Test]
+    public void RealtimeModelFactorySeparatesGaAndPreviewSignatures()
+    {
+        MethodInfo[] factories = typeof(ProjectsAgentsModelFactory).GetMethods()
+            .Where(method => method.Name == nameof(ProjectsAgentsModelFactory.VoiceAgentDefinition)).ToArray();
+        Assert.That(factories, Has.Length.EqualTo(2));
+        MethodInfo stableFactory = factories.Single(method =>
+            method.GetParameters().All(parameter => parameter.Name != "postCall"));
+        MethodInfo previewFactory = factories.Single(method =>
+            method.GetParameters().Any(parameter => parameter.Name == "postCall"));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(stableFactory.GetCustomAttribute<ExperimentalAttribute>(), Is.Null);
+            Assert.That(stableFactory.GetParameters().All(parameter => parameter.IsOptional), Is.True);
+            Assert.That(stableFactory.GetParameters().All(parameter =>
+                !HasExperimentalType(parameter.ParameterType)), Is.True);
+            Assert.That(previewFactory.GetCustomAttribute<ExperimentalAttribute>()?.DiagnosticId, Is.EqualTo("AAIP001"));
+            Assert.That(previewFactory.GetParameters().All(parameter => !parameter.IsOptional), Is.True,
+                "The preview compatibility overload must not make GA/default-literal calls ambiguous.");
+            Assert.That(previewFactory.GetParameters()[^1].ParameterType, Is.EqualTo(typeof(VoiceAgentPostCallConfig)));
+        });
+
+        static bool HasExperimentalType(Type type)
+            => type.GetCustomAttribute<ExperimentalAttribute>() != null ||
+                type.HasElementType && HasExperimentalType(type.GetElementType()) ||
+                type.IsGenericType && type.GetGenericArguments().Any(HasExperimentalType);
     }
 
     [Test]

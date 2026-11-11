@@ -30,6 +30,7 @@
 
     <!-- Shared source from Azure.Core -->
   <ItemGroup>
+    <Compile Include="..\..\Azure.AI.Projects.Agents\src\Custom\Internal\FoundryFeaturesPolicy.cs" Link="Shared\FoundryFeaturesPolicy.cs" />
     <Compile Include="$(AzureCoreSharedSources)ExperimentalAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs" LinkBase="Shared" />

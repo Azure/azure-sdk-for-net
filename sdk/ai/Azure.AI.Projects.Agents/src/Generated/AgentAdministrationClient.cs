@@ -55,28 +55,6 @@ namespace Azure.AI.Projects.Agents
         {
         }
 
-        /// <summary> Initializes a new instance of AgentAdministrationClient. </summary>
-        /// <param name="authenticationPolicy"> The authentication policy to use for pipeline creation. </param>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        internal AgentAdministrationClient(AuthenticationPolicy authenticationPolicy, Uri endpoint, AgentAdministrationClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-
-            options ??= new AgentAdministrationClientOptions();
-
-            _endpoint = endpoint;
-            if (authenticationPolicy != null)
-            {
-                Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AgentAdministrationClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
-            }
-            else
-            {
-                Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AgentAdministrationClient).Assembly) }, Array.Empty<PipelinePolicy>());
-            }
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
         /// <summary> Initializes a new instance of AgentAdministrationClient from a <see cref="AgentAdministrationClientSettings"/>. </summary>
         /// <param name="settings"> The settings for AgentAdministrationClient. </param>
         [Experimental("SCME0002")]

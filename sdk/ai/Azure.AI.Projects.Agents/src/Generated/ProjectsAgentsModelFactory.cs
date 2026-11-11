@@ -479,21 +479,90 @@ namespace Azure.AI.Projects.Agents
         /// <param name="subagentConfig"> Optional subagent configuration. Set `subagent_type` to `delegate` for delegated background specialists or `inline` for inline voice subagents. </param>
         /// <param name="store"> Persists conversation content and audio in Foundry, not native Live recordings. Defaults to false. </param>
         /// <param name="soundscape"> Optional background ambience and event cues, stored with the agent version and separate from the audio configuration. Currently rendered only for telephony calls, not browser WebRTC or direct voice WebSocket sessions. Omit this property to disable all auxiliary audio. Persisted conversation recordings do not include the soundscape mix. </param>
-        /// <param name="postCall"> Optional post-call delivery configuration. After each session ends, the service notifies the configured destinations. Post-call delivery is in preview and requires `VoiceAgents=V1Preview`. </param>
         /// <returns> A new <see cref="Agents.VoiceAgentDefinition"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
-        public static VoiceAgentDefinition VoiceAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, VoiceModelType? modelType = default, string model = default, VoiceConversationEngine conversationEngine = default, string instructions = default, VoiceAgentGreetingConfig greeting = default, VoiceAgentAudioConfig audio = default, IEnumerable<VoiceOutputModality> outputModalities = default, BinaryData internalMaxOutputTokens = default, IEnumerable<VoiceAgentSessionIncludeOption> include = default, VoiceAgentInterimResponseConfig interimResponse = default, VoiceAgentAvatarConfig avatar = default, IEnumerable<VoiceAgentTool> tools = default, BinaryData internalToolChoice = default, bool? parallelToolCalls = default, IDictionary<string, StructuredInputDefinition> structuredInputs = default, VoiceAgentSubagentConfig subagentConfig = default, bool? store = default, VoiceAgentSoundscapeConfig soundscape = default, VoiceAgentPostCallConfig postCall = default)
+        public static VoiceAgentDefinition VoiceAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, VoiceModelType? modelType = default, string model = default, VoiceConversationEngine conversationEngine = default, string instructions = default, VoiceAgentGreetingConfig greeting = default, VoiceAgentAudioConfig audio = default, IEnumerable<VoiceOutputModality> outputModalities = default, BinaryData internalMaxOutputTokens = default, IEnumerable<VoiceAgentSessionIncludeOption> include = default, VoiceAgentInterimResponseConfig interimResponse = default, VoiceAgentAvatarConfig avatar = default, IEnumerable<VoiceAgentTool> tools = default, BinaryData internalToolChoice = default, bool? parallelToolCalls = default, IDictionary<string, StructuredInputDefinition> structuredInputs = default, VoiceAgentSubagentConfig subagentConfig = default, bool? store = default, VoiceAgentSoundscapeConfig soundscape = default)
         {
-            structuredInputs ??= new ChangeTrackingDictionary<string, StructuredInputDefinition>();
             outputModalities ??= new ChangeTrackingList<VoiceOutputModality>();
             include ??= new ChangeTrackingList<VoiceAgentSessionIncludeOption>();
             tools ??= new ChangeTrackingList<VoiceAgentTool>();
-
+            structuredInputs ??= new ChangeTrackingDictionary<string, StructuredInputDefinition>();
             return new VoiceAgentDefinition(
-                ProjectsAgentKind.Voice,
+                "voice",
                 contentFilterConfiguration,
-                additionalBinaryDataProperties: null,
-                VoiceAgentSubProtocol.Realtime,
+                null,
+                default,
+                instructions,
+                structuredInputs,
+                store,
+                modelType,
+                model,
+                conversationEngine,
+                greeting,
+                audio,
+                soundscape,
+                outputModalities.ToList(),
+                internalMaxOutputTokens,
+                include.ToList(),
+                interimResponse,
+                avatar,
+                tools.ToList(),
+                internalToolChoice,
+                parallelToolCalls,
+                subagentConfig);
+        }
+
+        /// <summary>
+        /// The voice agent definition. Its configuration (model, instructions, audio, tools, and optional avatar) drives a
+        /// managed speech-to-speech experience. Establish realtime voice sessions through
+        /// `GET /agents/{agent_name}/endpoint/protocols/voice`. Every create or update produces a new immutable version.
+        /// </summary>
+        /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
+        /// <param name="modelType"> How the model backing this voice agent is served. Required with `model` for a model-backed voice agent and omitted when `conversation_engine` is provided. This is independent of the architecture (realtime or cascaded), which the service derives from the selected model. </param>
+        /// <param name="model"> The model to use for this agent. Required with `model_type` for a model-backed voice agent and omitted when `conversation_engine` is provided. The model must support realtime or cascaded voice. </param>
+        /// <param name="conversationEngine"> The engine that owns conversation handling for this voice agent. Exactly one of this property and the model-backed configuration (`model_type` with `model`) must be provided. When this property is provided, `model_type`, `model`, `instructions`, `tools`, and `tool_choice` must be omitted, and `greeting.tool_choice` cannot be `required`, because the engine owns the conversation logic. The initial implementation supports a hosted-agent engine. </param>
+        /// <param name="instructions"> Frontend instructions, templated with structured_inputs. Backend instructions belong in delegation.responses. </param>
+        /// <param name="greeting"> Optional session-start greeting. Template mode speaks exact rendered text; LLM-generated mode asks the session model to author the opening response and may use configured tools. </param>
+        /// <param name="audio">
+        /// The audio configuration, including input and output formats, voice, turn detection, noise reduction, and
+        /// transcription. These values are session defaults; a client may override supported fields when connecting.
+        /// </param>
+        /// <param name="outputModalities">
+        /// The output modalities the agent produces. Defaults to `["audio"]`. `animation` and `avatar` are available
+        /// when an avatar is configured.
+        /// </param>
+        /// <param name="internalMaxOutputTokens"> The maximum output-token count for one response. </param>
+        /// <param name="include"> Additional fields to include in service outputs. </param>
+        /// <param name="interimResponse"> Interim-response settings for latency and tool execution. </param>
+        /// <param name="avatar"> Optional avatar configuration. These values are session defaults and may be overridden when connecting. </param>
+        /// <param name="tools">
+        /// The tools the voice agent may use. Supported tool kinds are `function` (executed by the client), `mcp`,
+        /// `system` (service-managed session controls), and `toolbox`. Server-side tools such as `web_search`,
+        /// `azure_ai_search`, and `openapi` are provided through a toolbox rather than declared directly.
+        /// </param>
+        /// <param name="internalToolChoice">
+        /// How the model chooses tools for generated responses. `none` prevents tool calls, `auto` lets the model decide,
+        /// `required` requires at least one tool call, and a specific function or MCP tool can be selected with an object.
+        /// Defaults to `auto`.
+        /// </param>
+        /// <param name="parallelToolCalls"> Whether the model may call multiple tools in parallel. </param>
+        /// <param name="structuredInputs"> Template inputs for session instructions and supported greetings. </param>
+        /// <param name="subagentConfig"> Optional subagent configuration. Set `subagent_type` to `delegate` for delegated background specialists or `inline` for inline voice subagents. </param>
+        /// <param name="store"> Persists conversation content and audio in Foundry, not native Live recordings. Defaults to false. </param>
+        /// <param name="soundscape"> Optional background ambience and event cues, stored with the agent version and separate from the audio configuration. Currently rendered only for telephony calls, not browser WebRTC or direct voice WebSocket sessions. Omit this property to disable all auxiliary audio. Persisted conversation recordings do not include the soundscape mix. </param>
+        /// <param name="postCall"> Optional post-call delivery configuration. After each session ends, the service notifies the configured destinations. Post-call delivery is in preview and requires `VoiceAgents=V1Preview`. </param>
+        /// <returns> A new <see cref="Agents.VoiceAgentDefinition"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static VoiceAgentDefinition VoiceAgentDefinition(ContentFilterConfiguration contentFilterConfiguration, VoiceModelType? modelType, string model, VoiceConversationEngine conversationEngine, string instructions, VoiceAgentGreetingConfig greeting, VoiceAgentAudioConfig audio, IEnumerable<VoiceOutputModality> outputModalities, BinaryData internalMaxOutputTokens, IEnumerable<VoiceAgentSessionIncludeOption> include, VoiceAgentInterimResponseConfig interimResponse, VoiceAgentAvatarConfig avatar, IEnumerable<VoiceAgentTool> tools, BinaryData internalToolChoice, bool? parallelToolCalls, IDictionary<string, StructuredInputDefinition> structuredInputs, VoiceAgentSubagentConfig subagentConfig, bool? store, VoiceAgentSoundscapeConfig soundscape, VoiceAgentPostCallConfig postCall)
+        {
+            outputModalities ??= new ChangeTrackingList<VoiceOutputModality>();
+            include ??= new ChangeTrackingList<VoiceAgentSessionIncludeOption>();
+            tools ??= new ChangeTrackingList<VoiceAgentTool>();
+            structuredInputs ??= new ChangeTrackingDictionary<string, StructuredInputDefinition>();
+            return new VoiceAgentDefinition(
+                "voice",
+                contentFilterConfiguration,
+                null,
+                default,
                 instructions,
                 structuredInputs,
                 store,

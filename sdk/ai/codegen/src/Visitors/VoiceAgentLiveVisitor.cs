@@ -18,6 +18,7 @@ using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -43,6 +44,9 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
     private readonly Dictionary<string, ModelProvider> _models = new(StringComparer.Ordinal);
     private ClientProvider _liveClient;
     private CSharpType _responseItemType;
+    private CSharpType _realtimeStatusType;
+    private CSharpType _realtimeModalityType;
+    private CSharpType _semanticVadEagernessType;
 
     protected internal static void Configure(InputNamespace input)
     {
@@ -122,6 +126,7 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
         if (type is ModelFactoryProvider)
         {
             RemoveSupersededVoiceFactories(type);
+            AddStableRealtimeFactory(type);
         }
         return base.VisitType(type);
     }
@@ -160,7 +165,7 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
             method.Update(bodyStatements: body);
         }
         if (method.EnclosingType is ModelFactoryProvider && method.Signature.ReturnType?.Name is
-            "VoiceAgentDefinition" or "VoiceAgentLiveDefinition" or "VoiceAgentBaseDefinition" or "VoiceAgentAudioOutputConfig")
+            "VoiceAgentLiveDefinition" or "VoiceAgentBaseDefinition" or "VoiceAgentAudioOutputConfig")
         {
             UpdateVoiceFactory(method);
         }
@@ -177,8 +182,56 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
         return base.VisitMemberExpression(expression, method);
     }
 
+    protected override ValueExpression VisitInvokeMethodExpression(InvokeMethodExpression expression, MethodProvider method)
+    {
+        string invocation = expression.MethodSignature?.Name ?? expression.MethodName;
+        ValueExpression argument = expression.Arguments.Count > 0 ? expression.Arguments[0] : null;
+        while (argument is ScopedApi scoped)
+        {
+            argument = scoped.Original;
+        }
+        if (method.Signature.Name == "DeserializeVoiceResult" && invocation == "Read" &&
+            expression.TypeArguments?.Count == 1 && expression.TypeArguments[0].Name == "RealtimeOutputModality" &&
+            argument is InvokeMethodExpression bytes && bytes.InstanceReference != null)
+        {
+            _realtimeModalityType ??= ResolveOpenAIType("OpenAI.Realtime.RealtimeOutputModality");
+            return New.Instance(_realtimeModalityType, bytes.InstanceReference.Invoke(nameof(JsonElement.GetString)));
+        }
+        if (method.EnclosingType.Name == "VoiceResult" && method.Signature.Name == "JsonModelWriteCore" &&
+            invocation == "WriteObjectValue" &&
+            ((expression.TypeArguments?.Count == 1 && expression.TypeArguments[0].Name == "RealtimeResponseStatus") ||
+             argument is VariableExpression { Type.Name: "RealtimeOutputModality" }))
+        {
+            return expression.InstanceReference.Invoke(nameof(Utf8JsonWriter.WriteStringValue),
+                expression.Arguments[0].Invoke(nameof(ToString)));
+        }
+        if (method.Signature.Name == "DeserializeVoiceAgentSemanticVadTurnDetection" && invocation == "Read" &&
+            expression.TypeArguments?.Count == 1 && expression.TypeArguments[0].Name == "RealtimeSemanticVadEagernessLevel" &&
+            argument is InvokeMethodExpression eagernessBytes && eagernessBytes.InstanceReference != null)
+        {
+            _semanticVadEagernessType ??= ResolveOpenAIType("OpenAI.Realtime.RealtimeSemanticVadEagernessLevel");
+            return New.Instance(_semanticVadEagernessType, eagernessBytes.InstanceReference.Invoke(nameof(JsonElement.GetString)));
+        }
+        if (method.EnclosingType.Name == "VoiceAgentSemanticVadTurnDetection" &&
+            method.Signature.Name == "JsonModelWriteCore" && invocation == "WriteObjectValue" &&
+            expression.TypeArguments?.Count == 1 && expression.TypeArguments[0].Name == "RealtimeSemanticVadEagernessLevel")
+        {
+            return expression.InstanceReference.Invoke(nameof(Utf8JsonWriter.WriteStringValue),
+                expression.Arguments[0].Invoke(nameof(ToString)));
+        }
+        return base.VisitInvokeMethodExpression(expression, method);
+    }
+
     protected override ValueExpression VisitAssignmentExpression(AssignmentExpression expression, MethodProvider method)
     {
+        if (method.Signature.Name == "DeserializeVoiceResult" &&
+            expression.Variable is VariableExpression status && status.Declaration.RequestedName == "status")
+        {
+            ValueExpression element = method.Signature.Parameters[0].AsVariable();
+            _realtimeStatusType ??= ResolveOpenAIType("OpenAI.Realtime.RealtimeResponseStatus");
+            return new AssignmentExpression(expression.Variable,
+                New.Instance(_realtimeStatusType, element.Invoke(nameof(JsonElement.GetProperty), Literal("status")).Invoke(nameof(JsonElement.GetString))));
+        }
         if (method.Signature.Name == "DeserializeLiveClientEventLiveResponseItemCreateParam" &&
             expression.Variable is VariableExpression variable && variable.Declaration.RequestedName == "item")
         {
@@ -197,14 +250,18 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
         {
             if (_responseItemType == null)
             {
-                PortableExecutableReference reference = CodeModelGenerator.Instance.AdditionalMetadataReferences
-                    .OfType<PortableExecutableReference>()
-                    .Single(candidate => string.Equals(Path.GetFileName(candidate.FilePath), "OpenAI.dll", StringComparison.OrdinalIgnoreCase));
-                Type type = Assembly.LoadFrom(reference.FilePath).GetType("OpenAI.Responses.ResponseItem", throwOnError: true);
-                _responseItemType = new CSharpType(type);
+                _responseItemType = ResolveOpenAIType("OpenAI.Responses.ResponseItem");
             }
             return _responseItemType;
         }
+    }
+
+    private static CSharpType ResolveOpenAIType(string name)
+    {
+        PortableExecutableReference reference = CodeModelGenerator.Instance.AdditionalMetadataReferences
+            .OfType<PortableExecutableReference>()
+            .Single(candidate => string.Equals(Path.GetFileName(candidate.FilePath), "OpenAI.dll", StringComparison.OrdinalIgnoreCase));
+        return new CSharpType(Assembly.LoadFrom(reference.FilePath).GetType(name, throwOnError: true));
     }
 
     private MethodProvider BuildCursorMethod(TypeProvider pager)
@@ -298,6 +355,126 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
         factory.Update(methods: methods);
     }
 
+    private void AddStableRealtimeFactory(TypeProvider factory)
+    {
+        MethodProvider previewFactory = factory.Methods.SingleOrDefault(method =>
+            method.Signature.Name == "VoiceAgentDefinition" &&
+            method.Signature.Parameters.Any(parameter => parameter.Name == "postCall"));
+        if (previewFactory?.BodyStatements == null)
+        {
+            return;
+        }
+        Dictionary<string, CSharpType> collectionInitializers = [];
+        foreach (MethodBodyStatement statement in previewFactory.BodyStatements)
+        {
+            if (statement is ExpressionStatement { Expression: AssignmentExpression { UseNullCoalesce: true } assignment })
+            {
+                ValueExpression variable = assignment.Variable;
+                ValueExpression value = assignment.Value;
+                while (variable is ScopedApi variableApi)
+                {
+                    variable = variableApi.Original;
+                }
+                while (value is ScopedApi valueApi)
+                {
+                    value = valueApi.Original;
+                }
+                if (variable is not VariableExpression parameter || value is not NewInstanceExpression initializer ||
+                    initializer.Parameters.Count != 0 || initializer.InitExpression != null)
+                {
+                    throw new InvalidOperationException("Unexpected Realtime factory collection initialization.");
+                }
+                collectionInitializers.Add(parameter.Declaration.RequestedName, initializer.Type);
+            }
+        }
+        // The GA factory must not call a constructor whose signature exposes the preview configuration.
+        ModelProvider model = _models["VoiceAgentDefinition"];
+        ConstructorSignature constructor = model.FullConstructor.Signature;
+        ParameterProvider[] constructorParameters = constructor.Parameters.Where(parameter => parameter.Name != "postCall")
+            .Select(parameter => new ParameterProvider(parameter.Name, parameter.Description, parameter.Type,
+                attributes: parameter.Attributes)).ToArray();
+        ConstructorProvider stableConstructor = new(
+            new ConstructorSignature(model.Type, constructor.Description, MethodSignatureModifiers.Internal,
+                constructorParameters,
+                initializer: new ConstructorInitializer(false, constructor.Parameters.Select(parameter =>
+                    parameter.Name == "postCall" ? Null :
+                        constructorParameters.Single(candidate => candidate.Name == parameter.Name).AsVariable()).ToArray())),
+            Array.Empty<MethodBodyStatement>(), model);
+        model.Update(constructors: [.. model.Constructors, stableConstructor]);
+
+        MethodSignature signature = previewFactory.Signature;
+        ParameterProvider[] orderedParameters =
+        [
+            .. RealtimeFactoryParameters.Select(name => signature.Parameters.Single(parameter => parameter.Name == name)),
+            .. signature.Parameters.Where(parameter => parameter.Name is not ("kind" or "subProtocol") &&
+                !RealtimeFactoryParameters.Contains(parameter.Name))
+        ];
+        ParameterProvider[] stableParameters = orderedParameters.Where(parameter => parameter.Name != "postCall")
+            .Select(parameter => new ParameterProvider(parameter.Name, parameter.Description, parameter.Type,
+                defaultValue: Default, attributes: parameter.Attributes)).ToArray();
+        ParameterProvider[] previewParameters = orderedParameters.Select(parameter =>
+            new ParameterProvider(parameter.Name, parameter.Description, parameter.Type, attributes: parameter.Attributes)).ToArray();
+        MethodProvider stableFactory = new(
+            new MethodSignature(signature.Name, signature.Description, signature.Modifiers, signature.ReturnType,
+                signature.ReturnDescription, stableParameters,
+                Attributes: signature.Attributes),
+            BuildRealtimeFactoryBody(model, stableParameters, collectionInitializers), factory, FactoryDocs(stableParameters));
+
+        // Two optional overloads with the same prefix make GA calls ambiguous. Keep the preview CLR
+        // signature and positional order, but require every argument on that compatibility overload.
+        signature.Update(parameters: previewParameters);
+        previewFactory.Update(bodyStatements: BuildRealtimeFactoryBody(model, previewParameters, collectionInitializers),
+            xmlDocProvider: FactoryDocs(previewParameters));
+        List<MethodProvider> methods = [.. factory.Methods];
+        methods.Insert(methods.IndexOf(previewFactory), stableFactory);
+        factory.Update(methods: methods);
+
+        XmlDocProvider FactoryDocs(IReadOnlyList<ParameterProvider> parameters)
+            => new(previewFactory.XmlDocs.Summary,
+                parameters.Select(parameter => new XmlDocParamStatement(parameter)).ToArray(),
+                returns: new XmlDocReturnsStatement($"A new {signature.ReturnType:C} instance for mocking."));
+    }
+
+    private static MethodBodyStatement[] BuildRealtimeFactoryBody(ModelProvider model,
+        IReadOnlyList<ParameterProvider> parameters, IReadOnlyDictionary<string, CSharpType> collectionInitializers)
+    {
+        List<MethodBodyStatement> body = [];
+        foreach (ParameterProvider parameter in parameters.Where(parameter => parameter.Type.IsCollection))
+        {
+            if (!collectionInitializers.TryGetValue(parameter.Name, out CSharpType initializationType))
+            {
+                throw new InvalidOperationException($"Missing Realtime factory collection initialization for {parameter.Name}.");
+            }
+            body.Add(new ExpressionStatement(new AssignmentExpression(parameter.AsVariable(),
+                New.Instance(initializationType), true)));
+        }
+        Dictionary<string, ParameterProvider> byName = parameters.ToDictionary(parameter => parameter.Name);
+        ValueExpression[] arguments = model.FullConstructor.Signature.Parameters
+            .Where(parameter => parameter.Name != "postCall" || byName.ContainsKey(parameter.Name))
+            .Select(parameter =>
+            {
+                if (parameter.Name == "kind")
+                {
+                    return Literal("voice");
+                }
+                if (parameter.Name == "additionalBinaryDataProperties")
+                {
+                    return Null;
+                }
+                if (parameter.Name == "subProtocol")
+                {
+                    return Default;
+                }
+                ParameterProvider argument = byName[parameter.Name];
+                ValueExpression value = argument.AsVariable();
+                return CSharpType.RequiresToList(argument.Type, parameter.Type)
+                    ? value.Invoke(nameof(Enumerable.ToList))
+                    : value;
+            }).ToArray();
+        body.Add(Return(New.Instance(model.Type, arguments)));
+        return body.ToArray();
+    }
+
     private void UpdateVoiceFactory(MethodProvider method)
     {
         if (method.BodyStatements == null)
@@ -308,7 +485,6 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
         string name = method.Signature.ReturnType.Name;
         string[] originalParameters = name switch
         {
-            "VoiceAgentDefinition" => RealtimeFactoryParameters,
             "VoiceAgentAudioOutputConfig" => AudioOutputFactoryParameters,
             _ => null
         };
@@ -337,7 +513,6 @@ public class VoiceAgentLiveVisitor : ScmLibraryVisitor
                     constructor[index].Name switch
                     {
                         "kind" => Literal("voice"),
-                        "subProtocol" when name == "VoiceAgentDefinition" => Default,
                         "subProtocol" when name == "VoiceAgentLiveDefinition" => Static(constructor[index].Type).Property("Live"),
                         "modelType" when name == "VoiceAgentLiveDefinition" => Literal("self_deployed"),
                         _ => argument

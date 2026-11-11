@@ -7,8 +7,9 @@ using System.Text.Json;
 using Azure.AI.Projects.Evaluation;
 using NUnit.Framework;
 
-namespace Azure.AI.Projects.Tests;
 #pragma warning disable AAIP001
+
+namespace Azure.AI.Projects.Tests;
 
 public class EvaluatorGenerationArtifactsTests
 {
@@ -99,4 +100,3 @@ public class EvaluatorGenerationArtifactsTests
         });
     }
 }
-#pragma warning restore AAIP001

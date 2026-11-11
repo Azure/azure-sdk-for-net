@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects.Agents;
+using Azure.AI.Projects.Agents.Custom.Internal;
 using Azure.AI.Projects.Evaluation;
 using Azure.AI.Projects.Memory;
 using OpenAI.Realtime;
@@ -43,7 +44,7 @@ namespace Azure.AI.Projects
         private readonly AIProjectClientOptions _clientOptions;
         [Experimental("AAIP002")]
         private ProjectsRealtimeClient _cachedProjectsRealtimeClient;
-        private static readonly string s_experimentalHeaders = "MemoryStores=V1Preview,AgentInsights=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview,DigitalWorker=V1Preview,GitHubCopilot=V1Preview,FineTuningSessions=V1Preview,MicrosoftCopilot=V1Preview";
+        private static readonly string s_experimentalHeaders = "MemoryStores=V1Preview,AgentInsights=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,ModelRouterControls=V1Preview,DigitalWorker=V1Preview,GitHubCopilot=V1Preview,FineTuningSessions=V1Preview,MicrosoftCopilot=V1Preview";
 
         /// <summary> Initializes a new instance of AIProjectClient for mocking. </summary>
         protected AIProjectClient()
@@ -82,9 +83,14 @@ namespace Azure.AI.Projects
             _endpoint = endpoint;
             _tokenProvider = tokenProvider;
             _clientOptions = options;
-            Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AIProjectClient).Assembly), authenticationPolicy }, Array.Empty<PipelinePolicy>());
+            Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] {
+                new UserAgentPolicy(typeof(AIProjectClient).Assembly),
+                authenticationPolicy,
+                new FoundryFeaturesPolicy(null, endpoint)
+            }, Array.Empty<PipelinePolicy>());
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);
+            _cacheManager = new ClientConnectionCacheManager(_endpoint, Pipeline, tokenProvider);
         }
 
         /// <summary> Initializes a new instance of AIProjectClient. </summary>
@@ -119,7 +125,7 @@ namespace Azure.AI.Projects
                 "api-version",
                 _apiVersion,
                 conditionToEvaluate: request => request?.Uri?.AbsolutePath?.ToLowerInvariant()?.Contains("openai/v1") != true);
-            PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "Foundry-Features", s_experimentalHeaders);
+            options.AddPolicy(new FoundryFeaturesPolicy(s_experimentalHeaders, endpoint), PipelinePosition.PerCall);
             PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "User-Agent", _telemetryDetails.UserAgent.ToString());
             PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "x-ms-client-request-id", () => Guid.NewGuid().ToString().ToLowerInvariant());
             PipelinePolicyHelpers.OpenAI.AddResponseItemInputTransformPolicy(options);
@@ -276,10 +282,8 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
-        /// Gets the client for working with Voice Agents' realtime endpoints. Call
-        /// <see cref="ProjectsRealtimeClient.StartSessionAsync"/> on it (the same method an OpenAI
-        /// <see cref="RealtimeClient"/> consumer would use) to start and connect a session for a
-        /// named voice agent.
+        /// Gets the client for Realtime voice agents. Call <see cref="ProjectsRealtimeClient.StartSessionAsync"/>
+        /// with an agent name to connect.
         /// </summary>
         [Experimental("AAIP002")]
         public virtual ProjectsRealtimeClient ProjectsRealtimeClient => GetProjectsRealtimeClient();

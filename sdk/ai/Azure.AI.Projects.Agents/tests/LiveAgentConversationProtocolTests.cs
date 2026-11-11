@@ -153,17 +153,41 @@ public class LiveAgentConversationProtocolTests
     }
 
     [Test]
-    public async Task EmptyTerminalPageDoesNotIssueAnotherRequest([Values(false, true)] bool isAsync)
+    public async Task EmptyTerminalPageDoesNotIssueAnotherRequest(
+        [Values(false, true)] bool isAsync,
+        [Values(false, true)] bool raw,
+        [Values(false, true)] bool items)
     {
         (AgentAdministrationClient administration, MockPipelineTransport transport) = CreateClient(isAsync,
             """{"data":[],"last_id":"terminal_cursor","has_more":false}""");
         BetaVoiceAgentsLiveConversations client = administration.GetBetaVoiceAgentEndpointLiveConversations();
-        if (isAsync)
+        if (raw)
         {
-            await foreach (VoiceAgentLiveConversation _ in client.GetLiveAgentConversationsAsync("agent"))
+            List<ClientResult> pages = await ReadPagesAsync(client, isAsync, true, items, new RequestOptions());
+            Assert.That(pages, Has.Count.EqualTo(1));
+            using JsonDocument document = JsonDocument.Parse(pages[0].GetRawResponse().Content);
+            Assert.That(document.RootElement.GetProperty("data").GetArrayLength(), Is.Zero);
+        }
+        else if (isAsync)
+        {
+            if (items)
             {
-                Assert.Fail("An empty page must not produce a value.");
+                await foreach (VoiceAgentLiveConversationItem _ in client.GetLiveAgentConversationItemsAsync("agent", "conversation"))
+                {
+                    Assert.Fail("An empty page must not produce an item.");
+                }
             }
+            else
+            {
+                await foreach (VoiceAgentLiveConversation _ in client.GetLiveAgentConversationsAsync("agent"))
+                {
+                    Assert.Fail("An empty page must not produce a conversation.");
+                }
+            }
+        }
+        else if (items)
+        {
+            Assert.That(client.GetLiveAgentConversationItems("agent", "conversation").ToList(), Is.Empty);
         }
         else
         {
@@ -173,13 +197,113 @@ public class LiveAgentConversationProtocolTests
     }
 
     [Test]
-    public void MissingCursorOnNonterminalPageIsReported()
+    public void InvalidCursorOnNonterminalPageIsReported(
+        [Values(false, true)] bool isAsync,
+        [Values(false, true)] bool raw,
+        [Values(false, true)] bool items,
+        [Values(null, "null", "\"\"")] string cursorJson)
     {
-        (AgentAdministrationClient administration, MockPipelineTransport transport) = CreateClient(false,
-            """{"data":[],"has_more":true}""");
-        Assert.Throws<JsonException>(() => administration.GetBetaVoiceAgentEndpointLiveConversations()
-            .GetLiveAgentConversations("agent").ToList());
+        string cursor = cursorJson == null ? "" : ",\"last_id\":" + cursorJson;
+        (AgentAdministrationClient administration, MockPipelineTransport transport) = CreateClient(isAsync,
+            """{"data":[],"has_more":true""" + cursor + "}");
+        Assert.ThrowsAsync<JsonException>(async () => await ReadPagesAsync(
+            administration.GetBetaVoiceAgentEndpointLiveConversations(), isAsync, raw, items, new RequestOptions()));
         Assert.That(transport.Requests, Has.Count.EqualTo(1));
+    }
+
+    [Test]
+    public async Task OpaqueCursorsAndRequestHeadersSurviveContinuation(
+        [Values(false, true)] bool isAsync,
+        [Values(false, true)] bool raw,
+        [Values(false, true)] bool items)
+    {
+        const string cursor = "cursor/+ ?=&#%";
+        (AgentAdministrationClient administration, MockPipelineTransport transport) = CreateClient(isAsync,
+            Page(items, cursor, true), Page(items, "last", false));
+        RequestOptions options = new();
+        options.SetHeader("x-history-test", "retained");
+        List<ClientResult> pages = await ReadPagesAsync(
+            administration.GetBetaVoiceAgentEndpointLiveConversations(), isAsync, raw, items, options);
+
+        Assert.That(pages, Has.Count.EqualTo(2));
+        Assert.That(transport.Requests, Has.Count.EqualTo(2));
+        Assert.That(Query(transport.Requests[1].Uri, "after"), Is.EqualTo(cursor));
+        foreach (MockPipelineRequest request in transport.Requests)
+        {
+            Assert.Multiple(() =>
+            {
+                Assert.That(request.Uri.Fragment, Is.Empty);
+                Assert.That(Query(request.Uri, "limit"), Is.EqualTo("7"));
+                Assert.That(Query(request.Uri, "order"), Is.EqualTo("asc"));
+                Assert.That(Query(request.Uri, "before"), Is.EqualTo("before"));
+                Assert.That(Query(request.Uri, "api-version"), Is.EqualTo("v1"));
+                Assert.That(request.Headers.TryGetValue("Foundry-Features", out string features), Is.True);
+                Assert.That(features, Does.Contain("VoiceAgents=V1Preview"));
+                if (raw)
+                {
+                    Assert.That(request.Headers.TryGetValue("x-history-test", out string header), Is.True);
+                    Assert.That(header, Is.EqualTo("retained"));
+                }
+            });
+        }
+    }
+
+    [Test]
+    public void ContinuationHttpErrorsPropagate(
+        [Values(false, true)] bool isAsync,
+        [Values(false, true)] bool raw,
+        [Values(false, true)] bool items,
+        [Values(404, 412)] int status)
+    {
+        (AgentAdministrationClient administration, MockPipelineTransport transport) = CreateClient(isAsync,
+            new MockPipelineResponse(200).WithContent(Page(items, "first", true)),
+            new MockPipelineResponse(status).WithContent("""{"error":{"code":"HistoryUnavailable","message":"The stored history is unavailable."}}"""));
+        ClientResultException exception = Assert.ThrowsAsync<ClientResultException>(async () => await ReadPagesAsync(
+            administration.GetBetaVoiceAgentEndpointLiveConversations(), isAsync, raw, items, new RequestOptions()));
+
+        Assert.That(exception.Status, Is.EqualTo(status));
+        Assert.That(exception.Message, Does.Contain("The stored history is unavailable."));
+        Assert.That(transport.Requests, Has.Count.EqualTo(2));
+    }
+
+    [Test]
+    public async Task ProtocolNoThrowPreservesContinuationErrorResponse(
+        [Values(false, true)] bool isAsync,
+        [Values(false, true)] bool items)
+    {
+        const string error = """{"error":{"code":"NotFound","message":"The stored history was deleted."}}""";
+        (AgentAdministrationClient administration, MockPipelineTransport transport) = CreateClient(isAsync,
+            new MockPipelineResponse(200).WithContent(Page(items, "first", true)),
+            new MockPipelineResponse(404).WithContent(error));
+        List<ClientResult> pages = await ReadPagesAsync(
+            administration.GetBetaVoiceAgentEndpointLiveConversations(), isAsync, true, items,
+            new RequestOptions { ErrorOptions = ClientErrorBehaviors.NoThrow });
+
+        Assert.That(pages, Has.Count.EqualTo(2));
+        Assert.That(pages[1].GetRawResponse().Status, Is.EqualTo(404));
+        Assert.That(pages[1].GetRawResponse().Content.ToString(), Is.EqualTo(error));
+        Assert.That(transport.Requests, Has.Count.EqualTo(2));
+    }
+
+    [Test]
+    public void CancellationBetweenPagesIsObserved(
+        [Values(false, true)] bool isAsync,
+        [Values(false, true)] bool raw,
+        [Values(false, true)] bool items)
+    {
+        (AgentAdministrationClient administration, MockPipelineTransport transport) = CreateClient(isAsync,
+            Page(items, "first", true), Page(items, "last", false));
+        using CancellationTokenSource cancellation = new();
+        transport.OnSendingRequest = message => message.CancellationToken.ThrowIfCancellationRequested();
+        int pagesReceived = 0;
+        Assert.CatchAsync<OperationCanceledException>(async () => await ReadPagesAsync(
+            administration.GetBetaVoiceAgentEndpointLiveConversations(), isAsync, raw, items,
+            new RequestOptions { CancellationToken = cancellation.Token }, _ =>
+            {
+                pagesReceived++;
+                cancellation.Cancel();
+            }));
+        Assert.That(pagesReceived, Is.EqualTo(1), "Cancellation must prevent delivery of the second page.");
     }
 
     [TestCase("conversation", "GET", "/conversation", false)]
@@ -198,35 +322,10 @@ public class LiveAgentConversationProtocolTests
     [TestCase("audio-content", "GET", "/conversation/audio/content", true)]
     public async Task LiveRestResourcesUseDedicatedRoutes(string operation, string method, string suffix, bool isAsync)
     {
-        (AgentAdministrationClient administration, MockPipelineTransport transport) = CreateClient(isAsync, "{}");
+        (AgentAdministrationClient administration, MockPipelineTransport transport) = CreateClient(isAsync,
+            new MockPipelineResponse(operation == "delete" ? 204 : 200).WithContent("{}"));
         BetaVoiceAgentsLiveConversations client = administration.GetBetaVoiceAgentEndpointLiveConversations();
-        RequestOptions options = new();
-        if (isAsync)
-        {
-            await (operation switch
-            {
-                "conversation" => client.GetLiveAgentConversationAsync("agent", "conversation", options),
-                "delete" => client.DeleteLiveAgentConversationAsync("agent", "conversation", options),
-                "item" => client.GetLiveAgentConversationItemAsync("agent", "conversation", "item", options),
-                "item-audio" => client.GetLiveAgentConversationAudioItemAsync("agent", "conversation", "item", options),
-                "item-audio-content" => client.GetLiveAgentConversationAudioItemContentAsync("agent", "conversation", "item", options),
-                "audio" => client.GetLiveAgentConversationAudioAsync("agent", "conversation", options),
-                _ => client.GetLiveAgentConversationAudioContentAsync("agent", "conversation", options)
-            });
-        }
-        else
-        {
-            _ = operation switch
-            {
-                "conversation" => client.GetLiveAgentConversation("agent", "conversation", options),
-                "delete" => client.DeleteLiveAgentConversation("agent", "conversation", options),
-                "item" => client.GetLiveAgentConversationItem("agent", "conversation", "item", options),
-                "item-audio" => client.GetLiveAgentConversationAudioItem("agent", "conversation", "item", options),
-                "item-audio-content" => client.GetLiveAgentConversationAudioItemContent("agent", "conversation", "item", options),
-                "audio" => client.GetLiveAgentConversationAudio("agent", "conversation", options),
-                _ => client.GetLiveAgentConversationAudioContent("agent", "conversation", options)
-            };
-        }
+        await ReadResourceAsync(client, operation, isAsync, true, new RequestOptions());
 
         Assert.That(transport.Requests, Has.Count.EqualTo(1));
         MockPipelineRequest request = transport.Requests[0];
@@ -240,6 +339,115 @@ public class LiveAgentConversationProtocolTests
         });
     }
 
+    private static IEnumerable<TestCaseData> ResourceErrorCases()
+    {
+        foreach (string operation in new[] { "conversation", "delete", "item", "item-audio", "item-audio-content", "audio", "audio-content" })
+        {
+            foreach (bool isAsync in new[] { false, true })
+            {
+                yield return new TestCaseData(operation, isAsync, false, false);
+                yield return new TestCaseData(operation, isAsync, true, false);
+                yield return new TestCaseData(operation, isAsync, true, true);
+            }
+        }
+    }
+
+    [TestCaseSource(nameof(ResourceErrorCases))]
+    public async Task MissingResourcesThrowOrPreserveTheProtocolError(string operation, bool isAsync, bool raw, bool noThrow)
+    {
+        const string error = """{"error":{"code":"NotFound","message":"The stored resource does not exist."}}""";
+        (AgentAdministrationClient administration, MockPipelineTransport transport) = CreateClient(isAsync,
+            new MockPipelineResponse(404).WithContent(error));
+        BetaVoiceAgentsLiveConversations client = administration.GetBetaVoiceAgentEndpointLiveConversations();
+        RequestOptions options = new() { ErrorOptions = noThrow ? ClientErrorBehaviors.NoThrow : ClientErrorBehaviors.Default };
+        if (noThrow)
+        {
+            ClientResult result = await ReadResourceAsync(client, operation, isAsync, raw, options);
+            Assert.That(result.GetRawResponse().Status, Is.EqualTo(404));
+            Assert.That(result.GetRawResponse().Content.ToString(), Is.EqualTo(error));
+        }
+        else
+        {
+            ClientResultException exception = Assert.ThrowsAsync<ClientResultException>(async () =>
+                await ReadResourceAsync(client, operation, isAsync, raw, options));
+            Assert.That(exception.Status, Is.EqualTo(404));
+            Assert.That(exception.Message, Does.Contain("The stored resource does not exist."));
+        }
+        Assert.That(transport.Requests, Has.Count.EqualTo(1));
+    }
+
+    [Test]
+    public void AudioDownloadHonorsCancellation(
+        [Values(false, true)] bool isAsync,
+        [Values(false, true)] bool raw)
+    {
+        (AgentAdministrationClient administration, MockPipelineTransport transport) = CreateClient(isAsync, "{}");
+        transport.OnSendingRequest = message => message.CancellationToken.ThrowIfCancellationRequested();
+        using CancellationTokenSource cancellation = new();
+        cancellation.Cancel();
+        Assert.CatchAsync<OperationCanceledException>(async () => await ReadResourceAsync(
+            administration.GetBetaVoiceAgentEndpointLiveConversations(), "audio-content", isAsync, raw,
+            new RequestOptions { CancellationToken = cancellation.Token }));
+        Assert.That(transport.Requests, Is.Empty);
+    }
+
+    [Test]
+    public void ResourceMethodsRejectInvalidConversationIdsLocally(
+        [Values(false, true)] bool isAsync,
+        [Values(false, true)] bool raw,
+        [Values(null, "")] string conversationId)
+    {
+        (AgentAdministrationClient administration, MockPipelineTransport transport) = CreateClient(isAsync, "{}");
+        ArgumentException exception = Assert.CatchAsync<ArgumentException>(async () => await ReadResourceAsync(
+            administration.GetBetaVoiceAgentEndpointLiveConversations(), "conversation", isAsync, raw,
+            new RequestOptions(), conversationId));
+        Assert.That(exception, Is.TypeOf(conversationId == null ? typeof(ArgumentNullException) : typeof(ArgumentException)));
+        Assert.That(exception.ParamName, Is.EqualTo("conversationId"));
+        Assert.That(transport.Requests, Is.Empty);
+    }
+
+    private static async Task<ClientResult> ReadResourceAsync(
+        BetaVoiceAgentsLiveConversations client, string operation, bool isAsync, bool raw, RequestOptions options, string conversationId = "conversation")
+    {
+        if (!raw)
+        {
+            return operation switch
+            {
+                "conversation" => isAsync ? await client.GetLiveAgentConversationAsync("agent", conversationId, options.CancellationToken) : client.GetLiveAgentConversation("agent", conversationId, options.CancellationToken),
+                "delete" => isAsync ? await client.DeleteLiveAgentConversationAsync("agent", conversationId, options.CancellationToken) : client.DeleteLiveAgentConversation("agent", conversationId, options.CancellationToken),
+                "item" => isAsync ? await client.GetLiveAgentConversationItemAsync("agent", conversationId, "item", options.CancellationToken) : client.GetLiveAgentConversationItem("agent", conversationId, "item", options.CancellationToken),
+                "item-audio" => isAsync ? await client.GetLiveAgentConversationAudioItemAsync("agent", conversationId, "item", options.CancellationToken) : client.GetLiveAgentConversationAudioItem("agent", conversationId, "item", options.CancellationToken),
+                "item-audio-content" => isAsync ? await client.GetLiveAgentConversationAudioItemContentAsync("agent", conversationId, "item", options.CancellationToken) : client.GetLiveAgentConversationAudioItemContent("agent", conversationId, "item", options.CancellationToken),
+                "audio" => isAsync ? await client.GetLiveAgentConversationAudioAsync("agent", conversationId, options.CancellationToken) : client.GetLiveAgentConversationAudio("agent", conversationId, options.CancellationToken),
+                "audio-content" => isAsync ? await client.GetLiveAgentConversationAudioContentAsync("agent", conversationId, options.CancellationToken) : client.GetLiveAgentConversationAudioContent("agent", conversationId, options.CancellationToken),
+                _ => throw new ArgumentOutOfRangeException(nameof(operation))
+            };
+        }
+        return isAsync
+            ? await (operation switch
+            {
+                "conversation" => client.GetLiveAgentConversationAsync("agent", conversationId, options),
+                "delete" => client.DeleteLiveAgentConversationAsync("agent", conversationId, options),
+                "item" => client.GetLiveAgentConversationItemAsync("agent", conversationId, "item", options),
+                "item-audio" => client.GetLiveAgentConversationAudioItemAsync("agent", conversationId, "item", options),
+                "item-audio-content" => client.GetLiveAgentConversationAudioItemContentAsync("agent", conversationId, "item", options),
+                "audio" => client.GetLiveAgentConversationAudioAsync("agent", conversationId, options),
+                "audio-content" => client.GetLiveAgentConversationAudioContentAsync("agent", conversationId, options),
+                _ => throw new ArgumentOutOfRangeException(nameof(operation))
+            })
+            : operation switch
+            {
+                "conversation" => client.GetLiveAgentConversation("agent", conversationId, options),
+                "delete" => client.DeleteLiveAgentConversation("agent", conversationId, options),
+                "item" => client.GetLiveAgentConversationItem("agent", conversationId, "item", options),
+                "item-audio" => client.GetLiveAgentConversationAudioItem("agent", conversationId, "item", options),
+                "item-audio-content" => client.GetLiveAgentConversationAudioItemContent("agent", conversationId, "item", options),
+                "audio" => client.GetLiveAgentConversationAudio("agent", conversationId, options),
+                "audio-content" => client.GetLiveAgentConversationAudioContent("agent", conversationId, options),
+                _ => throw new ArgumentOutOfRangeException(nameof(operation))
+            };
+    }
+
     private static string Page(bool items, string id, bool hasMore)
     {
         string data = items
@@ -248,14 +456,59 @@ public class LiveAgentConversationProtocolTests
         return $$"""{"data":[{{data}}],"first_id":"{{id}}","last_id":"{{id}}","has_more":{{hasMore.ToString().ToLowerInvariant()}}}""";
     }
 
+    private static async Task<List<ClientResult>> ReadPagesAsync(
+        BetaVoiceAgentsLiveConversations client, bool isAsync, bool raw, bool items, RequestOptions options, Action<ClientResult> onPage = null)
+    {
+        List<ClientResult> pages = [];
+        if (isAsync)
+        {
+            AsyncCollectionResult collection = items
+                ? raw
+                    ? client.GetLiveAgentConversationItemsAsync("agent", "conversation", 7, "asc", "initial", "before", options)
+                    : client.GetLiveAgentConversationItemsAsync("agent", "conversation", 7, AgentListOrder.Ascending, "initial", "before", options.CancellationToken)
+                : raw
+                    ? client.GetLiveAgentConversationsAsync("agent", 7, "asc", "initial", "before", options)
+                    : client.GetLiveAgentConversationsAsync("agent", 7, AgentListOrder.Ascending, "initial", "before", options.CancellationToken);
+            await foreach (ClientResult page in collection.GetRawPagesAsync())
+            {
+                pages.Add(page);
+                onPage?.Invoke(page);
+            }
+        }
+        else
+        {
+            CollectionResult collection = items
+                ? raw
+                    ? client.GetLiveAgentConversationItems("agent", "conversation", 7, "asc", "initial", "before", options)
+                    : client.GetLiveAgentConversationItems("agent", "conversation", 7, AgentListOrder.Ascending, "initial", "before", options.CancellationToken)
+                : raw
+                    ? client.GetLiveAgentConversations("agent", 7, "asc", "initial", "before", options)
+                    : client.GetLiveAgentConversations("agent", 7, AgentListOrder.Ascending, "initial", "before", options.CancellationToken);
+            foreach (ClientResult page in collection.GetRawPages())
+            {
+                pages.Add(page);
+                onPage?.Invoke(page);
+            }
+        }
+        return pages;
+    }
+
+    private static string Query(Uri uri, string name)
+        => uri.Query.TrimStart('?').Split('&').Select(value => value.Split(new[] { '=' }, 2))
+            .Where(value => value.Length == 2 && Uri.UnescapeDataString(value[0]) == name)
+            .Select(value => Uri.UnescapeDataString(value[1])).SingleOrDefault();
+
     private static (AgentAdministrationClient Client, MockPipelineTransport Transport) CreateClient(bool isAsync, params string[] responses)
+        => CreateClient(isAsync, responses.Select(response => new MockPipelineResponse(200).WithContent(response)).ToArray());
+
+    private static (AgentAdministrationClient Client, MockPipelineTransport Transport) CreateClient(bool isAsync, params MockPipelineResponse[] responses)
     {
         int index = 0;
         MockPipelineTransport transport = new(request =>
         {
             int responseIndex = Interlocked.Increment(ref index) - 1;
             Assert.That(responseIndex, Is.LessThan(responses.Length), "The client requested a page after has_more=false.");
-            return new MockPipelineResponse(request.Request.Method == "DELETE" ? 204 : 200).WithContent(responses[responseIndex]);
+            return responses[responseIndex];
         })
         {
             ExpectSyncPipeline = !isAsync

@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Removed the unrelated Voice Agents preview flag from default OpenAI-compatible requests.
+
 ### Other Changes
 
 - No user-facing API changes.

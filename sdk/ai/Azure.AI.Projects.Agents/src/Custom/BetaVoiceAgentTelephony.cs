@@ -163,6 +163,9 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult<TelephonyBinding> GetTelephonyBinding(string agentName, string bindingId, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(bindingId, nameof(bindingId));
+
         return GetTelephonyBinding(
             agentName: agentName,
             bindingId: bindingId,
@@ -180,6 +183,9 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult<TelephonyBinding>> GetTelephonyBindingAsync(string agentName, string bindingId, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(bindingId, nameof(bindingId));
+
         return await GetTelephonyBindingAsync(
             agentName: agentName,
             bindingId: bindingId,
@@ -387,6 +393,9 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult<TelephonyCallRecord> GetTelephonyCall(string agentName, string callId, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(callId, nameof(callId));
+
         return GetTelephonyCall(
             agentName: agentName,
             callId: callId,
@@ -404,6 +413,9 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult<TelephonyCallRecord>> GetTelephonyCallAsync(string agentName, string callId, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(callId, nameof(callId));
+
         return await GetTelephonyCallAsync(
             agentName: agentName,
             callId: callId,
@@ -492,6 +504,8 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult<TelephonyTransferTargets> GetTelephonyTransferTargets(string agentName, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
         return GetTelephonyTransferTargets(
             agentName: agentName,
             foundryFeatures: default,
@@ -507,6 +521,8 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult<TelephonyTransferTargets>> GetTelephonyTransferTargetsAsync(string agentName, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+
         return await GetTelephonyTransferTargetsAsync(
             agentName: agentName,
             foundryFeatures: default,
@@ -599,6 +615,9 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult<TelephonyCallJob> GetTelephonyCallJob(string agentName, string callJobId, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(callJobId, nameof(callJobId));
+
         return GetTelephonyCallJob(
             agentName: agentName,
             callJobId: callJobId,
@@ -616,6 +635,9 @@ public partial class BetaVoiceAgentsTelephony
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult<TelephonyCallJob>> GetTelephonyCallJobAsync(string agentName, string callJobId, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+        Argument.AssertNotNullOrEmpty(callJobId, nameof(callJobId));
+
         return await GetTelephonyCallJobAsync(
             agentName: agentName,
             callJobId: callJobId,

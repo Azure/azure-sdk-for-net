@@ -11,6 +11,8 @@ namespace Azure.AI.Extensions.OpenAI.Tests;
 
 public class ProjectsTestSanitizerTests
 {
+    private const string LegacyDefaultsPrefix = "MemoryStores=V1Preview,WorkflowAgents=V1Preview,";
+
     [TestCase(RecordedTestMode.Playback, 1)]
     [TestCase(RecordedTestMode.Record, 0)]
     [TestCase(RecordedTestMode.Live, 0)]
@@ -18,7 +20,9 @@ public class ProjectsTestSanitizerTests
     {
         SanitizerFixture fixture = new(mode);
         ProjectsTestSanitizers.ApplySanitizers(fixture);
-        var sanitizers = fixture.HeaderRegexSanitizers.Where(sanitizer => sanitizer.Body.Key == "Foundry-Features").ToList();
+        var sanitizers = fixture.HeaderRegexSanitizers.Where(sanitizer =>
+            sanitizer.Body.Key == "Foundry-Features" &&
+            sanitizer.Body.Regex == ProjectsTestSanitizers.LegacyAgentInsightsFeaturePattern).ToList();
 
         Assert.That(sanitizers, Has.Count.EqualTo(expectedCount));
         if (expectedCount > 0)
@@ -36,6 +40,45 @@ public class ProjectsTestSanitizerTests
     [TestCase("OtherAgentInsights=V1Preview,AgentInsights=V1PreviewExtra", "OtherAgentInsights=V1Preview,AgentInsights=V1PreviewExtra")]
     public void NormalizationPreservesEveryOtherFeature(string value, string expected)
         => Assert.That(Regex.Replace(value, ProjectsTestSanitizers.LegacyAgentInsightsFeaturePattern, ""), Is.EqualTo(expected));
+
+    [TestCase(RecordedTestMode.Playback, 1)]
+    [TestCase(RecordedTestMode.Record, 0)]
+    [TestCase(RecordedTestMode.Live, 0)]
+    public void LegacyDefaultVoiceFeatureNormalizationIsPlaybackOnly(RecordedTestMode mode, int expectedCount)
+    {
+        SanitizerFixture fixture = new(mode);
+        ProjectsTestSanitizers.ApplySanitizers(fixture);
+        var sanitizers = fixture.HeaderRegexSanitizers.Where(sanitizer =>
+            sanitizer.Body.Key == "Foundry-Features" &&
+            sanitizer.Body.Regex == ProjectsTestSanitizers.LegacyDefaultVoiceAgentFeaturePattern).ToList();
+
+        Assert.That(sanitizers, Has.Count.EqualTo(expectedCount));
+        Assert.That(fixture.IgnoredHeaders, Does.Not.Contain("Foundry-Features"));
+        if (expectedCount > 0)
+        {
+            Assert.That(sanitizers[0].Body.Value, Is.EqualTo(ProjectsTestSanitizers.LegacyDefaultVoiceAgentFeatureReplacement));
+        }
+    }
+
+    [TestCase(LegacyDefaultsPrefix + "DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview",
+        LegacyDefaultsPrefix + "DraftAgents=V1Preview,ModelRouterControls=V1Preview")]
+    [TestCase(LegacyDefaultsPrefix + "Routines=V2Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview,GitHubCopilot=V1Preview",
+        LegacyDefaultsPrefix + "Routines=V2Preview,DraftAgents=V1Preview,ModelRouterControls=V1Preview,GitHubCopilot=V1Preview")]
+    [TestCase("VoiceAgents=V1Preview", "VoiceAgents=V1Preview")]
+    [TestCase("DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview",
+        "DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview")]
+    [TestCase(LegacyDefaultsPrefix + "DraftAgents=V1Preview,ModelRouterControls=V1Preview,VoiceAgents=V1Preview",
+        LegacyDefaultsPrefix + "DraftAgents=V1Preview,ModelRouterControls=V1Preview,VoiceAgents=V1Preview")]
+    [TestCase(LegacyDefaultsPrefix + "DraftAgents=V1Preview,VoiceAgents=V2Preview,ModelRouterControls=V1Preview",
+        LegacyDefaultsPrefix + "DraftAgents=V1Preview,VoiceAgents=V2Preview,ModelRouterControls=V1Preview")]
+    public void LegacyDefaultVoiceNormalizationPreservesOtherFlagsAndExplicitOptIns(string value, string expected)
+    {
+        string normalized = Regex.Replace(value, ProjectsTestSanitizers.LegacyDefaultVoiceAgentFeaturePattern,
+            ProjectsTestSanitizers.LegacyDefaultVoiceAgentFeatureReplacement);
+        Assert.That(normalized, Is.EqualTo(expected));
+        Assert.That(Regex.Replace(normalized, ProjectsTestSanitizers.LegacyDefaultVoiceAgentFeaturePattern,
+            ProjectsTestSanitizers.LegacyDefaultVoiceAgentFeatureReplacement), Is.EqualTo(expected));
+    }
 
     private sealed class SanitizerFixture : RecordedTestBase<ProjectsOpenAITestEnvironment>
     {

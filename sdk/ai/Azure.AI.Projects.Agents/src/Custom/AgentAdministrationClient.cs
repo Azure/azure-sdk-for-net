@@ -54,6 +54,7 @@ namespace Azure.AI.Projects.Agents;
 [CodeGenSuppress("DeleteSessionAsync", typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetSessionLogStream", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
 [CodeGenSuppress("GetSessionLogStreamAsync", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+[CodeGenSuppress("AgentAdministrationClient", typeof(AuthenticationPolicy), typeof(Uri), typeof(AgentAdministrationClientOptions))]
 public partial class AgentAdministrationClient
 {
     private AgentToolboxes _cachedAgentsToolboxes;
@@ -90,7 +91,7 @@ public partial class AgentAdministrationClient
         Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] {
             new UserAgentPolicy(typeof(InternalProjectsClient).Assembly),
             new BearerTokenPolicy(tokenProvider, _flows),
-            new FoundryFeaturesPolicy("MemoryStores=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview,DigitalWorker=V1Preview,GitHubCopilot=V1Preview,FineTuningSessions=V1Preview,MicrosoftCopilot=V1Preview"),
+            new FoundryFeaturesPolicy("MemoryStores=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,ModelRouterControls=V1Preview,DigitalWorker=V1Preview,GitHubCopilot=V1Preview,FineTuningSessions=V1Preview,MicrosoftCopilot=V1Preview", endpoint),
         }, Array.Empty<PipelinePolicy>());
         _apiVersion = options.Version;
         ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -107,8 +108,24 @@ public partial class AgentAdministrationClient
         options ??= new AgentAdministrationClientOptions();
 
         _endpoint = endpoint;
-        Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] { new UserAgentPolicy(typeof(AgentAdministrationClient).Assembly) }, Array.Empty<PipelinePolicy>());
+        Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] {
+            new UserAgentPolicy(typeof(AgentAdministrationClient).Assembly),
+            new FoundryFeaturesPolicy(null, endpoint)
+        }, Array.Empty<PipelinePolicy>());
         _apiVersion = options.Version;
+        ClientDiagnostics = new ClientDiagnostics(options, true);
+    }
+
+    internal AgentAdministrationClient(AuthenticationPolicy authenticationPolicy, Uri endpoint, AgentAdministrationClientOptions options)
+    {
+        Argument.AssertNotNull(endpoint, nameof(endpoint));
+        options ??= new AgentAdministrationClientOptions();
+        _endpoint = endpoint;
+        _apiVersion = options.Version;
+        PipelinePolicy[] policies = authenticationPolicy is null
+            ? [new UserAgentPolicy(typeof(AgentAdministrationClient).Assembly), new FoundryFeaturesPolicy(null, endpoint)]
+            : [new UserAgentPolicy(typeof(AgentAdministrationClient).Assembly), authenticationPolicy, new FoundryFeaturesPolicy(null, endpoint)];
+        Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), policies, Array.Empty<PipelinePolicy>());
         ClientDiagnostics = new ClientDiagnostics(options, true);
     }
 
@@ -1151,6 +1168,8 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult<ProjectsAgentRecord> GenerateAgent(GenerateVoiceAgentRequest body, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNull(body, nameof(body));
+
         return GenerateAgent(
             body: ModelReaderWriter.Write(body, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default),
             cancellationToken: cancellationToken
@@ -1167,6 +1186,8 @@ public partial class AgentAdministrationClient
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult<ProjectsAgentRecord>> GenerateAgentAsync(GenerateVoiceAgentRequest body, CancellationToken cancellationToken = default)
     {
+        Argument.AssertNotNull(body, nameof(body));
+
         return await GenerateAgentAsync(
             body: ModelReaderWriter.Write(body, ModelReaderWriterOptions.Json, AzureAIProjectsAgentsContext.Default),
             cancellationToken: cancellationToken

@@ -1,26 +1,22 @@
 # Trace Voice Agent REST operations
 
-This runnable sample uses the existing Foundry GenAI tracing setting and an OpenTelemetry console
-exporter for Voice Agent REST operations. It creates and retrieves an agent version, creates a new
-version with updated instructions, and deletes the temporary agent.
+Trace Voice Agent REST operations with OpenTelemetry and print the traces to the console.
+The example creates and reads an agent version, creates a new version with updated instructions,
+and deletes the temporary agent.
 
 ## Prerequisites
 
-- Set `FOUNDRY_PROJECT_ENDPOINT` to your Foundry project endpoint.
-- Set `FOUNDRY_REALTIME_MODEL_NAME` to a realtime-capable model deployment.
-- Authenticate an identity with access to the project, such as `az login` for local development.
-- Reference `Azure.AI.Projects`, `Azure.Identity`, and `OpenTelemetry.Exporter.Console`.
+- Follow the [Realtime prerequisites and authentication guidance](Sample_VoiceAgent.md#prerequisites).
+- Also reference `OpenTelemetry.Exporter.Console`.
 
-Use the namespaces `System`, `System.ClientModel`, `System.Diagnostics`, `Azure.AI.Projects`,
-`Azure.AI.Projects.Agents`, `Azure.Identity`, `OpenTelemetry`, `OpenTelemetry.Resources`, and
-`OpenTelemetry.Trace`. Suppress experimental diagnostic `AAIP001`.
+The [complete sample](../tests/Samples/VoiceAgent/Sample_VoiceAgent_Telemetry.cs) includes the
+required imports and setup.
 
 ## Configure tracing
 
-Configure the existing tracing setting and provider before constructing a client. The sample
-disables message-content recording; explicitly configured AppContext switches take precedence
-over the environment variables shown here. The application-owned ActivitySource supplies a
-common parent for the REST calls; it is not an additional SDK configuration option.
+Enable tracing before creating the client. Keep message-content recording disabled to avoid
+exporting instructions. If your application sets the corresponding `AppContext` switches,
+those values take precedence over these environment variables.
 
 ```C# Snippet:Sample_VoiceAgent_Telemetry_Setup
 Environment.SetEnvironmentVariable("AZURE_EXPERIMENTAL_ENABLE_GENAI_TRACING", "true");
@@ -38,8 +34,8 @@ using ActivitySource applicationSource = new(applicationSourceName);
 
 ## Create, retrieve, update, and delete a Voice Agent
 
-Run the following code in an asynchronous method. A unique temporary agent is deleted in the
-cleanup block, including when an operation inside that block fails.
+Run this code in an asynchronous method. Updating instructions creates a new agent version;
+the cleanup block deletes the temporary agent even if an operation fails.
 
 ```C# Snippet:Sample_VoiceAgent_Telemetry_Rest
 string projectEndpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
@@ -92,7 +88,7 @@ tracerProvider.ForceFlush();
 
 ## Inspect correlation and privacy
 
-The GenAI part of the exported trace has this hierarchy:
+The exported GenAI spans share one application trace:
 
 ```text
 voice_agent.sample.rest
@@ -100,25 +96,18 @@ voice_agent.sample.rest
   create_agent
 ```
 
-The first `create_agent` span represents the initial version; the second represents the new
-version with updated instructions. Both use `ActivityKind.Client` and the ActivitySource
-`Azure.AI.Projects.Agents.AgentsClient`. They share the application's trace ID and have the
-application workflow's span ID as their parent span ID.
+The two `create_agent` spans represent the initial and updated versions. They are client spans
+from `Azure.AI.Projects.Agents.AgentsClient` and include the agent kind, name, ID, version, and
+model when available. Reads and deletes keep their normal SDK diagnostics.
 
-Voice Agent creation metadata includes the agent kind, name, ID, version, and model when available.
-These service identifiers are attributes, not replacements for OpenTelemetry trace and span IDs.
-Read and delete operations retain their existing diagnostics rather than gaining new GenAI
-operation names.
+Voice Agent creation traces do not capture request/response bodies, credentials, authentication
+headers, or query strings. If you enable content recording, up to 4096 characters of instructions
+can be exported through `gen_ai.system_instructions`. Instructions may contain sensitive data.
+Other REST calls follow their existing SDK diagnostic settings.
 
-The enriched Voice Agent creation traces do not record HTTP request/response bodies, credentials,
-authentication headers, or query strings. Instruction text is excluded with the sample's existing
-content-recording setting. If content recording is explicitly enabled, up to 4096 characters of
-Voice Agent instructions can be exported through `gen_ai.system_instructions`, following the
-existing Foundry instruction schema and attribute/event configuration.
-Other REST operations retain their existing SDK diagnostic settings and scopes.
+## Run the repository sample
 
-To run the repository sample, set `CLIENTMODEL_TEST_MODE=Live` and the project/model variables,
-then run from the repository root:
+Set `CLIENTMODEL_TEST_MODE=Live`, then run from the repository root:
 
 ```dotnetcli
 dotnet test sdk\ai\Azure.AI.Projects\tests\Azure.AI.Projects.Tests.csproj -f net8.0 --filter "FullyQualifiedName~Sample_VoiceAgent_Telemetry&Name~VoiceAgentRestTelemetryAsync"

@@ -18,6 +18,7 @@
 - Restored the experimental legacy Skills API, including skill-version operations on the `/skills` routes with the preview `api-version` query, plus MCP toolbox request-header bindings.
 
 ### Breaking Changes
+- The preview `ProjectsAgentsModelFactory.VoiceAgentDefinition` overload containing `postCall` now requires all arguments to avoid ambiguous calls to the optional GA overload. For named-argument usage, create the GA definition and then set its preview `PostCall` property. The full positional preview signature is retained.
 - `VoiceAgentTransferRouting.RingTimeoutSeconds` now uses `TimeSpan?` instead of `int?`; JSON continues to use seconds.
 - `AgentOptimizationJob.Status` now uses the shared `AgentsJobStatus`. The `AgentOptimizationJobStatus` type and its named `Skipped` value were removed; existing list filters continue to accept `AgentsJobStatus`.
 - Realtime voice definitions now emit the required `sub_protocol` discriminator with the value `realtime`.
@@ -28,6 +29,8 @@
 - `VoiceRecordingChannelLayout.Left` and `Right` now use the extensible `VoiceAudioRole` type instead of `string`. Their wire values remain `user` and `agent`.
 
 ### Bugs Fixed
+- Removed blanket Voice Agents preview headers from GA generation, conversation/audio reads, and non-SIP telephony. Conditional operations now preserve explicit caller opt-ins; native GPT Live history and telephony campaigns retain their required preview header.
+- Applied consistent Voice Agents header handling to authenticated and settings-based client pipelines without overwriting caller-supplied feature headers.
 - Fixed required-versus-conditional preview metadata handling so GA base types can serialize preview variants without exposing a blanket experimental API. Native GPT Live, inline/handoff, SIP, campaigns, and post-call delivery remain preview; experimental OpenAI dependencies retain member-level `AAIP002` attribution.
 - Fixed Live Decision input and stored-message payloads to expose public patch access and preserve message fields during wire serialization.
 - Fixed typed persisted Realtime response status and output-modality serialization to use the external OpenAI enum values rather than treating them as ModelReaderWriter models.
@@ -37,6 +40,10 @@
 - Preserved the audio-output model factory's existing parameter order when introducing shared voice configuration.
 - Preserved typed deserialization of existing delegate configurations that omit `subagent_type`.
 - Fixed telephony call-history pagination to stop on terminal pages and use the correct cursor when paging backward.
+
+### Sample Updates
+- Updated GA Voice Agent administration to omit preview opt-ins and native GPT Live definition creation to request preview explicitly.
+- Added Voice Agent REST administration, read-only telephony inspection, and campaign inspection samples, including typed address configuration without dispatching calls.
 
 ### Other Changes
 - Regenerated from `foundry/snap-20261109` at [`3a17de2b4c2b23eec9e2f0985dbe5f6e2f417e0b`](https://github.com/Azure/azure-rest-api-specs/tree/3a17de2b4c2b23eec9e2f0985dbe5f6e2f417e0b), using OpenAI TypeSpec 1.34.1.
