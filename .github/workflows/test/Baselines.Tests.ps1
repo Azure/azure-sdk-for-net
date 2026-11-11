@@ -120,6 +120,23 @@ Describe 'Captured central ApiCompat baselines' {
         Set-ContentResponse Azure $script:head (Xml '<!-- <!DOCTYPE ignored> -->')
         { Get-Inventory (New-Snapshot @(@{filename=$script:path;status='added'})) } | Should -Throw '*DTD*'
     }
+    It 'rejects a near-declaration namespace on <Location>' -ForEach @(
+        @{ Location='suppression'; AttributeOnSuppression=$true; ExpectedError='*Unexpected baseline element*' },
+        @{ Location='field'; AttributeOnSuppression=$false; ExpectedError='*Unsupported suppression field*' }
+    ) {
+        $namespace = 'http://www.w3.org/2000/xmlns/' + [char]0x00ad
+        $attribute = ' ext:unexpected="value"'
+        $suppressionAttribute = if ($AttributeOnSuppression) { $attribute } else { '' }
+        $fieldAttribute = if ($AttributeOnSuppression) { '' } else { $attribute }
+        $content = "<Suppressions xmlns:ext=`"$namespace`"><Suppression$suppressionAttribute><DiagnosticId>CP0001</DiagnosticId><Target$fieldAttribute>T:One</Target></Suppression></Suppressions>"
+        { Get-BaselineEntries $content } | Should -Throw $ExpectedError
+    }
+    It 'accepts actual namespace declarations on suppressions and fields' {
+        $content = Xml '<Suppression xmlns:ext="urn:test"><DiagnosticId>CP0001</DiagnosticId><Target xmlns:other="urn:other">T:One</Target></Suppression>'
+        $entries = Get-BaselineEntries $content
+        $entries.Count | Should -Be 1
+        $entries[0].Fields['Target'] | Should -BeExactly 'T:One'
+    }
     It 'does not confuse XML fields with PowerShell DOM properties' {
         $content = Xml '<Suppression><NodeType>Comment</NodeType><Value>ignored</Value><Name>x</Name><Attributes>y</Attributes><ChildNodes>z</ChildNodes><DiagnosticId>CP0001</DiagnosticId><Target>T:One</Target></Suppression>'
         Set-ContentResponse Azure $script:head $content

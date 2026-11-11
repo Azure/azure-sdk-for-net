@@ -48,14 +48,14 @@ function Get-BaselineEntries {
         if ($node.psbase.NodeType -ne [System.Xml.XmlNodeType]::Element) { continue }
         if ($node.psbase.Name -cne 'Suppression' -or $node.psbase.NamespaceURI) { throw 'Unexpected baseline element' }
         foreach ($attribute in $node.psbase.Attributes) {
-            if ($attribute.psbase.NamespaceURI -cne 'http://www.w3.org/2000/xmlns/') { throw 'Unexpected baseline element' }
+            if (-not [StringComparer]::Ordinal.Equals($attribute.psbase.NamespaceURI, 'http://www.w3.org/2000/xmlns/')) { throw 'Unexpected baseline element' }
         }
         $fields = [System.Collections.Generic.SortedDictionary[string, string]]::new([StringComparer]::Ordinal)
         foreach ($field in $node.psbase.ChildNodes) {
             if ($field.psbase.NodeType -eq [System.Xml.XmlNodeType]::Comment) { throw 'Unsupported suppression field' }
             if ($field.psbase.NodeType -ne [System.Xml.XmlNodeType]::Element) { continue }
             foreach ($attribute in $field.psbase.Attributes) {
-                if ($attribute.psbase.NamespaceURI -cne 'http://www.w3.org/2000/xmlns/') { throw 'Unsupported suppression field' }
+                if (-not [StringComparer]::Ordinal.Equals($attribute.psbase.NamespaceURI, 'http://www.w3.org/2000/xmlns/')) { throw 'Unsupported suppression field' }
             }
             foreach ($child in $field.psbase.ChildNodes) {
                 if ($child.psbase.NodeType -eq [System.Xml.XmlNodeType]::Element -or $child.psbase.NodeType -eq [System.Xml.XmlNodeType]::Comment) { throw 'Unsupported suppression field' }
