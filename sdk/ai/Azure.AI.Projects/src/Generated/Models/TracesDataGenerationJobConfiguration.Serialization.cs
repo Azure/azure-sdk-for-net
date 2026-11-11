@@ -81,6 +81,11 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("redact_private_content"u8);
                 writer.WriteBooleanValue(RedactPrivateContent.Value);
             }
+            if (Optional.IsDefined(GenerateTestCaseRubric))
+            {
+                writer.WritePropertyName("generate_test_case_rubric"u8);
+                writer.WriteBooleanValue(GenerateTestCaseRubric.Value);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -114,6 +119,7 @@ namespace Azure.AI.Projects
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int? maxSamples = default;
             bool? redactPrivateContent = default;
+            bool? generateTestCaseRubric = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -157,6 +163,15 @@ namespace Azure.AI.Projects
                     redactPrivateContent = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("generate_test_case_rubric"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    generateTestCaseRubric = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -168,7 +183,8 @@ namespace Azure.AI.Projects
                 modelOptions,
                 additionalBinaryDataProperties,
                 maxSamples,
-                redactPrivateContent);
+                redactPrivateContent,
+                generateTestCaseRubric);
         }
     }
 }

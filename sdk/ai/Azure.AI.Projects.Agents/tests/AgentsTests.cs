@@ -1016,12 +1016,12 @@ public class AgentsTests : AgentsTestBase
         Assert.That(submittedJob1.Id, Is.EqualTo(prevID));
         // Get
         submittedJob1 = await jobsClient.GetAsync(submittedJob1.Id, cancellationToken: default);
-        while (submittedJob1.Status != AgentsJobStatus.Failed && submittedJob1.Status != AgentsJobStatus.Succeeded && submittedJob1.Status != AgentsJobStatus.Cancelled)
+        while (submittedJob1.Status != AgentOptimizationJobStatus.Failed && submittedJob1.Status != AgentOptimizationJobStatus.Succeeded && submittedJob1.Status != AgentOptimizationJobStatus.Cancelled)
         {
             await Delay();
             submittedJob1 = await jobsClient.GetAsync(submittedJob1.Id, cancellationToken: default);
         }
-        Assert.That(submittedJob1.Status, Is.EqualTo(AgentsJobStatus.Succeeded), submittedJob1.Error?.Message);
+        Assert.That(submittedJob1.Status, Is.EqualTo(AgentOptimizationJobStatus.Succeeded), submittedJob1.Error?.Message);
         List<AgentOptimizationCandidate> candidates = await candidatesClient.GetCandidatesAsync(jobId: submittedJob1.Id, expand: [AgentOptimizationCandidateExpand.Mutations]).ToListAsync();
         Assert.That(candidates.Count, Is.GreaterThanOrEqualTo(1));
         // Cancel
@@ -1029,19 +1029,19 @@ public class AgentsTests : AgentsTestBase
         AgentOptimizationJob submittedJob2 = (await jobOperation.UpdateStatusAsync()).ToProjectAgentsResult<AgentOptimizationJob>();
         Assert.That(submittedJob2.Id, Is.Not.EqualTo(submittedJob1.Id));
         AgentOptimizationJob cancelledJob = await jobsClient.CancelAsync(jobId: submittedJob2.Id, cancellationToken: default);
-        while (cancelledJob.Status != AgentsJobStatus.Failed && cancelledJob.Status != AgentsJobStatus.Succeeded && cancelledJob.Status != AgentsJobStatus.Cancelled)
+        while (cancelledJob.Status != AgentOptimizationJobStatus.Failed && cancelledJob.Status != AgentOptimizationJobStatus.Succeeded && cancelledJob.Status != AgentOptimizationJobStatus.Cancelled)
         {
             await Delay();
             cancelledJob = (await jobOperation.UpdateStatusAsync()).ToProjectAgentsResult<AgentOptimizationJob>();
         }
-        Assert.That(cancelledJob.Status, Is.EqualTo(AgentsJobStatus.Cancelled));
+        Assert.That(cancelledJob.Status, Is.EqualTo(AgentOptimizationJobStatus.Cancelled));
         // List
-        HashSet<string> jobIds = [.. await jobsClient.GetAllAsync().Select(x => x.Id).ToListAsync()];
+        HashSet<string> jobIds = [.. await jobsClient.GetAllAsync(status: (AgentsJobStatus?)null).Select(x => x.Id).ToListAsync()];
         Assert.That(jobIds, Does.Contain(submittedJob1.Id));
         Assert.That(jobIds, Does.Contain(submittedJob2.Id));
         // Delete
         await jobsClient.DeleteAsync(jobId: submittedJob1.Id, cancellationToken: default);
-        jobIds = [.. await jobsClient.GetAllAsync().Select(x => x.Id).ToListAsync()];
+        jobIds = [.. await jobsClient.GetAllAsync(status: (AgentsJobStatus?)null).Select(x => x.Id).ToListAsync()];
         Assert.That(jobIds, Does.Not.Contain(submittedJob1.Id));
         Assert.That(jobIds, Does.Contain(submittedJob2.Id));
     }
@@ -1058,25 +1058,25 @@ public class AgentsTests : AgentsTestBase
             AgentOptimizationJob submittedJob = AgentOptimizationJob.FromClientResult(await jobOperation.UpdateStatusAsync());
             await jobsClient.CancelAsync(jobId: submittedJob.Id, cancellationToken: default);
         }
-        List<AgentOptimizationJob> records = await jobsClient.GetAllAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending, agentName: AGENT_NAME).ToListAsync();
+        List<AgentOptimizationJob> records = await jobsClient.GetAllAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending, agentName: AGENT_NAME, status: (AgentsJobStatus?)null).ToListAsync();
         Assert.That(records.Count, Is.EqualTo(PAGE_SIZE + 1));
         // Go forward.
-        List<AgentOptimizationJob> forward = await jobsClient.GetAllAsync(order: AgentListOrder.Ascending, after: records[0].Id, limit: PAGE_SIZE, agentName: AGENT_NAME).ToListAsync();
+        List<AgentOptimizationJob> forward = await jobsClient.GetAllAsync(order: AgentListOrder.Ascending, after: records[0].Id, limit: PAGE_SIZE, agentName: AGENT_NAME, status: (AgentsJobStatus?)null).ToListAsync();
         Assert.That(forward.Count, Is.EqualTo(records.Count - 1));
         Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         Assert.That(forward[forward.Count - 1].Id, Is.EqualTo(records[records.Count - 1].Id));
         //// Two limits:
-        forward = await jobsClient.GetAllAsync(order: AgentListOrder.Ascending, after: records[0].Id, before: records[3].Id, limit: PAGE_SIZE, agentName: AGENT_NAME).ToListAsync();
+        forward = await jobsClient.GetAllAsync(order: AgentListOrder.Ascending, after: records[0].Id, before: records[3].Id, limit: PAGE_SIZE, agentName: AGENT_NAME, status: (AgentsJobStatus?)null).ToListAsync();
         Assert.That(forward.Count, Is.EqualTo(2));
         Assert.That(forward[0].Id, Is.EqualTo(records[1].Id));
         Assert.That(forward[1].Id, Is.EqualTo(records[2].Id));
         //// Go backwards.
-        List<AgentOptimizationJob> backwards = await jobsClient.GetAllAsync(order: AgentListOrder.Descending, before: records[0].Id, limit: PAGE_SIZE, agentName: AGENT_NAME).ToListAsync();
+        List<AgentOptimizationJob> backwards = await jobsClient.GetAllAsync(order: AgentListOrder.Descending, before: records[0].Id, limit: PAGE_SIZE, agentName: AGENT_NAME, status: (AgentsJobStatus?)null).ToListAsync();
         Assert.That(backwards.Count, Is.EqualTo(records.Count - 1));
         Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 1].Id));
         Assert.That(backwards[backwards.Count - 1].Id, Is.EqualTo(records[1].Id));
         //// Two limits.
-        backwards = await jobsClient.GetAllAsync(order: AgentListOrder.Descending, after: records[records.Count - 1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE, agentName: AGENT_NAME).ToListAsync();
+        backwards = await jobsClient.GetAllAsync(order: AgentListOrder.Descending, after: records[records.Count - 1].Id, before: records[records.Count - 4].Id, limit: PAGE_SIZE, agentName: AGENT_NAME, status: (AgentsJobStatus?)null).ToListAsync();
         Assert.That(backwards.Count, Is.EqualTo(2));
         Assert.That(backwards[0].Id, Is.EqualTo(records[records.Count - 2].Id));
         Assert.That(backwards[1].Id, Is.EqualTo(records[records.Count - 3].Id));

@@ -20,7 +20,7 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Initializes a new instance of EvaluationRulesGetAllAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The EvaluationRules client used to send requests. </param>
-        /// <param name="actionType"> Filter by the type of evaluation rule. </param>
+        /// <param name="actionType"> Filter by action type. When omitted, rules of all action types are returned. </param>
         /// <param name="agentName"> Filter by the agent name. </param>
         /// <param name="enabled"> Filter by the enabled status. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>

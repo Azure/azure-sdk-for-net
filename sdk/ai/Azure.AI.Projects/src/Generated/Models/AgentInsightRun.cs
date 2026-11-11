@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects
 {
     /// <summary> A long-running run that analyzes one agent's traces and updates that agent's insights. </summary>
-    [Experimental("AAIP001")]
     public partial class AgentInsightRun
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -37,7 +35,7 @@ namespace Azure.AI.Projects
         /// <param name="completedOn"> The time when this run reached a terminal status. </param>
         /// <param name="modelDeploymentName"> The model deployment used to analyze traces for this run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentInsightRun(string id, AgentInsightRunCreate inputs, AgentInsightRunResult result, ProjectsJobStatus status, FoundryOpenAIError error, string monitorId, string agentName, AgentInsightRunTrigger trigger, DateTimeOffset createdOn, DateTimeOffset updatedOn, DateTimeOffset windowStart, DateTimeOffset windowEnd, DateTimeOffset? startedOn, DateTimeOffset? completedOn, string modelDeploymentName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentInsightRun(string id, AgentInsightRunInputs inputs, AgentInsightRunResult result, ProjectsJobStatus status, FoundryOpenAIError error, string monitorId, string agentName, AgentInsightRunTrigger trigger, DateTimeOffset createdOn, DateTimeOffset updatedOn, DateTimeOffset windowStart, DateTimeOffset windowEnd, DateTimeOffset? startedOn, DateTimeOffset? completedOn, string modelDeploymentName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Inputs = inputs;
@@ -61,7 +59,7 @@ namespace Azure.AI.Projects
         public string Id { get; }
 
         /// <summary> Caller-supplied inputs. </summary>
-        public AgentInsightRunCreate Inputs { get; }
+        public AgentInsightRunInputs Inputs { get; }
 
         /// <summary> Result produced on success. </summary>
         public AgentInsightRunResult Result { get; }

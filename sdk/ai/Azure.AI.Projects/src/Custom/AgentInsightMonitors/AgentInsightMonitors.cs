@@ -5,7 +5,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Threading;
 using Azure.AI.Projects.Memory;
 
@@ -157,9 +156,9 @@ public partial class AgentInsightMonitors
             before: before,
             limit: limit,
             order: order?.ToString(),
-            category: categories == null ? null : string.Join(",", categories),
-            severity: severities == null ? null : string.Join(",", severities.Select(value => value.ToString())),
-            status: statuses == null ? null : string.Join(",", statuses.Select(value => value.ToString())),
+            categories: categories,
+            severities: severities,
+            statuses: statuses,
             includeDetails: includeDetails,
             options: cancellationToken.ToRequestOptions());
     }
@@ -199,9 +198,9 @@ public partial class AgentInsightMonitors
             before: before,
             limit: limit,
             order: order?.ToString(),
-            category: categories == null ? null : string.Join(",", categories),
-            severity: severities == null ? null : string.Join(",", severities.Select(value => value.ToString())),
-            status: statuses == null ? null : string.Join(",", statuses.Select(value => value.ToString())),
+            categories: categories,
+            severities: severities,
+            statuses: statuses,
             includeDetails: includeDetails,
             options: cancellationToken.ToRequestOptions());
     }

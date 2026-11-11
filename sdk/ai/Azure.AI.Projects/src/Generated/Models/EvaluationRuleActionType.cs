@@ -15,6 +15,10 @@ namespace Azure.AI.Projects
         private const string ContinuousEvaluationValue = "continuousEvaluation";
         /// <summary> Human evaluation preview. </summary>
         private const string HumanEvaluationPreviewValue = "humanEvaluationPreview";
+        /// <summary> Evaluate agent traces on the rule's schedule. </summary>
+        private const string TraceEvaluationValue = "traceEvaluation";
+        /// <summary> Evaluate dataset inputs on the rule's schedule. </summary>
+        private const string DatasetEvaluationValue = "datasetEvaluation";
 
         /// <summary> Initializes a new instance of <see cref="EvaluationRuleActionType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -31,6 +35,12 @@ namespace Azure.AI.Projects
 
         /// <summary> Human evaluation preview. </summary>
         public static EvaluationRuleActionType HumanEvaluationPreview { get; } = new EvaluationRuleActionType(HumanEvaluationPreviewValue);
+
+        /// <summary> Evaluate agent traces on the rule's schedule. </summary>
+        public static EvaluationRuleActionType TraceEvaluation { get; } = new EvaluationRuleActionType(TraceEvaluationValue);
+
+        /// <summary> Evaluate dataset inputs on the rule's schedule. </summary>
+        public static EvaluationRuleActionType DatasetEvaluation { get; } = new EvaluationRuleActionType(DatasetEvaluationValue);
 
         /// <summary> Determines if two <see cref="EvaluationRuleActionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

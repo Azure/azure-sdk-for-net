@@ -22,7 +22,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentTransferRouting"/>. </summary>
         /// <param name="strategy"> The routing strategy. Current native Telephony transfer supports ACS sequential and random routing only. </param>
-        /// <param name="ringTimeoutSeconds"> Per-destination ring timeout in seconds, from 1 to 300. If omitted, the service defaults to 20 seconds. Must not exceed the tool's timeout_seconds. ACS allows at most 180 seconds. </param>
+        /// <param name="ringTimeoutSeconds"> The per-destination ring timeout in seconds, from 1 to 300. If omitted, the service defaults to 20 seconds. Must not exceed the tool's execution timeout. ACS allows at most 180 seconds. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal VoiceAgentTransferRouting(VoiceAgentTransferStrategy strategy, TimeSpan? ringTimeoutSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -34,7 +34,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The routing strategy. Current native Telephony transfer supports ACS sequential and random routing only. </summary>
         public VoiceAgentTransferStrategy Strategy { get; set; }
 
-        /// <summary> Per-destination ring timeout in seconds, from 1 to 300. If omitted, the service defaults to 20 seconds. Must not exceed the tool's timeout_seconds. ACS allows at most 180 seconds. </summary>
+        /// <summary> The per-destination ring timeout in seconds, from 1 to 300. If omitted, the service defaults to 20 seconds. Must not exceed the tool's execution timeout. ACS allows at most 180 seconds. </summary>
         public TimeSpan? RingTimeoutSeconds { get; set; }
     }
 }
