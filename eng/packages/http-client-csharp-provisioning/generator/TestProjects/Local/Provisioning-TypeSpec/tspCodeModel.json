@@ -8760,7 +8760,6 @@
                 "writableScopes": [
                   "ResourceGroup"
                 ],
-                "isDeployableResource": true,
                 "isExtensionResource": false
               },
               {
@@ -8792,7 +8791,6 @@
                 "writableScopes": [
                   "ResourceGroup"
                 ],
-                "isDeployableResource": true,
                 "isExtensionResource": false
               },
               {
@@ -8823,7 +8821,6 @@
                 "writableScopes": [
                   "ResourceGroup"
                 ],
-                "isDeployableResource": true,
                 "isExtensionResource": false
               },
               {
@@ -8855,7 +8852,6 @@
                 "writableScopes": [
                   "ResourceGroup"
                 ],
-                "isDeployableResource": true,
                 "isExtensionResource": false
               },
               {
@@ -8882,7 +8878,6 @@
                   "ResourceGroup"
                 ],
                 "writableScopes": [],
-                "isDeployableResource": false,
                 "isExtensionResource": false
               },
               {
@@ -8912,7 +8907,6 @@
                 "writableScopes": [
                   "ResourceGroup"
                 ],
-                "isDeployableResource": true,
                 "isExtensionResource": false
               },
               {
@@ -8942,7 +8936,6 @@
                 "writableScopes": [
                   "ResourceGroup"
                 ],
-                "isDeployableResource": true,
                 "isExtensionResource": false
               },
               {
@@ -8969,7 +8962,6 @@
                   "ResourceGroup"
                 ],
                 "writableScopes": [],
-                "isDeployableResource": false,
                 "isExtensionResource": false
               },
               {
@@ -8996,7 +8988,6 @@
                 "writableScopes": [
                   "Extension"
                 ],
-                "isDeployableResource": true,
                 "isExtensionResource": true
               },
               {
@@ -9023,7 +9014,6 @@
                   "Extension"
                 ],
                 "writableScopes": [],
-                "isDeployableResource": false,
                 "isExtensionResource": true
               },
               {
@@ -9053,7 +9043,6 @@
                 "writableScopes": [
                   "Extension"
                 ],
-                "isDeployableResource": true,
                 "isExtensionResource": true
               },
               {
@@ -9087,7 +9076,6 @@
                   "Extension",
                   "ResourceGroup"
                 ],
-                "isDeployableResource": true,
                 "isExtensionResource": true
               },
               {
@@ -9118,7 +9106,6 @@
                 "writableScopes": [
                   "ResourceGroup"
                 ],
-                "isDeployableResource": true,
                 "isExtensionResource": false
               },
               {
@@ -9148,7 +9135,6 @@
                 "writableScopes": [
                   "ResourceGroup"
                 ],
-                "isDeployableResource": true,
                 "isExtensionResource": false
               },
               {
@@ -9178,7 +9164,6 @@
                 "writableScopes": [
                   "ResourceGroup"
                 ],
-                "isDeployableResource": true,
                 "isExtensionResource": false
               },
               {
@@ -9204,7 +9189,6 @@
                   "ResourceGroup"
                 ],
                 "writableScopes": [],
-                "isDeployableResource": false,
                 "isExtensionResource": false
               },
               {
@@ -9235,7 +9219,6 @@
                 "writableScopes": [
                   "ResourceGroup"
                 ],
-                "isDeployableResource": true,
                 "isExtensionResource": false
               },
               {
@@ -9265,7 +9248,6 @@
                 "writableScopes": [
                   "ResourceGroup"
                 ],
-                "isDeployableResource": true,
                 "isExtensionResource": false
               },
               {
@@ -9294,7 +9276,6 @@
                 "writableScopes": [
                   "ResourceGroup"
                 ],
-                "isDeployableResource": true,
                 "isExtensionResource": false
               }
             ],

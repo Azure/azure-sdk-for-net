@@ -25,7 +25,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         /// <summary> Creates a new ProfileRevision. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal ProfileRevision(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "ProvisioningTypeSpec/configurationStores/profiles/revisions", resourceVersion ?? "2024-05-01")
+        public ProfileRevision(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "ProvisioningTypeSpec/configurationStores/profiles/revisions", resourceVersion ?? "2024-05-01")
         {
         }
 

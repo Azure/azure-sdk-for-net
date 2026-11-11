@@ -22,7 +22,7 @@ const provisioningProviderSchema =
 
 export interface ResourceProjection {
   resourceModel: InputModelType;
-  isDeployableResource: boolean;
+  isSettable: boolean;
   resourceModelId: string;
   resourceName: string;
   resourceType: string;
@@ -75,7 +75,6 @@ export function updateProvisioningCodeModel(
           rbacRoles: projection.rbacRoles,
           readableScopes: projection.readableScopes,
           writableScopes: projection.writableScopes,
-          isDeployableResource: projection.isDeployableResource,
           isExtensionResource: projection.isExtensionResource
         })),
         modelSettableUsage: Array.from(
@@ -122,14 +121,14 @@ export function buildResourceProjections(
       );
     }
 
-    // Like Bicep, treat the projection as deployable only when at
+    // Like Bicep, treat the projection as deployable/settable only when at
     // least one grouped resource has a Create (PUT) operation. PATCH-only
     // resources remain reachable for existing-resource scenarios.
     const projection = buildResourceProjectionMetadata(resources);
     return {
       ...projection,
       resourceModel,
-      isDeployableResource: projection.writableScopes.length > 0,
+      isSettable: projection.writableScopes.length > 0,
       consistentResourceName: getConsistentValue(
         resources.map((resource) => resource.metadata.resourceName),
         undefined
@@ -157,10 +156,7 @@ export function buildResourceProjections(
 
 export function buildResourceProjectionMetadata(
   resources: ArmResourceSchema[]
-): Omit<
-  ResourceProjection,
-  "resourceModel" | "resourceName" | "isDeployableResource"
-> {
+): Omit<ResourceProjection, "resourceModel" | "resourceName" | "isSettable"> {
   const first = resources[0];
   const readableScopes = collectScopes(resources, "Read");
   const writableScopes = collectScopes(resources, "Create");
@@ -358,7 +354,7 @@ function collectReachableTypes(projections: ResourceProjection[]) {
     projectionsByModel.set(projection.resourceModel, modelProjections);
     queue.push({
       type: projection.resourceModel,
-      isSettable: projection.isDeployableResource
+      isSettable: projection.isSettable
     });
   }
 
@@ -376,9 +372,8 @@ function collectReachableTypes(projections: ResourceProjection[]) {
         const resourceProjections = projectionsByModel.get(model);
         const isSettable =
           item.isSettable ||
-          resourceProjections?.some(
-            (projection) => projection.isDeployableResource
-          ) === true;
+          resourceProjections?.some((projection) => projection.isSettable) ===
+            true;
 
         models.add(model);
         modelSettableUsage.set(

@@ -6,14 +6,16 @@ TypeSpec library for emitting Azure provisioning (infrastructure-as-code) librar
 
 This package generates `Azure.Provisioning.*` libraries from TypeSpec ARM (Azure Resource Manager) definitions. It extends the management emitter (`@azure-typespec/http-client-csharp-mgmt`) to produce `ProvisionableResource` subclasses with `BicepValue<T>` properties, enabling C# infrastructure-as-code that compiles to Bicep templates.
 
-Resource deployability and model settability are independent. A resource has a
-public constructor only when its projection has writable scopes; read-only and
-PATCH-only resources are referenced through `FromExisting()`. Model settability
-is propagated through writable property paths starting at deployable resources.
-A shared model can therefore retain property setters without making every
-resource that uses it deployable.
-The emitter writes `isDeployableResource` into each tspCodeModel resource
-projection, and the C# generator consumes that flag directly.
+## Resource construction and inline inputs
+
+A GET-only resource model can also be a writable inline input to a deployable
+parent. The generator intentionally preserves public construction and input
+setters for those usages; constructor accessibility must not depend solely on
+the resource's standalone deployability. `FromExisting()` is not a general
+replacement for constructing an input object.
+
+See the [deployability and model-settability invariants](docs/resource-detection-design.md#deployability-is-not-model-settability)
+before changing constructor or setter generation.
 
 ## Architecture
 

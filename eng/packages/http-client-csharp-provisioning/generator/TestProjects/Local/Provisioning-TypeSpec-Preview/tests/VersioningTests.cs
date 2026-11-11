@@ -9,15 +9,6 @@ namespace Azure.Provisioning.ProvisioningTypeSpec.Preview.Tests;
 public class VersioningTests
 {
     [Test]
-    public void SharedModelDoesNotMakeReadOnlyResourceDeployable()
-    {
-        Assert.That(typeof(Profile).GetConstructors(), Is.Not.Empty);
-        Assert.That(typeof(ProfileRevision).GetConstructors(), Is.Empty);
-        Assert.That(typeof(ProfileRevision).GetProperty(nameof(ProfileRevision.Description))?.CanWrite, Is.True);
-        Assert.That(ProfileRevision.FromExisting("revision").IsExistingResource, Is.True);
-    }
-
-    [Test]
     public void PreviewProjectionContainsExpectedApis()
     {
         var assembly = typeof(VersionedResource).Assembly;

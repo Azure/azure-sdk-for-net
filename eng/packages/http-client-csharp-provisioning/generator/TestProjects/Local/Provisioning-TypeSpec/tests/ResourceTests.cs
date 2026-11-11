@@ -39,8 +39,12 @@ public class ResourceTests
                     Description = "current profile",
                     SkuName = "Standard"
                 };
-                ProfileRevision revision = ProfileRevision.FromExisting(nameof(revision));
-                revision.Name = "store/profile/revision";
+                ProfileRevision revision = new(nameof(revision))
+                {
+                    Parent = profile,
+                    Description = "profile revision",
+                    SkuName = "Standard"
+                };
                 SpecializedResourceProfile specialized = new(nameof(specialized))
                 {
                     Parent = store,
@@ -94,8 +98,15 @@ public class ResourceTests
               }
             }
 
-            resource revision 'ProvisioningTypeSpec/configurationStores/profiles/revisions@2024-05-01' existing = {
-              name: 'store/profile/revision'
+            resource revision 'ProvisioningTypeSpec/configurationStores/profiles/revisions@2024-05-01' = {
+              name: take('revision-${uniqueString(resourceGroup().id)}', 24)
+              parent: profile
+              properties: {
+                description: 'profile revision'
+                sku: {
+                  name: 'Standard'
+                }
+              }
             }
 
             resource specialized 'ProvisioningTypeSpec/configurationStores/discriminatedResourceProfiles@2024-05-01' = {
@@ -107,22 +118,6 @@ public class ResourceTests
               }
             }
             """);
-    }
-
-    [Test]
-    public void SharedModelDoesNotMakeReadOnlyResourceDeployable()
-    {
-        Assert.That(typeof(Profile).GetConstructors(), Is.Not.Empty);
-        Assert.That(typeof(ProfileRevision).GetConstructors(), Is.Empty);
-        Assert.That(typeof(ProfileRevision).GetProperty(nameof(ProfileRevision.Description))?.CanWrite, Is.True);
-
-        Profile profile = new("profile") { Description = "current profile" };
-        Assert.That(profile.IsExistingResource, Is.False);
-        Assert.That(profile.Description.Value, Is.EqualTo("current profile"));
-
-        ProfileRevision revision = ProfileRevision.FromExisting("revision");
-        Assert.That(revision.IsExistingResource, Is.True);
-        Assert.That(revision.ProvisionableProperties[nameof(ProfileRevision.Parent)].IsOutput, Is.True);
     }
 
     [Test]

@@ -119,7 +119,6 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
                 metadata.RbacRoles,
                 readableScopes,
                 writableScopes,
-                writableScopes.Length > 0,
                 writableScopes.Contains(ResourceScope.Extension));
         }
     }
