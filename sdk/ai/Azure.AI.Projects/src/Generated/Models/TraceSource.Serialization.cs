@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace Azure.AI.Projects
 {
     /// <summary>
-    /// Base class for polymorphic trace sources nested within an AzureAITraceDataSourceEvalRunDataSource.
+    /// Base class for polymorphic trace sources nested within a TraceSourceEvalRunDataSource.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AgentFilterTraceSource"/>, <see cref="ConversationIdTraceSource"/>, and <see cref="TraceIdTraceSource"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTraceSource))]

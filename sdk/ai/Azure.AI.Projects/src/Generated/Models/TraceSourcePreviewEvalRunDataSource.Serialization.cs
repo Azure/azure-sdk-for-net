@@ -9,55 +9,52 @@ using System.Text.Json;
 
 namespace Azure.AI.Projects
 {
-    /// <summary>
-    /// A data source that selects traces for evaluation.
-    /// See [create an evaluation dataset from traces](https://learn.microsoft.com/en-us/azure/foundry/observability/how-to/traces-to-dataset?tabs=python).
-    /// </summary>
-    public partial class AzureAITraceDataSourceEvalRunDataSource : EvalRunDataSource, IJsonModel<AzureAITraceDataSourceEvalRunDataSource>
+    /// <summary> Preview form of `azure_ai_trace_data_source`. Returned only for rules backed by existing preview schedules; rejected on create and update. </summary>
+    public partial class TraceSourcePreviewEvalRunDataSource : EvalRunDataSource, IJsonModel<TraceSourcePreviewEvalRunDataSource>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EvalRunDataSource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureAITraceDataSourceEvalRunDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TraceSourcePreviewEvalRunDataSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAzureAITraceDataSourceEvalRunDataSource(document.RootElement, options);
+                        return DeserializeTraceSourcePreviewEvalRunDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureAITraceDataSourceEvalRunDataSource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TraceSourcePreviewEvalRunDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureAITraceDataSourceEvalRunDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TraceSourcePreviewEvalRunDataSource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AzureAITraceDataSourceEvalRunDataSource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TraceSourcePreviewEvalRunDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AzureAITraceDataSourceEvalRunDataSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TraceSourcePreviewEvalRunDataSource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureAITraceDataSourceEvalRunDataSource IPersistableModel<AzureAITraceDataSourceEvalRunDataSource>.Create(BinaryData data, ModelReaderWriterOptions options) => (AzureAITraceDataSourceEvalRunDataSource)PersistableModelCreateCore(data, options);
+        TraceSourcePreviewEvalRunDataSource IPersistableModel<TraceSourcePreviewEvalRunDataSource>.Create(BinaryData data, ModelReaderWriterOptions options) => (TraceSourcePreviewEvalRunDataSource)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AzureAITraceDataSourceEvalRunDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TraceSourcePreviewEvalRunDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AzureAITraceDataSourceEvalRunDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<TraceSourcePreviewEvalRunDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -68,10 +65,10 @@ namespace Azure.AI.Projects
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureAITraceDataSourceEvalRunDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TraceSourcePreviewEvalRunDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureAITraceDataSourceEvalRunDataSource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TraceSourcePreviewEvalRunDataSource)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(TraceSource))
@@ -83,30 +80,30 @@ namespace Azure.AI.Projects
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AzureAITraceDataSourceEvalRunDataSource IJsonModel<AzureAITraceDataSourceEvalRunDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AzureAITraceDataSourceEvalRunDataSource)JsonModelCreateCore(ref reader, options);
+        TraceSourcePreviewEvalRunDataSource IJsonModel<TraceSourcePreviewEvalRunDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TraceSourcePreviewEvalRunDataSource)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override EvalRunDataSource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AzureAITraceDataSourceEvalRunDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TraceSourcePreviewEvalRunDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureAITraceDataSourceEvalRunDataSource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TraceSourcePreviewEvalRunDataSource)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureAITraceDataSourceEvalRunDataSource(document.RootElement, options);
+            return DeserializeTraceSourcePreviewEvalRunDataSource(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AzureAITraceDataSourceEvalRunDataSource DeserializeAzureAITraceDataSourceEvalRunDataSource(JsonElement element, ModelReaderWriterOptions options)
+        internal static TraceSourcePreviewEvalRunDataSource DeserializeTraceSourcePreviewEvalRunDataSource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string @type = "azure_ai_trace_data_source";
+            string @type = "azure_ai_trace_data_source_preview";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             TraceSource traceSource = default;
             foreach (var prop in element.EnumerateObject())
@@ -130,7 +127,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new AzureAITraceDataSourceEvalRunDataSource(@type, additionalBinaryDataProperties, traceSource);
+            return new TraceSourcePreviewEvalRunDataSource(@type, additionalBinaryDataProperties, traceSource);
         }
     }
 }
