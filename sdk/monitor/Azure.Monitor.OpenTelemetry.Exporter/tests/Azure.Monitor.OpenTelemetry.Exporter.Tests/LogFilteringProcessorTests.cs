@@ -280,6 +280,37 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Null(Assert.Single(telemetryItems).SampleRate);
         }
 
+        /// <summary>
+        /// The rate is stamped on a <see cref="LogRecord"/> shared by every processor, so an exporter
+        /// that keeps all logs must not apply it, whichever order the processors run in.
+        /// </summary>
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void UnfilteredExporterOnSameProviderDoesNotApplyStampedSampleRate(bool filteredFirst)
+        {
+            var filteredItems = new List<TelemetryItem>();
+            var unfilteredItems = new List<TelemetryItem>();
+            var filtered = new LogFilteringProcessor(new AzureMonitorLogExporter(new MockTransmitter(filteredItems)));
+            var unfiltered = new AzureMonitorBatchLogRecordExportProcessor(new AzureMonitorLogExporter(new MockTransmitter(unfilteredItems)));
+
+            using (var loggerFactory = LoggerFactory.Create(builder => builder.AddOpenTelemetry(options =>
+            {
+                options.AddProcessor(filteredFirst ? filtered : unfiltered);
+                options.AddProcessor(filteredFirst ? unfiltered : filtered);
+            })))
+            {
+                using var activity = StartSampledActivity(25.0);
+                loggerFactory.CreateLogger<LogFilteringProcessorTests>().LogInformation("Hello {Name}", "World");
+            }
+
+            Assert.Equal(25f, Assert.Single(filteredItems).SampleRate);
+
+            var unfilteredItem = Assert.Single(unfilteredItems);
+            Assert.Null(unfilteredItem.SampleRate);
+            Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftSampleRate, ((MessageData)unfilteredItem.Data.BaseData).Properties.Keys);
+        }
+
         private static void CaptureLogAttributes(LogFilteringProcessor processor, object? spanSampleRate)
         {
             using var loggerFactory = CreateLoggerFactory(processor);

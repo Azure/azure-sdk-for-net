@@ -25,6 +25,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             : base(exporter)
         {
             _fallbackSampleRate = fallbackSampleRate;
+
+            if (exporter is AzureMonitorLogExporter azureMonitorLogExporter)
+            {
+                azureMonitorLogExporter.IsTraceBasedLogSampled = true;
+            }
         }
 
         public override void OnEnd(LogRecord logRecord)

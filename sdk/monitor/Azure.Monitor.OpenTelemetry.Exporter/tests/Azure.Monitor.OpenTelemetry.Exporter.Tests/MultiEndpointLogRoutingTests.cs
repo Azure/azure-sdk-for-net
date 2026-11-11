@@ -638,9 +638,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void RoutedLogsCarryTheirSampleRate()
         {
-            var telemetryItems = Convert(
+            var routeBatch = new EndpointRouteBatch();
+            WithLiveBatch(
+                batch => LogsHelper.OtelToAzureMonitorLogsMultiEndpoint(batch, resource: null, routeBatch, applySampleRate: true),
                 Emit(Ikey("ikey-a"), Endpoint(EastUs), SampleRate(25f)),
-                Emit(Ikey("ikey-a"), Endpoint(EastUs)))[0].TelemetryItems;
+                Emit(Ikey("ikey-a"), Endpoint(EastUs)));
+            var telemetryItems = routeBatch[0].TelemetryItems;
 
             Assert.Equal(25f, telemetryItems[0].SampleRate);
             Assert.Null(telemetryItems[1].SampleRate);
@@ -651,15 +654,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         /// Availability attributes are read in a second pass that rebuilds the log context, so the
         /// sample rate must survive it.
         /// </summary>
-        [Fact]
-        public void AvailabilityLogsCarryTheirSampleRate()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void AvailabilityLogsCarryTheirSampleRateOnlyWhenApplied(bool applySampleRate)
         {
-            var telemetryItem = Assert.Single(ConvertSingleEndpoint(
-                "ikey-a",
-                Emit(AvailabilityMarkers().Concat(new[] { SampleRate(25f) }).ToArray())));
+            List<TelemetryItem> telemetryItems = new();
+            WithLiveBatch(
+                batch => telemetryItems = LogsHelper.OtelToAzureMonitorLogs(batch, resource: null, "ikey-a", applySampleRate).TelemetryItems,
+                Emit(AvailabilityMarkers().Concat(new[] { SampleRate(25f) }).ToArray()));
+            var telemetryItem = Assert.Single(telemetryItems);
 
             Assert.Equal("Availability", telemetryItem.Name);
-            Assert.Equal(25f, telemetryItem.SampleRate);
+            Assert.Equal(applySampleRate ? 25f : null, telemetryItem.SampleRate);
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftSampleRate, ((AvailabilityData)telemetryItem.Data.BaseData).Properties.Keys);
         }
 
