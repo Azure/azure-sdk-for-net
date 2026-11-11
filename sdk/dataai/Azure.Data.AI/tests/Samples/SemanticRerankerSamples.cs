@@ -53,5 +53,34 @@ namespace Azure.Data.AI.Tests.Samples
             Response<SemanticRerankingResult> response = await client.SemanticRerankAsync(request);
             #endregion Snippet:SemanticReranker_RerankJsonDocuments
         }
+
+        private async Task GetMultimodalEmbeddings(InferenceClient client, Uri imageBlobUrl, string imageSasToken)
+        {
+            #region Snippet:Inference_GetMultimodalEmbeddings
+            Response<EmbeddingResult> response = await client.GetEmbeddingsAsync(
+                inputs: new object[]
+                {
+                    new
+                    {
+                        id = "map-question",
+                        kind = "query",
+                        content = "Which walking route follows the lake?"
+                    },
+                    new
+                    {
+                        id = "trail-map",
+                        kind = "image",
+                        url = imageBlobUrl,
+                        sasToken = imageSasToken
+                    }
+                },
+                model: "microsoft-embedding-1-large",
+                modelVersion: "<supported-model-version>",
+                dimensions: 2560,
+                delivery: EmbeddingDelivery.Inline);
+
+            EmbeddingResult result = response.Value;
+            #endregion Snippet:Inference_GetMultimodalEmbeddings
+        }
     }
 }

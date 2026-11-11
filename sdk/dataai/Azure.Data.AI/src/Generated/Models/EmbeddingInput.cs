@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.Data.AI
 {
     /// <summary> One item to embed, defaulting to text: an optional `id` and exactly one source, `content` or `url` with `sasToken`. </summary>
-    public partial class EmbeddingsInputContent
+    public partial class EmbeddingInput
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="EmbeddingsInputContent"/>. </summary>
-        public EmbeddingsInputContent()
+        /// <summary> Initializes a new instance of <see cref="EmbeddingInput"/>. </summary>
+        public EmbeddingInput()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="EmbeddingsInputContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmbeddingInput"/>. </summary>
         /// <param name="id"> A caller-chosen identifier, up to 256 characters, echoed on the matching result. </param>
         /// <param name="kind"> What the item is: a document (`text`, the default), a search query (`query`) or a document image (`image`). </param>
         /// <param name="content">
@@ -42,7 +42,7 @@ namespace Azure.Data.AI
         /// it for one read and never stores, logs or returns it.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EmbeddingsInputContent(string id, EmbeddingContentKind? kind, string content, Uri uri, string sasToken, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EmbeddingInput(string id, EmbeddingContentKind? kind, string content, Uri uri, string sasToken, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Kind = kind;

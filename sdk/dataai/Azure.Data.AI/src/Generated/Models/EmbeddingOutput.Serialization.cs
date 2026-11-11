@@ -16,56 +16,56 @@ namespace Azure.Data.AI
     /// A `delivery: link` result: a JSON file with the complete response (the same body as an inline response, including
     /// `data`), readable with `sasToken` until `expiresAt`.
     /// </summary>
-    public partial class MultimodalEmbeddingOutput : IJsonModel<MultimodalEmbeddingOutput>
+    public partial class EmbeddingOutput : IJsonModel<EmbeddingOutput>
     {
-        /// <summary> Initializes a new instance of <see cref="MultimodalEmbeddingOutput"/> for deserialization. </summary>
-        internal MultimodalEmbeddingOutput()
+        /// <summary> Initializes a new instance of <see cref="EmbeddingOutput"/> for deserialization. </summary>
+        internal EmbeddingOutput()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MultimodalEmbeddingOutput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EmbeddingOutput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MultimodalEmbeddingOutput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EmbeddingOutput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMultimodalEmbeddingOutput(document.RootElement, options);
+                        return DeserializeEmbeddingOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MultimodalEmbeddingOutput)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmbeddingOutput)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MultimodalEmbeddingOutput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EmbeddingOutput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureDataAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MultimodalEmbeddingOutput)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmbeddingOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MultimodalEmbeddingOutput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EmbeddingOutput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MultimodalEmbeddingOutput IPersistableModel<MultimodalEmbeddingOutput>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EmbeddingOutput IPersistableModel<EmbeddingOutput>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MultimodalEmbeddingOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EmbeddingOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MultimodalEmbeddingOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EmbeddingOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -76,10 +76,10 @@ namespace Azure.Data.AI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MultimodalEmbeddingOutput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EmbeddingOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultimodalEmbeddingOutput)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EmbeddingOutput)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
@@ -116,24 +116,24 @@ namespace Azure.Data.AI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MultimodalEmbeddingOutput IJsonModel<MultimodalEmbeddingOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EmbeddingOutput IJsonModel<EmbeddingOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MultimodalEmbeddingOutput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EmbeddingOutput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MultimodalEmbeddingOutput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EmbeddingOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultimodalEmbeddingOutput)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EmbeddingOutput)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMultimodalEmbeddingOutput(document.RootElement, options);
+            return DeserializeEmbeddingOutput(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MultimodalEmbeddingOutput DeserializeMultimodalEmbeddingOutput(JsonElement element, ModelReaderWriterOptions options)
+        internal static EmbeddingOutput DeserializeEmbeddingOutput(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -195,7 +195,7 @@ namespace Azure.Data.AI
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MultimodalEmbeddingOutput(
+            return new EmbeddingOutput(
                 id,
                 uri,
                 sasToken,

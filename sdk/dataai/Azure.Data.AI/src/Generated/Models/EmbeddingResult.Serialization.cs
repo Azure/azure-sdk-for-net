@@ -105,7 +105,7 @@ namespace Azure.Data.AI
             {
                 writer.WritePropertyName("warnings"u8);
                 writer.WriteStartArray();
-                foreach (MultimodalEmbeddingWarning item in Warnings)
+                foreach (EmbeddingWarning item in Warnings)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -163,8 +163,8 @@ namespace Azure.Data.AI
             EmbeddingOutputDataKind outputDataKind = default;
             IList<EmbeddingItem> data = default;
             EmbeddingUsage usage = default;
-            IList<MultimodalEmbeddingWarning> warnings = default;
-            MultimodalEmbeddingOutput output = default;
+            IList<EmbeddingWarning> warnings = default;
+            EmbeddingOutput output = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -204,10 +204,10 @@ namespace Azure.Data.AI
                     {
                         continue;
                     }
-                    List<MultimodalEmbeddingWarning> array = new List<MultimodalEmbeddingWarning>();
+                    List<EmbeddingWarning> array = new List<EmbeddingWarning>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MultimodalEmbeddingWarning.DeserializeMultimodalEmbeddingWarning(item, options));
+                        array.Add(EmbeddingWarning.DeserializeEmbeddingWarning(item, options));
                     }
                     warnings = array;
                     continue;
@@ -218,7 +218,7 @@ namespace Azure.Data.AI
                     {
                         continue;
                     }
-                    output = MultimodalEmbeddingOutput.DeserializeMultimodalEmbeddingOutput(prop.Value, options);
+                    output = EmbeddingOutput.DeserializeEmbeddingOutput(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -232,7 +232,7 @@ namespace Azure.Data.AI
                 outputDataKind,
                 data ?? new ChangeTrackingList<EmbeddingItem>(),
                 usage,
-                warnings ?? new ChangeTrackingList<MultimodalEmbeddingWarning>(),
+                warnings ?? new ChangeTrackingList<EmbeddingWarning>(),
                 output,
                 additionalBinaryDataProperties);
         }

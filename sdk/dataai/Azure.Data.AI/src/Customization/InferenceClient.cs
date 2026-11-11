@@ -62,9 +62,11 @@ namespace Azure.Data.AI
 
         /// <summary>
         /// Embeds text, queries and document images using loosely typed items, for example anonymous objects or dictionaries.
-        /// Each item is serialized to JSON with <see cref="JsonSerializer"/> and must produce a JSON object that uses the wire
-        /// property names <c>kind</c> (optional, defaults to text), <c>id</c>, <c>content</c>, <c>url</c> and <c>sasToken</c> (all optional, string values).
-        /// Property names are not renamed, so use these exact names. <see cref="EmbeddingsInputContent"/> instances are used as-is.
+        /// Each item is serialized to JSON with <see cref="JsonSerializer"/> using camelCase property and dictionary key naming and must produce
+        /// a JSON object with only the wire properties <c>kind</c> (optional, defaults to text), <c>id</c>, <c>content</c>, <c>url</c> and <c>sasToken</c>
+        /// (all optional, string values). C#-cased names such as <c>Content</c> map to the wire names and <see cref="EmbeddingContentKind"/> values
+        /// are written as their string value. <see cref="JsonElement"/> items must use the exact wire names. Unknown or duplicate properties are rejected.
+        /// <see cref="EmbeddingInput"/> instances are used as-is.
         /// </summary>
         /// <param name="inputs"> The items to embed. </param>
         /// <param name="model"> The model to use. </param>
@@ -78,7 +80,7 @@ namespace Azure.Data.AI
         /// <param name="delivery"> How results are delivered. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or one of its items is null. </exception>
-        /// <exception cref="ArgumentException"> An item is not a JSON object or supplies a <c>kind</c> that is not a non-empty string. A missing <c>kind</c> is allowed. </exception>
+        /// <exception cref="ArgumentException"> An item is not a JSON object, has an unknown or duplicate property, or supplies a value of the wrong type (for example a <c>kind</c> that is not a non-empty string). A missing <c>kind</c> is allowed. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
 #if NET5_0_OR_GREATER
         [RequiresUnreferencedCode("Serializes arbitrary objects with reflection-based System.Text.Json; members of the item types might be trimmed.")]
@@ -86,15 +88,17 @@ namespace Azure.Data.AI
 #endif
         public virtual Response<EmbeddingResult> GetEmbeddings(IEnumerable<object> inputs, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
         {
-            IEnumerable<EmbeddingsInputContent> items = ConvertToContentItems(inputs, nameof(inputs));
+            IEnumerable<EmbeddingInput> items = ConvertToContentItems(inputs, nameof(inputs));
             return GetEmbeddings(items, model, modelVersion, vectorKind, dimensions, multiDimensions, maxVectorCount, outputDataKind, encodingFormat, delivery, cancellationToken);
         }
 
         /// <summary>
         /// Embeds text, queries and document images using loosely typed items, for example anonymous objects or dictionaries.
-        /// Each item is serialized to JSON with <see cref="JsonSerializer"/> and must produce a JSON object that uses the wire
-        /// property names <c>kind</c> (optional, defaults to text), <c>id</c>, <c>content</c>, <c>url</c> and <c>sasToken</c> (all optional, string values).
-        /// Property names are not renamed, so use these exact names. <see cref="EmbeddingsInputContent"/> instances are used as-is.
+        /// Each item is serialized to JSON with <see cref="JsonSerializer"/> using camelCase property and dictionary key naming and must produce
+        /// a JSON object with only the wire properties <c>kind</c> (optional, defaults to text), <c>id</c>, <c>content</c>, <c>url</c> and <c>sasToken</c>
+        /// (all optional, string values). C#-cased names such as <c>Content</c> map to the wire names and <see cref="EmbeddingContentKind"/> values
+        /// are written as their string value. <see cref="JsonElement"/> items must use the exact wire names. Unknown or duplicate properties are rejected.
+        /// <see cref="EmbeddingInput"/> instances are used as-is.
         /// </summary>
         /// <param name="inputs"> The items to embed. </param>
         /// <param name="model"> The model to use. </param>
@@ -108,7 +112,7 @@ namespace Azure.Data.AI
         /// <param name="delivery"> How results are delivered. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputs"/> or one of its items is null. </exception>
-        /// <exception cref="ArgumentException"> An item is not a JSON object or supplies a <c>kind</c> that is not a non-empty string. A missing <c>kind</c> is allowed. </exception>
+        /// <exception cref="ArgumentException"> An item is not a JSON object, has an unknown or duplicate property, or supplies a value of the wrong type (for example a <c>kind</c> that is not a non-empty string). A missing <c>kind</c> is allowed. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
 #if NET5_0_OR_GREATER
         [RequiresUnreferencedCode("Serializes arbitrary objects with reflection-based System.Text.Json; members of the item types might be trimmed.")]
@@ -116,7 +120,7 @@ namespace Azure.Data.AI
 #endif
         public virtual async Task<Response<EmbeddingResult>> GetEmbeddingsAsync(IEnumerable<object> inputs, string model = default, string modelVersion = default, EmbeddingVectorKind? vectorKind = default, int? dimensions = default, int? multiDimensions = default, int? maxVectorCount = default, EmbeddingOutputDataKind? outputDataKind = default, EmbeddingEncodingFormat? encodingFormat = default, EmbeddingDelivery? delivery = default, CancellationToken cancellationToken = default)
         {
-            IEnumerable<EmbeddingsInputContent> items = ConvertToContentItems(inputs, nameof(inputs));
+            IEnumerable<EmbeddingInput> items = ConvertToContentItems(inputs, nameof(inputs));
             return await GetEmbeddingsAsync(items, model, modelVersion, vectorKind, dimensions, multiDimensions, maxVectorCount, outputDataKind, encodingFormat, delivery, cancellationToken).ConfigureAwait(false);
         }
 
@@ -124,11 +128,11 @@ namespace Azure.Data.AI
         [RequiresUnreferencedCode("Serializes arbitrary objects with reflection-based System.Text.Json; members of the item types might be trimmed.")]
         [RequiresDynamicCode("Serializes arbitrary objects with reflection-based System.Text.Json.")]
 #endif
-        private static List<EmbeddingsInputContent> ConvertToContentItems(IEnumerable<object> inputs, string paramName)
+        private static List<EmbeddingInput> ConvertToContentItems(IEnumerable<object> inputs, string paramName)
         {
             Argument.AssertNotNull(inputs, paramName);
 
-            List<EmbeddingsInputContent> items = new();
+            List<EmbeddingInput> items = new();
             int index = 0;
             foreach (object item in inputs)
             {
@@ -136,7 +140,7 @@ namespace Azure.Data.AI
                 {
                     throw new ArgumentNullException(paramName, $"Item at index {index} is null.");
                 }
-                items.Add(item as EmbeddingsInputContent ?? ConvertToContentItem(item, paramName, index));
+                items.Add(item as EmbeddingInput ?? ConvertToContentItem(item, paramName, index));
                 index++;
             }
             return items;
@@ -146,17 +150,40 @@ namespace Azure.Data.AI
         [RequiresUnreferencedCode("Serializes arbitrary objects with reflection-based System.Text.Json; members of the item types might be trimmed.")]
         [RequiresDynamicCode("Serializes arbitrary objects with reflection-based System.Text.Json.")]
 #endif
-        private static EmbeddingsInputContent ConvertToContentItem(object item, string paramName, int index)
+        private static EmbeddingInput ConvertToContentItem(object item, string paramName, int index)
         {
-            byte[] json = item is JsonElement element
-                ? JsonSerializer.SerializeToUtf8Bytes(element)
-                : JsonSerializer.SerializeToUtf8Bytes(item, item.GetType());
+            // Raw JsonElement values must already use the exact wire names; every other object is
+            // serialized with camelCase naming so C#-cased members map to the wire names.
+            byte[] json;
+            try
+            {
+                json = item is JsonElement element
+                    ? JsonSerializer.SerializeToUtf8Bytes(element)
+                    : JsonSerializer.SerializeToUtf8Bytes(item, item.GetType(), s_untypedInputOptions);
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new ArgumentException($"Item at index {index} of type '{item.GetType().Name}' could not be serialized. Canonical camelCase property names must be unique.", paramName, ex);
+            }
 
             using JsonDocument document = JsonDocument.Parse(json);
             JsonElement root = document.RootElement;
             if (root.ValueKind != JsonValueKind.Object)
             {
                 throw new ArgumentException($"Item at index {index} must serialize to a JSON object but serialized to {root.ValueKind}.", paramName);
+            }
+
+            HashSet<string> seen = new(StringComparer.Ordinal);
+            foreach (JsonProperty property in root.EnumerateObject())
+            {
+                if (Array.IndexOf(s_untypedInputProperties, property.Name) < 0)
+                {
+                    throw new ArgumentException($"Item at index {index} has an unknown property '{property.Name}'. Supported properties are: {string.Join(", ", s_untypedInputProperties)}.", paramName);
+                }
+                if (!seen.Add(property.Name))
+                {
+                    throw new ArgumentException($"Item at index {index} specifies the property '{property.Name}' more than once.", paramName);
+                }
             }
 
             if (root.TryGetProperty("kind", out JsonElement kind) && (kind.ValueKind != JsonValueKind.String || string.IsNullOrEmpty(kind.GetString())))
@@ -172,7 +199,25 @@ namespace Azure.Data.AI
                 }
             }
 
-            return EmbeddingsInputContent.DeserializeEmbeddingsInputContent(root, ModelReaderWriterOptions.Json);
+            return EmbeddingInput.DeserializeEmbeddingInput(root, ModelReaderWriterOptions.Json);
+        }
+
+        private static readonly string[] s_untypedInputProperties = { "kind", "id", "content", "url", "sasToken" };
+
+        private static readonly JsonSerializerOptions s_untypedInputOptions = new()
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            DictionaryKeyPolicy = JsonNamingPolicy.CamelCase,
+            Converters = { new EmbeddingContentKindJsonConverter() },
+        };
+
+        private sealed class EmbeddingContentKindJsonConverter : System.Text.Json.Serialization.JsonConverter<EmbeddingContentKind>
+        {
+            public override EmbeddingContentKind Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+                => throw new NotSupportedException();
+
+            public override void Write(Utf8JsonWriter writer, EmbeddingContentKind value, JsonSerializerOptions options)
+                => writer.WriteStringValue(value.ToString());
         }
     }
 

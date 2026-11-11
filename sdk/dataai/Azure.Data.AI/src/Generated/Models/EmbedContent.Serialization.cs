@@ -91,7 +91,7 @@ namespace Azure.Data.AI
             }
             writer.WritePropertyName("inputs"u8);
             writer.WriteStartArray();
-            foreach (EmbeddingsInputContent item in Inputs)
+            foreach (EmbeddingInput item in Inputs)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -183,7 +183,7 @@ namespace Azure.Data.AI
             {
                 return null;
             }
-            IList<EmbeddingsInputContent> inputs = default;
+            IList<EmbeddingInput> inputs = default;
             string model = default;
             string modelVersion = default;
             EmbeddingVectorKind? vectorKind = default;
@@ -198,10 +198,10 @@ namespace Azure.Data.AI
             {
                 if (prop.NameEquals("inputs"u8))
                 {
-                    List<EmbeddingsInputContent> array = new List<EmbeddingsInputContent>();
+                    List<EmbeddingInput> array = new List<EmbeddingInput>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(EmbeddingsInputContent.DeserializeEmbeddingsInputContent(item, options));
+                        array.Add(EmbeddingInput.DeserializeEmbeddingInput(item, options));
                     }
                     inputs = array;
                     continue;
@@ -285,7 +285,7 @@ namespace Azure.Data.AI
                 }
             }
             return new EmbedContent(
-                inputs ?? new ChangeTrackingList<EmbeddingsInputContent>(),
+                inputs ?? new ChangeTrackingList<EmbeddingInput>(),
                 model,
                 modelVersion,
                 vectorKind,

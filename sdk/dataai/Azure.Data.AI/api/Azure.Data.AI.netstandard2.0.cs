@@ -77,6 +77,24 @@ namespace Azure.Data.AI
         public static bool operator !=(Azure.Data.AI.EmbeddingImageFormat left, Azure.Data.AI.EmbeddingImageFormat right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class EmbeddingInput : System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.EmbeddingInput>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.EmbeddingInput>
+    {
+        public EmbeddingInput() { }
+        public string Content { get { throw null; } set { } }
+        public string Id { get { throw null; } set { } }
+        public Azure.Data.AI.EmbeddingContentKind? Kind { get { throw null; } set { } }
+        public string SasToken { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
+        protected virtual Azure.Data.AI.EmbeddingInput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.Data.AI.EmbeddingInput PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Data.AI.EmbeddingInput System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.EmbeddingInput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.EmbeddingInput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Data.AI.EmbeddingInput System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.EmbeddingInput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.EmbeddingInput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.EmbeddingInput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public abstract partial class EmbeddingItem : System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.EmbeddingItem>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.EmbeddingItem>
     {
         internal EmbeddingItem() { }
@@ -91,6 +109,27 @@ namespace Azure.Data.AI
         Azure.Data.AI.EmbeddingItem System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.EmbeddingItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.EmbeddingItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.EmbeddingItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class EmbeddingOutput : System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.EmbeddingOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.EmbeddingOutput>
+    {
+        internal EmbeddingOutput() { }
+        public string ContentType { get { throw null; } }
+        public System.DateTimeOffset ExpiresOn { get { throw null; } }
+        public string Id { get { throw null; } }
+        public int RecordCount { get { throw null; } }
+        public string SasToken { get { throw null; } }
+        public string Sha256 { get { throw null; } }
+        public long SizeInBytes { get { throw null; } }
+        public System.Uri Uri { get { throw null; } }
+        protected virtual Azure.Data.AI.EmbeddingOutput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.Data.AI.EmbeddingOutput PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Data.AI.EmbeddingOutput System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.EmbeddingOutput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.EmbeddingOutput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Data.AI.EmbeddingOutput System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.EmbeddingOutput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.EmbeddingOutput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.EmbeddingOutput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EmbeddingOutputDataKind : System.IEquatable<Azure.Data.AI.EmbeddingOutputDataKind>
@@ -115,10 +154,10 @@ namespace Azure.Data.AI
         public System.Collections.Generic.IList<Azure.Data.AI.EmbeddingItem> Data { get { throw null; } }
         public string Model { get { throw null; } }
         public string ModelVersion { get { throw null; } }
-        public Azure.Data.AI.MultimodalEmbeddingOutput Output { get { throw null; } }
+        public Azure.Data.AI.EmbeddingOutput Output { get { throw null; } }
         public Azure.Data.AI.EmbeddingOutputDataKind OutputDataKind { get { throw null; } }
         public Azure.Data.AI.EmbeddingUsage Usage { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Data.AI.MultimodalEmbeddingWarning> Warnings { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Data.AI.EmbeddingWarning> Warnings { get { throw null; } }
         protected virtual Azure.Data.AI.EmbeddingResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         public static explicit operator Azure.Data.AI.EmbeddingResult (Azure.Response response) { throw null; }
@@ -129,24 +168,6 @@ namespace Azure.Data.AI
         Azure.Data.AI.EmbeddingResult System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.EmbeddingResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.EmbeddingResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.EmbeddingResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class EmbeddingsInputContent : System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.EmbeddingsInputContent>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.EmbeddingsInputContent>
-    {
-        public EmbeddingsInputContent() { }
-        public string Content { get { throw null; } set { } }
-        public string Id { get { throw null; } set { } }
-        public Azure.Data.AI.EmbeddingContentKind? Kind { get { throw null; } set { } }
-        public string SasToken { get { throw null; } set { } }
-        public System.Uri Uri { get { throw null; } set { } }
-        protected virtual Azure.Data.AI.EmbeddingsInputContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.Data.AI.EmbeddingsInputContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.Data.AI.EmbeddingsInputContent System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.EmbeddingsInputContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.EmbeddingsInputContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Data.AI.EmbeddingsInputContent System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.EmbeddingsInputContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.EmbeddingsInputContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.EmbeddingsInputContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public abstract partial class EmbeddingUsage : System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.EmbeddingUsage>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.EmbeddingUsage>
     {
@@ -181,6 +202,25 @@ namespace Azure.Data.AI
         public static bool operator !=(Azure.Data.AI.EmbeddingVectorKind left, Azure.Data.AI.EmbeddingVectorKind right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class EmbeddingWarning : System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.EmbeddingWarning>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.EmbeddingWarning>
+    {
+        internal EmbeddingWarning() { }
+        public Azure.Data.AI.EmbeddingWarningCode Code { get { throw null; } }
+        public int? CodeNumber { get { throw null; } }
+        public int Index { get { throw null; } }
+        public long? InputTokens { get { throw null; } }
+        public string Message { get { throw null; } }
+        public long? Tokens { get { throw null; } }
+        protected virtual Azure.Data.AI.EmbeddingWarning JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.Data.AI.EmbeddingWarning PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.Data.AI.EmbeddingWarning System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.EmbeddingWarning>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.EmbeddingWarning>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Data.AI.EmbeddingWarning System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.EmbeddingWarning>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.EmbeddingWarning>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.EmbeddingWarning>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EmbeddingWarningCode : System.IEquatable<Azure.Data.AI.EmbeddingWarningCode>
     {
@@ -208,10 +248,10 @@ namespace Azure.Data.AI
         public InferenceClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Data.AI.InferenceClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response GetEmbeddings(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Data.AI.EmbeddingResult> GetEmbeddings(System.Collections.Generic.IEnumerable<Azure.Data.AI.EmbeddingsInputContent> inputs, string model = null, string modelVersion = null, Azure.Data.AI.EmbeddingVectorKind? vectorKind = default(Azure.Data.AI.EmbeddingVectorKind?), int? dimensions = default(int?), int? multiDimensions = default(int?), int? maxVectorCount = default(int?), Azure.Data.AI.EmbeddingOutputDataKind? outputDataKind = default(Azure.Data.AI.EmbeddingOutputDataKind?), Azure.Data.AI.EmbeddingEncodingFormat? encodingFormat = default(Azure.Data.AI.EmbeddingEncodingFormat?), Azure.Data.AI.EmbeddingDelivery? delivery = default(Azure.Data.AI.EmbeddingDelivery?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Data.AI.EmbeddingResult> GetEmbeddings(System.Collections.Generic.IEnumerable<Azure.Data.AI.EmbeddingInput> inputs, string model = null, string modelVersion = null, Azure.Data.AI.EmbeddingVectorKind? vectorKind = default(Azure.Data.AI.EmbeddingVectorKind?), int? dimensions = default(int?), int? multiDimensions = default(int?), int? maxVectorCount = default(int?), Azure.Data.AI.EmbeddingOutputDataKind? outputDataKind = default(Azure.Data.AI.EmbeddingOutputDataKind?), Azure.Data.AI.EmbeddingEncodingFormat? encodingFormat = default(Azure.Data.AI.EmbeddingEncodingFormat?), Azure.Data.AI.EmbeddingDelivery? delivery = default(Azure.Data.AI.EmbeddingDelivery?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Data.AI.EmbeddingResult> GetEmbeddings(System.Collections.Generic.IEnumerable<object> inputs, string model = null, string modelVersion = null, Azure.Data.AI.EmbeddingVectorKind? vectorKind = default(Azure.Data.AI.EmbeddingVectorKind?), int? dimensions = default(int?), int? multiDimensions = default(int?), int? maxVectorCount = default(int?), Azure.Data.AI.EmbeddingOutputDataKind? outputDataKind = default(Azure.Data.AI.EmbeddingOutputDataKind?), Azure.Data.AI.EmbeddingEncodingFormat? encodingFormat = default(Azure.Data.AI.EmbeddingEncodingFormat?), Azure.Data.AI.EmbeddingDelivery? delivery = default(Azure.Data.AI.EmbeddingDelivery?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetEmbeddingsAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AI.EmbeddingResult>> GetEmbeddingsAsync(System.Collections.Generic.IEnumerable<Azure.Data.AI.EmbeddingsInputContent> inputs, string model = null, string modelVersion = null, Azure.Data.AI.EmbeddingVectorKind? vectorKind = default(Azure.Data.AI.EmbeddingVectorKind?), int? dimensions = default(int?), int? multiDimensions = default(int?), int? maxVectorCount = default(int?), Azure.Data.AI.EmbeddingOutputDataKind? outputDataKind = default(Azure.Data.AI.EmbeddingOutputDataKind?), Azure.Data.AI.EmbeddingEncodingFormat? encodingFormat = default(Azure.Data.AI.EmbeddingEncodingFormat?), Azure.Data.AI.EmbeddingDelivery? delivery = default(Azure.Data.AI.EmbeddingDelivery?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AI.EmbeddingResult>> GetEmbeddingsAsync(System.Collections.Generic.IEnumerable<Azure.Data.AI.EmbeddingInput> inputs, string model = null, string modelVersion = null, Azure.Data.AI.EmbeddingVectorKind? vectorKind = default(Azure.Data.AI.EmbeddingVectorKind?), int? dimensions = default(int?), int? multiDimensions = default(int?), int? maxVectorCount = default(int?), Azure.Data.AI.EmbeddingOutputDataKind? outputDataKind = default(Azure.Data.AI.EmbeddingOutputDataKind?), Azure.Data.AI.EmbeddingEncodingFormat? encodingFormat = default(Azure.Data.AI.EmbeddingEncodingFormat?), Azure.Data.AI.EmbeddingDelivery? delivery = default(Azure.Data.AI.EmbeddingDelivery?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Data.AI.EmbeddingResult>> GetEmbeddingsAsync(System.Collections.Generic.IEnumerable<object> inputs, string model = null, string modelVersion = null, Azure.Data.AI.EmbeddingVectorKind? vectorKind = default(Azure.Data.AI.EmbeddingVectorKind?), int? dimensions = default(int?), int? multiDimensions = default(int?), int? maxVectorCount = default(int?), Azure.Data.AI.EmbeddingOutputDataKind? outputDataKind = default(Azure.Data.AI.EmbeddingOutputDataKind?), Azure.Data.AI.EmbeddingEncodingFormat? encodingFormat = default(Azure.Data.AI.EmbeddingEncodingFormat?), Azure.Data.AI.EmbeddingDelivery? delivery = default(Azure.Data.AI.EmbeddingDelivery?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response SemanticRerank(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.Data.AI.SemanticRerankingResult> SemanticRerank(Azure.Data.AI.SemanticRerankingContent request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -243,16 +283,16 @@ namespace Azure.Data.AI
     }
     public static partial class InferenceModelFactory
     {
+        public static Azure.Data.AI.EmbeddingInput EmbeddingInput(string id = null, Azure.Data.AI.EmbeddingContentKind? kind = default(Azure.Data.AI.EmbeddingContentKind?), string content = null, System.Uri uri = null, string sasToken = null) { throw null; }
         public static Azure.Data.AI.EmbeddingItem EmbeddingItem(string kind = null, int index = 0, string id = null) { throw null; }
-        public static Azure.Data.AI.EmbeddingResult EmbeddingResult(string model = null, string modelVersion = null, Azure.Data.AI.EmbeddingOutputDataKind outputDataKind = default(Azure.Data.AI.EmbeddingOutputDataKind), System.Collections.Generic.IEnumerable<Azure.Data.AI.EmbeddingItem> data = null, Azure.Data.AI.EmbeddingUsage usage = null, System.Collections.Generic.IEnumerable<Azure.Data.AI.MultimodalEmbeddingWarning> warnings = null, Azure.Data.AI.MultimodalEmbeddingOutput output = null) { throw null; }
-        public static Azure.Data.AI.EmbeddingsInputContent EmbeddingsInputContent(string id = null, Azure.Data.AI.EmbeddingContentKind? kind = default(Azure.Data.AI.EmbeddingContentKind?), string content = null, System.Uri uri = null, string sasToken = null) { throw null; }
+        public static Azure.Data.AI.EmbeddingOutput EmbeddingOutput(string id = null, System.Uri uri = null, string sasToken = null, System.DateTimeOffset expiresOn = default(System.DateTimeOffset), int recordCount = 0, long sizeInBytes = (long)0, string sha256 = null, string contentType = null) { throw null; }
+        public static Azure.Data.AI.EmbeddingResult EmbeddingResult(string model = null, string modelVersion = null, Azure.Data.AI.EmbeddingOutputDataKind outputDataKind = default(Azure.Data.AI.EmbeddingOutputDataKind), System.Collections.Generic.IEnumerable<Azure.Data.AI.EmbeddingItem> data = null, Azure.Data.AI.EmbeddingUsage usage = null, System.Collections.Generic.IEnumerable<Azure.Data.AI.EmbeddingWarning> warnings = null, Azure.Data.AI.EmbeddingOutput output = null) { throw null; }
         public static Azure.Data.AI.EmbeddingUsage EmbeddingUsage(string kind = null, long? promptTokens = default(long?), long? totalTokens = default(long?)) { throw null; }
+        public static Azure.Data.AI.EmbeddingWarning EmbeddingWarning(Azure.Data.AI.EmbeddingWarningCode code = default(Azure.Data.AI.EmbeddingWarningCode), int? codeNumber = default(int?), int index = 0, long? inputTokens = default(long?), long? tokens = default(long?), string message = null) { throw null; }
         public static Azure.Data.AI.LatencyResult LatencyResult(System.TimeSpan? dataPreprocessDuration = default(System.TimeSpan?), System.TimeSpan? inferenceDuration = default(System.TimeSpan?), System.TimeSpan? postProcessDuration = default(System.TimeSpan?)) { throw null; }
         public static Azure.Data.AI.MultimodalDenseAndMultiVectorEmbedding MultimodalDenseAndMultiVectorEmbedding(int index = 0, string id = null, Azure.Data.AI.EmbeddingContentKind contentKind = default(Azure.Data.AI.EmbeddingContentKind), int? width = default(int?), int? height = default(int?), Azure.Data.AI.EmbeddingImageFormat? format = default(Azure.Data.AI.EmbeddingImageFormat?), long? tokens = default(long?), long? visualTokens = default(long?), bool? truncated = default(bool?), long? inputTokens = default(long?), System.Collections.Generic.IEnumerable<int> shape = null, System.BinaryData embedding = null, System.BinaryData multiEmbedding = null) { throw null; }
         public static Azure.Data.AI.MultimodalDenseEmbedding MultimodalDenseEmbedding(int index = 0, string id = null, Azure.Data.AI.EmbeddingContentKind contentKind = default(Azure.Data.AI.EmbeddingContentKind), int? width = default(int?), int? height = default(int?), Azure.Data.AI.EmbeddingImageFormat? format = default(Azure.Data.AI.EmbeddingImageFormat?), long? tokens = default(long?), long? visualTokens = default(long?), bool? truncated = default(bool?), long? inputTokens = default(long?), System.BinaryData embedding = null) { throw null; }
-        public static Azure.Data.AI.MultimodalEmbeddingOutput MultimodalEmbeddingOutput(string id = null, System.Uri uri = null, string sasToken = null, System.DateTimeOffset expiresOn = default(System.DateTimeOffset), int recordCount = 0, long sizeInBytes = (long)0, string sha256 = null, string contentType = null) { throw null; }
         public static Azure.Data.AI.MultimodalEmbeddingUsage MultimodalEmbeddingUsage(long? promptTokens = default(long?), long? totalTokens = default(long?), long? textTokens = default(long?), int imageCount = 0, long? visualTokens = default(long?)) { throw null; }
-        public static Azure.Data.AI.MultimodalEmbeddingWarning MultimodalEmbeddingWarning(Azure.Data.AI.EmbeddingWarningCode code = default(Azure.Data.AI.EmbeddingWarningCode), int? codeNumber = default(int?), int index = 0, long? inputTokens = default(long?), long? tokens = default(long?), string message = null) { throw null; }
         public static Azure.Data.AI.MultimodalMultiVectorEmbedding MultimodalMultiVectorEmbedding(int index = 0, string id = null, Azure.Data.AI.EmbeddingContentKind contentKind = default(Azure.Data.AI.EmbeddingContentKind), int? width = default(int?), int? height = default(int?), Azure.Data.AI.EmbeddingImageFormat? format = default(Azure.Data.AI.EmbeddingImageFormat?), long? tokens = default(long?), long? visualTokens = default(long?), bool? truncated = default(bool?), long? inputTokens = default(long?), System.Collections.Generic.IEnumerable<int> shape = null, System.BinaryData multiEmbedding = null) { throw null; }
         public static Azure.Data.AI.SemanticRerankingContent SemanticRerankingContent(string query = null, System.Collections.Generic.IEnumerable<string> documents = null, bool? returnDocuments = default(bool?), int? topK = default(int?), int? batchSize = default(int?), bool? sort = default(bool?), Azure.Data.AI.SemanticRerankingDocumentType? documentType = default(Azure.Data.AI.SemanticRerankingDocumentType?), System.Collections.Generic.IEnumerable<string> targetPaths = null, string model = null, bool? returnSentenceScore = default(bool?)) { throw null; }
         public static Azure.Data.AI.SemanticRerankingMetadata SemanticRerankingMetadata(Azure.Data.AI.TokenUsageResult tokenUsage = null, Azure.Data.AI.LatencyResult latency = null, string modelName = null, string modelVersion = null) { throw null; }
@@ -325,27 +365,6 @@ namespace Azure.Data.AI
         string System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.MultimodalDenseEmbedding>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.MultimodalDenseEmbedding>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MultimodalEmbeddingOutput : System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.MultimodalEmbeddingOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.MultimodalEmbeddingOutput>
-    {
-        internal MultimodalEmbeddingOutput() { }
-        public string ContentType { get { throw null; } }
-        public System.DateTimeOffset ExpiresOn { get { throw null; } }
-        public string Id { get { throw null; } }
-        public int RecordCount { get { throw null; } }
-        public string SasToken { get { throw null; } }
-        public string Sha256 { get { throw null; } }
-        public long SizeInBytes { get { throw null; } }
-        public System.Uri Uri { get { throw null; } }
-        protected virtual Azure.Data.AI.MultimodalEmbeddingOutput JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.Data.AI.MultimodalEmbeddingOutput PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.Data.AI.MultimodalEmbeddingOutput System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.MultimodalEmbeddingOutput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.MultimodalEmbeddingOutput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Data.AI.MultimodalEmbeddingOutput System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.MultimodalEmbeddingOutput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.MultimodalEmbeddingOutput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.MultimodalEmbeddingOutput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class MultimodalEmbeddingUsage : Azure.Data.AI.EmbeddingUsage, System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.MultimodalEmbeddingUsage>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.MultimodalEmbeddingUsage>
     {
         internal MultimodalEmbeddingUsage() { }
@@ -361,25 +380,6 @@ namespace Azure.Data.AI
         Azure.Data.AI.MultimodalEmbeddingUsage System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.MultimodalEmbeddingUsage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.MultimodalEmbeddingUsage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.MultimodalEmbeddingUsage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MultimodalEmbeddingWarning : System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.MultimodalEmbeddingWarning>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.MultimodalEmbeddingWarning>
-    {
-        internal MultimodalEmbeddingWarning() { }
-        public Azure.Data.AI.EmbeddingWarningCode Code { get { throw null; } }
-        public int? CodeNumber { get { throw null; } }
-        public int Index { get { throw null; } }
-        public long? InputTokens { get { throw null; } }
-        public string Message { get { throw null; } }
-        public long? Tokens { get { throw null; } }
-        protected virtual Azure.Data.AI.MultimodalEmbeddingWarning JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.Data.AI.MultimodalEmbeddingWarning PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.Data.AI.MultimodalEmbeddingWarning System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.MultimodalEmbeddingWarning>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.MultimodalEmbeddingWarning>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.Data.AI.MultimodalEmbeddingWarning System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.MultimodalEmbeddingWarning>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.MultimodalEmbeddingWarning>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.MultimodalEmbeddingWarning>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MultimodalMultiVectorEmbedding : Azure.Data.AI.EmbeddingItem, System.ClientModel.Primitives.IJsonModel<Azure.Data.AI.MultimodalMultiVectorEmbedding>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AI.MultimodalMultiVectorEmbedding>
     {

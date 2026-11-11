@@ -30,7 +30,7 @@ namespace Azure.Data.AI
             OutputDataKind = outputDataKind;
             Data = data.ToList();
             Usage = usage;
-            Warnings = new ChangeTrackingList<MultimodalEmbeddingWarning>();
+            Warnings = new ChangeTrackingList<EmbeddingWarning>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EmbeddingResult"/>. </summary>
@@ -42,7 +42,7 @@ namespace Azure.Data.AI
         /// <param name="warnings"> Things to know about a successful response, such as truncated items. Omitted when there are none. </param>
         /// <param name="output"> With `delivery: link`: where to read the results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EmbeddingResult(string model, string modelVersion, EmbeddingOutputDataKind outputDataKind, IList<EmbeddingItem> data, EmbeddingUsage usage, IList<MultimodalEmbeddingWarning> warnings, MultimodalEmbeddingOutput output, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EmbeddingResult(string model, string modelVersion, EmbeddingOutputDataKind outputDataKind, IList<EmbeddingItem> data, EmbeddingUsage usage, IList<EmbeddingWarning> warnings, EmbeddingOutput output, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             ModelVersion = modelVersion;
@@ -70,9 +70,9 @@ namespace Azure.Data.AI
         public EmbeddingUsage Usage { get; }
 
         /// <summary> Things to know about a successful response, such as truncated items. Omitted when there are none. </summary>
-        public IList<MultimodalEmbeddingWarning> Warnings { get; }
+        public IList<EmbeddingWarning> Warnings { get; }
 
         /// <summary> With `delivery: link`: where to read the results. </summary>
-        public MultimodalEmbeddingOutput Output { get; }
+        public EmbeddingOutput Output { get; }
     }
 }

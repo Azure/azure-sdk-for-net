@@ -13,56 +13,56 @@ using System.Text.Json;
 namespace Azure.Data.AI
 {
     /// <summary> Something about a successful multimodal embedding response the caller should know. </summary>
-    public partial class MultimodalEmbeddingWarning : IJsonModel<MultimodalEmbeddingWarning>
+    public partial class EmbeddingWarning : IJsonModel<EmbeddingWarning>
     {
-        /// <summary> Initializes a new instance of <see cref="MultimodalEmbeddingWarning"/> for deserialization. </summary>
-        internal MultimodalEmbeddingWarning()
+        /// <summary> Initializes a new instance of <see cref="EmbeddingWarning"/> for deserialization. </summary>
+        internal EmbeddingWarning()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MultimodalEmbeddingWarning PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EmbeddingWarning PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MultimodalEmbeddingWarning>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EmbeddingWarning>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMultimodalEmbeddingWarning(document.RootElement, options);
+                        return DeserializeEmbeddingWarning(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MultimodalEmbeddingWarning)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmbeddingWarning)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MultimodalEmbeddingWarning>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EmbeddingWarning>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureDataAIContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MultimodalEmbeddingWarning)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmbeddingWarning)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MultimodalEmbeddingWarning>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EmbeddingWarning>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MultimodalEmbeddingWarning IPersistableModel<MultimodalEmbeddingWarning>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EmbeddingWarning IPersistableModel<EmbeddingWarning>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MultimodalEmbeddingWarning>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EmbeddingWarning>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MultimodalEmbeddingWarning>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EmbeddingWarning>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -73,10 +73,10 @@ namespace Azure.Data.AI
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MultimodalEmbeddingWarning>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EmbeddingWarning>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultimodalEmbeddingWarning)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EmbeddingWarning)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("code"u8);
             writer.WriteStringValue(Code.ToString());
@@ -118,24 +118,24 @@ namespace Azure.Data.AI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MultimodalEmbeddingWarning IJsonModel<MultimodalEmbeddingWarning>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EmbeddingWarning IJsonModel<EmbeddingWarning>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MultimodalEmbeddingWarning JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EmbeddingWarning JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MultimodalEmbeddingWarning>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EmbeddingWarning>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultimodalEmbeddingWarning)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EmbeddingWarning)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMultimodalEmbeddingWarning(document.RootElement, options);
+            return DeserializeEmbeddingWarning(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MultimodalEmbeddingWarning DeserializeMultimodalEmbeddingWarning(JsonElement element, ModelReaderWriterOptions options)
+        internal static EmbeddingWarning DeserializeEmbeddingWarning(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -197,7 +197,7 @@ namespace Azure.Data.AI
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new MultimodalEmbeddingWarning(
+            return new EmbeddingWarning(
                 code,
                 codeNumber,
                 index,

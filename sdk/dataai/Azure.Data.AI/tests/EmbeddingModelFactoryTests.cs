@@ -29,7 +29,7 @@ namespace Azure.Data.AI.Tests
         public void OutputSerializesOptionalFactoryUrl(bool includeUrl)
         {
             Uri url = includeUrl ? new Uri("https://example.blob.core.windows.net/results/output.json") : null;
-            var output = InferenceModelFactory.MultimodalEmbeddingOutput(
+            var output = InferenceModelFactory.EmbeddingOutput(
                 id: "output-id", uri: url, recordCount: 3, sizeInBytes: 129960);
 
             using JsonDocument json = Serialize(output);

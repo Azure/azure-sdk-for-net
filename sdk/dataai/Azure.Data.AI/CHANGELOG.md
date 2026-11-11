@@ -7,7 +7,7 @@
 - Added multimodal embedding operations for text, queries, and document images, with dense, multi-vector, and combined results.
 - Added inline and link delivery, output encoding and numeric precision selection, and embedding usage and warnings.
 - Added flattened `GetEmbeddings` and `GetEmbeddingsAsync` methods; callers pass request settings directly rather than creating a request options object.
-- Added .NET overloads that accept anonymous objects or dictionaries as embedding inputs and return typed results, without requiring `EmbeddingsInputContent` instances. Omitted input kinds default to text.
+- Added .NET overloads that accept anonymous objects or dictionaries as embedding inputs and return typed results, without requiring `EmbeddingInput` instances. Omitted input kinds default to text; PascalCase members and SDK content kinds are supported, and unknown or duplicate properties are rejected.
 - Added generic embedding result and usage models, with specialized multimodal implementations.
 
 ### Breaking Changes

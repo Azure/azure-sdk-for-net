@@ -67,11 +67,14 @@ Embedding model availability and image input support depend on the endpoint.
 
 The .NET overloads accept anonymous objects or dictionaries using the JSON property names
 `kind`, `id`, `content`, `url`, and `sasToken`. Omit `kind` for text, or set it to `query` or `image`.
+Anonymous members and dictionary keys can also use PascalCase, and `kind` accepts
+`EmbeddingContentKind` values. Unknown or duplicate properties are rejected before sending.
+`JsonElement` inputs must use the exact JSON property names.
 Settings stay as named arguments and the response is typed.
 For image inputs, authenticate `client` with Microsoft Entra ID and provide a caller-signed
 user-delegation SAS for the image blob.
 
-```C#
+```C# Snippet:Inference_GetMultimodalEmbeddings
 Response<EmbeddingResult> response = await client.GetEmbeddingsAsync(
     inputs: new object[]
     {
@@ -100,7 +103,7 @@ EmbeddingResult result = response.Value;
 Use a model version and dimension supported by your endpoint. Omit `dimensions` to use the
 model's native width. Each input produces a separate embedding, not a fused query/image embedding.
 Anonymous inputs use reflection-based JSON serialization; trimmed or Native AOT applications
-should use the typed `EmbeddingsInputContent` overloads instead. These inputs have a parameterless
+should use the typed `EmbeddingInput` overloads instead. These inputs have a parameterless
 constructor and optional `Kind`, so text inputs only need `Content`. `EmbeddingResult` exposes generic
 `EmbeddingItem` and `EmbeddingUsage` bases; cast to the concrete multimodal models to access their
 vector payloads and modality-specific metadata.

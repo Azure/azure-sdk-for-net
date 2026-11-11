@@ -23,7 +23,7 @@ namespace Azure.Data.AI
         /// at most 8 images. Images can be up to 20 MiB and 50 megapixels each (JPEG, PNG, GIF or WebP), with at most 20 MiB
         /// of images per request. The request body can be up to 30,000,000 bytes.
         /// </param>
-        internal EmbedContent(IEnumerable<EmbeddingsInputContent> inputs)
+        internal EmbedContent(IEnumerable<EmbeddingInput> inputs)
         {
             Inputs = inputs.ToList();
         }
@@ -56,7 +56,7 @@ namespace Azure.Data.AI
         /// endpoint has a result store, and every other request gets `inline`.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EmbedContent(IList<EmbeddingsInputContent> inputs, string model, string modelVersion, EmbeddingVectorKind? vectorKind, int? dimensions, int? multiDimensions, int? maxVectorCount, EmbeddingOutputDataKind? outputDataKind, EmbeddingEncodingFormat? encodingFormat, EmbeddingDelivery? delivery, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EmbedContent(IList<EmbeddingInput> inputs, string model, string modelVersion, EmbeddingVectorKind? vectorKind, int? dimensions, int? multiDimensions, int? maxVectorCount, EmbeddingOutputDataKind? outputDataKind, EmbeddingEncodingFormat? encodingFormat, EmbeddingDelivery? delivery, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Inputs = inputs;
             Model = model;
@@ -76,7 +76,7 @@ namespace Azure.Data.AI
         /// at most 8 images. Images can be up to 20 MiB and 50 megapixels each (JPEG, PNG, GIF or WebP), with at most 20 MiB
         /// of images per request. The request body can be up to 30,000,000 bytes.
         /// </summary>
-        public IList<EmbeddingsInputContent> Inputs { get; }
+        public IList<EmbeddingInput> Inputs { get; }
 
         /// <summary> The model to use. Defaults to `microsoft-embedding-1-large` (Microsoft Embedding 1-large). </summary>
         public string Model { get; }

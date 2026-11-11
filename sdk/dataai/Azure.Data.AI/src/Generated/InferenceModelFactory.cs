@@ -131,10 +131,10 @@ namespace Azure.Data.AI
         /// API. A SAS valid for more than 15 minutes is accepted with warning `EMBEDDING_SAS_LONG_LIVED`. The service uses
         /// it for one read and never stores, logs or returns it.
         /// </param>
-        /// <returns> A new <see cref="AI.EmbeddingsInputContent"/> instance for mocking. </returns>
-        public static EmbeddingsInputContent EmbeddingsInputContent(string id = default, EmbeddingContentKind? kind = default, string content = default, Uri uri = default, string sasToken = default)
+        /// <returns> A new <see cref="AI.EmbeddingInput"/> instance for mocking. </returns>
+        public static EmbeddingInput EmbeddingInput(string id = default, EmbeddingContentKind? kind = default, string content = default, Uri uri = default, string sasToken = default)
         {
-            return new EmbeddingsInputContent(
+            return new EmbeddingInput(
                 id,
                 kind,
                 content,
@@ -152,10 +152,10 @@ namespace Azure.Data.AI
         /// <param name="warnings"> Things to know about a successful response, such as truncated items. Omitted when there are none. </param>
         /// <param name="output"> With `delivery: link`: where to read the results. </param>
         /// <returns> A new <see cref="AI.EmbeddingResult"/> instance for mocking. </returns>
-        public static EmbeddingResult EmbeddingResult(string model = default, string modelVersion = default, EmbeddingOutputDataKind outputDataKind = default, IEnumerable<EmbeddingItem> data = default, EmbeddingUsage usage = default, IEnumerable<MultimodalEmbeddingWarning> warnings = default, MultimodalEmbeddingOutput output = default)
+        public static EmbeddingResult EmbeddingResult(string model = default, string modelVersion = default, EmbeddingOutputDataKind outputDataKind = default, IEnumerable<EmbeddingItem> data = default, EmbeddingUsage usage = default, IEnumerable<EmbeddingWarning> warnings = default, EmbeddingOutput output = default)
         {
             data ??= new ChangeTrackingList<EmbeddingItem>();
-            warnings ??= new ChangeTrackingList<MultimodalEmbeddingWarning>();
+            warnings ??= new ChangeTrackingList<EmbeddingWarning>();
 
             return new EmbeddingResult(
                 model,
@@ -335,10 +335,10 @@ namespace Azure.Data.AI
         /// <param name="inputTokens"> For `EMBEDDING_INPUT_TRUNCATED`: the item's tokens before truncation. </param>
         /// <param name="tokens"> For `EMBEDDING_INPUT_TRUNCATED`: the tokens embedded. </param>
         /// <param name="message"> A human-readable description that names the item, for example `inputs[1]`. </param>
-        /// <returns> A new <see cref="AI.MultimodalEmbeddingWarning"/> instance for mocking. </returns>
-        public static MultimodalEmbeddingWarning MultimodalEmbeddingWarning(EmbeddingWarningCode code = default, int? codeNumber = default, int index = default, long? inputTokens = default, long? tokens = default, string message = default)
+        /// <returns> A new <see cref="AI.EmbeddingWarning"/> instance for mocking. </returns>
+        public static EmbeddingWarning EmbeddingWarning(EmbeddingWarningCode code = default, int? codeNumber = default, int index = default, long? inputTokens = default, long? tokens = default, string message = default)
         {
-            return new MultimodalEmbeddingWarning(
+            return new EmbeddingWarning(
                 code,
                 codeNumber,
                 index,
@@ -363,10 +363,10 @@ namespace Azure.Data.AI
         /// <param name="sizeInBytes"> The size of the file in bytes. </param>
         /// <param name="sha256"> The lowercase hexadecimal SHA-256 hash of the file. </param>
         /// <param name="contentType"> The media type of the file: `application/json`. </param>
-        /// <returns> A new <see cref="AI.MultimodalEmbeddingOutput"/> instance for mocking. </returns>
-        public static MultimodalEmbeddingOutput MultimodalEmbeddingOutput(string id = default, Uri uri = default, string sasToken = default, DateTimeOffset expiresOn = default, int recordCount = default, long sizeInBytes = default, string sha256 = default, string contentType = default)
+        /// <returns> A new <see cref="AI.EmbeddingOutput"/> instance for mocking. </returns>
+        public static EmbeddingOutput EmbeddingOutput(string id = default, Uri uri = default, string sasToken = default, DateTimeOffset expiresOn = default, int recordCount = default, long sizeInBytes = default, string sha256 = default, string contentType = default)
         {
-            return new MultimodalEmbeddingOutput(
+            return new EmbeddingOutput(
                 id,
                 uri,
                 sasToken,

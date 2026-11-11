@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.Data.AI
 {
     /// <summary> Something about a successful multimodal embedding response the caller should know. </summary>
-    public partial class MultimodalEmbeddingWarning
+    public partial class EmbeddingWarning
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MultimodalEmbeddingWarning"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmbeddingWarning"/>. </summary>
         /// <param name="code"> A machine-readable warning code. </param>
         /// <param name="index"> The zero-based position of the item the warning is about, in `inputs` and `data`. </param>
         /// <param name="message"> A human-readable description that names the item, for example `inputs[1]`. </param>
-        internal MultimodalEmbeddingWarning(EmbeddingWarningCode code, int index, string message)
+        internal EmbeddingWarning(EmbeddingWarningCode code, int index, string message)
         {
             Code = code;
             Index = index;
             Message = message;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MultimodalEmbeddingWarning"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EmbeddingWarning"/>. </summary>
         /// <param name="code"> A machine-readable warning code. </param>
         /// <param name="codeNumber"> A stable numeric alias of `code`: `1001` for `EMBEDDING_INPUT_TRUNCATED`, `1002` for `EMBEDDING_SAS_LONG_LIVED`. </param>
         /// <param name="index"> The zero-based position of the item the warning is about, in `inputs` and `data`. </param>
@@ -35,7 +35,7 @@ namespace Azure.Data.AI
         /// <param name="tokens"> For `EMBEDDING_INPUT_TRUNCATED`: the tokens embedded. </param>
         /// <param name="message"> A human-readable description that names the item, for example `inputs[1]`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MultimodalEmbeddingWarning(EmbeddingWarningCode code, int? codeNumber, int index, long? inputTokens, long? tokens, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EmbeddingWarning(EmbeddingWarningCode code, int? codeNumber, int index, long? inputTokens, long? tokens, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             CodeNumber = codeNumber;
