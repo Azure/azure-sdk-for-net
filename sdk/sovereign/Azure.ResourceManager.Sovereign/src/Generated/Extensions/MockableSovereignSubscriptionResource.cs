@@ -122,11 +122,11 @@ namespace Azure.ResourceManager.Sovereign.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<SovereignNameAvailabilityResult>> CheckNameAvailabilityAsync(SovereignNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SovereignNameAvailabilityResult>> CheckSovereignNameAvailabilityAsync(SovereignNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = OperationsClientDiagnostics.CreateScope("MockableSovereignSubscriptionResource.CheckNameAvailability");
+            using DiagnosticScope scope = OperationsClientDiagnostics.CreateScope("MockableSovereignSubscriptionResource.CheckSovereignNameAvailability");
             scope.Start();
             try
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Sovereign.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationsRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SovereignNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = OperationsRestClient.CreateCheckSovereignNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SovereignNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SovereignNameAvailabilityResult> response = Response.FromValue(SovereignNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -170,11 +170,11 @@ namespace Azure.ResourceManager.Sovereign.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<SovereignNameAvailabilityResult> CheckNameAvailability(SovereignNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<SovereignNameAvailabilityResult> CheckSovereignNameAvailability(SovereignNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = OperationsClientDiagnostics.CreateScope("MockableSovereignSubscriptionResource.CheckNameAvailability");
+            using DiagnosticScope scope = OperationsClientDiagnostics.CreateScope("MockableSovereignSubscriptionResource.CheckSovereignNameAvailability");
             scope.Start();
             try
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Sovereign.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationsRestClient.CreateCheckNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SovereignNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = OperationsRestClient.CreateCheckSovereignNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), SovereignNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SovereignNameAvailabilityResult> response = Response.FromValue(SovereignNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -219,11 +219,11 @@ namespace Azure.ResourceManager.Sovereign.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<SovereignNameAvailabilityResult>> CheckNameAvailabilityLocalAsync(AzureLocation location, SovereignNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SovereignNameAvailabilityResult>> CheckSovereignNameAvailabilityLocalAsync(AzureLocation location, SovereignNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = OperationsClientDiagnostics.CreateScope("MockableSovereignSubscriptionResource.CheckNameAvailabilityLocal");
+            using DiagnosticScope scope = OperationsClientDiagnostics.CreateScope("MockableSovereignSubscriptionResource.CheckSovereignNameAvailabilityLocal");
             scope.Start();
             try
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Sovereign.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationsRestClient.CreateCheckNameAvailabilityLocalRequest(Guid.Parse(Id.SubscriptionId), location, SovereignNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = OperationsRestClient.CreateCheckSovereignNameAvailabilityLocalRequest(Guid.Parse(Id.SubscriptionId), location, SovereignNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SovereignNameAvailabilityResult> response = Response.FromValue(SovereignNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -268,11 +268,11 @@ namespace Azure.ResourceManager.Sovereign.Mocking
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<SovereignNameAvailabilityResult> CheckNameAvailabilityLocal(AzureLocation location, SovereignNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<SovereignNameAvailabilityResult> CheckSovereignNameAvailabilityLocal(AzureLocation location, SovereignNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = OperationsClientDiagnostics.CreateScope("MockableSovereignSubscriptionResource.CheckNameAvailabilityLocal");
+            using DiagnosticScope scope = OperationsClientDiagnostics.CreateScope("MockableSovereignSubscriptionResource.CheckSovereignNameAvailabilityLocal");
             scope.Start();
             try
             {
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Sovereign.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = OperationsRestClient.CreateCheckNameAvailabilityLocalRequest(Guid.Parse(Id.SubscriptionId), location, SovereignNameAvailabilityContent.ToRequestContent(content), context);
+                HttpMessage message = OperationsRestClient.CreateCheckSovereignNameAvailabilityLocalRequest(Guid.Parse(Id.SubscriptionId), location, SovereignNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SovereignNameAvailabilityResult> response = Response.FromValue(SovereignNameAvailabilityResult.FromResponse(result), result);
                 if (response.Value == null)

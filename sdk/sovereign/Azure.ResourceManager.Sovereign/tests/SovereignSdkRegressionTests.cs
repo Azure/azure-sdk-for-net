@@ -3,8 +3,8 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Linq;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -123,6 +123,49 @@ namespace Azure.ResourceManager.Sovereign.Tests
             Assert.That(operation.GetRehydrationToken(), Is.Not.Null);
             var response = await operation.WaitForCompletionAsync();
             Assert.That(response.Value.RemediationId, Is.EqualTo("polled-id"));
+        }
+
+        [TestCase(false, false)]
+        [TestCase(false, true)]
+        [TestCase(true, false)]
+        [TestCase(true, true)]
+        public async Task NameAvailabilityUsesSovereignOperationNames(bool local, bool async)
+        {
+            const string subscriptionId = "00000000-0000-0000-0000-000000000001";
+            var transport = new MockTransport(new MockResponse(200).SetContent("{\"nameAvailable\":true}"));
+            var options = new ArmClientOptions { Transport = transport };
+            var subscription = new ArmClient(new MockCredential(), subscriptionId, options)
+                .GetSubscriptionResource(SubscriptionResource.CreateResourceIdentifier(subscriptionId));
+            var content = new SovereignNameAvailabilityContent
+            {
+                Name = "test",
+                Type = "Microsoft.Sovereign/sovereignViews"
+            };
+            Response<SovereignNameAvailabilityResult> response;
+            if (local)
+            {
+                response = async
+                    ? await subscription.CheckSovereignNameAvailabilityLocalAsync(AzureLocation.WestUS, content)
+                    : subscription.CheckSovereignNameAvailabilityLocal(AzureLocation.WestUS, content);
+            }
+            else
+            {
+                response = async
+                    ? await subscription.CheckSovereignNameAvailabilityAsync(content)
+                    : subscription.CheckSovereignNameAvailability(content);
+            }
+
+            Assert.That(response.Value.IsNameAvailable, Is.True);
+            var request = transport.Requests.Single();
+            string scope = local ? "/locations/westus" : string.Empty;
+            Assert.That(request.Uri.ToUri().AbsolutePath,
+                Is.EqualTo($"/subscriptions/{subscriptionId}/providers/Microsoft.Sovereign{scope}/checkNameAvailability"));
+            Assert.That(request.Method, Is.EqualTo(RequestMethod.Post));
+            using var body = new MemoryStream();
+            request.Content.WriteTo(body, default);
+            using JsonDocument document = JsonDocument.Parse(body.ToArray());
+            Assert.That(document.RootElement.GetProperty("name").GetString(), Is.EqualTo(content.Name));
+            Assert.That(document.RootElement.GetProperty("type").GetString(), Is.EqualTo(content.Type));
         }
 
         [TestCase(false)]

@@ -7,7 +7,7 @@
 This is the first preview release of the Microsoft Azure Sovereign management client library for .NET, generated from TypeSpec with API version `2026-10-31-preview`.
 
 - Added `SovereignViewResource` and `SovereignViewCollection` to manage Sovereign views.
-- Added the `CheckNameAvailability` operation.
+- Added the `CheckSovereignNameAvailability` and `CheckSovereignNameAvailabilityLocal` operations.
 
 ### Bugs Fixed
 
