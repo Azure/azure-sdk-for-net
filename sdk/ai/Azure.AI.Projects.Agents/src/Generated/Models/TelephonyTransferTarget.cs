@@ -16,17 +16,14 @@ namespace Azure.AI.Projects.Agents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TelephonyTransferTarget"/>. </summary>
-        /// <param name="name"> The unique name exposed to the voice agent for this transfer target. </param>
         /// <param name="description"> A description that helps the voice agent decide when to use this target. </param>
         /// <param name="destination"> The provider-specific transfer destination. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="description"/> or <paramref name="destination"/> is null. </exception>
-        public TelephonyTransferTarget(string name, string description, TelephonyTransferDestination destination)
+        /// <exception cref="ArgumentNullException"> <paramref name="description"/> or <paramref name="destination"/> is null. </exception>
+        public TelephonyTransferTarget(string description, TelephonyTransferDestination destination)
         {
-            Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(description, nameof(description));
             Argument.AssertNotNull(destination, nameof(destination));
 
-            Name = name;
             Description = description;
             Destination = destination;
         }

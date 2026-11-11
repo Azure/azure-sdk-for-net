@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HybridCompute
     /// <summary>
     /// A class representing a collection of <see cref="HybridComputeSettingsResource"/> and their operations.
     /// Each <see cref="HybridComputeSettingsResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="HybridComputeSettingsCollection"/> instance call the GetHybridComputeSettings method from an instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="HybridComputeSettingsCollection"/> instance call the GetAllHybridComputeSettings method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class HybridComputeSettingsCollection : ArmCollection
     {

@@ -21,13 +21,15 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
         // ----- ServiceVersion -----
 
-        [Test]
-        public void UnsupportedServiceVersionThrows()
+        [TestCase(-1)]
+        [TestCase(9)]
+        [TestCase(9999)]
+        public void UnsupportedServiceVersionThrows(int version)
         {
             // The ctor stores the unrecognized value (the enum is just an int);
             // the ArgumentException must be raised when CertificateClient asks
             // GetVersionString() to turn it into a wire string.
-            var bogus = (CertificateClientOptions.ServiceVersion)9999;
+            var bogus = (CertificateClientOptions.ServiceVersion)version;
             var options = new CertificateClientOptions(bogus);
 
             ArgumentException ex = Assert.Catch<ArgumentException>(
@@ -36,8 +38,32 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             // CertificateClientOptions.GetVersionString (ArgumentException) may surface
             // first depending on construction order; both derive from ArgumentException
             // and both must mention the unsupported version value.
-            StringAssert.Contains("9999", ex.Message,
+            StringAssert.Contains(version.ToString(), ex.Message,
                 "Exception message should mention the unsupported version value.");
+        }
+
+        [Test]
+        public void ReleasedStableServiceVersionIsPreserved()
+        {
+            Assert.AreEqual(8, (int)CertificateClientOptions.ServiceVersion.V2026_04_01);
+        }
+
+        [Test]
+        public void DefaultServiceVersionMatchesReleasedStableValue()
+        {
+            var constructor = typeof(CertificateClientOptions).GetConstructor(
+                new[] { typeof(CertificateClientOptions.ServiceVersion) });
+            Assert.NotNull(constructor);
+            Assert.AreEqual(8, Convert.ToInt32(constructor.GetParameters()[0].DefaultValue));
+            Assert.AreEqual(CertificateClientOptions.ServiceVersion.V2026_04_01,
+                new CertificateClientOptions().Version);
+        }
+
+        [Test]
+        public void PreviewServiceVersionIsNotExposed()
+        {
+            Assert.That(Enum.GetNames(typeof(CertificateClientOptions.ServiceVersion)),
+                Does.Not.Contain("V2026_03_01_Preview"));
         }
 
         [Test]
@@ -68,7 +94,6 @@ namespace Azure.Security.KeyVault.Certificates.Tests
         [TestCase(CertificateClientOptions.ServiceVersion.V7_5, "7.5")]
         [TestCase(CertificateClientOptions.ServiceVersion.V7_6, "7.6")]
         [TestCase(CertificateClientOptions.ServiceVersion.V2025_07_01, "2025-07-01")]
-        [TestCase(CertificateClientOptions.ServiceVersion.V2026_03_01_Preview, "2026-03-01-preview")]
         [TestCase(CertificateClientOptions.ServiceVersion.V2026_04_01, "2026-04-01")]
         public void GetVersionString_MatchesWireString(CertificateClientOptions.ServiceVersion version, string expected)
         {
@@ -76,8 +101,16 @@ namespace Azure.Security.KeyVault.Certificates.Tests
             Assert.AreEqual(expected, options.GetVersionString());
         }
 
+        [TestCase(CertificateClientOptions.ServiceVersion.V7_0, "7.0")]
+        [TestCase(CertificateClientOptions.ServiceVersion.V7_1, "7.1")]
+        [TestCase(CertificateClientOptions.ServiceVersion.V7_2, "7.2")]
+        [TestCase(CertificateClientOptions.ServiceVersion.V7_3, "7.3")]
+        [TestCase(CertificateClientOptions.ServiceVersion.V7_4, "7.4")]
+        [TestCase(CertificateClientOptions.ServiceVersion.V7_5, "7.5")]
         [TestCase(CertificateClientOptions.ServiceVersion.V7_6, "7.6")]
+        [TestCase(CertificateClientOptions.ServiceVersion.V2025_07_01, "2025-07-01")]
         [TestCase(CertificateClientOptions.ServiceVersion.V2026_04_01, "2026-04-01")]
+        [TestCase((CertificateClientOptions.ServiceVersion)8, "2026-04-01", TestName = "ReleasedServiceVersionValue_PropagatesToWireApiVersionQuery")]
         [TestCase(null, "2026-04-01")]
         public async Task ServiceVersion_PropagatesToWireApiVersionQuery(CertificateClientOptions.ServiceVersion? version, string expected)
         {
@@ -90,6 +123,21 @@ namespace Azure.Security.KeyVault.Certificates.Tests
 
             string actual = GetApiVersionQuery(transport.Requests[0]);
             Assert.AreEqual(expected, actual, "Version configured on options must reach the wire as api-version.");
+        }
+
+        [Test]
+        public void ReleasedServiceVersion_PropagatesToSyncWireApiVersionQuery()
+        {
+            var transport = new MockTransport(MockGetCertificateOk());
+            var options = new CertificateClientOptions((CertificateClientOptions.ServiceVersion)8)
+            {
+                Transport = transport
+            };
+
+            using var client = new CertificateClient(TestVault, new MockCredential(), options);
+            client.GetCertificate("x");
+
+            Assert.AreEqual("2026-04-01", GetApiVersionQuery(transport.Requests[0]));
         }
 
         // ----- Options propagation -----

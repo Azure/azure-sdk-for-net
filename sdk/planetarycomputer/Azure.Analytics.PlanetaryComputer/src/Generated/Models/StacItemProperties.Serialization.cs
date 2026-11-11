@@ -18,11 +18,6 @@ namespace Azure.Analytics.PlanetaryComputer
     /// </summary>
     public partial class StacItemProperties : IJsonModel<StacItemProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="StacItemProperties"/> for deserialization. </summary>
-        internal StacItemProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual StacItemProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

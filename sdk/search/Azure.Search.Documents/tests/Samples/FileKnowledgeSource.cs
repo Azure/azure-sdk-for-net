@@ -125,7 +125,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 };
 
 #pragma warning disable SCME0004 // Multipart file request types are experimental.
-                UploadKnowledgeSourceFileMultipartRequest uploadRequest = new UploadKnowledgeSourceFileMultipartRequest(
+                UploadKnowledgeSourceFileMultipartContent uploadRequest = new UploadKnowledgeSourceFileMultipartContent(
                     uploadMetadata,
                     fileData);
                 Response<KnowledgeSourceFile> uploadResponse = await indexClient.UploadKnowledgeSourceFileMultipartAsync(
@@ -152,7 +152,7 @@ namespace Azure.Search.Documents.Tests.Samples
 #pragma warning disable SCME0004 // Multipart file request types are experimental.
                 BinaryData updatedFileData = BinaryData.FromString(
                     "Azure AI Search indexes content and uses semantic ranking to retrieve relevant information.");
-                UpdateKnowledgeSourceFileRequest updateRequest = new UpdateKnowledgeSourceFileRequest(
+                UpdateKnowledgeSourceFileContent updateRequest = new UpdateKnowledgeSourceFileContent(
                     updatedMetadata,
                     updatedFileData);
                 KnowledgeSourceFile updatedFile = await indexClient.UpdateKnowledgeSourceFileAsync(

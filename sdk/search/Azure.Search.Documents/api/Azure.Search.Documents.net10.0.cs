@@ -449,16 +449,16 @@ namespace Azure.Search.Documents.Indexes
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Indexes.Models.SynonymMap>>> GetSynonymMapsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateKnowledgeSourceFile(string sourceName, string fileId, Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0004")]
-        public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.KnowledgeSourceFile> UpdateKnowledgeSourceFile(string sourceName, string fileId, Azure.Search.Documents.Indexes.Models.UpdateKnowledgeSourceFileRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.KnowledgeSourceFile> UpdateKnowledgeSourceFile(string sourceName, string fileId, Azure.Search.Documents.Indexes.Models.UpdateKnowledgeSourceFileContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateKnowledgeSourceFileAsync(string sourceName, string fileId, Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0004")]
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.KnowledgeSourceFile>> UpdateKnowledgeSourceFileAsync(string sourceName, string fileId, Azure.Search.Documents.Indexes.Models.UpdateKnowledgeSourceFileRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.KnowledgeSourceFile>> UpdateKnowledgeSourceFileAsync(string sourceName, string fileId, Azure.Search.Documents.Indexes.Models.UpdateKnowledgeSourceFileContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UploadKnowledgeSourceFileMultipart(string sourceName, Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0004")]
-        public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.KnowledgeSourceFile> UploadKnowledgeSourceFileMultipart(string sourceName, Azure.Search.Documents.Indexes.Models.UploadKnowledgeSourceFileMultipartRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Search.Documents.Indexes.Models.KnowledgeSourceFile> UploadKnowledgeSourceFileMultipart(string sourceName, Azure.Search.Documents.Indexes.Models.UploadKnowledgeSourceFileMultipartContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UploadKnowledgeSourceFileMultipartAsync(string sourceName, Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0004")]
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.KnowledgeSourceFile>> UploadKnowledgeSourceFileMultipartAsync(string sourceName, Azure.Search.Documents.Indexes.Models.UploadKnowledgeSourceFileMultipartRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Indexes.Models.KnowledgeSourceFile>> UploadKnowledgeSourceFileMultipartAsync(string sourceName, Azure.Search.Documents.Indexes.Models.UploadKnowledgeSourceFileMultipartContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
     public static partial class SearchIndexClientHostExtensions
@@ -5601,30 +5601,30 @@ namespace Azure.Search.Documents.Indexes.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.UniqueTokenFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Search.Documents.Indexes.Models.UniqueTokenFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class UpdateKnowledgeSourceFileRequest
+    public partial class UpdateKnowledgeSourceFileContent
     {
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0004")]
-        public UpdateKnowledgeSourceFileRequest(Azure.Search.Documents.Indexes.Models.FileUploadMetadata metadata, System.BinaryData content) { }
+        public UpdateKnowledgeSourceFileContent(Azure.Search.Documents.Indexes.Models.FileUploadMetadata metadata, System.BinaryData content) { }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0004")]
-        public UpdateKnowledgeSourceFileRequest(Azure.Search.Documents.Indexes.Models.FileUploadMetadata metadata, System.ClientModel.FileBinaryContent content) { }
+        public UpdateKnowledgeSourceFileContent(Azure.Search.Documents.Indexes.Models.FileUploadMetadata metadata, System.ClientModel.FileBinaryContent content) { }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0004")]
-        public UpdateKnowledgeSourceFileRequest(Azure.Search.Documents.Indexes.Models.FileUploadMetadata metadata, System.IO.Stream content) { }
+        public UpdateKnowledgeSourceFileContent(Azure.Search.Documents.Indexes.Models.FileUploadMetadata metadata, System.IO.Stream content) { }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0004")]
-        public UpdateKnowledgeSourceFileRequest(Azure.Search.Documents.Indexes.Models.FileUploadMetadata metadata, string contentPath) { }
+        public UpdateKnowledgeSourceFileContent(Azure.Search.Documents.Indexes.Models.FileUploadMetadata metadata, string contentPath) { }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0004")]
         public System.ClientModel.FileBinaryContent Content { get { throw null; } }
         public Azure.Search.Documents.Indexes.Models.FileUploadMetadata Metadata { get { throw null; } }
     }
-    public partial class UploadKnowledgeSourceFileMultipartRequest
+    public partial class UploadKnowledgeSourceFileMultipartContent
     {
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0004")]
-        public UploadKnowledgeSourceFileMultipartRequest(Azure.Search.Documents.Indexes.Models.FileUploadMetadata metadata, System.BinaryData content) { }
+        public UploadKnowledgeSourceFileMultipartContent(Azure.Search.Documents.Indexes.Models.FileUploadMetadata metadata, System.BinaryData content) { }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0004")]
-        public UploadKnowledgeSourceFileMultipartRequest(Azure.Search.Documents.Indexes.Models.FileUploadMetadata metadata, System.ClientModel.FileBinaryContent content) { }
+        public UploadKnowledgeSourceFileMultipartContent(Azure.Search.Documents.Indexes.Models.FileUploadMetadata metadata, System.ClientModel.FileBinaryContent content) { }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0004")]
-        public UploadKnowledgeSourceFileMultipartRequest(Azure.Search.Documents.Indexes.Models.FileUploadMetadata metadata, System.IO.Stream content) { }
+        public UploadKnowledgeSourceFileMultipartContent(Azure.Search.Documents.Indexes.Models.FileUploadMetadata metadata, System.IO.Stream content) { }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0004")]
-        public UploadKnowledgeSourceFileMultipartRequest(Azure.Search.Documents.Indexes.Models.FileUploadMetadata metadata, string contentPath) { }
+        public UploadKnowledgeSourceFileMultipartContent(Azure.Search.Documents.Indexes.Models.FileUploadMetadata metadata, string contentPath) { }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0004")]
         public System.ClientModel.FileBinaryContent Content { get { throw null; } }
         public Azure.Search.Documents.Indexes.Models.FileUploadMetadata Metadata { get { throw null; } }
@@ -7918,9 +7918,9 @@ namespace Azure.Search.Documents.Models
         public static Azure.Search.Documents.Indexes.Models.UaxUrlEmailTokenizer UaxUrlEmailTokenizer(string name = null, int? maxTokenLength = default(int?)) { throw null; }
         public static Azure.Search.Documents.Indexes.Models.UniqueTokenFilter UniqueTokenFilter(string name = null, bool? onlyOnSamePosition = default(bool?)) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0004")]
-        public static Azure.Search.Documents.Indexes.Models.UpdateKnowledgeSourceFileRequest UpdateKnowledgeSourceFileRequest(Azure.Search.Documents.Indexes.Models.FileUploadMetadata metadata = null, System.ClientModel.FileBinaryContent content = null) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.UpdateKnowledgeSourceFileContent UpdateKnowledgeSourceFileContent(Azure.Search.Documents.Indexes.Models.FileUploadMetadata metadata = null, System.ClientModel.FileBinaryContent content = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0004")]
-        public static Azure.Search.Documents.Indexes.Models.UploadKnowledgeSourceFileMultipartRequest UploadKnowledgeSourceFileMultipartRequest(Azure.Search.Documents.Indexes.Models.FileUploadMetadata metadata = null, System.ClientModel.FileBinaryContent content = null) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.UploadKnowledgeSourceFileMultipartContent UploadKnowledgeSourceFileMultipartContent(Azure.Search.Documents.Indexes.Models.FileUploadMetadata metadata = null, System.ClientModel.FileBinaryContent content = null) { throw null; }
         public static Azure.Search.Documents.Models.VectorizableImageBinaryQuery VectorizableImageBinaryQuery(int? kNearestNeighborsCount = default(int?), string fieldsRaw = null, bool? exhaustive = default(bool?), double? oversampling = default(double?), float? weight = default(float?), string base64Image = null) { throw null; }
         public static Azure.Search.Documents.Models.VectorizableImageUrlQuery VectorizableImageUrlQuery(int? kNearestNeighborsCount = default(int?), string fieldsRaw = null, bool? exhaustive = default(bool?), double? oversampling = default(double?), float? weight = default(float?), System.Uri url = null) { throw null; }
         public static Azure.Search.Documents.Models.VectorizableTextQuery VectorizableTextQuery(int? kNearestNeighborsCount = default(int?), string fieldsRaw = null, bool? exhaustive = default(bool?), double? oversampling = default(double?), float? weight = default(float?), string text = null) { throw null; }

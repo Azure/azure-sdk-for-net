@@ -266,7 +266,6 @@ namespace Azure.Search.Documents
     [ModelReaderWriterBuildable(typeof(SearchIndexResponse))]
     [ModelReaderWriterBuildable(typeof(SearchIndexStatistics))]
     [ModelReaderWriterBuildable(typeof(SearchOptions))]
-    [ModelReaderWriterBuildable(typeof(SearchPostRequest))]
     [ModelReaderWriterBuildable(typeof(SearchResourceCounter))]
     [ModelReaderWriterBuildable(typeof(SearchResourceEncryptionKey))]
     [ModelReaderWriterBuildable(typeof(SearchResult))]

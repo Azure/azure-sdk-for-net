@@ -182,7 +182,7 @@ namespace Azure.Security.Attestation
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<PolicyCertificatesModifyResponse> Add(string policyCertificateToAdd, CancellationToken cancellationToken = default)
         {
-            AddRequest spreadModel = new AddRequest(policyCertificateToAdd, default);
+            AddContent spreadModel = new AddContent(policyCertificateToAdd, default);
             Response result = Add(spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((PolicyCertificatesModifyResponse)result, result);
         }
@@ -196,7 +196,7 @@ namespace Azure.Security.Attestation
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<PolicyCertificatesModifyResponse>> AddAsync(string policyCertificateToAdd, CancellationToken cancellationToken = default)
         {
-            AddRequest spreadModel = new AddRequest(policyCertificateToAdd, default);
+            AddContent spreadModel = new AddContent(policyCertificateToAdd, default);
             Response result = await AddAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((PolicyCertificatesModifyResponse)result, result);
         }
@@ -268,7 +268,7 @@ namespace Azure.Security.Attestation
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<PolicyCertificatesModifyResponse> Remove(string policyCertificateToRemove, CancellationToken cancellationToken = default)
         {
-            RemoveRequest spreadModel = new RemoveRequest(policyCertificateToRemove, default);
+            RemoveContent spreadModel = new RemoveContent(policyCertificateToRemove, default);
             Response result = Remove(spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((PolicyCertificatesModifyResponse)result, result);
         }
@@ -282,7 +282,7 @@ namespace Azure.Security.Attestation
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<PolicyCertificatesModifyResponse>> RemoveAsync(string policyCertificateToRemove, CancellationToken cancellationToken = default)
         {
-            RemoveRequest spreadModel = new RemoveRequest(policyCertificateToRemove, default);
+            RemoveContent spreadModel = new RemoveContent(policyCertificateToRemove, default);
             Response result = await RemoveAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((PolicyCertificatesModifyResponse)result, result);
         }

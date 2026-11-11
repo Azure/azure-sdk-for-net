@@ -187,6 +187,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("targetAvailabilityZone"u8);
                 writer.WriteStringValue(TargetAvailabilityZone);
             }
+            if (Optional.IsDefined(TargetExtendedLocation))
+            {
+                writer.WritePropertyName("targetExtendedLocation"u8);
+                writer.WriteObjectValue(TargetExtendedLocation, options);
+            }
             if (Optional.IsDefined(TargetProximityPlacementGroupId))
             {
                 writer.WritePropertyName("targetProximityPlacementGroupId"u8);
@@ -498,6 +503,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string targetLocation = default;
             ResourceIdentifier targetAvailabilitySetId = default;
             string targetAvailabilityZone = default;
+            SiteRecoveryExtendedLocation targetExtendedLocation = default;
             ResourceIdentifier targetProximityPlacementGroupId = default;
             ResourceIdentifier targetBootDiagnosticsStorageAccountId = default;
             ResourceIdentifier targetNetworkId = default;
@@ -686,6 +692,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 if (prop.NameEquals("targetAvailabilityZone"u8))
                 {
                     targetAvailabilityZone = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("targetExtendedLocation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("targetProximityPlacementGroupId"u8))
@@ -1112,6 +1127,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 targetLocation,
                 targetAvailabilitySetId,
                 targetAvailabilityZone,
+                targetExtendedLocation,
                 targetProximityPlacementGroupId,
                 targetBootDiagnosticsStorageAccountId,
                 targetNetworkId,

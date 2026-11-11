@@ -9,10 +9,11 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Azure.AI.Extensions.OpenAI;
 using Azure.AI.Projects.Agents;
 using Azure.AI.Projects.Tests.Utils;
 using Microsoft.ClientModel.TestFramework;
@@ -390,6 +391,97 @@ public partial class AgentsTelemetryTests : AgentsTestBase
         MethodInfo reinitializeConfigurationMethod = openTelemetryScopeType.GetMethod("ReinitializeConfiguration", BindingFlags.Static | BindingFlags.NonPublic);
         Assert.That(reinitializeConfigurationMethod, Is.Not.Null);
         reinitializeConfigurationMethod.Invoke(null, null);
+    }
+
+    [RecordedTest]
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task TestHostedAgentWithTelemetry(bool useImage)
+    {
+        if (Mode != RecordedTestMode.Live && !useImage)
+        {
+            Assert.Ignore("Recording does not suppotrt Multi part content.");
+        }
+        Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
+        Environment.SetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
+        ReinitializeOpenTelemetryScopeConfiguration();
+
+        string agentName = "HostedAgentTelemetryTestAgent";
+        string cpu = "0.5";
+        string memory = "1Gi";
+
+        AIProjectClient projectClient = GetTestProjectClient();
+        HostedAgentDefinition agentDefinition = new(
+            versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0")],
+            cpu: cpu,
+            memory: memory
+        );
+        ProjectsAgentVersion agentVersion;
+        ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
+        creationOptions.Metadata["enableVnextExperience"] = "true";
+        if (useImage)
+        {
+            // Note: Please create the image as described in the next sample.
+            // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Extensions.OpenAI/samples/Sample28_HostedAgent.md
+            agentDefinition.ContainerConfiguration = new(TestEnvironment.AGENT_DOCKER_IMAGE);
+            agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+                        agentName: agentName,
+                        options: creationOptions);
+        }
+        else
+        {
+            agentDefinition.CodeConfiguration = new(
+                runtime: "dotnet_10",
+                entryPoint: ["dotnet", "EchoAgent.dll"],
+                dependencyResolution: CodeDependencyResolution.Bundled
+            );
+            // Note: Please place Agent Echo Bot project to the TestData/Agents/AgentsCode
+            // to record this sample. See the instruction on how to create the echo bot in the next sample.
+            // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Extensions.OpenAI/samples/Sample37_CodeAgent.md
+            agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionFromCodeAsync(
+                agentName: agentName,
+                filePath: GetDirectory(Path.Combine(["TestData", "Agents", "AgentsCode"])),
+                metadata: new(agentDefinition)
+            );
+        }
+
+        var createAgentSpan = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == $"create_agent {agentName}");
+        Assert.That(createAgentSpan, Is.Not.Null);
+
+        // Verify attributes
+        var expectedAttributes = new Dictionary<string, object>
+        {
+            { "gen_ai.provider.name", "microsoft.foundry" },
+            { "gen_ai.operation.name", "create_agent" },
+            { "server.address", "*" },
+            { "az.namespace", "Microsoft.CognitiveServices" },
+            { "gen_ai.agent.name", agentName },
+            { "gen_ai.agent.id", "*" },
+            { "gen_ai.agent.version", agentVersion.Version },
+            { "gen_ai.agent.type", "hosted" },
+            { "gen_ai.agent.hosted.cpu", cpu },
+            { "gen_ai.agent.hosted.memory", memory},
+            { "gen_ai.agent.hosted.protocol", ProjectsAgentProtocol.Responses.ToString().ToLowerInvariant()},
+            { "gen_ai.agent.hosted.protocol_version", "1.0.0" }
+        };
+        if (useImage)
+        {
+            expectedAttributes["gen_ai.agent.hosted.image"] = TestEnvironment.AGENT_DOCKER_IMAGE;
+        }
+
+        GenAiTraceVerifier.ValidateSpanAttributes(createAgentSpan, expectedAttributes);
+
+        // Verify no unexpected attributes
+        var actualAttributes = new HashSet<string>();
+        foreach (KeyValuePair<string, object> tag in createAgentSpan.EnumerateTagObjects())
+        {
+            actualAttributes.Add(tag.Key);
+        }
+
+        var expectedKeys = new HashSet<string>(expectedAttributes.Keys);
+        var unexpectedAttributes = actualAttributes.Except(expectedKeys).ToList();
+        Assert.That(unexpectedAttributes, Is.Empty,
+            $"Found unexpected attributes in create_agent span: {string.Join(", ", unexpectedAttributes)}");
     }
 
     #region Helpers
@@ -860,10 +952,10 @@ trigger:
         Assert.That(contentArray.GetArrayLength(), Is.EqualTo(0));
     }
 
-    private async Task WaitMayBe(int timeout = 1000)
+    protected static string GetDirectory(string path, [CallerFilePath] string pth = "")
     {
-        if (Mode != RecordedTestMode.Playback)
-            await Task.Delay(timeout);
+        var dirName = Path.GetDirectoryName(pth) ?? "";
+        return Path.Combine([dirName, path]);
     }
     #endregion
 }
