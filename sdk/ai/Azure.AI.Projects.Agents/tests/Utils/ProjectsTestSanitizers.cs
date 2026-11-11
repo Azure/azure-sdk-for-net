@@ -107,7 +107,7 @@ namespace Azure.AI.Projects.Agents.Tests
         {
             if (testBase.Mode == RecordedTestMode.Playback)
             {
-                // Older recordings opted into Agent Insights before its feature flag was retired.
+                // Normalize recordings across Agent Insights feature-header revisions.
                 testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new("Foundry-Features")
                 {
                     Regex = LegacyAgentInsightsFeaturePattern,

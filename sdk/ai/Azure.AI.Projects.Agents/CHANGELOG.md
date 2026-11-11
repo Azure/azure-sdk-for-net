@@ -14,13 +14,13 @@
 - Added experimental SIP telephony binding models and allowed-caller configuration.
 - Added experimental telephony campaign configuration, schedules, operation-bound completion reads, pagination, and validation-error APIs.
 - Added the public `FoundryOpenAIError` data model for typed campaign failure details while keeping exception-formatting helpers internal.
+- Restored skill and trace optimization models, including skill references, validation and execution results, trace windows, Application Insights connections, and skill candidate outputs.
+- Restored the experimental legacy Skills API, including skill-version operations on the `/skills` routes with the preview `api-version` query, plus MCP toolbox request-header bindings.
 
 ### Breaking Changes
 - The preview `ProjectsAgentsModelFactory.VoiceAgentDefinition` overload containing `postCall` now requires all arguments to avoid ambiguous calls to the optional GA overload. For named-argument usage, create the GA definition and then set its preview `PostCall` property. The full positional preview signature is retained.
 - `VoiceAgentTransferRouting.RingTimeoutSeconds` now uses `TimeSpan?` instead of `int?`; JSON continues to use seconds.
-- Agent optimization jobs and their list filters now use the shared `AgentsJobStatus`; `AgentOptimizationJobStatus` and its `Skipped` state are no longer available.
-- Removed the specialized skill-optimization and trace-window model APIs that are no longer in the service contract.
-- Removed MCP toolbox request-header-binding models; use the `MCPToolboxTool.Headers` dictionary for declared headers.
+- `AgentOptimizationJob.Status` again uses `AgentOptimizationJobStatus`, including the `Skipped` state. Existing list filters continue to accept `AgentsJobStatus` for compatibility.
 - Realtime voice definitions now emit the required `sub_protocol` discriminator with the value `realtime`.
 - `VoiceAgentSubagentConfig` is now an abstract base class. Use `VoiceAgentDelegateSubagentConfig` for referenced agents or `VoiceAgentInlineSubagentConfig` for inline handoff graphs.
 - Telephony binding creation now accepts `TelephonyBinding` provider-specific models instead of the removed create-content models. Binding status fields and the binding-list status filter were removed.
@@ -34,6 +34,7 @@
 - Fixed required-versus-conditional preview metadata handling so GA base types can serialize preview variants without exposing a blanket experimental API. Native GPT Live, inline/handoff, SIP, campaigns, and post-call delivery remain preview; experimental OpenAI dependencies retain member-level `AAIP002` attribution.
 - Fixed Live Decision input and stored-message payloads to expose public patch access and preserve message fields during wire serialization.
 - Fixed typed persisted Realtime response status and output-modality serialization to use the external OpenAI enum values rather than treating them as ModelReaderWriter models.
+- Fixed `PhoneNumber`, `TeamsAddress`, and `SipAddress` serialization so inherited `value` properties are written exactly once.
 - Fixed semantic VAD eagerness serialization and deserialization to preserve the external OpenAI string values.
 - Fixed the Realtime model factory to preserve newly added fields, including `Soundscape` and `PostCall`, without changing the order of its existing parameters.
 - Preserved the audio-output model factory's existing parameter order when introducing shared voice configuration.
@@ -45,7 +46,7 @@
 - Added Voice Agent REST administration, read-only telephony inspection, and campaign inspection samples, including typed address configuration without dispatching calls.
 
 ### Other Changes
-- Regenerated from `feature/foundry-release` at [`879f4945427593222a5a9ecabefcd8a454e9ed71`](https://github.com/Azure/azure-rest-api-specs/tree/879f4945427593222a5a9ecabefcd8a454e9ed71), using OpenAI TypeSpec 1.34.1.
+- Regenerated from `foundry/snap-20261109` at [`134c3c4624ca04410c740d1230a82cba31595be9`](https://github.com/Azure/azure-rest-api-specs/tree/134c3c4624ca04410c740d1230a82cba31595be9), using OpenAI TypeSpec 1.34.1.
 
 ## 3.0.0-beta.6 (2026-10-30)
 

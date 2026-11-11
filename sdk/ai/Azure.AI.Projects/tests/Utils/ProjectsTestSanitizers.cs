@@ -13,7 +13,7 @@ namespace Azure.AI.Projects.Tests.Utils
     /// </summary>
     public static class ProjectsTestSanitizers
     {
-        internal const string LegacyAgentInsightsFeaturePattern = @"(?:^AgentInsights=V1Preview(?:,|$)|,AgentInsights=V1Preview(?=,|$))";
+        internal const string PlaybackAgentInsightsFeaturePattern = @"(?:^AgentInsights=V1Preview(?:,|$)|,AgentInsights=V1Preview(?=,|$))";
         internal const string LegacyDefaultVoiceAgentFeaturePattern = @"(\AMemoryStores=V1Preview,WorkflowAgents=V1Preview,(?:[^,]+,)*DraftAgents=V1Preview),VoiceAgents=V1Preview(?=,ModelRouterControls=V1Preview(?:,|\z))";
         internal const string LegacyDefaultVoiceAgentFeatureReplacement = "${1}";
 
@@ -72,10 +72,10 @@ namespace Azure.AI.Projects.Tests.Utils
         {
             if (testBase.Mode == RecordedTestMode.Playback)
             {
-                // Older recordings opted into Agent Insights before its feature flag was retired.
+                // Normalize recordings captured while the Agent Insights feature flag was retired.
                 testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new("Foundry-Features")
                 {
-                    Regex = LegacyAgentInsightsFeaturePattern,
+                    Regex = PlaybackAgentInsightsFeaturePattern,
                     Value = string.Empty
                 }));
                 // Remove only the obsolete token embedded in the legacy defaults, not explicit Voice opt-ins.

@@ -94,7 +94,7 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
         #endregion
         #region Snippet:Sample_GetOptimizationJob_AgentsOptimization_Async
         int reportedWarnings = 0;
-        if (submittedJob1.Status != AgentsJobStatus.Succeeded)
+        if (submittedJob1.Status != AgentOptimizationJobStatus.Succeeded)
         {
             throw new InvalidOperationException($"The job {submittedJob1.Id} has failed.");
         }
@@ -112,12 +112,12 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
         AgentOptimizationJob submittedJob2 = AgentOptimizationJob.FromClientResult(await jobOperation.UpdateStatusAsync());
         Console.WriteLine($"Submitted optimization job: {submittedJob2.Id}");
         AgentOptimizationJob cancelledJob = await jobsClient.CancelAsync(jobId: submittedJob2.Id, cancellationToken: default);
-        while (cancelledJob.Status != AgentsJobStatus.Failed && cancelledJob.Status != AgentsJobStatus.Succeeded && cancelledJob.Status != AgentsJobStatus.Cancelled)
+        while (cancelledJob.Status != AgentOptimizationJobStatus.Failed && cancelledJob.Status != AgentOptimizationJobStatus.Succeeded && cancelledJob.Status != AgentOptimizationJobStatus.Cancelled)
         {
             await Task.Delay(500);
             cancelledJob = AgentOptimizationJob.FromClientResult(await jobOperation.UpdateStatusAsync());
         }
-        if (cancelledJob.Status != AgentsJobStatus.Cancelled)
+        if (cancelledJob.Status != AgentOptimizationJobStatus.Cancelled)
         {
             throw new InvalidOperationException($"The job {cancelledJob.Id} has unexpected status: {cancelledJob.Status}.");
         }
@@ -214,7 +214,7 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
         #endregion
         #region Snippet:Sample_GetOptimizationJob_AgentsOptimization_Sync
         int reportedWarnings = 0;
-        while (submittedJob1.Status != AgentsJobStatus.Failed && submittedJob1.Status != AgentsJobStatus.Succeeded && submittedJob1.Status != AgentsJobStatus.Cancelled)
+        while (submittedJob1.Status != AgentOptimizationJobStatus.Failed && submittedJob1.Status != AgentOptimizationJobStatus.Succeeded && submittedJob1.Status != AgentOptimizationJobStatus.Cancelled)
         {
             Thread.Sleep(500);
             submittedJob1 = jobsClient.Get(submittedJob1.Id, cancellationToken: default);
@@ -227,7 +227,7 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
                 }
             }
         }
-        if (submittedJob1.Status != AgentsJobStatus.Succeeded)
+        if (submittedJob1.Status != AgentOptimizationJobStatus.Succeeded)
         {
             throw new InvalidOperationException($"The job {submittedJob1.Id} has failed.");
         }
@@ -237,12 +237,12 @@ public class Sample_AgentsOptimizationCRUD : SamplesBase
         AgentOptimizationJob submittedJob2 = AgentOptimizationJob.FromClientResult(jobOperation.UpdateStatus());
         Console.WriteLine($"Submitted optimization job: {submittedJob2.Id}");
         AgentOptimizationJob cancelledJob = jobsClient.Cancel(jobId: submittedJob2.Id, cancellationToken: default);
-        while (cancelledJob.Status != AgentsJobStatus.Failed && cancelledJob.Status != AgentsJobStatus.Succeeded && cancelledJob.Status != AgentsJobStatus.Cancelled)
+        while (cancelledJob.Status != AgentOptimizationJobStatus.Failed && cancelledJob.Status != AgentOptimizationJobStatus.Succeeded && cancelledJob.Status != AgentOptimizationJobStatus.Cancelled)
         {
             Thread.Sleep(500);
             cancelledJob = AgentOptimizationJob.FromClientResult(jobOperation.UpdateStatus());
         }
-        if (cancelledJob.Status != AgentsJobStatus.Cancelled)
+        if (cancelledJob.Status != AgentOptimizationJobStatus.Cancelled)
         {
             throw new InvalidOperationException($"The job {cancelledJob.Id} has unexpected status: {cancelledJob.Status}.");
         }

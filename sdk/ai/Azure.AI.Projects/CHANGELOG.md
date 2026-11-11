@@ -9,18 +9,20 @@
 - Added opt-in Voice Agent realtime tracing for connections, sessions, responses, tool milestones, audio usage, cancellation, and errors using the existing Foundry GenAI tracing settings. Added correlated, payload-free realtime diagnostic logs.
 - Included first-text/audio latency, reported audio formats and sample rates, session audio totals, consistent session lifecycle events, and bounded opt-in transcript/tool message content in Voice Agent telemetry.
 - Added rubric-based evaluator definitions and quality warnings for rubric generation.
+- Added `EvaluationDataGenerationJobOutputConfiguration` and `EvaluationRuleActionType` models from the current service contract.
+- Added detailed Agent Insights models for priorities, highlighted and linked traces, estimated cost and token usage, suspensions, proposed fixes, and recommended actions.
+- Restored evaluator diagnostics and health models, recurring evaluation schedules, trace and conversation evaluation data sources, and user-conversation simulation models.
+- Added rubric scoring configuration and safety-generation inputs, including allowed-behavior dimensions and generated weights.
+- Added stored-completions evaluation sources with the `ProjectsMetadata` model.
 
 ### Breaking Changes
 
 - Realtime connection options no longer allow overriding the client-managed `Authorization` header; these overrides throw `ArgumentException`. Conditional Voice Agents preview opt-ins may be supplied explicitly through the `Foundry-Features` header or `foundry_features` query.
-- `EvaluationsDimension.Weight` is a required `int`; provide a value when constructing a dimension.
-- `EvaluatorGenerationInputs` requires a caller-provided model, and `DailyRecurrenceSchedule` requires explicit hours.
+- `EvaluationsDimension.Weight` is nullable again. Dimensions now also expose `Allowed`, `GeneratedWeight`, and `IsAlwaysApplicable`.
 - `EvaluatorGenerationArtifacts.Reference` now uses `VersionedDatasetReference` instead of the removed `DatasetReference` model, retaining the required dataset version.
-- `AgentInsightMonitors.GetInsights` and `GetInsightsAsync` accept category, severity, and status collections, serialized to the service's singular `category`, `severity`, and `status` query parameters.
-- Agent Insights monitor creation accepts `AgentInsightMonitorCreate`, and run creation accepts `AgentInsightRunCreate`. Monitors expose `Overview` instead of `Priorities`.
-- Added typed Agent Insights monitor and run request models, plus overview and overview-source models for monitor summaries.
-- Added `EvaluationDataGenerationJobOutputConfiguration` and `EvaluationRuleActionType` models from the current service contract.
-- The regenerated contract removes the prior Agent Insights diagnostic, priority, generated-summary, and run-input models; evaluator diagnostic-history and health APIs; trace/conversation evaluation data-source and user-conversation simulation APIs; and the `ProjectsMetadata` alias.
+- `AgentInsightMonitors.GetInsights` and `GetInsightsAsync` now serialize category, severity, and status collections to the plural `categories`, `severities`, and `statuses` query parameters.
+- Agent Insights monitor creation now accepts the agent name, model deployment, and optional settings directly instead of `AgentInsightMonitorCreate`. Run creation now accepts evaluator and input arguments instead of `AgentInsightRunCreate`.
+- Agent Insights monitors again expose typed `Priorities` and `AgentSummary` instead of `Overview`; the overview request models were removed.
 
 ### Bugs Fixed
 
@@ -39,8 +41,8 @@
 
 ### Other Changes
 
-- Agent Insights no longer requires the `AgentInsights=V1Preview` feature header.
-- Regenerated from `feature/foundry-release` at [`879f4945427593222a5a9ecabefcd8a454e9ed71`](https://github.com/Azure/azure-rest-api-specs/tree/879f4945427593222a5a9ecabefcd8a454e9ed71).
+- Agent Insights requests again include the required `AgentInsights=V1Preview` feature header.
+- Regenerated from `foundry/snap-20261109` at [`134c3c4624ca04410c740d1230a82cba31595be9`](https://github.com/Azure/azure-rest-api-specs/tree/134c3c4624ca04410c740d1230a82cba31595be9), using OpenAI TypeSpec 1.34.1.
 
 ## 3.0.0-beta.6 (2026-10-30)
 

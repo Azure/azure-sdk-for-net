@@ -36,10 +36,13 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="action"> Definition of the evaluation rule action. </param>
         /// <param name="filter"> Filter condition of the evaluation rule. </param>
         /// <param name="eventType"> Event type that the evaluation rule applies to. </param>
+        /// <param name="schedule"> Timing for timerTrigger rules. Required for timerTrigger and not allowed for other event types. </param>
+        /// <param name="provisioningStatus"> Provisioning state of the rule's schedule. Returned for timerTrigger rules only. </param>
+        /// <param name="error"> Error that caused the rule to be disabled, if any. </param>
         /// <param name="enabled"> Indicates whether the evaluation rule is enabled. Default is true. </param>
         /// <param name="systemData"> System metadata for the evaluation rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EvaluationRule(string id, string displayName, string description, EvaluationRuleAction action, EvaluationRuleFilter filter, EvaluationRuleEventType eventType, bool enabled, IReadOnlyDictionary<string, string> systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EvaluationRule(string id, string displayName, string description, EvaluationRuleAction action, EvaluationRuleFilter filter, EvaluationRuleEventType eventType, ScheduleTrigger schedule, ScheduleProvisioningStatus? provisioningStatus, ProjectsError error, bool enabled, IReadOnlyDictionary<string, string> systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             DisplayName = displayName;
@@ -47,6 +50,9 @@ namespace Azure.AI.Projects.Evaluation
             Action = action;
             Filter = filter;
             EventType = eventType;
+            Schedule = schedule;
+            ProvisioningStatus = provisioningStatus;
+            Error = error;
             Enabled = enabled;
             SystemData = systemData;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -66,6 +72,15 @@ namespace Azure.AI.Projects.Evaluation
 
         /// <summary> Event type that the evaluation rule applies to. </summary>
         public EvaluationRuleEventType EventType { get; set; }
+
+        /// <summary> Timing for timerTrigger rules. Required for timerTrigger and not allowed for other event types. </summary>
+        public ScheduleTrigger Schedule { get; set; }
+
+        /// <summary> Provisioning state of the rule's schedule. Returned for timerTrigger rules only. </summary>
+        public ScheduleProvisioningStatus? ProvisioningStatus { get; }
+
+        /// <summary> Error that caused the rule to be disabled, if any. </summary>
+        public ProjectsError Error { get; }
 
         /// <summary> Indicates whether the evaluation rule is enabled. Default is true. </summary>
         public bool Enabled { get; set; }

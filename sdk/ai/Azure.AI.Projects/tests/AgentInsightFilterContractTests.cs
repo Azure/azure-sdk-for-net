@@ -27,8 +27,8 @@ public class AgentInsightFilterContractTests
     [TestCase("A=V1Preview,AgentInsights=V1Preview,B=V1Preview", "A=V1Preview,B=V1Preview")]
     [TestCase("AgentInsights=V1Preview", "")]
     [TestCase("OtherAgentInsights=V1Preview,AgentInsights=V1PreviewExtra", "OtherAgentInsights=V1Preview,AgentInsights=V1PreviewExtra")]
-    public void LegacyRecordingNormalizationRemovesOnlyTheRetiredFeature(string value, string expected)
-        => Assert.That(Regex.Replace(value, Utils.ProjectsTestSanitizers.LegacyAgentInsightsFeaturePattern, ""), Is.EqualTo(expected));
+    public void PlaybackNormalizationRemovesOnlyAgentInsightsFeature(string value, string expected)
+        => Assert.That(Regex.Replace(value, Utils.ProjectsTestSanitizers.PlaybackAgentInsightsFeaturePattern, ""), Is.EqualTo(expected));
 
     [TestCase(RecordedTestMode.Playback, 1)]
     [TestCase(RecordedTestMode.Record, 0)]
@@ -127,12 +127,13 @@ public class AgentInsightFilterContractTests
         }
 
         Assert.That(transport.Requests, Has.Count.EqualTo(1));
-        Assert.That(transport.Requests[0].Uri.Query, Does.Not.Contain("category=")
-            .And.Not.Contain("severity=").And.Not.Contain("status="));
+        Assert.That(transport.Requests[0].Uri.Query, Does.Not.Contain("categories=")
+            .And.Not.Contain("severities=").And.Not.Contain("statuses=")
+            .And.Not.Contain("category=").And.Not.Contain("severity=").And.Not.Contain("status="));
     }
 
     [Test]
-    public async Task InsightCollectionFiltersUseSingularWireParameters(
+    public async Task InsightCollectionFiltersUsePluralWireParameters(
         [Values(false, true)] bool isAsync,
         [Values(false, true)] bool multiple)
     {
@@ -170,16 +171,16 @@ public class AgentInsightFilterContractTests
         Assert.Multiple(() =>
         {
             Assert.That(request.Uri.AbsolutePath, Does.EndWith("/agent_insight_monitors/monitor%20%2F%3F/insights"));
-            Assert.That(query["category"], Is.EqualTo(string.Join(",", categories)));
-            Assert.That(query["severity"], Is.EqualTo(multiple ? "high,low" : "high"));
-            Assert.That(query["status"], Is.EqualTo(multiple ? "active,resolved" : "active"));
+            Assert.That(query["categories"], Is.EqualTo(string.Join(",", categories)));
+            Assert.That(query["severities"], Is.EqualTo(multiple ? "high,low" : "high"));
+            Assert.That(query["statuses"], Is.EqualTo(multiple ? "active,resolved" : "active"));
             Assert.That(query["include_details"], Is.EqualTo("true"));
             Assert.That(query["limit"], Is.EqualTo("7"));
-            Assert.That(query.ContainsKey("categories"), Is.False);
-            Assert.That(query.ContainsKey("severities"), Is.False);
-            Assert.That(query.ContainsKey("statuses"), Is.False);
+            Assert.That(query.ContainsKey("category"), Is.False);
+            Assert.That(query.ContainsKey("severity"), Is.False);
+            Assert.That(query.ContainsKey("status"), Is.False);
             Assert.That(request.Headers.TryGetValue("Foundry-Features", out string features), Is.True);
-            Assert.That(features, Does.Not.Contain("AgentInsights="));
+            Assert.That(features, Does.Contain("AgentInsights=V1Preview"));
         });
     }
 

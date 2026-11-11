@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Azure.AI.Projects.Agents
 {
-    /// <summary> Reusable quality-measurement configuration. </summary>
+    /// <summary> Reusable quality-measurement configuration for agent optimization. </summary>
     public partial class AgentOptimizationEvaluationConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

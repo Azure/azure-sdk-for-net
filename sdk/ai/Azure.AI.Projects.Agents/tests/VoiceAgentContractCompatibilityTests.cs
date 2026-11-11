@@ -156,6 +156,8 @@ public class VoiceAgentContractCompatibilityTests
         {
             Assert.That(list.Request.Uri.AbsolutePath, Is.EqualTo("/api/projects/project/skills"));
             Assert.That(create.Request.Uri.AbsolutePath, Is.EqualTo("/api/projects/project/skills/skill-name/versions"));
+            Assert.That(list.Request.Uri.Query, Does.Contain("api-version=v1"));
+            Assert.That(create.Request.Uri.Query, Does.Contain("api-version=v1"));
         });
     }
 

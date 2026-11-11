@@ -13,7 +13,7 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="ReinforcementFineTuningDataGenerationJob"/>. </summary>
         /// <param name="name"> The display name of the data generation job. </param>
         /// <param name="sources"> The sources used for the data generation job. </param>
-        /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
+        /// <param name="generationConfiguration"> The effective generation configuration for the data generation job. </param>
 #pragma warning disable AAIP001 // Model initialization and serialization support experimental members and variants.
         internal ReinforcementFineTuningDataGenerationJob(string name, IEnumerable<DataGenerationJobSource> sources, DataGenerationJobConfiguration generationConfiguration) : base(name, sources, generationConfiguration, DataGenerationJobScenario.ReinforcementFinetuningPreview)
         {
@@ -27,7 +27,7 @@ namespace Azure.AI.Projects
         /// <param name="error"> Error details — populated only on failure. </param>
         /// <param name="name"> The display name of the data generation job. </param>
         /// <param name="sources"> The sources used for the data generation job. </param>
-        /// <param name="generationConfiguration"> The generation configuration for the data generation job. </param>
+        /// <param name="generationConfiguration"> The effective generation configuration for the data generation job. </param>
         /// <param name="scenario"> The scenario of the data generation job. Either for fine-tuning or evaluation. </param>
         /// <param name="createdOn"> The timestamp when the job was created, represented in Unix time (seconds since January 1, 1970). </param>
         /// <param name="finishedOn"> The timestamp when the job was finished, represented in Unix time (seconds since January 1, 1970). </param>
