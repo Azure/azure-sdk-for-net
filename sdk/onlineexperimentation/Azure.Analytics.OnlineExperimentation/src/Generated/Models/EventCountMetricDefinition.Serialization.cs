@@ -15,11 +15,6 @@ namespace Azure.Analytics.OnlineExperimentation
     /// <summary> The definition of an EventCount metric definition. Counts the occurrences of a specified event. </summary>
     public partial class EventCountMetricDefinition : ExperimentMetricDefinition, IJsonModel<EventCountMetricDefinition>
     {
-        /// <summary> Initializes a new instance of <see cref="EventCountMetricDefinition"/> for deserialization. </summary>
-        internal EventCountMetricDefinition()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override ExperimentMetricDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

@@ -11,6 +11,7 @@ using System.Threading;
 using OpenAI;
 using OpenAI.Conversations;
 using OpenAI.Files;
+using OpenAI.VectorStores;
 
 namespace Azure.AI.Extensions.OpenAI;
 
@@ -94,8 +95,15 @@ public partial class ProjectOpenAIClient : OpenAIClient
     [Experimental("OPENAI001")]
     public virtual ProjectConversationsClient GetProjectConversationsClient()
     {
+        ConversationClientOptions conversationOptions = new()
+        {
+            Endpoint = _options.Endpoint,
+            OrganizationId = _options.OrganizationId,
+            ProjectId = _options.ProjectId,
+            UserAgentApplicationId = _options.UserAgentApplicationId,
+        };
         return Volatile.Read(ref _cachedConversationClient)
-            ?? Interlocked.CompareExchange(ref _cachedConversationClient, new ProjectConversationsClient(Pipeline, _options), null)
+            ?? Interlocked.CompareExchange(ref _cachedConversationClient, new ProjectConversationsClient(Pipeline, conversationOptions), null)
             ?? _cachedConversationClient;
     }
 
@@ -118,8 +126,15 @@ public partial class ProjectOpenAIClient : OpenAIClient
     [Experimental("OPENAI001")]
     public virtual ProjectVectorStoresClient GetProjectVectorStoresClient()
     {
+        VectorStoreClientOptions vectorStoreOptions = new()
+        {
+            Endpoint = _options.Endpoint,
+            OrganizationId = _options.OrganizationId,
+            ProjectId = _options.ProjectId,
+            UserAgentApplicationId = _options.UserAgentApplicationId,
+        };
         return Volatile.Read(ref _cachedVectorStoreClient)
-            ?? Interlocked.CompareExchange(ref _cachedVectorStoreClient, new ProjectVectorStoresClient(Pipeline, _options), null)
+            ?? Interlocked.CompareExchange(ref _cachedVectorStoreClient, new ProjectVectorStoresClient(Pipeline, vectorStoreOptions), null)
             ?? _cachedVectorStoreClient;
     }
 

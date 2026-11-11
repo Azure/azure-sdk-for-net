@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.OperationalInsights
     /// <summary>
     /// A class representing a collection of <see cref="OperationalInsightsSummaryLogsResource"/> and their operations.
     /// Each <see cref="OperationalInsightsSummaryLogsResource"/> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceResource"/>.
-    /// To get a <see cref="OperationalInsightsSummaryLogsCollection"/> instance call the GetOperationalInsightsSummaryLogs method from an instance of <see cref="OperationalInsightsWorkspaceResource"/>.
+    /// To get a <see cref="OperationalInsightsSummaryLogsCollection"/> instance call the GetAllOperationalInsightsSummaryLogs method from an instance of <see cref="OperationalInsightsWorkspaceResource"/>.
     /// </summary>
     public partial class OperationalInsightsSummaryLogsCollection : ArmCollection, IEnumerable<OperationalInsightsSummaryLogsResource>, IAsyncEnumerable<OperationalInsightsSummaryLogsResource>
     {

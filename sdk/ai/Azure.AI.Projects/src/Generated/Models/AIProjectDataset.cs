@@ -17,11 +17,9 @@ namespace Azure.AI.Projects
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AIProjectDataset"/>. </summary>
-        /// <param name="dataUri"> URI of the data ([example](https://go.microsoft.com/fwlink/?linkid=2202330)). </param>
         /// <param name="type"> Dataset type. </param>
-        private protected AIProjectDataset(Uri dataUri, DatasetType @type)
+        private protected AIProjectDataset(DatasetType @type)
         {
-            DataUri = dataUri;
             Type = @type;
             Tags = new ChangeTrackingDictionary<string, string>();
         }

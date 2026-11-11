@@ -436,7 +436,7 @@ namespace Azure.AI.Agents.Persistent
         {
             // We hide this method because setting stream to true will result in streaming response,
             // which cannot be deserialized to ThreadRun.
-            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(
+            SubmitToolOutputsToRunContent submitToolOutputsToRunRequest = new SubmitToolOutputsToRunContent(
                 toolOutputs: (IList<StructuredToolOutput>)(toolOutputs?.Cast<StructuredToolOutput>().ToList()) ?? new ChangeTrackingList<StructuredToolOutput>(),
                 toolApprovals: (IList<ToolApproval>)(toolApprovals?.ToList()) ?? new ChangeTrackingList<ToolApproval>(),
                 stream: stream,
@@ -454,7 +454,7 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         internal virtual async Task<Response> SubmitToolOutputsToRunAsyncInternal(string threadId, string runId, IEnumerable<StructuredToolOutput> toolOutputs, IEnumerable<ToolApproval> toolApprovals, bool? stream = null, CancellationToken cancellationToken = default)
         {
-            SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(
+            SubmitToolOutputsToRunContent submitToolOutputsToRunRequest = new(
                 toolOutputs: (IList<StructuredToolOutput>)(toolOutputs?.Cast<StructuredToolOutput>().ToList()) ?? new ChangeTrackingList<StructuredToolOutput>(),
                 toolApprovals: (IList<ToolApproval>)(toolApprovals?.ToList()) ?? new ChangeTrackingList<ToolApproval>(),
                 stream: stream,

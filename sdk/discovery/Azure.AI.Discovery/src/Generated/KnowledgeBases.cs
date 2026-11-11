@@ -350,7 +350,7 @@ namespace Azure.AI.Discovery
         {
             Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
 
-            StartIndexingRequest spreadModel = new StartIndexingRequest(nodePoolId, projectId, default);
+            StartIndexingContent spreadModel = new StartIndexingContent(nodePoolId, projectId, default);
             return StartIndexing(waitUntil, knowledgeBaseName, spreadModel, cancellationToken.ToRequestContext());
         }
 
@@ -366,7 +366,7 @@ namespace Azure.AI.Discovery
         {
             Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
 
-            StartIndexingRequest spreadModel = new StartIndexingRequest(nodePoolId, projectId, default);
+            StartIndexingContent spreadModel = new StartIndexingContent(nodePoolId, projectId, default);
             return await StartIndexingAsync(waitUntil, knowledgeBaseName, spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
@@ -507,7 +507,7 @@ namespace Azure.AI.Discovery
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Operation Search(WaitUntil waitUntil, string knowledgeBaseName, SearchRequest body, CancellationToken cancellationToken = default)
+        public virtual Operation Search(WaitUntil waitUntil, string knowledgeBaseName, SearchContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
             Argument.AssertNotNull(body, nameof(body));
@@ -522,7 +522,7 @@ namespace Azure.AI.Discovery
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="knowledgeBaseName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="knowledgeBaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Operation> SearchAsync(WaitUntil waitUntil, string knowledgeBaseName, SearchRequest body, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> SearchAsync(WaitUntil waitUntil, string knowledgeBaseName, SearchContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(knowledgeBaseName, nameof(knowledgeBaseName));
             Argument.AssertNotNull(body, nameof(body));

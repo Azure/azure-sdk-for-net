@@ -186,7 +186,7 @@ namespace Azure.AI.Discovery.Tests
                     searchOperation = await client.SearchAsync(
                         WaitUntil.Started,
                         KbName,
-                        new SearchRequest("What are common drug interactions?"));
+                        new SearchContent("What are common drug interactions?"));
                     break;
                 }
                 catch (Azure.RequestFailedException ex) when (ex.Message.Contains("KnowledgeBaseNotReady"))

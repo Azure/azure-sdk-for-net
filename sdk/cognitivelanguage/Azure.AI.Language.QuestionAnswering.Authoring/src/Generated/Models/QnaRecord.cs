@@ -17,10 +17,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="QnaRecord"/>. </summary>
-        /// <param name="id"> Unique ID for the QnA. </param>
-        public QnaRecord(int id)
+        public QnaRecord()
         {
-            Id = id;
             Questions = new ChangeTrackingList<string>();
             Metadata = new ChangeTrackingDictionary<string, string>();
             ActiveLearningSuggestions = new ChangeTrackingList<SuggestedQuestionsCluster>();

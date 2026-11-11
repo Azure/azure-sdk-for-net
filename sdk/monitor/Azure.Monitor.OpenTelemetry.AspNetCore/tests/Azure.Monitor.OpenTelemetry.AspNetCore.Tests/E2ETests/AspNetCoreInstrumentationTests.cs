@@ -44,10 +44,10 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
         [Theory]
         [InlineData("/custom-endpoint", null, 200)]
         [InlineData("/custom-endpoint", "?key=value", 200)]
-        [InlineData("/custom-endpoint", null, 500)]
-        [InlineData("/exception-endpoint", null, 500, true)]
+        [InlineData("/custom-endpoint", null, 500, false, "500")]
+        [InlineData("/exception-endpoint", null, 500, true, "System.Exception")]
         [InlineData("/unknown-endpoint", null, 404)]
-        public void AspNetCoreRequestsAreCapturedCorrectly(string path, string? queryString, int statusCode, bool shouldThrow = false)
+        public void AspNetCoreRequestsAreCapturedCorrectly(string path, string? queryString, int statusCode, bool shouldThrow = false, string? expectedErrorType = null)
         {
             // SETUP MOCK TRANSMITTER TO CAPTURE AZURE MONITOR TELEMETRY
             var testConnectionString = $"InstrumentationKey=unitTest-{nameof(AspNetCoreRequestsAreCapturedCorrectly)}";
@@ -143,6 +143,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
                 VerifyTelemetryItem(
                     isSuccess: statusCode == 200,
                     isException: shouldThrow,
+                    expectedErrorType: expectedErrorType,
                     expectedUrl: expectedUrl,
                     operationName: $"GET {path}",
                     statusCode: statusCode.ToString(),
@@ -172,6 +173,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
         internal static void VerifyTelemetryItem(
             bool isSuccess,
             bool isException,
+            string? expectedErrorType,
             string expectedUrl,
             string operationName,
             string statusCode,
@@ -197,7 +199,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             Assert.Equal(isSuccess, requestData.Success);
             Assert.Equal(expectedUrl, requestData.Url);
 
-            var expectedPropertiesCount = isException ? 6 : 4;
+            var expectedPropertiesCount = 4 + (expectedErrorType is null ? 0 : 1) + (isException ? 1 : 0);
             Assert.Equal(expectedPropertiesCount, requestData.Properties.Count);
 
             Assert.Contains(requestData.Properties, kvp => kvp.Key == "enrichedOnStart" && kvp.Value == "request");
@@ -205,9 +207,17 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.E2ETests
             Assert.Contains(requestData.Properties, kvp => kvp.Key == "_MS.ProcessedByMetricExtractors" && kvp.Value == "(Name: X,Ver:'1.1')");
             Assert.Contains(requestData.Properties, kvp => kvp.Key == "network.protocol.version" && kvp.Value == "1.1");
 
+            if (expectedErrorType is null)
+            {
+                Assert.DoesNotContain(requestData.Properties, kvp => kvp.Key == "error.type");
+            }
+            else
+            {
+                Assert.Contains(requestData.Properties, kvp => kvp.Key == "error.type" && kvp.Value == expectedErrorType);
+            }
+
             if (isException)
             {
-                Assert.Contains(requestData.Properties, kvp => kvp.Key == "error.type" && kvp.Value == "System.Exception");
                 Assert.Contains(requestData.Properties, kvp => kvp.Key == "enrichedOnException" && kvp.Value == "exception");
             }
         }

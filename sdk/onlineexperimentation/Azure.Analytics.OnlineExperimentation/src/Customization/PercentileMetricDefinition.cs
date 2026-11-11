@@ -10,8 +10,10 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="eventProperty"> The key of the event property to aggregate. </param>
         /// <param name="percentile"> The percentile to measure. </param>
         public PercentileMetricDefinition(string eventName, string eventProperty, int percentile)
-            : this(new AggregatedValue(eventName, eventProperty), percentile)
+            : this()
         {
+            Value = new AggregatedValue { EventName = eventName, EventProperty = eventProperty };
+            Percentile = percentile;
         }
     }
 }

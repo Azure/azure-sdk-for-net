@@ -14,15 +14,8 @@ namespace Azure.Analytics.OnlineExperimentation
     public partial class PercentileMetricDefinition : ExperimentMetricDefinition
     {
         /// <summary> Initializes a new instance of <see cref="PercentileMetricDefinition"/>. </summary>
-        /// <param name="value"> The value to aggregate, including the event name and property to measure. </param>
-        /// <param name="percentile"> The percentile to measure. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public PercentileMetricDefinition(AggregatedValue value, double percentile) : base(ExperimentMetricType.Percentile)
+        public PercentileMetricDefinition() : base(ExperimentMetricType.Percentile)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value;
-            Percentile = percentile;
         }
 
         /// <summary> Initializes a new instance of <see cref="PercentileMetricDefinition"/>. </summary>

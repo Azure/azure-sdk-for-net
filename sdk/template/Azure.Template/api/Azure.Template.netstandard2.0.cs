@@ -31,7 +31,7 @@ namespace Azure.Template
     }
     public partial class FakedSharedModel : System.ClientModel.Primitives.IJsonModel<Azure.Template.FakedSharedModel>, System.ClientModel.Primitives.IPersistableModel<Azure.Template.FakedSharedModel>
     {
-        public FakedSharedModel(string tag, System.DateTimeOffset createdOn) { }
+        public FakedSharedModel() { }
         public System.DateTimeOffset CreatedOn { get { throw null; } set { } }
         public string Tag { get { throw null; } set { } }
         protected virtual Azure.Template.FakedSharedModel JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -121,7 +121,7 @@ namespace Azure.Template
     }
     public partial class WidgetSuite : System.ClientModel.Primitives.IJsonModel<Azure.Template.WidgetSuite>, System.ClientModel.Primitives.IPersistableModel<Azure.Template.WidgetSuite>
     {
-        public WidgetSuite(string manufacturerId) { }
+        public WidgetSuite() { }
         public string ManufacturerId { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public Azure.Template.FakedSharedModel SharedModel { get { throw null; } set { } }

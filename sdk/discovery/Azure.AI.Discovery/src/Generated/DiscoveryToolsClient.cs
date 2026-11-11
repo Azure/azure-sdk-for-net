@@ -241,7 +241,7 @@ namespace Azure.AI.Discovery
             Argument.AssertNotNullOrEmpty(toolId, nameof(toolId));
             Argument.AssertNotNull(nodePoolIds, nameof(nodePoolIds));
 
-            RunRequest spreadModel = new RunRequest(
+            RunContent spreadModel = new RunContent(
                 toolId,
                 command,
                 inlineFiles?.ToList() as IList<InlineFile> ?? new ChangeTrackingList<InlineFile>(),
@@ -292,7 +292,7 @@ namespace Azure.AI.Discovery
             Argument.AssertNotNullOrEmpty(toolId, nameof(toolId));
             Argument.AssertNotNull(nodePoolIds, nameof(nodePoolIds));
 
-            RunRequest spreadModel = new RunRequest(
+            RunContent spreadModel = new RunContent(
                 toolId,
                 command,
                 inlineFiles?.ToList() as IList<InlineFile> ?? new ChangeTrackingList<InlineFile>(),
