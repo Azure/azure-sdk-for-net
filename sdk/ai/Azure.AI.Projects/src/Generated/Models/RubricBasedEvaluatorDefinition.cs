@@ -4,16 +4,17 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Azure.AI.Projects.Evaluation;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary> Rubric-based evaluator definition — stores dimensions produced by the generate API. Used for both quality and safety evaluators. </summary>
+    /// <summary> Rubric evaluator definition. Ordinary quality rubrics report one aggregate. Safety rubrics require Boolean scoring and an explicit allowed classification on every dimension, and report disallowed_behavior_violated and allowed_behavior_violated as two independent lower-is-better metrics. Safety rubrics have no weights, threshold, or combined safety score. </summary>
     public partial class RubricBasedEvaluatorDefinition : EvaluatorDefinition
     {
         /// <summary> Initializes a new instance of <see cref="RubricBasedEvaluatorDefinition"/>. </summary>
-        /// <param name="dimensions"> The set of dimensions — the scoring blueprint used by the LLM judge. Quality evaluators include a non-editable residual dimension with id 'general_quality' (always_applicable: true); safety evaluators include 'general_policy_compliance'. Both use the same Dimension structure. </param>
+        /// <param name="dimensions"> The rubric criteria. Safety dimensions require allowed and omit weight. Rating generation includes a service residual; Boolean generation does not inject a generic residual. Existing ordinary and legacy definitions retain their behavior. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dimensions"/> is null. </exception>
         public RubricBasedEvaluatorDefinition(IEnumerable<EvaluationsDimension> dimensions) : base(EvaluatorDefinitionType.Rubric)
         {
@@ -28,18 +29,25 @@ namespace Azure.AI.Projects
         /// <param name="dataSchema"> The JSON schema (Draft 2020-12) for the evaluator's input data. This includes parameters like type, properties, required. </param>
         /// <param name="metrics"> List of output metrics produced by this evaluator. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="dimensions"> The set of dimensions — the scoring blueprint used by the LLM judge. Quality evaluators include a non-editable residual dimension with id 'general_quality' (always_applicable: true); safety evaluators include 'general_policy_compliance'. Both use the same Dimension structure. </param>
-        /// <param name="passThreshold"> Pass/fail threshold for the aggregate rubric score, on the same normalized 0.0-1.0 scale as the emitted `score`. When the runtime weighted average meets or exceeds this value, the result is `pass`. Defaults to 0.5 (equivalent to a raw 1-5 weighted average of 3.0). The 'any dimension scored 1 → fail' rule still applies regardless of this threshold. </param>
-        internal RubricBasedEvaluatorDefinition(EvaluatorDefinitionType @type, BinaryData initParameters, BinaryData dataSchema, IDictionary<string, EvaluatorMetric> metrics, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<EvaluationsDimension> dimensions, float? passThreshold) : base(@type, initParameters, dataSchema, metrics, additionalBinaryDataProperties)
+        /// <param name="dimensions"> The rubric criteria. Safety dimensions require allowed and omit weight. Rating generation includes a service residual; Boolean generation does not inject a generic residual. Existing ordinary and legacy definitions retain their behavior. </param>
+        /// <param name="passThreshold"> Optional normalized threshold for Likert scoring, interpreted as 0.5 when omitted. Ordinary Boolean scoring requires all applicable checks to pass: omit this field or set it to 1; its effective threshold is 1 and other values are rejected. Safety rubrics omit this field and report two separate metrics without an overall threshold. </param>
+        /// <param name="scoring"> Simple scoring choices. Omission preserves existing legacy scoring for existing clients. No policy version is required from the caller. </param>
+        [Experimental("AAIP001")]
+        internal RubricBasedEvaluatorDefinition(EvaluatorDefinitionType @type, BinaryData initParameters, BinaryData dataSchema, IDictionary<string, EvaluatorMetric> metrics, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<EvaluationsDimension> dimensions, float? passThreshold, RubricScoring scoring) : base(@type, initParameters, dataSchema, metrics, additionalBinaryDataProperties)
         {
             Dimensions = dimensions;
             PassThreshold = passThreshold;
+            Scoring = scoring;
         }
 
-        /// <summary> The set of dimensions — the scoring blueprint used by the LLM judge. Quality evaluators include a non-editable residual dimension with id 'general_quality' (always_applicable: true); safety evaluators include 'general_policy_compliance'. Both use the same Dimension structure. </summary>
+        /// <summary> The rubric criteria. Safety dimensions require allowed and omit weight. Rating generation includes a service residual; Boolean generation does not inject a generic residual. Existing ordinary and legacy definitions retain their behavior. </summary>
         public IList<EvaluationsDimension> Dimensions { get; }
 
-        /// <summary> Pass/fail threshold for the aggregate rubric score, on the same normalized 0.0-1.0 scale as the emitted `score`. When the runtime weighted average meets or exceeds this value, the result is `pass`. Defaults to 0.5 (equivalent to a raw 1-5 weighted average of 3.0). The 'any dimension scored 1 → fail' rule still applies regardless of this threshold. </summary>
+        /// <summary> Optional normalized threshold for Likert scoring, interpreted as 0.5 when omitted. Ordinary Boolean scoring requires all applicable checks to pass: omit this field or set it to 1; its effective threshold is 1 and other values are rejected. Safety rubrics omit this field and report two separate metrics without an overall threshold. </summary>
         public float? PassThreshold { get; set; }
+
+        /// <summary> Simple scoring choices. Omission preserves existing legacy scoring for existing clients. No policy version is required from the caller. </summary>
+        [Experimental("AAIP001")]
+        public RubricScoring Scoring { get; set; }
     }
 }

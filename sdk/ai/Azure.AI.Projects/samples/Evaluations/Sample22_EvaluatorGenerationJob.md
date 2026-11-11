@@ -32,9 +32,11 @@ ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.Crea
 Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
 EvaluatorGenerationInputs job = new(
     sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
-    model: modelDeploymentName,
     evaluatorName: "coherence"
-);
+)
+{
+    Model = modelDeploymentName
+};
 ```
 
 Asynchronous sample:
@@ -49,9 +51,11 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
 Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
 EvaluatorGenerationInputs job = new(
     sources: [new AgentEvaluatorGenerationJobSource(agentName: agentVersion.Name)],
-    model: modelDeploymentName,
     evaluatorName: "coherence"
-);
+)
+{
+    Model = modelDeploymentName
+};
 ```
 
 3. Start the evaluator generation job and wait for job completion..
@@ -96,9 +100,11 @@ Synchronous sample:
 ```C# Snippet:Sample_CancelingJob_EvaluatorGenerationJob_Sync
 job = new(
     sources: [new PromptEvaluatorGenerationJobSource("Please explain the Maxwell's equation")],
-    model: modelDeploymentName,
     evaluatorName: "violence"
-);
+)
+{
+    Model = modelDeploymentName
+};
 result = projectClient.EvaluatorGenerationJobs.Create(waitUntilCompleted: false, job: job);
 EvaluatorGenerationJob jobToCancel = EvaluatorGenerationJob.FromClientResult(result.UpdateStatus());
 jobToCancel = projectClient.EvaluatorGenerationJobs.Cancel(jobToCancel.Id);
@@ -119,9 +125,11 @@ Asynchronous sample:
 ```C# Snippet:Sample_CancelingJob_EvaluatorGenerationJob_Async
 job = new(
     sources: [new PromptEvaluatorGenerationJobSource("Please explain the Maxwell's equation")],
-    model: modelDeploymentName,
     evaluatorName: "violence"
-);
+)
+{
+    Model = modelDeploymentName
+};
 result = await projectClient.EvaluatorGenerationJobs.CreateAsync(waitUntilCompleted: false, job: job);
 EvaluatorGenerationJob jobToCancel = EvaluatorGenerationJob.FromClientResult(await result.UpdateStatusAsync());
 jobToCancel = await projectClient.EvaluatorGenerationJobs.CancelAsync(jobToCancel.Id);

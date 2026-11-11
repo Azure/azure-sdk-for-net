@@ -1,0 +1,3 @@
+# The generated serializer must access the experimental scoring member on behalf of the SDK.
+[Generated/Models/RubricBasedEvaluatorDefinition.Serialization.cs]
+dotnet_diagnostic.AAIP001.severity = none

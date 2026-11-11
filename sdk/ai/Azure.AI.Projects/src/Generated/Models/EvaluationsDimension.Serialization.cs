@@ -10,7 +10,7 @@ using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
 {
-    /// <summary> A single dimension — one independent, measurable quality dimension within a rubric evaluator's scoring blueprint. </summary>
+    /// <summary> One measurable criterion within a rubric. Quality criteria may use rating weights; safety criteria classify a behavior as allowed or disallowed. </summary>
     public partial class EvaluationsDimension : IJsonModel<EvaluationsDimension>
     {
         /// <summary> Initializes a new instance of <see cref="EvaluationsDimension"/> for deserialization. </summary>
@@ -80,8 +80,21 @@ namespace Azure.AI.Projects.Evaluation
             writer.WriteStringValue(Id);
             writer.WritePropertyName("description"u8);
             writer.WriteStringValue(Description);
-            writer.WritePropertyName("weight"u8);
-            writer.WriteNumberValue(Weight);
+            if (Optional.IsDefined(Allowed))
+            {
+                writer.WritePropertyName("allowed"u8);
+                writer.WriteBooleanValue(Allowed.Value);
+            }
+            if (Optional.IsDefined(Weight))
+            {
+                writer.WritePropertyName("weight"u8);
+                writer.WriteNumberValue(Weight.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(GeneratedWeight))
+            {
+                writer.WritePropertyName("generated_weight"u8);
+                writer.WriteNumberValue(GeneratedWeight.Value);
+            }
             if (Optional.IsDefined(IsAlwaysApplicable))
             {
                 writer.WritePropertyName("always_applicable"u8);
@@ -131,7 +144,9 @@ namespace Azure.AI.Projects.Evaluation
             }
             string id = default;
             string description = default;
-            int weight = default;
+            bool? allowed = default;
+            int? weight = default;
+            int? generatedWeight = default;
             bool? isAlwaysApplicable = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -146,9 +161,31 @@ namespace Azure.AI.Projects.Evaluation
                     description = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("allowed"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    allowed = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("weight"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     weight = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("generated_weight"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    generatedWeight = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("always_applicable"u8))
@@ -165,7 +202,14 @@ namespace Azure.AI.Projects.Evaluation
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new EvaluationsDimension(id, description, weight, isAlwaysApplicable, additionalBinaryDataProperties);
+            return new EvaluationsDimension(
+                id,
+                description,
+                allowed,
+                weight,
+                generatedWeight,
+                isAlwaysApplicable,
+                additionalBinaryDataProperties);
         }
     }
 }

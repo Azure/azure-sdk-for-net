@@ -3,6 +3,10 @@
 <Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Suppression>
     <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Azure.AI.Projects.EvaluationRuleActionType</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
     <Target>T:Azure.AI.Projects.InputFileContentParam</Target>
   </Suppression>
   <Suppression>
@@ -59,6 +63,22 @@
   </Suppression>
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Evaluation.EvaluationRules.GetAll(System.Nullable{Azure.AI.Projects.EvaluationRuleActionType},System.String,System.Nullable{System.Boolean},System.Threading.CancellationToken)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Evaluation.EvaluationRules.GetAllAsync(System.Nullable{Azure.AI.Projects.EvaluationRuleActionType},System.String,System.Nullable{System.Boolean},System.Threading.CancellationToken)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Memory.AIProjectMemoryStores.UpdateMemories(System.String,System.ClientModel.BinaryContent,System.ClientModel.Primitives.RequestOptions)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.AI.Projects.Memory.AIProjectMemoryStores.UpdateMemoriesAsync(System.String,System.ClientModel.BinaryContent,System.ClientModel.Primitives.RequestOptions)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Azure.AI.Projects.Memory.MemorySearchOptions.get_ResultOptions</Target>
   </Suppression>
   <Suppression>
@@ -68,13 +88,5 @@
   <Suppression>
     <DiagnosticId>CP0002</DiagnosticId>
     <Target>M:Azure.AI.Projects.Memory.MemoryStoreOperationUsage.get_OutputTokensDetails</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Memory.AIProjectMemoryStores.UpdateMemories(System.String,System.ClientModel.BinaryContent,System.ClientModel.Primitives.RequestOptions)</Target>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0002</DiagnosticId>
-    <Target>M:Azure.AI.Projects.Memory.AIProjectMemoryStores.UpdateMemoriesAsync(System.String,System.ClientModel.BinaryContent,System.ClientModel.Primitives.RequestOptions)</Target>
   </Suppression>
 </Suppressions>

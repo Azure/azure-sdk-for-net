@@ -6,8 +6,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Evaluation data generation job resource. </summary>
     public partial class EvaluationDataGenerationJob : DataGenerationJob, IJsonModel<EvaluationDataGenerationJob>

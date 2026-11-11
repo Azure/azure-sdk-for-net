@@ -4,12 +4,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> A highlighted trace that provides evidence for an agent insight. </summary>
-    [Experimental("AAIP001")]
     public partial class AgentInsightHighlightedTrace
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

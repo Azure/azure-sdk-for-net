@@ -13,11 +13,6 @@ namespace Azure.AI.Projects.Evaluation
     /// <summary> Daily recurrence schedule. </summary>
     public partial class DailyRecurrenceSchedule : RecurrenceSchedule, IJsonModel<DailyRecurrenceSchedule>
     {
-        /// <summary> Initializes a new instance of <see cref="DailyRecurrenceSchedule"/> for deserialization. </summary>
-        internal DailyRecurrenceSchedule()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RecurrenceSchedule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -77,13 +72,16 @@ namespace Azure.AI.Projects.Evaluation
                 throw new FormatException($"The model {nameof(DailyRecurrenceSchedule)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("hours"u8);
-            writer.WriteStartArray();
-            foreach (int item in Hours)
+            if (Optional.IsCollectionDefined(Hours))
             {
-                writer.WriteNumberValue(item);
+                writer.WritePropertyName("hours"u8);
+                writer.WriteStartArray();
+                foreach (int item in Hours)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -123,6 +121,10 @@ namespace Azure.AI.Projects.Evaluation
                 }
                 if (prop.NameEquals("hours"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<int> array = new List<int>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {

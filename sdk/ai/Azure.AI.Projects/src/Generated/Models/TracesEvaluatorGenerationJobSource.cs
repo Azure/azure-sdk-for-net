@@ -4,9 +4,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Projects.Evaluation;
+using Azure.AI.Projects;
 
-namespace Azure.AI.Projects
+namespace Azure.AI.Projects.Evaluation
 {
     /// <summary> Traces source for evaluator generation jobs — conversation traces from Application Insights. </summary>
     public partial class TracesEvaluatorGenerationJobSource : EvaluatorGenerationJobSource
@@ -16,6 +16,7 @@ namespace Azure.AI.Projects
         public TracesEvaluatorGenerationJobSource(DateTimeOffset startsOn) : base(EvaluatorGenerationJobSourceType.Traces)
         {
             StartsOn = startsOn;
+            TraceIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TracesEvaluatorGenerationJobSource"/>. </summary>
@@ -27,7 +28,8 @@ namespace Azure.AI.Projects
         /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
         /// <param name="startsOn"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
         /// <param name="endsOn"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
-        internal TracesEvaluatorGenerationJobSource(EvaluatorGenerationJobSourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string description, string agentId, string agentName, string agentVersion, DateTimeOffset startsOn, DateTimeOffset? endsOn) : base(@type, additionalBinaryDataProperties)
+        /// <param name="traceIds"> Optional explicit list of trace IDs to include. </param>
+        internal TracesEvaluatorGenerationJobSource(EvaluatorGenerationJobSourceType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string description, string agentId, string agentName, string agentVersion, DateTimeOffset startsOn, DateTimeOffset? endsOn, IList<string> traceIds) : base(@type, additionalBinaryDataProperties)
         {
             Description = description;
             AgentId = agentId;
@@ -35,6 +37,7 @@ namespace Azure.AI.Projects
             AgentVersion = agentVersion;
             StartsOn = startsOn;
             EndsOn = endsOn;
+            TraceIds = traceIds;
         }
 
         /// <summary> Optional description of what this source represents — helps the pipeline interpret its content (e.g., 'Company refund policy document' or 'Describes the agent's core capabilities'). </summary>
@@ -54,5 +57,8 @@ namespace Azure.AI.Projects
 
         /// <summary> End of the time window (Unix timestamp in seconds). Defaults to current time. </summary>
         public DateTimeOffset? EndsOn { get; set; }
+
+        /// <summary> Optional explicit list of trace IDs to include. </summary>
+        public IList<string> TraceIds { get; }
     }
 }
