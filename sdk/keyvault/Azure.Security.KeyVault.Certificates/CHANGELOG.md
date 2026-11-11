@@ -2,8 +2,6 @@
 
 ## 4.11.0-beta.1 (2026-11-11)
 
-### Features Added
-
 ### Breaking Changes
 
 - Removed `CertificateClientOptions.ServiceVersion.V2026_03_01_Preview`. Use `V2026_04_01` instead.
