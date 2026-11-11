@@ -13,24 +13,29 @@ this document takes precedence for this repository.
 .NET ships a new major version every November as either a long-term support
 (LTS) or a standard-term support (STS) release. The
 [.NET support policy](https://dotnet.microsoft.com/platform/support/policy/dotnet-core)
-lists each release's type and end-of-support date.
+lists each release's type and end-of-support date. End of support is also
+called end of life (EOL).
 
 ## Package targets
 
 | Packages | Targets |
 |----------|---------|
 | Libraries (`SupportsNetStandard20`, on by default for `Azure.*` projects) | `netstandard2.0` and the current LTS |
-| Core packages: Azure.Core, System.ClientModel, and Azure.Core.Experimental | `netstandard2.0`, the current LTS, and the previous LTS |
+| Core packages: Azure.Core, System.ClientModel, and Azure.Core.Experimental | `netstandard2.0`, the current LTS, and the previous LTS until it reaches end of support |
 | Analyzers and source generators | `netstandard2.0` only |
 | Code generator projects (`IsGeneratorLibrary`) | The current LTS only |
 
 - ✅ **DO** adopt a new LTS as soon as it ships and the CI agent images include
-  its SDK (see [CI agent images](#ci-agent-images)). Add it as a target, and
-  drop every `netX.0` target older than the oldest LTS the package keeps. For
-  example, when .NET 12 ships, libraries move from `net10.0` to `net12.0`. Core
-  packages move from `net10.0` and `net8.0` to `net12.0` and `net10.0`, and
-  System.ClientModel drops its `net9.0` target.
-- ❌ **DO NOT** change repository-wide package targets when an STS ships.
+  its SDK (see [CI agent images](#ci-agent-images)). Libraries replace their
+  `netX.0` targets with it. Core packages add it and keep the outgoing LTS as
+  their previous LTS. For example, when .NET 12 ships, libraries move from
+  `net10.0` to `net12.0`, and Core packages move from `net10.0` to `net12.0` and
+  `net10.0`.
+- ✅ **DO** remove a .NET version from every package's targets when it reaches
+  end of support, in the same change that removes it from the test targets. For
+  example, .NET 8 and .NET 9 reach end of support as .NET 11 ships, so Core
+  packages drop `net8.0` and System.ClientModel drops `net9.0`.
+- ❌ **DO NOT** add repository-wide package targets when an STS ships.
 
 ### STS targets
 
@@ -42,7 +47,7 @@ lists each release's type and end-of-support date.
   improvements from the runtime they run on, whatever framework a package
   targets.
 
-An STS target is dropped by the LTS rule above, like any other `netX.0` target.
+STS targets are removed by the same rules as any other `netX.0` target.
 
 ## Test targets
 
@@ -54,18 +59,15 @@ matrix covers the same set.
   ships.
 - ✅ **DO** remove versions that have reached end of support in the same change.
 
-Core packages can keep shipping a target after its version leaves the test
-targets, until the next LTS ships. That gap is expected.
-
 ## Timeline
 
 How targets change over the next four releases:
 
 | Release | Libraries | Core packages | Tests |
 |---------|-----------|---------------|-------|
-| .NET 11 (STS), Nov 2026 | `net10.0` | `net10.0`, `net8.0` | `net10.0`, `net11.0` |
+| .NET 11 (STS), Nov 2026 | `net10.0` | `net10.0` | `net10.0`, `net11.0` |
 | .NET 12 (LTS), Nov 2027 | `net12.0` | `net12.0`, `net10.0` | `net10.0`, `net11.0`, `net12.0` |
-| .NET 13 (STS), Nov 2028 | `net12.0` | `net12.0`, `net10.0` | `net12.0`, `net13.0` |
+| .NET 13 (STS), Nov 2028 | `net12.0` | `net12.0` | `net12.0`, `net13.0` |
 | .NET 14 (LTS), Nov 2029 | `net14.0` | `net14.0`, `net12.0` | `net12.0`, `net13.0`, `net14.0` |
 
 All packages also target `netstandard2.0`, and tests also run on .NET Framework
@@ -92,9 +94,11 @@ Once the agent images include the new SDK:
 
 1. `global.json`: move `sdk.version` to the new SDK.
 2. `eng/Directory.Build.Common.props`: update `AllActiveCurrentTargetFrameworks`
-   for the test targets. For an LTS, also update `LtsTargetFramework`, the
-   previous LTS that Core packages target, and `ApiCompatRunnableTargetFramework`,
-   which must be a framework that already-released packages contain.
+   for the test targets, and remove the previous LTS that Core packages target
+   once it reaches end of support. For an LTS, also update `LtsTargetFramework`,
+   make the outgoing LTS the previous LTS that Core packages target, and update
+   `ApiCompatRunnableTargetFramework`, which must be a framework that
+   already-released packages contain.
 3. `eng/pipelines/templates/stages/platform-matrix.json`: add and remove
    `TestTargetFramework` entries for every OS. For an LTS, move the
    `Coverage_Record` entry to it.
@@ -102,10 +106,14 @@ Once the agent images include the new SDK:
    test framework older than the `global.json` SDK.
 5. `eng/centralpackagemanagement/`: update package versions conditioned on a
    framework, such as `Microsoft.AspNetCore.Mvc.Testing`.
-6. Search the repo for the old framework and SDK (for example `net8.0` and
-   `8.0.x`) to catch scripts, samples, and tools that hard-code them.
-7. For an LTS, regenerate API listings (`api/<Package>.<framework>.cs`) with
-   `eng/scripts/Export-API.ps1`. For .NET 10 this was done in follow-up PRs:
+6. Search the repo for the removed frameworks and old SDKs (for example
+   `net8.0`, `net9.0`, and `8.0.x`) to catch package-specific targets, such as
+   System.ClientModel's `net9.0`, and scripts, samples, and tools that hard-code
+   them.
+7. Update API listings (`api/<Package>.<framework>.cs`) for packages whose
+   targets changed. `eng/scripts/Export-API.ps1` generates listings for added
+   frameworks but leaves listings for removed frameworks in place, so delete
+   those. For .NET 10, the new listings were added in follow-up PRs:
    [#54412](https://github.com/Azure/azure-sdk-for-net/pull/54412) for Core and
    [#54952](https://github.com/Azure/azure-sdk-for-net/pull/54952) for all
    libraries.
