@@ -105,6 +105,13 @@ Describe 'PowerShell captured baseline parity' {
         $script:responses["repos/Azure/azure-sdk-for-net/contents/$($script:path)?ref=$($script:head)"]=@{Status=200;ExitCode=0;Body=($metadata | ConvertTo-Json -Compress)}
         { Get-CapturedBaselineFiles -Snapshot $snapshot -Repository $script:repo } | Should -Throw
     }
+    It 'rejects culture-ignorable characters in a blob SHA' {
+        $snapshot=@{ files=@(@{filename=$script:path;status='added'});head_sha=$script:head;head_repo='Azure/azure-sdk-for-net' }
+        $blob=New-Metadata '<Suppressions/>'; $metadata=@{} + $blob; $metadata.encoding='none'; $metadata.content=''; $blob.sha += [char]0
+        $script:responses["repos/Azure/azure-sdk-for-net/contents/$($script:path)?ref=$($script:head)"]=@{Status=200;ExitCode=0;Body=($metadata | ConvertTo-Json -Compress)}
+        $script:responses["repos/Azure/azure-sdk-for-net/git/blobs/$($metadata.sha)"]=@{Status=200;ExitCode=0;Body=($blob | ConvertTo-Json -Compress)}
+        { Get-CapturedBaselineFiles -Snapshot $snapshot -Repository $script:repo } | Should -Throw '*Unreadable baseline blob*'
+    }
     It 'rejects a blob whose size is a string even when the digits match' {
         $snapshot=@{ files=@(@{filename=$script:path;status='added'});head_sha=$script:head;head_repo='Azure/azure-sdk-for-net' }
         $blob=New-Metadata '<Suppressions/>'; $metadata=@{} + $blob; $metadata.encoding='none'; $metadata.content=''; $blob.size=[string]$blob.size
@@ -126,6 +133,15 @@ Describe 'PowerShell captured baseline parity' {
         $script:responses[$route]=@{Status=200;ExitCode=1;Body='{}'}
         { Get-CapturedBaselineFiles -Snapshot $snapshot -Repository $script:repo } | Should -Throw
     }
+    It 'rejects malformed statuses and non-string head repositories before fetching' {
+        foreach ($status in @(('modified' + [char]0), ('added' + [char]0x00ad))) {
+            $snapshot=@{ files=@(@{filename=$script:path;status=$status});head_sha=$script:head;diff_base_sha=$script:diff;head_repo='Azure/azure-sdk-for-net' }
+            { Get-CapturedBaselineFiles -Snapshot $snapshot -Repository $script:repo } | Should -Throw '*Unknown baseline file status*'
+        }
+        $snapshot=@{ files=@(@{filename=$script:path;status='added'});head_sha=$script:head;head_repo=@() }
+        { Get-CapturedBaselineFiles -Snapshot $snapshot -Repository $script:repo } | Should -Throw '*Invalid baseline head repository*'
+        $script:calls.Count | Should -Be 0
+    }
     It 'does not fall back for other errors' {
         $snapshot=@{ files=@(@{filename=$script:path;status='added'});head_sha=$script:head;head_repo='fork/azure-sdk-for-net' }
         $script:responses["repos/fork/azure-sdk-for-net/contents/$($script:path)?ref=$($script:head)"]=@{Status=429;ExitCode=1;Body='{}'}
@@ -133,7 +149,7 @@ Describe 'PowerShell captured baseline parity' {
         $script:calls.Count | Should -Be 1
     }
     It 'rejects malformed or corrupt metadata <Case>' -ForEach @(
-      @{Case='type Boolean';Key='type';Value=$true},@{Case='size string';Key='size';Value='15'},@{Case='size fraction';Key='size';Value=3.5},@{Case='encoding Boolean';Key='encoding';Value=$true},@{Case='content array';Key='content';Value=@('x')},@{Case='sha Boolean';Key='sha';Value=$true},@{Case='corrupt hash';Key='sha';Value=('0'*40)},@{Case='bad base64';Key='content';Value='####'}
+      @{Case='type Boolean';Key='type';Value=$true},@{Case='type NUL';Key='type';Value=('file'+[char]0)},@{Case='size string';Key='size';Value='15'},@{Case='size fraction';Key='size';Value=3.5},@{Case='encoding Boolean';Key='encoding';Value=$true},@{Case='encoding NUL';Key='encoding';Value=('base64'+[char]0)},@{Case='content array';Key='content';Value=@('x')},@{Case='sha Boolean';Key='sha';Value=$true},@{Case='corrupt hash';Key='sha';Value=('0'*40)},@{Case='bad base64';Key='content';Value='####'}
     ) {
         $snapshot=@{ files=@(@{filename=$script:path;status='added'});head_sha=$script:head;head_repo='Azure/azure-sdk-for-net' }
         $metadata=New-Metadata '<Suppressions/>'; $metadata[$Key]=$Value

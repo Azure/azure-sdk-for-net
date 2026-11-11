@@ -11,10 +11,36 @@ const deliveryModule = path.join(__dirname, '..', 'pr-re-review', 'ReviewDeliver
 
 function fixture(t, mode) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'review-verifier-'));
-  const pidFile = path.join(root, 'pid'), termFile = path.join(root, 'term');
+  const pidFile = path.join(root, 'pid'), termFile = path.join(root, 'term'), releaseFile = path.join(root, 'release'), ownerFile = path.join(root, 'owner'), startFile = path.join(root, 'start');
   const fake = path.join(root, 'fake-pwsh');
   fs.writeFileSync(fake, `#!/usr/bin/env node
     const fs = require('node:fs');
+    if (['slow-pid', 'slow-owner'].includes(process.env.FAKE_MODE)) {
+      const parent = Number(process.env.CONTROLLER_PID);
+      if (!Number.isSafeInteger(parent) || parent <= 1) process.exit(1);
+      const watchdog = setInterval(() => {
+        try { process.kill(parent, 0); } catch (error) { if (error.code === 'ESRCH') process.exit(0); else throw error; }
+      }, 10);
+      watchdog.unref();
+    }
+    if (process.env.FAKE_MODE === 'slow-owner') {
+      fs.writeFileSync(process.env.START_FILE + '.tmp', String(process.pid));
+      fs.renameSync(process.env.START_FILE + '.tmp', process.env.START_FILE);
+      process.stdin.resume(); setInterval(() => {}, 1000);
+      return;
+    }
+    if (process.env.FAKE_MODE === 'slow-pid') {
+      fs.writeFileSync(process.env.OWNER_FILE + '.tmp', String(process.pid));
+      fs.renameSync(process.env.OWNER_FILE + '.tmp', process.env.OWNER_FILE);
+    }
+    function publishPid(pid) {
+      const tmp = process.env.PID_FILE + '.tmp';
+      fs.writeFileSync(tmp, '');
+      const finish = () => { fs.writeFileSync(tmp, String(pid)); fs.renameSync(tmp, process.env.PID_FILE); };
+      if (process.env.FAKE_MODE === 'slow-pid') {
+        const timer = setInterval(() => { if (fs.existsSync(process.env.RELEASE_FILE)) { clearInterval(timer); finish(); } }, 10);
+      } else finish();
+    }
     if (process.env.FAKE_MODE === 'invalid') { process.stdout.write('invalid'); process.exit(0); }
     if (process.env.FAKE_MODE === 'error') { process.stderr.write('verifier failure'); process.exit(3); }
     if (process.env.FAKE_MODE === 'flood') {
@@ -26,7 +52,7 @@ function fixture(t, mode) {
       const { spawn } = require('node:child_process');
       const descendant = spawn(process.execPath, ['-e', "process.send('ready');setInterval(()=>{},1000)"], { stdio: ['ignore', 'ignore', 'ignore', 'ipc'] });
       descendant.once('message', () => {
-        fs.writeFileSync(process.env.PID_FILE, String(descendant.pid)); descendant.disconnect();
+        publishPid(descendant.pid); descendant.disconnect();
         if (process.env.FAKE_MODE === 'silent-success') { process.stdout.write('{}'); process.exit(0); }
         else { process.stderr.write('verifier failure'); process.exit(3); }
       });
@@ -36,22 +62,23 @@ function fixture(t, mode) {
       const { spawn } = require('node:child_process');
       process.on('SIGTERM', () => process.exit(0));
       const descendant = spawn(process.execPath, ['-e', "process.on('SIGTERM',()=>{});process.send('ready');setInterval(()=>{},1000)"], { stdio: ['ignore', 'ignore', 'ignore', 'ipc'] });
-      descendant.once('message', () => { fs.writeFileSync(process.env.PID_FILE, String(descendant.pid)); descendant.disconnect(); });
+      descendant.once('message', () => { publishPid(descendant.pid); descendant.disconnect(); });
       process.stdin.resume(); setInterval(() => {}, 1000);
       return;
     }
     if (['descendant', 'escaped'].includes(process.env.FAKE_MODE)) {
       const { spawn } = require('node:child_process');
       const descendant = spawn(process.execPath, ['-e', "process.on('SIGTERM',()=>{});setInterval(()=>{},1000)"], { detached: process.env.FAKE_MODE === 'escaped', stdio: ['ignore', 'inherit', 'inherit'] });
-      fs.writeFileSync(process.env.PID_FILE, String(descendant.pid));
+      publishPid(descendant.pid);
       process.exit(0);
     }
     process.on('SIGTERM', () => { fs.writeFileSync(process.env.TERM_FILE, 'term'); if (!['stubborn', 'timeout-stubborn'].includes(process.env.FAKE_MODE)) process.exit(0); });
-    fs.writeFileSync(process.env.PID_FILE, String(process.pid));
+    publishPid(process.pid);
     process.stdin.resume(); setInterval(() => {}, 1000);
   `, { mode: 0o755 });
   const entry = path.join(root, 'entry.cjs');
   fs.writeFileSync(entry, `
+    process.env.CONTROLLER_PID = String(process.pid);
     if (process.env.FAKE_MODE === 'timeout-stubborn') {
       const originalTimeout = global.setTimeout;
       global.setTimeout = (fn, delay, ...args) => originalTimeout(fn, delay === 30000 ? 1000 : delay, ...args);
@@ -62,15 +89,35 @@ function fixture(t, mode) {
       .catch(error => { console.log(error.message); process.exitCode = 1; });
   `);
   const child = spawn(process.execPath, [entry], {
-    env: { ...process.env, GH_AW_REVIEW_PWSH: mode === 'missing' ? `${fake}-missing` : fake, FAKE_MODE: mode, PID_FILE: pidFile, TERM_FILE: termFile },
+    env: { ...process.env, GH_AW_REVIEW_PWSH: mode === 'missing' ? `${fake}-missing` : fake, FAKE_MODE: mode, PID_FILE: pidFile, TERM_FILE: termFile, RELEASE_FILE: releaseFile, OWNER_FILE: ownerFile, START_FILE: startFile },
     stdio: ['ignore', 'pipe', 'pipe'],
   });
-  t.after(() => {
-    if (fs.existsSync(pidFile)) { try { process.kill(Number(fs.readFileSync(pidFile, 'utf8')), 'SIGKILL'); } catch { /* exited */ } }
+  let cleanupPromise;
+  const cleanup = () => cleanupPromise ??= (async () => {
+    if (mode === 'slow-pid' && !fs.existsSync(releaseFile)) fs.writeFileSync(releaseFile, 'release');
+    if (child.exitCode === null && child.signalCode === null) {
+      const closed = once(child, 'close').catch(() => {});
+      child.kill('SIGTERM');
+      let timer;
+      try { await Promise.race([closed, new Promise(resolve => { timer = setTimeout(resolve, 2500); })]); }
+      finally { clearTimeout(timer); }
+    }
+    if (!['slow-pid', 'slow-owner'].includes(mode) && fs.existsSync(pidFile)) {
+      const pid = Number(fs.readFileSync(pidFile, 'utf8'));
+      if (Number.isSafeInteger(pid) && pid > 1) { try { process.kill(pid, 'SIGKILL'); } catch { /* exited */ } }
+    }
     try { child.kill('SIGKILL'); } catch { /* exited */ }
-    fs.rmSync(root, { recursive: true, force: true });
-  });
-  return { child, pidFile, termFile };
+    const marker = mode === 'slow-pid' ? ownerFile : mode === 'slow-owner' ? startFile : null;
+    try {
+      if (marker && fs.existsSync(marker)) {
+        const pid = Number(fs.readFileSync(marker, 'utf8'));
+        if (!Number.isSafeInteger(pid) || pid <= 1) throw new Error('Invalid verifier PID');
+        await waitForProcessExit(pid);
+      }
+    } finally { fs.rmSync(root, { recursive: true, force: true }); }
+  })();
+  t.after(cleanup);
+  return { child, pidFile, termFile, releaseFile, ownerFile, startFile, cleanup };
 }
 
 async function waitForFile(filename, child) {
@@ -85,17 +132,84 @@ async function waitForFile(filename, child) {
   });
 }
 
+function linuxProcessState(stat) {
+  const close = stat.lastIndexOf(')');
+  if (close < 0 || !/^ [A-Za-z] /.test(stat.slice(close + 1))) throw new Error('Invalid process status');
+  return stat[close + 2];
+}
+
 async function waitForProcessExit(pid) {
   const deadline = Date.now() + 2000;
   while (Date.now() < deadline) {
-    try {
-      process.kill(pid, 0);
-      if (process.platform === 'linux' && /\) Z /.test(fs.readFileSync(`/proc/${pid}/stat`, 'utf8'))) return;
-    } catch { return; }
+    try { process.kill(pid, 0); } catch (error) { if (error.code === 'ESRCH') return; throw error; }
+    if (process.platform === 'linux') {
+      try { if (linuxProcessState(fs.readFileSync(`/proc/${pid}/stat`, 'utf8')) === 'Z') return; }
+      catch (error) {
+        if (error.code !== 'ENOENT') throw error;
+        try { process.kill(pid, 0); } catch (retry) { if (retry.code === 'ESRCH') return; throw retry; }
+        throw error;
+      }
+    }
     await new Promise(resolve => setTimeout(resolve, 10));
   }
-  throw new Error('A same-group descendant survived verifier exit');
+  throw new Error('A verifier process survived cleanup');
 }
+
+test('Linux process status uses the actual state, not the command name', () => {
+  assert.equal(linuxProcessState('123 (odd) Z name) S 1 2 3'), 'S');
+  assert.equal(linuxProcessState('123 (odd) Z name) Z 1 2 3'), 'Z');
+  assert.throws(() => linuxProcessState('invalid'), /Invalid process status/);
+});
+
+test('PID readiness waits for a complete verifier PID', { skip: process.platform === 'win32', timeout: 12000 }, async t => {
+  const { child, pidFile, releaseFile } = fixture(t, 'slow-pid');
+  const closed = once(child, 'close');
+  let settled = false, exitResult;
+  const readiness = waitForFile(pidFile, child).then(() => { settled = true; });
+  readiness.catch(() => {});
+  try {
+    await waitForFile(pidFile + '.tmp', child);
+    await new Promise(resolve => setImmediate(resolve));
+    assert.equal(fs.readFileSync(pidFile + '.tmp', 'utf8'), '');
+    assert.equal(fs.existsSync(pidFile), false);
+    assert.equal(settled, false);
+    fs.writeFileSync(releaseFile, 'release');
+    await readiness;
+    assert.match(fs.readFileSync(pidFile, 'utf8'), /^[1-9][0-9]*$/);
+  } finally {
+    if (!fs.existsSync(releaseFile)) fs.writeFileSync(releaseFile, 'release');
+    child.kill('SIGTERM');
+    let timer;
+    try { exitResult = await Promise.race([closed, new Promise((_, reject) => { timer = setTimeout(() => reject(new Error('Verifier did not stop')), 2500); })]); }
+    finally { clearTimeout(timer); }
+  }
+  assert.equal(exitResult[0], 1);
+});
+
+test('cleanup terminates an unpublished verifier after the controller exits', { skip: process.platform === 'win32', timeout: 5000 }, async t => {
+  const { child, pidFile, ownerFile, cleanup } = fixture(t, 'slow-pid');
+  const closed = once(child, 'close');
+  await waitForFile(pidFile + '.tmp', child);
+  const ownerPid = Number(fs.readFileSync(ownerFile, 'utf8'));
+  assert.ok(Number.isSafeInteger(ownerPid) && ownerPid > 1);
+  child.kill('SIGKILL');
+  await closed;
+  await cleanup();
+  await waitForProcessExit(ownerPid);
+});
+
+test('an unpublished verifier exits if its controller dies before PID ownership is recorded', { skip: process.platform === 'win32', timeout: 5000 }, async t => {
+  const { child, ownerFile, startFile, cleanup } = fixture(t, 'slow-owner');
+  const closed = once(child, 'close');
+  await waitForFile(startFile, child);
+  const pid = Number(fs.readFileSync(startFile, 'utf8'));
+  assert.ok(Number.isSafeInteger(pid) && pid > 1);
+  assert.equal(fs.existsSync(ownerFile), false);
+  child.kill('SIGKILL');
+  await closed;
+  await waitForProcessExit(pid);
+  await cleanup();
+});
 
 for (const mode of ['normal', 'stubborn']) {
   for (const signal of ['SIGTERM', 'SIGINT']) {

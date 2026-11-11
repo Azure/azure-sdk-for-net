@@ -120,25 +120,25 @@ function Get-CapturedBaselineFiles {
         $encoded = ($Name -split '/' | ForEach-Object { [uri]::EscapeDataString($_) }) -join '/'
         $response = Invoke-PrReReviewGhApi -Arguments @("repos/$source/contents/${encoded}?ref=$Ref") -IncludeStatus
         if ($response.ExitCode -ne 0 -or $response.Status -ne 200) {
-            if ($Ref -cne $Snapshot['head_sha'] -or $response.Status -notin @(403,404) -or $source -ceq $repo) { throw 'Unable to fetch captured baseline content.' }
+            if (-not [StringComparer]::Ordinal.Equals($Ref, $Snapshot['head_sha']) -or $response.Status -notin @(403,404) -or [StringComparer]::Ordinal.Equals($source, $repo)) { throw 'Unable to fetch captured baseline content.' }
             $source = $repo
             $response = Invoke-PrReReviewGhApi -Arguments @("repos/$source/contents/${encoded}?ref=$Ref") -IncludeStatus
             if ($response.ExitCode -ne 0 -or $response.Status -ne 200) { throw 'Unable to fetch captured baseline content.' }
         }
         $metadata = ConvertFrom-Json -InputObject $response.Body -AsHashtable -NoEnumerate
-        if ($metadata -isnot [System.Collections.IDictionary] -or $metadata['type'] -isnot [string] -or $metadata['type'] -cne 'file' -or
+        if ($metadata -isnot [System.Collections.IDictionary] -or $metadata['type'] -isnot [string] -or -not [StringComparer]::Ordinal.Equals($metadata['type'], 'file') -or
             ($metadata['size'] -isnot [long] -and $metadata['size'] -isnot [int] -and $metadata['size'] -isnot [double]) -or
             -not ($metadata['size'] -ge 0 -and $metadata['size'] -le 4MB -and [Math]::Floor([double]$metadata['size']) -eq $metadata['size']) -or
             $metadata['sha'] -isnot [string] -or $metadata['sha'] -cnotmatch '\A[a-fA-F0-9]{40}\z') { throw 'Unreadable baseline content.' }
         $data = $metadata
-        if ($metadata['encoding'] -is [string] -and $metadata['encoding'] -ceq 'none') {
+        if ($metadata['encoding'] -is [string] -and [StringComparer]::Ordinal.Equals($metadata['encoding'], 'none')) {
             $blob = Invoke-PrReReviewGhApi -Arguments @("repos/$source/git/blobs/$($metadata['sha'])") -IncludeStatus
             if ($blob.ExitCode -ne 0 -or $blob.Status -ne 200) { throw 'Unreadable baseline blob.' }
             $data = ConvertFrom-Json -InputObject $blob.Body -AsHashtable -NoEnumerate
         }
-        if ($data -isnot [System.Collections.IDictionary] -or $data['encoding'] -isnot [string] -or $data['encoding'] -cne 'base64' -or
+        if ($data -isnot [System.Collections.IDictionary] -or $data['encoding'] -isnot [string] -or -not [StringComparer]::Ordinal.Equals($data['encoding'], 'base64') -or
             $data['content'] -isnot [string] -or ($data['size'] -isnot [long] -and $data['size'] -isnot [int] -and $data['size'] -isnot [double]) -or
-            $data['size'] -ne $metadata['size'] -or $data['sha'] -isnot [string] -or $data['sha'] -cne $metadata['sha']) { throw 'Unreadable baseline blob.' }
+            $data['size'] -ne $metadata['size'] -or $data['sha'] -isnot [string] -or -not [StringComparer]::Ordinal.Equals($data['sha'], $metadata['sha'])) { throw 'Unreadable baseline blob.' }
         # ECMAScript's \s differs from .NET's (notably U+FEFF and U+0085).
         $encodedContent = [regex]::Replace($data['content'], '[\u0009-\u000D\u0020\u00A0\u1680\u2000-\u200A\u2028\u2029\u202F\u205F\u3000\uFEFF]', '')
         if ($encodedContent -cnotmatch '\A(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?\z') { throw 'Invalid baseline encoding.' }
@@ -148,22 +148,27 @@ function Get-CapturedBaselineFiles {
         [Buffer]::BlockCopy($prefix, 0, $combined, 0, $prefix.Length)
         [Buffer]::BlockCopy($bytes, 0, $combined, $prefix.Length, $bytes.Length)
         $actual = [Convert]::ToHexString([Security.Cryptography.SHA1]::HashData($combined)).ToLowerInvariant()
-        if ($bytes.Length -ne $data['size'] -or $actual -cne $data['sha'].ToLowerInvariant()) { throw 'Incomplete or corrupt baseline content.' }
+        if ($bytes.Length -ne $data['size'] -or -not [StringComparer]::Ordinal.Equals($actual, $data['sha'].ToLowerInvariant())) { throw 'Incomplete or corrupt baseline content.' }
         $text = [Text.UTF8Encoding]::new($false, $true).GetString($bytes)
         # TextDecoder('utf-8') strips one initial BOM after verifying the bytes.
         if ($text.Length -and $text[0] -eq [char]0xFEFF) { $text = $text.Substring(1) }
         return $text
     }
     $pairs = [System.Collections.Generic.List[object]]::new()
+    $validStatuses = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+    foreach ($status in @('added','modified','removed','renamed')) { [void]$validStatuses.Add($status) }
     foreach ($file in $Snapshot['files']) {
         if (-not (& $isBaseline $file['filename']) -and -not (& $isBaseline $file['previous_filename'])) { continue }
-        if ($file['status'] -isnot [string] -or $file['status'] -cnotin @('added','modified','removed','renamed')) { throw 'Unknown baseline file status.' }
-        if (-not (& $isBaseline $file['filename']) -or $file['status'] -ceq 'removed') { continue }
-        $headRepo = if ($Snapshot['head_repo']) { $Snapshot['head_repo'] } else { $repo }
+        if ($file['status'] -isnot [string] -or -not $validStatuses.Contains($file['status'])) { throw 'Unknown baseline file status.' }
+        if (-not (& $isBaseline $file['filename']) -or [StringComparer]::Ordinal.Equals($file['status'], 'removed')) { continue }
+        $headRepo = $Snapshot['head_repo']
+        if ($headRepo -is [array] -or $headRepo -is [System.Collections.IDictionary]) { throw 'Invalid baseline head repository.' }
+        if (-not $headRepo) { $headRepo = $repo }
+        if ($headRepo -isnot [string]) { throw 'Invalid baseline head repository.' }
         $names = $headRepo -split '/'
         if ($names.Count -ne 2 -or @($names | Where-Object { $_ -cnotmatch '\A[a-zA-Z0-9_.-]+\z' }).Count) { throw 'Invalid baseline head repository.' }
-        if ($file['status'] -ceq 'modified' -and ($Snapshot['diff_base_sha'] -isnot [string] -or $Snapshot['diff_base_sha'] -cnotmatch '\A[a-fA-F0-9]{40}\z')) { throw 'Missing captured baseline diff base.' }
-        $base = if ($file['status'] -ceq 'modified') { Read-CapturedBaseline $file['filename'] $Snapshot['diff_base_sha'] $repo } else { $null }
+        if ([StringComparer]::Ordinal.Equals($file['status'], 'modified') -and ($Snapshot['diff_base_sha'] -isnot [string] -or $Snapshot['diff_base_sha'] -cnotmatch '\A[a-fA-F0-9]{40}\z')) { throw 'Missing captured baseline diff base.' }
+        $base = if ([StringComparer]::Ordinal.Equals($file['status'], 'modified')) { Read-CapturedBaseline $file['filename'] $Snapshot['diff_base_sha'] $repo } else { $null }
         $head = Read-CapturedBaseline $file['filename'] $Snapshot['head_sha'] $headRepo
         $pairs.Add(@{ path = $file['filename']; base = $base; head = $head })
     }
