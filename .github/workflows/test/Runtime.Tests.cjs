@@ -18,7 +18,7 @@ function runtime(t, mode) {
   for (const helper of ['ReviewContinuation.cjs', 'ReviewDelivery.cjs', 'ReviewInputServer.ps1', 'ReviewVerifyDelivery.ps1']) fs.copyFileSync(path.join(__dirname, '..', 'pr-re-review', helper), path.join(actions, helper));
   fs.mkdirSync(path.join(root, 'receipts'));
   const snapshot = {
-    pull_number: 64192, head_sha: 'a'.repeat(40), base_sha: 'b'.repeat(40), changed_files: 106,
+    pull_number: 64192, head_sha: 'a'.repeat(40), base_sha: 'b'.repeat(40), diff_base_sha: 'b'.repeat(40), changed_files: 106,
     files: Array.from({ length: 106 }, (_, i) => ({ filename: `src/File${i}.cs`, status: 'modified', patch: '@@ -1 +1 @@\n-old\n+new' })), threads: [],
   };
   if (['missing-input', 'delivered-input'].includes(mode)) {
@@ -87,6 +87,7 @@ function runtime(t, mode) {
     if (mode === 'side-effect') fs.appendFileSync(process.env.GH_AW_SAFE_OUTPUTS, JSON.stringify({ type: 'resolve_pull_request_review_thread', thread_id: 'invented' }) + '\\n');
     let content;
     if (mode === 'stall' || (mode === 'early' && n === 1)) content = 'Fully verifying all 106 files is too heavy; I did not complete the review.';
+    else if (mode === 'early-json' && n === 1) content = JSON.stringify({ reason: 'Fully verifying all 106 files is too heavy.' });
     else {
       const items = mode === 'partial' && n === 1 ? input.assigned.slice(0, 1) : input.assigned;
       content = JSON.stringify({ results: items.map(item => mode === 'source-blocked' && item.id === 'file:0'
@@ -115,6 +116,15 @@ test('subprocess controller completes 106-file review after the original clean e
   assert.equal(r.progress.results.length, 106);
   assert.equal(r.progress.attempts[0].completed.length, 0);
   assert.match(r.progress.attempts[0].reason, /too heavy/);
+});
+
+test('subprocess controller continues a valid JSON refusal on the 106-file review', t => {
+  const r = runtime(t, 'early-json');
+  assert.equal(r.result.status, 0, r.result.stderr);
+  assert.equal(r.progress.results.length, 106);
+  assert.equal(r.progress.attempts[0].completed.length, 0);
+  assert.match(r.progress.attempts[0].reason, /too heavy/);
+  assert.match(r.outputs.at(-1).body, /106\/106 changed files reviewed/);
 });
 
 test('subprocess controller preserves partial progress and does not reassign completed files', t => {

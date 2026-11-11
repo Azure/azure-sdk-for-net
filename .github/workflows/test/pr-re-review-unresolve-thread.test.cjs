@@ -33,7 +33,9 @@ function extractUnresolveScript(markdownSource) {
   // dependency; Snapshot.Tests exercises that dependency with real history data.
   const freshnessStub = `
 process.env.GITHUB_WORKSPACE ||= '/workspace'; process.env.GH_AW_REVIEW_INPUT ||= 'captured-fixture';
+process.env.GH_AW_REVIEW_PROGRESS ||= 'progress-fixture'; process.env.GH_AW_AGENT_RESULT ||= 'success';
 async function capturedFixture() {
+  if (globalThis.expectedSnapshot) return globalThis.expectedSnapshot;
   const threads=[]; let cursor=null;
   do {
     const result=await github.graphql('query reviewThreads', {...context.repo,pr:context.payload.pull_request.number,cursor});
@@ -51,10 +53,10 @@ async function capturedFixture() {
   return {pull_number:context.payload.pull_request.number,head_sha:context.payload.pull_request.head.sha,threads};
 }
 const originalRequireForFreshness=require;
-require=name=>name.endsWith('/ReviewSnapshot.cjs')?{assertMutationFresh:async()=>{
+require=name=>name.endsWith('/ReviewSnapshot.cjs')?{assertMutationFresh:globalThis.realFreshness || (async()=>{
   const pr=(await github.rest.pulls.get({...context.repo,pull_number:context.payload.pull_request.number})).data;
   if(pr.state!=='open'||pr.draft||pr.head.sha!==context.payload.pull_request.head.sha)throw new Error('Stale PR state/head');
-}}:originalRequireForFreshness(name);
+})}:name.endsWith('/ReviewContinuation.cjs')?{assertPublication:globalThis.publicationGuard || (()=>{})}:originalRequireForFreshness(name);
 `;
   const script=body.split(/\r?\n/).map(line=>line.startsWith('              ')?line.slice(14):line).join('\n');
   // Supply an already captured history to the production lookup, preserving
@@ -68,7 +70,7 @@ require=name=>name.endsWith('/ReviewSnapshot.cjs')?{assertMutationFresh:async()=
 // a run that gets past the guard stops at the very next check instead of needing a full
 // GraphQL/PR mock -- github.rest.pulls.get and github.graphql are wired to throw if the
 // guard ever lets a run reach them.
-function run(script, { conclusion, reason, expectedActions = false }) {
+function run(script, { conclusion, reason, expectedActions = false, output = { items: [], errors: [] } }) {
   const warnings = [];
   const infos = [];
   let readFileCalled = false;
@@ -95,7 +97,7 @@ function run(script, { conclusion, reason, expectedActions = false }) {
     },
     require: (name) => {
       if (name === "fs") {
-        return { readFileSync: () => { readFileCalled = true; return JSON.stringify({ items: [], errors: [] }); } };
+        return { readFileSync: () => { readFileCalled = true; return JSON.stringify(output); } };
       }
       return require(name);
     },
@@ -110,6 +112,111 @@ const guardMessage = /did not conclude "success"/;
 test('a requested mutation blocked by detection fails instead of silently succeeding',async()=>{
   const script=extractUnresolveScript(fs.readFileSync(workflowPath,'utf8'));
   await assert.rejects(run(script,{conclusion:'warning',reason:'',expectedActions:true}),/Requested thread mutations blocked/);
+});
+
+test('requested thread mutations fail on missing, invalid, or incomplete agent output', async () => {
+  const script = extractUnresolveScript(fs.readFileSync(workflowPath, 'utf8'));
+  for (const output of [
+    { items: [], errors: [] },
+    { items: [{ type: 'unresolve_review_thread' }], errors: ['ingestion error'] },
+    { items: [null], errors: [] },
+    { items: [{ type: 'report_incomplete' }, { type: 'unresolve_review_thread' }], errors: [] },
+    { items: [{ type: 'submit_pull_request_review' }], errors: [] },
+  ]) {
+    await assert.rejects(run(script, { conclusion: 'success', reason: '', expectedActions: true, output }), /requested thread mutations/i);
+  }
+});
+
+test('a partially missing or changed thread-action artifact cannot mutate or succeed', async () => {
+  const { buildOutputs, assertPublication } = require('../pr-re-review/ReviewContinuation.cjs');
+  const { snapshotDigest } = require('../pr-re-review/ReviewDelivery.cjs');
+  const head = 'a'.repeat(40), base = 'b'.repeat(40);
+  const snapshot = {
+    pull_number: 7, head_sha: head, base_sha: base, changed_files: 0, files: [], baseline_suppressions: [],
+    threads: [101, 202].map(id => ({ id: `thread-${id}`, isResolved: true, comments: [{ databaseId: id, path: 'a.cs' }] })),
+  };
+  const progress = {
+    head_sha: head, base_sha: base, snapshot_sha256: snapshotDigest(snapshot),
+    results: snapshot.threads.map((thread, index) => ({ id: `thread:${index}`, status: 'complete', reasoning: 'still open', findings: [], action: 'reopen', reply: 'Still open.' })),
+  };
+  const complete = { items: buildOutputs(snapshot, progress), errors: [] };
+  assert.doesNotThrow(() => assertPublication(snapshot, progress, complete, 'success'));
+  const variants = [
+    complete.items.filter(item => !(item.type === 'unresolve_review_thread' && item.comment_id === 202)),
+    complete.items.map(item => item.type === 'unresolve_review_thread' && item.comment_id === 202 ? { ...item, comment_id: 303 } : item),
+    complete.items.map(item => item.type === 'unresolve_review_thread' && item.comment_id === 202 ? { ...item, operation: 'resolve' } : item),
+  ];
+  for (const [items, invalid] of [...variants.map(items => [items, true]), [complete.items, false]]) {
+    const mutations = [];
+    const sandbox = {
+      expectedSnapshot: snapshot, publicationGuard: assertPublication,
+      process: { env: { GH_AW_DETECTION_CONCLUSION: 'success', GH_AW_AGENT_OUTPUT: 'fixture.json', GH_AW_REPLY_MANIFEST: 'manifest.jsonl', GH_AW_EXPECTED_THREAD_ACTIONS: 'true' } },
+      core: { warning: () => {}, info: () => {} },
+      context: { repo: { owner: 'octo', repo: 'widgets' }, payload: { pull_request: { number: 7, head: { sha: head } } } },
+      github: { rest: { pulls: { get: async () => ({ data: { state: 'open', draft: false, head: { sha: head } } }) } },
+        graphql: async (_query, vars) => { mutations.push(vars.threadId); return {}; } },
+      require: name => name === 'fs' ? { readFileSync: file => file === 'manifest.jsonl'
+        ? [101, 202, 303].map(id => JSON.stringify({ type: 'reply_to_pull_request_review_comment', provider: 'github', id })).join('\n')
+        : file === 'progress-fixture' ? JSON.stringify(progress) : JSON.stringify({ items, errors: [] }) } : require(name),
+    };
+    vm.createContext(sandbox);
+    const script = extractUnresolveScript(fs.readFileSync(workflowPath, 'utf8'));
+    if (invalid) {
+      await assert.rejects(() => vm.runInContext(`(async () => {\n${script}\n})()`, sandbox), /buffered output/i);
+      assert.deepEqual(mutations, []);
+    } else {
+      await vm.runInContext(`(async () => {\n${script}\n})()`, sandbox);
+      assert.deepEqual(mutations, ['thread-101', 'thread-202']);
+    }
+  }
+});
+
+test('sanitized multi-action output passes the ledger and real reply-freshness checks', { skip: !process.env.GH_AW_TEST_ACTIONS_DIR }, async () => {
+  const { buildOutputs, assertPublication } = require('../pr-re-review/ReviewContinuation.cjs');
+  const { snapshotDigest } = require('../pr-re-review/ReviewDelivery.cjs');
+  const { assertMutationFresh } = require('../pr-re-review/ReviewSnapshot.cjs');
+  const { sanitizeContent } = require(path.join(process.env.GH_AW_TEST_ACTIONS_DIR, 'sanitize_content.cjs'));
+  const head = 'a'.repeat(40), base = 'b'.repeat(40), roots = [101, 202];
+  const snapshot = {
+    pull_number: 7, head_sha: head, base_sha: base, changed_files: 0, files: [], baseline_suppressions: [],
+    threads: roots.map(id => ({ id: `thread-${id}`, isResolved: true, comments: [{ databaseId: id, path: 'a.cs', body: 'old concern' }] })),
+  };
+  const progress = {
+    head_sha: head, base_sha: base, snapshot_sha256: snapshotDigest(snapshot),
+    results: roots.map((_id, index) => ({ id: `thread:${index}`, status: 'complete', reasoning: 'Still open for @reviewer.', findings: [], action: 'reopen', reply: 'Still open for @reviewer.' })),
+  };
+  const previousCore = global.core;
+  let items;
+  try {
+    global.core = { info: () => {}, warning: () => {} };
+    items = buildOutputs(snapshot, progress).map(item => ({ ...item,
+      ...(item.body ? { body: sanitizeContent(item.body) } : {}), ...(item.reason ? { reason: sanitizeContent(item.reason) } : {}) }));
+  } finally { if (previousCore === undefined) delete global.core; else global.core = previousCore; }
+  const manifest = roots.map((id, i) => ({ type: 'reply_to_pull_request_review_comment', provider: 'github', id, metadata: { reply_id: 1001 + i } }));
+  const mutations = [];
+  const sandbox = {
+    expectedSnapshot: snapshot, publicationGuard: assertPublication, realFreshness: assertMutationFresh,
+    process: { env: { GH_AW_DETECTION_CONCLUSION: 'success', GH_AW_AGENT_OUTPUT: 'fixture.json', GH_AW_REPLY_MANIFEST: 'manifest.jsonl', GH_AW_EXPECTED_THREAD_ACTIONS: 'true' } },
+    core: { warning: () => {}, info: () => {} },
+    context: { repo: { owner: 'octo', repo: 'widgets' }, payload: { pull_request: { number: 7, head: { sha: head } } } },
+    github: {
+      rest: { pulls: { get: async () => ({ data: { state: 'open', draft: false, head: { sha: head }, base: { sha: base }, changed_files: 0 } }) } },
+      graphql: async (query, vars) => {
+        if (query.startsWith('query')) return { repository: { pullRequest: { reviewThreads: {
+          totalCount: roots.length, pageInfo: { hasNextPage: false, endCursor: null },
+          nodes: snapshot.threads.map((thread, index) => ({ ...thread, comments: { nodes: [...thread.comments, { databaseId: 1001 + index, path: 'a.cs', body: 'Still open.' }], pageInfo: { hasNextPage: false, endCursor: null } } })),
+        } } } };
+        mutations.push(vars.threadId); return {};
+      },
+    },
+    require: name => name === 'fs' ? { readFileSync: file => file === 'manifest.jsonl'
+      ? manifest.map(item => JSON.stringify(item)).join('\n')
+      : file === 'progress-fixture' ? JSON.stringify(progress) : JSON.stringify({ items, errors: [] }) } : require(name),
+  };
+  vm.createContext(sandbox);
+  const script = extractUnresolveScript(fs.readFileSync(workflowPath, 'utf8'));
+  await vm.runInContext(`(async () => {\n${script}\n})()`, sandbox);
+  assert.deepEqual(mutations, ['thread-101', 'thread-202']);
 });
 
 test("blocks the reopen when threat detection did not cleanly conclude success", async () => {
@@ -163,9 +270,15 @@ test("compiled reopen job downloads the applied safe-output manifest", () => {
   const job = lock.match(/^  unresolve_review_thread:\n([\s\S]*?)(?=^  [a-zA-Z0-9_-]+:\n|(?![\s\S]))/m)?.[1];
   assert.ok(job, "missing reopen job");
   assert.match(job, /actions: read/);
+  assert.match(job, /needs:\s*\n\s+- agent\b/);
+  assert.match(job, /GH_AW_AGENT_RESULT:.*needs\.agent\.result/);
   assert.match(job, /name: Download applied safe-output manifest/);
   assert.match(job, /name: safe-outputs-items/);
   assert.match(job, /GH_AW_REPLY_MANIFEST:.*safe-output-items\.jsonl/);
+  assert.match(job, /name: Download review progress for mutation verification/);
+  assert.match(job, /name: pr-re-review-progress/);
+  assert.match(job, /GH_AW_REVIEW_PROGRESS:.*progress\.json/);
+  assert.match(job, /assertPublication\(snapshot, progress, output, process\.env\.GH_AW_AGENT_RESULT\)/);
 });
 
 test("does not reopen a thread when the agent did not request a matching reply", async () => {

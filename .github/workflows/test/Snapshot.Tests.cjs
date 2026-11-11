@@ -10,6 +10,7 @@ function fixture(count = 1, extra = {}) {
   const calls = [];
   const pull = { state: 'open', draft: false, head: { sha: files.head_sha }, base: { sha: files.base_sha }, changed_files: 106 };
   const github = {
+    request: async () => ({ data: { base_commit: { sha: files.base_sha }, merge_base_commit: { sha: files.base_sha } } }),
     rest: { pulls: { get: async () => ({ data: { ...pull, ...extra.pull } }), listReviews: () => {} } },
     paginate: async () => [{ id: 7, body: 'prior review', state: 'COMMENTED', commit_id: files.head_sha }],
     graphql: async (query, vars) => {
@@ -40,6 +41,48 @@ function fixtureWithBaseline() {
   } };
   return { ...f, manifest, repo, state };
 }
+
+test('captures the pinned merge base once and retains the base tip for freshness', async () => {
+  const f = fixture(); const mergeBase = 'c'.repeat(40); let calls = 0;
+  f.github.request = async (route, args) => {
+    calls++;
+    assert.equal(route, 'GET /repos/{owner}/{repo}/compare/{basehead}');
+    assert.equal(args.basehead, `${files.base_sha}...${files.head_sha}`);
+    assert.equal(args.per_page, 1);
+    return { data: { base_commit: { sha: files.base_sha }, merge_base_commit: { sha: mergeBase } } };
+  };
+  const snapshot = await captureContext(f.github, { owner: 'Azure', repo: 'azure-sdk-for-net' }, files);
+  assert.equal(snapshot.base_sha, files.base_sha);
+  assert.equal(snapshot.diff_base_sha, mergeBase);
+  f.github.request = async () => { throw new Error('immutable compare unavailable'); };
+  await assertFresh(f.github, { owner: 'Azure', repo: 'azure-sdk-for-net' }, snapshot);
+  f.threads[0].comments.nodes.push({ databaseId: 2, body: 'our reply', path: 'src/F.cs' });
+  await assertMutationFresh(f.github, { owner: 'Azure', repo: 'azure-sdk-for-net' }, snapshot, [1], [{ type: 'reply_to_pull_request_review_comment', provider: 'github', id: 1, metadata: { reply_id: 2 } }]);
+  assert.equal(calls, 1);
+  f.pull.base.sha = 'd'.repeat(40);
+  await assert.rejects(assertFresh(f.github, { owner: 'Azure', repo: 'azure-sdk-for-net' }, snapshot), /state|stale/i);
+});
+
+test('a base change during compare still blocks publication and mutation', async () => {
+  const f = fixture();
+  f.github.request = async () => {
+    f.pull.base.sha = 'd'.repeat(40);
+    return { data: { base_commit: { sha: files.base_sha }, merge_base_commit: { sha: 'c'.repeat(40) } } };
+  };
+  const repo = { owner: 'Azure', repo: 'azure-sdk-for-net' };
+  const snapshot = await captureContext(f.github, repo, files);
+  await assert.rejects(assertFresh(f.github, repo, snapshot), /state|stale/i);
+  await assert.rejects(assertMutationFresh(f.github, repo, snapshot, [1], [{ type: 'reply_to_pull_request_review_comment', provider: 'github', id: 1, metadata: { reply_id: 2 } }]), /state|stale/i);
+});
+
+test('fails closed when the pinned diff base is unavailable or invalid', async () => {
+  for (const data of [{}, { base_commit: { sha: 'd'.repeat(40) }, merge_base_commit: { sha: 'c'.repeat(40) } }, { base_commit: { sha: files.base_sha }, merge_base_commit: { sha: 'bad' } }]) {
+    const f = fixture(); f.github.request = async () => ({ data });
+    await assert.rejects(captureContext(f.github, {}, files), /diff base/i);
+  }
+  const f = fixture(); f.github.request = async () => { throw new Error('compare unavailable'); };
+  await assert.rejects(captureContext(f.github, {}, files), /compare unavailable/);
+});
 
 test('captured baseline is checked once and not refetched for freshness', async () => {
   const f = fixtureWithBaseline();
@@ -125,6 +168,7 @@ test('exports captured thread histories and prior reviews for worker context', a
   const index = JSON.parse(fs.readFileSync(path.join(directory, 'index.json'), 'utf8'));
   assert.equal(index.threads.length, 1);
   assert.equal(index.reviews.length, 1);
+  assert.equal(index.diff_base_sha, snapshot.diff_base_sha);
   assert.deepEqual(JSON.parse(fs.readFileSync(index.threads[0].history_path, 'utf8')), snapshot.threads[0]);
   assert.deepEqual(JSON.parse(fs.readFileSync(index.reviews[0].history_path, 'utf8')), snapshot.reviews[0]);
 });

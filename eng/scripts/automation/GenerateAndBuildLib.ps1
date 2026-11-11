@@ -1235,7 +1235,8 @@ function GetSDKProjectFolder()
         $csharpOptionKeys = @(
             "@azure-tools/typespec-csharp",
             "@azure-typespec/http-client-csharp",
-            "@azure-typespec/http-client-csharp-mgmt"
+            "@azure-typespec/http-client-csharp-mgmt",
+            "@typespec/http-client-csharp"
         )
         if (-not [string]::IsNullOrWhiteSpace($typespecEmitter)) {
             $csharpOptionKeys = @($typespecEmitter)

@@ -203,7 +203,7 @@ Console.WriteLine(response.GetOutputText());
 
 Alternatively, we can stream the response.
 ```C# Snippet:Sample_WriteOutput_ResponseStreaming_Async
-await foreach (StreamingResponseUpdate streamResponse in responsesClient.CreateResponseStreamingAsync("What is the size of France in square miles?"))
+await foreach (StreamingResponseUpdate streamResponse in await responsesClient.CreateResponseStreamingAsync("What is the size of France in square miles?"))
 {
     if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
     {
@@ -537,7 +537,7 @@ Configure an Agent endpoint for Responses protocol.
 ```C# Snippet:Sample_CreateTheEndpoint_HostedAgent_Sync
 AgentEndpointConfiguration config = new()
 {
-    VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+    VersionSelector = new() { VersionSelectionRules = { new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100) } },
     ProtocolConfiguration = new()
     {
         Responses = new()
@@ -824,7 +824,7 @@ do
         if (responseItem is ComputerCallResponseItem computerCall)
         {
             currentScreenshot = ProcessComputerUseCall(computerCall, currentScreenshot);
-            responseOptions.InputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageFileId: screenshots[currentScreenshot])));
+            responseOptions.InputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateComputerScreenshotOutput(screenshotImageFileId: screenshots[currentScreenshot])));
         }
     }
     limitIteration--;
@@ -1100,7 +1100,7 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
 The Web search tool also can use the custom Bing instances to perform more specific search.
 **Note:** Please do not set `userLocation` parameter in the `CreateWebSearchTool` method as it will result in regular Web search.
 
-```C# Snippet:Sample_CreateAgent_WebSearchCustomStreaming_Sync
+```C# Snippet:Sample_CreateAgent_WebSearchCustomStreaming_Async
 AIProjectConnection bingConnection = projectClient.Connections.GetConnection(connectionName: connectionName);
 WebSearchTool webSearchTool = ResponseTool.CreateWebSearchTool();
 webSearchTool.CustomSearchConfiguration = new(bingConnection.Id, customInstanceName);
@@ -1109,7 +1109,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful agent.",
     Tools = { webSearchTool }
 };
-ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1222,7 +1222,7 @@ ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetPro
 
 string annotation = "";
 string text = "";
-await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync("What is the temperature rating of the cozynights sleeping bag?"))
+await foreach (StreamingResponseUpdate streamResponse in await responseClient.CreateResponseStreamingAsync("What is the temperature rating of the cozynights sleeping bag?"))
 {
     if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
     {
@@ -1288,7 +1288,7 @@ ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetPro
 
 string annotation = "";
 string text = "";
-await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync("How does wikipedia explain Euler's Identity?"))
+await foreach (StreamingResponseUpdate streamResponse in await responseClient.CreateResponseStreamingAsync("How does wikipedia explain Euler's Identity?"))
 {
     if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
     {
@@ -1600,7 +1600,7 @@ CreateResponseOptions responseOptions = new()
             "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
     }
 };
-await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(responseOptions))
+await foreach (StreamingResponseUpdate update in await responseClient.CreateResponseStreamingAsync(responseOptions))
 {
     ParseResponse(update);
 }

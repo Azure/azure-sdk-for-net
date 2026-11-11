@@ -70,6 +70,15 @@ async function captureReviewState(github, repo, files, { includeReviews = true }
 
 async function captureContext(github, repo, files) {
   const snapshot = await captureReviewState(github, repo, files);
+  // GitHub's PR diff is merge-base-to-head; the base tip remains the freshness anchor.
+  const comparison = await github.request('GET /repos/{owner}/{repo}/compare/{basehead}', {
+    ...repo, basehead: `${snapshot.base_sha}...${snapshot.head_sha}`, per_page: 1,
+  });
+  const diffBase = comparison.data?.merge_base_commit?.sha;
+  if (!/^[a-f0-9]{40}$/i.test(diffBase || '') || comparison.data?.base_commit?.sha !== snapshot.base_sha) {
+    throw new Error('Cannot establish the captured PR diff base.');
+  }
+  snapshot.diff_base_sha = diffBase;
   // Baselines are immutable at the captured SHAs; fetch and validate them once.
   snapshot.baseline_suppressions = await require('./ReviewBaselines.cjs').captureBaselines(github, repo, snapshot);
   return snapshot;
@@ -126,7 +135,7 @@ function exportContext(snapshot, directory) {
     write(`review-${index}.json`, review);
     return { id: review.id, state: review.state, history_path: path.join(directory, `review-${index}.json`) };
   });
-  write('index.json', { head_sha: snapshot.head_sha, base_sha: snapshot.base_sha, files, threads, reviews });
+  write('index.json', { head_sha: snapshot.head_sha, base_sha: snapshot.base_sha, diff_base_sha: snapshot.diff_base_sha, files, threads, reviews });
   write('delivery-index.json', delivery);
 }
 

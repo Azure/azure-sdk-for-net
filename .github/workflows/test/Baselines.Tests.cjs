@@ -6,6 +6,7 @@ const crypto = require('node:crypto');
 const { captureBaselines } = require('../pr-re-review/ReviewBaselines.cjs');
 
 const path = 'eng/apicompatbaselines/Azure.ResourceManager.Compute.Recommender.xml';
+const diffBase = 'c'.repeat(40);
 const entry = (id, target) => `<Suppression><DiagnosticId>${id}</DiagnosticId><Target>${target}</Target></Suppression>`;
 const xml = body => `<?xml version="1.0"?><Suppressions>${body}</Suppressions>`;
 const fileResponse = content => {
@@ -14,10 +15,10 @@ const fileResponse = content => {
     sha: crypto.createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex') } };
 };
 const run = (files, contents) => captureBaselines({ rest: { repos: { getContent: async ({ path, ref }) => {
-  const key = `${ref}:${path}`;
+  const key = `${ref === diffBase ? 'base' : ref}:${path}`;
   if (!Object.hasOwn(contents, key)) throw new Error(`Missing ${key}`);
   return fileResponse(contents[key]);
-} } } }, { owner: 'Azure', repo: 'azure-sdk-for-net' }, { files, base_sha: 'base', head_sha: 'head', head_repo: 'Azure/azure-sdk-for-net' });
+} } } }, { owner: 'Azure', repo: 'azure-sdk-for-net' }, { files, base_sha: 'base', diff_base_sha: diffBase, head_sha: 'head', head_repo: 'Azure/azure-sdk-for-net' });
 
 test('captures all new suppressions in a #64595-style added baseline', async () => {
   const added = xml('<!-- Intentional preview rename. -->' + entry('CP0001', 'T:DiagnosticData') + entry('CP0002', 'M:Factory'));
@@ -31,6 +32,24 @@ test('compares complete entries, preserving distinct targets and duplicate addit
   const two = entry('CP0001', 'T:Two');
   const result = await run([{ filename: path, status: 'modified' }], { [`base:${path}`]: xml(one), [`head:${path}`]: xml(two + one + two) });
   assert.deepEqual(result.map(x => x.fields.Target), ['T:Two', 'T:Two']);
+});
+
+test('modified baseline inventory uses the diff base when the base tip diverged', async () => {
+  const tip = 'b'.repeat(40), head = 'a'.repeat(40), mergeBase = 'c'.repeat(40);
+  const suppression = entry('CP1', 'T:Model');
+  const snapshot = { files: [{ filename: path, status: 'modified' }], base_sha: tip, diff_base_sha: mergeBase, head_sha: head, head_repo: 'Azure/azure-sdk-for-net' };
+  for (const [old, tipContent, current, expected] of [
+    ['', suppression, suppression, 1], // Both branches added it: still new in the PR diff.
+    [suppression, '', suppression, 0], // Only the base tip removed it: not a PR addition.
+  ]) {
+    const reads = [];
+    const content = { [mergeBase]: xml(old), [tip]: xml(tipContent), [head]: xml(current) };
+    const github = { rest: { repos: { getContent: async ({ ref }) => { reads.push(ref); return fileResponse(content[ref]); } } } };
+    const result = await captureBaselines(github, { owner: 'Azure', repo: 'azure-sdk-for-net' }, snapshot);
+    assert.equal(result.length, expected);
+    assert.deepEqual(reads, [mergeBase, head]);
+  }
+  await assert.rejects(captureBaselines({ rest: { repos: {} } }, { owner: 'Azure', repo: 'azure-sdk-for-net' }, { ...snapshot, diff_base_sha: undefined }), /diff base/i);
 });
 
 test('does not attribute an old comment to an unrelated appended entry', async () => {

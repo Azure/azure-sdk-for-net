@@ -7,7 +7,7 @@ const crypto = require('node:crypto');
 const { requiredInputs, snapshotDigest } = require('../pr-re-review/ReviewDelivery.cjs');
 
 const snapshot = (count = 106) => ({
-  pull_number: 64192, head_sha: 'a'.repeat(40), base_sha: 'b'.repeat(40), changed_files: count,
+  pull_number: 64192, head_sha: 'a'.repeat(40), base_sha: 'b'.repeat(40), diff_base_sha: 'b'.repeat(40), changed_files: count,
   files: Array.from({ length: count }, (_, i) => ({ filename: `src/File${i}.cs`, status: 'modified', patch: '@@ -1 +1 @@\n-old\n+new' })),
   threads: [{ id: 'thread-1', isResolved: false, comments: [{ databaseId: 123, body: 'prior finding', path: 'src/File0.cs' }] }],
 });
@@ -180,6 +180,15 @@ test('parses only a final assistant result, not tool output or PR-injected JSON'
   assert.deepEqual(parseWorkerResult(lines.split('\n')[0]), { results: [] });
 });
 
+test('valid JSON refusals without a results array remain unfinished work', () => {
+  for (const content of [JSON.stringify({ reason: 'Too large to finish.' }), JSON.stringify('Too large to finish.'), '{}', '{"results":null}']) {
+    const output = JSON.stringify({ type: 'assistant.message', data: { content } });
+    const result = parseWorkerResult(output);
+    assert.deepEqual(result.results, []);
+    assert.ok(typeof result.reason === 'string');
+  }
+});
+
 test('reopening requires a reply and uses the captured root, not agent-selected IDs', async () => {
   const s = snapshot(1);
   s.threads[0].isResolved = true;
@@ -350,20 +359,26 @@ test('workers use captured repository identities and GitHub MCP for source reads
   const s = snapshot(1);
   s.base_repo = 'Azure/azure-sdk-for-net';
   s.head_repo = 'fork/azure-sdk-for-net';
+  s.diff_base_sha = 'c'.repeat(40);
   s.files[0] = { filename: 'new.cs', previous_filename: 'old.cs', status: 'renamed' };
   const prompt = workerPrompt('Trusted rules.', s, makeWorklist(s), 'a'.repeat(32));
   assert.match(prompt, /get_file_contents/);
+  assert.match(prompt, /tool's sha parameter/);
+  assert.match(prompt, /do not use ref/);
   assert.match(prompt, /head_repo/);
   assert.match(prompt, /base_repo/);
   assert.ok(prompt.includes(s.head_repo) && prompt.includes(s.base_repo));
-  assert.match(prompt, /head for additions, base for removals, and both base and head for modifications and renames/);
-  assert.match(prompt, /previous_filename at base for renames/);
+  assert.match(prompt, /head for additions, diff base for removals, and both diff base and head for modifications and renames/);
+  assert.match(prompt, /previous_filename at the diff base for renames/);
+  assert.ok(prompt.includes(s.diff_base_sha));
+  assert.match(prompt, /base-branch tip.*freshness checks, not the old side/);
   assert.match(prompt, /base repository may be tried only at that same head SHA/);
   assert.match(prompt, /inaccessible resource link/);
   assert.match(prompt, /blocked/i);
   assert.match(prompt, /Source reads are model-attested/);
   assert.match(prompt, /read-review-input/);
   assert.doesNotMatch(prompt, /read-review-source/);
+  assert.throws(() => workerPrompt('', { ...s, diff_base_sha: undefined }, makeWorklist(s), 'a'.repeat(32)), /diff base/i);
 });
 
 test('workers reuse captured review context without mandatory per-batch refetch', () => {

@@ -212,7 +212,7 @@ namespace Azure.AI.Projects.Agents
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(defaultVersion, nameof(defaultVersion));
 
-            UpdateSkillRequest spreadModel = new UpdateSkillRequest(defaultVersion, default);
+            UpdateSkillContent spreadModel = new UpdateSkillContent(defaultVersion, default);
             ClientResult result = UpdateDefaultVersion(name, spreadModel, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
         }
@@ -229,7 +229,7 @@ namespace Azure.AI.Projects.Agents
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(defaultVersion, nameof(defaultVersion));
 
-            UpdateSkillRequest spreadModel = new UpdateSkillRequest(defaultVersion, default);
+            UpdateSkillContent spreadModel = new UpdateSkillContent(defaultVersion, default);
             ClientResult result = await UpdateDefaultVersionAsync(name, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((AgentsSkill)result, result.GetRawResponse());
         }
@@ -402,7 +402,7 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<SkillVersion> CreateSkillVersion(string name, SkillInlineRequest inlineContent = default, bool? isDefault = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<SkillVersion> CreateSkillVersion(string name, SkillInlineContent inlineContent = default, bool? isDefault = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -419,7 +419,7 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<SkillVersion>> CreateSkillVersionAsync(string name, SkillInlineRequest inlineContent = default, bool? isDefault = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<SkillVersion>> CreateSkillVersionAsync(string name, SkillInlineContent inlineContent = default, bool? isDefault = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 

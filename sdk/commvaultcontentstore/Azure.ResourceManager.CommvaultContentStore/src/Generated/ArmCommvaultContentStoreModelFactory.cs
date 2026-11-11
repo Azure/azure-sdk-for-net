@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="company"> Optional company details for the cloud account. </param>
         /// <param name="roleAssignmentsOnCreate"> Role assignments to provision during CCA creation. Each entry maps a Commvault role to its assigned Entra principals. </param>
         /// <returns> A new <see cref="Models.CloudAccountProperties"/> instance for mocking. </returns>
-        public static CloudAccountProperties CloudAccountProperties(MarketplaceDetails marketplace = default, CommvaultUserDetails user = default, ResourceProvisioningState? provisioningState = default, string ssoUri = default, CompanyProfile company = default, IEnumerable<CommvaultRoleAssignment> roleAssignmentsOnCreate = default)
+        public static CloudAccountProperties CloudAccountProperties(CommvaultMarketplaceDetails marketplace = default, CommvaultUserDetails user = default, ResourceProvisioningState? provisioningState = default, string ssoUri = default, CommvaultCompanyProfile company = default, IEnumerable<CommvaultRoleAssignment> roleAssignmentsOnCreate = default)
         {
             roleAssignmentsOnCreate ??= new ChangeTrackingList<CommvaultRoleAssignment>();
 
@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="saasResourceId"> Marketplace SaaS Resource Id. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
-        /// <returns> A new <see cref="Models.MarketplaceDetails"/> instance for mocking. </returns>
-        public static MarketplaceDetails MarketplaceDetails(string subscriptionId = default, MarketplaceSubscriptionStatus? subscriptionStatus = default, ResourceIdentifier saasResourceId = default, CommvaultOfferDetails offerDetails = default)
+        /// <returns> A new <see cref="Models.CommvaultMarketplaceDetails"/> instance for mocking. </returns>
+        public static CommvaultMarketplaceDetails CommvaultMarketplaceDetails(string subscriptionId = default, MarketplaceSubscriptionStatus? subscriptionStatus = default, ResourceIdentifier saasResourceId = default, CommvaultOfferDetails offerDetails = default)
         {
-            return new MarketplaceDetails(subscriptionId, subscriptionStatus, saasResourceId, offerDetails, default);
+            return new CommvaultMarketplaceDetails(subscriptionId, subscriptionStatus, saasResourceId, offerDetails, default);
         }
 
         /// <summary> Offer details for the marketplace that is selected by the user. </summary>
@@ -101,16 +101,16 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="firstName"> First name of the user. </param>
         /// <param name="lastName"> Last name of the user. </param>
         /// <param name="emailAddress"> Email address of the user. </param>
-        /// <param name="upn"> User's principal name. </param>
+        /// <param name="userPrincipalName"> User's principal name. </param>
         /// <param name="phoneNumber"> User's phone number. </param>
         /// <returns> A new <see cref="Models.CommvaultUserDetails"/> instance for mocking. </returns>
-        public static CommvaultUserDetails CommvaultUserDetails(string firstName = default, string lastName = default, string emailAddress = default, string upn = default, string phoneNumber = default)
+        public static CommvaultUserDetails CommvaultUserDetails(string firstName = default, string lastName = default, string emailAddress = default, string userPrincipalName = default, string phoneNumber = default)
         {
             return new CommvaultUserDetails(
                 firstName,
                 lastName,
                 emailAddress,
-                upn,
+                userPrincipalName,
                 phoneNumber,
                 default);
         }
@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="country"> Country of the company address. </param>
         /// <param name="postalCode"> Postal code. </param>
         /// <param name="state"> State or province of the company address. </param>
-        /// <returns> A new <see cref="Models.CompanyProfile"/> instance for mocking. </returns>
-        public static CompanyProfile CompanyProfile(string jobTitle = default, string companyName = default, string website = default, string street = default, string city = default, string country = default, string postalCode = default, string state = default)
+        /// <returns> A new <see cref="Models.CommvaultCompanyProfile"/> instance for mocking. </returns>
+        public static CommvaultCompanyProfile CommvaultCompanyProfile(string jobTitle = default, string companyName = default, string website = default, string street = default, string city = default, string country = default, string postalCode = default, string state = default)
         {
-            return new CompanyProfile(
+            return new CommvaultCompanyProfile(
                 jobTitle,
                 companyName,
                 website,
@@ -141,23 +141,23 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <summary> A role assignment mapping a Commvault role to one or more Entra entities (users or groups). </summary>
         /// <param name="roleName"> The name of the Commvault role. </param>
-        /// <param name="entities"> The Entra entities (users or groups) assigned to this role. </param>
+        /// <param name="principals"> The Entra entities (users or groups) assigned to this role. </param>
         /// <returns> A new <see cref="Models.CommvaultRoleAssignment"/> instance for mocking. </returns>
-        public static CommvaultRoleAssignment CommvaultRoleAssignment(CommvaultRoleName roleName = default, IEnumerable<CommvaultEntityInfo> entities = default)
+        public static CommvaultRoleAssignment CommvaultRoleAssignment(CommvaultRoleName roleName = default, IEnumerable<CommvaultRolePrincipal> principals = default)
         {
-            entities ??= new ChangeTrackingList<CommvaultEntityInfo>();
+            principals ??= new ChangeTrackingList<CommvaultRolePrincipal>();
 
-            return new CommvaultRoleAssignment(roleName, (entities ?? new ChangeTrackingList<CommvaultEntityInfo>()).ToList(), default);
+            return new CommvaultRoleAssignment(roleName, (principals ?? new ChangeTrackingList<CommvaultRolePrincipal>()).ToList(), default);
         }
 
         /// <summary> Information about an Entra entity (user or group) assigned to a role. </summary>
         /// <param name="id"> The unique identifier (UUID) of the Entra entity. </param>
         /// <param name="displayName"> The display name of the Entra entity. </param>
-        /// <param name="entityType"> The type of entity - user or group. </param>
-        /// <returns> A new <see cref="Models.CommvaultEntityInfo"/> instance for mocking. </returns>
-        public static CommvaultEntityInfo CommvaultEntityInfo(string id = default, string displayName = default, CommvaultEntityType? entityType = default)
+        /// <param name="principalType"> The type of entity - user or group. </param>
+        /// <returns> A new <see cref="Models.CommvaultRolePrincipal"/> instance for mocking. </returns>
+        public static CommvaultRolePrincipal CommvaultRolePrincipal(string id = default, string displayName = default, CommvaultRolePrincipalType? principalType = default)
         {
-            return new CommvaultEntityInfo(id, displayName, entityType, default);
+            return new CommvaultRolePrincipal(id, displayName, principalType, default);
         }
 
         /// <summary> The type used for update operations of the CloudAccount. </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Models.CloudAccountPatch"/> instance for mocking. </returns>
-        public static CloudAccountPatch CloudAccountPatch(IDictionary<string, string> tags = default, CloudAccountPatchProperties properties = default, CloudAccountIdentityUpdate identity = default)
+        public static CloudAccountPatch CloudAccountPatch(IDictionary<string, string> tags = default, CloudAccountPatchProperties properties = default, CloudAccountIdentityPatch identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="marketplace"> Marketplace details of the resource. </param>
         /// <param name="user"> Details of the user. </param>
         /// <returns> A new <see cref="Models.CloudAccountPatchProperties"/> instance for mocking. </returns>
-        public static CloudAccountPatchProperties CloudAccountPatchProperties(CompanyProfile company = default, CloudAccountMarketplaceUpdate marketplace = default, CloudAccountUserUpdate user = default)
+        public static CloudAccountPatchProperties CloudAccountPatchProperties(CommvaultCompanyProfile company = default, CloudAccountMarketplacePatch marketplace = default, CloudAccountUserPatch user = default)
         {
             return new CloudAccountPatchProperties(company, marketplace, user, default);
         }
@@ -186,10 +186,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="saasResourceId"> Marketplace SaaS Resource Id. </param>
         /// <param name="subscriptionId"> Azure subscription id for the the marketplace offer is purchased from. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
-        /// <returns> A new <see cref="Models.CloudAccountMarketplaceUpdate"/> instance for mocking. </returns>
-        public static CloudAccountMarketplaceUpdate CloudAccountMarketplaceUpdate(ResourceIdentifier saasResourceId = default, string subscriptionId = default, CloudAccountOfferDetailsUpdate offerDetails = default)
+        /// <returns> A new <see cref="Models.CloudAccountMarketplacePatch"/> instance for mocking. </returns>
+        public static CloudAccountMarketplacePatch CloudAccountMarketplacePatch(ResourceIdentifier saasResourceId = default, string subscriptionId = default, CloudAccountOfferDetailsPatch offerDetails = default)
         {
-            return new CloudAccountMarketplaceUpdate(saasResourceId, subscriptionId, offerDetails, default);
+            return new CloudAccountMarketplacePatch(saasResourceId, subscriptionId, offerDetails, default);
         }
 
         /// <summary> Marketplace offer details that can be updated on a Commvault Cloud Account. </summary>
@@ -199,10 +199,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="termUnit"> Plan Display Name for the marketplace offer. </param>
         /// <param name="termId"> Plan Display Name for the marketplace offer. </param>
         /// <param name="planId"> Plan Id for the marketplace offer. </param>
-        /// <returns> A new <see cref="Models.CloudAccountOfferDetailsUpdate"/> instance for mocking. </returns>
-        public static CloudAccountOfferDetailsUpdate CloudAccountOfferDetailsUpdate(string publisherId = default, string offerId = default, string planName = default, string termUnit = default, string termId = default, string planId = default)
+        /// <returns> A new <see cref="Models.CloudAccountOfferDetailsPatch"/> instance for mocking. </returns>
+        public static CloudAccountOfferDetailsPatch CloudAccountOfferDetailsPatch(string publisherId = default, string offerId = default, string planName = default, string termUnit = default, string termId = default, string planId = default)
         {
-            return new CloudAccountOfferDetailsUpdate(
+            return new CloudAccountOfferDetailsPatch(
                 publisherId,
                 offerId,
                 planName,
@@ -213,16 +213,16 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> User details that can be updated on a Commvault Cloud Account. </summary>
-        /// <param name="upn"> User's principal name. </param>
+        /// <param name="userPrincipalName"> User's principal name. </param>
         /// <param name="phoneNumber"> User's phone number. </param>
         /// <param name="firstName"> First name of the user. </param>
         /// <param name="lastName"> Last name of the user. </param>
         /// <param name="emailAddress"> Email address of the user. </param>
-        /// <returns> A new <see cref="Models.CloudAccountUserUpdate"/> instance for mocking. </returns>
-        public static CloudAccountUserUpdate CloudAccountUserUpdate(string upn = default, string phoneNumber = default, string firstName = default, string lastName = default, string emailAddress = default)
+        /// <returns> A new <see cref="Models.CloudAccountUserPatch"/> instance for mocking. </returns>
+        public static CloudAccountUserPatch CloudAccountUserPatch(string userPrincipalName = default, string phoneNumber = default, string firstName = default, string lastName = default, string emailAddress = default)
         {
-            return new CloudAccountUserUpdate(
-                upn,
+            return new CloudAccountUserPatch(
+                userPrincipalName,
                 phoneNumber,
                 firstName,
                 lastName,
@@ -233,49 +233,49 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
         /// <param name="type"> The type of managed identity assigned to this resource. </param>
         /// <param name="userAssignedIdentities"> The identities assigned to this resource by the user. </param>
-        /// <returns> A new <see cref="Models.CloudAccountIdentityUpdate"/> instance for mocking. </returns>
-        public static CloudAccountIdentityUpdate CloudAccountIdentityUpdate(ManagedServiceIdentityType? @type = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default)
+        /// <returns> A new <see cref="Models.CloudAccountIdentityPatch"/> instance for mocking. </returns>
+        public static CloudAccountIdentityPatch CloudAccountIdentityPatch(ManagedServiceIdentityType? @type = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default)
         {
             userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentity>();
 
-            return new CloudAccountIdentityUpdate(@type, userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), default);
+            return new CloudAccountIdentityPatch(@type, userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), default);
         }
 
         /// <summary> SaaS-related data properties. </summary>
-        /// <param name="saaSResourceId"> SaaS resource id. </param>
-        /// <returns> A new <see cref="Models.CommvaultSaaSDetails"/> instance for mocking. </returns>
-        public static CommvaultSaaSDetails CommvaultSaaSDetails(ResourceIdentifier saaSResourceId = default)
+        /// <param name="saasResourceId"> SaaS resource id. </param>
+        /// <returns> A new <see cref="Models.CommvaultSaasDetails"/> instance for mocking. </returns>
+        public static CommvaultSaasDetails CommvaultSaasDetails(ResourceIdentifier saasResourceId = default)
         {
-            return new CommvaultSaaSDetails(saaSResourceId, default);
+            return new CommvaultSaasDetails(saasResourceId, default);
         }
 
         /// <summary> Response of get latest linked SaaS resource operation. </summary>
-        /// <param name="saaSResourceId"> SaaS resource id. </param>
-        /// <param name="isHiddenSaaS"> Flag indicating if the SaaS resource is hidden. </param>
-        /// <returns> A new <see cref="Models.LatestLinkedSaaSResult"/> instance for mocking. </returns>
-        public static LatestLinkedSaaSResult LatestLinkedSaaSResult(ResourceIdentifier saaSResourceId = default, bool? isHiddenSaaS = default)
+        /// <param name="saasResourceId"> SaaS resource id. </param>
+        /// <param name="isHiddenSaas"> Flag indicating if the SaaS resource is hidden. </param>
+        /// <returns> A new <see cref="Models.LatestLinkedSaasResult"/> instance for mocking. </returns>
+        public static LatestLinkedSaasResult LatestLinkedSaasResult(ResourceIdentifier saasResourceId = default, bool? isHiddenSaas = default)
         {
-            return new LatestLinkedSaaSResult(saaSResourceId, isHiddenSaaS, default);
+            return new LatestLinkedSaasResult(saasResourceId, isHiddenSaas, default);
         }
 
         /// <summary> SaaS guid for Activate and Validate SaaS Resource. </summary>
         /// <param name="saasGuid"> SaaS guid for Activate and Validate SaaS Resource. </param>
         /// <param name="publisherId"> Optional publisher identifier. </param>
         /// <param name="activationDetails"> Optional activation request parameters containing user and company details. </param>
-        /// <returns> A new <see cref="Models.ActivateSaaSParameterContent"/> instance for mocking. </returns>
-        public static ActivateSaaSParameterContent ActivateSaaSParameterContent(Guid saasGuid = default, string publisherId = default, SaaSActivationDetails activationDetails = default)
+        /// <returns> A new <see cref="Models.CommvaultSaasActivationContent"/> instance for mocking. </returns>
+        public static CommvaultSaasActivationContent CommvaultSaasActivationContent(Guid saasGuid = default, string publisherId = default, SaasActivationDetails activationDetails = default)
         {
-            return new ActivateSaaSParameterContent(saasGuid, publisherId, activationDetails, default);
+            return new CommvaultSaasActivationContent(saasGuid, publisherId, activationDetails, default);
         }
 
         /// <summary> Optional activate SaaS request parameters. </summary>
         /// <param name="saasResourceId"> Optional Marketplace SaaS resource identifier. </param>
         /// <param name="user"> Optional user details. </param>
         /// <param name="company"> Optional company details. </param>
-        /// <returns> A new <see cref="Models.SaaSActivationDetails"/> instance for mocking. </returns>
-        public static SaaSActivationDetails SaaSActivationDetails(ResourceIdentifier saasResourceId = default, CommvaultUserDetails user = default, CompanyProfile company = default)
+        /// <returns> A new <see cref="Models.SaasActivationDetails"/> instance for mocking. </returns>
+        public static SaasActivationDetails SaasActivationDetails(ResourceIdentifier saasResourceId = default, CommvaultUserDetails user = default, CommvaultCompanyProfile company = default)
         {
-            return new SaaSActivationDetails(saasResourceId, user, company, default);
+            return new SaasActivationDetails(saasResourceId, user, company, default);
         }
 
         /// <summary> Marketplace SaaS resource details. </summary>
@@ -283,16 +283,16 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="saaSResourceId"> Id of the Marketplace SaaS Resource. </param>
-        /// <returns> A new <see cref="Models.SaaSResourceDetailsData"/> instance for mocking. </returns>
-        public static SaaSResourceDetailsData SaaSResourceDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier saaSResourceId = default)
+        /// <param name="saasResourceId"> Id of the Marketplace SaaS Resource. </param>
+        /// <returns> A new <see cref="Models.SaasResourceDetailsData"/> instance for mocking. </returns>
+        public static SaasResourceDetailsData SaasResourceDetailsData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier saasResourceId = default)
         {
-            return new SaaSResourceDetailsData(
+            return new SaasResourceDetailsData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                saaSResourceId,
+                saasResourceId,
                 default);
         }
 
@@ -318,17 +318,17 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="location"> Location of the Commvault Storage. </param>
         /// <param name="storageType"> The type of Commvault Storage. </param>
         /// <param name="vendor"> The vendor of Commvault Storage. </param>
-        /// <param name="class"> The class of Commvault Storage. </param>
+        /// <param name="storageClass"> The class of Commvault Storage. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="complianceLockStatus"> The compliance lock status of the storage. </param>
         /// <returns> A new <see cref="Models.CommvaultStorageProperties"/> instance for mocking. </returns>
-        public static CommvaultStorageProperties CommvaultStorageProperties(AzureLocation location = default, CommvaultStorageType storageType = default, CommvaultVendor vendor = default, CommvaultStorageClassType @class = default, ResourceProvisioningState? provisioningState = default, ComplianceLockStatus? complianceLockStatus = default)
+        public static CommvaultStorageProperties CommvaultStorageProperties(AzureLocation location = default, CommvaultStorageType storageType = default, CommvaultVendor vendor = default, CommvaultStorageClassType storageClass = default, ResourceProvisioningState? provisioningState = default, ComplianceLockStatus? complianceLockStatus = default)
         {
             return new CommvaultStorageProperties(
                 location,
                 storageType,
                 vendor,
-                @class,
+                storageClass,
                 provisioningState,
                 complianceLockStatus,
                 default);
@@ -355,10 +355,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="location"> Location of the Commvault Plan. </param>
         /// <param name="storagePlans"> The storage plans associated with the Commvault Plan. </param>
         /// <param name="schedules"> The Commvault Plan Schedule. </param>
-        /// <param name="retentionNumberOfSnapshots"> Number of Snapshots. </param>
+        /// <param name="retentionSnapshotCount"> Number of Snapshots. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.CommvaultPlanProperties"/> instance for mocking. </returns>
-        public static CommvaultPlanProperties CommvaultPlanProperties(AzureLocation location = default, IEnumerable<CommvaultStoragePlan> storagePlans = default, IEnumerable<CommvaultBackupSchedule> schedules = default, int? retentionNumberOfSnapshots = default, ResourceProvisioningState? provisioningState = default)
+        public static CommvaultPlanProperties CommvaultPlanProperties(AzureLocation location = default, IEnumerable<CommvaultStoragePlan> storagePlans = default, IEnumerable<CommvaultBackupSchedule> schedules = default, int? retentionSnapshotCount = default, ResourceProvisioningState? provisioningState = default)
         {
             storagePlans ??= new ChangeTrackingList<CommvaultStoragePlan>();
             schedules ??= new ChangeTrackingList<CommvaultBackupSchedule>();
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 location,
                 (storagePlans ?? new ChangeTrackingList<CommvaultStoragePlan>()).ToList(),
                 (schedules ?? new ChangeTrackingList<CommvaultBackupSchedule>()).ToList(),
-                retentionNumberOfSnapshots is null ? default : new Retention(retentionNumberOfSnapshots, default),
+                retentionSnapshotCount is null ? default : new Retention(retentionSnapshotCount, default),
                 provisioningState,
                 default);
         }
@@ -378,13 +378,13 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="copyName"> Copy Name from Commvault. </param>
         /// <param name="copyPrecedence"> Precedence of the Storage Plan, 1 is the highest precedence, 2 is the next highest, and so on. </param>
         /// <param name="retentionPeriod"> Indicates the retention period valid only if the type of retention chosen in CUSTOM. </param>
-        /// <param name="retentionTime"> Indicates the retention timeframe valid only if the type of retention chosen in CUSTOM. </param>
+        /// <param name="retentionInterval"> Indicates the retention timeframe valid only if the type of retention chosen in CUSTOM. </param>
         /// <param name="backupRuleType"> Backup Rule Type. </param>
-        /// <param name="extendedRetention"> Extended Retention Policy. </param>
+        /// <param name="extendedRetentionPolicies"> Extended Retention Policy. </param>
         /// <returns> A new <see cref="Models.CommvaultStoragePlan"/> instance for mocking. </returns>
-        public static CommvaultStoragePlan CommvaultStoragePlan(string name = default, string storagePoolId = default, string copyName = default, int? copyPrecedence = default, int? retentionPeriod = default, CommvaultRetentionTime? retentionTime = default, BackupRuleType? backupRuleType = default, IEnumerable<ExtendedRetentionTime> extendedRetention = default)
+        public static CommvaultStoragePlan CommvaultStoragePlan(string name = default, string storagePoolId = default, string copyName = default, int? copyPrecedence = default, int? retentionPeriod = default, CommvaultRetentionInterval? retentionInterval = default, CommvaultBackupRuleType? backupRuleType = default, IEnumerable<CommvaultExtendedRetentionPolicy> extendedRetentionPolicies = default)
         {
-            extendedRetention ??= new ChangeTrackingList<ExtendedRetentionTime>();
+            extendedRetentionPolicies ??= new ChangeTrackingList<CommvaultExtendedRetentionPolicy>();
 
             return new CommvaultStoragePlan(
                 name,
@@ -392,47 +392,47 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 copyName,
                 copyPrecedence,
                 retentionPeriod,
-                retentionTime,
+                retentionInterval,
                 backupRuleType,
-                (extendedRetention ?? new ChangeTrackingList<ExtendedRetentionTime>()).ToList(),
+                (extendedRetentionPolicies ?? new ChangeTrackingList<CommvaultExtendedRetentionPolicy>()).ToList(),
                 default);
         }
 
         /// <summary> Extended Retention Time. </summary>
-        /// <param name="retentionTime"> Retention time for Extended Retention. </param>
+        /// <param name="retentionInterval"> Retention time for Extended Retention. </param>
         /// <param name="retentionPeriod"> Retention period for Extended Retention. </param>
         /// <param name="backupRuleType"> Backup Rule Type for Extended Retention. </param>
-        /// <returns> A new <see cref="Models.ExtendedRetentionTime"/> instance for mocking. </returns>
-        public static ExtendedRetentionTime ExtendedRetentionTime(CommvaultRetentionTime? retentionTime = default, int? retentionPeriod = default, BackupRuleType? backupRuleType = default)
+        /// <returns> A new <see cref="Models.CommvaultExtendedRetentionPolicy"/> instance for mocking. </returns>
+        public static CommvaultExtendedRetentionPolicy CommvaultExtendedRetentionPolicy(CommvaultRetentionInterval? retentionInterval = default, int? retentionPeriod = default, CommvaultBackupRuleType? backupRuleType = default)
         {
-            return new ExtendedRetentionTime(retentionTime, retentionPeriod, backupRuleType, default);
+            return new CommvaultExtendedRetentionPolicy(retentionInterval, retentionPeriod, backupRuleType, default);
         }
 
         /// <summary> A Commvault Plan Schedule Model. </summary>
         /// <param name="backupType"> Type of Backup. </param>
         /// <param name="frequency"> Frequency of Retention. </param>
-        /// <param name="runsEvery"> Interval of Retention. </param>
+        /// <param name="interval"> Interval of Retention. </param>
         /// <param name="weekOfMonth"> Week of the month. </param>
         /// <param name="dayOfWeek"> Day of the week. </param>
         /// <param name="monthOfYear"> Month of the year. </param>
         /// <param name="dayOfMonth"> Day of the month. </param>
-        /// <param name="weeklyDays"> Weekly Days List. </param>
+        /// <param name="daysOfWeek"> Weekly Days List. </param>
         /// <param name="time"> Time of Retention. </param>
         /// <param name="timeZone"> Time Zone. </param>
         /// <returns> A new <see cref="Models.CommvaultBackupSchedule"/> instance for mocking. </returns>
-        public static CommvaultBackupSchedule CommvaultBackupSchedule(CommvaultBackupType backupType = default, CommvaultBackupFrequency? frequency = default, int? runsEvery = default, WeekOfMonth? weekOfMonth = default, CommvaultDayOfWeek? dayOfWeek = default, MonthOfYear? monthOfYear = default, int? dayOfMonth = default, IEnumerable<WeeklyDays> weeklyDays = default, string time = default, string timeZone = default)
+        public static CommvaultBackupSchedule CommvaultBackupSchedule(CommvaultBackupType backupType = default, CommvaultBackupFrequency? frequency = default, int? interval = default, WeekOfMonth? weekOfMonth = default, CommvaultDayOfWeek? dayOfWeek = default, MonthOfYear? monthOfYear = default, int? dayOfMonth = default, IEnumerable<CommvaultScheduleDayOfWeek> daysOfWeek = default, string time = default, string timeZone = default)
         {
-            weeklyDays ??= new ChangeTrackingList<WeeklyDays>();
+            daysOfWeek ??= new ChangeTrackingList<CommvaultScheduleDayOfWeek>();
 
             return new CommvaultBackupSchedule(
                 backupType,
                 frequency,
-                runsEvery,
+                interval,
                 weekOfMonth,
                 dayOfWeek,
                 monthOfYear,
                 dayOfMonth,
-                (weeklyDays ?? new ChangeTrackingList<WeeklyDays>()).ToList(),
+                (daysOfWeek ?? new ChangeTrackingList<CommvaultScheduleDayOfWeek>()).ToList(),
                 time,
                 timeZone,
                 default);
@@ -458,21 +458,21 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <summary> The properties of Commvault Protection Group. </summary>
         /// <param name="plan"> The Commvault Plan to be associated with the Protection Group. </param>
-        /// <param name="resources"> The resources to be protected under Protection Group. </param>
+        /// <param name="resourceSelection"> The resources to be protected under Protection Group. </param>
         /// <param name="protectionStatus"> The protection group schedule. </param>
-        /// <param name="numberOfProtectedItems"> The number of ProtectedItems under the Protection Group. </param>
+        /// <param name="protectedItemCount"> The number of ProtectedItems under the Protection Group. </param>
         /// <param name="lastBackupTime"> The Commvault Protection Group backup time. </param>
         /// <param name="backupActivityStatus"> The backup activity status indicating if backup is enabled or not on the protection group. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.ProtectionGroupProperties"/> instance for mocking. </returns>
-        public static ProtectionGroupProperties ProtectionGroupProperties(string plan = default, ProtectionGroupResources resources = default, CommvaultProtectionStatus protectionStatus = default, int numberOfProtectedItems = default, long lastBackupTime = default, string backupActivityStatus = default, ResourceProvisioningState? provisioningState = default)
+        public static ProtectionGroupProperties ProtectionGroupProperties(string plan = default, ProtectionGroupResourceSelection resourceSelection = default, CommvaultProtectionStatus protectionStatus = default, int protectedItemCount = default, long lastBackupTime = default, string backupActivityStatus = default, ResourceProvisioningState? provisioningState = default)
         {
             return new ProtectionGroupProperties(
                 default,
                 plan,
-                resources,
+                resourceSelection,
                 protectionStatus,
-                numberOfProtectedItems,
+                protectedItemCount,
                 lastBackupTime,
                 backupActivityStatus,
                 provisioningState,
@@ -480,14 +480,14 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> The resources to be protected under Protection Group. </summary>
-        /// <param name="manual"> The items to be protected under Protection Group. </param>
+        /// <param name="manuallySelectedItems"> The items to be protected under Protection Group. </param>
         /// <param name="matchRules"> Rules to match resources. </param>
-        /// <returns> A new <see cref="Models.ProtectionGroupResources"/> instance for mocking. </returns>
-        public static ProtectionGroupResources ProtectionGroupResources(IEnumerable<string> manual = default, ProtectionGroupResourcesMatchRules matchRules = default)
+        /// <returns> A new <see cref="Models.ProtectionGroupResourceSelection"/> instance for mocking. </returns>
+        public static ProtectionGroupResourceSelection ProtectionGroupResourceSelection(IEnumerable<string> manuallySelectedItems = default, ProtectionGroupResourcesMatchRules matchRules = default)
         {
-            manual ??= new ChangeTrackingList<string>();
+            manuallySelectedItems ??= new ChangeTrackingList<string>();
 
-            return new ProtectionGroupResources((manual ?? new ChangeTrackingList<string>()).ToList(), matchRules, default);
+            return new ProtectionGroupResourceSelection((manuallySelectedItems ?? new ChangeTrackingList<string>()).ToList(), matchRules, default);
         }
 
         /// <summary> The ProtectionGroupResourcesMatchRules. </summary>
@@ -522,12 +522,12 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <param name="isInPlaceRestore"> Check whether inplace or out of place restore. </param>
         /// <param name="restoreType"> Type of Restore. </param>
-        /// <param name="toTime"> Time to restore. </param>
+        /// <param name="restorePointTime"> Time to restore. </param>
         /// <param name="vmInfoList"> List of information on VMs. </param>
         /// <returns> A new <see cref="Models.RestoreProtectionItemContent"/> instance for mocking. </returns>
-        public static RestoreProtectionItemContent RestoreProtectionItemContent(bool isInPlaceRestore = default, CommvaultRestoreType? restoreType = default, string toTime = default, IEnumerable<VmInfo> vmInfoList = default)
+        public static RestoreProtectionItemContent RestoreProtectionItemContent(bool isInPlaceRestore = default, CommvaultRestoreType? restoreType = default, string restorePointTime = default, IEnumerable<CommvaultVmRestoreSettings> vmInfoList = default)
         {
-            return new RestoreProtectionItemContent(isInPlaceRestore, restoreType, toTime, vmInfoList is null ? default : new VmDestinationInfo((vmInfoList ?? new ChangeTrackingList<VmInfo>()).ToList(), default), default);
+            return new RestoreProtectionItemContent(isInPlaceRestore, restoreType, restorePointTime, vmInfoList is null ? default : new VmDestinationInfo((vmInfoList ?? new ChangeTrackingList<CommvaultVmRestoreSettings>()).ToList(), default), default);
         }
 
         /// <summary> The properties of information of a VM. </summary>
@@ -535,40 +535,40 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="storageAccountId"> The storage account to be used for restore. </param>
         /// <param name="shouldPowerOnVmAfterRestore"> The identifier to check if VM needs to be powered on. </param>
         /// <param name="name"> The name of the VM. </param>
-        /// <param name="resourceGroup"> The resource group of the VM. </param>
+        /// <param name="resourceGroupName"> The resource group of the VM. </param>
         /// <param name="region"> The region of the VM. </param>
-        /// <param name="networkId"> The network Id of the VM. </param>
+        /// <param name="virtualNetworkId"> The network Id of the VM. </param>
         /// <param name="subnetId"> The subnet Id of the VM. </param>
         /// <param name="shouldAttachAndSwapOSDisk"> The identifier to check if to attach and swap disk of the VM. </param>
         /// <param name="targetVmGuid"> The GUID of target VM used in DISK ATTACH. </param>
-        /// <param name="vmTags"> The vmTag of the VM. </param>
-        /// <returns> A new <see cref="Models.VmInfo"/> instance for mocking. </returns>
-        public static VmInfo VmInfo(string sourceVmGuid = default, string storageAccountId = default, bool? shouldPowerOnVmAfterRestore = default, string name = default, string resourceGroup = default, string region = default, string networkId = default, string subnetId = default, bool? shouldAttachAndSwapOSDisk = default, string targetVmGuid = default, IEnumerable<VmTag> vmTags = default)
+        /// <param name="tags"> The vmTag of the VM. </param>
+        /// <returns> A new <see cref="Models.CommvaultVmRestoreSettings"/> instance for mocking. </returns>
+        public static CommvaultVmRestoreSettings CommvaultVmRestoreSettings(string sourceVmGuid = default, string storageAccountId = default, bool? shouldPowerOnVmAfterRestore = default, string name = default, string resourceGroupName = default, string region = default, string virtualNetworkId = default, string subnetId = default, bool? shouldAttachAndSwapOSDisk = default, string targetVmGuid = default, IEnumerable<CommvaultVmTag> tags = default)
         {
-            vmTags ??= new ChangeTrackingList<VmTag>();
+            tags ??= new ChangeTrackingList<CommvaultVmTag>();
 
-            return new VmInfo(
+            return new CommvaultVmRestoreSettings(
                 sourceVmGuid,
                 storageAccountId,
                 shouldPowerOnVmAfterRestore,
                 name,
-                resourceGroup,
+                resourceGroupName,
                 region,
-                networkId,
+                virtualNetworkId,
                 subnetId,
                 shouldAttachAndSwapOSDisk,
                 targetVmGuid,
-                (vmTags ?? new ChangeTrackingList<VmTag>()).ToList(),
+                (tags ?? new ChangeTrackingList<CommvaultVmTag>()).ToList(),
                 default);
         }
 
         /// <summary> The properties of VMTag for Restore Request. </summary>
         /// <param name="name"> The name of VM tag. </param>
         /// <param name="value"> The value of VM tag. </param>
-        /// <returns> A new <see cref="Models.VmTag"/> instance for mocking. </returns>
-        public static VmTag VmTag(string name = default, string value = default)
+        /// <returns> A new <see cref="Models.CommvaultVmTag"/> instance for mocking. </returns>
+        public static CommvaultVmTag CommvaultVmTag(string name = default, string value = default)
         {
-            return new VmTag(name, value, default);
+            return new CommvaultVmTag(name, value, default);
         }
 
         /// <summary> Restore resource response for a Protected Item. </summary>
@@ -584,21 +584,21 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <summary> The properties of BackupProtectionGroupRequest. </summary>
         /// <param name="vmList"> The vm list details. </param>
-        /// <param name="backupOptions"> The backup options for the VM backup. </param>
+        /// <param name="backupConfiguration"> The backup options for the VM backup. </param>
         /// <returns> A new <see cref="Models.BackupProtectionGroupContent"/> instance for mocking. </returns>
-        public static BackupProtectionGroupContent BackupProtectionGroupContent(IEnumerable<VmListItem> vmList = default, BackupConfig backupOptions = default)
+        public static BackupProtectionGroupContent BackupProtectionGroupContent(IEnumerable<CommvaultVmReference> vmList = default, CommvaultBackupConfiguration backupConfiguration = default)
         {
-            vmList ??= new ChangeTrackingList<VmListItem>();
+            vmList ??= new ChangeTrackingList<CommvaultVmReference>();
 
-            return new BackupProtectionGroupContent((vmList ?? new ChangeTrackingList<VmListItem>()).ToList(), backupOptions, default);
+            return new BackupProtectionGroupContent((vmList ?? new ChangeTrackingList<CommvaultVmReference>()).ToList(), backupConfiguration, default);
         }
 
         /// <summary> The VM list item for backup. </summary>
         /// <param name="vmGuid"> The GUID of the VM to backup. </param>
-        /// <returns> A new <see cref="Models.VmListItem"/> instance for mocking. </returns>
-        public static VmListItem VmListItem(string vmGuid = default)
+        /// <returns> A new <see cref="Models.CommvaultVmReference"/> instance for mocking. </returns>
+        public static CommvaultVmReference CommvaultVmReference(string vmGuid = default)
         {
-            return new VmListItem(vmGuid, default);
+            return new CommvaultVmReference(vmGuid, default);
         }
 
         /// <summary> The backup options for the VM backup. </summary>
@@ -607,10 +607,10 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="shouldCopyImmediately"> Indicates whether to run backup immediately or not for the VM. </param>
         /// <param name="shouldRunSnapshotBackup"> Indicates whether to run snapshot backup or not for the VM, if false, it will run regular backup. </param>
         /// <param name="shouldNotifyUserOnJobCompletion"> Indicates whether to notify the user on job completion. </param>
-        /// <returns> A new <see cref="Models.BackupConfig"/> instance for mocking. </returns>
-        public static BackupConfig BackupConfig(BackupLevel? backupLevel = default, string jobDescription = default, bool shouldCopyImmediately = default, bool shouldRunSnapshotBackup = default, bool shouldNotifyUserOnJobCompletion = default)
+        /// <returns> A new <see cref="Models.CommvaultBackupConfiguration"/> instance for mocking. </returns>
+        public static CommvaultBackupConfiguration CommvaultBackupConfiguration(CommvaultBackupLevel? backupLevel = default, string jobDescription = default, bool shouldCopyImmediately = default, bool shouldRunSnapshotBackup = default, bool shouldNotifyUserOnJobCompletion = default)
         {
-            return new BackupConfig(
+            return new CommvaultBackupConfiguration(
                 backupLevel,
                 jobDescription,
                 shouldCopyImmediately,
@@ -651,16 +651,16 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <summary> The properties of Commvault Protected Item. </summary>
         /// <param name="resourceName"> The Name of the commvault protected item. </param>
         /// <param name="lastBackupTime"> The Commvault Protected Item backup time. </param>
-        /// <param name="resourceGroup"> The resource group of the protected item. </param>
+        /// <param name="resourceGroupName"> The resource group of the protected item. </param>
         /// <param name="location"> The location of the protected item. </param>
         /// <param name="vmGuid"> The GUID of VM. </param>
         /// <returns> A new <see cref="Models.ProtectedItemProperties"/> instance for mocking. </returns>
-        public static ProtectedItemProperties ProtectedItemProperties(string resourceName = default, long lastBackupTime = default, string resourceGroup = default, AzureLocation location = default, string vmGuid = default)
+        public static ProtectedItemProperties ProtectedItemProperties(string resourceName = default, long lastBackupTime = default, string resourceGroupName = default, AzureLocation location = default, string vmGuid = default)
         {
             return new ProtectedItemProperties(
                 resourceName,
                 lastBackupTime,
-                resourceGroup,
+                resourceGroupName,
                 location,
                 vmGuid,
                 default);
@@ -668,12 +668,12 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
 
         /// <summary> Restore points of a Protected Item. </summary>
         /// <param name="restoreTimes"> The Commvault Protected Item Restore points. </param>
-        /// <returns> A new <see cref="Models.RestorePoints"/> instance for mocking. </returns>
-        public static RestorePoints RestorePoints(IEnumerable<long> restoreTimes = default)
+        /// <returns> A new <see cref="Models.ProtectedItemRestorePoints"/> instance for mocking. </returns>
+        public static ProtectedItemRestorePoints ProtectedItemRestorePoints(IEnumerable<long> restoreTimes = default)
         {
             restoreTimes ??= new ChangeTrackingList<long>();
 
-            return new RestorePoints((restoreTimes ?? new ChangeTrackingList<long>()).ToList(), default);
+            return new ProtectedItemRestorePoints((restoreTimes ?? new ChangeTrackingList<long>()).ToList(), default);
         }
 
         /// <summary> Request to count protected items for the provided CCA resource IDs across subscriptions. </summary>
@@ -713,14 +713,14 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> The properties of Commvault Role Mapping. </summary>
-        /// <param name="roles"> The list of role assignments mapping roles to Entra entities (users and groups). </param>
+        /// <param name="roleAssignments"> The list of role assignments mapping roles to Entra entities (users and groups). </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.RoleMappingProperties"/> instance for mocking. </returns>
-        public static RoleMappingProperties RoleMappingProperties(IEnumerable<CommvaultRoleAssignment> roles = default, ResourceProvisioningState? provisioningState = default)
+        public static RoleMappingProperties RoleMappingProperties(IEnumerable<CommvaultRoleAssignment> roleAssignments = default, ResourceProvisioningState? provisioningState = default)
         {
-            roles ??= new ChangeTrackingList<CommvaultRoleAssignment>();
+            roleAssignments ??= new ChangeTrackingList<CommvaultRoleAssignment>();
 
-            return new RoleMappingProperties((roles ?? new ChangeTrackingList<CommvaultRoleAssignment>()).ToList(), provisioningState, default);
+            return new RoleMappingProperties((roleAssignments ?? new ChangeTrackingList<CommvaultRoleAssignment>()).ToList(), provisioningState, default);
         }
     }
 }

@@ -522,13 +522,13 @@ public class AgentsTests : AgentsTestBase
         ProjectsAgentVersion agentVersion = await CreateHostedAgent(agentsClient);
         AgentEndpointConfiguration config = new()
         {
-            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74)]),
+            VersionSelector = new() { VersionSelectionRules = { new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74) } },
             ProtocolConfiguration = new()
             {
                 Responses = new()
             }
         };
-        SkillInlineRequest content = new(
+        SkillInlineContent content = new(
             description: "Calculates the sum of two numbers.",
             instructions: """
                 To calculate the sum  run
@@ -542,7 +542,7 @@ public class AgentsTests : AgentsTestBase
                 """
         );
         SkillVersion simpleSkill = await skillsClient.CreateSkillVersionAsync(name: SKILL, inlineContent: content);
-        AgentCard card = new(version: "42", [new AgentCardSkill(id: simpleSkill.Id, name: SKILL)]);
+        AgentCard card = new() { Version = "42", Skills = { new AgentCardSkill(id: simpleSkill.Id, name: SKILL) } };
         PatchAgentOptions patchOptions = new()
         {
             AgentEndpoint = config,
@@ -869,7 +869,7 @@ public class AgentsTests : AgentsTestBase
                 await skillsClient.DeleteSkillAsync(skill1.Name);
             }
         }
-        SkillInlineRequest content = new(
+        SkillInlineContent content = new(
             description: "Calculates the sum of two numbers.",
             instructions: """
                 To calculate the sum run
@@ -949,7 +949,7 @@ public class AgentsTests : AgentsTestBase
         AgentAdministrationClient agentsClient = GetTestClient();
         ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
         int initialCount = (await skillsClient.GetSkillsAsync(limit: PAGE_SIZE, order: AgentListOrder.Ascending).ToListAsync()).Count;
-        SkillInlineRequest contrent = new(
+        SkillInlineContent contrent = new(
             description: "Calculates the sum of two numbers.",
             instructions: """
                 To calculate the sum  run
@@ -1185,7 +1185,7 @@ public class AgentsTests : AgentsTestBase
             {
                 Random rv = new Random(42);
                 byte[] randomBytes = new byte[14360];
-                for (int i = 0; i< randomBytes.Length; i++)
+                for (int i = 0; i < randomBytes.Length; i++)
                 {
                     randomBytes[i] = (byte)rv.Next(32, 126);
                 }

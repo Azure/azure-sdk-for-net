@@ -39,7 +39,8 @@ async function captureBaselines(github, repo, snapshot) {
     if (!isBaseline(file.filename) || file.status === 'removed') continue;
     const names = (snapshot.head_repo || `${repo.owner}/${repo.repo}`).split('/');
     if (names.length !== 2 || !names.every(name => /^[a-zA-Z0-9_.-]+$/.test(name))) throw new Error('Invalid baseline head repository.');
-    const base = file.status === 'modified' ? await read(file.filename, snapshot.base_sha, repo) : null;
+    if (file.status === 'modified' && !/^[a-f0-9]{40}$/i.test(snapshot.diff_base_sha || '')) throw new Error('Missing captured baseline diff base.');
+    const base = file.status === 'modified' ? await read(file.filename, snapshot.diff_base_sha, repo) : null;
     const head = await read(file.filename, snapshot.head_sha, { owner: names[0], repo: names[1] });
     pair.push({ path: file.filename, base, head });
   }
