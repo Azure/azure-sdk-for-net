@@ -364,7 +364,7 @@ async function main() {
       const contents = fs.existsSync(receiptFile) ? fs.readFileSync(receiptFile, 'utf8') : '';
       if (Buffer.byteLength(contents) > 16 * 1024 * 1024) throw new Error('Delivery receipt limit exceeded.');
       const receipts = contents.split('\n').filter(Boolean).map(line => JSON.parse(line));
-      verifyDelivery(snapshot, batch, response.results, nonce, receipts);
+      await verifyDelivery(snapshot, batch, response.results, nonce, receipts, { deadline });
       return response;
     },
   });

@@ -301,6 +301,25 @@ jobs:
           ref: ${{ github.event.pull_request.base.sha }}
           persist-credentials: false
           sparse-checkout: .github/workflows/pr-re-review
+      - name: Provision pinned PowerShell for delivery verification
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "$(uname -m)" != x86_64 ]; then
+            echo 'Unsupported PowerShell runtime architecture.' >&2
+            exit 1
+          fi
+          archive="${RUNNER_TEMP}/gh-aw/powershell-7.6.9-linux-x64.tar.gz"
+          destination="${RUNNER_TEMP}/gh-aw/actions/pwsh"
+          curl --fail --location --retry 3 --connect-timeout 20 --max-time 180 \
+            'https://github.com/PowerShell/PowerShell/releases/download/v7.6.9/powershell-7.6.9-linux-x64.tar.gz' \
+            --output "$archive"
+          echo '1da6d6d6035d651f20e70ddee7c4c15ac6ab8b9fb40ee92240d91263f28a884b  '"$archive" | sha256sum --check
+          mkdir -p "$destination"
+          tar -xzf "$archive" -C "$destination"
+          chmod +x "$destination/pwsh"
+          "$destination/pwsh" -NoLogo -NoProfile -NonInteractive -Command 'if ($PSVersionTable.PSVersion.ToString() -ne "7.6.9") { exit 1 }'
+          echo "GH_AW_REVIEW_PWSH=$destination/pwsh" >> "$GITHUB_ENV"
       - name: Capture all changed-file pages
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
         with:
@@ -370,7 +389,7 @@ jobs:
             fs.mkdirSync(path.join(process.env.RUNNER_TEMP, 'gh-aw', 'safeoutputs', 'review-receipts'), { recursive: true });
             // Custom harnesses are provisioned into gh-aw's trusted action folder;
             // selecting harness.use does not copy a repository script by itself.
-            for (const helper of ['ReviewContinuation.cjs', 'ReviewDelivery.cjs', 'ReviewReadSource.cjs', 'ReviewSourceServer.cjs'])
+            for (const helper of ['ReviewContinuation.cjs', 'ReviewDelivery.cjs', 'ReviewReadSource.cjs', 'ReviewSourceServer.cjs', 'ReviewVerifyDelivery.ps1'])
               fs.copyFileSync(path.join(process.env.GITHUB_WORKSPACE, '.github/workflows/pr-re-review', helper),
                 path.join(process.env.RUNNER_TEMP, 'gh-aw', 'actions', helper));
             core.info(`Captured ${manifest.changed_files} changed files and ${snapshot.threads.length} threads for the event head.`);

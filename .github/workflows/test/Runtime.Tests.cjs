@@ -15,7 +15,7 @@ function runtime(t, mode) {
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
   const actions = path.join(root, 'actions');
   fs.mkdirSync(actions);
-  for (const helper of ['ReviewContinuation.cjs', 'ReviewDelivery.cjs', 'ReviewReadSource.cjs', 'ReviewSourceServer.cjs']) fs.copyFileSync(path.join(__dirname, '..', 'pr-re-review', helper), path.join(actions, helper));
+  for (const helper of ['ReviewContinuation.cjs', 'ReviewDelivery.cjs', 'ReviewReadSource.cjs', 'ReviewSourceServer.cjs', 'ReviewVerifyDelivery.ps1']) fs.copyFileSync(path.join(__dirname, '..', 'pr-re-review', helper), path.join(actions, helper));
   fs.mkdirSync(path.join(root, 'receipts'));
   const snapshot = {
     pull_number: 64192, head_sha: 'a'.repeat(40), base_sha: 'b'.repeat(40), changed_files: 106,
