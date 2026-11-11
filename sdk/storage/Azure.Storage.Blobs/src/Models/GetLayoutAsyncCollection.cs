@@ -17,12 +17,15 @@ namespace Azure.Storage.Blobs.Models
         private readonly HttpRange _range;
         private readonly BlobRequestConditions _conditions;
         private ETag? _etag; // the ETag from the initial Get Layout request
+        private readonly int? _requestPriority;
 
         public GetLayoutAsyncCollection(
             BlobBaseClient client,
             HttpRange range,
-            BlobRequestConditions conditions)
+            BlobRequestConditions conditions,
+            int? requestPriority)
         {
+            _requestPriority = requestPriority;
             _client = client;
             _range = range;
             _conditions = conditions;
@@ -54,6 +57,7 @@ namespace Azure.Storage.Blobs.Models
                     maxResults: pageSizeHint,
                     range: _range,
                     conditions: conditions,
+                    requestPriority: _requestPriority,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -65,6 +69,7 @@ namespace Azure.Storage.Blobs.Models
                     maxResults: pageSizeHint,
                     range: _range,
                     conditions: conditions,
+                    requestPriority: _requestPriority,
                     async: async,
                     cancellationToken: cancellationToken)
                     .EnsureCompleted();

@@ -29,6 +29,11 @@ namespace Azure.Storage.Blobs.Models
         private readonly CancellationToken _cancellationToken;
 
         /// <summary>
+        /// The request priority supplied when the copy was started, reused when polling for status.
+        /// </summary>
+        private readonly int? _requestPriority;
+
+        /// <summary>
         /// Whether the operation has completed.
         /// </summary>
         private bool _hasCompleted;
@@ -87,7 +92,7 @@ namespace Azure.Storage.Blobs.Models
         /// </param>
         /// <param name="id">The ID of this operation.</param>
         public CopyFromUriOperation(string id, BlobBaseClient client) :
-            this(client, id, null, CancellationToken.None)
+            this(client, id, null, requestPriority: default, CancellationToken.None)
         {
         }
 
@@ -102,6 +107,10 @@ namespace Azure.Storage.Blobs.Models
         /// Either the response from initiating the operation or getting the
         /// status if we're creating an operation from an existing ID.
         /// </param>
+        /// <param name="requestPriority">
+        /// Optional. Sets the priority of this request, from 0 through 7.
+        /// If not set, or if the value is outside that range, the service uses 3.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -110,6 +119,7 @@ namespace Azure.Storage.Blobs.Models
             BlobBaseClient client,
             string copyId,
             Response initialResponse,
+            int? requestPriority,
             CancellationToken cancellationToken)
         {
             Id = copyId;
@@ -117,6 +127,7 @@ namespace Azure.Storage.Blobs.Models
             _rawResponse = initialResponse;
             _client = client;
             _cancellationToken = cancellationToken;
+            _requestPriority = requestPriority;
         }
 
         /// <summary>
@@ -169,8 +180,8 @@ namespace Azure.Storage.Blobs.Models
 
             // Get the latest status
             Response<BlobProperties> update = async
-                ? await _client.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false)
-                : _client.GetProperties(cancellationToken: cancellationToken);
+                ? await _client.GetPropertiesAsync(new BlobGetPropertiesOptions { RequestPriority = _requestPriority }, cancellationToken).ConfigureAwait(false)
+                : _client.GetProperties(new BlobGetPropertiesOptions { RequestPriority = _requestPriority }, cancellationToken);
 
             // Check if the operation is no longer running
             if (Id != update.Value.CopyId ||

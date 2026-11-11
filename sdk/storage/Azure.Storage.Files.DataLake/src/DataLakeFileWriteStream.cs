@@ -14,6 +14,7 @@ namespace Azure.Storage.Files.DataLake
         private readonly DataLakeFileClient _fileClient;
         private readonly DataLakeRequestConditions _conditions;
         private readonly bool? _closeEvent;
+        private readonly int? _requestPriority;
         private long _writeIndex;
 
         public DataLakeFileWriteStream(
@@ -23,7 +24,8 @@ namespace Azure.Storage.Files.DataLake
             DataLakeRequestConditions conditions,
             IProgress<long> progressHandler,
             UploadTransferValidationOptions validationOptions,
-            bool? closeEvent) : base(
+            bool? closeEvent,
+            int? requestPriority) : base(
                 position,
                 bufferSize,
                 progressHandler,
@@ -35,6 +37,7 @@ namespace Azure.Storage.Files.DataLake
             _conditions = conditions ?? new DataLakeRequestConditions();
             _writeIndex = position;
             _closeEvent = closeEvent;
+            _requestPriority = requestPriority;
         }
 
         protected override async Task AppendInternal(
@@ -56,6 +59,7 @@ namespace Azure.Storage.Files.DataLake
                     proposedLeaseId: null,
                     progressHandler: _progressHandler,
                     flush: null,
+                    requestPriority: _requestPriority,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -77,6 +81,7 @@ namespace Azure.Storage.Files.DataLake
                 leaseAction: null,
                 leaseDuration: null,
                 proposedLeaseId: null,
+                requestPriority: _requestPriority,
                 async: async,
                 cancellationToken: cancellationToken)
                 .ConfigureAwait(false);

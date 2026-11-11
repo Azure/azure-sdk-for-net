@@ -58,6 +58,11 @@ namespace Azure.Storage.Blobs.Models
         public string Value { get; internal set; }
 
         /// <summary>
+        /// The request priority the service applied to this request.
+        /// </summary>
+        public int? EffectiveRequestPriority { get; internal set; }
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         internal UserDelegationKey() { }

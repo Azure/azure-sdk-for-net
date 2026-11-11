@@ -14,5 +14,10 @@ namespace Azure.Storage.Blobs.Models
         /// Blob Tags.
         /// </summary>
         public Tags Tags { get; internal set; }
+
+        /// <summary>
+        /// The request priority the service applied to this request.
+        /// </summary>
+        public int? EffectiveRequestPriority { get; internal set; }
     }
 }

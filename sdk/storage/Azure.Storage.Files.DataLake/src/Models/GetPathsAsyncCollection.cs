@@ -14,6 +14,7 @@ namespace Azure.Storage.Files.DataLake.Models
         private readonly bool? _recursive;
         private readonly bool? _upn;
         private readonly string _beginFrom;
+        private readonly int? _requestPriority;
         private readonly string _operationName;
 
         public GetPathsAsyncCollection(
@@ -22,6 +23,7 @@ namespace Azure.Storage.Files.DataLake.Models
             bool? recursive,
             bool? upn,
             string beginFrom,
+            int? requestPriority,
             string operationName)
         {
             _client = client;
@@ -29,6 +31,7 @@ namespace Azure.Storage.Files.DataLake.Models
             _recursive = recursive;
             _upn = upn;
             _beginFrom = beginFrom;
+            _requestPriority = requestPriority;
             _operationName = operationName;
         }
 
@@ -45,6 +48,7 @@ namespace Azure.Storage.Files.DataLake.Models
                 continuationToken,
                 pageSizeHint,
                 _beginFrom,
+                _requestPriority,
                 _operationName,
                 async,
                 cancellationToken).ConfigureAwait(false);

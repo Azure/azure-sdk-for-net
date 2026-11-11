@@ -35,6 +35,11 @@ namespace Azure.Storage.Files.DataLake.Models
         public int? LeaseTime { get; internal set; }
 
         /// <summary>
+        /// The request priority the service applied to this request.
+        /// </summary>
+        public int? EffectiveRequestPriority { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of Lease instances.
         /// You can use DataLakeModelFactory.Lease instead.
         /// </summary>

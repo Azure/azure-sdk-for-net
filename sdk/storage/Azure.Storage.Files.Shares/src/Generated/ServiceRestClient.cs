@@ -57,17 +57,21 @@ namespace Azure.Storage.Files.Shares
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response SetProperties(RequestContent content, int? timeout = default, RequestContext context = null)
+        public virtual Response SetProperties(RequestContent content, int? requestPriority = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.SetProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetPropertiesRequest(content, timeout, context);
+                using HttpMessage message = CreateSetPropertiesRequest(content, requestPriority, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -86,17 +90,21 @@ namespace Azure.Storage.Files.Shares
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SetPropertiesAsync(RequestContent content, int? timeout = default, RequestContext context = null)
+        public virtual async Task<Response> SetPropertiesAsync(RequestContent content, int? requestPriority = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.SetProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetPropertiesRequest(content, timeout, context);
+                using HttpMessage message = CreateSetPropertiesRequest(content, requestPriority, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -108,22 +116,30 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Sets properties for a storage account's File service endpoint, including properties for Storage Analytics metrics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="storageServiceProperties"> Storage service properties. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response SetProperties(ShareServiceProperties storageServiceProperties, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response SetProperties(ShareServiceProperties storageServiceProperties, int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return SetProperties(storageServiceProperties, timeout, cancellationToken.ToRequestContext());
+            return SetProperties(storageServiceProperties, requestPriority, timeout, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Sets properties for a storage account's File service endpoint, including properties for Storage Analytics metrics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="storageServiceProperties"> Storage service properties. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> SetPropertiesAsync(ShareServiceProperties storageServiceProperties, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SetPropertiesAsync(ShareServiceProperties storageServiceProperties, int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return await SetPropertiesAsync(storageServiceProperties, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await SetPropertiesAsync(storageServiceProperties, requestPriority, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -134,17 +150,21 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetProperties(int? timeout, RequestContext context)
+        public virtual Response GetProperties(int? requestPriority, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.GetProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPropertiesRequest(timeout, context);
+                using HttpMessage message = CreateGetPropertiesRequest(requestPriority, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -162,17 +182,21 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPropertiesAsync(int? timeout, RequestContext context)
+        public virtual async Task<Response> GetPropertiesAsync(int? requestPriority, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.GetProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPropertiesRequest(timeout, context);
+                using HttpMessage message = CreateGetPropertiesRequest(requestPriority, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -183,22 +207,30 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Gets the properties of a storage account's File service, including properties for Storage Analytics metrics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ShareServiceProperties> GetProperties(int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response<ShareServiceProperties> GetProperties(int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetProperties(timeout, cancellationToken.ToRequestContext());
+            Response result = GetProperties(requestPriority, timeout, cancellationToken.ToRequestContext());
             return Response.FromValue((ShareServiceProperties)result, result);
         }
 
         /// <summary> Gets the properties of a storage account's File service, including properties for Storage Analytics metrics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ShareServiceProperties>> GetPropertiesAsync(int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ShareServiceProperties>> GetPropertiesAsync(int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetPropertiesAsync(timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetPropertiesAsync(requestPriority, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ShareServiceProperties)result, result);
         }
 
@@ -210,6 +242,10 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters the results to return only items whose name begins with the specified prefix. </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
@@ -218,13 +254,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetSharesSegment(string prefix, string marker, int? maxresults, int? timeout, IEnumerable<ListSharesIncludeType> include, RequestContext context)
+        public virtual Response GetSharesSegment(int? requestPriority, string prefix, string marker, int? maxresults, int? timeout, IEnumerable<ListSharesIncludeType> include, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.GetSharesSegment");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSharesSegmentRequest(prefix, marker, maxresults, timeout, include, context);
+                using HttpMessage message = CreateGetSharesSegmentRequest(requestPriority, prefix, marker, maxresults, timeout, include, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -242,6 +278,10 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters the results to return only items whose name begins with the specified prefix. </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
@@ -250,13 +290,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetSharesSegmentAsync(string prefix, string marker, int? maxresults, int? timeout, IEnumerable<ListSharesIncludeType> include, RequestContext context)
+        public virtual async Task<Response> GetSharesSegmentAsync(int? requestPriority, string prefix, string marker, int? maxresults, int? timeout, IEnumerable<ListSharesIncludeType> include, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.GetSharesSegment");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetSharesSegmentRequest(prefix, marker, maxresults, timeout, include, context);
+                using HttpMessage message = CreateGetSharesSegmentRequest(requestPriority, prefix, marker, maxresults, timeout, include, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -267,6 +307,10 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> The List Shares Segment operation returns a list of the shares and share snapshots under the specified account. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters the results to return only items whose name begins with the specified prefix. </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
@@ -274,13 +318,17 @@ namespace Azure.Storage.Files.Shares
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ListSharesResponse> GetSharesSegment(string prefix = default, string marker = default, int? maxresults = default, int? timeout = default, IEnumerable<ListSharesIncludeType> include = default, CancellationToken cancellationToken = default)
+        public virtual Response<ListSharesResponse> GetSharesSegment(int? requestPriority = default, string prefix = default, string marker = default, int? maxresults = default, int? timeout = default, IEnumerable<ListSharesIncludeType> include = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetSharesSegment(prefix, marker, maxresults, timeout, include, cancellationToken.ToRequestContext());
+            Response result = GetSharesSegment(requestPriority, prefix, marker, maxresults, timeout, include, cancellationToken.ToRequestContext());
             return Response.FromValue((ListSharesResponse)result, result);
         }
 
         /// <summary> The List Shares Segment operation returns a list of the shares and share snapshots under the specified account. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters the results to return only items whose name begins with the specified prefix. </param>
         /// <param name="marker"> A string value that identifies the portion of the list to be returned with the next listing operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of items to return. </param>
@@ -288,9 +336,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ListSharesResponse>> GetSharesSegmentAsync(string prefix = default, string marker = default, int? maxresults = default, int? timeout = default, IEnumerable<ListSharesIncludeType> include = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ListSharesResponse>> GetSharesSegmentAsync(int? requestPriority = default, string prefix = default, string marker = default, int? maxresults = default, int? timeout = default, IEnumerable<ListSharesIncludeType> include = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetSharesSegmentAsync(prefix, marker, maxresults, timeout, include, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetSharesSegmentAsync(requestPriority, prefix, marker, maxresults, timeout, include, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ListSharesResponse)result, result);
         }
 
@@ -303,17 +351,21 @@ namespace Azure.Storage.Files.Shares
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetUserDelegationKey(RequestContent content, int? timeout = default, RequestContext context = null)
+        public virtual Response GetUserDelegationKey(RequestContent content, int? requestPriority = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.GetUserDelegationKey");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetUserDelegationKeyRequest(content, timeout, context);
+                using HttpMessage message = CreateGetUserDelegationKeyRequest(content, requestPriority, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -332,17 +384,21 @@ namespace Azure.Storage.Files.Shares
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetUserDelegationKeyAsync(RequestContent content, int? timeout = default, RequestContext context = null)
+        public virtual async Task<Response> GetUserDelegationKeyAsync(RequestContent content, int? requestPriority = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.GetUserDelegationKey");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetUserDelegationKeyRequest(content, timeout, context);
+                using HttpMessage message = CreateGetUserDelegationKeyRequest(content, requestPriority, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -354,23 +410,31 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Retrieves a user delegation key for the File service. This can be used to generate a user delegation SAS. </summary>
         /// <param name="keyInfo"> Key information. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<UserDelegationKey> GetUserDelegationKey(KeyInfo keyInfo, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response<UserDelegationKey> GetUserDelegationKey(KeyInfo keyInfo, int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetUserDelegationKey(keyInfo, timeout, cancellationToken.ToRequestContext());
+            Response result = GetUserDelegationKey(keyInfo, requestPriority, timeout, cancellationToken.ToRequestContext());
             return Response.FromValue((UserDelegationKey)result, result);
         }
 
         /// <summary> Retrieves a user delegation key for the File service. This can be used to generate a user delegation SAS. </summary>
         /// <param name="keyInfo"> Key information. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(KeyInfo keyInfo, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(KeyInfo keyInfo, int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetUserDelegationKeyAsync(keyInfo, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetUserDelegationKeyAsync(keyInfo, requestPriority, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((UserDelegationKey)result, result);
         }
     }

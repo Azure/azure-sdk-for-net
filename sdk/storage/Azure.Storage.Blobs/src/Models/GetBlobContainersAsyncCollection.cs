@@ -20,13 +20,16 @@ namespace Azure.Storage.Blobs.Models
         private readonly BlobContainerTraits _traits;
         private readonly BlobContainerStates _states;
         private readonly string _prefix;
+        private readonly int? _requestPriority;
 
         public GetBlobContainersAsyncCollection(
             BlobServiceClient client,
             BlobContainerTraits traits,
             BlobContainerStates states,
+            int? requestPriority,
             string prefix = default)
         {
+            _requestPriority = requestPriority;
             _client = client;
             _traits = traits;
             _states = states;
@@ -49,6 +52,7 @@ namespace Azure.Storage.Blobs.Models
                     states: _states,
                     prefix: _prefix,
                     pageSizeHint: pageSizeHint,
+                    requestPriority: _requestPriority,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -61,6 +65,7 @@ namespace Azure.Storage.Blobs.Models
                     states: _states,
                     prefix: _prefix,
                     pageSizeHint: pageSizeHint,
+                    requestPriority: _requestPriority,
                     async: async,
                     cancellationToken: cancellationToken)
                     .EnsureCompleted();

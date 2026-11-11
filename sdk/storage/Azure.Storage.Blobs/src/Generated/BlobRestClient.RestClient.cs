@@ -36,7 +36,7 @@ namespace Azure.Storage.Blobs
 
         private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
-        internal HttpMessage CreateGetPropertiesRequest(string snapshot, string versionId, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, RequestConditions requestConditions, string ifTags, RequestContext context)
+        internal HttpMessage CreateGetPropertiesRequest(int? requestPriority, string snapshot, string versionId, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, RequestConditions requestConditions, string ifTags, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -59,6 +59,10 @@ namespace Azure.Storage.Blobs
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (leaseId != null)
             {
@@ -87,7 +91,7 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string snapshot, string versionId, int? timeout, string leaseId, string deleteSnapshots, RequestConditions requestConditions, string ifTags, string blobDeleteType, DateTimeOffset? accessTierIfModifiedSince, DateTimeOffset? accessTierIfUnmodifiedSince, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(int? requestPriority, string snapshot, string versionId, int? timeout, string leaseId, string deleteSnapshots, RequestConditions requestConditions, string ifTags, string blobDeleteType, DateTimeOffset? accessTierIfModifiedSince, DateTimeOffset? accessTierIfUnmodifiedSince, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -114,6 +118,10 @@ namespace Azure.Storage.Blobs
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (leaseId != null)
             {
@@ -142,7 +150,7 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
-        internal HttpMessage CreateUndeleteRequest(int? timeout, RequestContext context)
+        internal HttpMessage CreateUndeleteRequest(int? requestPriority, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -159,10 +167,14 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             return message;
         }
 
-        internal HttpMessage CreateSetExpiryRequest(string expiryOptions, int? timeout, DateTimeOffset? expiresOn, RequestContext context)
+        internal HttpMessage CreateSetExpiryRequest(string expiryOptions, int? requestPriority, int? timeout, DateTimeOffset? expiresOn, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -179,6 +191,10 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             request.Headers.SetValue("x-ms-expiry-option", expiryOptions);
             if (expiresOn != null)
             {
@@ -187,7 +203,7 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
-        internal HttpMessage CreateSetHttpHeadersRequest(int? timeout, string blobCacheControl, string blobContentType, BinaryData blobContentMd5, string blobContentEncoding, string blobContentLanguage, string leaseId, string blobContentDisposition, RequestConditions requestConditions, string ifTags, RequestContext context)
+        internal HttpMessage CreateSetHttpHeadersRequest(int? requestPriority, int? timeout, string blobCacheControl, string blobContentType, BinaryData blobContentMd5, string blobContentEncoding, string blobContentLanguage, string leaseId, string blobContentDisposition, RequestConditions requestConditions, string ifTags, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -203,6 +219,10 @@ namespace Azure.Storage.Blobs
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (blobCacheControl != null)
             {
@@ -243,7 +263,7 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
-        internal HttpMessage CreateDeleteImmutabilityPolicyRequest(int? timeout, string snapshot, string versionId, RequestContext context)
+        internal HttpMessage CreateDeleteImmutabilityPolicyRequest(int? requestPriority, int? timeout, string snapshot, string versionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -268,10 +288,14 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             return message;
         }
 
-        internal HttpMessage CreateSetLegalHoldRequest(bool legalHold, int? timeout, string snapshot, string versionId, RequestContext context)
+        internal HttpMessage CreateSetLegalHoldRequest(bool legalHold, int? requestPriority, int? timeout, string snapshot, string versionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -296,11 +320,15 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             request.Headers.SetValue("x-ms-legal-hold", TypeFormatters.ConvertToString(legalHold));
             return message;
         }
 
-        internal HttpMessage CreateSetMetadataRequest(int? timeout, IDictionary<string, string> metadata, string leaseId, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, RequestConditions requestConditions, string ifTags, RequestContext context)
+        internal HttpMessage CreateSetMetadataRequest(int? requestPriority, int? timeout, IDictionary<string, string> metadata, string leaseId, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, RequestConditions requestConditions, string ifTags, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -316,6 +344,10 @@ namespace Azure.Storage.Blobs
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (metadata != null && !(metadata is ChangeTrackingDictionary<string, string> changeTrackingDictionary && changeTrackingDictionary.IsUndefined))
             {
@@ -352,7 +384,7 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
-        internal HttpMessage CreateAcquireLeaseRequest(long duration, int? timeout, string proposedLeaseId, RequestConditions requestConditions, string ifTags, RequestContext context)
+        internal HttpMessage CreateAcquireLeaseRequest(long duration, int? requestPriority, int? timeout, string proposedLeaseId, RequestConditions requestConditions, string ifTags, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -368,6 +400,10 @@ namespace Azure.Storage.Blobs
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             request.Headers.SetValue("x-ms-lease-duration", TypeFormatters.ConvertToString(duration));
             if (proposedLeaseId != null)
@@ -386,7 +422,7 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
-        internal HttpMessage CreateReleaseLeaseRequest(string leaseId, int? timeout, RequestConditions requestConditions, string ifTags, RequestContext context)
+        internal HttpMessage CreateReleaseLeaseRequest(string leaseId, int? requestPriority, int? timeout, RequestConditions requestConditions, string ifTags, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -402,6 +438,10 @@ namespace Azure.Storage.Blobs
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             request.Headers.SetValue("x-ms-lease-id", leaseId);
             if (requestConditions != null)
@@ -416,7 +456,7 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
-        internal HttpMessage CreateRenewLeaseRequest(string leaseId, int? timeout, RequestConditions requestConditions, string ifTags, RequestContext context)
+        internal HttpMessage CreateRenewLeaseRequest(string leaseId, int? requestPriority, int? timeout, RequestConditions requestConditions, string ifTags, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -432,6 +472,10 @@ namespace Azure.Storage.Blobs
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             request.Headers.SetValue("x-ms-lease-id", leaseId);
             if (requestConditions != null)
@@ -446,7 +490,7 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
-        internal HttpMessage CreateChangeLeaseRequest(string leaseId, string proposedLeaseId, int? timeout, RequestConditions requestConditions, string ifTags, RequestContext context)
+        internal HttpMessage CreateChangeLeaseRequest(string leaseId, string proposedLeaseId, int? requestPriority, int? timeout, RequestConditions requestConditions, string ifTags, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -462,6 +506,10 @@ namespace Azure.Storage.Blobs
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             request.Headers.SetValue("x-ms-lease-id", leaseId);
             request.Headers.SetValue("x-ms-proposed-lease-id", proposedLeaseId);
@@ -477,7 +525,7 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
-        internal HttpMessage CreateBreakLeaseRequest(int? timeout, long? breakPeriod, RequestConditions requestConditions, string ifTags, RequestContext context)
+        internal HttpMessage CreateBreakLeaseRequest(int? requestPriority, int? timeout, long? breakPeriod, RequestConditions requestConditions, string ifTags, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -493,6 +541,10 @@ namespace Azure.Storage.Blobs
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (breakPeriod != null)
             {
@@ -510,7 +562,7 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
-        internal HttpMessage CreateCreateSnapshotRequest(int? timeout, IDictionary<string, string> metadata, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, RequestConditions requestConditions, string ifTags, string leaseId, RequestContext context)
+        internal HttpMessage CreateCreateSnapshotRequest(int? requestPriority, int? timeout, IDictionary<string, string> metadata, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string encryptionScope, RequestConditions requestConditions, string ifTags, string leaseId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -526,6 +578,10 @@ namespace Azure.Storage.Blobs
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (metadata != null && !(metadata is ChangeTrackingDictionary<string, string> changeTrackingDictionary && changeTrackingDictionary.IsUndefined))
             {
@@ -562,7 +618,7 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
-        internal HttpMessage CreateStartCopyFromUrlRequest(string copySource, int? timeout, IDictionary<string, string> metadata, string tier, string rehydratePriority, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string sourceIfTags, RequestConditions requestConditions, string ifTags, string leaseId, string blobTagsString, bool? sealBlob, DateTimeOffset? immutabilityPolicyExpiry, string immutabilityPolicyMode, bool? legalHold, RequestContext context)
+        internal HttpMessage CreateStartCopyFromUrlRequest(string copySource, int? requestPriority, int? timeout, IDictionary<string, string> metadata, string tier, string rehydratePriority, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string sourceIfTags, RequestConditions requestConditions, string ifTags, string leaseId, string blobTagsString, bool? sealBlob, DateTimeOffset? immutabilityPolicyExpiry, string immutabilityPolicyMode, bool? legalHold, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -577,6 +633,10 @@ namespace Azure.Storage.Blobs
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (metadata != null && !(metadata is ChangeTrackingDictionary<string, string> changeTrackingDictionary && changeTrackingDictionary.IsUndefined))
             {
@@ -646,7 +706,7 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
-        internal HttpMessage CreateCopyFromUrlRequest(string copySource, int? timeout, IDictionary<string, string> metadata, string tier, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, RequestConditions requestConditions, string ifTags, string leaseId, BinaryData sourceContentMd5, string blobTagsString, DateTimeOffset? immutabilityPolicyExpiry, string immutabilityPolicyMode, bool? legalHold, string copySourceAuthorization, string encryptionScope, string copySourceTags, string fileRequestIntent, RequestContext context)
+        internal HttpMessage CreateCopyFromUrlRequest(string copySource, int? requestPriority, int? timeout, IDictionary<string, string> metadata, string tier, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, RequestConditions requestConditions, string ifTags, string leaseId, BinaryData sourceContentMd5, string blobTagsString, DateTimeOffset? immutabilityPolicyExpiry, string immutabilityPolicyMode, bool? legalHold, string copySourceAuthorization, string encryptionScope, string copySourceTags, string fileRequestIntent, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -661,6 +721,10 @@ namespace Azure.Storage.Blobs
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (metadata != null && !(metadata is ChangeTrackingDictionary<string, string> changeTrackingDictionary && changeTrackingDictionary.IsUndefined))
             {
@@ -739,7 +803,7 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
-        internal HttpMessage CreateAbortCopyFromUrlRequest(string copyId, int? timeout, string leaseId, RequestContext context)
+        internal HttpMessage CreateAbortCopyFromUrlRequest(string copyId, int? requestPriority, int? timeout, string leaseId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -757,6 +821,10 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             if (leaseId != null)
             {
                 request.Headers.SetValue("x-ms-lease-id", leaseId);
@@ -765,7 +833,7 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
-        internal HttpMessage CreateSetTierRequest(string tier, string snapshot, string versionId, int? timeout, string rehydratePriority, string leaseId, string ifTags, RequestContext context)
+        internal HttpMessage CreateSetTierRequest(string tier, int? requestPriority, string snapshot, string versionId, int? timeout, string rehydratePriority, string leaseId, string ifTags, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -790,6 +858,10 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             request.Headers.SetValue("x-ms-access-tier", tier);
             if (rehydratePriority != null)
             {
@@ -806,7 +878,7 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
-        internal HttpMessage CreateGetAccountInfoRequest(int? timeout, RequestContext context)
+        internal HttpMessage CreateGetAccountInfoRequest(int? requestPriority, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -824,10 +896,14 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             return message;
         }
 
-        internal HttpMessage CreateGetTagsRequest(int? timeout, string snapshot, string versionId, string leaseId, string ifTags, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateGetTagsRequest(int? requestPriority, int? timeout, string snapshot, string versionId, string leaseId, string ifTags, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -851,6 +927,10 @@ namespace Azure.Storage.Blobs
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (leaseId != null)
             {
@@ -880,7 +960,7 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
-        internal HttpMessage CreateSetTagsRequest(RequestContent content, int? timeout, string versionId, BinaryData transactionalContentMD5, BinaryData transactionalContentCrc64, string ifTags, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateSetTagsRequest(RequestContent content, int? requestPriority, int? timeout, string versionId, BinaryData transactionalContentMD5, BinaryData transactionalContentCrc64, string ifTags, string leaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -900,6 +980,10 @@ namespace Azure.Storage.Blobs
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             request.Headers.SetValue("Content-Type", "application/xml");
             if (transactionalContentMD5 != null)
@@ -938,7 +1022,7 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
-        internal HttpMessage CreateGetLayoutRequest(string snapshot, string versionId, string marker, int? maxresults, int? timeout, string range, string leaseId, string ifTags, RequestConditions requestConditions, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, RequestContext context)
+        internal HttpMessage CreateGetLayoutRequest(int? requestPriority, string snapshot, string versionId, string marker, int? maxresults, int? timeout, string range, string leaseId, string ifTags, RequestConditions requestConditions, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -970,6 +1054,10 @@ namespace Azure.Storage.Blobs
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (range != null)
             {

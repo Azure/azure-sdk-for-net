@@ -42,8 +42,9 @@ namespace Azure.Storage.Files.DataLake
                     DeletedOn = containerProperties.DeletedOn,
                     RemainingRetentionDays = containerProperties.RemainingRetentionDays,
                     DefaultEncryptionScope = containerProperties.DefaultEncryptionScope,
-                    PreventEncryptionScopeOverride = containerProperties.PreventEncryptionScopeOverride
-                };
+                    PreventEncryptionScopeOverride = containerProperties.PreventEncryptionScopeOverride,
+                    EffectiveRequestPriority = containerProperties.EffectiveRequestPriority
+                                    };
 
         internal static FileDownloadDetails ToFileDownloadDetails(this BlobDownloadDetails blobDownloadProperties, string encryptionContext, string accessControlList) =>
             new FileDownloadDetails()
@@ -69,7 +70,8 @@ namespace Azure.Storage.Files.DataLake
                 ContentHash = blobDownloadProperties.BlobContentHash,
                 CreatedOn = blobDownloadProperties.CreatedOn,
                 EncryptionContext = encryptionContext,
-                AccessControlList = PathAccessControlExtensions.ParseAccessControlList(accessControlList)
+                AccessControlList = PathAccessControlExtensions.ParseAccessControlList(accessControlList),
+                EffectiveRequestPriority = blobDownloadProperties.EffectiveRequestPriority
             };
 
         internal static FileDownloadInfo ToFileDownloadInfo(this Response<BlobDownloadInfo> blobDownloadInfoResponse)
@@ -156,7 +158,8 @@ namespace Azure.Storage.Files.DataLake
                 ExpiresOn = blobPropertiesResponse.Value.ExpiresOn,
                 EncryptionScope = blobPropertiesResponse.Value.EncryptionScope,
                 SmartAccessTier = blobPropertiesResponse.Value.SmartAccessTier,
-                AccessTierInferred = blobPropertiesResponse.Value.AccessTierInferred
+                AccessTierInferred = blobPropertiesResponse.Value.AccessTierInferred,
+                EffectiveRequestPriority = blobPropertiesResponse.Value.EffectiveRequestPriority
             };
             if (blobPropertiesResponse.GetRawResponse().Headers.TryGetValue(
                 Constants.DataLake.EncryptionContextHeaderName,
@@ -195,7 +198,8 @@ namespace Azure.Storage.Files.DataLake
             new PathInfo
             {
                 ETag = blobInfo.ETag,
-                LastModified = blobInfo.LastModified
+                LastModified = blobInfo.LastModified,
+                EffectiveRequestPriority = blobInfo.EffectiveRequestPriority
             };
 
         internal static DataLakeLease ToDataLakeLease(this BlobLease blobLease) =>
@@ -204,7 +208,8 @@ namespace Azure.Storage.Files.DataLake
                 ETag = blobLease.ETag,
                 LastModified = blobLease.LastModified,
                 LeaseId = blobLease.LeaseId,
-                LeaseTime = blobLease.LeaseTime
+                LeaseTime = blobLease.LeaseTime,
+                EffectiveRequestPriority = blobLease.EffectiveRequestPriority
             };
 
         internal static BlobHttpHeaders ToBlobHttpHeaders(this PathHttpHeaders pathHttpHeaders)
@@ -324,7 +329,8 @@ namespace Azure.Storage.Files.DataLake
                 DataLakePublicAccess = (Models.PublicAccessType)blobContainerAccessPolicy.BlobPublicAccess,
                 ETag = blobContainerAccessPolicy.ETag,
                 LastModified = blobContainerAccessPolicy.LastModified,
-                SignedIdentifiers = blobContainerAccessPolicy.SignedIdentifiers.ToDataLakeSignedIdentifiers()
+                SignedIdentifiers = blobContainerAccessPolicy.SignedIdentifiers.ToDataLakeSignedIdentifiers(),
+                EffectiveRequestPriority = blobContainerAccessPolicy.EffectiveRequestPriority
             };
         }
 
@@ -418,7 +424,8 @@ namespace Azure.Storage.Files.DataLake
                 InputTextConfiguration = options.InputTextConfiguration.ToBlobQueryTextConfiguration(isInput: true),
                 OutputTextConfiguration = options.OutputTextConfiguration.ToBlobQueryTextConfiguration(isInput: false),
                 Conditions = options.Conditions.ToBlobRequestConditions(),
-                ProgressHandler = options.ProgressHandler
+                ProgressHandler = options.ProgressHandler,
+                RequestPriority = options.RequestPriority
             };
 
             if (options._errorHandler != null)
@@ -580,13 +587,14 @@ namespace Azure.Storage.Files.DataLake
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 Position = options.Position,
                 TransferValidation = options.TransferValidation,
-                LayoutAwareRouting = options.LayoutAwareRouting
+                LayoutAwareRouting = options.LayoutAwareRouting,
+                RequestPriority = options.RequestPriority
             };
         }
 
         // TODO: Data Locality temporarily hidden; restore when feature stabilizes
         /*
-        internal static BlobGetLayoutOptions ToBlobGetLayoutOptions(this DataLakeFileGetLayoutOptions options)
+        internal static BlobGetLayoutOptions
         {
             if (options == null)
             {
@@ -613,6 +621,7 @@ namespace Azure.Storage.Files.DataLake
                 Range = options.Range,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 TransferValidation = options.TransferValidation,
+                RequestPriority = options.RequestPriority,
                 // TODO: Data Locality temporarily hidden; restore when feature stabilizes
                 // LayoutEndpoint = options.LayoutEndpoint
             };
@@ -629,7 +638,8 @@ namespace Azure.Storage.Files.DataLake
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 TransferOptions = options.TransferOptions,
                 TransferValidation = options.TransferValidation,
-                LayoutAwareRouting = options.LayoutAwareRouting
+                LayoutAwareRouting = options.LayoutAwareRouting,
+                RequestPriority = options.RequestPriority
             };
         }
 
@@ -800,11 +810,15 @@ namespace Azure.Storage.Files.DataLake
             return default;
         }
 
+        internal static int? GetEffectiveRequestPriority(this Response response)
+            => response.Headers.TryGetValue("x-ms-request-priority", out int? requestPriority) ? requestPriority : null;
+
         internal static PathInfo ToPathInfo(this Response response)
             => new PathInfo
             {
                 ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string etagValue) ? new ETag(etagValue) : default,
-                LastModified = (response.Headers.TryGetValue(LastModifiedHeader, out DateTimeOffset? lastModified) ? lastModified : null).GetValueOrDefault()
+                LastModified = (response.Headers.TryGetValue(LastModifiedHeader, out DateTimeOffset? lastModified) ? lastModified : null).GetValueOrDefault(),
+                EffectiveRequestPriority = response.GetEffectiveRequestPriority()
             };
 
         internal static PathAccessControl ToPathAccessControl(this Response response)
@@ -813,7 +827,8 @@ namespace Azure.Storage.Files.DataLake
                 Owner = response.Headers.TryGetValue(OwnerHeader, out string owner) ? owner : null,
                 Group = response.Headers.TryGetValue(GroupHeader, out string group) ? group : null,
                 Permissions = response.Headers.TryGetValue(PermissionsHeader, out string permissions) ? PathPermissions.ParseSymbolicPermissions(permissions) : null,
-                AccessControlList = response.Headers.TryGetValue(AclHeader, out string acl) ? PathAccessControlExtensions.ParseAccessControlList(acl) : null
+                AccessControlList = response.Headers.TryGetValue(AclHeader, out string acl) ? PathAccessControlExtensions.ParseAccessControlList(acl) : null,
+                EffectiveRequestPriority = response.GetEffectiveRequestPriority()
             };
 
         internal static PathSystemProperties ToPathSystemProperties(this Response response)
@@ -832,6 +847,7 @@ namespace Azure.Storage.Files.DataLake
                 Owner = response.Headers.TryGetValue(OwnerHeader, out string sysOwner) ? sysOwner : null,
                 Group = response.Headers.TryGetValue(GroupHeader, out string sysGroup) ? sysGroup : null,
                 Permissions = response.Headers.TryGetValue(PermissionsHeader, out string sysPermissions) ? PathPermissions.ParseSymbolicPermissions(sysPermissions) : null,
+                EffectiveRequestPriority = response.GetEffectiveRequestPriority(),
             };
 
         internal static PathDeletedSegment ToPathDeletedSegment(this Response<ListBlobsHierarchySegmentResult> response)
@@ -1112,7 +1128,7 @@ namespace Azure.Storage.Files.DataLake
         {
             return blobTagResult == null
                 ? null
-                : new GetPathTagResult { Tags = blobTagResult.Tags };
+                : new GetPathTagResult { Tags = blobTagResult.Tags, EffectiveRequestPriority = blobTagResult.EffectiveRequestPriority };
         }
 
         #region ValidateConditionsNotPresent

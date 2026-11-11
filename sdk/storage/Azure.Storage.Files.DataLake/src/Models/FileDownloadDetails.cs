@@ -168,6 +168,11 @@ namespace Azure.Storage.Files.DataLake.Models
         public IList<PathAccessControlItem> AccessControlList { get; internal set; }
 
         /// <summary>
+        /// The request priority the service applied to this request.
+        /// </summary>
+        public int? EffectiveRequestPriority { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of FileDownloadDetails instances.
         /// You can use DataLakeModelFactory.FileDownloadDetails instead.
         /// </summary>

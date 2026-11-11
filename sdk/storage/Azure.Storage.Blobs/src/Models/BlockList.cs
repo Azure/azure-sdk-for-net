@@ -9,7 +9,7 @@ namespace Azure.Storage.Blobs.Models
 {
     /// <summary>
     /// A block blob's <see cref="BlockList"/> returned from
-    /// <see cref="BlockBlobClient.GetBlockListAsync"/>.
+    /// <see cref="BlockBlobClient.GetBlockListAsync(BlockBlobGetBlockListOptions, System.Threading.CancellationToken)"/>.
     /// </summary>
     public partial class BlockList
     {
@@ -29,8 +29,13 @@ namespace Azure.Storage.Blobs.Models
         public ETag ETag { get; internal set; }
 
         /// <summary>
+        /// The request priority the service applied to this request.
+        /// </summary>
+        public int? EffectiveRequestPriority { get; internal set; }
+
+        /// <summary>
         /// The media type of the body of the response. For the
-        /// <see cref=" Specialized.BlockBlobClient.GetBlockListAsync"/>
+        /// <see cref="Specialized.BlockBlobClient.GetBlockListAsync(BlockBlobGetBlockListOptions, System.Threading.CancellationToken)"/>
         /// operation this is 'application/xml'.
         /// </summary>
         public string ContentType { get; internal set; }

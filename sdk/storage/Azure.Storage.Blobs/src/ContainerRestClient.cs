@@ -20,6 +20,7 @@ namespace Azure.Storage.Blobs
     internal partial class ContainerRestClient
     {
         /// <summary> Returns a list of the blobs in Apache Arrow format as raw data, to be deserialized by the client. </summary>
+        /// <param name="requestPriority"> Optional. Sets the priority of this request, from 0 through 7. If not set, or if the value is outside that range, the service uses 3. </param>
         /// <param name="prefix"> Filters the results to return only resources whose name begins with the specified prefix. </param>
         /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
@@ -29,14 +30,14 @@ namespace Azure.Storage.Blobs
         /// <param name="endBefore"> Filters the results to return only names that are ordered before this value. Currently only applies to Apache Arrow scenario. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Stream> GetBlobFlatSegmentApacheArrow(string prefix = default, string marker = default, int? maxresults = default, IEnumerable<ListBlobsIncludeItem> include = default, int? timeout = default, string startFrom = default, string endBefore = default, CancellationToken cancellationToken = default)
+        public virtual Response<Stream> GetBlobFlatSegmentApacheArrow(int? requestPriority = default, string prefix = default, string marker = default, int? maxresults = default, IEnumerable<ListBlobsIncludeItem> include = default, int? timeout = default, string startFrom = default, string endBefore = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.GetBlobFlatSegmentApacheArrow");
             scope.Start();
             try
             {
                 RequestContext context = cancellationToken.ToRequestContext();
-                using HttpMessage message = CreateGetBlobFlatSegmentApacheArrowRequest(prefix, marker, maxresults, include, timeout, startFrom, endBefore, context);
+                using HttpMessage message = CreateGetBlobFlatSegmentApacheArrowRequest(requestPriority, prefix, marker, maxresults, include, timeout, startFrom, endBefore, context);
                 message.BufferResponse = false;
                 Response response = Pipeline.ProcessMessage(message, context);
                 Stream content = message.ExtractResponseContent();
@@ -50,6 +51,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary> Returns a list of the blobs in Apache Arrow format as raw data, to be deserialized by the client. </summary>
+        /// <param name="requestPriority"> Optional. Sets the priority of this request, from 0 through 7. If not set, or if the value is outside that range, the service uses 3. </param>
         /// <param name="prefix"> Filters the results to return only resources whose name begins with the specified prefix. </param>
         /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
@@ -59,14 +61,14 @@ namespace Azure.Storage.Blobs
         /// <param name="endBefore"> Filters the results to return only names that are ordered before this value. Currently only applies to Apache Arrow scenario. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Stream>> GetBlobFlatSegmentApacheArrowAsync(string prefix = default, string marker = default, int? maxresults = default, IEnumerable<ListBlobsIncludeItem> include = default, int? timeout = default, string startFrom = default, string endBefore = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Stream>> GetBlobFlatSegmentApacheArrowAsync(int? requestPriority = default, string prefix = default, string marker = default, int? maxresults = default, IEnumerable<ListBlobsIncludeItem> include = default, int? timeout = default, string startFrom = default, string endBefore = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.GetBlobFlatSegmentApacheArrow");
             scope.Start();
             try
             {
                 RequestContext context = cancellationToken.ToRequestContext();
-                using HttpMessage message = CreateGetBlobFlatSegmentApacheArrowRequest(prefix, marker, maxresults, include, timeout, startFrom, endBefore, context);
+                using HttpMessage message = CreateGetBlobFlatSegmentApacheArrowRequest(requestPriority, prefix, marker, maxresults, include, timeout, startFrom, endBefore, context);
                 message.BufferResponse = false;
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Stream content = message.ExtractResponseContent();
@@ -81,6 +83,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary> Returns a list of the blobs in Apache Arrow format as raw data, to be deserialized by the client. A delimiter can be used to traverse a virtual hierarchy of blobs as though it were a file system. </summary>
         /// <param name="delimiter"> If specified, the operation returns a BlobPrefix element that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
+        /// <param name="requestPriority"> Optional. Sets the priority of this request, from 0 through 7. If not set, or if the value is outside that range, the service uses 3. </param>
         /// <param name="prefix"> Filters the results to return only resources whose name begins with the specified prefix. </param>
         /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
@@ -90,14 +93,14 @@ namespace Azure.Storage.Blobs
         /// <param name="endBefore"> Filters the results to return only names that are ordered before this value. Currently only applies to Apache Arrow scenario. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Stream> GetBlobHierarchySegmentApacheArrow(string delimiter = default, string prefix = default, string marker = default, int? maxresults = default, IEnumerable<ListBlobsIncludeItem> include = default, int? timeout = default, string startFrom = default, string endBefore = default, CancellationToken cancellationToken = default)
+        public virtual Response<Stream> GetBlobHierarchySegmentApacheArrow(string delimiter = default, int? requestPriority = default, string prefix = default, string marker = default, int? maxresults = default, IEnumerable<ListBlobsIncludeItem> include = default, int? timeout = default, string startFrom = default, string endBefore = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.GetBlobHierarchySegmentApacheArrow");
             scope.Start();
             try
             {
                 RequestContext context = cancellationToken.ToRequestContext();
-                using HttpMessage message = CreateGetBlobHierarchySegmentApacheArrowRequest(delimiter, prefix, marker, maxresults, include, timeout, startFrom, endBefore, context);
+                using HttpMessage message = CreateGetBlobHierarchySegmentApacheArrowRequest(delimiter, requestPriority, prefix, marker, maxresults, include, timeout, startFrom, endBefore, context);
                 message.BufferResponse = false;
                 Response response = Pipeline.ProcessMessage(message, context);
                 Stream content = message.ExtractResponseContent();
@@ -112,6 +115,7 @@ namespace Azure.Storage.Blobs
 
         /// <summary> Returns a list of the blobs in Apache Arrow format as raw data, to be deserialized by the client. A delimiter can be used to traverse a virtual hierarchy of blobs as though it were a file system. </summary>
         /// <param name="delimiter"> If specified, the operation returns a BlobPrefix element that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
+        /// <param name="requestPriority"> Optional. Sets the priority of this request, from 0 through 7. If not set, or if the value is outside that range, the service uses 3. </param>
         /// <param name="prefix"> Filters the results to return only resources whose name begins with the specified prefix. </param>
         /// <param name="marker"> An opaque string value that identifies the portion of the result set to return with this operation. </param>
         /// <param name="maxresults"> Specifies the maximum number of resources to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. </param>
@@ -121,14 +125,14 @@ namespace Azure.Storage.Blobs
         /// <param name="endBefore"> Filters the results to return only names that are ordered before this value. Currently only applies to Apache Arrow scenario. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Stream>> GetBlobHierarchySegmentApacheArrowAsync(string delimiter = default, string prefix = default, string marker = default, int? maxresults = default, IEnumerable<ListBlobsIncludeItem> include = default, int? timeout = default, string startFrom = default, string endBefore = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Stream>> GetBlobHierarchySegmentApacheArrowAsync(string delimiter = default, int? requestPriority = default, string prefix = default, string marker = default, int? maxresults = default, IEnumerable<ListBlobsIncludeItem> include = default, int? timeout = default, string startFrom = default, string endBefore = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ContainerRestClient.GetBlobHierarchySegmentApacheArrow");
             scope.Start();
             try
             {
                 RequestContext context = cancellationToken.ToRequestContext();
-                using HttpMessage message = CreateGetBlobHierarchySegmentApacheArrowRequest(delimiter, prefix, marker, maxresults, include, timeout, startFrom, endBefore, context);
+                using HttpMessage message = CreateGetBlobHierarchySegmentApacheArrowRequest(delimiter, requestPriority, prefix, marker, maxresults, include, timeout, startFrom, endBefore, context);
                 message.BufferResponse = false;
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Stream content = message.ExtractResponseContent();
@@ -141,7 +145,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateGetBlobHierarchySegmentRequest(string delimiter, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, RequestContext context)
+        internal HttpMessage CreateGetBlobHierarchySegmentRequest(string delimiter, int? requestPriority, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -183,11 +187,15 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             request.Headers.SetValue("Accept", "application/xml");
             return message;
         }
 
-        internal HttpMessage CreateGetBlobHierarchySegmentApacheArrowRequest(string delimiter, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, string endBefore, RequestContext context)
+        internal HttpMessage CreateGetBlobHierarchySegmentApacheArrowRequest(string delimiter, int? requestPriority, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout, string startFrom, string endBefore, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -232,6 +240,10 @@ namespace Azure.Storage.Blobs
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             request.Headers.SetValue("Accept", "application/vnd.apache.arrow.stream,application/xml");
             return message;

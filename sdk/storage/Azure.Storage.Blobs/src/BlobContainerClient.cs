@@ -665,6 +665,45 @@ namespace Azure.Storage.Blobs
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">
         /// Create Container</see>.
         /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerInfo}"/> describing the newly
+        /// created blob container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual Response<BlobContainerInfo> Create(
+            BlobContainerCreateOptions options,
+            CancellationToken cancellationToken = default) =>
+            CreateInternal(
+                options?.PublicAccessType ?? PublicAccessType.None,
+                options?.Metadata,
+                options?.EncryptionScopeOptions,
+                requestPriority: options?.RequestPriority,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="Create(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
+        /// operation creates a new container
+        /// under the specified account. If the container with the same name
+        /// already exists, the operation fails.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">
+        /// Create Container</see>.
+        /// </summary>
         /// <param name="publicAccessType">
         /// Optionally specifies whether data in the container may be accessed
         /// publicly and the level of access. <see cref="PublicAccessType.BlobContainer"/>
@@ -698,6 +737,7 @@ namespace Azure.Storage.Blobs
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobContainerInfo> Create(
             PublicAccessType publicAccessType = PublicAccessType.None,
             Metadata metadata = default,
@@ -707,6 +747,7 @@ namespace Azure.Storage.Blobs
                 publicAccessType,
                 metadata,
                 encryptionScopeOptions,
+                requestPriority: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -761,9 +802,48 @@ namespace Azure.Storage.Blobs
                 publicAccessType,
                 metadata,
                 encryptionScopeOptions: default,
+                requestPriority: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="CreateAsync(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
+        /// operation creates a new container under the specified account. If the container with the same name
+        /// already exists, the operation fails.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">
+        /// Create Container</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerInfo}"/> describing the newly
+        /// created container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual async Task<Response<BlobContainerInfo>> CreateAsync(
+            BlobContainerCreateOptions options,
+            CancellationToken cancellationToken = default) =>
+            await CreateInternal(
+                options?.PublicAccessType ?? PublicAccessType.None,
+                options?.Metadata,
+                options?.EncryptionScopeOptions,
+                requestPriority: options?.RequestPriority,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
 
         /// <summary>
         /// The <see cref="CreateAsync(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
@@ -807,6 +887,7 @@ namespace Azure.Storage.Blobs
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobContainerInfo>> CreateAsync(
             PublicAccessType publicAccessType = PublicAccessType.None,
             Metadata metadata = default,
@@ -816,6 +897,7 @@ namespace Azure.Storage.Blobs
                 publicAccessType,
                 metadata,
                 encryptionScopeOptions,
+                requestPriority: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -870,9 +952,48 @@ namespace Azure.Storage.Blobs
                 publicAccessType,
                 metadata,
                 encryptionScopeOptions: default,
+                requestPriority: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExists(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
+        /// operation creates a new container under the specified account. If the container with the same name
+        /// already exists, it is not changed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">
+        /// Create Container</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// If the container does not already exist, a <see cref="Response{ContainerInfo}"/>
+        /// describing the newly created container. If the container already exists, <c>null</c>.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual Response<BlobContainerInfo> CreateIfNotExists(
+            BlobContainerCreateIfNotExistsOptions options,
+            CancellationToken cancellationToken = default) =>
+            CreateIfNotExistsInternal(
+                options?.PublicAccessType ?? PublicAccessType.None,
+                options?.Metadata,
+                options?.EncryptionScopeOptions,
+                requestPriority: options?.RequestPriority,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
 
         /// <summary>
         /// The <see cref="CreateIfNotExists(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
@@ -916,6 +1037,7 @@ namespace Azure.Storage.Blobs
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<BlobContainerInfo> CreateIfNotExists(
             PublicAccessType publicAccessType = PublicAccessType.None,
             Metadata metadata = default,
@@ -925,6 +1047,7 @@ namespace Azure.Storage.Blobs
                 publicAccessType,
                 metadata,
                 encryptionScopeOptions,
+                requestPriority: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -979,9 +1102,48 @@ namespace Azure.Storage.Blobs
                 publicAccessType,
                 metadata,
                 encryptionScopeOptions: default,
+                requestPriority: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="CreateIfNotExistsAsync(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
+        /// operation creates a new container under the specified account. If the container with the same name
+        /// already exists, it is not changed.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/create-container">
+        /// Create Container</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{ContainerInfo}"/> describing the newly
+        /// created container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual async Task<Response<BlobContainerInfo>> CreateIfNotExistsAsync(
+            BlobContainerCreateIfNotExistsOptions options,
+            CancellationToken cancellationToken = default) =>
+            await CreateIfNotExistsInternal(
+                options?.PublicAccessType ?? PublicAccessType.None,
+                options?.Metadata,
+                options?.EncryptionScopeOptions,
+                requestPriority: options?.RequestPriority,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
 
         /// <summary>
         /// The <see cref="CreateIfNotExistsAsync(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
@@ -1025,6 +1187,7 @@ namespace Azure.Storage.Blobs
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobContainerInfo>> CreateIfNotExistsAsync(
             PublicAccessType publicAccessType = PublicAccessType.None,
             Metadata metadata = default,
@@ -1034,6 +1197,7 @@ namespace Azure.Storage.Blobs
                 publicAccessType,
                 metadata,
                 encryptionScopeOptions,
+                requestPriority: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1088,12 +1252,13 @@ namespace Azure.Storage.Blobs
                 publicAccessType,
                 metadata,
                 encryptionScopeOptions: default,
+                requestPriority: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="CreateIfNotExistsInternal(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, bool, CancellationToken)"/>
+        /// The <see cref="CreateIfNotExistsInternal(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, int?, bool, CancellationToken)"/>
         /// operation creates a new container under the specified account.  If the container already exists, it is
         /// not changed.
         ///
@@ -1120,6 +1285,10 @@ namespace Azure.Storage.Blobs
         /// <param name="encryptionScopeOptions">
         /// Optional encryption scope options to set for this container.
         /// </param>
+        /// <param name="requestPriority">
+        /// Optional. Sets the priority of this request, from 0 through 7.
+        /// If not set, or if the value is outside that range, the service uses 3.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1128,7 +1297,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// If the container does not already exist, a <see cref="Response{ContainerInfo}"/>
+        /// If the container does not already exist
         /// describing the newly created container. If the container already exists, <c>null</c>.
         /// </returns>
         /// <remarks>
@@ -1141,6 +1310,7 @@ namespace Azure.Storage.Blobs
             PublicAccessType publicAccessType,
             Metadata metadata,
             BlobContainerEncryptionScopeOptions encryptionScopeOptions,
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1164,6 +1334,7 @@ namespace Azure.Storage.Blobs
                         publicAccessType,
                         metadata,
                         encryptionScopeOptions,
+                        requestPriority,
                         async,
                         cancellationToken,
                         operationName)
@@ -1217,6 +1388,10 @@ namespace Azure.Storage.Blobs
         /// <param name="encryptionScopeOptions">
         /// Optional encryption scope options to set for this container.
         /// </param>
+        /// <param name="requestPriority">
+        /// Optional. Sets the priority of this request, from 0 through 7.
+        /// If not set, or if the value is outside that range, the service uses 3.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1241,6 +1416,7 @@ namespace Azure.Storage.Blobs
             PublicAccessType publicAccessType,
             Metadata metadata,
             BlobContainerEncryptionScopeOptions encryptionScopeOptions,
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken,
 #pragma warning disable CA1801 // Review unused parameters
@@ -1265,6 +1441,7 @@ namespace Azure.Storage.Blobs
                     if (async)
                     {
                         response = await ContainerRestClient.CreateAsync(
+                            requestPriority: requestPriority,
                             metadata: metadata,
                             access: publicAccessType == PublicAccessType.None ? null : publicAccessType,
                             defaultEncryptionScope: encryptionScopeOptions?.DefaultEncryptionScope,
@@ -1275,6 +1452,7 @@ namespace Azure.Storage.Blobs
                     else
                     {
                         response = ContainerRestClient.Create(
+                            requestPriority: requestPriority,
                             metadata: metadata,
                             access: publicAccessType == PublicAccessType.None ? null : publicAccessType,
                             defaultEncryptionScope: encryptionScopeOptions?.DefaultEncryptionScope,
@@ -1303,16 +1481,15 @@ namespace Azure.Storage.Blobs
 
         #region Delete
         /// <summary>
-        /// The <see cref="Delete"/> operation marks the specified
+        /// The <see cref="Delete(BlobContainerDeleteOptions, CancellationToken)"/> operation marks the specified
         /// container for deletion.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
         /// Delete Container</see>.
         /// </summary>
-        /// <param name="conditions">
-        /// Optional <see cref="BlobRequestConditions"/> to add
-        /// conditions on the deletion of this container.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1338,16 +1515,17 @@ namespace Azure.Storage.Blobs
         /// fail with status code 404 (Not Found).
         /// </remarks>
         public virtual Response Delete(
-            BlobRequestConditions conditions = default,
+            BlobContainerDeleteOptions options,
             CancellationToken cancellationToken = default) =>
             DeleteInternal(
-                conditions,
+                options?.Conditions,
+                options?.RequestPriority,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="DeleteAsync"/> operation marks the specified
+        /// The <see cref="Delete(BlobContainerDeleteOptions, CancellationToken)"/> operation marks the specified
         /// container for deletion.
         ///
         /// For more information, see
@@ -1381,18 +1559,64 @@ namespace Azure.Storage.Blobs
         /// accepted.  After this period, all operations on the container and its blobs
         /// fail with status code 404 (Not Found).
         /// </remarks>
-        public virtual async Task<Response> DeleteAsync(
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response Delete(
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await DeleteInternal(
+            DeleteInternal(
                 conditions,
+                default,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="DeleteAsync(BlobContainerDeleteOptions, CancellationToken)"/> operation marks the specified
+        /// container for deletion.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
+        /// Delete Container</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully marking for deletion.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        ///
+        /// When a container is deleted, a container with the same name can't be created
+        /// for at least 30 seconds.  The container might not be available for more than
+        /// 30 seconds if the service is still processing the request.  While the container
+        /// is being deleted, attempts to create a container of the same name fail with
+        /// status code 409 (Conflict).  The service indicates that the container is being
+        /// deleted.  Operations on blobs within the container, including reads and writes,
+        /// may continue to succeed for up to 30 seconds after the delete request is
+        /// accepted.  After this period, all operations on the container and its blobs
+        /// fail with status code 404 (Not Found).
+        /// </remarks>
+        public virtual async Task<Response> DeleteAsync(
+            BlobContainerDeleteOptions options,
+            CancellationToken cancellationToken = default) =>
+            await DeleteInternal(
+                options?.Conditions,
+                options?.RequestPriority,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="DeleteIfExists"/> operation marks the specified
-        /// container for deletion if it exists.
+        /// The <see cref="DeleteAsync(BlobContainerDeleteOptions, CancellationToken)"/> operation marks the specified
+        /// container for deletion.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
@@ -1401,6 +1625,51 @@ namespace Azure.Storage.Blobs
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add
         /// conditions on the deletion of this container.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully marking for deletion.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        ///
+        /// When a container is deleted, a container with the same name can't be created
+        /// for at least 30 seconds.  The container might not be available for more than
+        /// 30 seconds if the service is still processing the request.  While the container
+        /// is being deleted, attempts to create a container of the same name fail with
+        /// status code 409 (Conflict).  The service indicates that the container is being
+        /// deleted.  Operations on blobs within the container, including reads and writes,
+        /// may continue to succeed for up to 30 seconds after the delete request is
+        /// accepted.  After this period, all operations on the container and its blobs
+        /// fail with status code 404 (Not Found).
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response> DeleteAsync(
+            BlobRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            await DeleteInternal(
+                conditions,
+                default,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DeleteIfExists(BlobContainerDeleteIfExistsOptions, CancellationToken)"/> operation marks the specified
+        /// container for deletion if it exists.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
+        /// Delete Container</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1427,16 +1696,17 @@ namespace Azure.Storage.Blobs
         /// fail with status code 404 (Not Found).
         /// </remarks>
         public virtual Response<bool> DeleteIfExists(
-            BlobRequestConditions conditions = default,
+            BlobContainerDeleteIfExistsOptions options,
             CancellationToken cancellationToken = default) =>
             DeleteIfExistsInternal(
-                conditions,
+                options?.Conditions,
+                options?.RequestPriority,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="DeleteIfExistsAsync"/> operation marks the specified
+        /// The <see cref="DeleteIfExists(BlobContainerDeleteIfExistsOptions, CancellationToken)"/> operation marks the specified
         /// container for deletion if it exists.
         ///
         /// For more information, see
@@ -1471,11 +1741,105 @@ namespace Azure.Storage.Blobs
         /// accepted.  After this period, all operations on the container and its blobs
         /// fail with status code 404 (Not Found).
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<bool> DeleteIfExists(
+            BlobRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            DeleteIfExistsInternal(
+                conditions,
+                default,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="DeleteIfExistsAsync(BlobContainerDeleteIfExistsOptions, CancellationToken)"/> operation marks the specified
+        /// container for deletion if it exists.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
+        /// Delete Container</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> Returns true if container exists and was
+        /// marked for deletion, return false otherwise.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        ///
+        /// When a container is deleted, a container with the same name can't be created
+        /// for at least 30 seconds.  The container might not be available for more than
+        /// 30 seconds if the service is still processing the request.  While the container
+        /// is being deleted, attempts to create a container of the same name fail with
+        /// status code 409 (Conflict).  The service indicates that the container is being
+        /// deleted.  Operations on blobs within the container, including reads and writes,
+        /// may continue to succeed for up to 30 seconds after the delete request is
+        /// accepted.  After this period, all operations on the container and its blobs
+        /// fail with status code 404 (Not Found).
+        /// </remarks>
+        public virtual async Task<Response<bool>> DeleteIfExistsAsync(
+            BlobContainerDeleteIfExistsOptions options,
+            CancellationToken cancellationToken = default) =>
+            await DeleteIfExistsInternal(
+                options?.Conditions,
+                options?.RequestPriority,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DeleteIfExistsAsync(BlobContainerDeleteIfExistsOptions, CancellationToken)"/> operation marks the specified
+        /// container for deletion if it exists.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-container">
+        /// Delete Container</see>.
+        /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
+        /// conditions on the deletion of this container.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> Returns true if container exists and was
+        /// marked for deletion, return false otherwise.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        ///
+        /// When a container is deleted, a container with the same name can't be created
+        /// for at least 30 seconds.  The container might not be available for more than
+        /// 30 seconds if the service is still processing the request.  While the container
+        /// is being deleted, attempts to create a container of the same name fail with
+        /// status code 409 (Conflict).  The service indicates that the container is being
+        /// deleted.  Operations on blobs within the container, including reads and writes,
+        /// may continue to succeed for up to 30 seconds after the delete request is
+        /// accepted.  After this period, all operations on the container and its blobs
+        /// fail with status code 404 (Not Found).
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<bool>> DeleteIfExistsAsync(
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
             await DeleteIfExistsInternal(
                 conditions,
+                default,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1492,6 +1856,10 @@ namespace Azure.Storage.Blobs
         /// Optional <see cref="BlobRequestConditions"/> to add
         /// conditions on the deletion of this container.
         /// </param>
+        /// <param name="requestPriority">
+        /// Optional. Sets the priority of this request, from 0 through 7.
+        /// If not set, or if the value is outside that range, the service uses 3.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1500,7 +1868,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response"/> Returns true if container exists and was
+        /// A <see cref="Response"/> Returns true if container exists
         /// marked for deletion, return false otherwise.
         /// </returns>
         /// <remarks>
@@ -1511,6 +1879,7 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         private async Task<Response<bool>> DeleteIfExistsInternal(
             BlobRequestConditions conditions,
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1530,6 +1899,7 @@ namespace Azure.Storage.Blobs
                 {
                     Response response = await DeleteInternal(
                         conditions,
+                        requestPriority,
                         async,
                         cancellationToken,
                         operationName)
@@ -1557,7 +1927,7 @@ namespace Azure.Storage.Blobs
         }
 
         /// <summary>
-        /// The <see cref="DeleteAsync"/> operation marks the specified
+        /// The <see cref="DeleteAsync(BlobContainerDeleteOptions, CancellationToken)"/> operation marks the specified
         /// container for deletion.
         ///
         /// For more information, see
@@ -1567,6 +1937,10 @@ namespace Azure.Storage.Blobs
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add
         /// conditions on the deletion of this container.
+        /// </param>
+        /// <param name="requestPriority">
+        /// Optional. Sets the priority of this request, from 0 through 7.
+        /// If not set, or if the value is outside that range, the service uses 3.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1589,6 +1963,7 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         private async Task<Response> DeleteInternal(
             BlobRequestConditions conditions,
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken,
 #pragma warning disable CA1801 // Review unused parameters
@@ -1622,6 +1997,7 @@ namespace Azure.Storage.Blobs
                     if (async)
                     {
                         response = await ContainerRestClient.DeleteAsync(
+                            requestPriority: requestPriority,
                             leaseId: conditions?.LeaseId,
                             requestConditions: conditions,
                             cancellationToken: cancellationToken)
@@ -1630,6 +2006,7 @@ namespace Azure.Storage.Blobs
                     else
                     {
                         response = ContainerRestClient.Delete(
+                            requestPriority: requestPriority,
                             leaseId: conditions?.LeaseId,
                             requestConditions: conditions,
                             cancellationToken: cancellationToken);
@@ -1654,10 +2031,13 @@ namespace Azure.Storage.Blobs
 
         #region Exists
         /// <summary>
-        /// The <see cref="Exists"/> operation can be called on a
+        /// The <see cref="Exists(BlobContainerExistsOptions, CancellationToken)"/> operation can be called on a
         /// <see cref="BlobContainerClient"/> to see if the associated container
         /// exists on the storage account in the storage service.
         /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -1674,14 +2054,14 @@ namespace Azure.Storage.Blobs
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        public virtual Response<bool> Exists(
-            CancellationToken cancellationToken = default) =>
+        public virtual Response<bool> Exists(BlobContainerExistsOptions options, CancellationToken cancellationToken = default) =>
             ExistsInternal(
+                requestPriority: options?.RequestPriority,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="ExistsAsync"/> operation can be called on a
+        /// The <see cref="Exists(BlobContainerExistsOptions, CancellationToken)"/> operation can be called on a
         /// <see cref="BlobContainerClient"/> to see if the associated container
         /// exists on the storage account in the storage service.
         /// </summary>
@@ -1701,9 +2081,70 @@ namespace Azure.Storage.Blobs
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<bool> Exists(
+            CancellationToken cancellationToken = default) =>
+            ExistsInternal(
+                requestPriority: default,
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="ExistsAsync(BlobContainerExistsOptions, CancellationToken)"/> operation can be called on a
+        /// <see cref="BlobContainerClient"/> to see if the associated container
+        /// exists on the storage account in the storage service.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the container exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs. If you want to create the container if
+        /// it doesn't exist, use
+        /// <see cref="CreateIfNotExists(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
+        /// instead.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual async Task<Response<bool>> ExistsAsync(BlobContainerExistsOptions options, CancellationToken cancellationToken = default) =>
+            await ExistsInternal(
+                requestPriority: options?.RequestPriority,
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="ExistsAsync(BlobContainerExistsOptions, CancellationToken)"/> operation can be called on a
+        /// <see cref="BlobContainerClient"/> to see if the associated container
+        /// exists on the storage account in the storage service.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// Returns true if the container exists.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs. If you want to create the container if
+        /// it doesn't exist, use
+        /// <see cref="CreateIfNotExists(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
+        /// instead.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<bool>> ExistsAsync(
             CancellationToken cancellationToken = default) =>
             await ExistsInternal(
+                requestPriority: default,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -1712,6 +2153,10 @@ namespace Azure.Storage.Blobs
         /// <see cref="BlobContainerClient"/> to see if the associated container
         /// exists on the storage account in the storage service.
         /// </summary>
+        /// <param name="requestPriority">
+        /// Optional. Sets the priority of this request, from 0 through 7.
+        /// If not set, or if the value is outside that range, the service uses 3.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1729,6 +2174,7 @@ namespace Azure.Storage.Blobs
         /// containing each failure instance.
         /// </remarks>
         private async Task<Response<bool>> ExistsInternal(
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1746,6 +2192,7 @@ namespace Azure.Storage.Blobs
                 {
                     Response<BlobContainerProperties> response = await GetPropertiesInternal(
                         conditions: null,
+                        requestPriority: requestPriority,
                         async: async,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
@@ -1774,7 +2221,7 @@ namespace Azure.Storage.Blobs
 
         #region GetProperties
         /// <summary>
-        /// The <see cref="GetProperties"/> operation returns all
+        /// The <see cref="GetProperties(BlobContainerGetPropertiesOptions, CancellationToken)"/> operation returns all
         /// user-defined metadata and system properties for the specified
         /// container. The data returned does not include the container's
         /// list of blobs.
@@ -1783,9 +2230,8 @@ namespace Azure.Storage.Blobs
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-container-properties">
         /// Get Container Properties</see>.
         /// </summary>
-        /// <param name="conditions">
-        /// Optional <see cref="BlobRequestConditions"/> to add
-        /// conditions on getting the blob container's properties.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1802,16 +2248,17 @@ namespace Azure.Storage.Blobs
         /// containing each failure instance.
         /// </remarks>
         public virtual Response<BlobContainerProperties> GetProperties(
-            BlobRequestConditions conditions = default,
+            BlobContainerGetPropertiesOptions options,
             CancellationToken cancellationToken = default) =>
             GetPropertiesInternal(
-                conditions,
+                options?.Conditions,
+                options?.RequestPriority,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="GetPropertiesAsync"/> operation returns all
+        /// The <see cref="GetProperties(BlobContainerGetPropertiesOptions, CancellationToken)"/> operation returns all
         /// user-defined metadata and system properties for the specified
         /// container. The data returned does not include the container's
         /// list of blobs.
@@ -1838,17 +2285,56 @@ namespace Azure.Storage.Blobs
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        public virtual async Task<Response<BlobContainerProperties>> GetPropertiesAsync(
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<BlobContainerProperties> GetProperties(
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await GetPropertiesInternal(
+            GetPropertiesInternal(
                 conditions,
+                default,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="GetPropertiesAsync(BlobContainerGetPropertiesOptions, CancellationToken)"/> operation returns all
+        /// user-defined metadata and system properties for the specified
+        /// container. The data returned does not include the container's
+        /// list of blobs.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-container-properties">
+        /// Get Container Properties</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerProperties}"/> describing the
+        /// container and its properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual async Task<Response<BlobContainerProperties>> GetPropertiesAsync(
+            BlobContainerGetPropertiesOptions options,
+            CancellationToken cancellationToken = default) =>
+            await GetPropertiesInternal(
+                options?.Conditions,
+                options?.RequestPriority,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="GetPropertiesAsync"/> operation returns all
+        /// The <see cref="GetPropertiesAsync(BlobContainerGetPropertiesOptions, CancellationToken)"/> operation returns all
         /// user-defined metadata and system properties for the specified
         /// container. The data returned does not include the container's
         /// list of blobs.
@@ -1860,6 +2346,49 @@ namespace Azure.Storage.Blobs
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add
         /// conditions on getting the blob container's properties.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerProperties}"/> describing the
+        /// container and its properties.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<BlobContainerProperties>> GetPropertiesAsync(
+            BlobRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            await GetPropertiesInternal(
+                conditions,
+                default,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="GetPropertiesAsync(BlobContainerGetPropertiesOptions, CancellationToken)"/> operation returns all
+        /// user-defined metadata and system properties for the specified
+        /// container. The data returned does not include the container's
+        /// list of blobs.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-container-properties">
+        /// Get Container Properties</see>.
+        /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
+        /// conditions on getting the blob container's properties.
+        /// </param>
+        /// <param name="requestPriority">
+        /// Optional. Sets the priority of this request, from 0 through 7.
+        /// If not set, or if the value is outside that range, the service uses 3.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -1880,6 +2409,7 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         private async Task<Response<BlobContainerProperties>> GetPropertiesInternal(
             BlobRequestConditions conditions,
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1911,6 +2441,7 @@ namespace Azure.Storage.Blobs
                     if (async)
                     {
                         response = await ContainerRestClient.GetPropertiesAsync(
+                            requestPriority: requestPriority,
                             leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -1918,6 +2449,7 @@ namespace Azure.Storage.Blobs
                     else
                     {
                         response = ContainerRestClient.GetProperties(
+                            requestPriority: requestPriority,
                             leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken);
                     }
@@ -1943,7 +2475,7 @@ namespace Azure.Storage.Blobs
 
         #region SetMetadata
         /// <summary>
-        /// The <see cref="SetMetadata"/> operation sets one or more
+        /// The <see cref="SetMetadata(IDictionary{string, string}, BlobContainerSetMetadataOptions, CancellationToken)"/> operation sets one or more
         /// user-defined name-value pairs for the specified container.
         ///
         /// For more information, see
@@ -1953,9 +2485,8 @@ namespace Azure.Storage.Blobs
         /// <param name="metadata">
         /// Custom metadata to set for this container.
         /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="BlobRequestConditions"/> to add
-        /// conditions on the deletion of this container.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -1972,17 +2503,18 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         public virtual Response<BlobContainerInfo> SetMetadata(
             Metadata metadata,
-            BlobRequestConditions conditions = default,
+            BlobContainerSetMetadataOptions options,
             CancellationToken cancellationToken = default) =>
             SetMetadataInternal(
                 metadata,
-                conditions,
+                options?.Conditions,
+                options?.RequestPriority,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="SetMetadataAsync"/> operation sets one or more
+        /// The <see cref="SetMetadata(IDictionary{string, string}, BlobContainerSetMetadataOptions, CancellationToken)"/> operation sets one or more
         /// user-defined name-value pairs for the specified container.
         ///
         /// For more information, see
@@ -2009,6 +2541,87 @@ namespace Azure.Storage.Blobs
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<BlobContainerInfo> SetMetadata(
+            Metadata metadata,
+            BlobRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            SetMetadataInternal(
+                metadata,
+                conditions,
+                default,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="SetMetadataAsync(IDictionary{string, string}, BlobContainerSetMetadataOptions, CancellationToken)"/> operation sets one or more
+        /// user-defined name-value pairs for the specified container.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-container-metadata">
+        /// Set Container Metadata</see>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Custom metadata to set for this container.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerInfo}"/> if successful.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual async Task<Response<BlobContainerInfo>> SetMetadataAsync(
+            Metadata metadata,
+            BlobContainerSetMetadataOptions options,
+            CancellationToken cancellationToken = default) =>
+            await SetMetadataInternal(
+                metadata,
+                options?.Conditions,
+                options?.RequestPriority,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="SetMetadataAsync(IDictionary{string, string}, BlobContainerSetMetadataOptions, CancellationToken)"/> operation sets one or more
+        /// user-defined name-value pairs for the specified container.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/set-container-metadata">
+        /// Set Container Metadata</see>.
+        /// </summary>
+        /// <param name="metadata">
+        /// Custom metadata to set for this container.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
+        /// conditions on the deletion of this container.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerInfo}"/> if successful.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<BlobContainerInfo>> SetMetadataAsync(
             Metadata metadata,
             BlobRequestConditions conditions = default,
@@ -2016,6 +2629,7 @@ namespace Azure.Storage.Blobs
             await SetMetadataInternal(
                 metadata,
                 conditions,
+                default,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2034,6 +2648,10 @@ namespace Azure.Storage.Blobs
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add
         /// conditions on the deletion of this container.
+        /// </param>
+        /// <param name="requestPriority">
+        /// Optional. Sets the priority of this request, from 0 through 7.
+        /// If not set, or if the value is outside that range, the service uses 3.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -2054,6 +2672,7 @@ namespace Azure.Storage.Blobs
         private async Task<Response<BlobContainerInfo>> SetMetadataInternal(
             Metadata metadata,
             BlobRequestConditions conditions,
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2085,6 +2704,7 @@ namespace Azure.Storage.Blobs
                     if (async)
                     {
                         response = await ContainerRestClient.SetMetadataAsync(
+                            requestPriority: requestPriority,
                             leaseId: conditions?.LeaseId,
                             metadata: metadata,
                             requestConditions: conditions,
@@ -2094,6 +2714,7 @@ namespace Azure.Storage.Blobs
                     else
                     {
                         response = ContainerRestClient.SetMetadata(
+                            requestPriority: requestPriority,
                             leaseId: conditions?.LeaseId,
                             metadata: metadata,
                             requestConditions: conditions,
@@ -2121,7 +2742,7 @@ namespace Azure.Storage.Blobs
 
         #region GetAccessPolicy
         /// <summary>
-        /// The <see cref="GetAccessPolicy"/> operation gets the
+        /// The <see cref="GetAccessPolicy(BlobContainerGetAccessPolicyOptions, CancellationToken)"/> operation gets the
         /// permissions for this container. The permissions indicate whether
         /// container data may be accessed publicly.
         ///
@@ -2129,9 +2750,8 @@ namespace Azure.Storage.Blobs
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-container-acl">
         /// Get Container ACL</see>.
         /// </summary>
-        /// <param name="conditions">
-        /// Optional <see cref="BlobRequestConditions"/> to add
-        /// conditions on getting the blob container's access policy.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2148,16 +2768,17 @@ namespace Azure.Storage.Blobs
         /// containing each failure instance.
         /// </remarks>
         public virtual Response<BlobContainerAccessPolicy> GetAccessPolicy(
-            BlobRequestConditions conditions = default,
+            BlobContainerGetAccessPolicyOptions options,
             CancellationToken cancellationToken = default) =>
             GetAccessPolicyInternal(
-                conditions,
+                options?.Conditions,
+                options?.RequestPriority,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="GetAccessPolicyAsync"/> operation gets the
+        /// The <see cref="GetAccessPolicy(BlobContainerGetAccessPolicyOptions, CancellationToken)"/> operation gets the
         /// permissions for this container. The permissions indicate whether
         /// container data may be accessed publicly.
         ///
@@ -2183,17 +2804,55 @@ namespace Azure.Storage.Blobs
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        public virtual async Task<Response<BlobContainerAccessPolicy>> GetAccessPolicyAsync(
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<BlobContainerAccessPolicy> GetAccessPolicy(
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await GetAccessPolicyInternal(
+            GetAccessPolicyInternal(
                 conditions,
+                default,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="GetAccessPolicyAsync(BlobContainerGetAccessPolicyOptions, CancellationToken)"/> operation gets the
+        /// permissions for this container. The permissions indicate whether
+        /// container data may be accessed publicly.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-container-acl">
+        /// Get Container ACL</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerAccessPolicy}"/> describing
+        /// the container's access policy.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual async Task<Response<BlobContainerAccessPolicy>> GetAccessPolicyAsync(
+            BlobContainerGetAccessPolicyOptions options,
+            CancellationToken cancellationToken = default) =>
+            await GetAccessPolicyInternal(
+                options?.Conditions,
+                options?.RequestPriority,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="GetAccessPolicyAsync"/> operation gets the
+        /// The <see cref="GetAccessPolicyAsync(BlobContainerGetAccessPolicyOptions, CancellationToken)"/> operation gets the
         /// permissions for this container. The permissions indicate whether
         /// container data may be accessed publicly.
         ///
@@ -2204,6 +2863,48 @@ namespace Azure.Storage.Blobs
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add
         /// conditions on getting the blob container's access policy.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerAccessPolicy}"/> describing
+        /// the container's access policy.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<BlobContainerAccessPolicy>> GetAccessPolicyAsync(
+            BlobRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            await GetAccessPolicyInternal(
+                conditions,
+                default,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="GetAccessPolicyAsync(BlobContainerGetAccessPolicyOptions, CancellationToken)"/> operation gets the
+        /// permissions for this container. The permissions indicate whether
+        /// container data may be accessed publicly.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-container-acl">
+        /// Get Container ACL</see>.
+        /// </summary>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
+        /// conditions on getting the blob container's access policy.
+        /// </param>
+        /// <param name="requestPriority">
+        /// Optional. Sets the priority of this request, from 0 through 7.
+        /// If not set, or if the value is outside that range, the service uses 3.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -2224,6 +2925,7 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         private async Task<Response<BlobContainerAccessPolicy>> GetAccessPolicyInternal(
             BlobRequestConditions conditions,
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2255,6 +2957,7 @@ namespace Azure.Storage.Blobs
                     if (async)
                     {
                         response = await ContainerRestClient.GetAccessPolicyAsync(
+                            requestPriority: requestPriority,
                             leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -2262,6 +2965,7 @@ namespace Azure.Storage.Blobs
                     else
                     {
                         response = ContainerRestClient.GetAccessPolicy(
+                            requestPriority: requestPriority,
                             leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken);
                     }
@@ -2287,7 +2991,7 @@ namespace Azure.Storage.Blobs
 
         #region SetAccessPolicy
         /// <summary>
-        /// The <see cref="SetAccessPolicy"/> operation sets the
+        /// The <see cref="SetAccessPolicy(BlobContainerSetAccessPolicyOptions, CancellationToken)"/> operation sets the
         /// permissions for the specified container. The permissions indicate
         /// whether blob container data may be accessed publicly.
         ///
@@ -2295,26 +2999,8 @@ namespace Azure.Storage.Blobs
         /// <see href=" https://docs.microsoft.com/rest/api/storageservices/set-container-acl">
         /// Set Container ACL</see>.
         /// </summary>
-        /// <param name="accessType">
-        /// Optionally specifies whether data in the container may be accessed
-        /// publicly and the level of access. <see cref="PublicAccessType.BlobContainer"/>
-        /// specifies full public read access for container and blob data.
-        /// Clients can enumerate blobs within the container via anonymous
-        /// request, but cannot enumerate containers within the storage
-        /// account.  <see cref="PublicAccessType.Blob"/> specifies public
-        /// read access for blobs.  Blob data within this container can be
-        /// read via anonymous request, but container data is not available.
-        /// Clients cannot enumerate blobs within the container via anonymous
-        /// request.  <see cref="PublicAccessType.None"/> specifies that the
-        /// container data is private to the account owner.
-        /// </param>
-        /// <param name="permissions">
-        /// Stored access policies that you can use to provide fine grained
-        /// control over container permissions.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="BlobRequestConditions"/> to add
-        /// conditions on setting this blob container's access policy.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -2332,20 +3018,19 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public virtual Response<BlobContainerInfo> SetAccessPolicy(
-            PublicAccessType accessType = PublicAccessType.None,
-            IEnumerable<BlobSignedIdentifier> permissions = default,
-            BlobRequestConditions conditions = default,
+            BlobContainerSetAccessPolicyOptions options,
             CancellationToken cancellationToken = default) =>
             SetAccessPolicyInternal(
-                accessType,
-                permissions,
-                conditions,
+                options?.AccessType ?? PublicAccessType.None,
+                options?.Permissions,
+                options?.Conditions,
+                options?.RequestPriority,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="SetAccessPolicyAsync"/> operation sets the
+        /// The <see cref="SetAccessPolicy(BlobContainerSetAccessPolicyOptions, CancellationToken)"/> operation sets the
         /// permissions for the specified container. The permissions indicate
         /// whether blob container data may be accessed publicly.
         ///
@@ -2388,22 +3073,63 @@ namespace Azure.Storage.Blobs
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
-        public virtual async Task<Response<BlobContainerInfo>> SetAccessPolicyAsync(
+        public virtual Response<BlobContainerInfo> SetAccessPolicy(
             PublicAccessType accessType = PublicAccessType.None,
             IEnumerable<BlobSignedIdentifier> permissions = default,
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await SetAccessPolicyInternal(
+            SetAccessPolicyInternal(
                 accessType,
                 permissions,
                 conditions,
+                default,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="SetAccessPolicyAsync(BlobContainerSetAccessPolicyOptions, CancellationToken)"/> operation sets the
+        /// permissions for the specified container. The permissions indicate
+        /// whether blob container data may be accessed publicly.
+        ///
+        /// For more information, see
+        /// <see href=" https://docs.microsoft.com/rest/api/storageservices/set-container-acl">
+        /// Set Container ACL</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerInfo}"/> describing the
+        /// updated container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
+        public virtual async Task<Response<BlobContainerInfo>> SetAccessPolicyAsync(
+            BlobContainerSetAccessPolicyOptions options,
+            CancellationToken cancellationToken = default) =>
+            await SetAccessPolicyInternal(
+                options?.AccessType ?? PublicAccessType.None,
+                options?.Permissions,
+                options?.Conditions,
+                options?.RequestPriority,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="SetAccessPolicyAsync"/> operation sets the
+        /// The <see cref="SetAccessPolicyAsync(BlobContainerSetAccessPolicyOptions, CancellationToken)"/> operation sets the
         /// permissions for the specified container. The permissions indicate
         /// whether blob container data may be accessed publicly.
         ///
@@ -2431,6 +3157,70 @@ namespace Azure.Storage.Blobs
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add
         /// conditions on setting this blob container's access policy.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContainerInfo}"/> describing the
+        /// updated container.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
+        public virtual async Task<Response<BlobContainerInfo>> SetAccessPolicyAsync(
+            PublicAccessType accessType = PublicAccessType.None,
+            IEnumerable<BlobSignedIdentifier> permissions = default,
+            BlobRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            await SetAccessPolicyInternal(
+                accessType,
+                permissions,
+                conditions,
+                default,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="SetAccessPolicyAsync(BlobContainerSetAccessPolicyOptions, CancellationToken)"/> operation sets the
+        /// permissions for the specified container. The permissions indicate
+        /// whether blob container data may be accessed publicly.
+        ///
+        /// For more information, see
+        /// <see href=" https://docs.microsoft.com/rest/api/storageservices/set-container-acl">
+        /// Set Container ACL</see>.
+        /// </summary>
+        /// <param name="accessType">
+        /// Optionally specifies whether data in the container may be accessed
+        /// publicly and the level of access. <see cref="PublicAccessType.BlobContainer"/>
+        /// specifies full public read access for container and blob data.
+        /// Clients can enumerate blobs within the container via anonymous
+        /// request, but cannot enumerate containers within the storage
+        /// account.  <see cref="PublicAccessType.Blob"/> specifies public
+        /// read access for blobs.  Blob data within this container can be
+        /// read via anonymous request, but container data is not available.
+        /// Clients cannot enumerate blobs within the container via anonymous
+        /// request.  <see cref="PublicAccessType.None"/> specifies that the
+        /// container data is private to the account owner.
+        /// </param>
+        /// <param name="permissions">
+        /// Stored access policies that you can use to provide fine grained
+        /// control over container permissions.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add
+        /// conditions on setting this blob container's access policy.
+        /// </param>
+        /// <param name="requestPriority">
+        /// Optional. Sets the priority of this request, from 0 through 7.
+        /// If not set, or if the value is outside that range, the service uses 3.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -2453,6 +3243,7 @@ namespace Azure.Storage.Blobs
             PublicAccessType accessType,
             IEnumerable<BlobSignedIdentifier> permissions,
             BlobRequestConditions conditions,
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2499,6 +3290,7 @@ namespace Azure.Storage.Blobs
                     {
                         response = await ContainerRestClient.SetAccessPolicyAsync(
                             containerAcl: sanitizedPermissions != null ? new BlobSignedIdentifiers(sanitizedPermissions) : null,
+                            requestPriority: requestPriority,
                             leaseId: conditions?.LeaseId,
                             access: accessType == PublicAccessType.None ? null : accessType,
                             requestConditions: conditions,
@@ -2509,6 +3301,7 @@ namespace Azure.Storage.Blobs
                     {
                         response = ContainerRestClient.SetAccessPolicy(
                             containerAcl: sanitizedPermissions != null ? new BlobSignedIdentifiers(sanitizedPermissions) : null,
+                            requestPriority: requestPriority,
                             leaseId: conditions?.LeaseId,
                             access: accessType == PublicAccessType.None ? null : accessType,
                             requestConditions: conditions,
@@ -2542,6 +3335,9 @@ namespace Azure.Storage.Blobs
         /// <param name="config">
         /// Specifies the options for creating the session.
         /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -2558,6 +3354,7 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         internal virtual Response<CreateSessionResponse> CreateSession(
             CreateSessionConfiguration config,
+            BlobContainerCreateSessionOptions options = default,
             CancellationToken cancellationToken = default)
         {
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
@@ -2575,6 +3372,7 @@ namespace Azure.Storage.Blobs
                     scope.Start();
                     Response<CreateSessionResponse> response = ContainerRestClient.CreateSession(
                         createSessionConfiguration: config,
+                        requestPriority: options?.RequestPriority,
                         cancellationToken: cancellationToken);
 
                     return Response.FromValue(
@@ -2602,6 +3400,9 @@ namespace Azure.Storage.Blobs
         /// <param name="config">
         /// Specifies the options for creating the session.
         /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -2618,6 +3419,7 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         internal virtual async Task<Response<CreateSessionResponse>> CreateSessionAsync(
             CreateSessionConfiguration config,
+            BlobContainerCreateSessionOptions options = default,
             CancellationToken cancellationToken = default)
         {
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobContainerClient)))
@@ -2635,6 +3437,7 @@ namespace Azure.Storage.Blobs
                     scope.Start();
                     Response<CreateSessionResponse> response = await ContainerRestClient.CreateSessionAsync(
                         createSessionConfiguration: config,
+                        requestPriority: options?.RequestPriority,
                         cancellationToken: cancellationToken)
                         .ConfigureAwait(false);
 
@@ -2696,7 +3499,8 @@ namespace Azure.Storage.Blobs
                 states: options?.States ?? BlobStates.None,
                 prefix: options?.Prefix,
                 startFrom: options?.StartFrom,
-                endBefore: options?.EndBefore)
+                endBefore: options?.EndBefore,
+                requestPriority: options?.RequestPriority)
             .ToSyncCollection(cancellationToken);
 
         /// <summary>
@@ -2737,7 +3541,8 @@ namespace Azure.Storage.Blobs
                 states: options?.States ?? BlobStates.None,
                 prefix: options?.Prefix,
                 startFrom: options?.StartFrom,
-                endBefore: options?.EndBefore)
+                endBefore: options?.EndBefore,
+                requestPriority: options?.RequestPriority)
             .ToAsyncCollection(cancellationToken);
 
         /// <summary>
@@ -2783,7 +3588,7 @@ namespace Azure.Storage.Blobs
             BlobStates states,
             string prefix,
             CancellationToken cancellationToken) =>
-            new GetBlobsAsyncCollection(this, StorageResponseFormat.Xml, traits, states, prefix, startFrom: default, endBefore: default).ToSyncCollection(cancellationToken);
+            new GetBlobsAsyncCollection(this, StorageResponseFormat.Xml, traits, states, prefix, startFrom: default, endBefore: default, requestPriority: default).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsAsync(BlobTraits, BlobStates, string, CancellationToken)"/>
@@ -2828,7 +3633,7 @@ namespace Azure.Storage.Blobs
             BlobStates states,
             string prefix,
             CancellationToken cancellationToken) =>
-            new GetBlobsAsyncCollection(this, StorageResponseFormat.Xml, traits, states, prefix, startFrom: default, endBefore: default).ToAsyncCollection(cancellationToken);
+            new GetBlobsAsyncCollection(this, StorageResponseFormat.Xml, traits, states, prefix, startFrom: default, endBefore: default, requestPriority: default).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsInternal"/> operation returns a
@@ -2880,6 +3685,10 @@ namespace Azure.Storage.Blobs
         /// Gets or sets a value indicating the size of the page that should be
         /// requested.
         /// </param>
+        /// <param name="requestPriority">
+        /// Optional. Sets the priority of this request, from 0 through 7.
+        /// If not set, or if the value is outside that range, the service uses 3.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -2888,7 +3697,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobsFlatSegment}"/> describing a
+        /// A <see cref="Response{BlobsFlatSegment}"/>
         /// segment of the blobs in the container.
         /// </returns>
         /// <remarks>
@@ -2906,6 +3715,7 @@ namespace Azure.Storage.Blobs
             string startFrom,
             string endBefore,
             int? pageSizeHint,
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -2937,6 +3747,7 @@ namespace Azure.Storage.Blobs
                         if (async)
                         {
                             arrowResponse = await ContainerRestClient.GetBlobFlatSegmentApacheArrowAsync(
+                                requestPriority: requestPriority,
                                 prefix: prefix,
                                 marker: marker,
                                 maxresults: pageSizeHint,
@@ -2949,6 +3760,7 @@ namespace Azure.Storage.Blobs
                         else
                         {
                             arrowResponse = ContainerRestClient.GetBlobFlatSegmentApacheArrow(
+                                requestPriority: requestPriority,
                                 prefix: prefix,
                                 marker: marker,
                                 maxresults: pageSizeHint,
@@ -2986,6 +3798,7 @@ namespace Azure.Storage.Blobs
                         if (async)
                         {
                             response = await ContainerRestClient.GetBlobFlatSegmentAsync(
+                                requestPriority: requestPriority,
                                 prefix: prefix,
                                 marker: marker,
                                 maxresults: pageSizeHint,
@@ -2997,6 +3810,7 @@ namespace Azure.Storage.Blobs
                         else
                         {
                             response = ContainerRestClient.GetBlobFlatSegment(
+                                requestPriority: requestPriority,
                                 prefix: prefix,
                                 marker: marker,
                                 maxresults: pageSizeHint,
@@ -3318,7 +4132,8 @@ namespace Azure.Storage.Blobs
                 options?.States ?? BlobStates.None,
                 options?.Prefix,
                 options?.StartFrom,
-                options?.EndBefore)
+                options?.EndBefore,
+                requestPriority: options?.RequestPriority)
             .ToSyncCollection(cancellationToken);
 
         /// <summary>
@@ -3362,7 +4177,8 @@ namespace Azure.Storage.Blobs
                 options?.States ?? BlobStates.None,
                 options?.Prefix,
                 options?.StartFrom,
-                options?.EndBefore)
+                options?.EndBefore,
+                requestPriority: options?.RequestPriority)
             .ToAsyncCollection(cancellationToken);
 
         /// <summary>
@@ -3428,7 +4244,7 @@ namespace Azure.Storage.Blobs
             string delimiter,
             string prefix,
             CancellationToken cancellationToken = default) =>
-            new GetBlobsByHierarchyAsyncCollection(this, StorageResponseFormat.Xml, delimiter, traits, states, prefix, startFrom: default, endBefore: default).ToSyncCollection(cancellationToken);
+            new GetBlobsByHierarchyAsyncCollection(this, StorageResponseFormat.Xml, delimiter, traits, states, prefix, startFrom: default, endBefore: default, requestPriority: default).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsByHierarchyAsync(BlobTraits, BlobStates, string, string, CancellationToken)"/>
@@ -3493,7 +4309,7 @@ namespace Azure.Storage.Blobs
             string delimiter,
             string prefix,
             CancellationToken cancellationToken) =>
-            new GetBlobsByHierarchyAsyncCollection(this, StorageResponseFormat.Xml, delimiter, traits, states, prefix, startFrom: default, endBefore: default).ToAsyncCollection(cancellationToken);
+            new GetBlobsByHierarchyAsyncCollection(this, StorageResponseFormat.Xml, delimiter, traits, states, prefix, startFrom: default, endBefore: default, requestPriority: default).ToAsyncCollection(cancellationToken);
 
         /// <summary>
         /// The <see cref="GetBlobsByHierarchyInternal"/> operation returns
@@ -3565,6 +4381,10 @@ namespace Azure.Storage.Blobs
         /// Gets or sets a value indicating the size of the page that should be
         /// requested.
         /// </param>
+        /// <param name="requestPriority">
+        /// Optional. Sets the priority of this request, from 0 through 7.
+        /// If not set, or if the value is outside that range, the service uses 3.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -3573,7 +4393,7 @@ namespace Azure.Storage.Blobs
         /// notifications that the operation should be cancelled.
         /// </param>
         /// <returns>
-        /// A <see cref="Response{BlobsHierarchySegment}"/> describing a
+        /// A <see cref="Response{BlobsHierarchySegment}"/>
         /// segment of the blobs in the container.
         /// </returns>
         /// <remarks>
@@ -3592,6 +4412,7 @@ namespace Azure.Storage.Blobs
             string startFrom,
             string endBefore,
             int? pageSizeHint,
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -3624,6 +4445,7 @@ namespace Azure.Storage.Blobs
                         if (async)
                         {
                             arrowResponse = await ContainerRestClient.GetBlobHierarchySegmentApacheArrowAsync(
+                                requestPriority: requestPriority,
                                 prefix: prefix,
                                 delimiter: delimiter,
                                 marker: marker,
@@ -3637,6 +4459,7 @@ namespace Azure.Storage.Blobs
                         else
                         {
                             arrowResponse = ContainerRestClient.GetBlobHierarchySegmentApacheArrow(
+                                requestPriority: requestPriority,
                                 prefix: prefix,
                                 delimiter: delimiter,
                                 marker: marker,
@@ -3676,6 +4499,7 @@ namespace Azure.Storage.Blobs
                         {
                             response = await ContainerRestClient.GetBlobHierarchySegmentAsync(
                                 delimiter: delimiter,
+                                requestPriority: requestPriority,
                                 prefix: prefix,
                                 marker: marker,
                                 maxresults: pageSizeHint,
@@ -3688,6 +4512,7 @@ namespace Azure.Storage.Blobs
                         {
                             response = ContainerRestClient.GetBlobHierarchySegment(
                                 delimiter: delimiter,
+                                requestPriority: requestPriority,
                                 prefix: prefix,
                                 marker: marker,
                                 maxresults: pageSizeHint,
@@ -3759,6 +4584,9 @@ namespace Azure.Storage.Blobs
         /// <param name="content">
         /// A <see cref="Stream"/> containing the content to upload.
         /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -3780,11 +4608,116 @@ namespace Azure.Storage.Blobs
         public virtual Response<BlobContentInfo> UploadBlob(
             string blobName,
             Stream content,
+            BlobContainerUploadBlobOptions options,
+            CancellationToken cancellationToken = default) =>
+            GetBlobClient(blobName)
+                .Upload(
+                    content,
+                    new BlobUploadOptions
+                    {
+                        Conditions = new BlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) },
+                        RequestPriority = options?.RequestPriority
+                    },
+                    cancellationToken);
+
+        /// <summary>
+        /// The <see cref="UploadBlob(string, Stream, CancellationToken)"/> operation creates a new block
+        /// blob.
+        ///
+        /// For partial block blob updates and other advanced features, please
+        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// append blobs, please see <see cref="PageBlobClient"/> or
+        /// <see cref="AppendBlobClient"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
+        /// </summary>
+        /// <param name="blobName">The name of the blob to upload.</param>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content to upload.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown
+        /// if the blob already exists.  To overwrite an existing block blob,
+        /// get a <see cref="BlobClient"/> by calling <see cref="GetBlobClient(string)"/>,
+        /// and then call <see cref="BlobClient.UploadAsync(Stream, bool, CancellationToken)"/>
+        /// with the override parameter set to true.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Response<BlobContentInfo> UploadBlob(
+            string blobName,
+            Stream content,
             CancellationToken cancellationToken = default) =>
             GetBlobClient(blobName)
                 .Upload(
                     content,
                     cancellationToken);
+
+        /// <summary>
+        /// The <see cref="UploadBlobAsync(string, Stream, CancellationToken)"/> operation creates a new block
+        /// blob.
+        ///
+        /// For partial block blob updates and other advanced features, please
+        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// append blobs, please see <see cref="PageBlobClient"/> or
+        /// <see cref="AppendBlobClient"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
+        /// </summary>
+        /// <param name="blobName">The name of the blob to upload.</param>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content to upload.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown
+        /// if the blob already exists.  To overwrite an existing block blob,
+        /// get a <see cref="BlobClient"/> by calling <see cref="GetBlobClient(string)"/>,
+        /// and then call <see cref="BlobClient.Upload(Stream, bool, CancellationToken)"/>
+        /// with the override parameter set to true.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BlobContentInfo>> UploadBlobAsync(
+            string blobName,
+            Stream content,
+            BlobContainerUploadBlobOptions options,
+            CancellationToken cancellationToken = default) =>
+            await GetBlobClient(blobName)
+                .UploadAsync(
+                    content,
+                    new BlobUploadOptions
+                    {
+                        Conditions = new BlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) },
+                        RequestPriority = options?.RequestPriority
+                    },
+                    cancellationToken)
+                    .ConfigureAwait(false);
 
         /// <summary>
         /// The <see cref="UploadBlobAsync(string, Stream, CancellationToken)"/> operation creates a new block
@@ -3820,6 +4753,7 @@ namespace Azure.Storage.Blobs
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual async Task<Response<BlobContentInfo>> UploadBlobAsync(
             string blobName,
@@ -3830,6 +4764,59 @@ namespace Azure.Storage.Blobs
                     content,
                     cancellationToken)
                     .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="UploadBlob(string, BinaryData, CancellationToken)"/> operation creates a new block
+        /// blob.
+        ///
+        /// For partial block blob updates and other advanced features, please
+        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// append blobs, please see <see cref="PageBlobClient"/> or
+        /// <see cref="AppendBlobClient"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
+        /// </summary>
+        /// <param name="blobName">The name of the blob to upload.</param>
+        /// <param name="content">
+        /// A <see cref="BinaryData"/> containing the content to upload.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown
+        /// if the blob already exists.  To overwrite an existing block blob,
+        /// get a <see cref="BlobClient"/> by calling <see cref="GetBlobClient(string)"/>,
+        /// and then call <see cref="BlobClient.UploadAsync(Stream, bool, CancellationToken)"/>
+        /// with the override parameter set to true.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual Response<BlobContentInfo> UploadBlob(
+            string blobName,
+            BinaryData content,
+            BlobContainerUploadBlobOptions options,
+            CancellationToken cancellationToken = default) =>
+            GetBlobClient(blobName)
+                .Upload(
+                    content,
+                    new BlobUploadOptions
+                    {
+                        Conditions = new BlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) },
+                        RequestPriority = options?.RequestPriority
+                    },
+                    cancellationToken);
 
         /// <summary>
         /// The <see cref="UploadBlob(string, BinaryData, CancellationToken)"/> operation creates a new block
@@ -3865,6 +4852,7 @@ namespace Azure.Storage.Blobs
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual Response<BlobContentInfo> UploadBlob(
             string blobName,
@@ -3874,6 +4862,60 @@ namespace Azure.Storage.Blobs
                 .Upload(
                     content,
                     cancellationToken);
+
+        /// <summary>
+        /// The <see cref="UploadBlobAsync(string, BinaryData, CancellationToken)"/> operation creates a new block
+        /// blob.
+        ///
+        /// For partial block blob updates and other advanced features, please
+        /// see <see cref="BlockBlobClient"/>.  To create or modify page or
+        /// append blobs, please see <see cref="PageBlobClient"/> or
+        /// <see cref="AppendBlobClient"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/put-blob">
+        /// Put Blob</see>.
+        /// </summary>
+        /// <param name="blobName">The name of the blob to upload.</param>
+        /// <param name="content">
+        /// A <see cref="BinaryData"/> containing the content to upload.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{BlobContentInfo}"/> describing the
+        /// state of the updated block blob.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown
+        /// if the blob already exists.  To overwrite an existing block blob,
+        /// get a <see cref="BlobClient"/> by calling <see cref="GetBlobClient(string)"/>,
+        /// and then call <see cref="BlobClient.Upload(Stream, bool, CancellationToken)"/>
+        /// with the override parameter set to true.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BlobContentInfo>> UploadBlobAsync(
+            string blobName,
+            BinaryData content,
+            BlobContainerUploadBlobOptions options,
+            CancellationToken cancellationToken = default) =>
+            await GetBlobClient(blobName)
+                .UploadAsync(
+                    content,
+                    new BlobUploadOptions
+                    {
+                        Conditions = new BlobRequestConditions { IfNoneMatch = new ETag(Constants.Wildcard) },
+                        RequestPriority = options?.RequestPriority
+                    },
+                    cancellationToken)
+                    .ConfigureAwait(false);
 
         /// <summary>
         /// The <see cref="UploadBlobAsync(string, BinaryData, CancellationToken)"/> operation creates a new block
@@ -3909,6 +4951,7 @@ namespace Azure.Storage.Blobs
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual async Task<Response<BlobContentInfo>> UploadBlobAsync(
             string blobName,
@@ -3923,7 +4966,7 @@ namespace Azure.Storage.Blobs
 
         #region DeleteBlob
         /// <summary>
-        /// The <see cref="DeleteBlob"/> operation marks the specified
+        /// The <see cref="DeleteBlob(string, BlobContainerDeleteBlobOptions, CancellationToken)"/> operation marks the specified
         /// blob or snapshot for deletion.
         ///
         /// Note that in order to delete a blob, you must delete all of its
@@ -3935,12 +4978,8 @@ namespace Azure.Storage.Blobs
         /// Delete Blob</see>.
         /// </summary>
         /// <param name="blobName">The name of the blob to delete.</param>
-        /// <param name="snapshotsOption">
-        /// Specifies options for deleting blob snapshots.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
-        /// deleting this blob.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -3958,17 +4997,13 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual Response DeleteBlob(
             string blobName,
-            DeleteSnapshotsOption snapshotsOption = default,
-            BlobRequestConditions conditions = default,
+            BlobContainerDeleteBlobOptions options,
             CancellationToken cancellationToken = default) =>
             GetBlobClient(blobName)
-                .Delete(
-                    snapshotsOption,
-                    conditions,
-                    cancellationToken);
+                .Delete(new BlobDeleteOptions { SnapshotsOption = options?.SnapshotsOption ?? default, Conditions = options?.Conditions, RequestPriority = options?.RequestPriority }, cancellationToken);
 
         /// <summary>
-        /// The <see cref="DeleteBlobAsync"/> operation marks the specified
+        /// The <see cref="DeleteBlob(string, BlobContainerDeleteBlobOptions, CancellationToken)"/> operation marks the specified
         /// blob or snapshot for deletion.
         ///
         /// Note that in order to delete a blob, you must delete all of its
@@ -4000,22 +5035,60 @@ namespace Azure.Storage.Blobs
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
-        public virtual async Task<Response> DeleteBlobAsync(
+        public virtual Response DeleteBlob(
             string blobName,
             DeleteSnapshotsOption snapshotsOption = default,
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await GetBlobClient(blobName)
-                .DeleteAsync(
+            GetBlobClient(blobName)
+                .Delete(
                     snapshotsOption,
                     conditions,
-                    cancellationToken)
+                    cancellationToken);
+
+        /// <summary>
+        /// The <see cref="DeleteBlobAsync(string, BlobContainerDeleteBlobOptions, CancellationToken)"/> operation marks the specified
+        /// blob or snapshot for deletion.
+        ///
+        /// Note that in order to delete a blob, you must delete all of its
+        /// snapshots. You can delete both at the same time using
+        /// <see cref="DeleteSnapshotsOption.IncludeSnapshots"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob">
+        /// Delete Blob</see>.
+        /// </summary>
+        /// <param name="blobName">The name of the blob to delete.</param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully marking for deletion.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual async Task<Response> DeleteBlobAsync(
+            string blobName,
+            BlobContainerDeleteBlobOptions options,
+            CancellationToken cancellationToken = default) =>
+            await GetBlobClient(blobName)
+                .DeleteAsync(new BlobDeleteOptions { SnapshotsOption = options?.SnapshotsOption ?? default, Conditions = options?.Conditions, RequestPriority = options?.RequestPriority }, cancellationToken)
                     .ConfigureAwait(false);
 
         /// <summary>
-        /// The <see cref="DeleteBlobIfExists"/> operation marks the specified
-        /// blob or snapshot for deletion, if the blob or snapshot exists.
+        /// The <see cref="DeleteBlobAsync(string, BlobContainerDeleteBlobOptions, CancellationToken)"/> operation marks the specified
+        /// blob or snapshot for deletion.
         ///
         /// Note that in order to delete a blob, you must delete all of its
         /// snapshots. You can delete both at the same time using
@@ -4032,6 +5105,49 @@ namespace Azure.Storage.Blobs
         /// <param name="conditions">
         /// Optional <see cref="BlobRequestConditions"/> to add conditions on
         /// deleting this blob.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully marking for deletion.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual async Task<Response> DeleteBlobAsync(
+            string blobName,
+            DeleteSnapshotsOption snapshotsOption = default,
+            BlobRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+            await GetBlobClient(blobName)
+                .DeleteAsync(
+                    snapshotsOption,
+                    conditions,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DeleteBlobIfExists(string, BlobContainerDeleteBlobIfExistsOptions, CancellationToken)"/> operation marks the specified
+        /// blob or snapshot for deletion, if the blob or snapshot exists.
+        ///
+        /// Note that in order to delete a blob, you must delete all of its
+        /// snapshots. You can delete both at the same time using
+        /// <see cref="DeleteSnapshotsOption.IncludeSnapshots"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob">
+        /// Delete Blob</see>.
+        /// </summary>
+        /// <param name="blobName">The name of the blob to delete.</param>
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -4049,17 +5165,13 @@ namespace Azure.Storage.Blobs
         [ForwardsClientCalls]
         public virtual Response<bool> DeleteBlobIfExists(
             string blobName,
-            DeleteSnapshotsOption snapshotsOption = default,
-            BlobRequestConditions conditions = default,
+            BlobContainerDeleteBlobIfExistsOptions options,
             CancellationToken cancellationToken = default) =>
                 GetBlobClient(blobName).
-                DeleteIfExists(
-                    snapshotsOption,
-                    conditions ?? default,
-                    cancellationToken);
+                DeleteIfExists(new BlobDeleteIfExistsOptions { SnapshotsOption = options?.SnapshotsOption ?? default, Conditions = options?.Conditions, RequestPriority = options?.RequestPriority }, cancellationToken);
 
         /// <summary>
-        /// The <see cref="DeleteBlobIfExistsAsync"/> operation marks the specified
+        /// The <see cref="DeleteBlobIfExists(string, BlobContainerDeleteBlobIfExistsOptions, CancellationToken)"/> operation marks the specified
         /// blob or snapshot for deletion, if the blob or snapshot exists.
         ///
         /// Note that in order to delete a blob, you must delete all of its
@@ -4091,6 +5203,90 @@ namespace Azure.Storage.Blobs
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Response<bool> DeleteBlobIfExists(
+            string blobName,
+            DeleteSnapshotsOption snapshotsOption = default,
+            BlobRequestConditions conditions = default,
+            CancellationToken cancellationToken = default) =>
+                GetBlobClient(blobName).
+                DeleteIfExists(
+                    snapshotsOption,
+                    conditions ?? default,
+                    cancellationToken);
+
+        /// <summary>
+        /// The <see cref="DeleteBlobIfExistsAsync(string, BlobContainerDeleteBlobIfExistsOptions, CancellationToken)"/> operation marks the specified
+        /// blob or snapshot for deletion, if the blob or snapshot exists.
+        ///
+        /// Note that in order to delete a blob, you must delete all of its
+        /// snapshots. You can delete both at the same time using
+        /// <see cref="DeleteSnapshotsOption.IncludeSnapshots"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob">
+        /// Delete Blob</see>.
+        /// </summary>
+        /// <param name="blobName">The name of the blob to delete.</param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully marking for deletion.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<bool>> DeleteBlobIfExistsAsync(
+            string blobName,
+            BlobContainerDeleteBlobIfExistsOptions options,
+            CancellationToken cancellationToken = default) =>
+            await GetBlobClient(blobName).DeleteIfExistsAsync(new BlobDeleteIfExistsOptions { SnapshotsOption = options?.SnapshotsOption ?? default, Conditions = options?.Conditions, RequestPriority = options?.RequestPriority }, cancellationToken)
+                    .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="DeleteBlobIfExistsAsync(string, BlobContainerDeleteBlobIfExistsOptions, CancellationToken)"/> operation marks the specified
+        /// blob or snapshot for deletion, if the blob or snapshot exists.
+        ///
+        /// Note that in order to delete a blob, you must delete all of its
+        /// snapshots. You can delete both at the same time using
+        /// <see cref="DeleteSnapshotsOption.IncludeSnapshots"/>.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/storageservices/delete-blob">
+        /// Delete Blob</see>.
+        /// </summary>
+        /// <param name="blobName">The name of the blob to delete.</param>
+        /// <param name="snapshotsOption">
+        /// Specifies options for deleting blob snapshots.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional <see cref="BlobRequestConditions"/> to add conditions on
+        /// deleting this blob.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response"/> on successfully marking for deletion.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         [ForwardsClientCalls]
         public virtual async Task<Response<bool>> DeleteBlobIfExistsAsync(
             string blobName,
@@ -4112,11 +5308,8 @@ namespace Azure.Storage.Blobs
         /// <param name="destinationContainerName">
         /// The name of the destination container.
         /// </param>
-        /// <param name="sourceConditions">
-        /// Optional <see cref="BlobRequestConditions"/> that
-        /// source container has to meet to proceed with rename.
-        /// Note that LeaseId is the only request condition enforced by
-        /// this API.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -4133,11 +5326,12 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         internal virtual Response<BlobContainerClient> Rename(
             string destinationContainerName,
-            BlobRequestConditions sourceConditions = default,
+            BlobContainerRenameOptions options = default,
             CancellationToken cancellationToken = default)
             => RenameInternal(
                 destinationContainerName,
-                sourceConditions,
+                options?.SourceConditions,
+                options?.RequestPriority,
                 async: false,
                 cancellationToken: cancellationToken)
                 .EnsureCompleted();
@@ -4148,11 +5342,8 @@ namespace Azure.Storage.Blobs
         /// <param name="destinationContainerName">
         /// The name of the destination container.
         /// </param>
-        /// <param name="sourceConditions">
-        /// Optional <see cref="BlobRequestConditions"/> that
-        /// source container has to meet to proceed with rename.
-        /// Note that LeaseId is the only request condition enforced by
-        /// this API.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
@@ -4169,11 +5360,12 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         internal virtual async Task<Response<BlobContainerClient>> RenameAsync(
             string destinationContainerName,
-            BlobRequestConditions sourceConditions = default,
+            BlobContainerRenameOptions options = default,
             CancellationToken cancellationToken = default)
             => await RenameInternal(
                 destinationContainerName,
-                sourceConditions,
+                options?.SourceConditions,
+                options?.RequestPriority,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -4187,6 +5379,10 @@ namespace Azure.Storage.Blobs
         /// <param name="sourceConditions">
         /// Optional <see cref="BlobRequestConditions"/> to add
         /// conditions on the renaming of this container.
+        /// </param>
+        /// <param name="requestPriority">
+        /// Optional. Sets the priority of this request, from 0 through 7.
+        /// If not set, or if the value is outside that range, the service uses 3.
         /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
@@ -4207,6 +5403,7 @@ namespace Azure.Storage.Blobs
         internal async Task<Response<BlobContainerClient>> RenameInternal(
             string destinationContainerName,
             BlobRequestConditions sourceConditions,
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -4249,6 +5446,7 @@ namespace Azure.Storage.Blobs
                     {
                         response = await destContainerClient.ContainerRestClient.RenameAsync(
                             sourceContainerName: Name,
+                            requestPriority: requestPriority,
                             sourceLeaseId: sourceConditions?.LeaseId,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -4257,6 +5455,7 @@ namespace Azure.Storage.Blobs
                     {
                         response = destContainerClient.ContainerRestClient.Rename(
                             sourceContainerName: Name,
+                            requestPriority: requestPriority,
                             sourceLeaseId: sourceConditions?.LeaseId,
                             cancellationToken: cancellationToken);
                     }
@@ -4296,6 +5495,9 @@ namespace Azure.Storage.Blobs
         /// The following operators are supported: =, &gt;, &gt;=, &lt;, &lt;=, AND.
         /// Example expression: "tagKey"='tagValue'.
         /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -4311,8 +5513,9 @@ namespace Azure.Storage.Blobs
         /// </remarks>
         public virtual Pageable<TaggedBlobItem> FindBlobsByTags(
             string tagFilterSqlExpression,
+            BlobContainerFindBlobsByTagsOptions options,
             CancellationToken cancellationToken = default) =>
-            new FilterBlobsAsyncCollection(this, tagFilterSqlExpression).ToSyncCollection(cancellationToken);
+            new FilterBlobsAsyncCollection(this, tagFilterSqlExpression, requestPriority: options?.RequestPriority).ToSyncCollection(cancellationToken);
 
         /// <summary>
         /// The Filter Blobs operation enables callers to list blobs in the container whose tags
@@ -4342,15 +5545,88 @@ namespace Azure.Storage.Blobs
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<TaggedBlobItem> FindBlobsByTags(
+            string tagFilterSqlExpression,
+            CancellationToken cancellationToken = default) =>
+            new FilterBlobsAsyncCollection(this, tagFilterSqlExpression, requestPriority: default).ToSyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The Filter Blobs operation enables callers to list blobs in the container whose tags
+        /// match a given search expression and only the tags appearing in the expression will be returned.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/find-blobs-by-tags">
+        /// Find Blobs by Tags</see>.
+        /// </summary>
+        /// <param name="tagFilterSqlExpression">
+        /// The where parameter finds blobs in the storage account whose tags match a given expression.
+        /// The expression must evaluate to true for a blob to be returned in the result set.
+        /// The storage service supports a subset of the ANSI SQL WHERE clause grammar for the value of the where=expression query parameter.
+        /// The following operators are supported: =, &gt;, &gt;=, &lt;, &lt;=, AND.
+        /// Example expression: "tagKey"='tagValue'.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{T}"/> describing the blobs.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual AsyncPageable<TaggedBlobItem> FindBlobsByTagsAsync(
+            string tagFilterSqlExpression,
+            BlobContainerFindBlobsByTagsOptions options,
+            CancellationToken cancellationToken = default) =>
+            new FilterBlobsAsyncCollection(this, tagFilterSqlExpression, requestPriority: options?.RequestPriority).ToAsyncCollection(cancellationToken);
+
+        /// <summary>
+        /// The Filter Blobs operation enables callers to list blobs in the container whose tags
+        /// match a given search expression and only the tags appearing in the expression will be returned.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/find-blobs-by-tags">
+        /// Find Blobs by Tags</see>.
+        /// </summary>
+        /// <param name="tagFilterSqlExpression">
+        /// The where parameter finds blobs in the storage account whose tags match a given expression.
+        /// The expression must evaluate to true for a blob to be returned in the result set.
+        /// The storage service supports a subset of the ANSI SQL WHERE clause grammar for the value of the where=expression query parameter.
+        /// The following operators are supported: =, &gt;, &gt;=, &lt;, &lt;=, AND.
+        /// Example expression: "tagKey"='tagValue'.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// An <see cref="AsyncPageable{T}"/> describing the blobs.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<TaggedBlobItem> FindBlobsByTagsAsync(
             string tagFilterSqlExpression,
             CancellationToken cancellationToken = default) =>
-            new FilterBlobsAsyncCollection(this, tagFilterSqlExpression).ToAsyncCollection(cancellationToken);
+            new FilterBlobsAsyncCollection(this, tagFilterSqlExpression, requestPriority: default).ToAsyncCollection(cancellationToken);
 
         internal async Task<Response<FilterBlobSegment>> FindBlobsByTagsInternal(
             string marker,
             string expression,
             int? pageSizeHint,
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -4373,6 +5649,7 @@ namespace Azure.Storage.Blobs
                     {
                         response = await ContainerRestClient.FilterBlobsAsync(
                             filterExpression: expression,
+                            requestPriority: requestPriority,
                             marker: marker,
                             maxresults: pageSizeHint,
                             cancellationToken: cancellationToken)
@@ -4382,6 +5659,7 @@ namespace Azure.Storage.Blobs
                     {
                         response = ContainerRestClient.FilterBlobs(
                             filterExpression: expression,
+                            requestPriority: requestPriority,
                             marker: marker,
                             maxresults: pageSizeHint,
                             cancellationToken: cancellationToken);
@@ -4408,13 +5686,16 @@ namespace Azure.Storage.Blobs
 
         #region GetAccountInfo
         /// <summary>
-        /// The <see cref="GetAccountInfo"/> operation returns the sku
+        /// The <see cref="GetAccountInfo(BlobContainerGetAccountInfoOptions, CancellationToken)"/> operation returns the sku
         /// name and account kind for the specified account.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-account-information">
         /// Get Account Information</see>.
         /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
         /// <param name="cancellationToken">
         /// Optional <see cref="CancellationToken"/> to propagate
         /// notifications that the operation should be cancelled.
@@ -4428,15 +5709,15 @@ namespace Azure.Storage.Blobs
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
-        public virtual Response<AccountInfo> GetAccountInfo(
-            CancellationToken cancellationToken = default) =>
+        public virtual Response<AccountInfo> GetAccountInfo(BlobContainerGetAccountInfoOptions options, CancellationToken cancellationToken = default) =>
             GetAccountInfoInternal(
+                options?.RequestPriority,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
 
         /// <summary>
-        /// The <see cref="GetAccountInfoAsync"/> operation returns the sku
+        /// The <see cref="GetAccountInfo(BlobContainerGetAccountInfoOptions, CancellationToken)"/> operation returns the sku
         /// name and account kind for the specified account.
         ///
         /// For more information, see
@@ -4456,9 +5737,72 @@ namespace Azure.Storage.Blobs
         /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
         /// containing each failure instance.
         /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<AccountInfo> GetAccountInfo(
+            CancellationToken cancellationToken = default) =>
+            GetAccountInfoInternal(
+                default,
+                false, // async
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// The <see cref="GetAccountInfoAsync(BlobContainerGetAccountInfoOptions, CancellationToken)"/> operation returns the sku
+        /// name and account kind for the specified account.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-account-information">
+        /// Get Account Information</see>.
+        /// </summary>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{AccountInfo}"/> describing the account.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        public virtual async Task<Response<AccountInfo>> GetAccountInfoAsync(BlobContainerGetAccountInfoOptions options, CancellationToken cancellationToken = default) =>
+            await GetAccountInfoInternal(
+                options?.RequestPriority,
+                true, // async
+                cancellationToken)
+                .ConfigureAwait(false);
+
+        /// <summary>
+        /// The <see cref="GetAccountInfoAsync(BlobContainerGetAccountInfoOptions, CancellationToken)"/> operation returns the sku
+        /// name and account kind for the specified account.
+        ///
+        /// For more information, see
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-account-information">
+        /// Get Account Information</see>.
+        /// </summary>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Response{AccountInfo}"/> describing the account.
+        /// </returns>
+        /// <remarks>
+        /// A <see cref="RequestFailedException"/> will be thrown if
+        /// a failure occurs.
+        /// If multiple failures occur, an <see cref="AggregateException"/> will be thrown,
+        /// containing each failure instance.
+        /// </remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response<AccountInfo>> GetAccountInfoAsync(
             CancellationToken cancellationToken = default) =>
             await GetAccountInfoInternal(
+                default,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -4471,6 +5815,10 @@ namespace Azure.Storage.Blobs
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/get-account-information">
         /// Get Account Information</see>.
         /// </summary>
+        /// <param name="requestPriority">
+        /// Optional. Sets the priority of this request, from 0 through 7.
+        /// If not set, or if the value is outside that range, the service uses 3.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -4488,6 +5836,7 @@ namespace Azure.Storage.Blobs
         /// containing each failure instance.
         /// </remarks>
         private async Task<Response<AccountInfo>> GetAccountInfoInternal(
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -4505,12 +5854,14 @@ namespace Azure.Storage.Blobs
                     if (async)
                     {
                         response = await ContainerRestClient.GetAccountInfoAsync(
+                            requestPriority: requestPriority,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
                     else
                     {
                         response = ContainerRestClient.GetAccountInfo(
+                            requestPriority: requestPriority,
                             cancellationToken: cancellationToken);
                     }
 

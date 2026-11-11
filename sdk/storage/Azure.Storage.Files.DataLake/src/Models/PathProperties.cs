@@ -247,6 +247,13 @@ namespace Azure.Storage.Files.DataLake.Models
         /// </summary>
 #pragma warning disable CA2227 // Collection properties should be read only
         public IList<PathAccessControlItem> AccessControlList { get; set; }
+#pragma warning restore CA2227 // Collection properties should be read only
+
+        /// <summary>
+        /// The request priority the service applied to this request.
+        /// </summary>
+        public int? EffectiveRequestPriority { get; internal set; }
+#pragma warning disable CA2227 // Collection properties should be read only
 
         /// <summary>
         /// Prevent direct instantiation of PathProperties instances.

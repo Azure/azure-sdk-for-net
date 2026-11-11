@@ -28,6 +28,11 @@ namespace Azure.Storage.Blobs.Models
         public DateTimeOffset LastModified { get; }
 
         /// <summary>
+        /// The request priority the service applied to this request.
+        /// </summary>
+        public int? EffectiveRequestPriority { get; }
+
+        /// <summary>
         /// Creates a new <see cref="ReleasedObjectInfo"/>.
         /// </summary>
         /// <param name="eTag">
@@ -38,9 +43,28 @@ namespace Azure.Storage.Blobs.Models
         /// The date and time the object was last modified.
         /// </param>
         public ReleasedObjectInfo(ETag eTag, DateTimeOffset lastModified)
+            : this(eTag, lastModified, effectiveRequestPriority: default)
+        {
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="ReleasedObjectInfo"/>.
+        /// </summary>
+        /// <param name="eTag">
+        /// The <see cref="ETag"/> contains a value that you can use to perform
+        /// operations conditionally.
+        /// </param>
+        /// <param name="lastModified">
+        /// The date and time the object was last modified.
+        /// </param>
+        /// <param name="effectiveRequestPriority">
+        /// The request priority the service applied to this request.
+        /// </param>
+        internal ReleasedObjectInfo(ETag eTag, DateTimeOffset lastModified, int? effectiveRequestPriority)
         {
             ETag = eTag;
             LastModified = lastModified;
+            EffectiveRequestPriority = effectiveRequestPriority;
         }
 
         /// <summary>
@@ -48,7 +72,7 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         /// <param name="info">A released <see cref="BlobInfo"/>.</param>
         internal ReleasedObjectInfo(BlobInfo info)
-            : this(info.ETag, info.LastModified)
+            : this(info.ETag, info.LastModified, info.EffectiveRequestPriority)
         {
         }
 
@@ -57,7 +81,7 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         /// <param name="info">A released <see cref="BlobContainerInfo"/>.</param>
         internal ReleasedObjectInfo(BlobContainerInfo info)
-            : this(info.ETag, info.LastModified)
+            : this(info.ETag, info.LastModified, info.EffectiveRequestPriority)
         {
         }
 

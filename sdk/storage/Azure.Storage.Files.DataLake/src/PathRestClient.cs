@@ -15,6 +15,7 @@ namespace Azure.Storage.Files.DataLake
     {
         public virtual Response<SetAccessControlRecursiveResponse> SetAccessControlRecursive(
             string mode,
+            int? requestPriority = default,
             string continuation = default,
             bool? forceFlag = default,
             int? maxRecords = default,
@@ -22,12 +23,13 @@ namespace Azure.Storage.Files.DataLake
             int? timeout = default,
             CancellationToken cancellationToken = default)
         {
-            Response result = SetAccessControlRecursive(mode, continuation, forceFlag, maxRecords, acl, timeout, cancellationToken.ToRequestContext());
+            Response result = SetAccessControlRecursive(mode, requestPriority, continuation, forceFlag, maxRecords, acl, timeout, cancellationToken.ToRequestContext());
             return Response.FromValue((SetAccessControlRecursiveResponse)result, result);
         }
 
         public virtual async Task<Response<SetAccessControlRecursiveResponse>> SetAccessControlRecursiveAsync(
             string mode,
+            int? requestPriority = default,
             string continuation = default,
             bool? forceFlag = default,
             int? maxRecords = default,
@@ -35,7 +37,7 @@ namespace Azure.Storage.Files.DataLake
             int? timeout = default,
             CancellationToken cancellationToken = default)
         {
-            Response result = await SetAccessControlRecursiveAsync(mode, continuation, forceFlag, maxRecords, acl, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await SetAccessControlRecursiveAsync(mode, requestPriority, continuation, forceFlag, maxRecords, acl, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SetAccessControlRecursiveResponse)result, result);
         }
     }

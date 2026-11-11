@@ -21,7 +21,7 @@ namespace Azure.Storage.Files.Shares
 
         private static ResponseClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
 
-        internal HttpMessage CreateSetPropertiesRequest(RequestContent content, int? timeout, RequestContext context)
+        internal HttpMessage CreateSetPropertiesRequest(RequestContent content, int? requestPriority, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -40,6 +40,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             request.Headers.SetValue("Content-Type", "application/xml");
             if (_fileRequestIntent?.ToString() != null)
             {
@@ -49,7 +53,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateGetPropertiesRequest(int? timeout, RequestContext context)
+        internal HttpMessage CreateGetPropertiesRequest(int? requestPriority, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -68,6 +72,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             if (_fileRequestIntent?.ToString() != null)
             {
                 request.Headers.SetValue("x-ms-file-request-intent", TypeFormatters.ConvertToString(_fileRequestIntent?.ToString()));
@@ -76,7 +84,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateGetSharesSegmentRequest(string prefix, string marker, int? maxresults, int? timeout, IEnumerable<ListSharesIncludeType> include, RequestContext context)
+        internal HttpMessage CreateGetSharesSegmentRequest(int? requestPriority, string prefix, string marker, int? maxresults, int? timeout, IEnumerable<ListSharesIncludeType> include, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -110,6 +118,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             if (_fileRequestIntent?.ToString() != null)
             {
                 request.Headers.SetValue("x-ms-file-request-intent", TypeFormatters.ConvertToString(_fileRequestIntent?.ToString()));
@@ -118,7 +130,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateGetUserDelegationKeyRequest(RequestContent content, int? timeout, RequestContext context)
+        internal HttpMessage CreateGetUserDelegationKeyRequest(RequestContent content, int? requestPriority, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -137,6 +149,10 @@ namespace Azure.Storage.Files.Shares
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             request.Headers.SetValue("Accept", "application/xml");
             request.Content = content;

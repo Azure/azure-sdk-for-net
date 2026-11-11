@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -346,9 +346,10 @@ DataLakePathScheduleDeletionOptions scheduleDeletionOptions =
                     scheduleDeletionOptions.ExpiresOn,
                     default,
                     s_conditions,
+                    IsAny<int?>(),
                     _async,
                     cts.Token
-                )).Returns<PathResourceType, PathHttpHeaders, IDictionary<string, string>, string, string, string, string, IList<PathAccessControlItem>, string, TimeSpan?, TimeSpan?, DateTimeOffset?, string, DataLakeRequestConditions, bool, CancellationToken>(sink.CreateInternal);
+                )).Returns(() => sink.CreateInternal(default, default, default, default, default, default, default, default, default, default, default, default, default, default, default, _async, default));
 
             clientMock.Setup(
                 c => c.AppendInternal(
@@ -361,9 +362,10 @@ DataLakePathScheduleDeletionOptions scheduleDeletionOptions =
                     IsAny<string>(),
                     IsAny<IProgress<long>>(),
                     IsAny<bool?>(),
+                    IsAny<int?>(),
                     _async,
                     cts.Token
-                )).Returns<Stream, long, UploadTransferValidationOptions, string, DataLakeLeaseAction?, TimeSpan?, string, IProgress<long>, bool?, bool, CancellationToken>(sink.AppendInternal);
+                )).Returns<Stream, long, UploadTransferValidationOptions, string, DataLakeLeaseAction?, TimeSpan?, string, IProgress<long>, bool?, int?, bool, CancellationToken>(sink.AppendInternal);
 
             clientMock.Setup(
                 c => c.FlushInternal(
@@ -375,9 +377,10 @@ DataLakePathScheduleDeletionOptions scheduleDeletionOptions =
                     IsAny<DataLakeLeaseAction?>(),
                     IsAny<TimeSpan?>(),
                     IsAny<string>(),
+                    IsAny<int?>(),
                     _async,
                     cts.Token
-                )).Returns<long, bool?, bool?, PathHttpHeaders, DataLakeRequestConditions, DataLakeLeaseAction?, TimeSpan?, string, bool, CancellationToken>(sink.FlushInternal);
+                )).Returns<long, bool?, bool?, PathHttpHeaders, DataLakeRequestConditions, DataLakeLeaseAction?, TimeSpan?, string, int?, bool, CancellationToken>(sink.FlushInternal);
         }
 
         private static void AssertAppended(AppendSink sink, TestStream stream)
@@ -416,6 +419,7 @@ DataLakePathScheduleDeletionOptions scheduleDeletionOptions =
                 DateTimeOffset? expiresOn,
                 string encryptionContext,
                 DataLakeRequestConditions conditions,
+                int? requestPriority,
                 bool async,
                 CancellationToken cancellationToken)
             {
@@ -435,7 +439,7 @@ DataLakePathScheduleDeletionOptions scheduleDeletionOptions =
                 DataLakeLeaseAction? leaseAction,
                 TimeSpan? leaseDuration,
                 string proposedLeaseId,
-                bool async,
+                int? requestPriority, bool async,
                 CancellationToken cancellationToken)
             {
                 if (async)
@@ -455,7 +459,7 @@ DataLakePathScheduleDeletionOptions scheduleDeletionOptions =
                 string proposedLeaseId,
                 IProgress<long> progressHandler,
                 bool? flush,
-                bool async,
+                int? requestPriority, bool async,
                 CancellationToken cancellationToken)
             {
                 if (async)

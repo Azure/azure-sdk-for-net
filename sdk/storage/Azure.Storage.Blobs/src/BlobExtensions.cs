@@ -17,6 +17,9 @@ namespace Azure.Storage.Blobs
 {
     internal static partial class BlobExtensions
     {
+        internal static int? GetEffectiveRequestPriority(this Response response)
+            => response.Headers.TryGetValue("x-ms-request-priority", out int? requestPriority) ? requestPriority : null;
+
         #region Tags
         internal static IDictionary<string, string> ToTagDictionary(this BlobTags blobTags)
         {
@@ -256,7 +259,8 @@ namespace Azure.Storage.Blobs
                     {
                         SkuName = response.Headers.TryGetValue("x-ms-sku-name", out string skuName) ? skuName.ToSkuName() : default,
                         AccountKind = response.Headers.TryGetValue("x-ms-account-kind", out string accountKind) ? accountKind.ToAccountKind() : default,
-                        IsHierarchicalNamespaceEnabled = response.Headers.TryGetValue("x-ms-is-hns-enabled", out bool? isHns) && isHns.GetValueOrDefault()
+                        IsHierarchicalNamespaceEnabled = response.Headers.TryGetValue("x-ms-is-hns-enabled", out bool? isHns) && isHns.GetValueOrDefault(),
+                        EffectiveRequestPriority = response.GetEffectiveRequestPriority()
                     };
                 default:
                     throw new ArgumentException($"Unknown {nameof(AccountInfoHeaderType)}: {headerType}", nameof(headerType));
@@ -278,7 +282,8 @@ namespace Azure.Storage.Blobs
                 BlobPublicAccess = response.GetRawResponse().Headers.TryGetValue("x-ms-blob-public-access", out string publicAccess) ? publicAccess.ToPublicAccessType() : default,
                 ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
-                SignedIdentifiers = response.Value.Items.ToList()
+                SignedIdentifiers = response.Value.Items.ToList(),
+                EffectiveRequestPriority = response.GetRawResponse().GetEffectiveRequestPriority()
             };
         }
         #endregion
@@ -307,6 +312,7 @@ namespace Azure.Storage.Blobs
                     return new BlobContainerInfo
                     {
                         ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                        EffectiveRequestPriority = response.GetEffectiveRequestPriority(),
                         LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
                     };
                 default:
@@ -360,6 +366,7 @@ namespace Azure.Storage.Blobs
                     return new BlobContentInfo
                     {
                         ETag = eTag,
+                        EffectiveRequestPriority = response.GetEffectiveRequestPriority(),
                         LastModified = lastModified,
                         ContentHash = contentHash,
                         VersionId = versionId,
@@ -370,6 +377,7 @@ namespace Azure.Storage.Blobs
                     return new BlobContentInfo
                     {
                         ETag = eTag,
+                        EffectiveRequestPriority = response.GetEffectiveRequestPriority(),
                         LastModified = lastModified,
                         ContentHash = contentHash,
                         ContentCrc64 = response.Headers.TryGetValue("x-ms-content-crc64", out byte[] contentCrc64) ? contentCrc64 : null,
@@ -404,6 +412,7 @@ namespace Azure.Storage.Blobs
                 case BlobAppendInfoHeaderType.AppendBlockFromUrl:
                     return new BlobAppendInfo
                     {
+                        EffectiveRequestPriority = response.GetEffectiveRequestPriority(),
                         ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                         LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
                         ContentHash = response.Headers.TryGetValue(Constants.HeaderNames.ContentMD5, out byte[] contentMD5) ? contentMD5 : null,
@@ -443,6 +452,7 @@ namespace Azure.Storage.Blobs
                     // AppendBlobSeal and SetHttpHeaders do not return BlobSequenceNumber or VersionId.
                     return new BlobInfo
                     {
+                        EffectiveRequestPriority = response.GetEffectiveRequestPriority(),
                         ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                         LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
                     };
@@ -450,6 +460,7 @@ namespace Azure.Storage.Blobs
                     // SetMetadata returns VersionId but not BlobSequenceNumber.
                     return new BlobInfo
                     {
+                        EffectiveRequestPriority = response.GetEffectiveRequestPriority(),
                         ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string smdValue) ? new ETag(smdValue) : default,
                         LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? smdLastModified) ? smdLastModified.GetValueOrDefault() : default,
                         VersionId = response.Headers.TryGetValue(Constants.HeaderNames.VersionId, out string versionId) ? versionId : null
@@ -482,6 +493,7 @@ namespace Azure.Storage.Blobs
                 case PageInfoHeaderType.UploadPagesFromUrl:
                     return new PageInfo
                     {
+                        EffectiveRequestPriority = response.GetEffectiveRequestPriority(),
                         ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                         LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
                         ContentHash = response.Headers.TryGetValue(Constants.HeaderNames.ContentMD5, out byte[] contentMD5) ? contentMD5 : null,
@@ -494,6 +506,7 @@ namespace Azure.Storage.Blobs
                     // Clear Page Blob does not return EncryptionKeySha256 or EncryptionScope.
                     return new PageInfo
                     {
+                        EffectiveRequestPriority = response.GetEffectiveRequestPriority(),
                         ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string clearValue) ? new ETag(clearValue) : default,
                         LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? clearLastModified) ? clearLastModified.GetValueOrDefault() : default,
                         ContentHash = response.Headers.TryGetValue(Constants.HeaderNames.ContentMD5, out byte[] clearContentMD5) ? clearContentMD5 : null,
@@ -527,6 +540,7 @@ namespace Azure.Storage.Blobs
                 case PageRangesInfoHeaderType.GetPageRangesDiff:
                     return new PageRangesInfo
                     {
+                        EffectiveRequestPriority = response.GetRawResponse().GetEffectiveRequestPriority(),
                         LastModified = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
                         ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                         BlobContentLength = response.GetRawResponse().Headers.TryGetValue("x-ms-blob-content-length", out long? blobContentLength) ? blobContentLength.GetValueOrDefault() : default,
@@ -571,6 +585,7 @@ namespace Azure.Storage.Blobs
                 case PageBlobInfoHeaderType.UpdateSequenceNumber:
                     return new PageBlobInfo
                     {
+                        EffectiveRequestPriority = response.GetEffectiveRequestPriority(),
                         ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                         LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
                         BlobSequenceNumber = response.Headers.TryGetValue("x-ms-blob-sequence-number", out long? seqNum) ? seqNum.GetValueOrDefault() : default
@@ -602,6 +617,7 @@ namespace Azure.Storage.Blobs
                 case BlockInfoHeaderType.StageBlockFromUrl:
                     return new BlockInfo
                     {
+                        EffectiveRequestPriority = response.GetEffectiveRequestPriority(),
                         ContentHash = response.Headers.TryGetValue(Constants.HeaderNames.ContentMD5, out byte[] contentMD5) ? contentMD5 : null,
                         ContentCrc64 = response.Headers.TryGetValue("x-ms-content-crc64", out byte[] crc64) ? crc64 : null,
                         EncryptionKeySha256 = response.Headers.TryGetValue("x-ms-encryption-key-sha256", out string encryptionKeySha256) ? encryptionKeySha256 : null,
@@ -624,6 +640,7 @@ namespace Azure.Storage.Blobs
 
             return new BlockList
             {
+                EffectiveRequestPriority = response.GetRawResponse().GetEffectiveRequestPriority(),
                 LastModified = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
                 ETag = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 ContentType = response.GetRawResponse().Headers.TryGetValue(Constants.HeaderNames.ContentType, out string contentType) ? contentType : null,
@@ -644,6 +661,7 @@ namespace Azure.Storage.Blobs
 
             return new BlobSnapshotInfo
             {
+                EffectiveRequestPriority = response.GetEffectiveRequestPriority(),
                 Snapshot = response.Headers.TryGetValue("x-ms-snapshot", out string snapshot) ? snapshot : null,
                 ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                 LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
@@ -717,7 +735,8 @@ namespace Azure.Storage.Blobs
                 lastAccessed: response.Headers.TryGetValue("x-ms-last-access-time", out DateTimeOffset? lastAccessed) ? lastAccessed.GetValueOrDefault() : default,
                 immutabilityPolicy: immutabilityPolicy,
                 hasLegalHold: response.Headers.TryGetValue("x-ms-legal-hold", out bool? legalHold) && legalHold.GetValueOrDefault(),
-                smartAccessTier: response.Headers.TryGetValue("x-ms-smart-access-tier", out string smartAccessTier) ? smartAccessTier : null);
+                smartAccessTier: response.Headers.TryGetValue("x-ms-smart-access-tier", out string smartAccessTier) ? smartAccessTier : null,
+                effectiveRequestPriority: response.GetEffectiveRequestPriority());
         }
 
         internal static BlobLayoutInfo ToBlobLayoutInfo(this NullableResponse<BlobLayout> response)
@@ -921,6 +940,7 @@ namespace Azure.Storage.Blobs
                 case BlobCopyInfoHeaderType.CopyFromUrl:
                     return new BlobCopyInfo
                     {
+                        EffectiveRequestPriority = response.GetEffectiveRequestPriority(),
                         ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string copyFromUrlEtag) ? new ETag(copyFromUrlEtag) : default,
                         LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? copyFromUrlLastModified) ? copyFromUrlLastModified.GetValueOrDefault() : default,
                         VersionId = response.Headers.TryGetValue(Constants.HeaderNames.VersionId, out string copyFromUrlVersionId) ? copyFromUrlVersionId : null,
@@ -931,6 +951,7 @@ namespace Azure.Storage.Blobs
                 case BlobCopyInfoHeaderType.StartCopyFromUrl:
                     return new BlobCopyInfo
                     {
+                        EffectiveRequestPriority = response.GetEffectiveRequestPriority(),
                         ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string startCopyEtag) ? new ETag(startCopyEtag) : default,
                         LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? startCopyLastModified) ? startCopyLastModified.GetValueOrDefault() : default,
                         VersionId = response.Headers.TryGetValue(Constants.HeaderNames.VersionId, out string startCopyVersionId) ? startCopyVersionId : null,
@@ -941,6 +962,7 @@ namespace Azure.Storage.Blobs
                     // Page Blob Copy Incremental does not return VersionId.
                     return new BlobCopyInfo
                     {
+                        EffectiveRequestPriority = response.GetEffectiveRequestPriority(),
                         ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string incrEtag) ? new ETag(incrEtag) : default,
                         LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? incrLastModified) ? incrLastModified.GetValueOrDefault() : default,
                         CopyId = response.Headers.TryGetValue("x-ms-copy-id", out string incrCopyId) ? incrCopyId : null,
@@ -980,6 +1002,7 @@ namespace Azure.Storage.Blobs
                     Metadata = metadata,
                     ContentRange = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ContentRange, out string contentRange) ? contentRange : null,
                     ETag = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                    EffectiveRequestPriority = rawResponse.GetEffectiveRequestPriority(),
                     ContentEncoding = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ContentEncoding, out string contentEncoding) ? contentEncoding : null,
                     CacheControl = rawResponse.Headers.TryGetValue("Cache-Control", out string cacheControl) ? cacheControl : null,
                     ContentDisposition = rawResponse.Headers.TryGetValue("Content-Disposition", out string contentDisposition) ? contentDisposition : null,
@@ -1054,6 +1077,7 @@ namespace Azure.Storage.Blobs
                     Metadata = rawResponse.Headers.TryGetValue(Constants.HeaderNames.MetadataPrefix, out IDictionary<string, string> metadataValue) ? metadataValue.ToMetadata() : null,
                     ContentRange = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ContentRange, out string contentRange) ? contentRange : null,
                     ETag = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
+                    EffectiveRequestPriority = rawResponse.GetEffectiveRequestPriority(),
                     ContentEncoding = rawResponse.Headers.TryGetValue(Constants.HeaderNames.ContentEncoding, out string contentEncoding) ? contentEncoding : null,
                     CacheControl = rawResponse.Headers.TryGetValue("Cache-Control", out string cacheControl) ? cacheControl : null,
                     ContentDisposition = rawResponse.Headers.TryGetValue("Content-Disposition", out string contentDisposition) ? contentDisposition : null,
@@ -1127,6 +1151,7 @@ namespace Azure.Storage.Blobs
                 case BlobLeaseHeaderType.ContainerChange:
                     return new BlobLease
                     {
+                        EffectiveRequestPriority = response.GetEffectiveRequestPriority(),
                         ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
                         LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
                         LeaseId = response.Headers.TryGetValue(Constants.HeaderNames.LeaseId, out string leaseId) ? leaseId : null,
@@ -1137,6 +1162,7 @@ namespace Azure.Storage.Blobs
                     // LeaseId is not returned on a broken lease.
                     return new BlobLease
                     {
+                        EffectiveRequestPriority = response.GetEffectiveRequestPriority(),
                         ETag = response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string breakValue) ? new ETag(breakValue) : default,
                         LastModified = response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? breakLastModified) ? breakLastModified.GetValueOrDefault() : default,
                         LeaseTime = response.Headers.ExtractLeaseTime()
@@ -1169,7 +1195,8 @@ namespace Azure.Storage.Blobs
 
             return new ReleasedObjectInfo(
                 eTag: response.Headers.TryGetValue(Constants.HeaderNames.ETag, out string value) ? new ETag(value) : default,
-                lastModified: response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default);
+                lastModified: response.Headers.TryGetValue(Constants.HeaderNames.LastModified, out DateTimeOffset? lastModified) ? lastModified.GetValueOrDefault() : default,
+                effectiveRequestPriority: response.GetEffectiveRequestPriority());
         }
         #endregion
 
@@ -1362,7 +1389,8 @@ namespace Azure.Storage.Blobs
                 Metadata = response.Headers.TryGetValue(Constants.HeaderNames.MetadataPrefix, out IDictionary<string, string> metadataValue)
                     ? metadataValue.ToMetadata()
                     : null,
-                HasImmutableStorageWithVersioning = response.Headers.TryGetValue("x-ms-immutable-storage-with-versioning-enabled", out bool? immutableStorage) && immutableStorage.GetValueOrDefault()
+                HasImmutableStorageWithVersioning = response.Headers.TryGetValue("x-ms-immutable-storage-with-versioning-enabled", out bool? immutableStorage) && immutableStorage.GetValueOrDefault(),
+                EffectiveRequestPriority = response.GetEffectiveRequestPriority()
             };
         }
 
@@ -1427,7 +1455,8 @@ namespace Azure.Storage.Blobs
 
             return new BlobLegalHoldResult
             {
-                HasLegalHold = response.Headers.TryGetValue("x-ms-legal-hold", out bool? legalHold) && legalHold.GetValueOrDefault()
+                HasLegalHold = response.Headers.TryGetValue("x-ms-legal-hold", out bool? legalHold) && legalHold.GetValueOrDefault(),
+                EffectiveRequestPriority = response.GetEffectiveRequestPriority()
             };
         }
         #endregion

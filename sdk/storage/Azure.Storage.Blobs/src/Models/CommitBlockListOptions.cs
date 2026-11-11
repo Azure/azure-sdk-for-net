@@ -58,5 +58,11 @@ namespace Azure.Storage.Blobs.Models
         /// has immutable storage with versioning enabled.
         /// </summary>
         public bool? LegalHold { get; set; }
+
+        /// <summary>
+        /// Optional. Sets the priority of this request, from 0 through 7.
+        /// If not set, or if the value is outside that range, the service uses 3.
+        /// </summary>
+        public int? RequestPriority { get; set; }
     }
 }

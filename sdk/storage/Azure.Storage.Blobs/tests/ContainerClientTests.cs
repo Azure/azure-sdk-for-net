@@ -5641,7 +5641,7 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<ArgumentException>(
                 containerClient.RenameAsync(
                     "destination",
-                    conditions),
+                    new BlobContainerRenameOptions { SourceConditions = conditions }),
                 e =>
                 {
                     Assert.IsTrue(e.Message.Contains($"Rename does not support the {invalidCondition} condition(s)."));
@@ -5714,7 +5714,7 @@ namespace Azure.Storage.Blobs.Test
             // Act
             BlobContainerClient newContainer = await container.RenameAsync(
                 destinationContainerName: newContainerName,
-                sourceConditions: sourceConditions);
+                options: new BlobContainerRenameOptions { SourceConditions = sourceConditions });
 
             // Assert
             await newContainer.GetPropertiesAsync();
@@ -5745,7 +5745,7 @@ namespace Azure.Storage.Blobs.Test
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 container.RenameAsync(
                     destinationContainerName: newContainerName,
-                    sourceConditions: sourceConditions),
+                    options: new BlobContainerRenameOptions { SourceConditions = sourceConditions }),
                 e => Assert.AreEqual(BlobErrorCode.LeaseNotPresentWithContainerOperation.ToString(), e.ErrorCode));
 
             // Cleanup

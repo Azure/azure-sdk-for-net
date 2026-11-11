@@ -1959,6 +1959,7 @@ namespace Azure.Storage.Blobs.Test
 
             blockClient.Setup(c => c.GetPropertiesInternal(
                 It.IsAny<BlobRequestConditions>(),
+                It.IsAny<int?>(),
                 It.IsAny<bool>(),
                 It.IsAny<RequestContext>(),
                 It.IsAny<string>())).ReturnsAsync(response);
@@ -1982,10 +1983,11 @@ namespace Azure.Storage.Blobs.Test
                 It.IsAny<string>(),
                 It.IsAny<AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(),
                 It.IsAny<Uri>(),
+                It.IsAny<int?>(),
                 IsAsync,
                 It.IsAny<CancellationToken>())
-            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, Uri, bool, CancellationToken>(
-                (range, conditions, validation, progress, operationName, layoutCache, layoutEndpoint, async, cancellation) =>
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, Uri, int?, bool, CancellationToken>(
+                (range, conditions, validation, progress, operationName, layoutCache, layoutEndpoint, requestPriority, async, cancellation) =>
                 {
                     lock (capturedCalls)
                     {
@@ -2063,6 +2065,7 @@ namespace Azure.Storage.Blobs.Test
             // (ETag, BlobContentLength, Metadata) needed to bootstrap the stream.
             blockClient.Verify(c => c.GetPropertiesInternal(
                 It.IsAny<BlobRequestConditions>(),
+                It.IsAny<int?>(),
                 It.IsAny<bool>(),
                 It.IsAny<RequestContext>(),
                 It.IsAny<string>()), Times.Never);
@@ -2074,6 +2077,7 @@ namespace Azure.Storage.Blobs.Test
             // recover ETag/length/metadata when GetLayout returned a 400/5xx.
             blockClient.Verify(c => c.GetPropertiesInternal(
                 It.IsAny<BlobRequestConditions>(),
+                It.IsAny<int?>(),
                 It.IsAny<bool>(),
                 It.IsAny<RequestContext>(),
                 It.IsAny<string>()), Times.Once);
@@ -2096,6 +2100,7 @@ namespace Azure.Storage.Blobs.Test
                 allowModifications: false,
                 transferValidationOverride: options.TransferValidation,
                 layoutAwareRouting: options.LayoutAwareRouting,
+                requestPriority: default,
                 async: IsAsync,
                 cancellationToken: s_openReadCancellationToken).ConfigureAwait(false);
         }

@@ -99,15 +99,18 @@ namespace Azure.Storage.Blobs
         private readonly LayoutAwareRouting _layoutAwareRouting;
 
         private readonly int DefaultConcurrentTransfersCount = Math.Min(Math.Max(Environment.ProcessorCount * 2, 8), 32);
+        private readonly int? _requestPriority;
 
         public PartitionedDownloader(
             BlobBaseClient client,
+            int? requestPriority,
             StorageTransferOptions transferOptions = default,
             DownloadTransferValidationOptions transferValidation = default,
             IProgress<long> progress = default,
             ArrayPool<byte> arrayPool = default,
             LayoutAwareRouting layoutAwareRouting = LayoutAwareRouting.Auto)
         {
+            _requestPriority = requestPriority;
             _client = client;
             _arrayPool = arrayPool ?? ArrayPool<byte>.Shared;
             _layoutAwareRouting = layoutAwareRouting.ResolveAuto();
@@ -210,6 +213,7 @@ namespace Azure.Storage.Blobs
                         _innerOperationName,
                         layoutCache: null,
                         layoutEndpoint: null,
+                        requestPriority: _requestPriority,
                         async,
                         cancellationToken).ConfigureAwait(false);
                 }
@@ -230,6 +234,7 @@ namespace Azure.Storage.Blobs
                         _innerOperationName,
                         layoutCache: null,
                         layoutEndpoint: null,
+                        requestPriority: _requestPriority,
                         async,
                         cancellationToken).ConfigureAwait(false);
 
@@ -319,6 +324,7 @@ namespace Azure.Storage.Blobs
                             (_, BlobLayoutSegment[] segments) = await _client.FetchLayoutInternal(
                                 new HttpRange(initialLength, totalLength - initialLength),
                                 conditionsWithEtag,
+                                _requestPriority,
                                 acquireAsync,
                                 ct).ConfigureAwait(false);
 #pragma warning restore AZC0108 // 'async' parameter for the 'FetchLayoutInternal' method call should be 'true'.
@@ -488,6 +494,7 @@ namespace Azure.Storage.Blobs
                     _innerOperationName,
                     layoutCache,
                     layoutEndpoint: null,
+                    requestPriority: _requestPriority,
                     async,
                     cancellationToken).ConfigureAwait(false)
                 ));
@@ -606,6 +613,7 @@ namespace Azure.Storage.Blobs
                 _innerOperationName,
                 layoutCache,
                 layoutEndpoint: null,
+                requestPriority: _requestPriority,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 

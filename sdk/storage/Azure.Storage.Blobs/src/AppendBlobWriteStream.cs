@@ -14,6 +14,7 @@ namespace Azure.Storage.Blobs
     {
         private readonly AppendBlobClient _appendBlobClient;
         private readonly AppendBlobRequestConditions _conditions;
+        private readonly int? _requestPriority;
 
         public AppendBlobWriteStream(
             AppendBlobClient appendBlobClient,
@@ -21,7 +22,8 @@ namespace Azure.Storage.Blobs
             long position,
             AppendBlobRequestConditions conditions,
             IProgress<long> progressHandler,
-            UploadTransferValidationOptions transferValidation
+            UploadTransferValidationOptions transferValidation,
+            int? requestPriority
             ) : base(
                 position,
                 bufferSize,
@@ -29,6 +31,7 @@ namespace Azure.Storage.Blobs
                 transferValidation
                 )
         {
+            _requestPriority = requestPriority;
             ValidateBufferSize(bufferSize);
             _appendBlobClient = appendBlobClient;
             _conditions = conditions ?? new AppendBlobRequestConditions();
@@ -48,6 +51,7 @@ namespace Azure.Storage.Blobs
                     validationOptions,
                     _conditions,
                     _progressHandler,
+                    requestPriority: _requestPriority,
                     async: async,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);

@@ -13,5 +13,11 @@ namespace Azure.Storage.Files.DataLake.Models
         /// To add conditions on getting the path's system properties.
         /// </summary>
         public DataLakeRequestConditions RequestConditions { get; set; }
+
+        /// <summary>
+        /// Optional. Sets the priority of this request, from 0 through 7.
+        /// If not set, or if the value is outside that range, the service uses 3.
+        /// </summary>
+        public int? RequestPriority { get; set; }
     }
 }

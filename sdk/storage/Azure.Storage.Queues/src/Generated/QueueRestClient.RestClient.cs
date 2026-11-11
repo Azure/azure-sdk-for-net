@@ -23,7 +23,7 @@ namespace Azure.Storage.Queues
 
         private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
-        internal HttpMessage CreateCreateRequest(int? timeout, IDictionary<string, string> metadata, RequestContext context)
+        internal HttpMessage CreateCreateRequest(int? requestPriority, int? timeout, IDictionary<string, string> metadata, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -39,6 +39,10 @@ namespace Azure.Storage.Queues
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             if (metadata != null && !(metadata is ChangeTrackingDictionary<string, string> changeTrackingDictionary && changeTrackingDictionary.IsUndefined))
             {
                 request.Headers.Add("x-ms-meta-", metadata);
@@ -46,7 +50,7 @@ namespace Azure.Storage.Queues
             return message;
         }
 
-        internal HttpMessage CreateGetPropertiesRequest(int? timeout, RequestContext context)
+        internal HttpMessage CreateGetPropertiesRequest(int? requestPriority, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -63,10 +67,14 @@ namespace Azure.Storage.Queues
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(int? timeout, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(int? requestPriority, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -82,10 +90,14 @@ namespace Azure.Storage.Queues
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             return message;
         }
 
-        internal HttpMessage CreateSetMetadataRequest(int? timeout, IDictionary<string, string> metadata, RequestContext context)
+        internal HttpMessage CreateSetMetadataRequest(int? requestPriority, int? timeout, IDictionary<string, string> metadata, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -102,6 +114,10 @@ namespace Azure.Storage.Queues
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             if (metadata != null && !(metadata is ChangeTrackingDictionary<string, string> changeTrackingDictionary && changeTrackingDictionary.IsUndefined))
             {
                 request.Headers.Add("x-ms-meta-", metadata);
@@ -109,7 +125,7 @@ namespace Azure.Storage.Queues
             return message;
         }
 
-        internal HttpMessage CreateGetAccessPolicyRequest(int? timeout, RequestContext context)
+        internal HttpMessage CreateGetAccessPolicyRequest(int? requestPriority, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -126,11 +142,15 @@ namespace Azure.Storage.Queues
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             request.Headers.SetValue("Accept", "application/xml");
             return message;
         }
 
-        internal HttpMessage CreateSetAccessPolicyRequest(RequestContent content, int? timeout, RequestContext context)
+        internal HttpMessage CreateSetAccessPolicyRequest(RequestContent content, int? requestPriority, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -146,6 +166,10 @@ namespace Azure.Storage.Queues
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (content != null)
             {

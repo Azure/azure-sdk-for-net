@@ -31,7 +31,7 @@ namespace Azure.Storage.Files.Shares
 
         private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
-        internal HttpMessage CreateCreateRequest(long fileContentLength, RequestContent content, int? timeout, string fileContentType, string fileContentEncoding, string fileContentLanguage, string fileCacheControl, BinaryData fileContentMD5, string fileContentDisposition, IDictionary<string, string> metadata, string filePermission, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermissionFormat, string leaseId, string owner, string @group, string fileMode, string nfsFileType, BinaryData contentMD5, string filePropertySemantics, long? contentLength, string structuredBodyType, long? structuredContentLength, RequestContext context)
+        internal HttpMessage CreateCreateRequest(long fileContentLength, RequestContent content, int? requestPriority, int? timeout, string fileContentType, string fileContentEncoding, string fileContentLanguage, string fileCacheControl, BinaryData fileContentMD5, string fileContentDisposition, IDictionary<string, string> metadata, string filePermission, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermissionFormat, string leaseId, string owner, string @group, string fileMode, string nfsFileType, BinaryData contentMD5, string filePropertySemantics, long? contentLength, string structuredBodyType, long? structuredContentLength, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -46,6 +46,10 @@ namespace Azure.Storage.Files.Shares
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (content != null)
             {
@@ -161,7 +165,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateDownloadRequest(int? timeout, string range, bool? rangeGetContentMD5, string leaseId, string structuredBodyType, RequestContext context)
+        internal HttpMessage CreateDownloadRequest(int? requestPriority, int? timeout, string range, bool? rangeGetContentMD5, string leaseId, string structuredBodyType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -176,6 +180,10 @@ namespace Azure.Storage.Files.Shares
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (range != null)
             {
@@ -205,7 +213,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateGetPropertiesRequest(string sharesnapshot, int? timeout, string leaseId, RequestContext context)
+        internal HttpMessage CreateGetPropertiesRequest(int? requestPriority, string sharesnapshot, int? timeout, string leaseId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -225,6 +233,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             if (leaseId != null)
             {
                 request.Headers.SetValue("x-ms-lease-id", leaseId);
@@ -240,7 +252,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(int? timeout, string leaseId, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(int? requestPriority, int? timeout, string leaseId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -256,6 +268,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             if (leaseId != null)
             {
                 request.Headers.SetValue("x-ms-lease-id", leaseId);
@@ -271,7 +287,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateSetHttpHeadersRequest(int? timeout, long? fileContentLength, string fileContentType, string fileContentEncoding, string fileContentLanguage, string fileCacheControl, BinaryData fileContentMD5, string fileContentDisposition, string filePermission, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermissionFormat, string leaseId, string owner, string @group, string fileMode, RequestContext context)
+        internal HttpMessage CreateSetHttpHeadersRequest(int? requestPriority, int? timeout, long? fileContentLength, string fileContentType, string fileContentEncoding, string fileContentLanguage, string fileCacheControl, BinaryData fileContentMD5, string fileContentDisposition, string filePermission, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermissionFormat, string leaseId, string owner, string @group, string fileMode, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -287,6 +303,10 @@ namespace Azure.Storage.Files.Shares
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (fileContentLength != null)
             {
@@ -371,7 +391,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateSetMetadataRequest(int? timeout, IDictionary<string, string> metadata, string leaseId, RequestContext context)
+        internal HttpMessage CreateSetMetadataRequest(int? requestPriority, int? timeout, IDictionary<string, string> metadata, string leaseId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -387,6 +407,10 @@ namespace Azure.Storage.Files.Shares
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (metadata != null && !(metadata is ChangeTrackingDictionary<string, string> changeTrackingDictionary && changeTrackingDictionary.IsUndefined))
             {
@@ -407,7 +431,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateAcquireLeaseRequest(int? timeout, int? leaseDuration, string proposedLeaseId, RequestContext context)
+        internal HttpMessage CreateAcquireLeaseRequest(int? requestPriority, int? timeout, int? leaseDuration, string proposedLeaseId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -423,6 +447,10 @@ namespace Azure.Storage.Files.Shares
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (leaseDuration != null)
             {
@@ -444,7 +472,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateReleaseLeaseRequest(string leaseId, int? timeout, RequestContext context)
+        internal HttpMessage CreateReleaseLeaseRequest(string leaseId, int? requestPriority, int? timeout, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -460,6 +488,10 @@ namespace Azure.Storage.Files.Shares
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             request.Headers.SetValue("x-ms-lease-id", leaseId);
             request.Headers.SetValue("x-ms-lease-action", "release");
@@ -474,7 +506,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateChangeLeaseRequest(string leaseId, int? timeout, string proposedLeaseId, RequestContext context)
+        internal HttpMessage CreateChangeLeaseRequest(string leaseId, int? requestPriority, int? timeout, string proposedLeaseId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -490,6 +522,10 @@ namespace Azure.Storage.Files.Shares
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             request.Headers.SetValue("x-ms-lease-id", leaseId);
             if (proposedLeaseId != null)
@@ -508,7 +544,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateBreakLeaseRequest(int? timeout, string leaseId, RequestContext context)
+        internal HttpMessage CreateBreakLeaseRequest(int? requestPriority, int? timeout, string leaseId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -524,6 +560,10 @@ namespace Azure.Storage.Files.Shares
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (leaseId != null)
             {
@@ -541,7 +581,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateUploadRangeRequest(string range, string fileRangeWrite, long contentLength, RequestContent content, int? timeout, BinaryData contentMD5, string leaseId, string fileLastWrittenMode, string structuredBodyType, long? structuredContentLength, RequestContext context)
+        internal HttpMessage CreateUploadRangeRequest(string range, string fileRangeWrite, long contentLength, RequestContent content, int? requestPriority, int? timeout, BinaryData contentMD5, string leaseId, string fileLastWrittenMode, string structuredBodyType, long? structuredContentLength, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -557,6 +597,10 @@ namespace Azure.Storage.Files.Shares
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (content != null)
             {
@@ -597,7 +641,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateUploadRangeFromUrlRequest(string range, string copySource, long contentLength, string sourceRange, int? timeout, BinaryData sourceContentCrc64, BinaryData sourceIfMatchCrc64, BinaryData sourceIfNoneMatchCrc64, string leaseId, string copySourceAuthorization, string fileLastWrittenMode, RequestContext context)
+        internal HttpMessage CreateUploadRangeFromUrlRequest(string range, string copySource, long contentLength, int? requestPriority, string sourceRange, int? timeout, BinaryData sourceContentCrc64, BinaryData sourceIfMatchCrc64, BinaryData sourceIfNoneMatchCrc64, string leaseId, string copySourceAuthorization, string fileLastWrittenMode, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -613,6 +657,10 @@ namespace Azure.Storage.Files.Shares
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             request.Headers.SetValue("Range", range);
             request.Headers.SetValue("x-ms-copy-source", copySource);
@@ -661,7 +709,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateGetRangeListRequest(string sharesnapshot, string prevsharesnapshot, int? timeout, string range, string leaseId, bool? supportRename, RequestContext context)
+        internal HttpMessage CreateGetRangeListRequest(int? requestPriority, string sharesnapshot, string prevsharesnapshot, int? timeout, string range, string leaseId, bool? supportRename, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -685,6 +733,10 @@ namespace Azure.Storage.Files.Shares
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (range != null)
             {
@@ -710,7 +762,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateGetAllRangesRequest(string sharesnapshot, string prevsharesnapshot, int? timeout, string range, string leaseId, bool? supportRename, string marker, int? maxresults, RequestContext context)
+        internal HttpMessage CreateGetAllRangesRequest(int? requestPriority, string sharesnapshot, string prevsharesnapshot, int? timeout, string range, string leaseId, bool? supportRename, string marker, int? maxresults, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -743,6 +795,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             if (range != null)
             {
                 request.Headers.SetValue("Range", range);
@@ -767,7 +823,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateStartCopyRequest(string copySource, int? timeout, IDictionary<string, string> metadata, string filePermission, string filePermissionFormat, string filePermissionKey, string filePermissionCopyMode, bool? ignoreReadOnly, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, bool? setArchiveAttribute, string leaseId, string owner, string @group, string fileMode, string fileModeCopyMode, string fileOwnerCopyMode, RequestContext context)
+        internal HttpMessage CreateStartCopyRequest(string copySource, int? requestPriority, int? timeout, IDictionary<string, string> metadata, string filePermission, string filePermissionFormat, string filePermissionKey, string filePermissionCopyMode, bool? ignoreReadOnly, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, bool? setArchiveAttribute, string leaseId, string owner, string @group, string fileMode, string fileModeCopyMode, string fileOwnerCopyMode, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -782,6 +838,10 @@ namespace Azure.Storage.Files.Shares
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             request.Headers.SetValue("x-ms-copy-source", copySource);
             if (metadata != null && !(metadata is ChangeTrackingDictionary<string, string> changeTrackingDictionary && changeTrackingDictionary.IsUndefined))
@@ -867,7 +927,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateAbortCopyRequest(string copyid, int? timeout, string leaseId, RequestContext context)
+        internal HttpMessage CreateAbortCopyRequest(string copyid, int? requestPriority, int? timeout, string leaseId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -885,6 +945,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             request.Headers.SetValue("x-ms-copy-action", "abort");
             if (leaseId != null)
             {
@@ -901,7 +965,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateGetHandlesRequest(string marker, int? maxresults, int? timeout, string sharesnapshot, RequestContext context)
+        internal HttpMessage CreateGetHandlesRequest(int? requestPriority, string marker, int? maxresults, int? timeout, string sharesnapshot, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -930,6 +994,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             if (_allowTrailingDot != null)
             {
                 request.Headers.SetValue("x-ms-allow-trailing-dot", TypeFormatters.ConvertToString(_allowTrailingDot));
@@ -942,7 +1010,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateForceCloseHandlesRequest(string handleId, int? timeout, string marker, string sharesnapshot, RequestContext context)
+        internal HttpMessage CreateForceCloseHandlesRequest(string handleId, int? requestPriority, int? timeout, string marker, string sharesnapshot, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -967,6 +1035,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             request.Headers.SetValue("x-ms-handle-id", handleId);
             if (_allowTrailingDot != null)
             {
@@ -979,7 +1051,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateRenameRequest(string renameSource, int? timeout, bool? replaceIfExists, bool? ignoreReadOnly, string sourceLeaseId, string destinationLeaseId, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermission, string filePermissionFormat, string filePermissionKey, IDictionary<string, string> metadata, string fileContentType, RequestContext context)
+        internal HttpMessage CreateRenameRequest(string renameSource, int? requestPriority, int? timeout, bool? replaceIfExists, bool? ignoreReadOnly, string sourceLeaseId, string destinationLeaseId, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string filePermission, string filePermissionFormat, string filePermissionKey, IDictionary<string, string> metadata, string fileContentType, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -995,6 +1067,10 @@ namespace Azure.Storage.Files.Shares
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             request.Headers.SetValue("x-ms-file-rename-source", renameSource);
             if (replaceIfExists != null)
@@ -1064,7 +1140,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateCreateSymbolicLinkRequest(string linkText, int? timeout, IDictionary<string, string> metadata, string fileCreationTime, string fileLastWriteTime, string leaseId, string owner, string @group, RequestContext context)
+        internal HttpMessage CreateCreateSymbolicLinkRequest(string linkText, int? requestPriority, int? timeout, IDictionary<string, string> metadata, string fileCreationTime, string fileLastWriteTime, string leaseId, string owner, string @group, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1080,6 +1156,10 @@ namespace Azure.Storage.Files.Shares
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (metadata != null && !(metadata is ChangeTrackingDictionary<string, string> changeTrackingDictionary && changeTrackingDictionary.IsUndefined))
             {
@@ -1113,7 +1193,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateGetSymbolicLinkRequest(int? timeout, string sharesnapshot, RequestContext context)
+        internal HttpMessage CreateGetSymbolicLinkRequest(int? requestPriority, int? timeout, string sharesnapshot, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1134,6 +1214,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             if (_fileRequestIntent?.ToString() != null)
             {
                 request.Headers.SetValue("x-ms-file-request-intent", TypeFormatters.ConvertToString(_fileRequestIntent?.ToString()));
@@ -1141,7 +1225,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateCreateHardLinkRequest(string targetFile, int? timeout, string leaseId, RequestContext context)
+        internal HttpMessage CreateCreateHardLinkRequest(string targetFile, int? requestPriority, int? timeout, string leaseId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1158,6 +1242,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.SetValue("x-ms-version", _version);
             }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
+            }
             request.Headers.SetValue("x-ms-type", "file");
             if (leaseId != null)
             {
@@ -1171,7 +1259,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateGetHardLinksRequest(string sharesnapshot, int? timeout, string leaseId, RequestContext context)
+        internal HttpMessage CreateGetHardLinksRequest(int? requestPriority, string sharesnapshot, int? timeout, string leaseId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1191,6 +1279,10 @@ namespace Azure.Storage.Files.Shares
             if (_version != null)
             {
                 request.Headers.SetValue("x-ms-version", _version);
+            }
+            if (requestPriority != null)
+            {
+                request.Headers.SetValue("x-ms-request-priority", TypeFormatters.ConvertToString(requestPriority));
             }
             if (leaseId != null)
             {

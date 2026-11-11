@@ -55,6 +55,10 @@ namespace Azure.Storage.Queues
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
@@ -62,13 +66,13 @@ namespace Azure.Storage.Queues
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response SetProperties(RequestContent content, int? timeout = default, RequestContext context = null)
+        public virtual Response SetProperties(RequestContent content, int? requestPriority = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.SetProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetPropertiesRequest(content, timeout, context);
+                using HttpMessage message = CreateSetPropertiesRequest(content, requestPriority, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -88,6 +92,10 @@ namespace Azure.Storage.Queues
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
@@ -95,13 +103,13 @@ namespace Azure.Storage.Queues
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SetPropertiesAsync(RequestContent content, int? timeout = default, RequestContext context = null)
+        public virtual async Task<Response> SetPropertiesAsync(RequestContent content, int? requestPriority = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.SetProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetPropertiesRequest(content, timeout, context);
+                using HttpMessage message = CreateSetPropertiesRequest(content, requestPriority, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -116,15 +124,19 @@ namespace Azure.Storage.Queues
         /// and CORS (Cross-Origin Resource Sharing) rules.
         /// </summary>
         /// <param name="queueServiceProperties"> The storage service properties to set. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response SetProperties(QueueServiceProperties queueServiceProperties, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response SetProperties(QueueServiceProperties queueServiceProperties, int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return SetProperties(queueServiceProperties, timeout, cancellationToken.ToRequestContext());
+            return SetProperties(queueServiceProperties, requestPriority, timeout, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -132,15 +144,19 @@ namespace Azure.Storage.Queues
         /// and CORS (Cross-Origin Resource Sharing) rules.
         /// </summary>
         /// <param name="queueServiceProperties"> The storage service properties to set. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> SetPropertiesAsync(QueueServiceProperties queueServiceProperties, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SetPropertiesAsync(QueueServiceProperties queueServiceProperties, int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return await SetPropertiesAsync(queueServiceProperties, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await SetPropertiesAsync(queueServiceProperties, requestPriority, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -152,6 +168,10 @@ namespace Azure.Storage.Queues
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
@@ -159,13 +179,13 @@ namespace Azure.Storage.Queues
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetProperties(int? timeout, RequestContext context)
+        public virtual Response GetProperties(int? requestPriority, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.GetProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPropertiesRequest(timeout, context);
+                using HttpMessage message = CreateGetPropertiesRequest(requestPriority, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -184,6 +204,10 @@ namespace Azure.Storage.Queues
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
@@ -191,13 +215,13 @@ namespace Azure.Storage.Queues
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPropertiesAsync(int? timeout, RequestContext context)
+        public virtual async Task<Response> GetPropertiesAsync(int? requestPriority, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.GetProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPropertiesRequest(timeout, context);
+                using HttpMessage message = CreateGetPropertiesRequest(requestPriority, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -211,15 +235,19 @@ namespace Azure.Storage.Queues
         /// Retrieves properties of a storage account's Queue service, including properties for Storage Analytics and
         /// CORS (Cross-Origin Resource Sharing) rules.
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<QueueServiceProperties> GetProperties(int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response<QueueServiceProperties> GetProperties(int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetProperties(timeout, cancellationToken.ToRequestContext());
+            Response result = GetProperties(requestPriority, timeout, cancellationToken.ToRequestContext());
             return Response.FromValue((QueueServiceProperties)result, result);
         }
 
@@ -227,15 +255,19 @@ namespace Azure.Storage.Queues
         /// Retrieves properties of a storage account's Queue service, including properties for Storage Analytics and
         /// CORS (Cross-Origin Resource Sharing) rules.
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<QueueServiceProperties>> GetPropertiesAsync(int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QueueServiceProperties>> GetPropertiesAsync(int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetPropertiesAsync(timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetPropertiesAsync(requestPriority, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((QueueServiceProperties)result, result);
         }
 
@@ -248,6 +280,10 @@ namespace Azure.Storage.Queues
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
@@ -255,13 +291,13 @@ namespace Azure.Storage.Queues
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetStatistics(int? timeout, RequestContext context)
+        public virtual Response GetStatistics(int? requestPriority, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.GetStatistics");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetStatisticsRequest(timeout, context);
+                using HttpMessage message = CreateGetStatisticsRequest(requestPriority, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -280,6 +316,10 @@ namespace Azure.Storage.Queues
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
@@ -287,13 +327,13 @@ namespace Azure.Storage.Queues
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetStatisticsAsync(int? timeout, RequestContext context)
+        public virtual async Task<Response> GetStatisticsAsync(int? requestPriority, int? timeout, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.GetStatistics");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetStatisticsRequest(timeout, context);
+                using HttpMessage message = CreateGetStatisticsRequest(requestPriority, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -307,15 +347,19 @@ namespace Azure.Storage.Queues
         /// Retrieves statistics related to replication for the Queue service. It is only available on the secondary
         /// location endpoint when read-access geo-redundant replication is enabled for the storage account.
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<QueueServiceStatistics> GetStatistics(int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response<QueueServiceStatistics> GetStatistics(int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetStatistics(timeout, cancellationToken.ToRequestContext());
+            Response result = GetStatistics(requestPriority, timeout, cancellationToken.ToRequestContext());
             return Response.FromValue((QueueServiceStatistics)result, result);
         }
 
@@ -323,15 +367,19 @@ namespace Azure.Storage.Queues
         /// Retrieves statistics related to replication for the Queue service. It is only available on the secondary
         /// location endpoint when read-access geo-redundant replication is enabled for the storage account.
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<QueueServiceStatistics>> GetStatisticsAsync(int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QueueServiceStatistics>> GetStatisticsAsync(int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetStatisticsAsync(timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetStatisticsAsync(requestPriority, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((QueueServiceStatistics)result, result);
         }
 
@@ -345,6 +393,10 @@ namespace Azure.Storage.Queues
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
@@ -352,13 +404,13 @@ namespace Azure.Storage.Queues
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetUserDelegationKey(RequestContent content, int? timeout = default, RequestContext context = null)
+        public virtual Response GetUserDelegationKey(RequestContent content, int? requestPriority = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.GetUserDelegationKey");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetUserDelegationKeyRequest(content, timeout, context);
+                using HttpMessage message = CreateGetUserDelegationKeyRequest(content, requestPriority, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -378,6 +430,10 @@ namespace Azure.Storage.Queues
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
@@ -385,13 +441,13 @@ namespace Azure.Storage.Queues
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetUserDelegationKeyAsync(RequestContent content, int? timeout = default, RequestContext context = null)
+        public virtual async Task<Response> GetUserDelegationKeyAsync(RequestContent content, int? requestPriority = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.GetUserDelegationKey");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetUserDelegationKeyRequest(content, timeout, context);
+                using HttpMessage message = CreateGetUserDelegationKeyRequest(content, requestPriority, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -406,15 +462,19 @@ namespace Azure.Storage.Queues
         /// token authentication.
         /// </summary>
         /// <param name="keyInfo"> Key information. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<UserDelegationKey> GetUserDelegationKey(KeyInfo keyInfo, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response<UserDelegationKey> GetUserDelegationKey(KeyInfo keyInfo, int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetUserDelegationKey(keyInfo, timeout, cancellationToken.ToRequestContext());
+            Response result = GetUserDelegationKey(keyInfo, requestPriority, timeout, cancellationToken.ToRequestContext());
             return Response.FromValue((UserDelegationKey)result, result);
         }
 
@@ -423,15 +483,19 @@ namespace Azure.Storage.Queues
         /// token authentication.
         /// </summary>
         /// <param name="keyInfo"> Key information. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout">
         /// The timeout parameter is expressed in seconds. For more information, see
         /// &lt;a href="https://learn.microsoft.com/en-us/rest/api/storageservices/setting-timeouts-for-queue-service-operations"&gt;Setting Timeouts for Queue Service Operations.&lt;/a&gt;
         /// </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(KeyInfo keyInfo, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<UserDelegationKey>> GetUserDelegationKeyAsync(KeyInfo keyInfo, int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetUserDelegationKeyAsync(keyInfo, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetUserDelegationKeyAsync(keyInfo, requestPriority, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((UserDelegationKey)result, result);
         }
 
@@ -443,6 +507,10 @@ namespace Azure.Storage.Queues
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters the results to return only queues whose name begins with the specified prefix. </param>
         /// <param name="marker">
         /// Identifies the portion of the list of queues to be returned with the next listing operation. The operation
@@ -462,13 +530,13 @@ namespace Azure.Storage.Queues
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetQueuesSegment(string prefix, string marker, int? maxresults, int? timeout, IEnumerable<string> include, RequestContext context)
+        public virtual Response GetQueuesSegment(int? requestPriority, string prefix, string marker, int? maxresults, int? timeout, IEnumerable<string> include, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.GetQueuesSegment");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetQueuesSegmentRequest(prefix, marker, maxresults, timeout, include, context);
+                using HttpMessage message = CreateGetQueuesSegmentRequest(requestPriority, prefix, marker, maxresults, timeout, include, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -486,6 +554,10 @@ namespace Azure.Storage.Queues
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters the results to return only queues whose name begins with the specified prefix. </param>
         /// <param name="marker">
         /// Identifies the portion of the list of queues to be returned with the next listing operation. The operation
@@ -505,13 +577,13 @@ namespace Azure.Storage.Queues
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetQueuesSegmentAsync(string prefix, string marker, int? maxresults, int? timeout, IEnumerable<string> include, RequestContext context)
+        public virtual async Task<Response> GetQueuesSegmentAsync(int? requestPriority, string prefix, string marker, int? maxresults, int? timeout, IEnumerable<string> include, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ServiceRestClient.GetQueuesSegment");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetQueuesSegmentRequest(prefix, marker, maxresults, timeout, include, context);
+                using HttpMessage message = CreateGetQueuesSegmentRequest(requestPriority, prefix, marker, maxresults, timeout, include, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -522,6 +594,10 @@ namespace Azure.Storage.Queues
         }
 
         /// <summary> Returns a list of queues. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters the results to return only queues whose name begins with the specified prefix. </param>
         /// <param name="marker">
         /// Identifies the portion of the list of queues to be returned with the next listing operation. The operation
@@ -540,13 +616,17 @@ namespace Azure.Storage.Queues
         /// <param name="include"> Specify to include additional, optional information. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ListQueuesResult> GetQueuesSegment(string prefix = default, string marker = default, int? maxresults = default, int? timeout = default, IEnumerable<string> include = default, CancellationToken cancellationToken = default)
+        public virtual Response<ListQueuesResult> GetQueuesSegment(int? requestPriority = default, string prefix = default, string marker = default, int? maxresults = default, int? timeout = default, IEnumerable<string> include = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetQueuesSegment(prefix, marker, maxresults, timeout, include, cancellationToken.ToRequestContext());
+            Response result = GetQueuesSegment(requestPriority, prefix, marker, maxresults, timeout, include, cancellationToken.ToRequestContext());
             return Response.FromValue((ListQueuesResult)result, result);
         }
 
         /// <summary> Returns a list of queues. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="prefix"> Filters the results to return only queues whose name begins with the specified prefix. </param>
         /// <param name="marker">
         /// Identifies the portion of the list of queues to be returned with the next listing operation. The operation
@@ -565,9 +645,9 @@ namespace Azure.Storage.Queues
         /// <param name="include"> Specify to include additional, optional information. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ListQueuesResult>> GetQueuesSegmentAsync(string prefix = default, string marker = default, int? maxresults = default, int? timeout = default, IEnumerable<string> include = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ListQueuesResult>> GetQueuesSegmentAsync(int? requestPriority = default, string prefix = default, string marker = default, int? maxresults = default, int? timeout = default, IEnumerable<string> include = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetQueuesSegmentAsync(prefix, marker, maxresults, timeout, include, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetQueuesSegmentAsync(requestPriority, prefix, marker, maxresults, timeout, include, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ListQueuesResult)result, result);
         }
     }

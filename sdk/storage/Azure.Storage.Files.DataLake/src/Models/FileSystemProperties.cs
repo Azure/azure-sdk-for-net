@@ -82,6 +82,11 @@ namespace Azure.Storage.Files.DataLake.Models
         public bool? PreventEncryptionScopeOverride { get; internal set; }
 
         /// <summary>
+        /// The request priority the service applied to the request, from 0 through 7.
+        /// </summary>
+        public int? EffectiveRequestPriority { get; internal set; }
+
+        /// <summary>
         /// Prevent direct instantiation of FileSystemProperties instances.
         /// You can use BlobsModelFactory.FileSystemProperties instead.
         /// </summary>

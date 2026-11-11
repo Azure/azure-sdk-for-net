@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,28 +28,21 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="client">
         /// Client to the blob.
         /// </param>
-        /// <param name="encryptionOptionsOverride">
-        /// Optional override for client-side encryption options to use when updating the key encryption key.
-        /// Defaults to the <see cref="ClientSideEncryptionOptions"/> configured on the client when this is
-        /// not populated. New key encryption key for the blob will be the
-        /// <see cref="ClientSideEncryptionOptions.KeyEncryptionKey"/> on whichever encryption options are
-        /// used for the operation. Options must have a resolver that can resolve the old key on the blob.
-        /// </param>
-        /// <param name="conditions">
-        /// Optional request conditions for the operation.
+        /// <param name="options">
+        /// Optional parameters.
         /// </param>
         /// <param name="cancellationToken">
         /// Cancellation token for the operation.
         /// </param>
         public static void UpdateClientSideKeyEncryptionKey(
             this BlobClient client,
-            ClientSideEncryptionOptions encryptionOptionsOverride = default,
-            BlobRequestConditions conditions = default,
+            BlobUpdateClientSideKeyEncryptionKeyOptions options,
             CancellationToken cancellationToken = default)
             => UpdateClientsideKeyEncryptionKeyInternal(
                 client,
-                encryptionOptionsOverride,
-                conditions,
+                options?.EncryptionOptionsOverride,
+                options?.Conditions,
+                requestPriority: options?.RequestPriority,
                 async: false,
                 cancellationToken).EnsureCompleted();
 
@@ -72,6 +66,66 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="cancellationToken">
         /// Cancellation token for the operation.
         /// </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static void UpdateClientSideKeyEncryptionKey(
+            this BlobClient client,
+            ClientSideEncryptionOptions encryptionOptionsOverride = default,
+            BlobRequestConditions conditions = default,
+            CancellationToken cancellationToken = default)
+            => UpdateClientsideKeyEncryptionKeyInternal(
+                client,
+                encryptionOptionsOverride,
+                conditions,
+                requestPriority: default,
+                async: false,
+                cancellationToken).EnsureCompleted();
+
+        /// <summary>
+        /// Rotates the Key Encryption Key (KEK) for a client-side encrypted blob without
+        /// needing to reupload the entire blob.
+        /// </summary>
+        /// <param name="client">
+        /// Client to the blob.
+        /// </param>
+        /// <param name="options">
+        /// Optional parameters.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token for the operation.
+        /// </param>
+        public static async Task UpdateClientSideKeyEncryptionKeyAsync(
+            this BlobClient client,
+            BlobUpdateClientSideKeyEncryptionKeyOptions options,
+            CancellationToken cancellationToken = default)
+            => await UpdateClientsideKeyEncryptionKeyInternal(
+                client,
+                options?.EncryptionOptionsOverride,
+                options?.Conditions,
+                requestPriority: options?.RequestPriority,
+                async: true,
+                cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Rotates the Key Encryption Key (KEK) for a client-side encrypted blob without
+        /// needing to reupload the entire blob.
+        /// </summary>
+        /// <param name="client">
+        /// Client to the blob.
+        /// </param>
+        /// <param name="encryptionOptionsOverride">
+        /// Optional override for client-side encryption options to use when updating the key encryption key.
+        /// Defaults to the <see cref="ClientSideEncryptionOptions"/> configured on the client when this is
+        /// not populated. New key encryption key for the blob will be the
+        /// <see cref="ClientSideEncryptionOptions.KeyEncryptionKey"/> on whichever encryption options are
+        /// used for the operation. Options must have a resolver that can resolve the old key on the blob.
+        /// </param>
+        /// <param name="conditions">
+        /// Optional request conditions for the operation.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token for the operation.
+        /// </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static async Task UpdateClientSideKeyEncryptionKeyAsync(
             this BlobClient client,
             ClientSideEncryptionOptions encryptionOptionsOverride = default,
@@ -81,6 +135,7 @@ namespace Azure.Storage.Blobs.Specialized
                 client,
                 encryptionOptionsOverride,
                 conditions,
+                requestPriority: default,
                 async: true,
                 cancellationToken).ConfigureAwait(false);
 
@@ -88,6 +143,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobClient client,
             ClientSideEncryptionOptions encryptionOptionsOverride,
             BlobRequestConditions conditions,
+            int? requestPriority,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -113,7 +169,7 @@ namespace Azure.Storage.Blobs.Specialized
                 try
                 {
                     // hold onto etag, metadata, encryptiondata
-                    BlobProperties getPropertiesResponse = await client.GetPropertiesInternal(conditions, async, new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false);
+                    BlobProperties getPropertiesResponse = await client.GetPropertiesInternal(conditions, requestPriority, async, new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false);
                     ETag etag = getPropertiesResponse.ETag;
                     IDictionary<string, string> metadata = getPropertiesResponse.Metadata;
                     EncryptionData encryptionData = BlobClientSideDecryptor.GetAndValidateEncryptionDataOrDefault(metadata)
@@ -143,7 +199,7 @@ namespace Azure.Storage.Blobs.Specialized
                     // update blob ONLY IF ETAG MATCHES (do not take chances encryption info is now out of sync)
                     BlobRequestConditions modifiedRequestConditions = BlobRequestConditions.CloneOrDefault(conditions) ?? new BlobRequestConditions();
                     modifiedRequestConditions.IfMatch = etag;
-                    await client.SetMetadataInternal(metadata, modifiedRequestConditions, async, cancellationToken).ConfigureAwait(false);
+                    await client.SetMetadataInternal(metadata, modifiedRequestConditions, requestPriority, async, cancellationToken).ConfigureAwait(false);
                 }
                 catch (Exception ex)
                 {

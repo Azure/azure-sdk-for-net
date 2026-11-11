@@ -15,6 +15,11 @@ namespace Azure.Storage.Files.DataLake.Models
         /// </summary>
         public Tags Tags { get; internal set; }
 
+        /// <summary>
+        /// The request priority the service applied to this request.
+        /// </summary>
+        public int? EffectiveRequestPriority { get; internal set; }
+
         internal GetPathTagResult() { }
     }
 }

@@ -57,6 +57,12 @@ namespace Azure.Storage.Blobs.Models
         /// to be set.
         /// </summary>
         public UploadTransferValidationOptions TransferValidation { get; set; }
+
+        /// <summary>
+        /// Optional. Sets the priority of this request, from 0 through 7.
+        /// If not set, or if the value is outside that range, the service uses 3.
+        /// </summary>
+        public int? RequestPriority { get; set; }
     }
 
     internal static class BlobOpenWriteOptionsExtensions
@@ -71,6 +77,7 @@ namespace Azure.Storage.Blobs.Models
                 Metadata = options.Metadata,
                 Tags = options.Tags,
                 TransferValidation = options.TransferValidation,
+                RequestPriority = options.RequestPriority,
                 OperationName = $"{nameof(BlobClient)}.{nameof(BlockBlobClient.OpenWrite)}"
             };
     }

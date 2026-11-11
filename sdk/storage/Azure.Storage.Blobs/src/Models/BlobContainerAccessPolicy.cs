@@ -24,6 +24,11 @@ namespace Azure.Storage.Blobs.Models
         public ETag ETag { get; internal set; }
 
         /// <summary>
+        /// The request priority the service applied to this request.
+        /// </summary>
+        public int? EffectiveRequestPriority { get; internal set; }
+
+        /// <summary>
         /// Returns the date and time the container was last modified.
         /// Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob.
         /// </summary>

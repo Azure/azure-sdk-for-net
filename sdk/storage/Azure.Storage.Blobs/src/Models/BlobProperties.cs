@@ -247,6 +247,11 @@ namespace Azure.Storage.Blobs.Models
         public string SmartAccessTier { get; }
 
         /// <summary>
+        /// The request priority the service applied to this request.
+        /// </summary>
+        public int? EffectiveRequestPriority { get; }
+
+        /// <summary>
         /// A DateTime value returned by the service that uniquely identifies the blob. The value of this header
         /// indicates the blob version, and may be used in subsequent requests to access this version of the blob.
         /// </summary>
@@ -349,7 +354,8 @@ namespace Azure.Storage.Blobs.Models
             DateTimeOffset lastAccessed,
             BlobImmutabilityPolicy immutabilityPolicy,
             bool hasLegalHold,
-            string smartAccessTier)
+            string smartAccessTier,
+            int? effectiveRequestPriority)
         {
             LastModified = lastModified;
             LeaseStatus = leaseStatus;
@@ -396,6 +402,7 @@ namespace Azure.Storage.Blobs.Models
             ImmutabilityPolicy = immutabilityPolicy;
             HasLegalHold = hasLegalHold;
             SmartAccessTier = smartAccessTier;
+            EffectiveRequestPriority = effectiveRequestPriority;
         }
     }
 }

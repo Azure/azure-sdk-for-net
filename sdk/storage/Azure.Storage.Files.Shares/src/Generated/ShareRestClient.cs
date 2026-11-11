@@ -56,6 +56,10 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="quota"> Specifies the maximum size of the share, in gigabytes. </param>
@@ -74,13 +78,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Create(int? timeout, IDictionary<string, string> metadata, int? quota, string accessTier, string enabledProtocols, string rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? shareProvisionedIops, long? shareProvisionedBandwidthMibps, bool? enableSmbDirectoryLease, bool? enableChangeFeed, int? changeFeedRetentionInDays, RequestContext context)
+        public virtual Response Create(int? requestPriority, int? timeout, IDictionary<string, string> metadata, int? quota, string accessTier, string enabledProtocols, string rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? shareProvisionedIops, long? shareProvisionedBandwidthMibps, bool? enableSmbDirectoryLease, bool? enableChangeFeed, int? changeFeedRetentionInDays, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(timeout, metadata, quota, accessTier, enabledProtocols, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, enableChangeFeed, changeFeedRetentionInDays, context);
+                using HttpMessage message = CreateCreateRequest(requestPriority, timeout, metadata, quota, accessTier, enabledProtocols, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, enableChangeFeed, changeFeedRetentionInDays, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -98,6 +102,10 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="quota"> Specifies the maximum size of the share, in gigabytes. </param>
@@ -116,13 +124,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateAsync(int? timeout, IDictionary<string, string> metadata, int? quota, string accessTier, string enabledProtocols, string rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? shareProvisionedIops, long? shareProvisionedBandwidthMibps, bool? enableSmbDirectoryLease, bool? enableChangeFeed, int? changeFeedRetentionInDays, RequestContext context)
+        public virtual async Task<Response> CreateAsync(int? requestPriority, int? timeout, IDictionary<string, string> metadata, int? quota, string accessTier, string enabledProtocols, string rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? shareProvisionedIops, long? shareProvisionedBandwidthMibps, bool? enableSmbDirectoryLease, bool? enableChangeFeed, int? changeFeedRetentionInDays, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(timeout, metadata, quota, accessTier, enabledProtocols, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, enableChangeFeed, changeFeedRetentionInDays, context);
+                using HttpMessage message = CreateCreateRequest(requestPriority, timeout, metadata, quota, accessTier, enabledProtocols, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, enableChangeFeed, changeFeedRetentionInDays, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -133,6 +141,10 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Creates a new share under the specified account. If the share with the same name already exists, the operation fails. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="quota"> Specifies the maximum size of the share, in gigabytes. </param>
@@ -150,12 +162,16 @@ namespace Azure.Storage.Files.Shares
         /// <param name="changeFeedRetentionInDays"> Optional. Integer. Specifies the number of days that change feed records are retained, between 1 and 365. Default if not specified is 7 days. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Create(int? timeout = default, IDictionary<string, string> metadata = default, int? quota = default, ShareAccessTier? accessTier = default, string enabledProtocols = default, ShareRootSquash? rootSquash = default, bool? enableSnapshotVirtualDirectoryAccess = default, bool? paidBurstingEnabled = default, long? paidBurstingMaxIops = default, long? paidBurstingMaxBandwidthMibps = default, long? shareProvisionedIops = default, long? shareProvisionedBandwidthMibps = default, bool? enableSmbDirectoryLease = default, bool? enableChangeFeed = default, int? changeFeedRetentionInDays = default, CancellationToken cancellationToken = default)
+        public virtual Response Create(int? requestPriority = default, int? timeout = default, IDictionary<string, string> metadata = default, int? quota = default, ShareAccessTier? accessTier = default, string enabledProtocols = default, ShareRootSquash? rootSquash = default, bool? enableSnapshotVirtualDirectoryAccess = default, bool? paidBurstingEnabled = default, long? paidBurstingMaxIops = default, long? paidBurstingMaxBandwidthMibps = default, long? shareProvisionedIops = default, long? shareProvisionedBandwidthMibps = default, bool? enableSmbDirectoryLease = default, bool? enableChangeFeed = default, int? changeFeedRetentionInDays = default, CancellationToken cancellationToken = default)
         {
-            return Create(timeout, metadata, quota, accessTier?.ToString(), enabledProtocols, rootSquash?.ToSerialString(), enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, enableChangeFeed, changeFeedRetentionInDays, cancellationToken.ToRequestContext());
+            return Create(requestPriority, timeout, metadata, quota, accessTier?.ToString(), enabledProtocols, rootSquash?.ToSerialString(), enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, enableChangeFeed, changeFeedRetentionInDays, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Creates a new share under the specified account. If the share with the same name already exists, the operation fails. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="quota"> Specifies the maximum size of the share, in gigabytes. </param>
@@ -173,9 +189,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="changeFeedRetentionInDays"> Optional. Integer. Specifies the number of days that change feed records are retained, between 1 and 365. Default if not specified is 7 days. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> CreateAsync(int? timeout = default, IDictionary<string, string> metadata = default, int? quota = default, ShareAccessTier? accessTier = default, string enabledProtocols = default, ShareRootSquash? rootSquash = default, bool? enableSnapshotVirtualDirectoryAccess = default, bool? paidBurstingEnabled = default, long? paidBurstingMaxIops = default, long? paidBurstingMaxBandwidthMibps = default, long? shareProvisionedIops = default, long? shareProvisionedBandwidthMibps = default, bool? enableSmbDirectoryLease = default, bool? enableChangeFeed = default, int? changeFeedRetentionInDays = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CreateAsync(int? requestPriority = default, int? timeout = default, IDictionary<string, string> metadata = default, int? quota = default, ShareAccessTier? accessTier = default, string enabledProtocols = default, ShareRootSquash? rootSquash = default, bool? enableSnapshotVirtualDirectoryAccess = default, bool? paidBurstingEnabled = default, long? paidBurstingMaxIops = default, long? paidBurstingMaxBandwidthMibps = default, long? shareProvisionedIops = default, long? shareProvisionedBandwidthMibps = default, bool? enableSmbDirectoryLease = default, bool? enableChangeFeed = default, int? changeFeedRetentionInDays = default, CancellationToken cancellationToken = default)
         {
-            return await CreateAsync(timeout, metadata, quota, accessTier?.ToString(), enabledProtocols, rootSquash?.ToSerialString(), enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, enableChangeFeed, changeFeedRetentionInDays, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await CreateAsync(requestPriority, timeout, metadata, quota, accessTier?.ToString(), enabledProtocols, rootSquash?.ToSerialString(), enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, enableChangeFeed, changeFeedRetentionInDays, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -186,19 +202,23 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetProperties(string sharesnapshot, int? timeout, string leaseId, RequestContext context)
+        public virtual Response GetProperties(int? requestPriority, string sharesnapshot, int? timeout, string leaseId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.GetProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPropertiesRequest(sharesnapshot, timeout, leaseId, context);
+                using HttpMessage message = CreateGetPropertiesRequest(requestPriority, sharesnapshot, timeout, leaseId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -216,19 +236,23 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPropertiesAsync(string sharesnapshot, int? timeout, string leaseId, RequestContext context)
+        public virtual async Task<Response> GetPropertiesAsync(int? requestPriority, string sharesnapshot, int? timeout, string leaseId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.GetProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPropertiesRequest(sharesnapshot, timeout, leaseId, context);
+                using HttpMessage message = CreateGetPropertiesRequest(requestPriority, sharesnapshot, timeout, leaseId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -239,25 +263,33 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Returns all user-defined metadata and system properties for the specified share or share snapshot. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response GetProperties(string sharesnapshot = default, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
+        public virtual Response GetProperties(int? requestPriority = default, string sharesnapshot = default, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            return GetProperties(sharesnapshot, timeout, leaseId, cancellationToken.ToRequestContext());
+            return GetProperties(requestPriority, sharesnapshot, timeout, leaseId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Returns all user-defined metadata and system properties for the specified share or share snapshot. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> GetPropertiesAsync(string sharesnapshot = default, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> GetPropertiesAsync(int? requestPriority = default, string sharesnapshot = default, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            return await GetPropertiesAsync(sharesnapshot, timeout, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await GetPropertiesAsync(requestPriority, sharesnapshot, timeout, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -268,6 +300,10 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="deleteSnapshots"> Specifies the option include to delete the base share and all of its snapshots. </param>
@@ -275,13 +311,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Delete(string sharesnapshot, int? timeout, string deleteSnapshots, string leaseId, RequestContext context)
+        public virtual Response Delete(int? requestPriority, string sharesnapshot, int? timeout, string deleteSnapshots, string leaseId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(sharesnapshot, timeout, deleteSnapshots, leaseId, context);
+                using HttpMessage message = CreateDeleteRequest(requestPriority, sharesnapshot, timeout, deleteSnapshots, leaseId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -299,6 +335,10 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="deleteSnapshots"> Specifies the option include to delete the base share and all of its snapshots. </param>
@@ -306,13 +346,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteAsync(string sharesnapshot, int? timeout, string deleteSnapshots, string leaseId, RequestContext context)
+        public virtual async Task<Response> DeleteAsync(int? requestPriority, string sharesnapshot, int? timeout, string deleteSnapshots, string leaseId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.Delete");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(sharesnapshot, timeout, deleteSnapshots, leaseId, context);
+                using HttpMessage message = CreateDeleteRequest(requestPriority, sharesnapshot, timeout, deleteSnapshots, leaseId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -323,27 +363,35 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Operation marks the specified share or share snapshot for deletion. The share or share snapshot and any files contained within it are later deleted during garbage collection. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="deleteSnapshots"> Specifies the option include to delete the base share and all of its snapshots. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Delete(string sharesnapshot = default, int? timeout = default, DeleteSnapshotsOptionType? deleteSnapshots = default, string leaseId = default, CancellationToken cancellationToken = default)
+        public virtual Response Delete(int? requestPriority = default, string sharesnapshot = default, int? timeout = default, DeleteSnapshotsOptionType? deleteSnapshots = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            return Delete(sharesnapshot, timeout, deleteSnapshots?.ToSerialString(), leaseId, cancellationToken.ToRequestContext());
+            return Delete(requestPriority, sharesnapshot, timeout, deleteSnapshots?.ToSerialString(), leaseId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Operation marks the specified share or share snapshot for deletion. The share or share snapshot and any files contained within it are later deleted during garbage collection. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="deleteSnapshots"> Specifies the option include to delete the base share and all of its snapshots. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteAsync(string sharesnapshot = default, int? timeout = default, DeleteSnapshotsOptionType? deleteSnapshots = default, string leaseId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteAsync(int? requestPriority = default, string sharesnapshot = default, int? timeout = default, DeleteSnapshotsOptionType? deleteSnapshots = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            return await DeleteAsync(sharesnapshot, timeout, deleteSnapshots?.ToSerialString(), leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await DeleteAsync(requestPriority, sharesnapshot, timeout, deleteSnapshots?.ToSerialString(), leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -354,6 +402,10 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="leaseDuration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
@@ -361,13 +413,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response AcquireLease(int? timeout, int? leaseDuration, string proposedLeaseId, string sharesnapshot, RequestContext context)
+        public virtual Response AcquireLease(int? requestPriority, int? timeout, int? leaseDuration, string proposedLeaseId, string sharesnapshot, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.AcquireLease");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAcquireLeaseRequest(timeout, leaseDuration, proposedLeaseId, sharesnapshot, context);
+                using HttpMessage message = CreateAcquireLeaseRequest(requestPriority, timeout, leaseDuration, proposedLeaseId, sharesnapshot, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -385,6 +437,10 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="leaseDuration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
@@ -392,13 +448,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> AcquireLeaseAsync(int? timeout, int? leaseDuration, string proposedLeaseId, string sharesnapshot, RequestContext context)
+        public virtual async Task<Response> AcquireLeaseAsync(int? requestPriority, int? timeout, int? leaseDuration, string proposedLeaseId, string sharesnapshot, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.AcquireLease");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateAcquireLeaseRequest(timeout, leaseDuration, proposedLeaseId, sharesnapshot, context);
+                using HttpMessage message = CreateAcquireLeaseRequest(requestPriority, timeout, leaseDuration, proposedLeaseId, sharesnapshot, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -409,27 +465,35 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="leaseDuration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response AcquireLease(int? timeout = default, int? leaseDuration = default, string proposedLeaseId = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
+        public virtual Response AcquireLease(int? requestPriority = default, int? timeout = default, int? leaseDuration = default, string proposedLeaseId = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
         {
-            return AcquireLease(timeout, leaseDuration, proposedLeaseId, sharesnapshot, cancellationToken.ToRequestContext());
+            return AcquireLease(requestPriority, timeout, leaseDuration, proposedLeaseId, sharesnapshot, cancellationToken.ToRequestContext());
         }
 
         /// <summary> The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="leaseDuration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> AcquireLeaseAsync(int? timeout = default, int? leaseDuration = default, string proposedLeaseId = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> AcquireLeaseAsync(int? requestPriority = default, int? timeout = default, int? leaseDuration = default, string proposedLeaseId = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
         {
-            return await AcquireLeaseAsync(timeout, leaseDuration, proposedLeaseId, sharesnapshot, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await AcquireLeaseAsync(requestPriority, timeout, leaseDuration, proposedLeaseId, sharesnapshot, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -441,18 +505,22 @@ namespace Azure.Storage.Files.Shares
         /// </list>
         /// </summary>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response ReleaseLease(string leaseId, int? timeout, string sharesnapshot, RequestContext context)
+        public virtual Response ReleaseLease(string leaseId, int? requestPriority, int? timeout, string sharesnapshot, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.ReleaseLease");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReleaseLeaseRequest(leaseId, timeout, sharesnapshot, context);
+                using HttpMessage message = CreateReleaseLeaseRequest(leaseId, requestPriority, timeout, sharesnapshot, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -471,18 +539,22 @@ namespace Azure.Storage.Files.Shares
         /// </list>
         /// </summary>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ReleaseLeaseAsync(string leaseId, int? timeout, string sharesnapshot, RequestContext context)
+        public virtual async Task<Response> ReleaseLeaseAsync(string leaseId, int? requestPriority, int? timeout, string sharesnapshot, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.ReleaseLease");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateReleaseLeaseRequest(leaseId, timeout, sharesnapshot, context);
+                using HttpMessage message = CreateReleaseLeaseRequest(leaseId, requestPriority, timeout, sharesnapshot, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -494,24 +566,32 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response ReleaseLease(string leaseId, int? timeout = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
+        public virtual Response ReleaseLease(string leaseId, int? requestPriority = default, int? timeout = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
         {
-            return ReleaseLease(leaseId, timeout, sharesnapshot, cancellationToken.ToRequestContext());
+            return ReleaseLease(leaseId, requestPriority, timeout, sharesnapshot, cancellationToken.ToRequestContext());
         }
 
         /// <summary> The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> ReleaseLeaseAsync(string leaseId, int? timeout = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ReleaseLeaseAsync(string leaseId, int? requestPriority = default, int? timeout = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
         {
-            return await ReleaseLeaseAsync(leaseId, timeout, sharesnapshot, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await ReleaseLeaseAsync(leaseId, requestPriority, timeout, sharesnapshot, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -523,19 +603,23 @@ namespace Azure.Storage.Files.Shares
         /// </list>
         /// </summary>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response ChangeLease(string leaseId, string proposedLeaseId, int? timeout, string sharesnapshot, RequestContext context)
+        public virtual Response ChangeLease(string leaseId, int? requestPriority, string proposedLeaseId, int? timeout, string sharesnapshot, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.ChangeLease");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateChangeLeaseRequest(leaseId, proposedLeaseId, timeout, sharesnapshot, context);
+                using HttpMessage message = CreateChangeLeaseRequest(leaseId, requestPriority, proposedLeaseId, timeout, sharesnapshot, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -554,19 +638,23 @@ namespace Azure.Storage.Files.Shares
         /// </list>
         /// </summary>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ChangeLeaseAsync(string leaseId, string proposedLeaseId, int? timeout, string sharesnapshot, RequestContext context)
+        public virtual async Task<Response> ChangeLeaseAsync(string leaseId, int? requestPriority, string proposedLeaseId, int? timeout, string sharesnapshot, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.ChangeLease");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateChangeLeaseRequest(leaseId, proposedLeaseId, timeout, sharesnapshot, context);
+                using HttpMessage message = CreateChangeLeaseRequest(leaseId, requestPriority, proposedLeaseId, timeout, sharesnapshot, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -578,26 +666,34 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response ChangeLease(string leaseId, string proposedLeaseId = default, int? timeout = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
+        public virtual Response ChangeLease(string leaseId, int? requestPriority = default, string proposedLeaseId = default, int? timeout = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
         {
-            return ChangeLease(leaseId, proposedLeaseId, timeout, sharesnapshot, cancellationToken.ToRequestContext());
+            return ChangeLease(leaseId, requestPriority, proposedLeaseId, timeout, sharesnapshot, cancellationToken.ToRequestContext());
         }
 
         /// <summary> The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The File service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> ChangeLeaseAsync(string leaseId, string proposedLeaseId = default, int? timeout = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> ChangeLeaseAsync(string leaseId, int? requestPriority = default, string proposedLeaseId = default, int? timeout = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
         {
-            return await ChangeLeaseAsync(leaseId, proposedLeaseId, timeout, sharesnapshot, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await ChangeLeaseAsync(leaseId, requestPriority, proposedLeaseId, timeout, sharesnapshot, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -609,18 +705,22 @@ namespace Azure.Storage.Files.Shares
         /// </list>
         /// </summary>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response RenewLease(string leaseId, int? timeout, string sharesnapshot, RequestContext context)
+        public virtual Response RenewLease(string leaseId, int? requestPriority, int? timeout, string sharesnapshot, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.RenewLease");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRenewLeaseRequest(leaseId, timeout, sharesnapshot, context);
+                using HttpMessage message = CreateRenewLeaseRequest(leaseId, requestPriority, timeout, sharesnapshot, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -639,18 +739,22 @@ namespace Azure.Storage.Files.Shares
         /// </list>
         /// </summary>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RenewLeaseAsync(string leaseId, int? timeout, string sharesnapshot, RequestContext context)
+        public virtual async Task<Response> RenewLeaseAsync(string leaseId, int? requestPriority, int? timeout, string sharesnapshot, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.RenewLease");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRenewLeaseRequest(leaseId, timeout, sharesnapshot, context);
+                using HttpMessage message = CreateRenewLeaseRequest(leaseId, requestPriority, timeout, sharesnapshot, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -662,24 +766,32 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response RenewLease(string leaseId, int? timeout = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
+        public virtual Response RenewLease(string leaseId, int? requestPriority = default, int? timeout = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
         {
-            return RenewLease(leaseId, timeout, sharesnapshot, cancellationToken.ToRequestContext());
+            return RenewLease(leaseId, requestPriority, timeout, sharesnapshot, cancellationToken.ToRequestContext());
         }
 
         /// <summary> The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
         /// <param name="leaseId"> Specifies the current lease ID on the resource. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> RenewLeaseAsync(string leaseId, int? timeout = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RenewLeaseAsync(string leaseId, int? requestPriority = default, int? timeout = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
         {
-            return await RenewLeaseAsync(leaseId, timeout, sharesnapshot, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await RenewLeaseAsync(leaseId, requestPriority, timeout, sharesnapshot, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -690,6 +802,10 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="breakPeriod"> For a break operation, proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. This break period is only used if it is shorter than the time remaining on the lease. If longer, the time remaining on the lease is used. A new lease will not be available before the break period has expired, but the lease may be held for longer than the break period. If this header does not appear with a break operation, a fixed-duration lease breaks after the remaining lease period elapses, and an infinite lease breaks immediately. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
@@ -697,13 +813,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response BreakLease(int? timeout, int? breakPeriod, string leaseId, string sharesnapshot, RequestContext context)
+        public virtual Response BreakLease(int? requestPriority, int? timeout, int? breakPeriod, string leaseId, string sharesnapshot, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.BreakLease");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateBreakLeaseRequest(timeout, breakPeriod, leaseId, sharesnapshot, context);
+                using HttpMessage message = CreateBreakLeaseRequest(requestPriority, timeout, breakPeriod, leaseId, sharesnapshot, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -721,6 +837,10 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="breakPeriod"> For a break operation, proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. This break period is only used if it is shorter than the time remaining on the lease. If longer, the time remaining on the lease is used. A new lease will not be available before the break period has expired, but the lease may be held for longer than the break period. If this header does not appear with a break operation, a fixed-duration lease breaks after the remaining lease period elapses, and an infinite lease breaks immediately. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
@@ -728,13 +848,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> BreakLeaseAsync(int? timeout, int? breakPeriod, string leaseId, string sharesnapshot, RequestContext context)
+        public virtual async Task<Response> BreakLeaseAsync(int? requestPriority, int? timeout, int? breakPeriod, string leaseId, string sharesnapshot, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.BreakLease");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateBreakLeaseRequest(timeout, breakPeriod, leaseId, sharesnapshot, context);
+                using HttpMessage message = CreateBreakLeaseRequest(requestPriority, timeout, breakPeriod, leaseId, sharesnapshot, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -745,27 +865,35 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="breakPeriod"> For a break operation, proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. This break period is only used if it is shorter than the time remaining on the lease. If longer, the time remaining on the lease is used. A new lease will not be available before the break period has expired, but the lease may be held for longer than the break period. If this header does not appear with a break operation, a fixed-duration lease breaks after the remaining lease period elapses, and an infinite lease breaks immediately. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response BreakLease(int? timeout = default, int? breakPeriod = default, string leaseId = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
+        public virtual Response BreakLease(int? requestPriority = default, int? timeout = default, int? breakPeriod = default, string leaseId = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
         {
-            return BreakLease(timeout, breakPeriod, leaseId, sharesnapshot, cancellationToken.ToRequestContext());
+            return BreakLease(requestPriority, timeout, breakPeriod, leaseId, sharesnapshot, cancellationToken.ToRequestContext());
         }
 
         /// <summary> The Lease Share operation establishes and manages a lock on a share for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="breakPeriod"> For a break operation, proposed duration the lease should continue before it is broken, in seconds, between 0 and 60. This break period is only used if it is shorter than the time remaining on the lease. If longer, the time remaining on the lease is used. A new lease will not be available before the break period has expired, but the lease may be held for longer than the break period. If this header does not appear with a break operation, a fixed-duration lease breaks after the remaining lease period elapses, and an infinite lease breaks immediately. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="sharesnapshot"> The snapshot parameter is an opaque DateTime value that specifies a share snapshot. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> BreakLeaseAsync(int? timeout = default, int? breakPeriod = default, string leaseId = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> BreakLeaseAsync(int? requestPriority = default, int? timeout = default, int? breakPeriod = default, string leaseId = default, string sharesnapshot = default, CancellationToken cancellationToken = default)
         {
-            return await BreakLeaseAsync(timeout, breakPeriod, leaseId, sharesnapshot, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await BreakLeaseAsync(requestPriority, timeout, breakPeriod, leaseId, sharesnapshot, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -776,18 +904,22 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response CreateSnapshot(int? timeout, IDictionary<string, string> metadata, RequestContext context)
+        public virtual Response CreateSnapshot(int? requestPriority, int? timeout, IDictionary<string, string> metadata, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.CreateSnapshot");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateSnapshotRequest(timeout, metadata, context);
+                using HttpMessage message = CreateCreateSnapshotRequest(requestPriority, timeout, metadata, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -805,18 +937,22 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateSnapshotAsync(int? timeout, IDictionary<string, string> metadata, RequestContext context)
+        public virtual async Task<Response> CreateSnapshotAsync(int? requestPriority, int? timeout, IDictionary<string, string> metadata, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.CreateSnapshot");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateSnapshotRequest(timeout, metadata, context);
+                using HttpMessage message = CreateCreateSnapshotRequest(requestPriority, timeout, metadata, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -827,23 +963,31 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Creates a read-only snapshot of a share. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response CreateSnapshot(int? timeout = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        public virtual Response CreateSnapshot(int? requestPriority = default, int? timeout = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            return CreateSnapshot(timeout, metadata, cancellationToken.ToRequestContext());
+            return CreateSnapshot(requestPriority, timeout, metadata, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Creates a read-only snapshot of a share. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> CreateSnapshotAsync(int? timeout = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CreateSnapshotAsync(int? requestPriority = default, int? timeout = default, IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
         {
-            return await CreateSnapshotAsync(timeout, metadata, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await CreateSnapshotAsync(requestPriority, timeout, metadata, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -855,17 +999,21 @@ namespace Azure.Storage.Files.Shares
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response CreatePermission(RequestContent content, int? timeout = default, RequestContext context = null)
+        public virtual Response CreatePermission(RequestContent content, int? requestPriority = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.CreatePermission");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreatePermissionRequest(content, timeout, context);
+                using HttpMessage message = CreateCreatePermissionRequest(content, requestPriority, timeout, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -884,17 +1032,21 @@ namespace Azure.Storage.Files.Shares
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreatePermissionAsync(RequestContent content, int? timeout = default, RequestContext context = null)
+        public virtual async Task<Response> CreatePermissionAsync(RequestContent content, int? requestPriority = default, int? timeout = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.CreatePermission");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreatePermissionRequest(content, timeout, context);
+                using HttpMessage message = CreateCreatePermissionRequest(content, requestPriority, timeout, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -906,22 +1058,30 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Create a permission (a security descriptor). This is used to support file level ACLs for SMB shares. </summary>
         /// <param name="permission"> A permission (a security descriptor) at the share level. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response CreatePermission(SharePermission permission, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual Response CreatePermission(SharePermission permission, int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return CreatePermission(permission, timeout, cancellationToken.ToRequestContext());
+            return CreatePermission(permission, requestPriority, timeout, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Create a permission (a security descriptor). This is used to support file level ACLs for SMB shares. </summary>
         /// <param name="permission"> A permission (a security descriptor) at the share level. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> CreatePermissionAsync(SharePermission permission, int? timeout = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> CreatePermissionAsync(SharePermission permission, int? requestPriority = default, int? timeout = default, CancellationToken cancellationToken = default)
         {
-            return await CreatePermissionAsync(permission, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await CreatePermissionAsync(permission, requestPriority, timeout, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -933,18 +1093,22 @@ namespace Azure.Storage.Files.Shares
         /// </list>
         /// </summary>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="filePermissionFormat"> Optional. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetPermission(string filePermissionKey, int? timeout, string filePermissionFormat, RequestContext context)
+        public virtual Response GetPermission(string filePermissionKey, int? requestPriority, int? timeout, string filePermissionFormat, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.GetPermission");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPermissionRequest(filePermissionKey, timeout, filePermissionFormat, context);
+                using HttpMessage message = CreateGetPermissionRequest(filePermissionKey, requestPriority, timeout, filePermissionFormat, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -963,18 +1127,22 @@ namespace Azure.Storage.Files.Shares
         /// </list>
         /// </summary>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="filePermissionFormat"> Optional. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPermissionAsync(string filePermissionKey, int? timeout, string filePermissionFormat, RequestContext context)
+        public virtual async Task<Response> GetPermissionAsync(string filePermissionKey, int? requestPriority, int? timeout, string filePermissionFormat, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.GetPermission");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetPermissionRequest(filePermissionKey, timeout, filePermissionFormat, context);
+                using HttpMessage message = CreateGetPermissionRequest(filePermissionKey, requestPriority, timeout, filePermissionFormat, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -986,25 +1154,33 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Returns the permission (security descriptor) for a given permission key. This is used to support file level ACLs for SMB shares. </summary>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="filePermissionFormat"> Optional. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SharePermission> GetPermission(string filePermissionKey, int? timeout = default, FilePermissionFormat? filePermissionFormat = default, CancellationToken cancellationToken = default)
+        public virtual Response<SharePermission> GetPermission(string filePermissionKey, int? requestPriority = default, int? timeout = default, FilePermissionFormat? filePermissionFormat = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetPermission(filePermissionKey, timeout, filePermissionFormat?.ToSerialString(), cancellationToken.ToRequestContext());
+            Response result = GetPermission(filePermissionKey, requestPriority, timeout, filePermissionFormat?.ToSerialString(), cancellationToken.ToRequestContext());
             return Response.FromValue((SharePermission)result, result);
         }
 
         /// <summary> Returns the permission (security descriptor) for a given permission key. This is used to support file level ACLs for SMB shares. </summary>
         /// <param name="filePermissionKey"> Key of the permission to be set for the directory/file. Note: Only one of the x-ms-file-permission or x-ms-file-permission-key should be specified. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="filePermissionFormat"> Optional. Specifies the format in which the permission is returned. Acceptable values are SDDL or binary. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SharePermission>> GetPermissionAsync(string filePermissionKey, int? timeout = default, FilePermissionFormat? filePermissionFormat = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SharePermission>> GetPermissionAsync(string filePermissionKey, int? requestPriority = default, int? timeout = default, FilePermissionFormat? filePermissionFormat = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetPermissionAsync(filePermissionKey, timeout, filePermissionFormat?.ToSerialString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetPermissionAsync(filePermissionKey, requestPriority, timeout, filePermissionFormat?.ToSerialString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SharePermission)result, result);
         }
 
@@ -1016,6 +1192,10 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="quota"> Specifies the maximum size of the share, in gigabytes. </param>
         /// <param name="accessTier"> Specifies the access tier of the share. </param>
@@ -1033,13 +1213,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response SetProperties(int? timeout, int? quota, string accessTier, string leaseId, string rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? shareProvisionedIops, long? shareProvisionedBandwidthMibps, bool? enableSmbDirectoryLease, bool? enableChangeFeed, int? changeFeedRetentionInDays, RequestContext context)
+        public virtual Response SetProperties(int? requestPriority, int? timeout, int? quota, string accessTier, string leaseId, string rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? shareProvisionedIops, long? shareProvisionedBandwidthMibps, bool? enableSmbDirectoryLease, bool? enableChangeFeed, int? changeFeedRetentionInDays, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.SetProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetPropertiesRequest(timeout, quota, accessTier, leaseId, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, enableChangeFeed, changeFeedRetentionInDays, context);
+                using HttpMessage message = CreateSetPropertiesRequest(requestPriority, timeout, quota, accessTier, leaseId, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, enableChangeFeed, changeFeedRetentionInDays, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1057,6 +1237,10 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="quota"> Specifies the maximum size of the share, in gigabytes. </param>
         /// <param name="accessTier"> Specifies the access tier of the share. </param>
@@ -1074,13 +1258,13 @@ namespace Azure.Storage.Files.Shares
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SetPropertiesAsync(int? timeout, int? quota, string accessTier, string leaseId, string rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? shareProvisionedIops, long? shareProvisionedBandwidthMibps, bool? enableSmbDirectoryLease, bool? enableChangeFeed, int? changeFeedRetentionInDays, RequestContext context)
+        public virtual async Task<Response> SetPropertiesAsync(int? requestPriority, int? timeout, int? quota, string accessTier, string leaseId, string rootSquash, bool? enableSnapshotVirtualDirectoryAccess, bool? paidBurstingEnabled, long? paidBurstingMaxIops, long? paidBurstingMaxBandwidthMibps, long? shareProvisionedIops, long? shareProvisionedBandwidthMibps, bool? enableSmbDirectoryLease, bool? enableChangeFeed, int? changeFeedRetentionInDays, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.SetProperties");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetPropertiesRequest(timeout, quota, accessTier, leaseId, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, enableChangeFeed, changeFeedRetentionInDays, context);
+                using HttpMessage message = CreateSetPropertiesRequest(requestPriority, timeout, quota, accessTier, leaseId, rootSquash, enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, enableChangeFeed, changeFeedRetentionInDays, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1091,6 +1275,10 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Sets properties for the specified share. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="quota"> Specifies the maximum size of the share, in gigabytes. </param>
         /// <param name="accessTier"> Specifies the access tier of the share. </param>
@@ -1107,12 +1295,16 @@ namespace Azure.Storage.Files.Shares
         /// <param name="changeFeedRetentionInDays"> Optional. Integer. Specifies the number of days that change feed records are retained, between 1 and 365. Default if not specified is 7 days. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response SetProperties(int? timeout = default, int? quota = default, ShareAccessTier? accessTier = default, string leaseId = default, ShareRootSquash? rootSquash = default, bool? enableSnapshotVirtualDirectoryAccess = default, bool? paidBurstingEnabled = default, long? paidBurstingMaxIops = default, long? paidBurstingMaxBandwidthMibps = default, long? shareProvisionedIops = default, long? shareProvisionedBandwidthMibps = default, bool? enableSmbDirectoryLease = default, bool? enableChangeFeed = default, int? changeFeedRetentionInDays = default, CancellationToken cancellationToken = default)
+        public virtual Response SetProperties(int? requestPriority = default, int? timeout = default, int? quota = default, ShareAccessTier? accessTier = default, string leaseId = default, ShareRootSquash? rootSquash = default, bool? enableSnapshotVirtualDirectoryAccess = default, bool? paidBurstingEnabled = default, long? paidBurstingMaxIops = default, long? paidBurstingMaxBandwidthMibps = default, long? shareProvisionedIops = default, long? shareProvisionedBandwidthMibps = default, bool? enableSmbDirectoryLease = default, bool? enableChangeFeed = default, int? changeFeedRetentionInDays = default, CancellationToken cancellationToken = default)
         {
-            return SetProperties(timeout, quota, accessTier?.ToString(), leaseId, rootSquash?.ToSerialString(), enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, enableChangeFeed, changeFeedRetentionInDays, cancellationToken.ToRequestContext());
+            return SetProperties(requestPriority, timeout, quota, accessTier?.ToString(), leaseId, rootSquash?.ToSerialString(), enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, enableChangeFeed, changeFeedRetentionInDays, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Sets properties for the specified share. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="quota"> Specifies the maximum size of the share, in gigabytes. </param>
         /// <param name="accessTier"> Specifies the access tier of the share. </param>
@@ -1129,9 +1321,9 @@ namespace Azure.Storage.Files.Shares
         /// <param name="changeFeedRetentionInDays"> Optional. Integer. Specifies the number of days that change feed records are retained, between 1 and 365. Default if not specified is 7 days. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> SetPropertiesAsync(int? timeout = default, int? quota = default, ShareAccessTier? accessTier = default, string leaseId = default, ShareRootSquash? rootSquash = default, bool? enableSnapshotVirtualDirectoryAccess = default, bool? paidBurstingEnabled = default, long? paidBurstingMaxIops = default, long? paidBurstingMaxBandwidthMibps = default, long? shareProvisionedIops = default, long? shareProvisionedBandwidthMibps = default, bool? enableSmbDirectoryLease = default, bool? enableChangeFeed = default, int? changeFeedRetentionInDays = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SetPropertiesAsync(int? requestPriority = default, int? timeout = default, int? quota = default, ShareAccessTier? accessTier = default, string leaseId = default, ShareRootSquash? rootSquash = default, bool? enableSnapshotVirtualDirectoryAccess = default, bool? paidBurstingEnabled = default, long? paidBurstingMaxIops = default, long? paidBurstingMaxBandwidthMibps = default, long? shareProvisionedIops = default, long? shareProvisionedBandwidthMibps = default, bool? enableSmbDirectoryLease = default, bool? enableChangeFeed = default, int? changeFeedRetentionInDays = default, CancellationToken cancellationToken = default)
         {
-            return await SetPropertiesAsync(timeout, quota, accessTier?.ToString(), leaseId, rootSquash?.ToSerialString(), enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, enableChangeFeed, changeFeedRetentionInDays, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await SetPropertiesAsync(requestPriority, timeout, quota, accessTier?.ToString(), leaseId, rootSquash?.ToSerialString(), enableSnapshotVirtualDirectoryAccess, paidBurstingEnabled, paidBurstingMaxIops, paidBurstingMaxBandwidthMibps, shareProvisionedIops, shareProvisionedBandwidthMibps, enableSmbDirectoryLease, enableChangeFeed, changeFeedRetentionInDays, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1142,19 +1334,23 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response SetMetadata(int? timeout, IDictionary<string, string> metadata, string leaseId, RequestContext context)
+        public virtual Response SetMetadata(int? requestPriority, int? timeout, IDictionary<string, string> metadata, string leaseId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.SetMetadata");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetMetadataRequest(timeout, metadata, leaseId, context);
+                using HttpMessage message = CreateSetMetadataRequest(requestPriority, timeout, metadata, leaseId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1172,19 +1368,23 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SetMetadataAsync(int? timeout, IDictionary<string, string> metadata, string leaseId, RequestContext context)
+        public virtual async Task<Response> SetMetadataAsync(int? requestPriority, int? timeout, IDictionary<string, string> metadata, string leaseId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.SetMetadata");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetMetadataRequest(timeout, metadata, leaseId, context);
+                using HttpMessage message = CreateSetMetadataRequest(requestPriority, timeout, metadata, leaseId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1195,25 +1395,33 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Sets one or more user-defined name-value pairs for the specified share. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response SetMetadata(int? timeout = default, IDictionary<string, string> metadata = default, string leaseId = default, CancellationToken cancellationToken = default)
+        public virtual Response SetMetadata(int? requestPriority = default, int? timeout = default, IDictionary<string, string> metadata = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            return SetMetadata(timeout, metadata, leaseId, cancellationToken.ToRequestContext());
+            return SetMetadata(requestPriority, timeout, metadata, leaseId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Sets one or more user-defined name-value pairs for the specified share. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="metadata"> Optional. User-defined metadata for the resource. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> SetMetadataAsync(int? timeout = default, IDictionary<string, string> metadata = default, string leaseId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SetMetadataAsync(int? requestPriority = default, int? timeout = default, IDictionary<string, string> metadata = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            return await SetMetadataAsync(timeout, metadata, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await SetMetadataAsync(requestPriority, timeout, metadata, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1224,18 +1432,22 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetAccessPolicy(int? timeout, string leaseId, RequestContext context)
+        public virtual Response GetAccessPolicy(int? requestPriority, int? timeout, string leaseId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.GetAccessPolicy");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAccessPolicyRequest(timeout, leaseId, context);
+                using HttpMessage message = CreateGetAccessPolicyRequest(requestPriority, timeout, leaseId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1253,18 +1465,22 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAccessPolicyAsync(int? timeout, string leaseId, RequestContext context)
+        public virtual async Task<Response> GetAccessPolicyAsync(int? requestPriority, int? timeout, string leaseId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.GetAccessPolicy");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAccessPolicyRequest(timeout, leaseId, context);
+                using HttpMessage message = CreateGetAccessPolicyRequest(requestPriority, timeout, leaseId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1275,24 +1491,32 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Returns information about stored access policies specified on the share that may be used with Shared Access Signatures. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SignedIdentifiers> GetAccessPolicy(int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
+        public virtual Response<SignedIdentifiers> GetAccessPolicy(int? requestPriority = default, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetAccessPolicy(timeout, leaseId, cancellationToken.ToRequestContext());
+            Response result = GetAccessPolicy(requestPriority, timeout, leaseId, cancellationToken.ToRequestContext());
             return Response.FromValue((SignedIdentifiers)result, result);
         }
 
         /// <summary> Returns information about stored access policies specified on the share that may be used with Shared Access Signatures. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SignedIdentifiers>> GetAccessPolicyAsync(int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SignedIdentifiers>> GetAccessPolicyAsync(int? requestPriority = default, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetAccessPolicyAsync(timeout, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetAccessPolicyAsync(requestPriority, timeout, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SignedIdentifiers)result, result);
         }
 
@@ -1305,18 +1529,22 @@ namespace Azure.Storage.Files.Shares
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response SetAccessPolicy(RequestContent content, int? timeout = default, string leaseId = default, RequestContext context = null)
+        public virtual Response SetAccessPolicy(RequestContent content, int? requestPriority = default, int? timeout = default, string leaseId = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.SetAccessPolicy");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetAccessPolicyRequest(content, timeout, leaseId, context);
+                using HttpMessage message = CreateSetAccessPolicyRequest(content, requestPriority, timeout, leaseId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1335,18 +1563,22 @@ namespace Azure.Storage.Files.Shares
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SetAccessPolicyAsync(RequestContent content, int? timeout = default, string leaseId = default, RequestContext context = null)
+        public virtual async Task<Response> SetAccessPolicyAsync(RequestContent content, int? requestPriority = default, int? timeout = default, string leaseId = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.SetAccessPolicy");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSetAccessPolicyRequest(content, timeout, leaseId, context);
+                using HttpMessage message = CreateSetAccessPolicyRequest(content, requestPriority, timeout, leaseId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1358,24 +1590,32 @@ namespace Azure.Storage.Files.Shares
 
         /// <summary> Sets stored access policies for the share that may be used with Shared Access Signatures. </summary>
         /// <param name="shareAcl"> The ACL for the share. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response SetAccessPolicy(SignedIdentifiers shareAcl = default, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
+        public virtual Response SetAccessPolicy(SignedIdentifiers shareAcl = default, int? requestPriority = default, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            return SetAccessPolicy(shareAcl, timeout, leaseId, cancellationToken.ToRequestContext());
+            return SetAccessPolicy(shareAcl, requestPriority, timeout, leaseId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Sets stored access policies for the share that may be used with Shared Access Signatures. </summary>
         /// <param name="shareAcl"> The ACL for the share. </param>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> SetAccessPolicyAsync(SignedIdentifiers shareAcl = default, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> SetAccessPolicyAsync(SignedIdentifiers shareAcl = default, int? requestPriority = default, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            return await SetAccessPolicyAsync(shareAcl, timeout, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await SetAccessPolicyAsync(shareAcl, requestPriority, timeout, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1386,18 +1626,22 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetStatistics(int? timeout, string leaseId, RequestContext context)
+        public virtual Response GetStatistics(int? requestPriority, int? timeout, string leaseId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.GetStatistics");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetStatisticsRequest(timeout, leaseId, context);
+                using HttpMessage message = CreateGetStatisticsRequest(requestPriority, timeout, leaseId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1415,18 +1659,22 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetStatisticsAsync(int? timeout, string leaseId, RequestContext context)
+        public virtual async Task<Response> GetStatisticsAsync(int? requestPriority, int? timeout, string leaseId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.GetStatistics");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetStatisticsRequest(timeout, leaseId, context);
+                using HttpMessage message = CreateGetStatisticsRequest(requestPriority, timeout, leaseId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1437,24 +1685,32 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Retrieves statistics related to the share. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ShareStatistics> GetStatistics(int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
+        public virtual Response<ShareStatistics> GetStatistics(int? requestPriority = default, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetStatistics(timeout, leaseId, cancellationToken.ToRequestContext());
+            Response result = GetStatistics(requestPriority, timeout, leaseId, cancellationToken.ToRequestContext());
             return Response.FromValue((ShareStatistics)result, result);
         }
 
         /// <summary> Retrieves statistics related to the share. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="leaseId"> If specified, the lease ID must match the lease ID of the file. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ShareStatistics>> GetStatisticsAsync(int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ShareStatistics>> GetStatisticsAsync(int? requestPriority = default, int? timeout = default, string leaseId = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetStatisticsAsync(timeout, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await GetStatisticsAsync(requestPriority, timeout, leaseId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ShareStatistics)result, result);
         }
 
@@ -1466,19 +1722,23 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="deletedShareName"> Specifies the name of the previously-deleted share. </param>
         /// <param name="deletedShareVersion"> Specifies the version of the previously-deleted share. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Restore(int? timeout, string deletedShareName, string deletedShareVersion, RequestContext context)
+        public virtual Response Restore(int? requestPriority, int? timeout, string deletedShareName, string deletedShareVersion, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.Restore");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRestoreRequest(timeout, deletedShareName, deletedShareVersion, context);
+                using HttpMessage message = CreateRestoreRequest(requestPriority, timeout, deletedShareName, deletedShareVersion, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1496,19 +1756,23 @@ namespace Azure.Storage.Files.Shares
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="deletedShareName"> Specifies the name of the previously-deleted share. </param>
         /// <param name="deletedShareVersion"> Specifies the version of the previously-deleted share. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> RestoreAsync(int? timeout, string deletedShareName, string deletedShareVersion, RequestContext context)
+        public virtual async Task<Response> RestoreAsync(int? requestPriority, int? timeout, string deletedShareName, string deletedShareVersion, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ShareRestClient.Restore");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRestoreRequest(timeout, deletedShareName, deletedShareVersion, context);
+                using HttpMessage message = CreateRestoreRequest(requestPriority, timeout, deletedShareName, deletedShareVersion, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1519,25 +1783,33 @@ namespace Azure.Storage.Files.Shares
         }
 
         /// <summary> Restores a previously deleted share. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="deletedShareName"> Specifies the name of the previously-deleted share. </param>
         /// <param name="deletedShareVersion"> Specifies the version of the previously-deleted share. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Restore(int? timeout = default, string deletedShareName = default, string deletedShareVersion = default, CancellationToken cancellationToken = default)
+        public virtual Response Restore(int? requestPriority = default, int? timeout = default, string deletedShareName = default, string deletedShareVersion = default, CancellationToken cancellationToken = default)
         {
-            return Restore(timeout, deletedShareName, deletedShareVersion, cancellationToken.ToRequestContext());
+            return Restore(requestPriority, timeout, deletedShareName, deletedShareVersion, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Restores a previously deleted share. </summary>
+        /// <param name="requestPriority">
+        /// Specifies the requested priority from 0 through 7. Integers outside this range
+        /// do not cause the request to fail; the service uses priority 3 instead.
+        /// </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="deletedShareName"> Specifies the name of the previously-deleted share. </param>
         /// <param name="deletedShareVersion"> Specifies the version of the previously-deleted share. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> RestoreAsync(int? timeout = default, string deletedShareName = default, string deletedShareVersion = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RestoreAsync(int? requestPriority = default, int? timeout = default, string deletedShareName = default, string deletedShareVersion = default, CancellationToken cancellationToken = default)
         {
-            return await RestoreAsync(timeout, deletedShareName, deletedShareVersion, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await RestoreAsync(requestPriority, timeout, deletedShareName, deletedShareVersion, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
     }
 }

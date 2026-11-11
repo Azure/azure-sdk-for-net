@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
@@ -20,18 +20,30 @@ namespace Azure.Storage.Files.DataLake.Models
         private readonly FileSystemTraits _traits;
         private readonly FileSystemStates _states;
         private readonly string _prefix;
+        private readonly int? _requestPriority;
 
         public GetFileSystemsAsyncCollection(
             BlobServiceClient client,
             FileSystemTraits traits,
             FileSystemStates states,
-            string prefix = default)
+            string prefix = default,
+            int? requestPriority = default)
         {
+            _requestPriority = requestPriority;
             _client = client;
             _traits = traits;
             _states = states;
             _prefix = prefix;
         }
+
+        private BlobServiceGetBlobContainersOptions ToBlobOptions()
+            => new BlobServiceGetBlobContainersOptions
+            {
+                Traits = (BlobContainerTraits)_traits,
+                States = (BlobContainerStates)_states,
+                Prefix = _prefix,
+                RequestPriority = _requestPriority
+            };
 
         private static Page<FileSystemItem> ConvertPage(Page<BlobContainerItem> page)
         {
@@ -48,10 +60,7 @@ namespace Azure.Storage.Files.DataLake.Models
 
         private static AsyncPageable<BlobContainerItem> ConvertCollection(GetFileSystemsAsyncCollection collection, CancellationToken cancellationToken)
         {
-            return collection._client.GetBlobContainersAsync(
-                       (BlobContainerTraits)collection._traits,
-                       (BlobContainerStates)collection._states,
-                       collection._prefix,
+            return collection._client.GetBlobContainersAsync(collection.ToBlobOptions(),
                        cancellationToken);
         }
 
@@ -97,10 +106,7 @@ namespace Azure.Storage.Files.DataLake.Models
                 string continuationToken = default,
                 int? pageHintSize = default)
             {
-                return _collection._client.GetBlobContainers(
-                    (BlobContainerTraits)_collection._traits,
-                    (BlobContainerStates)_collection._states,
-                    _collection._prefix,
+                return _collection._client.GetBlobContainers(_collection.ToBlobOptions(),
                     CancellationToken)
                     .AsPages(continuationToken, pageHintSize)
                     .Select(ConvertPage);
@@ -113,10 +119,7 @@ namespace Azure.Storage.Files.DataLake.Models
             /// <returns>A sequence of values.</returns>
             public override IEnumerator<FileSystemItem> GetEnumerator()
             {
-                return _collection._client.GetBlobContainers(
-                    (BlobContainerTraits)_collection._traits,
-                    (BlobContainerStates)_collection._states,
-                    _collection._prefix,
+                return _collection._client.GetBlobContainers(_collection.ToBlobOptions(),
                     CancellationToken)
                     .Select(ConvertItem)
                     .GetEnumerator();

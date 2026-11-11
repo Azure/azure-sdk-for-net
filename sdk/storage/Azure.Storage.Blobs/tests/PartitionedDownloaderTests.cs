@@ -60,6 +60,7 @@ namespace Azure.Storage.Blobs.Test
 
             PartitionedDownloader downloader = new PartitionedDownloader(
                 blockClient.Object,
+                requestPriority: default,
                 transferValidation: validationOptions);
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
@@ -84,6 +85,7 @@ namespace Azure.Storage.Blobs.Test
 
             PartitionedDownloader downloader = new PartitionedDownloader(
                 blockClient.Object,
+                requestPriority: default,
                 transferValidation: s_validationOptions);
 
             Response result = await InvokeDownloadToAsync(downloader, stream);
@@ -108,6 +110,7 @@ namespace Azure.Storage.Blobs.Test
 
             PartitionedDownloader downloader = new PartitionedDownloader(
                 blockClient.Object,
+                requestPriority: default,
                 new StorageTransferOptions()
                 {
                     MaximumTransferLength = 10,
@@ -139,6 +142,7 @@ namespace Azure.Storage.Blobs.Test
 
             PartitionedDownloader downloader = new PartitionedDownloader(
                 blockClient.Object,
+                requestPriority: default,
                 new StorageTransferOptions()
                 {
                     MaximumTransferLength = 40,
@@ -171,6 +175,7 @@ namespace Azure.Storage.Blobs.Test
 
             PartitionedDownloader downloader = new PartitionedDownloader(
                 blockClient.Object,
+                requestPriority: default,
                 new StorageTransferOptions()
                 {
                     MaximumTransferLength = 10,
@@ -222,11 +227,13 @@ namespace Azure.Storage.Blobs.Test
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
                 It.IsAny<AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(),
                 It.IsAny<Uri>(),
+                It.IsAny<int?>(),
                 _async,
                 s_cancellationToken)).ThrowsAsync(e);
 
             PartitionedDownloader downloader = new PartitionedDownloader(
                 blockClient.Object,
+                requestPriority: default,
                 new StorageTransferOptions() { MaximumTransferLength = 10 },
                 transferValidation: s_validationOptions);
 
@@ -258,6 +265,7 @@ namespace Azure.Storage.Blobs.Test
 
             PartitionedDownloader downloader = new PartitionedDownloader(
                 blockClient.Object,
+                requestPriority: default,
                 new StorageTransferOptions()
                 {
                     MaximumTransferLength = 10,
@@ -361,6 +369,7 @@ namespace Azure.Storage.Blobs.Test
 
             PartitionedDownloader downloader = new PartitionedDownloader(
                 blockClient.Object,
+                requestPriority: default,
                 new StorageTransferOptions()
                 {
                     MaximumTransferLength = 10,
@@ -406,6 +415,7 @@ namespace Azure.Storage.Blobs.Test
             // Auto (default) currently resolves to Disabled
             PartitionedDownloader downloader = new PartitionedDownloader(
                 blockClient.Object,
+                requestPriority: default,
                 new StorageTransferOptions()
                 {
                     MaximumTransferLength = 10,
@@ -462,6 +472,7 @@ namespace Azure.Storage.Blobs.Test
 
             PartitionedDownloader downloader = new PartitionedDownloader(
                 blockClient.Object,
+                requestPriority: default,
                 new StorageTransferOptions()
                 {
                     MaximumTransferLength = 10,
@@ -519,6 +530,7 @@ namespace Azure.Storage.Blobs.Test
 
             PartitionedDownloader downloader = new PartitionedDownloader(
                 blockClient.Object,
+                requestPriority: default,
                 new StorageTransferOptions()
                 {
                     MaximumTransferLength = 10,
@@ -577,10 +589,11 @@ namespace Azure.Storage.Blobs.Test
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
                 It.IsAny<AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(),
                 It.IsAny<Uri>(),
+                It.IsAny<int?>(),
                 _async,
                 s_cancellationToken)
-            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, Uri, bool, CancellationToken>(
-                async (range, conditions, validation, progress, operationName, layoutCache, LayoutEndpoint, async, cancellation) =>
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, Uri, int?, bool, CancellationToken>(
+                async (range, conditions, validation, progress, operationName, layoutCache, LayoutEndpoint, requestPriority, async, cancellation) =>
                 {
                     if (layoutCache != null)
                     {
@@ -602,6 +615,7 @@ namespace Azure.Storage.Blobs.Test
 
             PartitionedDownloader downloader = new PartitionedDownloader(
                 blockClient.Object,
+                requestPriority: default,
                 new StorageTransferOptions()
                 {
                     MaximumTransferLength = 10,
@@ -643,6 +657,7 @@ namespace Azure.Storage.Blobs.Test
 
             PartitionedDownloader downloader = new PartitionedDownloader(
                 blockClient.Object,
+                requestPriority: default,
                 new StorageTransferOptions()
                 {
                     MaximumTransferLength = 10,
@@ -724,6 +739,7 @@ namespace Azure.Storage.Blobs.Test
 
             PartitionedDownloader downloader = new PartitionedDownloader(
                 blockClient.Object,
+                requestPriority: default,
                 new StorageTransferOptions()
                 {
                     MaximumTransferLength = 10,
@@ -791,6 +807,7 @@ namespace Azure.Storage.Blobs.Test
             // Initial range (20) >= blob size (10) → one-shot path
             PartitionedDownloader downloader = new PartitionedDownloader(
                 blockClient.Object,
+                requestPriority: default,
                 new StorageTransferOptions()
                 {
                     MaximumTransferLength = 10,
@@ -838,10 +855,11 @@ namespace Azure.Storage.Blobs.Test
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
                 It.IsAny<AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(),
                 It.IsAny<Uri>(),
+                It.IsAny<int?>(),
                 _async,
                 s_cancellationToken)
-            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, Uri, bool, CancellationToken>(
-                (range, conditions, validation, progress, operationName, layoutCache, LayoutEndpoint, async, cancellation) =>
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, Uri, int?, bool, CancellationToken>(
+                (range, conditions, validation, progress, operationName, layoutCache, LayoutEndpoint, requestPriority, async, cancellation) =>
                 {
                     lock (capturedCalls)
                     {
@@ -1042,10 +1060,11 @@ namespace Azure.Storage.Blobs.Test
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
                 It.IsAny<AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(),
                 It.IsAny<Uri>(),
+                It.IsAny<int?>(),
                 _async,
                 It.IsAny<CancellationToken>())
-            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, Uri, bool, CancellationToken>(
-                (range, conditions, validation, progress, operationName, layoutCache, layoutEndpoint, async, cancellation) =>
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, Uri, int?, bool, CancellationToken>(
+                (range, conditions, validation, progress, operationName, layoutCache, layoutEndpoint, requestPriority, async, cancellation) =>
                     handler(range, conditions, validation, progress, async, cancellation));
         }
 
@@ -1102,6 +1121,7 @@ namespace Azure.Storage.Blobs.Test
         {
             return new PartitionedDownloader(
                 client,
+                requestPriority: default,
                 new StorageTransferOptions()
                 {
                     MaximumTransferLength = maximumTransferLength,
@@ -1123,10 +1143,11 @@ namespace Azure.Storage.Blobs.Test
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
                 It.IsAny<AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(),
                 It.IsAny<Uri>(),
+                It.IsAny<int?>(),
                 _async,
                 s_cancellationToken)
-            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, Uri, bool, CancellationToken>(
-                (range, conditions, validation, progress, operationName, layoutCache, LayoutEndpoint, async, cancellation) => async
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, Uri, int?, bool, CancellationToken>(
+                (range, conditions, validation, progress, operationName, layoutCache, LayoutEndpoint, requestPriority, async, cancellation) => async
                     ? dataSource.GetStreamAsync(range, conditions, validation, progress: progress, cancellation)
                     : new ValueTask<Response<BlobDownloadStreamingResult>>(dataSource.GetStream(range, conditions, validation, progress: progress, cancellation)));
         }
@@ -1143,6 +1164,7 @@ namespace Azure.Storage.Blobs.Test
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
                 It.IsAny<AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(),
                 It.IsAny<Uri>(),
+                It.IsAny<int?>(),
                 _async,
                 s_cancellationToken)
             ).ThrowsAsync(new RequestFailedException(
@@ -1161,10 +1183,11 @@ namespace Azure.Storage.Blobs.Test
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
                 It.IsAny<AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(),
                 It.IsAny<Uri>(),
+                It.IsAny<int?>(),
                 _async,
                 s_cancellationToken)
-            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, Uri, bool, CancellationToken>(
-                (range, conditions, validation, progress, operationName, layoutCache, LayoutEndpoint, async, cancellation) => async
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, Uri, int?, bool, CancellationToken>(
+                (range, conditions, validation, progress, operationName, layoutCache, LayoutEndpoint, requestPriority, async, cancellation) => async
                     ? dataSource.GetStreamAsync(range, conditions, validation, progress: progress, cancellation)
                     : new ValueTask<Response<BlobDownloadStreamingResult>>(dataSource.GetStream(range, conditions, validation, progress: progress, cancellation)));
         }
