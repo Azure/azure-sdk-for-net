@@ -49,6 +49,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="name"> The name of the index. </param>
         /// <param name="description"> The description of the index. </param>
         /// <param name="fields"> The fields of the index. </param>
+        /// <param name="graphProfile"> The persisted edge-list graph mapping, when the index supports graph queries. </param>
         /// <param name="scoringProfiles"> The scoring profiles for the index. </param>
         /// <param name="defaultScoringProfile"> The name of the scoring profile to use if none is specified in the query. If this property is not set and no scoring profile is specified in the query, then default scoring (tf-idf) will be used. </param>
         /// <param name="corsOptions"> Options to control Cross-Origin Resource Sharing (CORS) for the index. </param>
@@ -64,13 +65,16 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="vectorSearch"> Contains configuration options related to vector search. </param>
         /// <param name="permissionFilterOption"> A value indicating whether permission filtering is enabled for the index. </param>
         /// <param name="purviewEnabled"> A value indicating whether Purview is enabled for the index. </param>
+        /// <param name="sharePointConnectorAppRegistration"> Configures a SharePoint connector app registration for the index, enabling document-level permissions from SharePoint. If provided, the applicationId and federatedCredentialId properties are required. </param>
+        /// <param name="oneLakeSecuritySource"> Identifies the Microsoft Fabric OneLake lakehouse that the index's documents originate from. Required when any field uses the 'oneLakeParentFolders' or 'oneLakeLakehouseId' permission filter. </param>
         /// <param name="eTag"> The ETag of the index. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexResponse(string name, string description, IList<SearchField> fields, IList<ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IList<SearchSuggester> suggesters, IList<LexicalAnalyzer> analyzers, IList<LexicalTokenizer> tokenizers, IList<TokenFilter> tokenFilters, IList<CharFilter> charFilters, IList<LexicalNormalizer> normalizers, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, SemanticSearch semanticSearch, VectorSearch vectorSearch, SearchIndexPermissionFilterOption? permissionFilterOption, bool? purviewEnabled, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndexResponse(string name, string description, IList<SearchField> fields, GraphProfile graphProfile, IList<ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IList<SearchSuggester> suggesters, IList<LexicalAnalyzer> analyzers, IList<LexicalTokenizer> tokenizers, IList<TokenFilter> tokenFilters, IList<CharFilter> charFilters, IList<LexicalNormalizer> normalizers, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, SemanticSearch semanticSearch, VectorSearch vectorSearch, SearchIndexPermissionFilterOption? permissionFilterOption, bool? purviewEnabled, SharePointConnectorAppRegistration sharePointConnectorAppRegistration, OneLakeSecuritySource oneLakeSecuritySource, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
             Fields = fields;
+            GraphProfile = graphProfile;
             ScoringProfiles = scoringProfiles;
             DefaultScoringProfile = defaultScoringProfile;
             _corsOptions = corsOptions;
@@ -86,6 +90,8 @@ namespace Azure.Search.Documents.Indexes.Models
             _vectorSearch = vectorSearch;
             _permissionFilterOption = permissionFilterOption;
             _purviewEnabled = purviewEnabled;
+            SharePointConnectorAppRegistration = sharePointConnectorAppRegistration;
+            OneLakeSecuritySource = oneLakeSecuritySource;
             ETag = eTag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -98,6 +104,9 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> The fields of the index. </summary>
         public IList<SearchField> Fields { get; }
+
+        /// <summary> The persisted edge-list graph mapping, when the index supports graph queries. </summary>
+        public GraphProfile GraphProfile { get; }
 
         /// <summary> The scoring profiles for the index. </summary>
         public IList<ScoringProfile> ScoringProfiles { get; }
@@ -179,6 +188,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 return _purviewEnabled;
             }
         }
+
+        /// <summary> Configures a SharePoint connector app registration for the index, enabling document-level permissions from SharePoint. If provided, the applicationId and federatedCredentialId properties are required. </summary>
+        public SharePointConnectorAppRegistration SharePointConnectorAppRegistration { get; }
+
+        /// <summary> Identifies the Microsoft Fabric OneLake lakehouse that the index's documents originate from. Required when any field uses the 'oneLakeParentFolders' or 'oneLakeLakehouseId' permission filter. </summary>
+        public OneLakeSecuritySource OneLakeSecuritySource { get; }
 
         /// <summary> The ETag of the index. </summary>
         public ETag? ETag { get; }

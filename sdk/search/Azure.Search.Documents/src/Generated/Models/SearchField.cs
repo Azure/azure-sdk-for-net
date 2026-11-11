@@ -33,6 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="isSortable"> A value indicating whether to enable the field to be referenced in $orderby expressions. By default, the search engine sorts results by score, but in many experiences users will want to sort by fields in the documents. A simple field can be sortable only if it is single-valued (it has a single value in the scope of the parent document). Simple collection fields cannot be sortable, since they are multi-valued. Simple sub-fields of complex collections are also multi-valued, and therefore cannot be sortable. This is true whether it's an immediate parent field, or an ancestor field, that's the complex collection. Complex fields cannot be sortable and the sortable property must be null for such fields. The default for sortable is true for single-valued simple fields, false for multi-valued simple fields, and null for complex fields. </param>
         /// <param name="isFacetable"> A value indicating whether to enable the field to be referenced in facet queries. Typically used in a presentation of search results that includes hit count by category (for example, search for digital cameras and see hits by brand, by megapixels, by price, and so on). This property must be null for complex fields. Fields of type Edm.GeographyPoint or Collection(Edm.GeographyPoint) cannot be facetable. Default is true for all other simple fields. </param>
         /// <param name="permissionFilter"> A value indicating whether the field should be used as a permission filter. </param>
+        /// <param name="organizationAccessExpiration"> A value indicating whether the field contains the expiration timestamp for organization-scoped SharePoint sharing links. At most one top-level field of type Edm.DateTimeOffset can have this property set to true. On permission-filtered queries, expiration applies only to orgLink:&lt;tenantId&gt; values in a userIds permission-filter field whose tenant ID matches the validated user's tenant ID. The grant is valid only before the timestamp; an absent expiration field or a null timestamp means no time limit. Expiration does not affect orgGroup:&lt;tenantId&gt; values in groupIds permission-filter fields or ordinary user and group grants. If omitted or false, this field is not used for organization-link expiration. </param>
         /// <param name="sensitivityLabelId"> A value indicating whether the field should be used for sensitivity label ID filtering. This enables document-level filtering based on Microsoft Purview sensitivity label IDs. </param>
         /// <param name="sensitivityLabelName"> A value indicating whether the field contains the name of a Microsoft Purview sensitivity label applied to the document. </param>
         /// <param name="sourceDocumentId"> A value indicating whether the field contains the source document identifier used for Purview audit tracking. </param>
@@ -43,11 +44,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="normalizerName"> The name of the normalizer to use for the field. This option can be used only with fields with filterable, sortable, or facetable enabled. Once the normalizer is chosen, it cannot be changed for the field. Must be null for complex fields. </param>
         /// <param name="vectorSearchDimensions"> The dimensionality of the vector field. </param>
         /// <param name="vectorSearchProfileName"> The name of the vector search profile that specifies the algorithm and vectorizer to use when searching the vector field. </param>
+        /// <param name="topicGraphProfile"> The name of the topic graph profile linked to this vector field. </param>
         /// <param name="vectorEncodingFormat"> The encoding format to interpret the field contents. </param>
         /// <param name="synonymMapNames"> A list of the names of synonym maps to associate with this field. This option can be used only with searchable fields. Currently only one synonym map per field is supported. Assigning a synonym map to a field ensures that query terms targeting that field are expanded at query-time using the rules in the synonym map. This attribute can be changed on existing fields. Must be null or an empty collection for complex fields. </param>
         /// <param name="fields"> A list of sub-fields if this is a field of type Edm.ComplexType or Collection(Edm.ComplexType). Must be null or empty for simple fields. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchField(string name, SearchFieldDataType @type, bool? isKey, bool? isRetrievable, bool? isStored, bool? isSearchable, bool? isFilterable, bool? isSortable, bool? isFacetable, PermissionFilter? permissionFilter, bool? sensitivityLabelId, bool? sensitivityLabelName, bool? sourceDocumentId, bool? sharepointSiteUrl, LexicalAnalyzerName? analyzerName, LexicalAnalyzerName? searchAnalyzerName, LexicalAnalyzerName? indexAnalyzerName, LexicalNormalizerName? normalizerName, int? vectorSearchDimensions, string vectorSearchProfileName, VectorEncodingFormat? vectorEncodingFormat, IList<string> synonymMapNames, IList<SearchField> fields, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchField(string name, SearchFieldDataType @type, bool? isKey, bool? isRetrievable, bool? isStored, bool? isSearchable, bool? isFilterable, bool? isSortable, bool? isFacetable, PermissionFilter? permissionFilter, bool? organizationAccessExpiration, bool? sensitivityLabelId, bool? sensitivityLabelName, bool? sourceDocumentId, bool? sharepointSiteUrl, LexicalAnalyzerName? analyzerName, LexicalAnalyzerName? searchAnalyzerName, LexicalAnalyzerName? indexAnalyzerName, LexicalNormalizerName? normalizerName, int? vectorSearchDimensions, string vectorSearchProfileName, string topicGraphProfile, VectorEncodingFormat? vectorEncodingFormat, IList<string> synonymMapNames, IList<SearchField> fields, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Type = @type;
@@ -59,6 +61,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IsSortable = isSortable;
             IsFacetable = isFacetable;
             _permissionFilter = permissionFilter;
+            OrganizationAccessExpiration = organizationAccessExpiration;
             SensitivityLabelId = sensitivityLabelId;
             SensitivityLabelName = sensitivityLabelName;
             SourceDocumentId = sourceDocumentId;
@@ -69,6 +72,7 @@ namespace Azure.Search.Documents.Indexes.Models
             NormalizerName = normalizerName;
             VectorSearchDimensions = vectorSearchDimensions;
             _vectorSearchProfileName = vectorSearchProfileName;
+            TopicGraphProfile = topicGraphProfile;
             _vectorEncodingFormat = vectorEncodingFormat;
             SynonymMapNames = synonymMapNames;
             Fields = fields;
@@ -88,6 +92,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 _permissionFilterIsDefined = true;
             }
         }
+
+        /// <summary> A value indicating whether the field contains the expiration timestamp for organization-scoped SharePoint sharing links. At most one top-level field of type Edm.DateTimeOffset can have this property set to true. On permission-filtered queries, expiration applies only to orgLink:&lt;tenantId&gt; values in a userIds permission-filter field whose tenant ID matches the validated user's tenant ID. The grant is valid only before the timestamp; an absent expiration field or a null timestamp means no time limit. Expiration does not affect orgGroup:&lt;tenantId&gt; values in groupIds permission-filter fields or ordinary user and group grants. If omitted or false, this field is not used for organization-link expiration. </summary>
+        public bool? OrganizationAccessExpiration { get; set; }
 
         /// <summary> A value indicating whether the field should be used for sensitivity label ID filtering. This enables document-level filtering based on Microsoft Purview sensitivity label IDs. </summary>
         public bool? SensitivityLabelId { get; set; }
@@ -117,6 +124,9 @@ namespace Azure.Search.Documents.Indexes.Models
                 _vectorSearchProfileNameIsDefined = true;
             }
         }
+
+        /// <summary> The name of the topic graph profile linked to this vector field. </summary>
+        public string TopicGraphProfile { get; set; }
 
         /// <summary> The encoding format to interpret the field contents. </summary>
         public VectorEncodingFormat? VectorEncodingFormat

@@ -92,7 +92,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.ToSerialString());
             }
-            if (options.Format != "W")
+            if (options.Format != "W" && Optional.IsDefined(Runtime))
             {
                 writer.WritePropertyName("runtime"u8);
                 writer.WriteObjectValue(Runtime, options);
@@ -186,6 +186,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 if (prop.NameEquals("runtime"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     runtime = IndexerRuntime.DeserializeIndexerRuntime(prop.Value, options);
                     continue;
                 }

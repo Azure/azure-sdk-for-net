@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> A hint that identifies a field and representative values the query planner can use when constructing a filter. </summary>
+    /// <summary> A hint that identifies a field and exhaustive grounding values the query planner can use when constructing a filter. </summary>
     public partial class SearchIndexKnowledgeSourceFilterHint
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -20,26 +19,26 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexKnowledgeSourceFilterHint"/>. </summary>
         /// <param name="field"> The name of the filterable search index field. </param>
-        /// <param name="fieldValues"> Representative values for the field. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="field"/> or <paramref name="fieldValues"/> is null. </exception>
-        public SearchIndexKnowledgeSourceFilterHint(string @field, IEnumerable<string> fieldValues)
+        /// <exception cref="ArgumentNullException"> <paramref name="field"/> is null. </exception>
+        public SearchIndexKnowledgeSourceFilterHint(string @field)
         {
             Argument.AssertNotNull(@field, nameof(@field));
-            Argument.AssertNotNull(fieldValues, nameof(fieldValues));
 
             Field = @field;
-            FieldValues = fieldValues.ToList();
+            FieldValues = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexKnowledgeSourceFilterHint"/>. </summary>
         /// <param name="field"> The name of the filterable search index field. </param>
-        /// <param name="fieldValues"> Representative values for the field. </param>
+        /// <param name="fieldValues"> The exhaustive set of values for the field. At most 160 values, with a maximum of 128 characters per value and 2048 characters combined. In versions supporting `autoConfiguration`, required unless `autoConfiguration` is specified, and mutually exclusive with it. </param>
+        /// <param name="autoConfiguration"> Configures the service to resolve grounding values from the field's facets. Its presence enables auto-configuration. The field must be filterable and facetable. Not supported when the target index has document-level permissions or Purview sensitivity labels enabled; this restriction is validated at knowledge source create/update and knowledge base retrieval time. Mutually exclusive with `fieldValues`. Supported only in a knowledge source's stored `queryHints`, not in request-time `queryHintOverrides`. </param>
         /// <param name="filterInstructions"> Natural-language instructions that explain when and how to filter on the field. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SearchIndexKnowledgeSourceFilterHint(string @field, IList<string> fieldValues, string filterInstructions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SearchIndexKnowledgeSourceFilterHint(string @field, IList<string> fieldValues, SearchIndexKnowledgeSourceFilterHintAutoConfiguration autoConfiguration, string filterInstructions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Field = @field;
             FieldValues = fieldValues;
+            AutoConfiguration = autoConfiguration;
             FilterInstructions = filterInstructions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -47,8 +46,11 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> The name of the filterable search index field. </summary>
         public string Field { get; set; }
 
-        /// <summary> Representative values for the field. </summary>
+        /// <summary> The exhaustive set of values for the field. At most 160 values, with a maximum of 128 characters per value and 2048 characters combined. In versions supporting `autoConfiguration`, required unless `autoConfiguration` is specified, and mutually exclusive with it. </summary>
         public IList<string> FieldValues { get; }
+
+        /// <summary> Configures the service to resolve grounding values from the field's facets. Its presence enables auto-configuration. The field must be filterable and facetable. Not supported when the target index has document-level permissions or Purview sensitivity labels enabled; this restriction is validated at knowledge source create/update and knowledge base retrieval time. Mutually exclusive with `fieldValues`. Supported only in a knowledge source's stored `queryHints`, not in request-time `queryHintOverrides`. </summary>
+        public SearchIndexKnowledgeSourceFilterHintAutoConfiguration AutoConfiguration { get; set; }
 
         /// <summary> Natural-language instructions that explain when and how to filter on the field. </summary>
         public string FilterInstructions { get; set; }

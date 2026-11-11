@@ -3,6 +3,14 @@
 
 #if AZURE_SEARCH_PREVIEW
 
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using Azure.Search.Documents.Indexes;
+using Azure.Search.Documents.Indexes.Models;
+using NUnit.Framework;
+
 namespace Azure.Search.Documents.Tests
 {
     /// <summary>
@@ -17,22 +25,85 @@ namespace Azure.Search.Documents.Tests
     /// </summary>
     public partial class SearchIndexClientTests
     {
-        // This file intentionally contains no tests in GA releases.
-        // It is scaffolding for the next preview API version and should not be counted as active coverage.
-        //
-        // Add preview-only index management tests here.
-        // Each test should have [ServiceVersion(Min = CurrentPreviewVersion)] to ensure
-        // it only runs against the preview API version in the test matrix.
-        //
-        // Example:
-        // [Test]
-        // [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_05_01_Preview)]
-        // public async Task PreviewIndexFeature()
-        // {
-        //     await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
-        //     SearchIndexClient client = resources.GetIndexClient();
-        //     // ... test preview-only index behavior
-        // }
+        // search-preview:2026-11-01-preview {
+        [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_11_01_Preview)]
+        public async Task RandomScoringParametersRoundtrip()
+        {
+            await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
+            resources.IndexName = Recording.Random.GetName(8);
+            SearchIndex index = SearchResources.GetHotelIndex(resources.IndexName);
+            index.ScoringProfiles.Clear();
+            index.ScoringProfiles.Add(new ScoringProfile("random-order")
+            {
+                Functions =
+                {
+                    new RandomScoringFunction
+                    {
+                        Parameters = new RandomScoringParameters("randomSeed")
+                    }
+                }
+            });
+
+            SearchIndexClient client = resources.GetIndexClient();
+            SearchIndex created = await client.CreateIndexAsync(index);
+            RandomScoringFunction createdFunction = created.ScoringProfiles.Single().Functions.Single() as RandomScoringFunction;
+            Assert.IsNotNull(createdFunction);
+            Assert.AreEqual("randomSeed", createdFunction.Parameters.SeedParameter);
+
+            SearchIndex fetched = await client.GetIndexAsync(resources.IndexName);
+            RandomScoringFunction fetchedFunction = fetched.ScoringProfiles.Single().Functions.Single() as RandomScoringFunction;
+            Assert.IsNotNull(fetchedFunction);
+            Assert.AreEqual("randomSeed", fetchedFunction.Parameters.SeedParameter);
+        }
+
+        [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_11_01_Preview)]
+        public async Task KnowledgeSourceFacetFilterAutoConfigurationRoundtrip()
+        {
+            await using SearchResources resources = await SearchResources.CreateWithHotelsIndexAsync(this);
+            string sourceName = Recording.Random.GetName(8);
+            SearchIndexClient client = resources.GetIndexClient();
+            var source = new SearchIndexKnowledgeSource(sourceName, new SearchIndexKnowledgeSourceParameters(resources.IndexName)
+            {
+                SemanticConfigurationName = "my-semantic-config",
+                QueryHints = new SearchIndexKnowledgeSourceQueryHints
+                {
+                    Filters =
+                    {
+                        new SearchIndexKnowledgeSourceFilterHint("category")
+                        {
+                            AutoConfiguration = new SearchIndexKnowledgeSourceFilterHintAutoConfiguration
+                            {
+                                CacheTtl = 300,
+                                MaxFacetValueCount = 32
+                            }
+                        }
+                    }
+                }
+            });
+
+            bool created = false;
+            try
+            {
+                await client.CreateKnowledgeSourceAsync(source);
+                created = true;
+                SearchIndexKnowledgeSource fetched = (SearchIndexKnowledgeSource)(await client.GetKnowledgeSourceAsync(sourceName)).Value;
+                SearchIndexKnowledgeSourceFilterHintAutoConfiguration configuration =
+                    fetched.SearchIndexParameters.QueryHints.Filters.Single().AutoConfiguration;
+                Assert.IsNotNull(configuration);
+                Assert.AreEqual(300, configuration.CacheTtl);
+                Assert.AreEqual(32, configuration.MaxFacetValueCount);
+            }
+            finally
+            {
+                if (created)
+                {
+                    await client.DeleteKnowledgeSourceAsync(sourceName, cancellationToken: CancellationToken.None);
+                }
+            }
+        }
+        // search-preview:2026-11-01-preview }
     }
 }
 #endif

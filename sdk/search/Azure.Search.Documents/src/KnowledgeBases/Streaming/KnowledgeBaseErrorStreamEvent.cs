@@ -4,7 +4,7 @@
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Wraps an <c>error</c> event payload. </summary>
-    public sealed class KnowledgeBaseErrorStreamEvent : KnowledgeBaseRetrievalStreamEvent
+    public sealed partial class KnowledgeBaseErrorStreamEvent : KnowledgeBaseRetrievalStreamEvent
     {
         internal KnowledgeBaseErrorStreamEvent(KnowledgeBaseStreamErrorEvent value)
             : base("error") => Value = value;

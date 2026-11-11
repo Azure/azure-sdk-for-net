@@ -54,6 +54,36 @@ namespace Azure.Search.Documents.Tests
         /// </summary>
         public static IEnumerable<TestCaseData> SearchOptionProperties()
         {
+            yield return new TestCaseData(
+                (Action<SearchOptions>)(o => o.MoreLikeThis = "hotel-42"),
+                "\"moreLikeThis\":\"hotel-42\"")
+                .SetName("Serializes_MoreLikeThis");
+
+            yield return new TestCaseData(
+                (Action<SearchOptions>)(o => o.AgenticOptions = new AgenticSearchOptions { MaxRuntimeInSeconds = 30 }),
+                "\"agenticOptions\":{\"maxRuntimeInSeconds\":30}")
+                .SetName("Serializes_AgenticOptions");
+
+            yield return new TestCaseData(
+                (Action<SearchOptions>)(o => o.QueryType = SearchQueryType.Agentic),
+                "\"queryType\":\"agentic\"")
+                .SetName("Serializes_AgenticQueryType");
+
+            yield return new TestCaseData(
+                (Action<SearchOptions>)(o => o.VectorSearch = new VectorSearchOptions
+                {
+                    Queries =
+                    {
+                        new VectorizedQuery(new[] { 0.1f, 0.2f })
+                        {
+                            Fields = { "contentVector" },
+                            TopicGraph = new BalancedVectorQueryTopicGraph { MinDiversityPoolSize = 1000 }
+                        }
+                    }
+                }),
+                "\"topicGraph\":{\"kind\":\"balanced\",\"minDiversityPoolSize\":1000}")
+                .SetName("Serializes_VectorTopicGraph");
+
             // Filter
             yield return new TestCaseData(
                 (Action<SearchOptions>)(o => o.Filter = "rating gt 4"),

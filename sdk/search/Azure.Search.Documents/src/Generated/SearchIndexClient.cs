@@ -327,16 +327,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Pageable<BinaryData> GetSynonymMaps(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        public virtual Pageable<BinaryData> GetAllSynonymMaps(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
-            return new SearchIndexClientGetSynonymMapsCollectionResult(
+            return new SearchIndexClientGetAllSynonymMapsCollectionResult(
                 this,
                 @select,
                 search,
                 pageSize,
                 searchType,
                 context,
-                "SearchIndexClient.GetSynonymMaps");
+                "SearchIndexClient.GetAllSynonymMaps");
         }
 
         /// <summary>
@@ -354,16 +354,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual AsyncPageable<BinaryData> GetSynonymMapsAsync(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetAllSynonymMapsAsync(IEnumerable<string> @select, string search, int? pageSize, string searchType, RequestContext context)
         {
-            return new SearchIndexClientGetSynonymMapsAsyncCollectionResult(
+            return new SearchIndexClientGetAllSynonymMapsAsyncCollectionResult(
                 this,
                 @select,
                 search,
                 pageSize,
                 searchType,
                 context,
-                "SearchIndexClient.GetSynonymMaps");
+                "SearchIndexClient.GetAllSynonymMaps");
         }
 
         /// <summary> Lists all synonym maps available for a search service. </summary>
@@ -373,16 +373,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Pageable<SynonymMap> GetSynonymMaps(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SynonymMap> GetAllSynonymMaps(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexClientGetSynonymMapsCollectionResultOfT(
+            return new SearchIndexClientGetAllSynonymMapsCollectionResultOfT(
                 this,
                 @select,
                 search,
                 pageSize,
                 searchType?.ToString(),
                 cancellationToken.ToRequestContext(),
-                "SearchIndexClient.GetSynonymMaps");
+                "SearchIndexClient.GetAllSynonymMaps");
         }
 
         /// <summary> Lists all synonym maps available for a search service. </summary>
@@ -392,16 +392,16 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual AsyncPageable<SynonymMap> GetSynonymMapsAsync(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SynonymMap> GetAllSynonymMapsAsync(IEnumerable<string> @select = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexClientGetSynonymMapsAsyncCollectionResultOfT(
+            return new SearchIndexClientGetAllSynonymMapsAsyncCollectionResultOfT(
                 this,
                 @select,
                 search,
                 pageSize,
                 searchType?.ToString(),
                 cancellationToken.ToRequestContext(),
-                "SearchIndexClient.GetSynonymMaps");
+                "SearchIndexClient.GetAllSynonymMaps");
         }
 
         /// <summary>
@@ -2790,6 +2790,102 @@ namespace Azure.Search.Documents.Indexes
             return Response.FromValue((KnowledgeSourceFile)result, result);
         }
 
+        /// <summary> Starts asynchronous ingestion of a new file into a File knowledge source, processed on a Content Processor. Poll the returned operation to retrieve the created file. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Operation<BinaryData> IngestKnowledgeSourceFileMultipart(WaitUntil waitUntil, string sourceName, RequestContent content, string contentType, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.IngestKnowledgeSourceFileMultipart");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
+
+                using HttpMessage message = CreateIngestKnowledgeSourceFileMultipartRequest(sourceName, content, contentType, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "SearchIndexClient.IngestKnowledgeSourceFileMultipart", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Starts asynchronous ingestion of a new file into a File knowledge source, processed on a Content Processor. Poll the returned operation to retrieve the created file. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Operation<BinaryData>> IngestKnowledgeSourceFileMultipartAsync(WaitUntil waitUntil, string sourceName, RequestContent content, string contentType, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.IngestKnowledgeSourceFileMultipart");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
+
+                using HttpMessage message = CreateIngestKnowledgeSourceFileMultipartRequest(sourceName, content, contentType, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "SearchIndexClient.IngestKnowledgeSourceFileMultipart", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Starts asynchronous ingestion of a new file into a File knowledge source, processed on a Content Processor. Poll the returned operation to retrieve the created file. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="body"> The multipart/form-data body containing the metadata and content parts. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [Experimental("SCME0004")]
+        public virtual Operation<KnowledgeSourceFile> IngestKnowledgeSourceFileMultipart(WaitUntil waitUntil, string sourceName, UploadKnowledgeSourceFileMultipartRequest body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using MultiPartFormContent content = body.ToMultipartFormContent();
+            using RequestContent requestContent = RequestContent.Create(content);
+            Operation<BinaryData> result = IngestKnowledgeSourceFileMultipart(waitUntil, sourceName, requestContent, content.MediaType, cancellationToken.ToRequestContext());
+            return ProtocolOperationHelpers.Convert(result, response => KnowledgeSourceFile.FromLroResponse(response), ClientDiagnostics, "SearchIndexClient.IngestKnowledgeSourceFileMultipart");
+        }
+
+        /// <summary> Starts asynchronous ingestion of a new file into a File knowledge source, processed on a Content Processor. Poll the returned operation to retrieve the created file. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="body"> The multipart/form-data body containing the metadata and content parts. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [Experimental("SCME0004")]
+        public virtual async Task<Operation<KnowledgeSourceFile>> IngestKnowledgeSourceFileMultipartAsync(WaitUntil waitUntil, string sourceName, UploadKnowledgeSourceFileMultipartRequest body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using MultiPartFormContent content = body.ToMultipartFormContent();
+            using RequestContent requestContent = RequestContent.Create(content);
+            Operation<BinaryData> result = await IngestKnowledgeSourceFileMultipartAsync(waitUntil, sourceName, requestContent, content.MediaType, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(result, response => KnowledgeSourceFile.FromLroResponse(response), ClientDiagnostics, "SearchIndexClient.IngestKnowledgeSourceFileMultipart");
+        }
+
         /// <summary>
         /// [Protocol Method] Lists all files in a File knowledge source.
         /// <list type="bullet">
@@ -2808,11 +2904,11 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetKnowledgeSourceFiles(string sourceName, string prefix, string search, int? pageSize, string searchType, RequestContext context)
+        public virtual Pageable<BinaryData> GetAllKnowledgeSourceFiles(string sourceName, string prefix, string search, int? pageSize, string searchType, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
-            return new SearchIndexClientGetKnowledgeSourceFilesCollectionResult(
+            return new SearchIndexClientGetAllKnowledgeSourceFilesCollectionResult(
                 this,
                 sourceName,
                 prefix,
@@ -2820,7 +2916,7 @@ namespace Azure.Search.Documents.Indexes
                 pageSize,
                 searchType,
                 context,
-                "SearchIndexClient.GetKnowledgeSourceFiles");
+                "SearchIndexClient.GetAllKnowledgeSourceFiles");
         }
 
         /// <summary>
@@ -2841,11 +2937,11 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetKnowledgeSourceFilesAsync(string sourceName, string prefix, string search, int? pageSize, string searchType, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetAllKnowledgeSourceFilesAsync(string sourceName, string prefix, string search, int? pageSize, string searchType, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
-            return new SearchIndexClientGetKnowledgeSourceFilesAsyncCollectionResult(
+            return new SearchIndexClientGetAllKnowledgeSourceFilesAsyncCollectionResult(
                 this,
                 sourceName,
                 prefix,
@@ -2853,7 +2949,7 @@ namespace Azure.Search.Documents.Indexes
                 pageSize,
                 searchType,
                 context,
-                "SearchIndexClient.GetKnowledgeSourceFiles");
+                "SearchIndexClient.GetAllKnowledgeSourceFiles");
         }
 
         /// <summary> Lists all files in a File knowledge source. </summary>
@@ -2866,11 +2962,11 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<KnowledgeSourceFile> GetKnowledgeSourceFiles(string sourceName, string prefix = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<KnowledgeSourceFile> GetAllKnowledgeSourceFiles(string sourceName, string prefix = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
-            return new SearchIndexClientGetKnowledgeSourceFilesCollectionResultOfT(
+            return new SearchIndexClientGetAllKnowledgeSourceFilesCollectionResultOfT(
                 this,
                 sourceName,
                 prefix,
@@ -2878,7 +2974,7 @@ namespace Azure.Search.Documents.Indexes
                 pageSize,
                 searchType?.ToString(),
                 cancellationToken.ToRequestContext(),
-                "SearchIndexClient.GetKnowledgeSourceFiles");
+                "SearchIndexClient.GetAllKnowledgeSourceFiles");
         }
 
         /// <summary> Lists all files in a File knowledge source. </summary>
@@ -2891,11 +2987,11 @@ namespace Azure.Search.Documents.Indexes
         /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<KnowledgeSourceFile> GetKnowledgeSourceFilesAsync(string sourceName, string prefix = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<KnowledgeSourceFile> GetAllKnowledgeSourceFilesAsync(string sourceName, string prefix = default, string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
 
-            return new SearchIndexClientGetKnowledgeSourceFilesAsyncCollectionResultOfT(
+            return new SearchIndexClientGetAllKnowledgeSourceFilesAsyncCollectionResultOfT(
                 this,
                 sourceName,
                 prefix,
@@ -2903,7 +2999,7 @@ namespace Azure.Search.Documents.Indexes
                 pageSize,
                 searchType?.ToString(),
                 cancellationToken.ToRequestContext(),
-                "SearchIndexClient.GetKnowledgeSourceFiles");
+                "SearchIndexClient.GetAllKnowledgeSourceFiles");
         }
 
         /// <summary>
@@ -2914,23 +3010,23 @@ namespace Azure.Search.Documents.Indexes
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="fileId"> The unique identifier of the file to delete. </param>
         /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="fileId"> The unique identifier of the file to delete. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteKnowledgeSourceFile(string fileId, string sourceName, RequestContext context)
+        public virtual Response DeleteKnowledgeSourceFile(string sourceName, string fileId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.DeleteKnowledgeSourceFile");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
                 Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-                using HttpMessage message = CreateDeleteKnowledgeSourceFileRequest(fileId, sourceName, context);
+                using HttpMessage message = CreateDeleteKnowledgeSourceFileRequest(sourceName, fileId, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2948,23 +3044,23 @@ namespace Azure.Search.Documents.Indexes
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="fileId"> The unique identifier of the file to delete. </param>
         /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="fileId"> The unique identifier of the file to delete. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteKnowledgeSourceFileAsync(string fileId, string sourceName, RequestContext context)
+        public virtual async Task<Response> DeleteKnowledgeSourceFileAsync(string sourceName, string fileId, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.DeleteKnowledgeSourceFile");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
                 Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-                using HttpMessage message = CreateDeleteKnowledgeSourceFileRequest(fileId, sourceName, context);
+                using HttpMessage message = CreateDeleteKnowledgeSourceFileRequest(sourceName, fileId, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2975,33 +3071,33 @@ namespace Azure.Search.Documents.Indexes
         }
 
         /// <summary> Deletes a file from a File knowledge source and removes all indexed content derived from it. </summary>
-        /// <param name="fileId"> The unique identifier of the file to delete. </param>
         /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="fileId"> The unique identifier of the file to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response DeleteKnowledgeSourceFile(string fileId, string sourceName, CancellationToken cancellationToken = default)
+        public virtual Response DeleteKnowledgeSourceFile(string sourceName, string fileId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
             Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            return DeleteKnowledgeSourceFile(fileId, sourceName, cancellationToken.ToRequestContext());
+            return DeleteKnowledgeSourceFile(sourceName, fileId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Deletes a file from a File knowledge source and removes all indexed content derived from it. </summary>
-        /// <param name="fileId"> The unique identifier of the file to delete. </param>
         /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="fileId"> The unique identifier of the file to delete. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> or <paramref name="fileId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteKnowledgeSourceFileAsync(string fileId, string sourceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteKnowledgeSourceFileAsync(string sourceName, string fileId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
             Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            return await DeleteKnowledgeSourceFileAsync(fileId, sourceName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return await DeleteKnowledgeSourceFileAsync(sourceName, fileId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3012,27 +3108,27 @@ namespace Azure.Search.Documents.Indexes
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="fileId"> The unique identifier of the file to update. </param>
         /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="fileId"> The unique identifier of the file to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/>, <paramref name="sourceName"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/>, <paramref name="sourceName"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="fileId"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/>, <paramref name="fileId"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response UpdateKnowledgeSourceFile(string fileId, string sourceName, RequestContent content, string contentType, RequestContext context = null)
+        public virtual Response UpdateKnowledgeSourceFile(string sourceName, string fileId, RequestContent content, string contentType, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.UpdateKnowledgeSourceFile");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
                 Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
                 Argument.AssertNotNull(content, nameof(content));
                 Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
 
-                using HttpMessage message = CreateUpdateKnowledgeSourceFileRequest(fileId, sourceName, content, contentType, context);
+                using HttpMessage message = CreateUpdateKnowledgeSourceFileRequest(sourceName, fileId, content, contentType, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3050,27 +3146,27 @@ namespace Azure.Search.Documents.Indexes
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="fileId"> The unique identifier of the file to update. </param>
         /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="fileId"> The unique identifier of the file to update. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/>, <paramref name="sourceName"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/>, <paramref name="sourceName"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="fileId"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/>, <paramref name="fileId"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateKnowledgeSourceFileAsync(string fileId, string sourceName, RequestContent content, string contentType, RequestContext context = null)
+        public virtual async Task<Response> UpdateKnowledgeSourceFileAsync(string sourceName, string fileId, RequestContent content, string contentType, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.UpdateKnowledgeSourceFile");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
                 Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
                 Argument.AssertNotNull(content, nameof(content));
                 Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
 
-                using HttpMessage message = CreateUpdateKnowledgeSourceFileRequest(fileId, sourceName, content, contentType, context);
+                using HttpMessage message = CreateUpdateKnowledgeSourceFileRequest(sourceName, fileId, content, contentType, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3081,45 +3177,349 @@ namespace Azure.Search.Documents.Indexes
         }
 
         /// <summary> Updates an existing file in a File knowledge source in place, replacing its indexed content. Uses multipart/form-data: a JSON 'metadata' part (file name and custom metadata) and a 'content' part with the raw file bytes. </summary>
-        /// <param name="fileId"> The unique identifier of the file to update. </param>
         /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="fileId"> The unique identifier of the file to update. </param>
         /// <param name="body"> The multipart/form-data body containing the metadata and content parts. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/>, <paramref name="sourceName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="fileId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         [Experimental("SCME0004")]
-        public virtual Response<KnowledgeSourceFile> UpdateKnowledgeSourceFile(string fileId, string sourceName, UpdateKnowledgeSourceFileRequest body, CancellationToken cancellationToken = default)
+        public virtual Response<KnowledgeSourceFile> UpdateKnowledgeSourceFile(string sourceName, string fileId, UpdateKnowledgeSourceFileRequest body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
             Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
             Argument.AssertNotNull(body, nameof(body));
 
             using MultiPartFormContent content = body.ToMultipartFormContent();
             using RequestContent requestContent = RequestContent.Create(content);
-            Response result = UpdateKnowledgeSourceFile(fileId, sourceName, requestContent, content.MediaType, cancellationToken.ToRequestContext());
+            Response result = UpdateKnowledgeSourceFile(sourceName, fileId, requestContent, content.MediaType, cancellationToken.ToRequestContext());
             return Response.FromValue((KnowledgeSourceFile)result, result);
         }
 
         /// <summary> Updates an existing file in a File knowledge source in place, replacing its indexed content. Uses multipart/form-data: a JSON 'metadata' part (file name and custom metadata) and a 'content' part with the raw file bytes. </summary>
-        /// <param name="fileId"> The unique identifier of the file to update. </param>
         /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="fileId"> The unique identifier of the file to update. </param>
         /// <param name="body"> The multipart/form-data body containing the metadata and content parts. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/>, <paramref name="sourceName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="fileId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         [Experimental("SCME0004")]
-        public virtual async Task<Response<KnowledgeSourceFile>> UpdateKnowledgeSourceFileAsync(string fileId, string sourceName, UpdateKnowledgeSourceFileRequest body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<KnowledgeSourceFile>> UpdateKnowledgeSourceFileAsync(string sourceName, string fileId, UpdateKnowledgeSourceFileRequest body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
             Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
             Argument.AssertNotNull(body, nameof(body));
 
             using MultiPartFormContent content = body.ToMultipartFormContent();
             using RequestContent requestContent = RequestContent.Create(content);
-            Response result = await UpdateKnowledgeSourceFileAsync(fileId, sourceName, requestContent, content.MediaType, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            Response result = await UpdateKnowledgeSourceFileAsync(sourceName, fileId, requestContent, content.MediaType, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((KnowledgeSourceFile)result, result);
+        }
+
+        /// <summary> Starts asynchronous ingestion that replaces an existing file in a File knowledge source, processed on a Content Processor. Poll the returned operation to retrieve the updated file. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="fileId"> The unique identifier of the file to update. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="fileId"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/>, <paramref name="fileId"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Operation<BinaryData> IngestKnowledgeSourceFileReplacement(WaitUntil waitUntil, string sourceName, string fileId, RequestContent content, string contentType, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.IngestKnowledgeSourceFileReplacement");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+                Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
+
+                using HttpMessage message = CreateIngestKnowledgeSourceFileReplacementRequest(sourceName, fileId, content, contentType, context);
+                return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "SearchIndexClient.IngestKnowledgeSourceFileReplacement", OperationFinalStateVia.OperationLocation, context, waitUntil);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Starts asynchronous ingestion that replaces an existing file in a File knowledge source, processed on a Content Processor. Poll the returned operation to retrieve the updated file. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="fileId"> The unique identifier of the file to update. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType"> The contentType to use which has the multipart/form-data boundary. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="fileId"/>, <paramref name="content"/> or <paramref name="contentType"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/>, <paramref name="fileId"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Operation<BinaryData>> IngestKnowledgeSourceFileReplacementAsync(WaitUntil waitUntil, string sourceName, string fileId, RequestContent content, string contentType, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.IngestKnowledgeSourceFileReplacement");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+                Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
+
+                using HttpMessage message = CreateIngestKnowledgeSourceFileReplacementRequest(sourceName, fileId, content, contentType, context);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "SearchIndexClient.IngestKnowledgeSourceFileReplacement", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Starts asynchronous ingestion that replaces an existing file in a File knowledge source, processed on a Content Processor. Poll the returned operation to retrieve the updated file. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="fileId"> The unique identifier of the file to update. </param>
+        /// <param name="body"> The multipart/form-data body containing the metadata and content parts. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="fileId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        [Experimental("SCME0004")]
+        public virtual Operation<KnowledgeSourceFile> IngestKnowledgeSourceFileReplacement(WaitUntil waitUntil, string sourceName, string fileId, UpdateKnowledgeSourceFileRequest body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using MultiPartFormContent content = body.ToMultipartFormContent();
+            using RequestContent requestContent = RequestContent.Create(content);
+            Operation<BinaryData> result = IngestKnowledgeSourceFileReplacement(waitUntil, sourceName, fileId, requestContent, content.MediaType, cancellationToken.ToRequestContext());
+            return ProtocolOperationHelpers.Convert(result, response => KnowledgeSourceFile.FromLroResponse(response), ClientDiagnostics, "SearchIndexClient.IngestKnowledgeSourceFileReplacement");
+        }
+
+        /// <summary> Starts asynchronous ingestion that replaces an existing file in a File knowledge source, processed on a Content Processor. Poll the returned operation to retrieve the updated file. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="fileId"> The unique identifier of the file to update. </param>
+        /// <param name="body"> The multipart/form-data body containing the metadata and content parts. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="fileId"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
+        [Experimental("SCME0004")]
+        public virtual async Task<Operation<KnowledgeSourceFile>> IngestKnowledgeSourceFileReplacementAsync(WaitUntil waitUntil, string sourceName, string fileId, UpdateKnowledgeSourceFileRequest body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+            Argument.AssertNotNull(body, nameof(body));
+
+            using MultiPartFormContent content = body.ToMultipartFormContent();
+            using RequestContent requestContent = RequestContent.Create(content);
+            Operation<BinaryData> result = await IngestKnowledgeSourceFileReplacementAsync(waitUntil, sourceName, fileId, requestContent, content.MediaType, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(result, response => KnowledgeSourceFile.FromLroResponse(response), ClientDiagnostics, "SearchIndexClient.IngestKnowledgeSourceFileReplacement");
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status and, when successful, the result of a file ingestion operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="operationId"> The server-generated identifier returned when ingestion was accepted. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetKnowledgeSourceFileIngestionOperation(string sourceName, string operationId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.GetKnowledgeSourceFileIngestionOperation");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+                using HttpMessage message = CreateGetKnowledgeSourceFileIngestionOperationRequest(sourceName, operationId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the status and, when successful, the result of a file ingestion operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="operationId"> The server-generated identifier returned when ingestion was accepted. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetKnowledgeSourceFileIngestionOperationAsync(string sourceName, string operationId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.GetKnowledgeSourceFileIngestionOperation");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+                using HttpMessage message = CreateGetKnowledgeSourceFileIngestionOperationRequest(sourceName, operationId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the status and, when successful, the result of a file ingestion operation. </summary>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="operationId"> The server-generated identifier returned when ingestion was accepted. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<KnowledgeSourceFileIngestionOperation> GetKnowledgeSourceFileIngestionOperation(string sourceName, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            Response result = GetKnowledgeSourceFileIngestionOperation(sourceName, operationId, cancellationToken.ToRequestContext());
+            return Response.FromValue((KnowledgeSourceFileIngestionOperation)result, result);
+        }
+
+        /// <summary> Gets the status and, when successful, the result of a file ingestion operation. </summary>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="operationId"> The server-generated identifier returned when ingestion was accepted. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> or <paramref name="operationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<KnowledgeSourceFileIngestionOperation>> GetKnowledgeSourceFileIngestionOperationAsync(string sourceName, string operationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+
+            Response result = await GetKnowledgeSourceFileIngestionOperationAsync(sourceName, operationId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((KnowledgeSourceFileIngestionOperation)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists retained file ingestion operations for this knowledge source.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="pageSize"> The maximum number of operations to return. </param>
+        /// <param name="continuationToken"> An opaque continuation token returned by the service. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> GetKnowledgeSourceFileIngestionOperations(string sourceName, int? pageSize, string continuationToken, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+            return new SearchIndexClientGetKnowledgeSourceFileIngestionOperationsCollectionResult(
+                this,
+                sourceName,
+                pageSize,
+                continuationToken,
+                context,
+                "SearchIndexClient.GetKnowledgeSourceFileIngestionOperations");
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists retained file ingestion operations for this knowledge source.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="pageSize"> The maximum number of operations to return. </param>
+        /// <param name="continuationToken"> An opaque continuation token returned by the service. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> GetKnowledgeSourceFileIngestionOperationsAsync(string sourceName, int? pageSize, string continuationToken, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+            return new SearchIndexClientGetKnowledgeSourceFileIngestionOperationsAsyncCollectionResult(
+                this,
+                sourceName,
+                pageSize,
+                continuationToken,
+                context,
+                "SearchIndexClient.GetKnowledgeSourceFileIngestionOperations");
+        }
+
+        /// <summary> Lists retained file ingestion operations for this knowledge source. </summary>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="pageSize"> The maximum number of operations to return. </param>
+        /// <param name="continuationToken"> An opaque continuation token returned by the service. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<KnowledgeSourceFileIngestionOperation> GetKnowledgeSourceFileIngestionOperations(string sourceName, int? pageSize = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+            return new SearchIndexClientGetKnowledgeSourceFileIngestionOperationsCollectionResultOfT(
+                this,
+                sourceName,
+                pageSize,
+                continuationToken,
+                cancellationToken.ToRequestContext(),
+                "SearchIndexClient.GetKnowledgeSourceFileIngestionOperations");
+        }
+
+        /// <summary> Lists retained file ingestion operations for this knowledge source. </summary>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="pageSize"> The maximum number of operations to return. </param>
+        /// <param name="continuationToken"> An opaque continuation token returned by the service. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<KnowledgeSourceFileIngestionOperation> GetKnowledgeSourceFileIngestionOperationsAsync(string sourceName, int? pageSize = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+            return new SearchIndexClientGetKnowledgeSourceFileIngestionOperationsAsyncCollectionResultOfT(
+                this,
+                sourceName,
+                pageSize,
+                continuationToken,
+                cancellationToken.ToRequestContext(),
+                "SearchIndexClient.GetKnowledgeSourceFileIngestionOperations");
         }
 
         /// <summary>
@@ -3208,15 +3608,15 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetIndexStatsSummary(string search, int? pageSize, string searchType, RequestContext context)
+        public virtual Pageable<BinaryData> GetAllIndexStatsSummary(string search, int? pageSize, string searchType, RequestContext context)
         {
-            return new SearchIndexClientGetIndexStatsSummaryCollectionResult(
+            return new SearchIndexClientGetAllIndexStatsSummaryCollectionResult(
                 this,
                 search,
                 pageSize,
                 searchType,
                 context,
-                "SearchIndexClient.GetIndexStatsSummary");
+                "SearchIndexClient.GetAllIndexStatsSummary");
         }
 
         /// <summary>
@@ -3233,15 +3633,15 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetIndexStatsSummaryAsync(string search, int? pageSize, string searchType, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetAllIndexStatsSummaryAsync(string search, int? pageSize, string searchType, RequestContext context)
         {
-            return new SearchIndexClientGetIndexStatsSummaryAsyncCollectionResult(
+            return new SearchIndexClientGetAllIndexStatsSummaryAsyncCollectionResult(
                 this,
                 search,
                 pageSize,
                 searchType,
                 context,
-                "SearchIndexClient.GetIndexStatsSummary");
+                "SearchIndexClient.GetAllIndexStatsSummary");
         }
 
         /// <summary> Retrieves a summary of statistics for all indexes in the search service. </summary>
@@ -3250,15 +3650,15 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<IndexStatisticsSummary> GetIndexStatsSummary(string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<IndexStatisticsSummary> GetAllIndexStatsSummary(string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexClientGetIndexStatsSummaryCollectionResultOfT(
+            return new SearchIndexClientGetAllIndexStatsSummaryCollectionResultOfT(
                 this,
                 search,
                 pageSize,
                 searchType?.ToString(),
                 cancellationToken.ToRequestContext(),
-                "SearchIndexClient.GetIndexStatsSummary");
+                "SearchIndexClient.GetAllIndexStatsSummary");
         }
 
         /// <summary> Retrieves a summary of statistics for all indexes in the search service. </summary>
@@ -3267,15 +3667,15 @@ namespace Azure.Search.Documents.Indexes
         /// <param name="searchType"> Specifies how the search parameter is interpreted. Currently only 'prefix' is supported. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<IndexStatisticsSummary> GetIndexStatsSummaryAsync(string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<IndexStatisticsSummary> GetAllIndexStatsSummaryAsync(string search = default, int? pageSize = default, ListingSearchType? searchType = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexClientGetIndexStatsSummaryAsyncCollectionResultOfT(
+            return new SearchIndexClientGetAllIndexStatsSummaryAsyncCollectionResultOfT(
                 this,
                 search,
                 pageSize,
                 searchType?.ToString(),
                 cancellationToken.ToRequestContext(),
-                "SearchIndexClient.GetIndexStatsSummary");
+                "SearchIndexClient.GetAllIndexStatsSummary");
         }
 
         /// <summary> Lists all indexes available for a search service. </summary>

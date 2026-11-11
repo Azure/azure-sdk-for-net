@@ -130,6 +130,11 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("permissionFilter"u8);
                 }
             }
+            if (Optional.IsDefined(OrganizationAccessExpiration))
+            {
+                writer.WritePropertyName("organizationAccessExpiration"u8);
+                writer.WriteBooleanValue(OrganizationAccessExpiration.Value);
+            }
             if (Optional.IsDefined(SensitivityLabelId))
             {
                 writer.WritePropertyName("sensitivityLabelId"u8);
@@ -186,6 +191,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     writer.WriteNull("vectorSearchProfile"u8);
                 }
+            }
+            if (Optional.IsDefined(TopicGraphProfile))
+            {
+                writer.WritePropertyName("topicGraphProfile"u8);
+                writer.WriteStringValue(TopicGraphProfile);
             }
             if (Optional.IsDefined(VectorEncodingFormat, _vectorEncodingFormatIsDefined))
             {
@@ -277,6 +287,7 @@ namespace Azure.Search.Documents.Indexes.Models
             bool? isFacetable = default;
             bool permissionFilterIsDefined = false;
             PermissionFilter? permissionFilter = default;
+            bool? organizationAccessExpiration = default;
             bool? sensitivityLabelId = default;
             bool? sensitivityLabelName = default;
             bool? sourceDocumentId = default;
@@ -288,6 +299,7 @@ namespace Azure.Search.Documents.Indexes.Models
             int? vectorSearchDimensions = default;
             bool vectorSearchProfileNameIsDefined = false;
             string vectorSearchProfileName = default;
+            string topicGraphProfile = default;
             bool vectorEncodingFormatIsDefined = false;
             VectorEncodingFormat? vectorEncodingFormat = default;
             IList<string> synonymMapNames = default;
@@ -377,6 +389,15 @@ namespace Azure.Search.Documents.Indexes.Models
                         continue;
                     }
                     permissionFilter = new PermissionFilter(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("organizationAccessExpiration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    organizationAccessExpiration = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("sensitivityLabelId"u8))
@@ -475,6 +496,11 @@ namespace Azure.Search.Documents.Indexes.Models
                     vectorSearchProfileName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("topicGraphProfile"u8))
+                {
+                    topicGraphProfile = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("vectorEncoding"u8))
                 {
                     vectorEncodingFormatIsDefined = true;
@@ -537,6 +563,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 isSortable,
                 isFacetable,
                 permissionFilter,
+                organizationAccessExpiration,
                 sensitivityLabelId,
                 sensitivityLabelName,
                 sourceDocumentId,
@@ -547,6 +574,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 normalizerName,
                 vectorSearchDimensions,
                 vectorSearchProfileName,
+                topicGraphProfile,
                 vectorEncodingFormat,
                 synonymMapNames ?? new ChangeTrackingList<string>(),
                 fields ?? new ChangeTrackingList<SearchField>(),

@@ -193,6 +193,8 @@ namespace Azure.Search.Documents.Tests
         /// </param>
         private SearchResources(SearchTestBase fixture) => TestFixture = fixture;
 
+        private bool _isShared;
+
         /// <summary>
         /// Create a new Search Service resource with no indexes.
         /// </summary>
@@ -341,7 +343,12 @@ namespace Azure.Search.Documents.Tests
         {
             // TODO: consider whether we should delete the index at the end of the test run here.
             //       SharedSearchResources seems to purposely cache the index.
-            await SharedSearchResources.EnsureInitialized(async () => await CreateWithHotelsIndexAsync(fixture, isSample), isSample);
+            await SharedSearchResources.EnsureInitialized(async () =>
+            {
+                SearchResources resources = await CreateWithHotelsIndexAsync(fixture, isSample);
+                resources._isShared = true;
+                return resources;
+            }, isSample);
 
             // Clone it for the current fixture (note that setting these values
             // will create the recording ServiceName/IndexName/etc. variables)
@@ -476,7 +483,10 @@ namespace Azure.Search.Documents.Tests
         {
             if (RequiresCleanup && !string.IsNullOrEmpty(IndexName))
             {
-                SearchIndexClient client = GetIndexClient();
+                // Shared resources are disposed after their creating test's recording has closed.
+                SearchIndexClient client = _isShared
+                    ? new SearchIndexClient(Endpoint, new AzureKeyCredential(PrimaryApiKey))
+                    : GetIndexClient();
                 try
                 {
                     await client.DeleteIndexAsync(IndexName, cancellationToken: CancellationToken.None);

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -116,6 +117,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("queryHints"u8);
                 writer.WriteObjectValue(QueryHints, options);
             }
+            if (Optional.IsDefined(TopicGraph))
+            {
+                writer.WritePropertyName("topicGraph"u8);
+                writer.WriteObjectValue(TopicGraph, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -164,6 +170,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string semanticConfigurationName = default;
             string baseFilter = default;
             SearchIndexKnowledgeSourceQueryHints queryHints = default;
+            VectorQueryTopicGraph topicGraph = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -219,6 +226,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     queryHints = SearchIndexKnowledgeSourceQueryHints.DeserializeSearchIndexKnowledgeSourceQueryHints(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("topicGraph"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    topicGraph = VectorQueryTopicGraph.DeserializeVectorQueryTopicGraph(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -231,6 +247,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 semanticConfigurationName,
                 baseFilter,
                 queryHints,
+                topicGraph,
                 additionalBinaryDataProperties);
         }
     }

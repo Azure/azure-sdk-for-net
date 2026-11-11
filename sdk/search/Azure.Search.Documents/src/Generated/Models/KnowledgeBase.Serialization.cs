@@ -108,6 +108,16 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(Tools))
+            {
+                writer.WritePropertyName("tools"u8);
+                writer.WriteStartArray();
+                foreach (KnowledgeBaseTool item in Tools)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(Models))
             {
                 writer.WritePropertyName("models"u8);
@@ -230,6 +240,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string name = default;
             IList<KnowledgeSourceReference> knowledgeSources = default;
+            IList<KnowledgeBaseTool> tools = default;
             IList<KnowledgeBaseModel> models = default;
             KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default;
             KnowledgeRetrievalOutputMode? outputMode = default;
@@ -258,6 +269,20 @@ namespace Azure.Search.Documents.Indexes.Models
                         array.Add(KnowledgeSourceReference.DeserializeKnowledgeSourceReference(item, options));
                     }
                     knowledgeSources = array;
+                    continue;
+                }
+                if (prop.NameEquals("tools"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<KnowledgeBaseTool> array = new List<KnowledgeBaseTool>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(KnowledgeBaseTool.DeserializeKnowledgeBaseTool(item, options));
+                    }
+                    tools = array;
                     continue;
                 }
                 if (prop.NameEquals("models"u8))
@@ -374,6 +399,7 @@ namespace Azure.Search.Documents.Indexes.Models
             return new KnowledgeBase(
                 name,
                 knowledgeSources ?? new ChangeTrackingList<KnowledgeSourceReference>(),
+                tools ?? new ChangeTrackingList<KnowledgeBaseTool>(),
                 models ?? new ChangeTrackingList<KnowledgeBaseModel>(),
                 retrievalReasoningEffort,
                 outputMode,

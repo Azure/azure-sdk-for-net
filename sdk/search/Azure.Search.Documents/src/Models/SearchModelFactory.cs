@@ -490,7 +490,7 @@ namespace Azure.Search.Documents.Models
             normalizers ??= new List<LexicalNormalizer>();
             additionalBinaryDataProperties ??= new Dictionary<string, BinaryData>();
 
-            return new SearchIndex(name, description, scoringProfiles, defaultScoringProfile, corsOptions, suggesters, analyzers, tokenizers, tokenFilters, charFilters, normalizers, encryptionKey, similarity, semanticSearch, vectorSearch, permissionFilterOption: null, purviewEnabled: null, sharePointConnectorAppRegistration: null, fields, etag, additionalBinaryDataProperties);
+            return new SearchIndex(name, description, graphProfile: null, scoringProfiles, defaultScoringProfile, corsOptions, suggesters, analyzers, tokenizers, tokenFilters, charFilters, normalizers, encryptionKey, similarity, semanticSearch, vectorSearch, permissionFilterOption: null, purviewEnabled: null, sharePointConnectorAppRegistration: null, oneLakeSecuritySource: null, fields, etag, additionalBinaryDataProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerDataSourceConnection"/>. </summary>

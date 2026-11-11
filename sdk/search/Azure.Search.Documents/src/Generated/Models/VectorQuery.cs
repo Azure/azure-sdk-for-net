@@ -35,9 +35,10 @@ namespace Azure.Search.Documents.Models
         /// <param name="threshold"> The threshold used for vector queries. Note this can only be set if all 'fields' use the same similarity metric. </param>
         /// <param name="filterOverride"> The OData filter expression to apply to this specific vector query. If no filter expression is defined at the vector level, the expression defined in the top level filter parameter is used instead. </param>
         /// <param name="perDocumentVectorLimit"> Controls how many vectors can be matched from each document in a vector search query. Setting it to 1 ensures at most one vector per document is matched, guaranteeing results come from distinct documents. Setting it to 0 (unlimited) allows multiple relevant vectors from the same document to be matched. Default is 0. </param>
+        /// <param name="topicGraph"> Topic graph vector search options. </param>
         /// <param name="kind"> Type of query. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VectorQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, int? perDocumentVectorLimit, VectorQueryKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VectorQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, int? perDocumentVectorLimit, VectorQueryTopicGraph topicGraph, VectorQueryKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KNearestNeighborsCount = kNearestNeighborsCount;
             FieldsRaw = fieldsRaw;
@@ -47,6 +48,7 @@ namespace Azure.Search.Documents.Models
             Threshold = threshold;
             FilterOverride = filterOverride;
             PerDocumentVectorLimit = perDocumentVectorLimit;
+            TopicGraph = topicGraph;
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -76,6 +78,9 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Controls how many vectors can be matched from each document in a vector search query. Setting it to 1 ensures at most one vector per document is matched, guaranteeing results come from distinct documents. Setting it to 0 (unlimited) allows multiple relevant vectors from the same document to be matched. Default is 0. </summary>
         public int? PerDocumentVectorLimit { get; set; }
+
+        /// <summary> Topic graph vector search options. </summary>
+        public VectorQueryTopicGraph TopicGraph { get; set; }
 
         /// <summary> Type of query. </summary>
         internal VectorQueryKind Kind { get; set; }

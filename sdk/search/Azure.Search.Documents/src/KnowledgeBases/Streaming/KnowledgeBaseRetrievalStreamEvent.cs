@@ -5,22 +5,41 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary> Base type for events emitted by a streaming knowledge base retrieval. </summary>
-    public abstract class KnowledgeBaseRetrievalStreamEvent
+    [CodeGenSuppress("DeserializeKnowledgeBaseRetrievalStreamEvent", typeof(JsonElement), typeof(ModelReaderWriterOptions))]
+    public abstract partial class KnowledgeBaseRetrievalStreamEvent
     {
+        private readonly string _eventName;
+
         private protected KnowledgeBaseRetrievalStreamEvent(string eventName)
         {
-            EventName = eventName;
+            _eventName = eventName;
         }
 
         /// <summary> Gets the wire name of the server-sent event. </summary>
-        public string EventName { get; }
+        public string EventName => _eventName ?? this switch
+        {
+            KnowledgeBaseRetrievalStartedStreamEvent => "retrieval.started",
+            KnowledgeBaseActivityStartedStreamEvent => "activity.started",
+            KnowledgeBaseActivityCompletedStreamEvent => "activity.completed",
+            KnowledgeBaseAnswerCompletedStreamEvent => "answer.completed",
+            KnowledgeBaseReferencesCompletedStreamEvent => "references.completed",
+            KnowledgeBaseErrorStreamEvent => "error",
+            KnowledgeBaseResponseCompletedStreamEvent => "response.completed",
+            _ => throw new InvalidOperationException("The retrieval stream event does not have an event name.")
+        };
 
         /// <summary> Gets whether this event terminates the retrieval stream. </summary>
         public virtual bool IsTerminal => false;
+
+        internal static KnowledgeBaseRetrievalStreamEvent DeserializeKnowledgeBaseRetrievalStreamEvent(
+            JsonElement element,
+            ModelReaderWriterOptions options) =>
+            throw new NotSupportedException("A server-sent event name is required to deserialize a knowledge base retrieval event. Use RetrieveStreamAsync to read typed events.");
 
         internal static KnowledgeBaseRetrievalStreamEvent Deserialize(string eventName, BinaryData data)
         {

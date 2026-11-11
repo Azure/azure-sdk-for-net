@@ -61,7 +61,10 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             }
             finally
             {
-                await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
+                if (indexClient != null)
+                {
+                    await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
+                }
             }
         }
 
@@ -108,7 +111,10 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             }
             finally
             {
-                await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
+                if (indexClient != null)
+                {
+                    await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
+                }
             }
         }
 
@@ -155,7 +161,10 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             }
             finally
             {
-                await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
+                if (indexClient != null)
+                {
+                    await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
+                }
             }
         }
 
@@ -201,7 +210,10 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             }
             finally
             {
-                await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
+                if (indexClient != null)
+                {
+                    await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
+                }
             }
         }
 
@@ -245,7 +257,10 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             }
             finally
             {
-                await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
+                if (indexClient != null)
+                {
+                    await indexClient.DeleteIndexAsync(indexName, cancellationToken: CancellationToken.None);
+                }
             }
         }
 

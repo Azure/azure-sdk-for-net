@@ -24,6 +24,38 @@ namespace Azure.Search.Documents
 
         private static ResponseClassifier PipelineMessageClassifier200207 => _pipelineMessageClassifier200207 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 207 });
 
+        internal HttpMessage CreateGraphRequest(RequestContent content, string querySourceAuthorization, bool? enableElevatedRead, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/indexes('", false);
+            uri.AppendPath(_indexName, true);
+            uri.AppendPath("')/docs/search.graph", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            if ("application/json;odata.metadata=none" != null)
+            {
+                request.Headers.SetValue("Accept", "application/json;odata.metadata=none");
+            }
+            if (querySourceAuthorization != null)
+            {
+                request.Headers.SetValue("x-ms-query-source-authorization", querySourceAuthorization);
+            }
+            if (enableElevatedRead != null)
+            {
+                request.Headers.SetValue("x-ms-enable-elevated-read", TypeFormatters.ConvertToString(enableElevatedRead));
+            }
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Content = content;
+            return message;
+        }
+
         internal HttpMessage CreateGetDocumentCountRequest(RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
@@ -46,7 +78,7 @@ namespace Azure.Search.Documents
             return message;
         }
 
-        internal HttpMessage CreateSearchGetRequest(string querySourceAuthorization, bool? enableElevatedRead, string searchText, bool? includeTotalResultCount, IEnumerable<string> facets, string filter, IEnumerable<string> highlightFields, string highlightPostTag, string highlightPreTag, double? minimumCoverage, IEnumerable<string> orderBy, string queryType, IEnumerable<string> scoringParameters, string scoringProfile, IEnumerable<string> searchFields, string searchMode, string scoringStatistics, string sessionId, IEnumerable<string> @select, int? skip, int? top, string semanticConfiguration, string semanticErrorHandling, int? semanticMaxWaitInMilliseconds, string answers, string captions, string semanticQuery, string queryRewrites, string debug, string queryLanguage, string speller, IEnumerable<string> semanticFields, RequestContext context)
+        internal HttpMessage CreateSearchGetRequest(string querySourceAuthorization, bool? enableElevatedRead, string searchText, bool? includeTotalResultCount, IEnumerable<string> facets, string filter, IEnumerable<string> highlightFields, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string moreLikeThis, IEnumerable<string> orderBy, string queryType, IEnumerable<string> scoringParameters, string scoringProfile, IEnumerable<string> searchFields, string searchMode, string scoringStatistics, string sessionId, IEnumerable<string> @select, int? skip, int? top, string semanticConfiguration, string semanticErrorHandling, int? semanticMaxWaitInMilliseconds, string answers, string captions, string semanticQuery, string queryRewrites, string debug, string queryLanguage, string speller, IEnumerable<string> semanticFields, int? agenticMaxRuntimeInSeconds, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -91,6 +123,10 @@ namespace Azure.Search.Documents
             if (minimumCoverage != null)
             {
                 uri.AppendQuery("minimumCoverage", TypeFormatters.ConvertToString(minimumCoverage), true);
+            }
+            if (moreLikeThis != null)
+            {
+                uri.AppendQuery("moreLikeThis", moreLikeThis, true);
             }
             if (orderBy != null && !(orderBy is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
@@ -182,6 +218,10 @@ namespace Azure.Search.Documents
             if (semanticFields != null && !(semanticFields is ChangeTrackingList<string> changeTrackingList5 && changeTrackingList5.IsUndefined))
             {
                 uri.AppendQueryDelimited("semanticFields", semanticFields, ",", escape: true);
+            }
+            if (agenticMaxRuntimeInSeconds != null)
+            {
+                uri.AppendQuery("agenticMaxRuntimeInSeconds", TypeFormatters.ConvertToString(agenticMaxRuntimeInSeconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200206);
             Request request = message.Request;

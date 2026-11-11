@@ -81,11 +81,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 throw new FormatException($"The model {nameof(FileKnowledgeSourceParams)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(QueryHintOverrides))
-            {
-                writer.WritePropertyName("queryHintOverrides"u8);
-                writer.WriteObjectValue(QueryHintOverrides, options);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -125,7 +120,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             KnowledgeSourceKind kind = default;
             bool? enableImageServing = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            SearchIndexKnowledgeSourceQueryHints queryHintOverrides = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("knowledgeSourceName"u8))
@@ -219,15 +213,6 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     enableImageServing = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("queryHintOverrides"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    queryHintOverrides = SearchIndexKnowledgeSourceQueryHints.DeserializeSearchIndexKnowledgeSourceQueryHints(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -245,8 +230,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 maxOutputDocuments,
                 kind,
                 enableImageServing,
-                additionalBinaryDataProperties,
-                queryHintOverrides);
+                additionalBinaryDataProperties);
         }
     }
 }
