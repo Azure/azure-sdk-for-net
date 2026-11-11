@@ -44,12 +44,14 @@ called end of life (EOL).
 ## Test targets
 
 Test, sample, perf, and stress projects run on every .NET version still in
-support, plus .NET Framework (`NetFxTargetFramework`) on Windows. The CI test
-matrix covers the same set.
+support, plus the earliest .NET Framework version still in support
+(`NetFxTargetFramework`) on Windows. The CI test matrix covers the same set.
 
 - ✅ **DO** add each new .NET version, LTS or STS, to the test targets when it
   ships.
 - ✅ **DO** remove versions that have reached end of support in the same change.
+- ✅ **DO** move `NetFxTargetFramework` to the next .NET Framework version when
+  the current one reaches end of support.
 
 Package targets stay for 6 months after their version leaves the test targets.
 
