@@ -71,6 +71,9 @@
             "SessionOptions": {
               "type": "object"
             },
+            "RequestPriority": {
+              "type": "integer"
+            },
             "EnableTenantDiscovery": {
               "type": "boolean"
             },
