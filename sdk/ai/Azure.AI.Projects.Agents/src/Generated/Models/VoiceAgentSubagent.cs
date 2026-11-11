@@ -31,7 +31,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentVersion"> The version of the subagent. When omitted, the active version is used. </param>
         /// <param name="agentCapabilities"> A description of the subagent's capabilities, used by the voice agent to decide whether to forward a query. </param>
         /// <param name="responsePolicy"> Policy for acknowledging forwarded requests and filling gaps while waiting for this subagent's response. </param>
-        /// <param name="invokeTimeout"> The wall-clock timeout, in seconds, for each invocation of this subagent. When omitted, the service timeout is used. </param>
+        /// <param name="invokeTimeout"> The wall-clock timeout in seconds for each invocation of this subagent. When omitted, the service timeout is used. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal VoiceAgentSubagent(string agentName, string agentVersion, string agentCapabilities, VoiceAgentSubagentResponsePolicy responsePolicy, TimeSpan? invokeTimeout, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
@@ -55,7 +55,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Policy for acknowledging forwarded requests and filling gaps while waiting for this subagent's response. </summary>
         public VoiceAgentSubagentResponsePolicy ResponsePolicy { get; set; }
 
-        /// <summary> The wall-clock timeout, in seconds, for each invocation of this subagent. When omitted, the service timeout is used. </summary>
+        /// <summary> The wall-clock timeout in seconds for each invocation of this subagent. When omitted, the service timeout is used. </summary>
         public TimeSpan? InvokeTimeout { get; set; }
     }
 }

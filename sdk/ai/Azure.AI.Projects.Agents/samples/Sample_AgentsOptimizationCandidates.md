@@ -16,10 +16,10 @@ AgentOptimizationJobCandidates candidatesClient = agentsClient.GetAgentOptimizat
 
 ```C# Snippet:Sample_AgentDefinition_AgentsOptimizationCandidates
 private static DeclarativeAgentDefinition GetAgentDefinition(string modelDeploymentName) => new(model: modelDeploymentName)
-    {
-        // Start from bad prompt.
-        Instructions = "You are a prompt agent, who always give wrong answers.",
-        Tools =
+{
+    // Start from bad prompt.
+    Instructions = "You are a prompt agent, who always give wrong answers.",
+    Tools =
         {
             new FunctionTool(
                 functionName: "sum_numbers",
@@ -108,7 +108,7 @@ AgentOptimizationConfiguration conf = new(
     },
     agentOptimizationSpace: new()
     {
-        TargetAttributes = { TargetAttribute.Instructions,  TargetAttribute.Tools, TargetAttribute.Model },
+        TargetAttributes = { TargetAttribute.Instructions, TargetAttribute.Tools, TargetAttribute.Model },
         ModelSearchSpace = { modelDeploymentName, anotherModelDeploymentName }
     }
 );
@@ -164,7 +164,7 @@ Console.WriteLine($"Submitted optimization job: {submittedJob.Id}");
 Synchronous sample:
 ```C# Snippet:Sample_GetOptimizationJob_AgentsOptimizationCandidates_Sync
 int reportedWarnings = 0;
-if (submittedJob.Status != AgentsJobStatus.Succeeded)
+if (submittedJob.Status != AgentOptimizationJobStatus.Succeeded)
 {
     throw new InvalidOperationException($"The job {submittedJob.Id} has failed.");
 }
@@ -181,7 +181,7 @@ if (submittedJob.Warnings.Count > reportedWarnings)
 Asynchronous sample:
 ```C# Snippet:Sample_GetOptimizationJob_AgentsOptimizationCandidates_Async
 int reportedWarnings = 0;
-if (submittedJob.Status != AgentsJobStatus.Succeeded)
+if (submittedJob.Status != AgentOptimizationJobStatus.Succeeded)
 {
     throw new InvalidOperationException($"The job {submittedJob.Id} has failed.");
 }

@@ -22,7 +22,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The service-managed control action. Known values are stable; additional values may be added over time. </param>
         /// <param name="description"> An optional description of the system tool. </param>
-        /// <param name="timeoutSeconds"> Execution timeout, from 1 to 300 seconds. If omitted, the service defaults to 60 seconds. </param>
+        /// <param name="timeoutSeconds"> The execution timeout in seconds, from 1 to 300. If omitted, the service defaults to 60 seconds. </param>
         internal VoiceAgentSystemTool(VoiceAgentToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, VoiceAgentSystemToolName name, string description, TimeSpan? timeoutSeconds) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
@@ -36,7 +36,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> An optional description of the system tool. </summary>
         public string Description { get; set; }
 
-        /// <summary> Execution timeout, from 1 to 300 seconds. If omitted, the service defaults to 60 seconds. </summary>
+        /// <summary> The execution timeout in seconds, from 1 to 300. If omitted, the service defaults to 60 seconds. </summary>
         public TimeSpan? TimeoutSeconds { get; set; }
     }
 }

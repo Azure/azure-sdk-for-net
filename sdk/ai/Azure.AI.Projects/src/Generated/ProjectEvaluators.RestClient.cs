@@ -5,6 +5,8 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 
 namespace Azure.AI.Projects.Evaluation
@@ -21,6 +23,68 @@ namespace Azure.AI.Projects.Evaluation
         private static PipelineMessageClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 201 });
 
         private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
+
+        [Experimental("AAIP001")]
+        internal PipelineMessage CreateGetDiagnosticsRequest(string name, string after, string before, int? limit, string order, DateTimeOffset? startTime, DateTimeOffset? endTime, string evaluatorVersion, string dimensionId, IEnumerable<EvaluatorDiagnosticType> @type, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/evaluators/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/diagnostics", false);
+            if (after != null)
+            {
+                uri.AppendQuery("after", after, true);
+            }
+            if (before != null)
+            {
+                uri.AppendQuery("before", before, true);
+            }
+            if (limit != null)
+            {
+                uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
+            }
+            if (order != null)
+            {
+                uri.AppendQuery("order", order, true);
+            }
+            if (startTime != null)
+            {
+                uri.AppendQuery("start_time", TypeFormatters.ConvertToString(startTime, SerializationFormat.DateTime_Unix), true);
+            }
+            if (endTime != null)
+            {
+                uri.AppendQuery("end_time", TypeFormatters.ConvertToString(endTime, SerializationFormat.DateTime_Unix), true);
+            }
+            if (evaluatorVersion != null)
+            {
+                uri.AppendQuery("evaluator_version", evaluatorVersion, true);
+            }
+            if (dimensionId != null)
+            {
+                uri.AppendQuery("dimension_id", dimensionId, true);
+            }
+            if (@type != null && !(@type is ChangeTrackingList<EvaluatorDiagnosticType> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in @type)
+                {
+                    string paramStr = @param.ToString();
+                    if (paramStr != null)
+                    {
+                        uri.AppendQuery("type", paramStr, true);
+                    }
+                }
+            }
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
+            request.Headers.Set("Accept", "application/json");
+            message.Apply(options);
+            return message;
+        }
 
         internal PipelineMessage CreateGetVersionsRequest(string name, string @type, int? limit, RequestOptions options)
         {

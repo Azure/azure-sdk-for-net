@@ -19,18 +19,21 @@ namespace Azure.AI.Projects
         {
             Outputs = new ChangeTrackingList<DataGenerationJobOutput>();
             GeneratedSamples = generatedSamples;
+            Warnings = new ChangeTrackingList<DataGenerationWarning>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DataGenerationJobResult"/>. </summary>
         /// <param name="outputs"> The final job outputs: Azure OpenAI files for fine-tuning, or datasets for evaluation. </param>
         /// <param name="generatedSamples"> The number of samples actually generated. </param>
         /// <param name="tokenUsage"> The token usage information for the data generation job. </param>
+        /// <param name="warnings"> Nonfatal warnings associated with otherwise usable output. `test_case_description_generation_incomplete` indicates that conversation rows were produced but one or more optional descriptions failed. Warning messages do not expose raw provider or model error bodies. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataGenerationJobResult(IList<DataGenerationJobOutput> outputs, int generatedSamples, DataGenerationTokenUsage tokenUsage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataGenerationJobResult(IList<DataGenerationJobOutput> outputs, int generatedSamples, DataGenerationTokenUsage tokenUsage, IList<DataGenerationWarning> warnings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Outputs = outputs;
             GeneratedSamples = generatedSamples;
             TokenUsage = tokenUsage;
+            Warnings = warnings;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,5 +45,8 @@ namespace Azure.AI.Projects
 
         /// <summary> The token usage information for the data generation job. </summary>
         public DataGenerationTokenUsage TokenUsage { get; }
+
+        /// <summary> Nonfatal warnings associated with otherwise usable output. `test_case_description_generation_incomplete` indicates that conversation rows were produced but one or more optional descriptions failed. Warning messages do not expose raw provider or model error bodies. </summary>
+        public IList<DataGenerationWarning> Warnings { get; }
     }
 }

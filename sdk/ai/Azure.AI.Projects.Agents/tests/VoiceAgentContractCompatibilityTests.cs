@@ -8,7 +8,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Realtime;
@@ -19,49 +18,8 @@ namespace Azure.AI.Projects.Agents.Tests;
 
 public class VoiceAgentContractCompatibilityTests
 {
-    [TestCase(RecordedTestMode.Playback, 1)]
-    [TestCase(RecordedTestMode.Record, 0)]
-    [TestCase(RecordedTestMode.Live, 0)]
-    public void LegacySkillsRouteNormalizationIsPlaybackOnly(RecordedTestMode mode, int expectedCount)
-    {
-        SanitizerFixture fixture = new(mode);
-        ProjectsTestSanitizers.ApplySanitizers(fixture);
-        var sanitizers = fixture.UriRegexSanitizers
-            .Where(sanitizer => sanitizer.Body.Regex == ProjectsTestSanitizers.LegacySkillsPathPattern).ToList();
-        Assert.That(sanitizers, Has.Count.EqualTo(expectedCount));
-        if (expectedCount > 0)
-        {
-            Assert.That(sanitizers[0].Body.Value, Is.EqualTo(ProjectsTestSanitizers.LegacySkillsPathReplacement));
-        }
-    }
-
-    [TestCase("https://example.test/api/projects/project/skills?limit=3&order=asc&api-version=v1",
-        "https://example.test/api/projects/project/openai/v1/skills?limit=3&order=asc&api-version=v1")]
-    [TestCase("https://example.test/api/projects/project/skills/skill/versions?api-version=v1",
-        "https://example.test/api/projects/project/openai/v1/skills/skill/versions?api-version=v1")]
-    [TestCase("https://example.test/api/projects/project/skills/skill/versions/1/content",
-        "https://example.test/api/projects/project/openai/v1/skills/skill/versions/1/content")]
-    [TestCase("https://example.test/api/projects/skills/skills",
-        "https://example.test/api/projects/skills/openai/v1/skills")]
-    [TestCase("https://example.test/api/projects/project/openai/v1/skills?api-version=v1",
-        "https://example.test/api/projects/project/openai/v1/skills?api-version=v1")]
-    [TestCase("https://example.test/api/projects/project/skills_extra",
-        "https://example.test/api/projects/project/skills_extra")]
-    [TestCase("https://example.test/api/projects/project/agents/skills",
-        "https://example.test/api/projects/project/agents/skills")]
-    [TestCase("https://example.test/skills/skill",
-        "https://example.test/skills/skill")]
-    [TestCase("https://example.test/api/projects/project/agents?next=/api/projects/other/skills",
-        "https://example.test/api/projects/project/agents?next=/api/projects/other/skills")]
-    public void LegacySkillsRecordingRoutesPreserveOtherPaths(string uri, string expected)
-    {
-        string normalized = Regex.Replace(uri, ProjectsTestSanitizers.LegacySkillsPathPattern,
-            ProjectsTestSanitizers.LegacySkillsPathReplacement);
-        Assert.That(normalized, Is.EqualTo(expected));
-    }
-
     [Test]
-    public void GeneratedSkillsRequestsUseOpenAIV1RoutesWithoutPlaybackNormalization()
+    public void GeneratedSkillsRequestsUseLegacyPreviewRoutes()
     {
         ProjectAgentSkills client = new(null, ClientPipeline.Create(),
             new Uri("https://example.test/api/projects/project"), "v1");
@@ -72,6 +30,8 @@ public class VoiceAgentContractCompatibilityTests
         {
             Assert.That(list.Request.Uri.AbsolutePath, Is.EqualTo("/api/projects/project/skills"));
             Assert.That(create.Request.Uri.AbsolutePath, Is.EqualTo("/api/projects/project/skills/skill-name/versions"));
+            Assert.That(list.Request.Uri.Query, Does.Contain("api-version=v1"));
+            Assert.That(create.Request.Uri.Query, Does.Contain("api-version=v1"));
         });
     }
 

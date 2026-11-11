@@ -119,10 +119,15 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("suspension"u8);
                 writer.WriteObjectValue(Suspension, options);
             }
-            if (options.Format != "W")
+            if (options.Format != "W" && Optional.IsDefined(AgentSummary))
             {
-                writer.WritePropertyName("overview"u8);
-                writer.WriteObjectValue(Overview, options);
+                writer.WritePropertyName("agent_summary"u8);
+                writer.WriteObjectValue(AgentSummary, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Priorities))
+            {
+                writer.WritePropertyName("priorities"u8);
+                writer.WriteObjectValue(Priorities, options);
             }
             if (options.Format != "W")
             {
@@ -179,7 +184,8 @@ namespace Azure.AI.Projects
             DateTimeOffset? nextScheduledRunOn = default;
             AgentInsightEstimatedCost estimatedCost = default;
             AgentInsightSuspension suspension = default;
-            AgentInsightsOverview overview = default;
+            AgentInsightSummary agentSummary = default;
+            AgentInsightPrioritiesRead priorities = default;
             DateTimeOffset updatedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -237,14 +243,22 @@ namespace Azure.AI.Projects
                     suspension = AgentInsightSuspension.DeserializeAgentInsightSuspension(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("overview"u8))
+                if (prop.NameEquals("agent_summary"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        overview = null;
                         continue;
                     }
-                    overview = AgentInsightsOverview.DeserializeAgentInsightsOverview(prop.Value, options);
+                    agentSummary = AgentInsightSummary.DeserializeAgentInsightSummary(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("priorities"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    priorities = AgentInsightPrioritiesRead.DeserializeAgentInsightPrioritiesRead(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("updated_at"u8))
@@ -266,7 +280,8 @@ namespace Azure.AI.Projects
                 nextScheduledRunOn,
                 estimatedCost,
                 suspension,
-                overview,
+                agentSummary,
+                priorities,
                 updatedOn,
                 additionalBinaryDataProperties);
         }
