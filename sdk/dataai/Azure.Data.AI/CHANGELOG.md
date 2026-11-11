@@ -14,7 +14,7 @@
 
 - The default service API version is now `2026-11-01-preview`. Select `InferenceClientOptions.ServiceVersion.V2026_10_30` explicitly to continue using the stable semantic reranking API.
 
-## 1.0.0 (2026-10-30)
+## 1.0.0 (2026-11-10)
 
 ### Features Added
 

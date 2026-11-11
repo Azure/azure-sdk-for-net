@@ -15,11 +15,6 @@ namespace Azure.Developer.LoadTesting
     /// <summary> Recurrence model when frequency is set as Hourly. </summary>
     public partial class HourlyRecurrence : LoadTestingRecurrence, IJsonModel<HourlyRecurrence>
     {
-        /// <summary> Initializes a new instance of <see cref="HourlyRecurrence"/> for deserialization. </summary>
-        internal HourlyRecurrence()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override LoadTestingRecurrence PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

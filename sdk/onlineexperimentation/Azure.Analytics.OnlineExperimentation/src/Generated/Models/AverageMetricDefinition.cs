@@ -14,13 +14,8 @@ namespace Azure.Analytics.OnlineExperimentation
     public partial class AverageMetricDefinition : ExperimentMetricDefinition
     {
         /// <summary> Initializes a new instance of <see cref="AverageMetricDefinition"/>. </summary>
-        /// <param name="value"> The value to aggregate. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AverageMetricDefinition(AggregatedValue value) : base(ExperimentMetricType.Average)
+        public AverageMetricDefinition() : base(ExperimentMetricType.Average)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value;
         }
 
         /// <summary> Initializes a new instance of <see cref="AverageMetricDefinition"/>. </summary>

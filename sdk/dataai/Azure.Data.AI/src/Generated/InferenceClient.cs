@@ -287,7 +287,7 @@ namespace Azure.Data.AI
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
-            EmbedRequest spreadModel = new EmbedRequest(
+            EmbedContent spreadModel = new EmbedContent(
                 inputs?.ToList() as IList<EmbeddingsInputContent> ?? new ChangeTrackingList<EmbeddingsInputContent>(),
                 model,
                 modelVersion,
@@ -342,7 +342,7 @@ namespace Azure.Data.AI
         {
             Argument.AssertNotNull(inputs, nameof(inputs));
 
-            EmbedRequest spreadModel = new EmbedRequest(
+            EmbedContent spreadModel = new EmbedContent(
                 inputs?.ToList() as IList<EmbeddingsInputContent> ?? new ChangeTrackingList<EmbeddingsInputContent>(),
                 model,
                 modelVersion,

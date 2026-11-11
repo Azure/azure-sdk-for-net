@@ -16,11 +16,6 @@ namespace Azure.Messaging.WebPubSub.Chat
     /// <summary> Represents a chat message. </summary>
     public partial class WebPubSubChatMessage : IJsonModel<WebPubSubChatMessage>
     {
-        /// <summary> Initializes a new instance of <see cref="WebPubSubChatMessage"/> for deserialization. </summary>
-        internal WebPubSubChatMessage()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual WebPubSubChatMessage PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

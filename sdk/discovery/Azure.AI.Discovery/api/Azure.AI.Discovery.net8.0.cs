@@ -299,10 +299,10 @@ namespace Azure.AI.Discovery
         public static Azure.AI.Discovery.RunResult RunResult(string status = null, string runtimeDetails = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? completedOn = default(System.DateTimeOffset?), string createdBy = null, Azure.AI.Discovery.RunResultToolReport toolReport = null, System.Collections.Generic.IEnumerable<Azure.AI.Discovery.OutputDataUri> outputData = null, string debugInfo = null) { throw null; }
         public static Azure.AI.Discovery.RunResultToolReport RunResultToolReport(int percentageComplete = 0, Azure.AI.Discovery.RunResultToolReportStatusInformation statusInformation = null, string logs = null) { throw null; }
         public static Azure.AI.Discovery.RunResultToolReportStatusInformation RunResultToolReportStatusInformation() { throw null; }
-        public static Azure.AI.Discovery.SearchRequest SearchRequest(string query = null) { throw null; }
+        public static Azure.AI.Discovery.SearchContent SearchContent(string query = null) { throw null; }
         public static Azure.AI.Discovery.SearchResult SearchResult(System.Collections.Generic.IEnumerable<Azure.AI.Discovery.SearchResultItem> searchResults = null) { throw null; }
         public static Azure.AI.Discovery.SearchResultItem SearchResultItem(string text = null, System.Collections.Generic.IEnumerable<Azure.AI.Discovery.DiscoveryCitation> citations = null) { throw null; }
-        public static Azure.AI.Discovery.StartTaskRequest StartTaskRequest(Azure.AI.Discovery.TaskAssignee assignee = null) { throw null; }
+        public static Azure.AI.Discovery.StartTaskContent StartTaskContent(Azure.AI.Discovery.TaskAssignee assignee = null) { throw null; }
         public static Azure.AI.Discovery.StorageAssetReference StorageAssetReference(Azure.Core.ResourceIdentifier id = null, Azure.Core.ResourceIdentifier userAssignedIdentity = null) { throw null; }
         public static Azure.AI.Discovery.SupercomputerUsage SupercomputerUsage(long activeJobs = (long)0, long pendingJobs = (long)0, System.Collections.Generic.IDictionary<string, Azure.AI.Discovery.NodePoolUsage> nodePools = null) { throw null; }
         public static Azure.AI.Discovery.TaskAssignee TaskAssignee(string id = null, Azure.AI.Discovery.DiscoveryActorType type = default(Azure.AI.Discovery.DiscoveryActorType)) { throw null; }
@@ -414,9 +414,9 @@ namespace Azure.AI.Discovery
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Discovery.DiscoveryTask>> GetAsync(string projectName, string investigationName, string taskName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response StableUpdate(string projectName, string investigationName, string taskName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StableUpdateAsync(string projectName, string investigationName, string taskName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.AI.Discovery.DiscoveryTask> Start(string projectName, string investigationName, string taskName, Azure.AI.Discovery.StartTaskRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.Discovery.DiscoveryTask> Start(string projectName, string investigationName, string taskName, Azure.AI.Discovery.StartTaskContent body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Start(string projectName, string investigationName, string taskName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Discovery.DiscoveryTask>> StartAsync(string projectName, string investigationName, string taskName, Azure.AI.Discovery.StartTaskRequest body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Discovery.DiscoveryTask>> StartAsync(string projectName, string investigationName, string taskName, Azure.AI.Discovery.StartTaskContent body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StartAsync(string projectName, string investigationName, string taskName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
     public partial class DiscoveryToolsClient
@@ -612,7 +612,7 @@ namespace Azure.AI.Discovery
     }
     public partial class KnowledgeBase : System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.KnowledgeBase>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.KnowledgeBase>
     {
-        public KnowledgeBase(string description, string copilotInstruction) { }
+        public KnowledgeBase() { }
         public string BookshelfName { get { throw null; } }
         public string CopilotInstruction { get { throw null; } set { } }
         public string CreatedBy { get { throw null; } }
@@ -700,9 +700,9 @@ namespace Azure.AI.Discovery
         public virtual Azure.Response<Azure.AI.Discovery.KnowledgeBaseOperationResult> GetOperationStatus(string knowledgeBaseName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetOperationStatusAsync(string knowledgeBaseName, string operationId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Discovery.KnowledgeBaseOperationResult>> GetOperationStatusAsync(string knowledgeBaseName, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Operation Search(Azure.WaitUntil waitUntil, string knowledgeBaseName, Azure.AI.Discovery.SearchRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation Search(Azure.WaitUntil waitUntil, string knowledgeBaseName, Azure.AI.Discovery.SearchContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation Search(Azure.WaitUntil waitUntil, string knowledgeBaseName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation> SearchAsync(Azure.WaitUntil waitUntil, string knowledgeBaseName, Azure.AI.Discovery.SearchRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation> SearchAsync(Azure.WaitUntil waitUntil, string knowledgeBaseName, Azure.AI.Discovery.SearchContent body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> SearchAsync(Azure.WaitUntil waitUntil, string knowledgeBaseName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Operation StartIndexing(Azure.WaitUntil waitUntil, string knowledgeBaseName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Operation StartIndexing(Azure.WaitUntil waitUntil, string knowledgeBaseName, string nodePoolId = null, string projectId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -977,20 +977,20 @@ namespace Azure.AI.Discovery
         public static bool operator !=(Azure.AI.Discovery.RunStatus left, Azure.AI.Discovery.RunStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SearchRequest : System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.SearchRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.SearchRequest>
+    public partial class SearchContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.SearchContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.SearchContent>
     {
-        public SearchRequest(string query) { }
+        public SearchContent(string query) { }
         public string Query { get { throw null; } }
-        protected virtual Azure.AI.Discovery.SearchRequest JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.AI.Discovery.SearchContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static implicit operator Azure.Core.RequestContent (Azure.AI.Discovery.SearchRequest searchRequest) { throw null; }
-        protected virtual Azure.AI.Discovery.SearchRequest PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public static implicit operator Azure.Core.RequestContent (Azure.AI.Discovery.SearchContent searchContent) { throw null; }
+        protected virtual Azure.AI.Discovery.SearchContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Discovery.SearchRequest System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.SearchRequest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.SearchRequest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Discovery.SearchRequest System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.SearchRequest>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.SearchRequest>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.SearchRequest>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Discovery.SearchContent System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.SearchContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.SearchContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Discovery.SearchContent System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.SearchContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.SearchContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.SearchContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SearchResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.SearchResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.SearchResult>
     {
@@ -1021,20 +1021,20 @@ namespace Azure.AI.Discovery
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.SearchResultItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.SearchResultItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StartTaskRequest : System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.StartTaskRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.StartTaskRequest>
+    public partial class StartTaskContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.StartTaskContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.StartTaskContent>
     {
-        public StartTaskRequest() { }
+        public StartTaskContent() { }
         public Azure.AI.Discovery.TaskAssignee Assignee { get { throw null; } set { } }
-        protected virtual Azure.AI.Discovery.StartTaskRequest JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.AI.Discovery.StartTaskContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static implicit operator Azure.Core.RequestContent (Azure.AI.Discovery.StartTaskRequest startTaskRequest) { throw null; }
-        protected virtual Azure.AI.Discovery.StartTaskRequest PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public static implicit operator Azure.Core.RequestContent (Azure.AI.Discovery.StartTaskContent startTaskContent) { throw null; }
+        protected virtual Azure.AI.Discovery.StartTaskContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.AI.Discovery.StartTaskRequest System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.StartTaskRequest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.StartTaskRequest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Discovery.StartTaskRequest System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.StartTaskRequest>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.StartTaskRequest>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.StartTaskRequest>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Discovery.StartTaskContent System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.StartTaskContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.StartTaskContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Discovery.StartTaskContent System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.StartTaskContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.StartTaskContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.StartTaskContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class StorageAssetReference : System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.StorageAssetReference>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.StorageAssetReference>
     {
@@ -1086,7 +1086,7 @@ namespace Azure.AI.Discovery
     }
     public partial class TaskAssignee : System.ClientModel.Primitives.IJsonModel<Azure.AI.Discovery.TaskAssignee>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Discovery.TaskAssignee>
     {
-        public TaskAssignee(string id, Azure.AI.Discovery.DiscoveryActorType type) { }
+        public TaskAssignee() { }
         public string Id { get { throw null; } set { } }
         public Azure.AI.Discovery.DiscoveryActorType Type { get { throw null; } set { } }
         protected virtual Azure.AI.Discovery.TaskAssignee JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

@@ -9,8 +9,10 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="startEventName"> Name of the event that starts the rate calculation. </param>
         /// <param name="endEventName"> Name of the event that ends the rate calculation. </param>
         public UserRateMetricDefinition(string startEventName, string endEventName)
-            : this(new ObservedEvent(startEventName), new ObservedEvent(endEventName))
+            : this()
         {
+            StartEvent = new ObservedEvent { EventName = startEventName };
+            EndEvent = new ObservedEvent { EventName = endEventName };
         }
     }
 }

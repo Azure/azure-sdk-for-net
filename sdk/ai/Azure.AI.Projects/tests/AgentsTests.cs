@@ -134,13 +134,14 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
+    [AsyncOnly]
     public async Task TestResponsesStreaming()
     {
         AIProjectClient projectClient = GetTestProjectClient();
         ProjectResponsesClient client = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(TestEnvironment.FOUNDRY_MODEL_NAME);
         bool isCreated = false;
         bool textReceived = false;
-        await foreach (StreamingResponseUpdate streamResponse in client.CreateResponseStreamingAsync("What is steam reactor?"))
+        await foreach (StreamingResponseUpdate streamResponse in await client.CreateResponseStreamingAsync("What is steam reactor?"))
         {
             if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
             {
@@ -532,6 +533,7 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
+    [AsyncOnly]
     public async Task SimpleWorkflowAgentStreaming()
     {
         AIProjectClient projectClient = GetTestProjectClient();
@@ -554,7 +556,7 @@ public class AgentsTests : AgentsTestBase
 
         AgentWorkflowPreviewActionResponseItem streamedWorkflowActionItem = null;
 
-        await foreach (StreamingResponseUpdate responseUpdate in responseClient.CreateResponseStreamingAsync("Hello, agent!"))
+        await foreach (StreamingResponseUpdate responseUpdate in await responseClient.CreateResponseStreamingAsync("Hello, agent!"))
         {
             if (responseUpdate is StreamingResponseOutputItemDoneUpdate itemDoneUpdate)
             {
@@ -944,6 +946,7 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
+    [AsyncOnly]
     [TestCase(ToolType.FileSearch)]
     [TestCase(ToolType.CodeInterpreter)]
     [TestCase(ToolType.CodeInterpreterGen)]
@@ -988,7 +991,7 @@ public class AgentsTests : AgentsTestBase
             StreamingEnabled = true,
         };
         bool updateFound = !ExpectedUpdateTypes.TryGetValue(toolType, out Type expectedUpdateType);
-        await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync(responseOptions))
+        await foreach (StreamingResponseUpdate streamResponse in await responseClient.CreateResponseStreamingAsync(responseOptions))
         {
             if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
             {
@@ -1166,6 +1169,7 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
+    [AsyncOnly]
     [TestCase(ToolType.FunctionCall)]
     [TestCase(ToolType.MCP)]
     [TestCase(ToolType.MCPConnection)]
@@ -1197,7 +1201,7 @@ public class AgentsTests : AgentsTestBase
 
         do
         {
-            await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync(nextResponseOptions))
+            await foreach (StreamingResponseUpdate streamResponse in await responseClient.CreateResponseStreamingAsync(nextResponseOptions))
             {
                 if (streamResponse is StreamingResponseCreatedUpdate createdUpdate)
                 {
@@ -1276,13 +1280,13 @@ public class AgentsTests : AgentsTestBase
         {
             if (currentScreenshotStr.StartsWith("data:image"))
             {
-                return ResponseItem.CreateComputerCallOutputItem(callId: item.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageUri: new Uri(currentScreenshotStr)));
+                return ResponseItem.CreateComputerCallOutputItem(callId: item.CallId, output: ComputerCallOutput.CreateComputerScreenshotOutput(screenshotImageUri: new Uri(currentScreenshotStr)));
             }
-            return ResponseItem.CreateComputerCallOutputItem(callId: item.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageFileId: currentScreenshotStr));
+            return ResponseItem.CreateComputerCallOutputItem(callId: item.CallId, output: ComputerCallOutput.CreateComputerScreenshotOutput(screenshotImageFileId: currentScreenshotStr));
         }
         if (currentScreenshot is BinaryData currentScreenshotBin)
         {
-            return ResponseItem.CreateComputerCallOutputItem(callId: item.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageBytes: currentScreenshotBin, screenshotImageBytesMediaType: "image/png"));
+            return ResponseItem.CreateComputerCallOutputItem(callId: item.CallId, output: ComputerCallOutput.CreateComputerScreenshotOutput(screenshotImageBytes: currentScreenshotBin, screenshotImageBytesMediaType: "image/png"));
         }
         throw new InvalidDataException("screenshots must be a Dictionary<string, string>, Dictionary<string, BinaryData>");
     }

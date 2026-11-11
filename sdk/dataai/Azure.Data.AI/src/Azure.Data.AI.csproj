@@ -3,6 +3,8 @@
     <Description>This is the Azure.Data.AI client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>SDK Code Generation Azure.Data.AI</AssemblyTitle>
     <Version>1.1.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>Azure.Data.AI</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GenerateAPIListing>true</GenerateAPIListing>

@@ -90,6 +90,8 @@ namespace Azure.Analytics.PlanetaryComputer
                 throw new FormatException($"The model {nameof(StacItemCollection)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(KindProperty.ToString());
             writer.WritePropertyName("features"u8);
             writer.WriteStartArray();
             foreach (StacItem item in Features)
@@ -147,6 +149,7 @@ namespace Azure.Analytics.PlanetaryComputer
             string shortDescription = default;
             IList<string> stacExtensions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            StacModelKind kindProperty = default;
             IList<StacItem> features = default;
             IList<float> boundingBox = default;
             StacContextExtension context = default;
@@ -220,6 +223,11 @@ namespace Azure.Analytics.PlanetaryComputer
                     stacExtensions = array;
                     continue;
                 }
+                if (prop.NameEquals("type"u8))
+                {
+                    kindProperty = new StacModelKind(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("features"u8))
                 {
                     List<StacItem> array = new List<StacItem>();
@@ -267,6 +275,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 shortDescription,
                 stacExtensions ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties,
+                kindProperty,
                 features ?? new ChangeTrackingList<StacItem>(),
                 boundingBox ?? new ChangeTrackingList<float>(),
                 context);
