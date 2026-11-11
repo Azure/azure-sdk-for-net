@@ -6,11 +6,12 @@
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Request modes supported by Model Router session affinity. </summary>
-    public enum SessionAffinityRequestMode
+    internal enum SessionAffinityRequestStrategy
     {
         /// <summary> Attempts to reuse the model associated with the selected conversation identifier. </summary>
         Sticky,
+        /// <summary> Chooses between the associated model and a newly ranked model by balancing expected response quality and cache benefit. </summary>
+        Adaptive,
         /// <summary> Disables affinity state lookup and update for this request. </summary>
         None
     }

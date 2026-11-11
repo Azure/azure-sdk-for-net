@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> The moderation policy for the response input. </summary>
-    public partial class ModerationConfigParam : IJsonModel<ModerationConfigParam>
+    internal partial class ModerationConfigParam : IJsonModel<ModerationConfigParam>
     {
         /// <summary> Initializes a new instance of <see cref="ModerationConfigParam"/> for deserialization. </summary>
         internal ModerationConfigParam()

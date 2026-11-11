@@ -6,8 +6,7 @@
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary></summary>
-    public enum ModerationMode
+    internal enum ModerationMode
     {
         /// <summary> Score. </summary>
         Score,

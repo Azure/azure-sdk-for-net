@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> A computer screenshot image used with the computer use tool. </summary>
-    public partial class ComputerScreenshotImage : IJsonModel<ComputerScreenshotImage>
+    internal partial class ComputerScreenshotImage : IJsonModel<ComputerScreenshotImage>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

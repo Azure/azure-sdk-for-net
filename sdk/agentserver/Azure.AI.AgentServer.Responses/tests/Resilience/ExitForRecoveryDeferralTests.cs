@@ -13,6 +13,7 @@ using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.DependencyInjection;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Resilience;
 
@@ -545,7 +546,7 @@ public sealed class ExitForRecoveryDeferralTests : IDisposable
         public override Task DeleteResponseAsync(string responseId, PlatformContext context, CancellationToken cancellationToken = default)
             => _inner.DeleteResponseAsync(responseId, context, cancellationToken);
 
-        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, PlatformContext context, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken cancellationToken = default)
+        public override Task<ResponseItemCollectionPage> GetInputItemsAsync(string responseId, PlatformContext context, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken cancellationToken = default)
             => _inner.GetInputItemsAsync(responseId, context, limit, ascending, after, before, cancellationToken);
 
         public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, PlatformContext context, CancellationToken cancellationToken = default)

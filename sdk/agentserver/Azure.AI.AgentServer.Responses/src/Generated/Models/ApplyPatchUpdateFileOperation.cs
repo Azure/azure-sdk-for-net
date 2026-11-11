@@ -6,22 +6,16 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Apply patch update file operation. </summary>
-    public partial class ApplyPatchUpdateFileOperation : ApplyPatchFileOperation
+    internal partial class ApplyPatchUpdateFileOperation : ApplyPatchFileOperation
     {
         /// <summary> Initializes a new instance of <see cref="ApplyPatchUpdateFileOperation"/>. </summary>
         /// <param name="path"> Path of the file to update. </param>
         /// <param name="diff"> Diff to apply. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="path"/> or <paramref name="diff"/> is null. </exception>
         public ApplyPatchUpdateFileOperation(string path, string diff) : base(ApplyPatchFileOperationType.UpdateFile)
         {
-            Argument.AssertNotNull(path, nameof(path));
-            Argument.AssertNotNull(diff, nameof(diff));
-
             Path = path;
             Diff = diff;
         }

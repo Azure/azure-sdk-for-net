@@ -6,8 +6,7 @@
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary></summary>
-    public enum PageOrder
+    internal enum PageOrder
     {
         /// <summary> Return items in ascending creation-time order. </summary>
         Asc,

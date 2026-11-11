@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Conversation. </summary>
-    public partial class ResponseConversation : IJsonModel<ResponseConversation>
+    internal partial class ResponseConversation : IJsonModel<ResponseConversation>
     {
         /// <summary> Initializes a new instance of <see cref="ResponseConversation"/> for deserialization. </summary>
         internal ResponseConversation()

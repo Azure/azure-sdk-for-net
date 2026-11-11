@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// Moderation results or an error for a response moderation check.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ModerationErrorBody"/> and <see cref="ModerationResultBody"/>.
     /// </summary>
-    public abstract partial class ModerationEntry
+    internal abstract partial class ModerationEntry
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

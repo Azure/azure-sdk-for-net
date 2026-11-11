@@ -10,8 +10,7 @@ using System.Text.Json;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Custom tool call output. </summary>
-    public partial class ItemFieldCustomToolCallOutput : ItemField
+    internal partial class ItemFieldCustomToolCallOutput : ItemField
     {
         private ToolCallCallerParam _caller;
         private bool _callerIsDefined;

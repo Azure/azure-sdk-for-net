@@ -6,15 +6,11 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// Per-request configuration for Model Router inference calls.
-    /// Supported on Model Router endpoints (deployed or instant if supported).
-    /// Returns a 400 (Bad Request) error when the target is not a Model Router endpoint.
-    /// </summary>
-    public partial class RoutingConfiguration
+    internal partial class RoutingConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,24 +18,54 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="RoutingConfiguration"/>. </summary>
         public RoutingConfiguration()
         {
+            Models = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="RoutingConfiguration"/>. </summary>
         /// <param name="sessionAffinity">
         /// Session affinity configuration for reusing an eligible model across requests in the same conversation.
-        /// If omitted, sticky affinity is used when a supported conversation identifier is available.
+        /// If omitted, adaptive affinity is used when a supported conversation identifier is available.
+        /// </param>
+        /// <param name="mode"> Overrides the routing objective for this request. If omitted, the configured routing mode is used. </param>
+        /// <param name="models"> Model names used to narrow the configured model pool for this request. If omitted, the configured model pool is used. </param>
+        /// <param name="requireParameters">
+        /// When true, restricts routing to qualified model and serving API combinations that support
+        /// all applicable request parameters. Returns 400 (Bad Request) when none qualify.
+        /// Defaults to false when omitted. Explicit null and non-boolean values return 400.
+        /// Requires the Foundry-Features: ModelRouterControls=V1Preview header.
+        /// Applies only to qualified model, API, and adapter mappings, not every provider-native option.
+        /// This setting is request-scoped; it does not introduce stored deployment defaults.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoutingConfiguration(SessionAffinityConfiguration sessionAffinity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoutingConfiguration(SessionAffinityConfiguration sessionAffinity, ModelRouterMode? mode, IList<string> models, bool? requireParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SessionAffinity = sessionAffinity;
+            Mode = mode;
+            Models = models;
+            RequireParameters = requireParameters;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
         /// Session affinity configuration for reusing an eligible model across requests in the same conversation.
-        /// If omitted, sticky affinity is used when a supported conversation identifier is available.
+        /// If omitted, adaptive affinity is used when a supported conversation identifier is available.
         /// </summary>
         public SessionAffinityConfiguration SessionAffinity { get; set; }
+
+        /// <summary> Overrides the routing objective for this request. If omitted, the configured routing mode is used. </summary>
+        public ModelRouterMode? Mode { get; set; }
+
+        /// <summary> Model names used to narrow the configured model pool for this request. If omitted, the configured model pool is used. </summary>
+        public IList<string> Models { get; }
+
+        /// <summary>
+        /// When true, restricts routing to qualified model and serving API combinations that support
+        /// all applicable request parameters. Returns 400 (Bad Request) when none qualify.
+        /// Defaults to false when omitted. Explicit null and non-boolean values return 400.
+        /// Requires the Foundry-Features: ModelRouterControls=V1Preview header.
+        /// Applies only to qualified model, API, and adapter mappings, not every provider-native option.
+        /// This setting is request-scoped; it does not introduce stored deployment defaults.
+        /// </summary>
+        public bool? RequireParameters { get; set; }
     }
 }

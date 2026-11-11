@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> MCP approval request. </summary>
-    public partial class ItemFieldMcpApprovalRequest : ItemField, IJsonModel<ItemFieldMcpApprovalRequest>
+    internal partial class ItemFieldMcpApprovalRequest : ItemField, IJsonModel<ItemFieldMcpApprovalRequest>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldMcpApprovalRequest"/> for deserialization. </summary>
         internal ItemFieldMcpApprovalRequest()

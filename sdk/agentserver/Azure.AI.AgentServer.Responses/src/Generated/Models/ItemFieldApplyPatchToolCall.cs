@@ -9,8 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Apply patch tool call. </summary>
-    public partial class ItemFieldApplyPatchToolCall : ItemField
+    internal partial class ItemFieldApplyPatchToolCall : ItemField
     {
         private ToolCallCaller _caller;
         private bool _callerIsDefined;

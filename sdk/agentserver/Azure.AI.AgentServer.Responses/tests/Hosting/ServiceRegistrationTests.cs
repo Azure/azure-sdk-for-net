@@ -18,6 +18,7 @@ using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Hosting;
 
@@ -313,8 +314,8 @@ public class ServiceRegistrationTests
         public override Task UpdateResponseAsync(ResponseObject response, PlatformContext isolation, CancellationToken ct = default) => Task.CompletedTask;
         public override Task DeleteResponseAsync(string responseId, PlatformContext isolation, CancellationToken ct = default)
             => throw new ResourceNotFoundException("not found");
-        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, PlatformContext isolation, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
-            => Task.FromResult(ResponsesModelFactory.AgentsPagedResultOutputItem(data: Array.Empty<OutputItem>(), hasMore: false));
+        public override Task<ResponseItemCollectionPage> GetInputItemsAsync(string responseId, PlatformContext isolation, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
+            => Task.FromResult(new ResponseItemCollectionPage { Object = "list", HasMore = false });
         public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, PlatformContext isolation, CancellationToken ct = default)
             => Task.FromResult(Enumerable.Empty<OutputItem?>());
         public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, PlatformContext isolation, CancellationToken ct = default)
@@ -366,8 +367,8 @@ public class ServiceRegistrationTests
             return Task.CompletedTask;
         }
 
-        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, PlatformContext isolation, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
-            => Task.FromResult(ResponsesModelFactory.AgentsPagedResultOutputItem(data: Array.Empty<OutputItem>(), hasMore: false));
+        public override Task<ResponseItemCollectionPage> GetInputItemsAsync(string responseId, PlatformContext isolation, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken ct = default)
+            => Task.FromResult(new ResponseItemCollectionPage { Object = "list", HasMore = false });
 
         public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, PlatformContext isolation, CancellationToken ct = default)
             => Task.FromResult(Enumerable.Empty<OutputItem?>());

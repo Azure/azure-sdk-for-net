@@ -6,8 +6,7 @@
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary></summary>
-    public enum ToolSearchExecutionType
+    internal enum ToolSearchExecutionType
     {
         /// <summary> Server. </summary>
         Server,

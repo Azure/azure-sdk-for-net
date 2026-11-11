@@ -6,12 +6,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Configuration for running moderation on the input and output of this response. </summary>
-    public partial class ModerationParam
+    internal partial class ModerationParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -20,11 +18,8 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ModerationParam"/>. </summary>
         /// <param name="model"> The moderation model to use for moderated completions, e.g. 'omni-moderation-latest'. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
         public ModerationParam(string model)
         {
-            Argument.AssertNotNull(model, nameof(model));
-
             Model = model;
         }
 

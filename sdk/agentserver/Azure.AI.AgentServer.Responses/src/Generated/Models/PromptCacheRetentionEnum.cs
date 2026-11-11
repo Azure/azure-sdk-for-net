@@ -6,8 +6,7 @@
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary></summary>
-    public enum PromptCacheRetentionEnum
+    internal enum PromptCacheRetentionEnum
     {
         /// <summary> InMemory. </summary>
         InMemory,

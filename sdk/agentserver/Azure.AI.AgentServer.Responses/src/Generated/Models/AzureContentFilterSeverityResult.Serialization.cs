@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> A content filter result indicating severity level and whether content was filtered. </summary>
-    public partial class AzureContentFilterSeverityResult : IJsonModel<AzureContentFilterSeverityResult>
+    internal partial class AzureContentFilterSeverityResult : IJsonModel<AzureContentFilterSeverityResult>
     {
         /// <summary> Initializes a new instance of <see cref="AzureContentFilterSeverityResult"/> for deserialization. </summary>
         internal AzureContentFilterSeverityResult()

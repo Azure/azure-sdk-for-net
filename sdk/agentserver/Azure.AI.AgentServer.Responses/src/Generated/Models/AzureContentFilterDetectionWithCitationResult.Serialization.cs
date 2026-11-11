@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> A content filter detection result that includes citation information for protected material. </summary>
-    public partial class AzureContentFilterDetectionWithCitationResult : IJsonModel<AzureContentFilterDetectionWithCitationResult>
+    internal partial class AzureContentFilterDetectionWithCitationResult : IJsonModel<AzureContentFilterDetectionWithCitationResult>
     {
         /// <summary> Initializes a new instance of <see cref="AzureContentFilterDetectionWithCitationResult"/> for deserialization. </summary>
         internal AzureContentFilterDetectionWithCitationResult()

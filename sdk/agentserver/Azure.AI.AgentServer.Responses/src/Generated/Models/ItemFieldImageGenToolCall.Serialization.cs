@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Image generation call. </summary>
-    public partial class ItemFieldImageGenToolCall : ItemField, IJsonModel<ItemFieldImageGenToolCall>
+    internal partial class ItemFieldImageGenToolCall : ItemField, IJsonModel<ItemFieldImageGenToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldImageGenToolCall"/> for deserialization. </summary>
         internal ItemFieldImageGenToolCall()

@@ -11,7 +11,7 @@ using System.Linq;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Routing decision metadata from Model Router. </summary>
-    public partial class ModelRouterDetails
+    internal partial class ModelRouterDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

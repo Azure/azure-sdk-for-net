@@ -13,8 +13,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> The result of a delete response operation. </summary>
-    public partial class DeleteResponseResult : IJsonModel<DeleteResponseResult>
+    internal partial class DeleteResponseResult : IJsonModel<DeleteResponseResult>
     {
         /// <summary> Initializes a new instance of <see cref="DeleteResponseResult"/> for deserialization. </summary>
         internal DeleteResponseResult()

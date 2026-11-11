@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> A content filter detection result that includes a reason description. </summary>
-    public partial class AzureContentFilterDetectionWithReasonResult : IJsonModel<AzureContentFilterDetectionWithReasonResult>
+    internal partial class AzureContentFilterDetectionWithReasonResult : IJsonModel<AzureContentFilterDetectionWithReasonResult>
     {
         /// <summary> Initializes a new instance of <see cref="AzureContentFilterDetectionWithReasonResult"/> for deserialization. </summary>
         internal AzureContentFilterDetectionWithReasonResult()

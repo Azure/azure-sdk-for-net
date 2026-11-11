@@ -26,7 +26,7 @@ public class GetInputItemsProtocolTests : IDisposable
     }
 
     /// <summary>
-    /// T029: GET /responses/{id}/input_items returns 200 with AgentsPagedResultOutputItem
+    /// T029: GET /responses/{id}/input_items returns 200 with a ResponseItemCollectionPage
     /// for a response with stored input items.
     /// </summary>
     [Test]

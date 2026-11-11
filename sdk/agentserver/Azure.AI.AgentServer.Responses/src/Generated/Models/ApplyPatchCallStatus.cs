@@ -7,7 +7,7 @@
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public enum ApplyPatchCallStatus
+    internal enum ApplyPatchCallStatus
     {
         /// <summary> InProgress. </summary>
         InProgress,

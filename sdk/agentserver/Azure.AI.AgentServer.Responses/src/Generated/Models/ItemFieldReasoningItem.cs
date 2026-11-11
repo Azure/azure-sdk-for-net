@@ -11,8 +11,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Reasoning. </summary>
-    public partial class ItemFieldReasoningItem : ItemField
+    internal partial class ItemFieldReasoningItem : ItemField
     {
         private string _encryptedContent;
         private bool _encryptedContentIsDefined;

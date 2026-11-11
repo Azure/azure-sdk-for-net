@@ -10,6 +10,7 @@ using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
@@ -179,7 +180,7 @@ public class HistoryValidationTests : IDisposable
         public override Task DeleteResponseAsync(string responseId, PlatformContext isolation, CancellationToken cancellationToken = default)
             => _inner.DeleteResponseAsync(responseId, isolation, cancellationToken);
 
-        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, PlatformContext isolation, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken cancellationToken = default)
+        public override Task<ResponseItemCollectionPage> GetInputItemsAsync(string responseId, PlatformContext isolation, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken cancellationToken = default)
             => _inner.GetInputItemsAsync(responseId, isolation, limit, ascending, after, before, cancellationToken);
 
         public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, PlatformContext isolation, CancellationToken cancellationToken = default)

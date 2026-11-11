@@ -5,6 +5,7 @@ using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Models;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Internal;
 
@@ -94,13 +95,16 @@ internal static class StorageEnvelopeSerializer
     }
 
     /// <summary>
-    /// Deserializes a JSON string into an <see cref="AgentsPagedResultOutputItem"/>.
+    /// Deserializes a JSON string into a <see cref="ResponseItemCollectionPage"/>.
     /// </summary>
-    public static AgentsPagedResultOutputItem DeserializePagedItems(string json)
+    public static ResponseItemCollectionPage DeserializePagedItems(string json)
     {
         var data = BinaryData.FromString(json);
-        return ModelJson.Read<AgentsPagedResultOutputItem>(data, JsonOptions)
-            ?? throw new InvalidOperationException("Failed to deserialize AgentsPagedResultOutputItem from storage.");
+        var page = ModelJson.Read<ResponseItemCollectionPage>(data, JsonOptions)
+            ?? throw new InvalidOperationException("Failed to deserialize ResponseItemCollectionPage from storage.");
+        // The input-items list is always an OpenAI "list" envelope; stamp it if storage omitted it.
+        page.Object ??= "list";
+        return page;
     }
 
     /// <summary>

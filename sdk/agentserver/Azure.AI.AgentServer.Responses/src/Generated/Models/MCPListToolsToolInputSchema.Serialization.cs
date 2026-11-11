@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> The MCPListToolsToolInputSchema. </summary>
-    public partial class MCPListToolsToolInputSchema : IJsonModel<MCPListToolsToolInputSchema>
+    internal partial class MCPListToolsToolInputSchema : IJsonModel<MCPListToolsToolInputSchema>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

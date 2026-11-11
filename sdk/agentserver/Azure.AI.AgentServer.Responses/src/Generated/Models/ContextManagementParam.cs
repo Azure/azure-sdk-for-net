@@ -6,12 +6,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> The ContextManagementParam. </summary>
-    public partial class ContextManagementParam
+    internal partial class ContextManagementParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -20,11 +18,8 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ContextManagementParam"/>. </summary>
         /// <param name="type"> The context management entry type. Currently only 'compaction' is supported. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="type"/> is null. </exception>
         public ContextManagementParam(string @type)
         {
-            Argument.AssertNotNull(@type, nameof(@type));
-
             Type = @type;
         }
 

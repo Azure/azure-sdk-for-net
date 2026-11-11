@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> A content filter result indicating severity level and whether content was filtered. </summary>
-    public partial class AzureContentFilterSeverityResult
+    internal partial class AzureContentFilterSeverityResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

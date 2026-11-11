@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Message. </summary>
-    public partial class ItemFieldMessage : ItemField, IJsonModel<ItemFieldMessage>
+    internal partial class ItemFieldMessage : ItemField, IJsonModel<ItemFieldMessage>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldMessage"/> for deserialization. </summary>
         internal ItemFieldMessage()

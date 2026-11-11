@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> A collection of filtering results for configured custom blocklists. </summary>
-    public partial class AzureContentFilterBlocklistResult : IJsonModel<AzureContentFilterBlocklistResult>
+    internal partial class AzureContentFilterBlocklistResult : IJsonModel<AzureContentFilterBlocklistResult>
     {
         /// <summary> Initializes a new instance of <see cref="AzureContentFilterBlocklistResult"/> for deserialization. </summary>
         internal AzureContentFilterBlocklistResult()

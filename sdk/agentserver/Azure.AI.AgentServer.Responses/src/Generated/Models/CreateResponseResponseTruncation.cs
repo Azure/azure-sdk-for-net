@@ -7,7 +7,7 @@
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public enum CreateResponseResponseTruncation
+    internal enum CreateResponseResponseTruncation
     {
         /// <summary> Auto. </summary>
         Auto,

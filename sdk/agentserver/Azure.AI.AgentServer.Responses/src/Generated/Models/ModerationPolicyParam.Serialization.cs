@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> The policy to apply to moderated response input and output. </summary>
-    public partial class ModerationPolicyParam : IJsonModel<ModerationPolicyParam>
+    internal partial class ModerationPolicyParam : IJsonModel<ModerationPolicyParam>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

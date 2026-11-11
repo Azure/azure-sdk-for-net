@@ -7,7 +7,7 @@
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public enum CacheMissReasonTypeEnum
+    internal enum CacheMissReasonTypeEnum
     {
         /// <summary> ModelChanged. </summary>
         ModelChanged,

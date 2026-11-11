@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> The FileSearchToolCallResults. </summary>
-    public partial class FileSearchToolCallResults : IJsonModel<FileSearchToolCallResults>
+    internal partial class FileSearchToolCallResults : IJsonModel<FileSearchToolCallResults>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

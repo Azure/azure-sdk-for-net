@@ -6,23 +6,18 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> The result of a delete response operation. </summary>
-    public partial class DeleteResponseResult
+    internal partial class DeleteResponseResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeleteResponseResult"/>. </summary>
         /// <param name="id"> The operation ID. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public DeleteResponseResult(string id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
             Id = id;
         }
 

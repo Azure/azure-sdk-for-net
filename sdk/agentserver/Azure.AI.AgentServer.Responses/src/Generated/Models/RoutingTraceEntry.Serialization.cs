@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> A single entry in the routing trace representing one inference turn. Each entry contains the latency and the ordered list of attempts for that turn. </summary>
-    public partial class RoutingTraceEntry : IJsonModel<RoutingTraceEntry>
+    internal partial class RoutingTraceEntry : IJsonModel<RoutingTraceEntry>
     {
         /// <summary> Initializes a new instance of <see cref="RoutingTraceEntry"/> for deserialization. </summary>
         internal RoutingTraceEntry()

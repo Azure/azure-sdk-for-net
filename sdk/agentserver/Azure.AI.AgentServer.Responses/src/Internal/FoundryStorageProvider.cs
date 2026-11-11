@@ -6,6 +6,7 @@ using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Internal;
 
@@ -169,7 +170,7 @@ internal sealed class FoundryStorageProvider : ResponsesProvider
     }
 
     /// <inheritdoc/>
-    public override async Task<AgentsPagedResultOutputItem> GetInputItemsAsync(
+    public override async Task<ResponseItemCollectionPage> GetInputItemsAsync(
         string responseId,
         PlatformContext context,
         int limit = 20,

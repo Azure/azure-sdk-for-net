@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Hosting;
 
@@ -131,7 +132,7 @@ public sealed class ResilienceStartupValidationTests
         public override Task<ResponseObject> GetResponseAsync(string responseId, PlatformContext context, CancellationToken cancellationToken = default) => throw new ResourceNotFoundException(responseId);
         public override Task UpdateResponseAsync(ResponseObject response, PlatformContext context, CancellationToken cancellationToken = default) => Task.CompletedTask;
         public override Task DeleteResponseAsync(string responseId, PlatformContext context, CancellationToken cancellationToken = default) => Task.CompletedTask;
-        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(string responseId, PlatformContext context, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken cancellationToken = default) => throw new ResourceNotFoundException(responseId);
+        public override Task<ResponseItemCollectionPage> GetInputItemsAsync(string responseId, PlatformContext context, int limit = 20, bool ascending = false, string? after = null, string? before = null, CancellationToken cancellationToken = default) => throw new ResourceNotFoundException(responseId);
         public override Task<IEnumerable<OutputItem?>> GetItemsAsync(IEnumerable<string> itemIds, PlatformContext context, CancellationToken cancellationToken = default) => Task.FromResult(Enumerable.Empty<OutputItem?>());
         public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(string? previousResponseId, string? conversationId, int limit, PlatformContext context, CancellationToken cancellationToken = default) => Task.FromResult(Enumerable.Empty<string>());
     }

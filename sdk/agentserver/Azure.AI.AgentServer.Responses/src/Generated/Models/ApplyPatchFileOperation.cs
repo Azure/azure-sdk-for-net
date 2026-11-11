@@ -9,11 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// Apply patch operation
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ApplyPatchCreateFileOperation"/>, <see cref="ApplyPatchDeleteFileOperation"/>, and <see cref="ApplyPatchUpdateFileOperation"/>.
-    /// </summary>
-    public abstract partial class ApplyPatchFileOperation
+    internal abstract partial class ApplyPatchFileOperation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

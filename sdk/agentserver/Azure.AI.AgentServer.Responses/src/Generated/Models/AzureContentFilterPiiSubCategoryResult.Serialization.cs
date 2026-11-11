@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Result details for an individual PII subcategory. </summary>
-    public partial class AzureContentFilterPiiSubCategoryResult : IJsonModel<AzureContentFilterPiiSubCategoryResult>
+    internal partial class AzureContentFilterPiiSubCategoryResult : IJsonModel<AzureContentFilterPiiSubCategoryResult>
     {
         /// <summary> Initializes a new instance of <see cref="AzureContentFilterPiiSubCategoryResult"/> for deserialization. </summary>
         internal AzureContentFilterPiiSubCategoryResult()

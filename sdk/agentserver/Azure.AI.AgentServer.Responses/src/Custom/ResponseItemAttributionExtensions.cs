@@ -14,30 +14,21 @@ using OpenAI.Responses;
 namespace Azure.AI.AgentServer.Responses;
 
 /// <summary>
-/// Read/write accessors for the Azure agent attribution fields carried on
-/// <see cref="ResponseItem"/> (<c>response_id</c>, <c>agent_reference</c> and <c>created_by</c>).
+/// Read/write accessors for Azure-specific fields that the OpenAI models carry only in their
+/// <see cref="JsonPatch"/>, such as <c>created_by</c> on <see cref="ResponseItem"/>.
 /// </summary>
 /// <remarks>
 /// <para>
-/// <c>Azure.AI.Extensions.OpenAI.ResponseItemExtensions</c> exposes <c>ResponseId</c> and
-/// <c>AgentReference</c> as read-only, which suits clients that only consume items. This
-/// package is the server side: it <em>produces</em> response items and therefore has to stamp
-/// these fields on outgoing items, so it needs setters as well. <c>created_by</c> is not
-/// modelled in Extensions at all.
-/// </para>
-/// <para>
 /// These are implemented over the public <see cref="JsonPatch"/> surface, mirroring how
-/// Extensions implements its own accessors. If Extensions later exposes settable equivalents,
-/// this type should be deleted in favour of them.
+/// <c>Azure.AI.Extensions.OpenAI</c> implements its own accessors.
 /// </para>
 /// <para>
-/// Because both packages extend <see cref="ResponseItem"/> with <c>ResponseId</c> and
-/// <c>AgentReference</c>, a file that imports both <c>Azure.AI.AgentServer.Responses</c> and
-/// <c>Azure.AI.Extensions.OpenAI</c> gets compiler error CS9339 (ambiguous extension) when it
-/// reads or assigns either member on a <see cref="ResponseItem"/>. Import only one of the two
-/// namespaces in that file, declare <c>using Azure.AI.AgentServer.Responses;</c> inside the
-/// enclosing namespace so it takes precedence, or name <c>AgentReference</c> through a using
-/// alias or its fully qualified name instead of importing <c>Azure.AI.Extensions.OpenAI</c>.
+/// <c>Azure.AI.Extensions.OpenAI.ResponseItemExtensions</c> already exposes read-only
+/// <c>ResponseId</c> and <c>AgentReference</c> on <see cref="ResponseItem"/>. This package is the
+/// server side and has to stamp those fields on the items it produces, so it keeps settable
+/// versions of them, but only internally: public duplicates would make every use ambiguous
+/// (CS9339) in files that import both namespaces. Make them public only once the ambiguity is
+/// resolved, for example by moving the setters to Extensions.
 /// </para>
 /// </remarks>
 [Experimental("OPENAI001")]
@@ -58,14 +49,14 @@ public static class ResponseItemAttributionExtensions
     extension(ResponseItem item)
     {
         /// <summary> Gets or sets the ID of the response that the item belongs to. </summary>
-        public string? ResponseId
+        internal string? ResponseId
         {
             get => GetString(ref item.Patch, ResponseIdPath.Span);
             set => SetOrClear(ref item.Patch, ResponseIdPath.Span, value);
         }
 
         /// <summary> Gets or sets the agent that created the item. </summary>
-        public AgentReference? AgentReference
+        internal AgentReference? AgentReference
         {
             get => GetJsonModel<AgentReference>(ref item.Patch, AgentReferencePath.Span);
             set => SetOrClear(ref item.Patch, AgentReferencePath.Span, value);

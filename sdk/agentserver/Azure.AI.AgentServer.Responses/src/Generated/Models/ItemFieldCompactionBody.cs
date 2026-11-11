@@ -9,8 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Compaction item. </summary>
-    public partial class ItemFieldCompactionBody : ItemField
+    internal partial class ItemFieldCompactionBody : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldCompactionBody"/>. </summary>
         /// <param name="id"> The unique ID of the compaction item. </param>

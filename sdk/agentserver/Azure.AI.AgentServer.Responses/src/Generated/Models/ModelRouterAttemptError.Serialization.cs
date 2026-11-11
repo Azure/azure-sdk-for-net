@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Error details returned by a model routing attempt. </summary>
-    public partial class ModelRouterAttemptError : IJsonModel<ModelRouterAttemptError>
+    internal partial class ModelRouterAttemptError : IJsonModel<ModelRouterAttemptError>
     {
         /// <summary> Initializes a new instance of <see cref="ModelRouterAttemptError"/> for deserialization. </summary>
         internal ModelRouterAttemptError()

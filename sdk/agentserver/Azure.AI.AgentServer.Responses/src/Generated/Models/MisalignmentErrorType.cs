@@ -6,12 +6,10 @@
 
 using System;
 using System.ComponentModel;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary></summary>
-    public readonly partial struct MisalignmentErrorType : IEquatable<MisalignmentErrorType>
+    internal readonly partial struct MisalignmentErrorType : IEquatable<MisalignmentErrorType>
     {
         private readonly string _value;
         private const string PotentiallyUnintendedDataTransferValue = "potentially_unintended_data_transfer";
@@ -21,11 +19,8 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="MisalignmentErrorType"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MisalignmentErrorType(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
             _value = value;
         }
 

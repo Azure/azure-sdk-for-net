@@ -12,7 +12,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> The HTTP-style result returned by a model routing attempt. </summary>
-    public partial class ModelRouterAttemptResult
+    internal partial class ModelRouterAttemptResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

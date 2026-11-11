@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Moderation result. </summary>
-    public partial class ModerationResultBody : ModerationEntry, IJsonModel<ModerationResultBody>
+    internal partial class ModerationResultBody : ModerationEntry, IJsonModel<ModerationResultBody>
     {
         /// <summary> Initializes a new instance of <see cref="ModerationResultBody"/> for deserialization. </summary>
         internal ModerationResultBody()

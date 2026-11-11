@@ -19,7 +19,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// [reasoning guide](https://developers.openai.com/api/docs/guides/reasoning)
     /// for model-specific support.
     /// </summary>
-    public readonly partial struct ReasoningEffort : IEquatable<ReasoningEffort>
+    internal readonly partial struct ReasoningEffort : IEquatable<ReasoningEffort>
     {
         private readonly string _value;
         private const string NoneValue = "none";

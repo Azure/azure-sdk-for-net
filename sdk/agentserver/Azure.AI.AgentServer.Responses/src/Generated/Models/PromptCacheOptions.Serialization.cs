@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Prompt cache options. </summary>
-    public partial class PromptCacheOptions : IJsonModel<PromptCacheOptions>
+    internal partial class PromptCacheOptions : IJsonModel<PromptCacheOptions>
     {
         /// <summary> Initializes a new instance of <see cref="PromptCacheOptions"/> for deserialization. </summary>
         internal PromptCacheOptions()

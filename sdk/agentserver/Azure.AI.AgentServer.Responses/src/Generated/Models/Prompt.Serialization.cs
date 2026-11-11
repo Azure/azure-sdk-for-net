@@ -16,7 +16,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// Reference to a prompt template and its variables.
     /// [Learn more](https://developers.openai.com/api/docs/guides/text?api-mode=responses#version-prompts-in-code).
     /// </summary>
-    public partial class Prompt : IJsonModel<Prompt>
+    internal partial class Prompt : IJsonModel<Prompt>
     {
         /// <summary> Initializes a new instance of <see cref="Prompt"/> for deserialization. </summary>
         internal Prompt()

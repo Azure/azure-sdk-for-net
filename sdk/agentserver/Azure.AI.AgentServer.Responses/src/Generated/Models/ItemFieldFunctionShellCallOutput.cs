@@ -10,8 +10,7 @@ using System.Linq;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Shell call output. </summary>
-    public partial class ItemFieldFunctionShellCallOutput : ItemField
+    internal partial class ItemFieldFunctionShellCallOutput : ItemField
     {
         private ToolCallCaller _caller;
         private bool _callerIsDefined;

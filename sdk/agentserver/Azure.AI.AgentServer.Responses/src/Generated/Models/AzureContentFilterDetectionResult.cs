@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> A content filter result indicating whether the content was detected and filtered. </summary>
-    public partial class AzureContentFilterDetectionResult
+    internal partial class AzureContentFilterDetectionResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

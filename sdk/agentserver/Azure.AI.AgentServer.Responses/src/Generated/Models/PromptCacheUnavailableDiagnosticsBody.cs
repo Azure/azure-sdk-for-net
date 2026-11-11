@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> The PromptCacheUnavailableDiagnosticsBody. </summary>
-    public partial class PromptCacheUnavailableDiagnosticsBody : PromptCacheDiagnostics
+    internal partial class PromptCacheUnavailableDiagnosticsBody : PromptCacheDiagnostics
     {
         /// <summary> Initializes a new instance of <see cref="PromptCacheUnavailableDiagnosticsBody"/>. </summary>
         internal PromptCacheUnavailableDiagnosticsBody() : base(PromptCacheDiagnosticsType.Unavailable)

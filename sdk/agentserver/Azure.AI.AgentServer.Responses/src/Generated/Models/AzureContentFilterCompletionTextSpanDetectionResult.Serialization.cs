@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> A content filter detection result with completion text span details. </summary>
-    public partial class AzureContentFilterCompletionTextSpanDetectionResult : IJsonModel<AzureContentFilterCompletionTextSpanDetectionResult>
+    internal partial class AzureContentFilterCompletionTextSpanDetectionResult : IJsonModel<AzureContentFilterCompletionTextSpanDetectionResult>
     {
         /// <summary> Initializes a new instance of <see cref="AzureContentFilterCompletionTextSpanDetectionResult"/> for deserialization. </summary>
         internal AzureContentFilterCompletionTextSpanDetectionResult()

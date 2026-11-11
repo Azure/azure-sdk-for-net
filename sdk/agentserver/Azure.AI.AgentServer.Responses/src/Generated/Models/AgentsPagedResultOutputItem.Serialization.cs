@@ -15,7 +15,7 @@ using OpenAI.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> The response data for a requested list of items. </summary>
-    public partial class AgentsPagedResultOutputItem : IJsonModel<AgentsPagedResultOutputItem>
+    internal partial class AgentsPagedResultOutputItem : IJsonModel<AgentsPagedResultOutputItem>
     {
         /// <summary> Initializes a new instance of <see cref="AgentsPagedResultOutputItem"/> for deserialization. </summary>
         internal AgentsPagedResultOutputItem()
@@ -77,6 +77,58 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AgentsPagedResultOutputItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AgentsPagedResultOutputItem)} does not support writing '{format}' format.");
+            }
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
+            writer.WritePropertyName("data"u8);
+            writer.WriteStartArray();
+            foreach (Item item in Data)
+            {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
+            if (Optional.IsDefined(FirstId))
+            {
+                writer.WritePropertyName("first_id"u8);
+                writer.WriteStringValue(FirstId);
+            }
+            if (Optional.IsDefined(LastId))
+            {
+                writer.WritePropertyName("last_id"u8);
+                writer.WriteStringValue(LastId);
+            }
+            writer.WritePropertyName("has_more"u8);
+            writer.WriteBooleanValue(HasMore);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>

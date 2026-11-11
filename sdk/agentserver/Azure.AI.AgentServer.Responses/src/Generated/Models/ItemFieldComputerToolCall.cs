@@ -13,9 +13,8 @@ using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Computer tool call. </summary>
     [Experimental("OPENAI001")]
-    public partial class ItemFieldComputerToolCall : ItemField
+    internal partial class ItemFieldComputerToolCall : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldComputerToolCall"/>. </summary>
         /// <param name="id"> The unique ID of the computer call. </param>

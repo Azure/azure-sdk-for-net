@@ -6,23 +6,18 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Input text. </summary>
-    public partial class InputTextContent
+    internal partial class InputTextContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InputTextContent"/>. </summary>
         /// <param name="text"> The text input to the model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public InputTextContent(string text)
         {
-            Argument.AssertNotNull(text, nameof(text));
-
             Text = text;
         }
 

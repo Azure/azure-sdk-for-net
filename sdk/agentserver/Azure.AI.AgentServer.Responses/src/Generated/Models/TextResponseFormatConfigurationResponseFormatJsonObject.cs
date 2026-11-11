@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> JSON object. </summary>
-    public partial class TextResponseFormatConfigurationResponseFormatJsonObject : TextResponseFormatConfiguration
+    internal partial class TextResponseFormatConfigurationResponseFormatJsonObject : TextResponseFormatConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="TextResponseFormatConfigurationResponseFormatJsonObject"/>. </summary>
         public TextResponseFormatConfigurationResponseFormatJsonObject() : base(TextResponseFormatConfigurationType.JsonObject)

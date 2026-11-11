@@ -13,7 +13,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// Prompt cache diagnostics requested for this response.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PromptCacheComparisonResponseNotFoundDiagnosticsBody"/>, <see cref="PromptCacheHitDiagnosticsBody"/>, <see cref="PromptCacheMissDiagnosticsBody"/>, and <see cref="PromptCacheUnavailableDiagnosticsBody"/>.
     /// </summary>
-    public abstract partial class PromptCacheDiagnostics
+    internal abstract partial class PromptCacheDiagnostics
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

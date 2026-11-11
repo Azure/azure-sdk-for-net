@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Conversation identifier sources supported by Model Router session affinity. </summary>
-    public readonly partial struct SessionAffinitySource : IEquatable<SessionAffinitySource>
+    internal readonly partial struct SessionAffinitySource : IEquatable<SessionAffinitySource>
     {
         private readonly string _value;
         /// <summary> An explicit session identifier supplied in the request body. </summary>
@@ -20,10 +20,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         private const string SessionIdHeaderValue = "session_id_header";
         /// <summary> No usable conversation identifier was available. </summary>
         private const string NotAvailableValue = "not_available";
-        /// <summary> The Responses conversation identifier. </summary>
-        private const string ConversationValue = "conversation";
-        /// <summary> The Responses previous response identifier. </summary>
-        private const string PreviousResponseIdValue = "previous_response_id";
+        /// <summary> A service-derived fingerprint based on Responses linkage or request content. </summary>
+        private const string DerivedFingerprintValue = "derived_fingerprint";
 
         /// <summary> Initializes a new instance of <see cref="SessionAffinitySource"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -44,11 +42,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> No usable conversation identifier was available. </summary>
         public static SessionAffinitySource NotAvailable { get; } = new SessionAffinitySource(NotAvailableValue);
 
-        /// <summary> The Responses conversation identifier. </summary>
-        public static SessionAffinitySource Conversation { get; } = new SessionAffinitySource(ConversationValue);
-
-        /// <summary> The Responses previous response identifier. </summary>
-        public static SessionAffinitySource PreviousResponseId { get; } = new SessionAffinitySource(PreviousResponseIdValue);
+        /// <summary> A service-derived fingerprint based on Responses linkage or request content. </summary>
+        public static SessionAffinitySource DerivedFingerprint { get; } = new SessionAffinitySource(DerivedFingerprintValue);
 
         /// <summary> Determines if two <see cref="SessionAffinitySource"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

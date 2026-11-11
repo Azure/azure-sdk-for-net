@@ -11,7 +11,7 @@ using System.Linq;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> A content filter detection result with completion text span details. </summary>
-    public partial class AzureContentFilterCompletionTextSpanDetectionResult
+    internal partial class AzureContentFilterCompletionTextSpanDetectionResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

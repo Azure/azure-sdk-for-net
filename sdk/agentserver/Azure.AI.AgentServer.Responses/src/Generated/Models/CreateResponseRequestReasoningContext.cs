@@ -7,7 +7,7 @@
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public enum CreateResponseRequestReasoningContext
+    internal enum CreateResponseRequestReasoningContext
     {
         /// <summary> Auto. </summary>
         Auto,

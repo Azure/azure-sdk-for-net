@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> MCP list tools. </summary>
-    public partial class ItemFieldMcpListTools : ItemField, IJsonModel<ItemFieldMcpListTools>
+    internal partial class ItemFieldMcpListTools : ItemField, IJsonModel<ItemFieldMcpListTools>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldMcpListTools"/> for deserialization. </summary>
         internal ItemFieldMcpListTools()

@@ -6,23 +6,18 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Code interpreter output logs. </summary>
-    public partial class CodeInterpreterOutputLogs
+    internal partial class CodeInterpreterOutputLogs
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CodeInterpreterOutputLogs"/>. </summary>
         /// <param name="logs"> The logs output from the code interpreter. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="logs"/> is null. </exception>
         public CodeInterpreterOutputLogs(string logs)
         {
-            Argument.AssertNotNull(logs, nameof(logs));
-
             Logs = logs;
         }
 

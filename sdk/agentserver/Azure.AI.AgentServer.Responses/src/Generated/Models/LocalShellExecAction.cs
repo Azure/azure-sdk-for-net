@@ -7,12 +7,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Local shell exec action. </summary>
-    public partial class LocalShellExecAction
+    internal partial class LocalShellExecAction
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -26,12 +24,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="LocalShellExecAction"/>. </summary>
         /// <param name="command"> The command to run. </param>
         /// <param name="env"> Environment variables to set for the command. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="command"/> or <paramref name="env"/> is null. </exception>
         public LocalShellExecAction(IEnumerable<string> command, IDictionary<string, string> env)
         {
-            Argument.AssertNotNull(command, nameof(command));
-            Argument.AssertNotNull(env, nameof(env));
-
             Command = command.ToList();
             Env = env;
         }

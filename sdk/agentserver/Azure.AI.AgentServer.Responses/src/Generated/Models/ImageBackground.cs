@@ -6,8 +6,7 @@
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary></summary>
-    public enum ImageBackground
+    internal enum ImageBackground
     {
         /// <summary> Transparent. </summary>
         Transparent,

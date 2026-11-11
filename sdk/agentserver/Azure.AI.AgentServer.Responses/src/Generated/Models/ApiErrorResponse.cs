@@ -6,23 +6,18 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Error response for API failures. </summary>
-    public partial class ApiErrorResponse
+    internal partial class ApiErrorResponse
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApiErrorResponse"/>. </summary>
         /// <param name="error"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="error"/> is null. </exception>
         public ApiErrorResponse(ApiError error)
         {
-            Argument.AssertNotNull(error, nameof(error));
-
             Error = error;
         }
 

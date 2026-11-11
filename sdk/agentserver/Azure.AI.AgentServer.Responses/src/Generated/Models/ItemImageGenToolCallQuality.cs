@@ -7,7 +7,7 @@
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public enum ItemImageGenToolCallQuality
+    internal enum ItemImageGenToolCallQuality
     {
         /// <summary> Low. </summary>
         Low,

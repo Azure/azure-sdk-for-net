@@ -7,7 +7,7 @@
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public enum PromptCacheModeEnum
+    internal enum PromptCacheModeEnum
     {
         /// <summary> Implicit. </summary>
         Implicit,

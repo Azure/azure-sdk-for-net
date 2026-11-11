@@ -10,8 +10,7 @@ using System.Linq;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Message. </summary>
-    public partial class ItemFieldMessage : ItemField
+    internal partial class ItemFieldMessage : ItemField
     {
         private MessagePhase? _phase;
         private bool _phaseIsDefined;

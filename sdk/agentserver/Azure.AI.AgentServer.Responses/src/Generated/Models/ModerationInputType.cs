@@ -7,7 +7,7 @@
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public enum ModerationInputType
+    internal enum ModerationInputType
     {
         /// <summary> Text. </summary>
         Text,

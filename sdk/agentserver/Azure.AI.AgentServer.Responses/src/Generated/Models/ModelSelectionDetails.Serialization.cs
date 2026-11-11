@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Model selection metadata providing visibility into routing decisions. </summary>
-    public partial class ModelSelectionDetails : IJsonModel<ModelSelectionDetails>
+    internal partial class ModelSelectionDetails : IJsonModel<ModelSelectionDetails>
     {
         /// <summary> Initializes a new instance of <see cref="ModelSelectionDetails"/> for deserialization. </summary>
         internal ModelSelectionDetails()

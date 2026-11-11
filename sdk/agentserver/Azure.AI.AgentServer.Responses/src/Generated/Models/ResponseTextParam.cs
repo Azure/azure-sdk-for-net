@@ -14,7 +14,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// text or structured JSON data. Learn more:
     /// <list type="bullet"><item><description>[Text inputs and outputs](https://developers.openai.com/api/docs/guides/text)</description></item><item><description>[Structured Outputs](https://developers.openai.com/api/docs/guides/structured-outputs)</description></item></list>
     /// </summary>
-    public partial class ResponseTextParam
+    internal partial class ResponseTextParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -6,15 +6,10 @@
 
 using System;
 using System.ComponentModel;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// Specify additional output data to include in the model response. Currently supported values are:
-    /// <list type="bullet"><item><description>`web_search_call.results`: Include the search results of the web search tool call.</description></item><item><description>`web_search_call.action.sources`: Include the sources of the web search tool call.</description></item><item><description>`code_interpreter_call.outputs`: Includes the outputs of python code execution in code interpreter tool call items.</description></item><item><description>`computer_call_output.output.image_url`: Include image urls from the computer call output.</description></item><item><description>`file_search_call.results`: Include the search results of the file search tool call.</description></item><item><description>`message.input_image.image_url`: Include image urls from the input message.</description></item><item><description>`message.output_text.logprobs`: Include logprobs with assistant messages.</description></item><item><description>`reasoning.encrypted_content`: Includes an encrypted version of reasoning tokens in reasoning item outputs. This enables reasoning items to be used in multi-turn conversations when using the Responses API statelessly (like when the `store` parameter is set to `false`, or when an organization is enrolled in the zero data retention program).</description></item></list>
-    /// </summary>
-    public readonly partial struct IncludeEnum : IEquatable<IncludeEnum>
+    internal readonly partial struct IncludeEnum : IEquatable<IncludeEnum>
     {
         private readonly string _value;
         private const string FileSearchCallResultsValue = "file_search_call.results";
@@ -29,11 +24,8 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="IncludeEnum"/>. </summary>
         /// <param name="value"> The value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IncludeEnum(string value)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
             _value = value;
         }
 

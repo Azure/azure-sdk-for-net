@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Computer tool call output. </summary>
-    public partial class ItemFieldComputerToolCallOutput : ItemField, IJsonModel<ItemFieldComputerToolCallOutput>
+    internal partial class ItemFieldComputerToolCallOutput : ItemField, IJsonModel<ItemFieldComputerToolCallOutput>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldComputerToolCallOutput"/> for deserialization. </summary>
         internal ItemFieldComputerToolCallOutput()

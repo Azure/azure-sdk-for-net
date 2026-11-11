@@ -9,8 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Local Environment. </summary>
-    public partial class LocalEnvironmentResource : FunctionShellCallEnvironment
+    internal partial class LocalEnvironmentResource : FunctionShellCallEnvironment
     {
         /// <summary> Initializes a new instance of <see cref="LocalEnvironmentResource"/>. </summary>
         public LocalEnvironmentResource() : base(FunctionShellCallEnvironmentType.Local)

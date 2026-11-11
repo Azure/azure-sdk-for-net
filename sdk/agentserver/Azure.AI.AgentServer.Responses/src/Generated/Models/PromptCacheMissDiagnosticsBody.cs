@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> The PromptCacheMissDiagnosticsBody. </summary>
-    public partial class PromptCacheMissDiagnosticsBody : PromptCacheDiagnostics
+    internal partial class PromptCacheMissDiagnosticsBody : PromptCacheDiagnostics
     {
         /// <summary> Initializes a new instance of <see cref="PromptCacheMissDiagnosticsBody"/>. </summary>
         /// <param name="reason"> The reason prompt cache reuse did not occur. </param>

@@ -19,7 +19,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// Keys are strings with a maximum length of 64 characters. Values are strings
     /// with a maximum length of 512 characters.
     /// </summary>
-    public partial class Metadata : IJsonModel<Metadata>
+    internal partial class Metadata : IJsonModel<Metadata>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

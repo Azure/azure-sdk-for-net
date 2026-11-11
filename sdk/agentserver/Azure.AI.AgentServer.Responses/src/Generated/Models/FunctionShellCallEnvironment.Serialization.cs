@@ -11,12 +11,8 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// The FunctionShellCallEnvironment.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContainerReferenceResource"/> and <see cref="LocalEnvironmentResource"/>.
-    /// </summary>
     [PersistableModelProxy(typeof(UnknownFunctionShellCallEnvironment))]
-    public abstract partial class FunctionShellCallEnvironment : IJsonModel<FunctionShellCallEnvironment>
+    internal abstract partial class FunctionShellCallEnvironment : IJsonModel<FunctionShellCallEnvironment>
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallEnvironment"/> for deserialization. </summary>
         internal FunctionShellCallEnvironment()

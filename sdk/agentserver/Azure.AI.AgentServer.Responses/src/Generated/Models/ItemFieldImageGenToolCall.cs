@@ -9,8 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Image generation call. </summary>
-    public partial class ItemFieldImageGenToolCall : ItemField
+    internal partial class ItemFieldImageGenToolCall : ItemField
     {
         private ItemImageGenToolCallSize? _size;
         private bool _sizeIsDefined;

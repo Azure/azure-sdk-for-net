@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> A content filter detection result for Personally Identifiable Information. </summary>
-    public partial class AzureContentFilterPersonallyIdentifiableInformationResult
+    internal partial class AzureContentFilterPersonallyIdentifiableInformationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

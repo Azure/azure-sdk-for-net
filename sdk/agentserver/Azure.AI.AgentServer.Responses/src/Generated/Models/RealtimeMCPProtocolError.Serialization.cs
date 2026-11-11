@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Realtime MCP protocol error. </summary>
-    public partial class RealtimeMCPProtocolError : RealtimeMCPError, IJsonModel<RealtimeMCPProtocolError>
+    internal partial class RealtimeMCPProtocolError : RealtimeMCPError, IJsonModel<RealtimeMCPProtocolError>
     {
         /// <summary> Initializes a new instance of <see cref="RealtimeMCPProtocolError"/> for deserialization. </summary>
         internal RealtimeMCPProtocolError()

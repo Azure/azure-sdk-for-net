@@ -10,6 +10,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Internal.Resilience;
 
@@ -84,7 +85,7 @@ internal sealed class FileResponsesProvider : ResponsesProvider
         }
     }
 
-    public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(
+    public override Task<ResponseItemCollectionPage> GetInputItemsAsync(
         string responseId, PlatformContext context, int limit = 20, bool ascending = false,
         string? after = null, string? before = null, CancellationToken cancellationToken = default)
     {
@@ -245,7 +246,7 @@ internal sealed class FileResponseStore : ResponsesProvider
     }
 
     /// <inheritdoc/>
-    public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(
+    public override Task<ResponseItemCollectionPage> GetInputItemsAsync(
         string responseId,
         PlatformContext context,
         int limit = 20,
@@ -303,11 +304,17 @@ internal sealed class FileResponseStore : ResponsesProvider
         var firstId = page.Count > 0 ? GetItemId(page[0]) : null;
         var lastId = page.Count > 0 ? GetItemId(page[^1]) : null;
 
-        var result = ResponsesModelFactory.AgentsPagedResultOutputItem(
-            data: page,
-            firstId: firstId!,
-            lastId: lastId!,
-            hasMore: hasMore);
+        var result = new ResponseItemCollectionPage
+        {
+            Object = "list",
+            FirstId = firstId,
+            LastId = lastId,
+            HasMore = hasMore,
+        };
+        foreach (var item in page)
+        {
+            result.Data.Add(item);
+        }
         return Task.FromResult(result);
     }
 
@@ -445,16 +452,7 @@ internal sealed class FileResponseStore : ResponsesProvider
     }
 
     private static string? GetItemId(OutputItem item)
-    {
-        try
-        {
-            return item.GetId();
-        }
-        catch (InvalidOperationException)
-        {
-            return null;
-        }
-    }
+        => string.IsNullOrEmpty(item.Id) ? null : item.Id;
 
     // ── Persistence ─────────────────────────────────────────────────────
 

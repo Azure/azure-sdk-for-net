@@ -11,8 +11,7 @@ using System.Text.Json;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Code interpreter tool call. </summary>
-    public partial class ItemFieldCodeInterpreterToolCall : ItemField
+    internal partial class ItemFieldCodeInterpreterToolCall : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldCodeInterpreterToolCall"/>. </summary>
         /// <param name="id"> The unique ID of the code interpreter tool call. </param>

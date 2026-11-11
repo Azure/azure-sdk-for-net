@@ -9,8 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Request settings that control Model Router session affinity. </summary>
-    public partial class SessionAffinityConfiguration
+    internal partial class SessionAffinityConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -21,21 +20,26 @@ namespace Azure.AI.AgentServer.Responses.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SessionAffinityConfiguration"/>. </summary>
-        /// <param name="mode"> Controls whether Model Router applies session affinity to this request. </param>
+        /// <param name="strategy"> Controls how session affinity influences model selection for this request. When omitted, adaptive affinity is used. </param>
+        /// <param name="mode"> Deprecated request alias for `strategy`. Ignored when `strategy` is also supplied. </param>
         /// <param name="sessionId">
         /// An opaque, application-owned conversation identifier. Use the same value for related requests.
         /// The value is not returned in the response and must not contain secrets or personally identifiable information.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SessionAffinityConfiguration(SessionAffinityRequestMode? mode, string sessionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SessionAffinityConfiguration(SessionAffinityRequestStrategy? strategy, SessionAffinityRequestStrategy? mode, string sessionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Strategy = strategy;
             Mode = mode;
             SessionId = sessionId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Controls whether Model Router applies session affinity to this request. </summary>
-        public SessionAffinityRequestMode? Mode { get; set; }
+        /// <summary> Controls how session affinity influences model selection for this request. When omitted, adaptive affinity is used. </summary>
+        public SessionAffinityRequestStrategy? Strategy { get; set; }
+
+        /// <summary> Deprecated request alias for `strategy`. Ignored when `strategy` is also supplied. </summary>
+        public SessionAffinityRequestStrategy? Mode { get; set; }
 
         /// <summary>
         /// An opaque, application-owned conversation identifier. Use the same value for related requests.

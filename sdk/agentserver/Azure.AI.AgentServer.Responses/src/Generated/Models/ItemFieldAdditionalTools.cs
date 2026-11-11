@@ -12,9 +12,8 @@ using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> The ItemFieldAdditionalTools. </summary>
     [Experimental("OPENAI001")]
-    public partial class ItemFieldAdditionalTools : ItemField
+    internal partial class ItemFieldAdditionalTools : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldAdditionalTools"/>. </summary>
         /// <param name="id"> The unique ID of the additional tools item. </param>

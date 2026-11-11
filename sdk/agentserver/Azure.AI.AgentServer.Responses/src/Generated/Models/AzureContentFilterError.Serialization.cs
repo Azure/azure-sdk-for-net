@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Error details from the content filtering system. </summary>
-    public partial class AzureContentFilterError : IJsonModel<AzureContentFilterError>
+    internal partial class AzureContentFilterError : IJsonModel<AzureContentFilterError>
     {
         /// <summary> Initializes a new instance of <see cref="AzureContentFilterError"/> for deserialization. </summary>
         internal AzureContentFilterError()

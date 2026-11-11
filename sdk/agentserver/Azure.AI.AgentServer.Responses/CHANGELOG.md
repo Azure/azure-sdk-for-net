@@ -7,10 +7,9 @@
   durable task runtime without a separate `SetResilientTasksEnabled()` call. Steering-only
   deployments retain durable task bookkeeping but mark interrupted background responses
   failed instead of re-invoking their handlers.
-- `ApiError` (the model carried by `ApiErrorResponse`) has a new optional `Misalignment` property
-  (`MisalignmentErrorDetailsResource`, `MisalignmentErrorType`, `MisalignmentSteer`), and
-  `OutputItemCustomToolCall` / `OutputItemCustomToolCallOutput` expose `Caller` (plus `Async` on the
-  call), all following the Foundry spec.
+- `OutputItemCustomToolCall` / `OutputItemCustomToolCallOutput` expose `Caller` (`ToolCallCaller`,
+  either `DirectToolCallCaller` or `ProgramToolCallCaller`), plus `Async` on the call, following
+  the Foundry spec.
 
 ### Breaking Changes
 - The package no longer emits its own copies of the OpenAI Responses models. Public handler,
@@ -46,30 +45,28 @@
   `Response` is an `OpenAI.Responses.ResponseResult` and its `InputItems` are
   `OpenAI.Responses.ResponseItem`, so custom `ResponsesProvider` implementations must update their
   override.
-- Regenerating against the updated Foundry spec replaced several enums in
-  `Azure.AI.AgentServer.Responses.Models`. The `Status` of `ItemFieldFunctionShellCall`,
-  `ItemFieldFunctionShellCallOutput`, and `ItemFieldWebSearchToolCall` is now a
-  `FunctionShellCallStatus`, `FunctionShellCallOutputStatusEnum`, and `WebSearchCallStatus`
-  respectively, and `LocalShellCallStatus`, `LocalShellCallOutputStatusEnum`, and
-  `ItemWebSearchToolCallStatus` were removed. On `Reasoning`, `Effort` is now the extensible
-  `ReasoningEffort` (was `CreateResponseReasoningEffort`), and `GenerateSummary` and `Summary` are
-  now `CreateResponseRequestReasoningGenerateSummary` and `CreateResponseRequestReasoningSummary`
-  (were `CreateResponseReasoningGenerateSummary` and `CreateResponseReasoningSummary`).
-  `IncludeEnum.ComputerCallOutputOutputImageUrl` and `IncludeEnum.MessageInputImageImageUrl` are
-  renamed to `ComputerCallOutputOutputImageUri` and `MessageInputImageImageUri`.
-- `AgentId`, `ComputerScreenshotImage`, `ConversationParam`, and `ResponseIncompleteDetails` no
-  longer have public constructors, and their properties no longer have setters;
-  `ContextManagementParam.Type` also lost its setter. The type of
-  `ResponseIncompleteDetails.Reason` changed from `ResponseIncompleteDetailsReason?` to
-  `CreateResponseResponseIncompleteDetailsReason?`.
+- Models in `Azure.AI.AgentServer.Responses.Models` that no public API of this package uses any
+  more are now internal, so they no longer duplicate or collide with the OpenAI types. This covers
+  the `ItemField*` hierarchy and its status enums, the request-side models (`CreateResponseRequest`,
+  `Reasoning`, `Prompt`, `IncludeEnum`, `ResponseTextParam`, `TextResponseFormat*`,
+  `ResponseStreamOptions`, `ContextManagementParam`, `Metadata`), the apply-patch, function-shell,
+  local-shell, code-interpreter, MCP list-tools, and web-search action models, `InputTextContent`,
+  `InputImageContent`, `InputFileContent`, `FunctionAndCustomToolCallOutput*`, `MessageRole`,
+  `MessageStatus`, `MessagePhase`, `AgentId`, `CreatedBy`, `ComputerScreenshotImage`,
+  `CompactResource`, `ResponseIncompleteDetails`, `Error` / `ApiErrorResponse`, `DeleteResponseResult`,
+  and `AgentsPagedResultOutputItem`. Use the equivalent `OpenAI.Responses` or
+  `Azure.AI.Extensions.OpenAI` types instead.
+- `ConversationParam` no longer has a public constructor, and its properties no longer have
+  setters.
 - `MessageContentOutputTextContent` is now constructed from its text alone (the `annotations` and
   `logprobs` constructor parameters were dropped), and its `Annotations` are
-  `OpenAI.Responses.ResponseMessageAnnotation`. `WebSearchActionSearch` now has a parameterless
-  constructor (was `WebSearchActionSearch(string query)`; set `Query` instead),
-  `WebSearchActionSearchSources.Url` and its constructor parameter are now a `Uri`, and
-  `CompactResource.CreatedAt` is renamed to `CreatedOn`.
-- The error model `Error` is renamed to `ApiError`; `ApiErrorResponse.Error` and the
-  `ApiErrorResponse` constructor now use `ApiError`.
+  `OpenAI.Responses.ResponseMessageAnnotation`.
+- `ResponsesProvider.GetInputItemsAsync` now returns `OpenAI.Responses.ResponseItemCollectionPage`
+  (was `AgentsPagedResultOutputItem`) and is marked `[Experimental("OPENAI001")]`, so custom
+  `ResponsesProvider` implementations must update their override.
+- `OutputItemExtensions` (`GetId(this OutputItem)`) is removed; use `ResponseItem.Id` instead.
+- The `AgentsPagedResultOutputItem` and `DeleteResponseResult` model factory methods are removed
+  along with their (now internal) models.
 - `ResponseEventStream` no longer has the builders for local-shell, function-shell, and compaction
   output items: `AddOutputItemLocalShellCall`, `AddOutputItemLocalShellCallOutput`,
   `AddOutputItemFunctionShellCall`, `AddOutputItemFunctionShellCallOutput`, and

@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Input file. </summary>
-    public partial class InputFileContent : IJsonModel<InputFileContent>
+    internal partial class InputFileContent : IJsonModel<InputFileContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

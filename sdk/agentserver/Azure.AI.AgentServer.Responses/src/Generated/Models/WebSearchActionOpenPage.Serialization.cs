@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Open page action. </summary>
-    public partial class WebSearchActionOpenPage : IJsonModel<WebSearchActionOpenPage>
+    internal partial class WebSearchActionOpenPage : IJsonModel<WebSearchActionOpenPage>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

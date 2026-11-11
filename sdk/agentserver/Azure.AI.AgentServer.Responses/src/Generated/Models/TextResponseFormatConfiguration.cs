@@ -21,7 +21,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// is preferred for models that support it.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TextResponseFormatConfigurationResponseFormatJsonObject"/>, <see cref="TextResponseFormatConfigurationResponseFormatText"/>, and <see cref="TextResponseFormatJsonSchema"/>.
     /// </summary>
-    public abstract partial class TextResponseFormatConfiguration
+    internal abstract partial class TextResponseFormatConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

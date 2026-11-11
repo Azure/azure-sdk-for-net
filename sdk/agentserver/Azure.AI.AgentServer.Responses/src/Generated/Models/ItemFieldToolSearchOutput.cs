@@ -12,9 +12,8 @@ using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> The ItemFieldToolSearchOutput. </summary>
     [Experimental("OPENAI001")]
-    public partial class ItemFieldToolSearchOutput : ItemField
+    internal partial class ItemFieldToolSearchOutput : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldToolSearchOutput"/>. </summary>
         /// <param name="id"> The unique ID of the tool search output item. </param>

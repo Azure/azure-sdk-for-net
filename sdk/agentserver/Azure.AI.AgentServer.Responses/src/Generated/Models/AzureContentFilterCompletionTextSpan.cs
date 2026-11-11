@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> A representation of a span of completion text as used by Azure OpenAI content filter results. </summary>
-    public partial class AzureContentFilterCompletionTextSpan
+    internal partial class AzureContentFilterCompletionTextSpan
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

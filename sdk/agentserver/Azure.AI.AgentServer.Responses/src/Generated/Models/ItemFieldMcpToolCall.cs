@@ -11,8 +11,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> MCP tool call. </summary>
-    public partial class ItemFieldMcpToolCall : ItemField
+    internal partial class ItemFieldMcpToolCall : ItemField
     {
         private string _output;
         private bool _outputIsDefined;

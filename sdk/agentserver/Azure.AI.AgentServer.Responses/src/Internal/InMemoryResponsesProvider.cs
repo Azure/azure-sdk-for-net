@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 using Microsoft.Extensions.Options;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Internal;
 
@@ -247,7 +248,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
               or ResponseStatus.Cancelled or ResponseStatus.Incomplete;
 
     /// <inheritdoc/>
-    public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(
+    public override Task<ResponseItemCollectionPage> GetInputItemsAsync(
         string responseId,
         PlatformContext context,
         int limit = 20,
@@ -334,11 +335,17 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
             var firstId = page.Count > 0 ? GetItemId(page[0]) : null;
             var lastId = page.Count > 0 ? GetItemId(page[^1]) : null;
 
-            var result = ResponsesModelFactory.AgentsPagedResultOutputItem(
-                data: page,
-                firstId: firstId!,
-                lastId: lastId!,
-                hasMore: hasMore);
+            var result = new ResponseItemCollectionPage
+            {
+                Object = "list",
+                FirstId = firstId,
+                LastId = lastId,
+                HasMore = hasMore,
+            };
+            foreach (var item in page)
+            {
+                result.Data.Add(item);
+            }
             return Task.FromResult(result);
         }
     }
@@ -424,16 +431,7 @@ internal sealed class InMemoryResponsesProvider : ResponsesProvider, IDisposable
     }
 
     private static string? GetItemId(OutputItem item)
-    {
-        try
-        {
-            return item.GetId();
-        }
-        catch (InvalidOperationException)
-        {
-            return null;
-        }
-    }
+        => string.IsNullOrEmpty(item.Id) ? null : item.Id;
 
     /// <summary>
     /// Extracts output items from <see cref="ResponseObject.OutputItems"/>, stores new ones in the item store,

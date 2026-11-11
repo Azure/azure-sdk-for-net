@@ -7,7 +7,7 @@
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public enum CreateResponseRequestPromptCacheRetention
+    internal enum CreateResponseRequestPromptCacheRetention
     {
         /// <summary> InMemory. </summary>
         InMemory,

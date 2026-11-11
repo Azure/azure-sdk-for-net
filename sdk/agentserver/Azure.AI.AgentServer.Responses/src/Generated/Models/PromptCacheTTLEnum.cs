@@ -7,7 +7,7 @@
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public enum PromptCacheTTLEnum
+    internal enum PromptCacheTTLEnum
     {
         /// <summary> _30m. </summary>
         _30m

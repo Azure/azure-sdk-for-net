@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Apply patch tool call. </summary>
-    public partial class ItemFieldApplyPatchToolCall : ItemField, IJsonModel<ItemFieldApplyPatchToolCall>
+    internal partial class ItemFieldApplyPatchToolCall : ItemField, IJsonModel<ItemFieldApplyPatchToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldApplyPatchToolCall"/> for deserialization. </summary>
         internal ItemFieldApplyPatchToolCall()

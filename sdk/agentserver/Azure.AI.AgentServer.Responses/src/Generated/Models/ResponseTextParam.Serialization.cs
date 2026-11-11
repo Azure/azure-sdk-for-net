@@ -17,7 +17,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// text or structured JSON data. Learn more:
     /// <list type="bullet"><item><description>[Text inputs and outputs](https://developers.openai.com/api/docs/guides/text)</description></item><item><description>[Structured Outputs](https://developers.openai.com/api/docs/guides/structured-outputs)</description></item></list>
     /// </summary>
-    public partial class ResponseTextParam : IJsonModel<ResponseTextParam>
+    internal partial class ResponseTextParam : IJsonModel<ResponseTextParam>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

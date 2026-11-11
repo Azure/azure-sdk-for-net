@@ -9,8 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> The ItemFieldProgramOutput. </summary>
-    public partial class ItemFieldProgramOutput : ItemField
+    internal partial class ItemFieldProgramOutput : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldProgramOutput"/>. </summary>
         /// <param name="id"> The unique ID of the program output item. </param>

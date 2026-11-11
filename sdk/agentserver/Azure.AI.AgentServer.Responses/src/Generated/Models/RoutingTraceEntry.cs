@@ -11,7 +11,7 @@ using System.Linq;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> A single entry in the routing trace representing one inference turn. Each entry contains the latency and the ordered list of attempts for that turn. </summary>
-    public partial class RoutingTraceEntry
+    internal partial class RoutingTraceEntry
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

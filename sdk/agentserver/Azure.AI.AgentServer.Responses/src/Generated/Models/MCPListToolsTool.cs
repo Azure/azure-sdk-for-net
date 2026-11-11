@@ -6,12 +6,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> MCP list tools tool. </summary>
-    public partial class MCPListToolsTool
+    internal partial class MCPListToolsTool
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -23,12 +21,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// <summary> Initializes a new instance of <see cref="MCPListToolsTool"/>. </summary>
         /// <param name="name"> The name of the tool. </param>
         /// <param name="inputSchema"> The JSON schema describing the tool's input. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="inputSchema"/> is null. </exception>
         public MCPListToolsTool(string name, MCPListToolsToolInputSchema inputSchema)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(inputSchema, nameof(inputSchema));
-
             Name = name;
             InputSchema = inputSchema;
         }

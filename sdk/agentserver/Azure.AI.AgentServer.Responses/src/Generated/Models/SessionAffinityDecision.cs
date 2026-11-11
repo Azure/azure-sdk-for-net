@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Final outcomes reported for Model Router session affinity. </summary>
-    public readonly partial struct SessionAffinityDecision : IEquatable<SessionAffinityDecision>
+    internal readonly partial struct SessionAffinityDecision : IEquatable<SessionAffinityDecision>
     {
         private readonly string _value;
         /// <summary> A new model association was initialized. </summary>

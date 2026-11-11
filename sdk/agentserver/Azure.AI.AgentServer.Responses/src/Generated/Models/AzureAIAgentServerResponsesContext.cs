@@ -15,99 +15,15 @@ namespace Azure.AI.AgentServer.Responses
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(AgentId))]
     [ModelReaderWriterBuildable(typeof(AgentReference))]
-    [ModelReaderWriterBuildable(typeof(AgentsPagedResultOutputItem))]
-    [ModelReaderWriterBuildable(typeof(ApiError))]
-    [ModelReaderWriterBuildable(typeof(ApiErrorResponse))]
-    [ModelReaderWriterBuildable(typeof(Models.ApplyPatchCreateFileOperation))]
-    [ModelReaderWriterBuildable(typeof(Models.ApplyPatchDeleteFileOperation))]
-    [ModelReaderWriterBuildable(typeof(ApplyPatchFileOperation))]
-    [ModelReaderWriterBuildable(typeof(Models.ApplyPatchUpdateFileOperation))]
-    [ModelReaderWriterBuildable(typeof(AzureContentFilterBlocklistIdResult))]
-    [ModelReaderWriterBuildable(typeof(AzureContentFilterBlocklistResult))]
-    [ModelReaderWriterBuildable(typeof(AzureContentFilterCitation))]
-    [ModelReaderWriterBuildable(typeof(AzureContentFilterCompletionTextSpan))]
-    [ModelReaderWriterBuildable(typeof(AzureContentFilterCompletionTextSpanDetectionResult))]
-    [ModelReaderWriterBuildable(typeof(AzureContentFilterDetectionResult))]
-    [ModelReaderWriterBuildable(typeof(AzureContentFilterDetectionWithCitationResult))]
-    [ModelReaderWriterBuildable(typeof(AzureContentFilterDetectionWithReasonResult))]
-    [ModelReaderWriterBuildable(typeof(AzureContentFilterError))]
-    [ModelReaderWriterBuildable(typeof(AzureContentFilterPersonallyIdentifiableInformationResult))]
-    [ModelReaderWriterBuildable(typeof(AzureContentFilterPiiSubCategoryResult))]
-    [ModelReaderWriterBuildable(typeof(AzureContentFilterResultsForResponses))]
-    [ModelReaderWriterBuildable(typeof(AzureContentFilterSeverityResult))]
-    [ModelReaderWriterBuildable(typeof(AzureUserSecurityContext))]
-    [ModelReaderWriterBuildable(typeof(CodeInterpreterOutputImage))]
-    [ModelReaderWriterBuildable(typeof(CodeInterpreterOutputLogs))]
-#pragma warning disable OPENAI001 // global::Azure.AI.AgentServer.Responses.Models.CompactResource is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(CompactResource))]
-#pragma warning restore OPENAI001 // global::Azure.AI.AgentServer.Responses.Models.CompactResource is experimental and may change in future versions.
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.ComputerCallAction is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ComputerAction))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.ComputerCallAction is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(ComputerCallSafetyCheckParam))]
     [ModelReaderWriterBuildable(typeof(ComputerScreenshotContent))]
-    [ModelReaderWriterBuildable(typeof(ComputerScreenshotImage))]
-    [ModelReaderWriterBuildable(typeof(ContainerReferenceResource))]
-    [ModelReaderWriterBuildable(typeof(ContentFilterResult))]
-    [ModelReaderWriterBuildable(typeof(ContextManagementParam))]
     [ModelReaderWriterBuildable(typeof(ConversationParam))]
-    [ModelReaderWriterBuildable(typeof(CreateResponseResult))]
-    [ModelReaderWriterBuildable(typeof(DeleteResponseResult))]
     [ModelReaderWriterBuildable(typeof(DirectToolCallCaller))]
     [ModelReaderWriterBuildable(typeof(DirectToolCallCallerParam))]
-    [ModelReaderWriterBuildable(typeof(FileSearchToolCallResults))]
-    [ModelReaderWriterBuildable(typeof(FunctionShellAction))]
-    [ModelReaderWriterBuildable(typeof(FunctionShellCallEnvironment))]
-    [ModelReaderWriterBuildable(typeof(FunctionShellCallOutputContent))]
-    [ModelReaderWriterBuildable(typeof(FunctionShellCallOutputExitOutcome))]
-    [ModelReaderWriterBuildable(typeof(FunctionShellCallOutputOutcome))]
-    [ModelReaderWriterBuildable(typeof(FunctionShellCallOutputTimeoutOutcome))]
-    [ModelReaderWriterBuildable(typeof(InputFileContent))]
-    [ModelReaderWriterBuildable(typeof(InputImageContent))]
-    [ModelReaderWriterBuildable(typeof(InputTextContent))]
-    [ModelReaderWriterBuildable(typeof(ItemField))]
-#pragma warning disable OPENAI001 // global::Azure.AI.AgentServer.Responses.Models.ItemFieldAdditionalTools is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(ItemFieldAdditionalTools))]
-#pragma warning restore OPENAI001 // global::Azure.AI.AgentServer.Responses.Models.ItemFieldAdditionalTools is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(ItemFieldApplyPatchToolCall))]
-    [ModelReaderWriterBuildable(typeof(ItemFieldApplyPatchToolCallOutput))]
-    [ModelReaderWriterBuildable(typeof(ItemFieldCodeInterpreterToolCall))]
-    [ModelReaderWriterBuildable(typeof(ItemFieldCompactionBody))]
-#pragma warning disable OPENAI001 // global::Azure.AI.AgentServer.Responses.Models.ItemFieldComputerToolCall is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(ItemFieldComputerToolCall))]
-#pragma warning restore OPENAI001 // global::Azure.AI.AgentServer.Responses.Models.ItemFieldComputerToolCall is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(ItemFieldComputerToolCallOutput))]
-    [ModelReaderWriterBuildable(typeof(ItemFieldCustomToolCall))]
-    [ModelReaderWriterBuildable(typeof(ItemFieldCustomToolCallOutput))]
-    [ModelReaderWriterBuildable(typeof(ItemFieldFileSearchToolCall))]
-    [ModelReaderWriterBuildable(typeof(ItemFieldFunctionShellCall))]
-    [ModelReaderWriterBuildable(typeof(ItemFieldFunctionShellCallOutput))]
-    [ModelReaderWriterBuildable(typeof(ItemFieldFunctionToolCall))]
-    [ModelReaderWriterBuildable(typeof(ItemFieldFunctionToolCallOutput))]
-    [ModelReaderWriterBuildable(typeof(ItemFieldImageGenToolCall))]
-    [ModelReaderWriterBuildable(typeof(ItemFieldLocalShellToolCall))]
-    [ModelReaderWriterBuildable(typeof(ItemFieldLocalShellToolCallOutput))]
-    [ModelReaderWriterBuildable(typeof(ItemFieldMcpApprovalRequest))]
-    [ModelReaderWriterBuildable(typeof(ItemFieldMcpApprovalResponseResource))]
-    [ModelReaderWriterBuildable(typeof(ItemFieldMcpListTools))]
-    [ModelReaderWriterBuildable(typeof(ItemFieldMcpToolCall))]
-    [ModelReaderWriterBuildable(typeof(ItemFieldMessage))]
-    [ModelReaderWriterBuildable(typeof(ItemFieldProgram))]
-    [ModelReaderWriterBuildable(typeof(ItemFieldProgramOutput))]
-    [ModelReaderWriterBuildable(typeof(ItemFieldReasoningItem))]
-    [ModelReaderWriterBuildable(typeof(ItemFieldToolSearchCall))]
-#pragma warning disable OPENAI001 // global::Azure.AI.AgentServer.Responses.Models.ItemFieldToolSearchOutput is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(ItemFieldToolSearchOutput))]
-#pragma warning restore OPENAI001 // global::Azure.AI.AgentServer.Responses.Models.ItemFieldToolSearchOutput is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(ItemFieldWebSearchToolCall))]
-    [ModelReaderWriterBuildable(typeof(LocalEnvironmentResource))]
-    [ModelReaderWriterBuildable(typeof(LocalShellExecAction))]
     [ModelReaderWriterBuildable(typeof(LogProb))]
-    [ModelReaderWriterBuildable(typeof(MCPListToolsTool))]
-    [ModelReaderWriterBuildable(typeof(MCPListToolsToolAnnotations))]
-    [ModelReaderWriterBuildable(typeof(MCPListToolsToolInputSchema))]
     [ModelReaderWriterBuildable(typeof(MessageContent))]
     [ModelReaderWriterBuildable(typeof(MessageContentInputFileContent))]
     [ModelReaderWriterBuildable(typeof(MessageContentInputImageContent))]
@@ -117,21 +33,6 @@ namespace Azure.AI.AgentServer.Responses
 #pragma warning restore OPENAI001 // global::Azure.AI.AgentServer.Responses.Models.MessageContentOutputTextContent is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MessageContentReasoningTextContent))]
     [ModelReaderWriterBuildable(typeof(MessageContentRefusalContent))]
-    [ModelReaderWriterBuildable(typeof(Metadata))]
-    [ModelReaderWriterBuildable(typeof(MisalignmentErrorDetailsResource))]
-    [ModelReaderWriterBuildable(typeof(MisalignmentSteer))]
-    [ModelReaderWriterBuildable(typeof(ModelRouterAttempt))]
-    [ModelReaderWriterBuildable(typeof(ModelRouterAttemptError))]
-    [ModelReaderWriterBuildable(typeof(ModelRouterAttemptResult))]
-    [ModelReaderWriterBuildable(typeof(ModelRouterDetails))]
-    [ModelReaderWriterBuildable(typeof(ModelSelectionDetails))]
-    [ModelReaderWriterBuildable(typeof(Moderation))]
-    [ModelReaderWriterBuildable(typeof(ModerationConfigParam))]
-    [ModelReaderWriterBuildable(typeof(ModerationEntry))]
-    [ModelReaderWriterBuildable(typeof(ModerationErrorBody))]
-    [ModelReaderWriterBuildable(typeof(ModerationParam))]
-    [ModelReaderWriterBuildable(typeof(ModerationPolicyParam))]
-    [ModelReaderWriterBuildable(typeof(ModerationResultBody))]
 #pragma warning disable OPENAI001 // global::Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(OutputItemCustomToolCall))]
 #pragma warning restore OPENAI001 // global::Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall is experimental and may change in future versions.
@@ -140,30 +41,13 @@ namespace Azure.AI.AgentServer.Responses
 #pragma warning restore OPENAI001 // global::Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ProgramToolCallCaller))]
     [ModelReaderWriterBuildable(typeof(ProgramToolCallCallerParam))]
-    [ModelReaderWriterBuildable(typeof(Prompt))]
     [ModelReaderWriterBuildable(typeof(PromptCacheBreakpointConfig))]
-    [ModelReaderWriterBuildable(typeof(PromptCacheComparisonResponseNotFoundDiagnosticsBody))]
-    [ModelReaderWriterBuildable(typeof(PromptCacheDiagnostics))]
-    [ModelReaderWriterBuildable(typeof(PromptCacheHitDiagnosticsBody))]
-    [ModelReaderWriterBuildable(typeof(PromptCacheMissDiagnosticsBody))]
-    [ModelReaderWriterBuildable(typeof(PromptCacheOptions))]
-    [ModelReaderWriterBuildable(typeof(PromptCacheOptionsParam))]
-    [ModelReaderWriterBuildable(typeof(PromptCacheUnavailableDiagnosticsBody))]
-    [ModelReaderWriterBuildable(typeof(RealtimeMCPError))]
-    [ModelReaderWriterBuildable(typeof(RealtimeMCPHTTPError))]
-    [ModelReaderWriterBuildable(typeof(RealtimeMCPProtocolError))]
-    [ModelReaderWriterBuildable(typeof(RealtimeMCPToolExecutionError))]
-    [ModelReaderWriterBuildable(typeof(Reasoning))]
-    [ModelReaderWriterBuildable(typeof(ReasoningTextContent))]
-    [ModelReaderWriterBuildable(typeof(ResponseConversation))]
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.ResponseConversationOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ConversationReference))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.ResponseConversationOptions is experimental and may change in future versions.
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.ResponseError is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(Error))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.ResponseError is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(ResponseFormatJsonSchemaSchema))]
-    [ModelReaderWriterBuildable(typeof(ResponseIncompleteDetails))]
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.ResponseIncompleteStatusDetails is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ResponseIncompleteStatusDetails))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.ResponseIncompleteStatusDetails is experimental and may change in future versions.
@@ -179,22 +63,18 @@ namespace Azure.AI.AgentServer.Responses
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.ResponseOutputTokenUsageDetails is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ResponseUsageOutputTokensDetails))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.ResponseOutputTokenUsageDetails is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(ResponsePromptCacheOptionsParam))]
-    [ModelReaderWriterBuildable(typeof(ResponsePromptVariables))]
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.ResponseReasoningOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ResponseReasoningOptions))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.ResponseReasoningOptions is experimental and may change in future versions.
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.ResponseResult is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ResponseObject))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.ResponseResult is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(ResponseStreamOptions))]
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.ResponseTextFormat is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ResponseTextFormat))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.ResponseTextFormat is experimental and may change in future versions.
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.ResponseTextOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ResponseTextOptions))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.ResponseTextOptions is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(ResponseTextParam))]
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.ResponseTokenUsage is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ResponseUsage))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.ResponseTokenUsage is experimental and may change in future versions.
@@ -204,19 +84,11 @@ namespace Azure.AI.AgentServer.Responses
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.ResponseToolChoice is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ResponseToolChoice))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.ResponseToolChoice is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(RoutingConfiguration))]
-    [ModelReaderWriterBuildable(typeof(RoutingTraceEntry))]
-    [ModelReaderWriterBuildable(typeof(SessionAffinityConfiguration))]
-    [ModelReaderWriterBuildable(typeof(SessionAffinityDetails))]
     [ModelReaderWriterBuildable(typeof(SpecificApplyPatchParam))]
     [ModelReaderWriterBuildable(typeof(SpecificFunctionShellParam))]
     [ModelReaderWriterBuildable(typeof(SpecificProgrammaticToolCallingParam))]
     [ModelReaderWriterBuildable(typeof(SummaryTextContent))]
     [ModelReaderWriterBuildable(typeof(TextContent))]
-    [ModelReaderWriterBuildable(typeof(TextResponseFormatConfiguration))]
-    [ModelReaderWriterBuildable(typeof(TextResponseFormatConfigurationResponseFormatJsonObject))]
-    [ModelReaderWriterBuildable(typeof(TextResponseFormatConfigurationResponseFormatText))]
-    [ModelReaderWriterBuildable(typeof(TextResponseFormatJsonSchema))]
     [ModelReaderWriterBuildable(typeof(ToolCallCaller))]
     [ModelReaderWriterBuildable(typeof(ToolCallCallerParam))]
     [ModelReaderWriterBuildable(typeof(ToolChoiceAllowed))]
@@ -233,11 +105,6 @@ namespace Azure.AI.AgentServer.Responses
     [ModelReaderWriterBuildable(typeof(ToolChoiceWebSearchPreview))]
     [ModelReaderWriterBuildable(typeof(ToolChoiceWebSearchPreview20250311))]
     [ModelReaderWriterBuildable(typeof(TopLogProb))]
-    [ModelReaderWriterBuildable(typeof(VectorStoreFileAttributes))]
-    [ModelReaderWriterBuildable(typeof(WebSearchActionFind))]
-    [ModelReaderWriterBuildable(typeof(WebSearchActionOpenPage))]
-    [ModelReaderWriterBuildable(typeof(WebSearchActionSearch))]
-    [ModelReaderWriterBuildable(typeof(WebSearchActionSearchSources))]
     public partial class AzureAIAgentServerResponsesContext : ModelReaderWriterContext
     {
     }

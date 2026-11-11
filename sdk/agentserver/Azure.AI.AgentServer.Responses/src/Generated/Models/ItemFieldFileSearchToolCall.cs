@@ -11,8 +11,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> File search tool call. </summary>
-    public partial class ItemFieldFileSearchToolCall : ItemField
+    internal partial class ItemFieldFileSearchToolCall : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldFileSearchToolCall"/>. </summary>
         /// <param name="id"> The unique ID of the file search tool call. </param>

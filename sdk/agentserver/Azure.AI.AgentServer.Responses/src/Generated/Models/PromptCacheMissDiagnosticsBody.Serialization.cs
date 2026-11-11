@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> The PromptCacheMissDiagnosticsBody. </summary>
-    public partial class PromptCacheMissDiagnosticsBody : PromptCacheDiagnostics, IJsonModel<PromptCacheMissDiagnosticsBody>
+    internal partial class PromptCacheMissDiagnosticsBody : PromptCacheDiagnostics, IJsonModel<PromptCacheMissDiagnosticsBody>
     {
         /// <summary> Initializes a new instance of <see cref="PromptCacheMissDiagnosticsBody"/> for deserialization. </summary>
         internal PromptCacheMissDiagnosticsBody()

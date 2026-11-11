@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Routing decision metadata from Model Router. </summary>
-    public partial class ModelRouterDetails : IJsonModel<ModelRouterDetails>
+    internal partial class ModelRouterDetails : IJsonModel<ModelRouterDetails>
     {
         /// <summary> Initializes a new instance of <see cref="ModelRouterDetails"/> for deserialization. </summary>
         internal ModelRouterDetails()

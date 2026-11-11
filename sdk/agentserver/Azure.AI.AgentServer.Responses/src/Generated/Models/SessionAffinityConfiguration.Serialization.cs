@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Request settings that control Model Router session affinity. </summary>
-    public partial class SessionAffinityConfiguration : IJsonModel<SessionAffinityConfiguration>
+    internal partial class SessionAffinityConfiguration : IJsonModel<SessionAffinityConfiguration>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -73,6 +72,11 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 throw new FormatException($"The model {nameof(SessionAffinityConfiguration)} does not support writing '{format}' format.");
             }
+            if (Optional.IsDefined(Strategy))
+            {
+                writer.WritePropertyName("strategy"u8);
+                writer.WriteStringValue(Strategy.Value.ToSerialString());
+            }
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
@@ -125,18 +129,28 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            SessionAffinityRequestMode? mode = default;
+            SessionAffinityRequestStrategy? strategy = default;
+            SessionAffinityRequestStrategy? mode = default;
             string sessionId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("strategy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    strategy = prop.Value.GetString().ToSessionAffinityRequestStrategy();
+                    continue;
+                }
                 if (prop.NameEquals("mode"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mode = prop.Value.GetString().ToSessionAffinityRequestMode();
+                    mode = prop.Value.GetString().ToSessionAffinityRequestStrategy();
                     continue;
                 }
                 if (prop.NameEquals("session_id"u8))
@@ -149,7 +163,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SessionAffinityConfiguration(mode, sessionId, additionalBinaryDataProperties);
+            return new SessionAffinityConfiguration(strategy, mode, sessionId, additionalBinaryDataProperties);
         }
     }
 }

@@ -55,7 +55,7 @@ public class ApiErrorSerializationTests
     {
         var response = ReadResponse();
 
-        var written = ModelReaderWriter.Write(response, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default);
+        var written = ModelReaderWriter.Write(response, ModelReaderWriterOptions.Json);
 
         Assert.That(
             JsonNode.DeepEquals(JsonNode.Parse(ApiErrorResponseJson), JsonNode.Parse(written.ToString())),
@@ -68,7 +68,7 @@ public class ApiErrorSerializationTests
     {
         var error = new ApiError("invalid_value", "Bad input");
 
-        using var document = JsonDocument.Parse(ModelReaderWriter.Write(error, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default));
+        using var document = JsonDocument.Parse(ModelReaderWriter.Write(error, ModelReaderWriterOptions.Json));
 
         Assert.Multiple(() =>
         {
@@ -83,7 +83,7 @@ public class ApiErrorSerializationTests
     {
         var error = AgentServerResponsesModelFactory.ApiError(code: "invalid_value", message: "Bad input");
 
-        using var document = JsonDocument.Parse(ModelReaderWriter.Write(error, ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default));
+        using var document = JsonDocument.Parse(ModelReaderWriter.Write(error, ModelReaderWriterOptions.Json));
 
         Assert.Multiple(() =>
         {
@@ -95,6 +95,5 @@ public class ApiErrorSerializationTests
     private static ApiErrorResponse ReadResponse()
         => ModelReaderWriter.Read<ApiErrorResponse>(
             BinaryData.FromString(ApiErrorResponseJson),
-            ModelReaderWriterOptions.Json,
-            AzureAIAgentServerResponsesContext.Default)!;
+            ModelReaderWriterOptions.Json)!;
 }

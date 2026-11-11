@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Code interpreter tool call. </summary>
-    public partial class ItemFieldCodeInterpreterToolCall : ItemField, IJsonModel<ItemFieldCodeInterpreterToolCall>
+    internal partial class ItemFieldCodeInterpreterToolCall : ItemField, IJsonModel<ItemFieldCodeInterpreterToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldCodeInterpreterToolCall"/> for deserialization. </summary>
         internal ItemFieldCodeInterpreterToolCall()

@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Shell call exit outcome. </summary>
-    public partial class FunctionShellCallOutputExitOutcome : FunctionShellCallOutputOutcome, IJsonModel<FunctionShellCallOutputExitOutcome>
+    internal partial class FunctionShellCallOutputExitOutcome : FunctionShellCallOutputOutcome, IJsonModel<FunctionShellCallOutputExitOutcome>
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellCallOutputExitOutcome"/> for deserialization. </summary>
         internal FunctionShellCallOutputExitOutcome()

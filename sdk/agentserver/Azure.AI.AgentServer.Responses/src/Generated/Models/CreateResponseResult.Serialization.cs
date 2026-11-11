@@ -16,7 +16,7 @@ using OpenAI.Responses;
 namespace Azure.AI.AgentServer.Responses
 {
     /// <summary> The CreateResponseResult. </summary>
-    public partial class CreateResponseResult : IJsonModel<CreateResponseResult>
+    internal partial class CreateResponseResult : IJsonModel<CreateResponseResult>
     {
         /// <summary> Initializes a new instance of <see cref="CreateResponseResult"/> for deserialization. </summary>
         internal CreateResponseResult()

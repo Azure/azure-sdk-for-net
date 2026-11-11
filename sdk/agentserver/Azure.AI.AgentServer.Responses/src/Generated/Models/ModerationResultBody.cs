@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Moderation result. </summary>
-    public partial class ModerationResultBody : ModerationEntry
+    internal partial class ModerationResultBody : ModerationEntry
     {
         /// <summary> Initializes a new instance of <see cref="ModerationResultBody"/>. </summary>
         /// <param name="model"> The moderation model that produced this result. </param>

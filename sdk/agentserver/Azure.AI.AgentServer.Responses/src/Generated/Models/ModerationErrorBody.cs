@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Moderation error. </summary>
-    public partial class ModerationErrorBody : ModerationEntry
+    internal partial class ModerationErrorBody : ModerationEntry
     {
         /// <summary> Initializes a new instance of <see cref="ModerationErrorBody"/>. </summary>
         /// <param name="code"> The error code. </param>

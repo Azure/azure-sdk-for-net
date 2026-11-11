@@ -8,7 +8,7 @@
     <Nullable>annotations</Nullable>
     <!-- OPENAI001: the OpenAI Responses surface the tests build on is experimental in the OpenAI SDK.
          AAIP001/AAIP002: public-API tests construct every model, including Azure.AI.Extensions.OpenAI items and generated
-         members (e.g. AgentsPagedResultOutputItem.Data) that are still tagged experimental upstream. -->
+         members that are still tagged experimental upstream. -->
     <NoWarn>$(NoWarn);CS1591;AAIP001;AAIP002;OPENAI001</NoWarn>
   </PropertyGroup>
 

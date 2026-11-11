@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public readonly partial struct ReasoningModeEnum : IEquatable<ReasoningModeEnum>
+    internal readonly partial struct ReasoningModeEnum : IEquatable<ReasoningModeEnum>
     {
         private readonly string _value;
         private const string StandardValue = "standard";

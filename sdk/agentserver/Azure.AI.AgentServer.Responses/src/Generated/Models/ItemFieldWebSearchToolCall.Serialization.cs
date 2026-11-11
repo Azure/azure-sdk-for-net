@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Web search tool call. </summary>
-    public partial class ItemFieldWebSearchToolCall : ItemField, IJsonModel<ItemFieldWebSearchToolCall>
+    internal partial class ItemFieldWebSearchToolCall : ItemField, IJsonModel<ItemFieldWebSearchToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldWebSearchToolCall"/> for deserialization. </summary>
         internal ItemFieldWebSearchToolCall()

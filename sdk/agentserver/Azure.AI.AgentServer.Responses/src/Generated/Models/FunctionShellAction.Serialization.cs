@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Shell exec action. </summary>
-    public partial class FunctionShellAction : IJsonModel<FunctionShellAction>
+    internal partial class FunctionShellAction : IJsonModel<FunctionShellAction>
     {
         /// <summary> Initializes a new instance of <see cref="FunctionShellAction"/> for deserialization. </summary>
         internal FunctionShellAction()

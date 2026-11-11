@@ -6,8 +6,7 @@
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary></summary>
-    public enum ImageOutputFormat
+    internal enum ImageOutputFormat
     {
         /// <summary> Png. </summary>
         Png,

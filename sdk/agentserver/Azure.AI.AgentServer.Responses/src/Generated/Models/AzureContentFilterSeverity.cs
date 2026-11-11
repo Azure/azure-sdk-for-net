@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Ratings for the intensity and risk level of harmful content. </summary>
-    public readonly partial struct AzureContentFilterSeverity : IEquatable<AzureContentFilterSeverity>
+    internal readonly partial struct AzureContentFilterSeverity : IEquatable<AzureContentFilterSeverity>
     {
         private readonly string _value;
         /// <summary> Content appropriate for most audiences. </summary>

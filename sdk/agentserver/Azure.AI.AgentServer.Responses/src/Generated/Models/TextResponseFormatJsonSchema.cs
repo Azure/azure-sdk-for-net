@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> JSON schema. </summary>
-    public partial class TextResponseFormatJsonSchema : TextResponseFormatConfiguration
+    internal partial class TextResponseFormatJsonSchema : TextResponseFormatConfiguration
     {
         private bool? _strict;
         private bool _strictIsDefined;

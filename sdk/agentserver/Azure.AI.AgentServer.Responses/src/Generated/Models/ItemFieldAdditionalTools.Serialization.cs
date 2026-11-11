@@ -13,8 +13,7 @@ using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> The ItemFieldAdditionalTools. </summary>
-    public partial class ItemFieldAdditionalTools : ItemField, IJsonModel<ItemFieldAdditionalTools>
+    internal partial class ItemFieldAdditionalTools : ItemField, IJsonModel<ItemFieldAdditionalTools>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldAdditionalTools"/> for deserialization. </summary>
         internal ItemFieldAdditionalTools()

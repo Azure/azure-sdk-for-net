@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Local Environment. </summary>
-    public partial class LocalEnvironmentResource : FunctionShellCallEnvironment, IJsonModel<LocalEnvironmentResource>
+    internal partial class LocalEnvironmentResource : FunctionShellCallEnvironment, IJsonModel<LocalEnvironmentResource>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

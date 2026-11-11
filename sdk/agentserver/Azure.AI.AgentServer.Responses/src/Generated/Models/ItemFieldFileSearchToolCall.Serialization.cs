@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> File search tool call. </summary>
-    public partial class ItemFieldFileSearchToolCall : ItemField, IJsonModel<ItemFieldFileSearchToolCall>
+    internal partial class ItemFieldFileSearchToolCall : ItemField, IJsonModel<ItemFieldFileSearchToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldFileSearchToolCall"/> for deserialization. </summary>
         internal ItemFieldFileSearchToolCall()

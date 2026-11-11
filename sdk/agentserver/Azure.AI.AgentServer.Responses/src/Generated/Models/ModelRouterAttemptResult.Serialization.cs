@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> The HTTP-style result returned by a model routing attempt. </summary>
-    public partial class ModelRouterAttemptResult : IJsonModel<ModelRouterAttemptResult>
+    internal partial class ModelRouterAttemptResult : IJsonModel<ModelRouterAttemptResult>
     {
         /// <summary> Initializes a new instance of <see cref="ModelRouterAttemptResult"/> for deserialization. </summary>
         internal ModelRouterAttemptResult()

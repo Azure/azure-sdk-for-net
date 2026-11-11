@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> JSON object. </summary>
-    public partial class TextResponseFormatConfigurationResponseFormatJsonObject : TextResponseFormatConfiguration, IJsonModel<TextResponseFormatConfigurationResponseFormatJsonObject>
+    internal partial class TextResponseFormatConfigurationResponseFormatJsonObject : TextResponseFormatConfiguration, IJsonModel<TextResponseFormatConfigurationResponseFormatJsonObject>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

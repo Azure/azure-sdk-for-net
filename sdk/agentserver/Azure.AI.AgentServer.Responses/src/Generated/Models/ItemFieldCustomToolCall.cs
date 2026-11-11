@@ -9,8 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Custom tool call. </summary>
-    public partial class ItemFieldCustomToolCall : ItemField
+    internal partial class ItemFieldCustomToolCall : ItemField
     {
         private ToolCallCaller _caller;
         private bool _callerIsDefined;

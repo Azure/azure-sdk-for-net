@@ -16,7 +16,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ModerationErrorBody"/> and <see cref="ModerationResultBody"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownModerationEntry))]
-    public abstract partial class ModerationEntry : IJsonModel<ModerationEntry>
+    internal abstract partial class ModerationEntry : IJsonModel<ModerationEntry>
     {
         /// <summary> Initializes a new instance of <see cref="ModerationEntry"/> for deserialization. </summary>
         internal ModerationEntry()

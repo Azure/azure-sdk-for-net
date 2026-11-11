@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> The PromptCacheComparisonResponseNotFoundDiagnosticsBody. </summary>
-    public partial class PromptCacheComparisonResponseNotFoundDiagnosticsBody : PromptCacheDiagnostics
+    internal partial class PromptCacheComparisonResponseNotFoundDiagnosticsBody : PromptCacheDiagnostics
     {
         /// <summary> Initializes a new instance of <see cref="PromptCacheComparisonResponseNotFoundDiagnosticsBody"/>. </summary>
         internal PromptCacheComparisonResponseNotFoundDiagnosticsBody() : base(PromptCacheDiagnosticsType.ComparisonResponseNotFound)

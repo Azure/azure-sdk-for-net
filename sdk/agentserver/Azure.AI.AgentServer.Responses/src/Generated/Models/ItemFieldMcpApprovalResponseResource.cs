@@ -9,8 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> MCP approval response. </summary>
-    public partial class ItemFieldMcpApprovalResponseResource : ItemField
+    internal partial class ItemFieldMcpApprovalResponseResource : ItemField
     {
         private string _reason;
         private bool _reasonIsDefined;

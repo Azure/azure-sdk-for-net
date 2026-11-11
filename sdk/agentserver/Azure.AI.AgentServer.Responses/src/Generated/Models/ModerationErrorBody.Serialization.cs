@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Moderation error. </summary>
-    public partial class ModerationErrorBody : ModerationEntry, IJsonModel<ModerationErrorBody>
+    internal partial class ModerationErrorBody : ModerationEntry, IJsonModel<ModerationErrorBody>
     {
         /// <summary> Initializes a new instance of <see cref="ModerationErrorBody"/> for deserialization. </summary>
         internal ModerationErrorBody()

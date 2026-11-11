@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Compaction item. </summary>
-    public partial class ItemFieldCompactionBody : ItemField, IJsonModel<ItemFieldCompactionBody>
+    internal partial class ItemFieldCompactionBody : ItemField, IJsonModel<ItemFieldCompactionBody>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldCompactionBody"/> for deserialization. </summary>
         internal ItemFieldCompactionBody()

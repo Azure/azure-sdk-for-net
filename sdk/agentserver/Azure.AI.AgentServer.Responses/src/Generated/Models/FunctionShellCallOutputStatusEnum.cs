@@ -6,8 +6,7 @@
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary></summary>
-    public enum FunctionShellCallOutputStatusEnum
+    internal enum FunctionShellCallOutputStatusEnum
     {
         /// <summary> InProgress. </summary>
         InProgress,

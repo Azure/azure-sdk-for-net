@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> A content filter blocklist ID result. </summary>
-    public partial class AzureContentFilterBlocklistIdResult
+    internal partial class AzureContentFilterBlocklistIdResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

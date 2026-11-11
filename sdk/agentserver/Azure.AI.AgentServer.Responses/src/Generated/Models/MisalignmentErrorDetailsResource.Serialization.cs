@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> The MisalignmentErrorDetailsResource. </summary>
-    public partial class MisalignmentErrorDetailsResource : IJsonModel<MisalignmentErrorDetailsResource>
+    internal partial class MisalignmentErrorDetailsResource : IJsonModel<MisalignmentErrorDetailsResource>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

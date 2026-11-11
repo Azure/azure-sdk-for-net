@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Shell call output. </summary>
-    public partial class ItemFieldFunctionShellCallOutput : ItemField, IJsonModel<ItemFieldFunctionShellCallOutput>
+    internal partial class ItemFieldFunctionShellCallOutput : ItemField, IJsonModel<ItemFieldFunctionShellCallOutput>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldFunctionShellCallOutput"/> for deserialization. </summary>
         internal ItemFieldFunctionShellCallOutput()

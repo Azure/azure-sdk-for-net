@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> The WebSearchActionSearchSources. </summary>
-    public partial class WebSearchActionSearchSources : IJsonModel<WebSearchActionSearchSources>
+    internal partial class WebSearchActionSearchSources : IJsonModel<WebSearchActionSearchSources>
     {
         /// <summary> Initializes a new instance of <see cref="WebSearchActionSearchSources"/> for deserialization. </summary>
         internal WebSearchActionSearchSources()

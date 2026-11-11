@@ -134,31 +134,6 @@ internal static partial class AgentServerResponsesModelFactory
         return new DeleteResponseResult(id, "response", true, additionalBinaryDataProperties: null);
     }
 
-    /// <summary>Creates an <see cref="Models.AgentsPagedResultOutputItem"/> instance for mocking.</summary>
-    /// <param name="data">The output items in the page.</param>
-    /// <param name="firstId">The ID of the first item.</param>
-    /// <param name="lastId">The ID of the last item.</param>
-    /// <param name="hasMore">Whether there are more items.</param>
-    /// <returns>A new <see cref="Models.AgentsPagedResultOutputItem"/> instance.</returns>
-    public static AgentsPagedResultOutputItem AgentsPagedResultOutputItem(
-        IEnumerable<OutputItem> data = default!,
-        string firstId = default!,
-        string lastId = default!,
-        bool hasMore = default)
-    {
-        data ??= new List<OutputItem>();
-
-        // The internal constructor is tagged AAIP002 because its parameter list carries OpenAI-experimental/upstream-tagged item types.
-#pragma warning disable AAIP002
-        return new AgentsPagedResultOutputItem(
-            data.ToList(),
-            firstId,
-            lastId,
-            hasMore,
-            additionalBinaryDataProperties: null);
-#pragma warning restore AAIP002
-    }
-
     /// <summary>Creates a <see cref="ResponseUsage"/> instance for mocking.</summary>
     /// <param name="inputTokens">The number of input tokens.</param>
     /// <param name="inputTokensDetails">A detailed breakdown of the input tokens.</param>

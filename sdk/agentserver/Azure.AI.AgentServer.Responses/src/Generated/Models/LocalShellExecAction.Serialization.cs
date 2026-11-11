@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Local shell exec action. </summary>
-    public partial class LocalShellExecAction : IJsonModel<LocalShellExecAction>
+    internal partial class LocalShellExecAction : IJsonModel<LocalShellExecAction>
     {
         /// <summary> Initializes a new instance of <see cref="LocalShellExecAction"/> for deserialization. </summary>
         internal LocalShellExecAction()

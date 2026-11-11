@@ -15,6 +15,7 @@ using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Tests.E2E.ResilienceContract;
 
@@ -138,7 +139,7 @@ public sealed class TestRecoveryDropPreconditionTests : CrashRecoveryE2ETestBase
             string responseId, PlatformContext context, CancellationToken cancellationToken = default)
             => _inner.DeleteResponseAsync(responseId, context, cancellationToken);
 
-        public override Task<AgentsPagedResultOutputItem> GetInputItemsAsync(
+        public override Task<ResponseItemCollectionPage> GetInputItemsAsync(
             string responseId, PlatformContext context, int limit = 20, bool ascending = false,
             string? after = null, string? before = null, CancellationToken cancellationToken = default)
             => _inner.GetInputItemsAsync(responseId, context, limit, ascending, after, before, cancellationToken);

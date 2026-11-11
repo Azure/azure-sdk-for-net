@@ -9,8 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Local shell call output. </summary>
-    public partial class ItemFieldLocalShellToolCallOutput : ItemField
+    internal partial class ItemFieldLocalShellToolCallOutput : ItemField
     {
         private ItemLocalShellToolCallOutputStatus? _status;
         private bool _statusIsDefined;

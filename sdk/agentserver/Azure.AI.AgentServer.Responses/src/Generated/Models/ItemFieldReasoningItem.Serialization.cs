@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Reasoning. </summary>
-    public partial class ItemFieldReasoningItem : ItemField, IJsonModel<ItemFieldReasoningItem>
+    internal partial class ItemFieldReasoningItem : ItemField, IJsonModel<ItemFieldReasoningItem>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldReasoningItem"/> for deserialization. </summary>
         internal ItemFieldReasoningItem()

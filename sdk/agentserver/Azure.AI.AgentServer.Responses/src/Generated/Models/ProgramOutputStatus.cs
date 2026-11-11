@@ -6,8 +6,7 @@
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary></summary>
-    public enum ProgramOutputStatus
+    internal enum ProgramOutputStatus
     {
         /// <summary> Completed. </summary>
         Completed,

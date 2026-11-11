@@ -11,12 +11,8 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// An item representing a message, tool call, tool output, reasoning, or other response element.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ItemFieldAdditionalTools"/>, <see cref="ItemFieldApplyPatchToolCall"/>, <see cref="ItemFieldApplyPatchToolCallOutput"/>, <see cref="ItemFieldCodeInterpreterToolCall"/>, <see cref="ItemFieldCompactionBody"/>, <see cref="ItemFieldComputerToolCall"/>, <see cref="ItemFieldComputerToolCallOutput"/>, <see cref="ItemFieldCustomToolCall"/>, <see cref="ItemFieldCustomToolCallOutput"/>, <see cref="ItemFieldFileSearchToolCall"/>, <see cref="ItemFieldFunctionShellCall"/>, <see cref="ItemFieldFunctionShellCallOutput"/>, <see cref="ItemFieldFunctionToolCall"/>, <see cref="ItemFieldFunctionToolCallOutput"/>, <see cref="ItemFieldImageGenToolCall"/>, <see cref="ItemFieldLocalShellToolCall"/>, <see cref="ItemFieldLocalShellToolCallOutput"/>, <see cref="ItemFieldMcpApprovalRequest"/>, <see cref="ItemFieldMcpApprovalResponseResource"/>, <see cref="ItemFieldMcpListTools"/>, <see cref="ItemFieldMcpToolCall"/>, <see cref="ItemFieldMessage"/>, <see cref="ItemFieldProgram"/>, <see cref="ItemFieldProgramOutput"/>, <see cref="ItemFieldReasoningItem"/>, <see cref="ItemFieldToolSearchCall"/>, <see cref="ItemFieldToolSearchOutput"/>, and <see cref="ItemFieldWebSearchToolCall"/>.
-    /// </summary>
     [PersistableModelProxy(typeof(UnknownItemField))]
-    public abstract partial class ItemField : IJsonModel<ItemField>
+    internal abstract partial class ItemField : IJsonModel<ItemField>
     {
         /// <summary> Initializes a new instance of <see cref="ItemField"/> for deserialization. </summary>
         internal ItemField()

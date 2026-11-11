@@ -473,20 +473,4 @@ public class ModelRoundTripTests
         Assert.That(restored.Object, Is.EqualTo("response"),
             "DeleteResponseResult.Object must round-trip as 'response'");
     }
-
-    [Test]
-    public void AgentsPagedResultOutputItem_Serialize_IncludesObjectList()
-    {
-        var options = CreateOptions();
-        var paged = ResponsesModelFactory.AgentsPagedResultOutputItem(
-            data: Array.Empty<OutputItem>(),
-            hasMore: false);
-
-        var json = JsonSerializer.Serialize(paged, options);
-        using var doc = JsonDocument.Parse(json);
-
-        Assert.That(doc.RootElement.GetProperty("object").GetString(), Is.EqualTo("list"),
-            "AgentsPagedResultOutputItem must serialize 'object': 'list'");
-        Assert.That(doc.RootElement.GetProperty("has_more").GetBoolean(), Is.False);
-    }
 }

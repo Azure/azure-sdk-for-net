@@ -6,23 +6,18 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> The MisalignmentSteer. </summary>
-    public partial class MisalignmentSteer
+    internal partial class MisalignmentSteer
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MisalignmentSteer"/>. </summary>
         /// <param name="message"> The public continuation instruction. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="message"/> is null. </exception>
         public MisalignmentSteer(string message)
         {
-            Argument.AssertNotNull(message, nameof(message));
-
             Message = message;
         }
 

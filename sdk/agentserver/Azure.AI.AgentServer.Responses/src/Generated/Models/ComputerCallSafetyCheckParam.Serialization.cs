@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> A pending safety check for the computer call. </summary>
-    public partial class ComputerCallSafetyCheckParam : IJsonModel<ComputerCallSafetyCheckParam>
+    internal partial class ComputerCallSafetyCheckParam : IJsonModel<ComputerCallSafetyCheckParam>
     {
         /// <summary> Initializes a new instance of <see cref="ComputerCallSafetyCheckParam"/> for deserialization. </summary>
         internal ComputerCallSafetyCheckParam()

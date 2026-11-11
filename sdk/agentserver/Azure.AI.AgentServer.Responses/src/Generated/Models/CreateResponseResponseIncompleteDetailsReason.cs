@@ -7,7 +7,7 @@
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public enum CreateResponseResponseIncompleteDetailsReason
+    internal enum CreateResponseResponseIncompleteDetailsReason
     {
         /// <summary> MaxOutputTokens. </summary>
         MaxOutputTokens,

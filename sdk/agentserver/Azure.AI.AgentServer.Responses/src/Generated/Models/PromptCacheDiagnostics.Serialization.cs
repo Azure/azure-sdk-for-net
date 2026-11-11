@@ -16,7 +16,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PromptCacheComparisonResponseNotFoundDiagnosticsBody"/>, <see cref="PromptCacheHitDiagnosticsBody"/>, <see cref="PromptCacheMissDiagnosticsBody"/>, and <see cref="PromptCacheUnavailableDiagnosticsBody"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownPromptCacheDiagnostics))]
-    public abstract partial class PromptCacheDiagnostics : IJsonModel<PromptCacheDiagnostics>
+    internal abstract partial class PromptCacheDiagnostics : IJsonModel<PromptCacheDiagnostics>
     {
         /// <summary> Initializes a new instance of <see cref="PromptCacheDiagnostics"/> for deserialization. </summary>
         internal PromptCacheDiagnostics()

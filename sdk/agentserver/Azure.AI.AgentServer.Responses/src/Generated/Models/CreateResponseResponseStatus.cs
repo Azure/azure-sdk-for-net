@@ -7,7 +7,7 @@
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public enum CreateResponseResponseStatus
+    internal enum CreateResponseResponseStatus
     {
         /// <summary> Completed. </summary>
         Completed,

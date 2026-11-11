@@ -94,10 +94,10 @@ public class StreamingUpstreamHandler : ResponseHandler
             // Clear upstream response_id on output items so the
             // orchestrator's auto-stamp fills in this server's ID.
             if (update is StreamingResponseOutputItemAddedUpdate added)
-                added.Item.ResponseId = null;
+                added.Item.Patch.Remove("$.response_id"u8);
             else if (update is StreamingResponseOutputItemDoneUpdate done)
             {
-                done.Item.ResponseId = null;
+                done.Item.Patch.Remove("$.response_id"u8);
                 outputItems.Add(done.Item);
             }
 

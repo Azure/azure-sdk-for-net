@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> JSON schema. </summary>
-    public partial class TextResponseFormatJsonSchema : TextResponseFormatConfiguration, IJsonModel<TextResponseFormatJsonSchema>
+    internal partial class TextResponseFormatJsonSchema : TextResponseFormatConfiguration, IJsonModel<TextResponseFormatJsonSchema>
     {
         /// <summary> Initializes a new instance of <see cref="TextResponseFormatJsonSchema"/> for deserialization. </summary>
         internal TextResponseFormatJsonSchema()

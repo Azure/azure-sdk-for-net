@@ -6,8 +6,7 @@
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary></summary>
-    public enum ServiceTierEnum
+    internal enum ServiceTierEnum
     {
         /// <summary> Auto. </summary>
         Auto,

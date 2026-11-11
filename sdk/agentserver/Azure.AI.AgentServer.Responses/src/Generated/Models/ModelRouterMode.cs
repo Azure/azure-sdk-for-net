@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> The routing mode used by Model Router for the request. </summary>
-    public readonly partial struct ModelRouterMode : IEquatable<ModelRouterMode>
+    internal readonly partial struct ModelRouterMode : IEquatable<ModelRouterMode>
     {
         private readonly string _value;
         /// <summary> Default routing strategy balancing cost and accuracy across eligible models. </summary>

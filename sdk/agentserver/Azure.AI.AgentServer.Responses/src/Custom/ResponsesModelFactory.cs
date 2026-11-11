@@ -70,32 +70,4 @@ public static class ResponsesModelFactory
             response: response,
             sequenceNumber: sequenceNumber);
     }
-
-    /// <summary>Creates a <see cref="Models.DeleteResponseResult"/> instance for mocking.</summary>
-    /// <param name="id">The ID of the deleted response.</param>
-    /// <returns>A new <see cref="Models.DeleteResponseResult"/> instance with <c>Deleted</c> set to <c>true</c>.</returns>
-    public static DeleteResponseResult DeleteResponseResult(
-        string id = default!)
-    {
-        return AgentServerResponsesModelFactory.DeleteResponseResult(id: id);
-    }
-
-    /// <summary>Creates an <see cref="Models.AgentsPagedResultOutputItem"/> instance for mocking.</summary>
-    /// <param name="data">The output items in the page.</param>
-    /// <param name="firstId">The ID of the first item in the page.</param>
-    /// <param name="lastId">The ID of the last item in the page.</param>
-    /// <param name="hasMore">Whether there are more items available.</param>
-    /// <returns>A new <see cref="Models.AgentsPagedResultOutputItem"/> instance.</returns>
-    public static AgentsPagedResultOutputItem AgentsPagedResultOutputItem(
-        IEnumerable<OutputItem> data = default!,
-        string firstId = default!,
-        string lastId = default!,
-        bool hasMore = default)
-    {
-        return AgentServerResponsesModelFactory.AgentsPagedResultOutputItem(
-            data: data,
-            firstId: firstId,
-            lastId: lastId,
-            hasMore: hasMore);
-    }
 }

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> The PromptCacheHitDiagnosticsBody. </summary>
-    public partial class PromptCacheHitDiagnosticsBody : PromptCacheDiagnostics
+    internal partial class PromptCacheHitDiagnosticsBody : PromptCacheDiagnostics
     {
         /// <summary> Initializes a new instance of <see cref="PromptCacheHitDiagnosticsBody"/>. </summary>
         internal PromptCacheHitDiagnosticsBody() : base(PromptCacheDiagnosticsType.CacheHit)

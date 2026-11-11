@@ -12,7 +12,7 @@ using OpenAI.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> The response data for a requested list of items. </summary>
-    public partial class AgentsPagedResultOutputItem
+    internal partial class AgentsPagedResultOutputItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

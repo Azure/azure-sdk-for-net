@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> A content filter detection result for Personally Identifiable Information. </summary>
-    public partial class AzureContentFilterPersonallyIdentifiableInformationResult : IJsonModel<AzureContentFilterPersonallyIdentifiableInformationResult>
+    internal partial class AzureContentFilterPersonallyIdentifiableInformationResult : IJsonModel<AzureContentFilterPersonallyIdentifiableInformationResult>
     {
         /// <summary> Initializes a new instance of <see cref="AzureContentFilterPersonallyIdentifiableInformationResult"/> for deserialization. </summary>
         internal AzureContentFilterPersonallyIdentifiableInformationResult()

@@ -24,7 +24,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TextResponseFormatConfigurationResponseFormatJsonObject"/>, <see cref="TextResponseFormatConfigurationResponseFormatText"/>, and <see cref="TextResponseFormatJsonSchema"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTextResponseFormatConfiguration))]
-    public abstract partial class TextResponseFormatConfiguration : IJsonModel<TextResponseFormatConfiguration>
+    internal abstract partial class TextResponseFormatConfiguration : IJsonModel<TextResponseFormatConfiguration>
     {
         /// <summary> Initializes a new instance of <see cref="TextResponseFormatConfiguration"/> for deserialization. </summary>
         internal TextResponseFormatConfiguration()

@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public readonly partial struct ItemImageGenToolCallSize : IEquatable<ItemImageGenToolCallSize>
+    internal readonly partial struct ItemImageGenToolCallSize : IEquatable<ItemImageGenToolCallSize>
     {
         private readonly string _value;
         private const string _1024x1024Value = "1024x1024";

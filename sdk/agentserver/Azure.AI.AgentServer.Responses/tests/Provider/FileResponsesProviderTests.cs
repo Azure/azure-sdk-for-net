@@ -149,7 +149,7 @@ public class FileResponsesProviderTests : IDisposable
         var reader = NewProvider();
         var page = await reader.GetInputItemsAsync("resp_items", PlatformContext.Empty);
         Assert.That(page.Data.Count, Is.EqualTo(1));
-        Assert.That(page.Data[0].GetId(), Is.EqualTo("msg_in_1"));
+        Assert.That(page.Data[0].Id, Is.EqualTo("msg_in_1"));
     }
 
     [Test]

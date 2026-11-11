@@ -10,8 +10,7 @@ using System.Text.Json;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Web search tool call. </summary>
-    public partial class ItemFieldWebSearchToolCall : ItemField
+    internal partial class ItemFieldWebSearchToolCall : ItemField
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldWebSearchToolCall"/>. </summary>
         /// <param name="id"> The unique ID of the web search tool call. </param>

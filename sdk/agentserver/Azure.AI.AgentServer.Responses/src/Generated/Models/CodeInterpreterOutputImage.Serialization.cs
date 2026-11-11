@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Code interpreter output image. </summary>
-    public partial class CodeInterpreterOutputImage : IJsonModel<CodeInterpreterOutputImage>
+    internal partial class CodeInterpreterOutputImage : IJsonModel<CodeInterpreterOutputImage>
     {
         /// <summary> Initializes a new instance of <see cref="CodeInterpreterOutputImage"/> for deserialization. </summary>
         internal CodeInterpreterOutputImage()

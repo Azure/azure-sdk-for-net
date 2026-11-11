@@ -4,6 +4,7 @@
 using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses;
 
@@ -85,10 +86,11 @@ public abstract class ResponsesProvider
     /// <param name="after">Cursor: return items after this item ID.</param>
     /// <param name="before">Cursor: return items before this item ID.</param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
-    /// <returns>A paged result of output items.</returns>
+    /// <returns>A page of input items, serialized as an OpenAI <c>list</c> envelope.</returns>
     /// <exception cref="ResourceNotFoundException">Thrown when the response was never created.</exception>
     /// <exception cref="BadRequestException">Thrown when the response has been deleted.</exception>
-    public abstract Task<AgentsPagedResultOutputItem> GetInputItemsAsync(
+    [Experimental("OPENAI001")]
+    public abstract Task<ResponseItemCollectionPage> GetInputItemsAsync(
         string responseId,
         PlatformContext context,
         int limit = 20,

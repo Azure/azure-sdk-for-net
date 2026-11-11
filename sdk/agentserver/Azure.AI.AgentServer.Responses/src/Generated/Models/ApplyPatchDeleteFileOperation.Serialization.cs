@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Apply patch delete file operation. </summary>
-    public partial class ApplyPatchDeleteFileOperation : ApplyPatchFileOperation, IJsonModel<ApplyPatchDeleteFileOperation>
+    internal partial class ApplyPatchDeleteFileOperation : ApplyPatchFileOperation, IJsonModel<ApplyPatchDeleteFileOperation>
     {
         /// <summary> Initializes a new instance of <see cref="ApplyPatchDeleteFileOperation"/> for deserialization. </summary>
         internal ApplyPatchDeleteFileOperation()

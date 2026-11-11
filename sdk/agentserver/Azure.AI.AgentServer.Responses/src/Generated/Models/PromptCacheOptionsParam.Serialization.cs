@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Prompt cache options. </summary>
-    public partial class PromptCacheOptionsParam : IJsonModel<PromptCacheOptionsParam>
+    internal partial class PromptCacheOptionsParam : IJsonModel<PromptCacheOptionsParam>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

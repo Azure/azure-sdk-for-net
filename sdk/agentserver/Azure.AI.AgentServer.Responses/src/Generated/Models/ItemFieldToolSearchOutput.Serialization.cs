@@ -13,8 +13,7 @@ using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> The ItemFieldToolSearchOutput. </summary>
-    public partial class ItemFieldToolSearchOutput : ItemField, IJsonModel<ItemFieldToolSearchOutput>
+    internal partial class ItemFieldToolSearchOutput : ItemField, IJsonModel<ItemFieldToolSearchOutput>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldToolSearchOutput"/> for deserialization. </summary>
         internal ItemFieldToolSearchOutput()

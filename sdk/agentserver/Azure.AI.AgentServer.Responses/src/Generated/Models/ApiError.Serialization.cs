@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> The ApiError. </summary>
-    public partial class ApiError : IJsonModel<ApiError>
+    internal partial class ApiError : IJsonModel<ApiError>
     {
         /// <summary> Initializes a new instance of <see cref="ApiError"/> for deserialization. </summary>
         internal ApiError()

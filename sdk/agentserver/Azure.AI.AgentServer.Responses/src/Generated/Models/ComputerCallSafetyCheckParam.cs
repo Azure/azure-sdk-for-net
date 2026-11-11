@@ -6,12 +6,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> A pending safety check for the computer call. </summary>
-    public partial class ComputerCallSafetyCheckParam
+    internal partial class ComputerCallSafetyCheckParam
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,11 +20,8 @@ namespace Azure.AI.AgentServer.Responses.Models
 
         /// <summary> Initializes a new instance of <see cref="ComputerCallSafetyCheckParam"/>. </summary>
         /// <param name="id"> The ID of the pending safety check. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public ComputerCallSafetyCheckParam(string id)
         {
-            Argument.AssertNotNull(id, nameof(id));
-
             Id = id;
         }
 

@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> A content filter evaluation result for a specific source in the response. </summary>
-    public partial class ContentFilterResult : IJsonModel<ContentFilterResult>
+    internal partial class ContentFilterResult : IJsonModel<ContentFilterResult>
     {
         /// <summary> Initializes a new instance of <see cref="ContentFilterResult"/> for deserialization. </summary>
         internal ContentFilterResult()

@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> The ContextManagementParam. </summary>
-    public partial class ContextManagementParam : IJsonModel<ContextManagementParam>
+    internal partial class ContextManagementParam : IJsonModel<ContextManagementParam>
     {
         /// <summary> Initializes a new instance of <see cref="ContextManagementParam"/> for deserialization. </summary>
         internal ContextManagementParam()

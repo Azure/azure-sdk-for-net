@@ -11,12 +11,8 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// The RealtimeMCPError.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RealtimeMCPHTTPError"/>, <see cref="RealtimeMCPProtocolError"/>, and <see cref="RealtimeMCPToolExecutionError"/>.
-    /// </summary>
     [PersistableModelProxy(typeof(UnknownRealtimeMCPError))]
-    public abstract partial class RealtimeMCPError : IJsonModel<RealtimeMCPError>
+    internal abstract partial class RealtimeMCPError : IJsonModel<RealtimeMCPError>
     {
         /// <summary> Initializes a new instance of <see cref="RealtimeMCPError"/> for deserialization. </summary>
         internal RealtimeMCPError()

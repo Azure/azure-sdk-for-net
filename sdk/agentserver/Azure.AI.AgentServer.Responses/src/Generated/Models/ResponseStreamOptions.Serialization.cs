@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Options for streaming responses. Only set this when you set `stream: true`. </summary>
-    public partial class ResponseStreamOptions : IJsonModel<ResponseStreamOptions>
+    internal partial class ResponseStreamOptions : IJsonModel<ResponseStreamOptions>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Effective Model Router session affinity metadata for a request. </summary>
-    public partial class SessionAffinityDetails : IJsonModel<SessionAffinityDetails>
+    internal partial class SessionAffinityDetails : IJsonModel<SessionAffinityDetails>
     {
         /// <summary> Initializes a new instance of <see cref="SessionAffinityDetails"/> for deserialization. </summary>
         internal SessionAffinityDetails()
@@ -78,8 +78,8 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 throw new FormatException($"The model {nameof(SessionAffinityDetails)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("mode"u8);
-            writer.WriteStringValue(Mode.ToString());
+            writer.WritePropertyName("strategy"u8);
+            writer.WriteStringValue(Strategy.ToString());
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
@@ -132,15 +132,15 @@ namespace Azure.AI.AgentServer.Responses.Models
             {
                 return null;
             }
-            SessionAffinityMode mode = default;
+            SessionAffinityStrategy strategy = default;
             SessionAffinitySource? source = default;
             SessionAffinityDecision? decision = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("mode"u8))
+                if (prop.NameEquals("strategy"u8))
                 {
-                    mode = new SessionAffinityMode(prop.Value.GetString());
+                    strategy = new SessionAffinityStrategy(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("source"u8))
@@ -166,7 +166,7 @@ namespace Azure.AI.AgentServer.Responses.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SessionAffinityDetails(mode, source, decision, additionalBinaryDataProperties);
+            return new SessionAffinityDetails(strategy, source, decision, additionalBinaryDataProperties);
         }
     }
 }

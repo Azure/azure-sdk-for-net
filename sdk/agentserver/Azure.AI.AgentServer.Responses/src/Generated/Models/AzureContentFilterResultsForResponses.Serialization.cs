@@ -13,7 +13,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Content filter results for the Responses API. </summary>
-    public partial class AzureContentFilterResultsForResponses : IJsonModel<AzureContentFilterResultsForResponses>
+    internal partial class AzureContentFilterResultsForResponses : IJsonModel<AzureContentFilterResultsForResponses>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

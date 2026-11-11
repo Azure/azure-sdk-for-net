@@ -10,35 +10,35 @@ using System.Collections.Generic;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> Effective Model Router session affinity metadata for a request. </summary>
-    public partial class SessionAffinityDetails
+    internal partial class SessionAffinityDetails
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SessionAffinityDetails"/>. </summary>
-        /// <param name="mode"> The effective session affinity mode. </param>
-        internal SessionAffinityDetails(SessionAffinityMode mode)
+        /// <param name="strategy"> The effective session affinity strategy. </param>
+        internal SessionAffinityDetails(SessionAffinityStrategy strategy)
         {
-            Mode = mode;
+            Strategy = strategy;
         }
 
         /// <summary> Initializes a new instance of <see cref="SessionAffinityDetails"/>. </summary>
-        /// <param name="mode"> The effective session affinity mode. </param>
-        /// <param name="source"> The identity source selected after applying precedence. `conversation` and `previous_response_id` apply only to the Responses API. Omitted when affinity is disabled. </param>
+        /// <param name="strategy"> The effective session affinity strategy. </param>
+        /// <param name="source"> The identity source selected after applying precedence. Omitted when affinity is disabled. </param>
         /// <param name="decision"> The final affinity outcome for the model that served the response. Omitted when affinity is disabled or no usable identity was available. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SessionAffinityDetails(SessionAffinityMode mode, SessionAffinitySource? source, SessionAffinityDecision? decision, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SessionAffinityDetails(SessionAffinityStrategy strategy, SessionAffinitySource? source, SessionAffinityDecision? decision, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Mode = mode;
+            Strategy = strategy;
             Source = source;
             Decision = decision;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The effective session affinity mode. </summary>
-        public SessionAffinityMode Mode { get; }
+        /// <summary> The effective session affinity strategy. </summary>
+        public SessionAffinityStrategy Strategy { get; }
 
-        /// <summary> The identity source selected after applying precedence. `conversation` and `previous_response_id` apply only to the Responses API. Omitted when affinity is disabled. </summary>
+        /// <summary> The identity source selected after applying precedence. Omitted when affinity is disabled. </summary>
         public SessionAffinitySource? Source { get; }
 
         /// <summary> The final affinity outcome for the model that served the response. Omitted when affinity is disabled or no usable identity was available. </summary>

@@ -6,23 +6,18 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> The WebSearchActionSearchSources. </summary>
-    public partial class WebSearchActionSearchSources
+    internal partial class WebSearchActionSearchSources
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WebSearchActionSearchSources"/>. </summary>
         /// <param name="url"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
         public WebSearchActionSearchSources(Uri url)
         {
-            Argument.AssertNotNull(url, nameof(url));
-
             Url = url;
         }
 

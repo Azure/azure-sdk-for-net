@@ -14,7 +14,7 @@ namespace Azure.AI.AgentServer.Responses.Models
     /// Reference to a prompt template and its variables.
     /// [Learn more](https://developers.openai.com/api/docs/guides/text?api-mode=responses#version-prompts-in-code).
     /// </summary>
-    public partial class Prompt
+    internal partial class Prompt
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

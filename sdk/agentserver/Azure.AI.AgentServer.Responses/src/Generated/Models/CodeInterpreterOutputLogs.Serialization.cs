@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Code interpreter output logs. </summary>
-    public partial class CodeInterpreterOutputLogs : IJsonModel<CodeInterpreterOutputLogs>
+    internal partial class CodeInterpreterOutputLogs : IJsonModel<CodeInterpreterOutputLogs>
     {
         /// <summary> Initializes a new instance of <see cref="CodeInterpreterOutputLogs"/> for deserialization. </summary>
         internal CodeInterpreterOutputLogs()

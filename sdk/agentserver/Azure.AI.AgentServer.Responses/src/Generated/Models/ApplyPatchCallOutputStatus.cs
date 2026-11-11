@@ -7,7 +7,7 @@
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public enum ApplyPatchCallOutputStatus
+    internal enum ApplyPatchCallOutputStatus
     {
         /// <summary> Completed. </summary>
         Completed,

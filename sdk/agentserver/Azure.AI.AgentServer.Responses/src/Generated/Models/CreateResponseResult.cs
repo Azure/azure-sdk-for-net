@@ -15,7 +15,7 @@ using OpenAI.Responses;
 namespace Azure.AI.AgentServer.Responses
 {
     /// <summary> The CreateResponseResult. </summary>
-    public partial class CreateResponseResult
+    internal partial class CreateResponseResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

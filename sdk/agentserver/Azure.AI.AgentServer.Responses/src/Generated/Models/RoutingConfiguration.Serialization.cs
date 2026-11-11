@@ -12,12 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// Per-request configuration for Model Router inference calls.
-    /// Supported on Model Router endpoints (deployed or instant if supported).
-    /// Returns a 400 (Bad Request) error when the target is not a Model Router endpoint.
-    /// </summary>
-    public partial class RoutingConfiguration : IJsonModel<RoutingConfiguration>
+    internal partial class RoutingConfiguration : IJsonModel<RoutingConfiguration>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -82,6 +77,31 @@ namespace Azure.AI.AgentServer.Responses.Models
                 writer.WritePropertyName("session_affinity"u8);
                 writer.WriteObjectValue(SessionAffinity, options);
             }
+            if (Optional.IsDefined(Mode))
+            {
+                writer.WritePropertyName("mode"u8);
+                writer.WriteStringValue(Mode.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(Models))
+            {
+                writer.WritePropertyName("models"u8);
+                writer.WriteStartArray();
+                foreach (string item in Models)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(RequireParameters))
+            {
+                writer.WritePropertyName("require_parameters"u8);
+                writer.WriteBooleanValue(RequireParameters.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -125,6 +145,9 @@ namespace Azure.AI.AgentServer.Responses.Models
                 return null;
             }
             SessionAffinityConfiguration sessionAffinity = default;
+            ModelRouterMode? mode = default;
+            IList<string> models = default;
+            bool? requireParameters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,12 +160,51 @@ namespace Azure.AI.AgentServer.Responses.Models
                     sessionAffinity = SessionAffinityConfiguration.DeserializeSessionAffinityConfiguration(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("mode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mode = new ModelRouterMode(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("models"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    models = array;
+                    continue;
+                }
+                if (prop.NameEquals("require_parameters"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    requireParameters = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new RoutingConfiguration(sessionAffinity, additionalBinaryDataProperties);
+            return new RoutingConfiguration(sessionAffinity, mode, models ?? new ChangeTrackingList<string>(), requireParameters, additionalBinaryDataProperties);
         }
     }
 }

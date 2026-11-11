@@ -192,7 +192,7 @@ internal static class FunctionCallOutputParts
         (IList list, int index) => index < list.Count ? list[index] : null,
         (CreateResponseOptions options, "input") => options.InputItems,
         (ResponseResult response, "output") => response.OutputItems,
-        (AgentsPagedResultOutputItem page, "data") => page.Data,
+        (ResponseItemCollectionPage page, "data") => page.Data,
         (StreamingResponseOutputItemAddedUpdate update, "item") => update.Item,
         (StreamingResponseOutputItemDoneUpdate update, "item") => update.Item,
         (StreamingResponseUpdate update, "response") =>

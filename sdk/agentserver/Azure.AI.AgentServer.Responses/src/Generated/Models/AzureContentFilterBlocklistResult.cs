@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary> A collection of filtering results for configured custom blocklists. </summary>
-    public partial class AzureContentFilterBlocklistResult
+    internal partial class AzureContentFilterBlocklistResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

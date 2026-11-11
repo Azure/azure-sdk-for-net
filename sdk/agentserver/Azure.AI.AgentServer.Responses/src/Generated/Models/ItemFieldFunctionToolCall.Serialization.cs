@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Function tool call. </summary>
-    public partial class ItemFieldFunctionToolCall : ItemField, IJsonModel<ItemFieldFunctionToolCall>
+    internal partial class ItemFieldFunctionToolCall : ItemField, IJsonModel<ItemFieldFunctionToolCall>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldFunctionToolCall"/> for deserialization. </summary>
         internal ItemFieldFunctionToolCall()

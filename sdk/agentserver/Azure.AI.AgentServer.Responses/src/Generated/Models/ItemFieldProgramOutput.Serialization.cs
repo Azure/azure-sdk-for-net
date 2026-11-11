@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> The ItemFieldProgramOutput. </summary>
-    public partial class ItemFieldProgramOutput : ItemField, IJsonModel<ItemFieldProgramOutput>
+    internal partial class ItemFieldProgramOutput : ItemField, IJsonModel<ItemFieldProgramOutput>
     {
         /// <summary> Initializes a new instance of <see cref="ItemFieldProgramOutput"/> for deserialization. </summary>
         internal ItemFieldProgramOutput()

@@ -11,6 +11,7 @@ using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
@@ -455,7 +456,7 @@ public class PersistenceFailureTests : IDisposable
             await _inner.DeleteResponseAsync(responseId, isolation, cancellationToken);
         }
 
-        public override async Task<AgentsPagedResultOutputItem> GetInputItemsAsync(
+        public override async Task<ResponseItemCollectionPage> GetInputItemsAsync(
             string responseId, PlatformContext isolation, int limit = 20, bool ascending = false,
             string? after = null, string? before = null, CancellationToken cancellationToken = default)
             => await _inner.GetInputItemsAsync(responseId, isolation, limit, ascending, after, before, cancellationToken);
