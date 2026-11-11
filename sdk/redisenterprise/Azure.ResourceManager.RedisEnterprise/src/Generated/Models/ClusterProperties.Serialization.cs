@@ -96,7 +96,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             if (Optional.IsCollectionDefined(FirewallRules))
             {
                 writer.WritePropertyName("firewallRules"u8);
-                SerializeFirewallRules(writer, options);
+                writer.WriteStartArray();
+                foreach (FirewallRule item in FirewallRules)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(HostName))
             {
@@ -233,7 +238,16 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
                 if (prop.NameEquals("firewallRules"u8))
                 {
-                    DeserializeFirewallRules(prop, ref firewallRules);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<FirewallRule> array = new List<FirewallRule>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(FirewallRule.DeserializeFirewallRule(item, options));
+                    }
+                    firewallRules = array;
                     continue;
                 }
                 if (prop.NameEquals("hostName"u8))

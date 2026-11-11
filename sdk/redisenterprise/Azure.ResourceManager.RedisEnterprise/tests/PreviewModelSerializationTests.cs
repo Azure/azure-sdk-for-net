@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
         }
 
         [Test]
-        public void ClusterDataDistinguishesOmittedNullAndArrayFirewallRules(
+        public void ClusterDataDistinguishesOmittedAndArrayFirewallRules(
             [Values(false, true)] bool useFactory,
-            [Values("omitted", "null", "empty", "populated")] string state,
+            [Values("omitted", "empty", "populated")] string state,
             [Values("Enabled", "Disabled")] string publicNetworkAccess,
             [Values("W", "J")] string format)
         {
@@ -122,7 +122,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
                 };
             if (!useFactory && state != "omitted")
             {
-                data.FirewallRules = CreateFirewallRules(state);
+                data.FirewallRules.Clear();
+                foreach (FirewallRule rule in CreateFirewallRules(state))
+                {
+                    data.FirewallRules.Add(rule);
+                }
             }
 
             var options = new ModelReaderWriterOptions(format);
@@ -131,16 +135,16 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
 
             var result = ModelReaderWriter.Read<RedisEnterpriseClusterData>(
                 json, options, AzureResourceManagerRedisEnterpriseContext.Default);
-            Assert.AreEqual(state == "null", result.FirewallRules == null);
+            Assert.IsNotNull(result.FirewallRules);
             AssertFirewallRulesWireState(
                 ModelReaderWriter.Write(result, options, AzureResourceManagerRedisEnterpriseContext.Default),
                 state, publicNetworkAccess);
         }
 
         [Test]
-        public void ClusterPatchDistinguishesOmittedNullAndArrayFirewallRules(
+        public void ClusterPatchDistinguishesOmittedAndArrayFirewallRules(
             [Values(false, true)] bool useFactory,
-            [Values("omitted", "null", "empty", "populated")] string state,
+            [Values("omitted", "empty", "populated")] string state,
             [Values("Enabled", "Disabled")] string publicNetworkAccess,
             [Values("W", "J")] string format)
         {
@@ -153,7 +157,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
                 : new RedisEnterpriseClusterPatch { PublicNetworkAccess = access };
             if (!useFactory && state != "omitted")
             {
-                patch.FirewallRules = CreateFirewallRules(state);
+                patch.FirewallRules.Clear();
+                foreach (FirewallRule rule in CreateFirewallRules(state))
+                {
+                    patch.FirewallRules.Add(rule);
+                }
             }
 
             var options = new ModelReaderWriterOptions(format);
@@ -162,7 +170,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
 
             var result = ModelReaderWriter.Read<RedisEnterpriseClusterPatch>(
                 json, options, AzureResourceManagerRedisEnterpriseContext.Default);
-            Assert.AreEqual(state == "null", result.FirewallRules == null);
+            Assert.IsNotNull(result.FirewallRules);
             AssertFirewallRulesWireState(
                 ModelReaderWriter.Write(result, options, AzureResourceManagerRedisEnterpriseContext.Default),
                 state, publicNetworkAccess);
@@ -195,8 +203,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
         [TestCase(true, "clear")]
         [TestCase(false, "remove-last")]
         [TestCase(true, "remove-last")]
-        [TestCase(false, "assign-untouched")]
-        [TestCase(true, "assign-untouched")]
         public void ExplicitlyEmptyFirewallRulesSerializeAnEmptyArray(bool isPatch, string action)
         {
             var data = new RedisEnterpriseClusterData(
@@ -213,14 +219,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
                 rules.Add(rule);
                 rules.Remove(rule);
             }
-            else if (isPatch)
-            {
-                patch.FirewallRules = rules;
-            }
-            else
-            {
-                data.FirewallRules = rules;
-            }
 
             BinaryData json = isPatch
                 ? ModelReaderWriter.Write(patch, WireOptions, AzureResourceManagerRedisEnterpriseContext.Default)
@@ -232,7 +230,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
 
         [TestCase(false)]
         [TestCase(true)]
-        public void FirewallRulesAssignmentCanReplaceNullAndPreviouslyPopulatedRules(bool isPatch)
+        public void FirewallRulesCanReplacePreviouslyPopulatedRules(bool isPatch)
         {
             var data = new RedisEnterpriseClusterData(
                 AzureLocation.EastUS, new RedisEnterpriseSku(RedisEnterpriseSkuName.BalancedB1));
@@ -240,14 +238,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             if (isPatch)
             {
                 patch.FirewallRules.Add(new FirewallRule("old-rule", "203.0.113.1"));
-                patch.FirewallRules = null;
-                patch.FirewallRules = new List<FirewallRule> { new FirewallRule("replacement", "198.51.100.1") };
+                patch.FirewallRules.Clear();
+                patch.FirewallRules.Add(new FirewallRule("replacement", "198.51.100.1"));
             }
             else
             {
                 data.FirewallRules.Add(new FirewallRule("old-rule", "203.0.113.1"));
-                data.FirewallRules = null;
-                data.FirewallRules = new List<FirewallRule> { new FirewallRule("replacement", "198.51.100.1") };
+                data.FirewallRules.Clear();
+                data.FirewallRules.Add(new FirewallRule("replacement", "198.51.100.1"));
             }
 
             BinaryData json = isPatch
@@ -260,32 +258,27 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             Assert.AreEqual("198.51.100.1", rules[0].GetProperty("sourceAddressPrefix").GetString());
         }
 
-        [TestCase(false)]
-        [TestCase(true)]
-        public void ExplicitNullFirewallRulesOverridePreviouslyPopulatedRules(bool isPatch)
+        [Test]
+        public void NullFactoryFirewallRulesAreOmitted(
+            [Values(false, true)] bool isPatch,
+            [Values("W", "J")] string format)
         {
-            var data = new RedisEnterpriseClusterData(
-                AzureLocation.EastUS, new RedisEnterpriseSku(RedisEnterpriseSkuName.BalancedB1));
-            var patch = new RedisEnterpriseClusterPatch();
-            if (isPatch)
-            {
-                patch.FirewallRules.Add(new FirewallRule("old-rule", "203.0.113.1"));
-                patch.FirewallRules = null;
-                Assert.IsNull(patch.FirewallRules);
-            }
-            else
-            {
-                data.FirewallRules.Add(new FirewallRule("old-rule", "203.0.113.1"));
-                data.FirewallRules = null;
-                Assert.IsNull(data.FirewallRules);
-            }
+            var data = ArmRedisEnterpriseModelFactory.RedisEnterpriseClusterData(
+                location: AzureLocation.EastUS,
+                sku: new RedisEnterpriseSku(RedisEnterpriseSkuName.BalancedB1),
+                publicNetworkAccess: RedisEnterprisePublicNetworkAccess.Enabled,
+                firewallRules: null);
+            var patch = ArmRedisEnterpriseModelFactory.RedisEnterpriseClusterPatch(
+                publicNetworkAccess: RedisEnterprisePublicNetworkAccess.Enabled,
+                firewallRules: null);
+            Assert.IsNotNull(data.FirewallRules);
+            Assert.IsNotNull(patch.FirewallRules);
 
+            var options = new ModelReaderWriterOptions(format);
             BinaryData json = isPatch
-                ? ModelReaderWriter.Write(patch, WireOptions, AzureResourceManagerRedisEnterpriseContext.Default)
-                : ModelReaderWriter.Write(data, WireOptions, AzureResourceManagerRedisEnterpriseContext.Default);
-            using JsonDocument document = JsonDocument.Parse(json);
-            Assert.AreEqual(JsonValueKind.Null,
-                document.RootElement.GetProperty("properties").GetProperty("firewallRules").ValueKind);
+                ? ModelReaderWriter.Write(patch, options, AzureResourceManagerRedisEnterpriseContext.Default)
+                : ModelReaderWriter.Write(data, options, AzureResourceManagerRedisEnterpriseContext.Default);
+            AssertFirewallRulesWireState(json, "omitted", "Enabled");
         }
 
         [TestCase(false)]
@@ -310,8 +303,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
         }
 
         private static IList<FirewallRule> CreateFirewallRules(string state)
-            => state == "null" ? null
-                : state == "empty" ? Array.Empty<FirewallRule>()
+            => state == "empty" ? Array.Empty<FirewallRule>()
                 : new[] { new FirewallRule("allow-ip", "203.0.113.1"), new FirewallRule("allow-subnet", "203.0.113.0/24") };
 
         private static void AssertFirewallRulesWireState(BinaryData json, string state, string publicNetworkAccess)
@@ -321,11 +313,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             Assert.AreEqual(publicNetworkAccess, properties.GetProperty("publicNetworkAccess").GetString());
             bool hasRules = properties.TryGetProperty("firewallRules", out JsonElement rules);
             Assert.AreEqual(state != "omitted", hasRules);
-            if (state == "null")
-            {
-                Assert.AreEqual(JsonValueKind.Null, rules.ValueKind);
-            }
-            else if (state == "empty")
+            if (state == "empty")
             {
                 Assert.AreEqual(0, rules.GetArrayLength());
             }

@@ -49,6 +49,10 @@ Code samples for using the management library for .NET can be found in the follo
 - [Redis Enterprise generated samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/redisenterprise/Azure.ResourceManager.RedisEnterprise/tests/Generated/Samples)
 - [.NET Management Library Code Samples](https://aka.ms/azuresdk-net-mgmt-samples)
 
+### Manage cluster firewall rules
+
+Call `FirewallRules.Clear()` before sending an update to clear all rules. On PATCH, leave the collection untouched to preserve existing rules unless public network access is being disabled. With public network access enabled, an empty rule set allows all public source IPs.
+
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).

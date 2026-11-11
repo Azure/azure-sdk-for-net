@@ -5,7 +5,7 @@
 ### Features Added
 
 - Updated the default service API version to `2026-10-01-preview`.
-- Added cluster firewall rules for Azure Managed Redis. Models and model factories support explicit `null` or an empty collection to clear rules, and non-empty collections to replace rules. Omitting firewall rules preserves existing rules on PATCH unless public network access is disabled; omission on PUT clears rules.
+- Added cluster firewall rules for Azure Managed Redis. Use an empty array to clear rules; omit `firewallRules` on PATCH to leave them unchanged unless public network access is disabled.
 - Reintroduced custom Redis ACL access strings and provisioning error details to access policy assignments, previously available in `1.4.0-beta.2` but not in `1.4.0`.
 
 ## 1.4.0 (2026-10-30)

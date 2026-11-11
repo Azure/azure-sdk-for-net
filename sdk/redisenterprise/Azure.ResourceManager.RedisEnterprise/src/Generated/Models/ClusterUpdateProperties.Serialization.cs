@@ -169,7 +169,16 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
                 if (prop.NameEquals("firewallRules"u8))
                 {
-                    DeserializeFirewallRules(prop, ref firewallRules);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<FirewallRule> array = new List<FirewallRule>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(FirewallRule.DeserializeFirewallRule(item, options));
+                    }
+                    firewallRules = array;
                     continue;
                 }
                 if (prop.NameEquals("hostName"u8))
