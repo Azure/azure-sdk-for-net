@@ -44,7 +44,8 @@ namespace Azure.Core
         /// <param name="header">The header to add.</param>
         public void Add(HttpHeader header)
         {
-            Add(header.Name, header.Value);
+            ValidateHeaderValue(header.Name, header.Value, nameof(header));
+            _request.AddHeader(header.Name, header.Value);
         }
 
         /// <summary>
@@ -54,7 +55,7 @@ namespace Azure.Core
         /// <param name="value">The header value.</param>
         public void Add(string name, string value)
         {
-            ValidateHeaderValue(name, value);
+            ValidateHeaderValue(name, value, nameof(value));
             _request.AddHeader(name, value);
         }
 
@@ -97,15 +98,15 @@ namespace Azure.Core
         /// <param name="value">The header value.</param>
         public void SetValue(string name, string value)
         {
-            ValidateHeaderValue(name, value);
+            ValidateHeaderValue(name, value, nameof(value));
             _request.SetHeader(name, value);
         }
 
-        private static void ValidateHeaderValue(string name, string value)
+        private static void ValidateHeaderValue(string name, string value, string paramName)
         {
-            if (value != null && (value.IndexOf('\r') >= 0 || value.IndexOf('\n') >= 0))
+            if (value != null && value.AsSpan().IndexOfAny('\r', '\n', '\0') >= 0)
             {
-                throw new ArgumentException($"The value of header '{name}' cannot contain CR or LF characters.", nameof(value));
+                throw new ArgumentException($"The value of header '{name}' cannot contain CR, LF, or NUL characters.", paramName);
             }
         }
 

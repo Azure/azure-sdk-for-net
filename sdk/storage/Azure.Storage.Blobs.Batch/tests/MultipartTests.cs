@@ -19,10 +19,12 @@ namespace Azure.Storage.Blobs.Test
             using HttpMessage message = new HttpMessage(new MockRequest(), new ResponseClassifier());
             message.Request.Method = RequestMethod.Delete;
             message.Request.Uri.Reset(new Uri("https://account.blob.core.windows.net/container/blob"));
-            message.Request.Headers.SetValue("x-ms-if-tags", ifTags);
 
             ArgumentException exception = Assert.ThrowsAsync<ArgumentException>(async () =>
-                await Multipart.CreateAsync(new[] { message }, "batch", async: true, CancellationToken.None));
+            {
+                message.Request.Headers.SetValue("x-ms-if-tags", ifTags);
+                await Multipart.CreateAsync(new[] { message }, "batch", async: true, CancellationToken.None);
+            });
 
             StringAssert.Contains("x-ms-if-tags", exception.Message);
         }

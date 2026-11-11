@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
@@ -10,6 +11,14 @@ namespace System.ClientModel.Tests.Message;
 
 public class PipelineRequestHeadersTests
 {
+    public static object[] InvalidHeaderValues =>
+        new object[]
+        {
+            new object[] { "value\r" },
+            new object[] { "value\n" },
+            new object[] { "value\0" },
+        };
+
     [Test]
     public void AddCreatesNewHeader()
     {
@@ -119,5 +128,27 @@ public class PipelineRequestHeadersTests
         Assert.IsTrue(headers.TryGetValues("MOCK-HEADER", out IEnumerable<string>? values));
         Assert.AreEqual(1, values!.Count());
         Assert.AreEqual("Mock value", values!.First());
+    }
+
+    [TestCaseSource(nameof(InvalidHeaderValues))]
+    public void AddRejectsValuesContainingCrlfOrNul(string headerValue)
+    {
+        ArrayBackedRequestHeaders headers = new();
+
+        ArgumentException ex = Assert.Throws<ArgumentException>(() => headers.Add("Mock-Header", headerValue))!;
+
+        Assert.AreEqual("value", ex.ParamName);
+        StringAssert.Contains("Mock-Header", ex.Message);
+    }
+
+    [TestCaseSource(nameof(InvalidHeaderValues))]
+    public void SetRejectsValuesContainingCrlfOrNul(string headerValue)
+    {
+        ArrayBackedRequestHeaders headers = new();
+
+        ArgumentException ex = Assert.Throws<ArgumentException>(() => headers.Set("Mock-Header", headerValue))!;
+
+        Assert.AreEqual("value", ex.ParamName);
+        StringAssert.Contains("Mock-Header", ex.Message);
     }
 }

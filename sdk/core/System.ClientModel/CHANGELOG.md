@@ -6,7 +6,11 @@
 
 ### Breaking Changes
 
+- `PipelineRequestHeaders.Add` and `PipelineRequestHeaders.Set` now reject header values containing carriage return (`\r`), line feed (`\n`), or NUL (`\0`) characters and throw `ArgumentException`.
+
 ### Bugs Fixed
+
+- Hardened request-header handling to prevent CR/LF/NUL header-value injection in the `System.ClientModel` pipeline.
 
 ### Other Changes
 

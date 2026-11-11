@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ClientModel.Internal;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -15,12 +16,16 @@ internal class ArrayBackedRequestHeaders : PipelineRequestHeaders
         => _headers.TryRemove(new IgnoreCaseString(name));
 
     public override void Set(string name, string value)
-        => _headers.Set(new IgnoreCaseString(name), value);
+    {
+        ValidateHeaderValue(name, value, nameof(value));
+        _headers.Set(new IgnoreCaseString(name), value);
+    }
 
     public override void Add(string name, string value)
     {
         Argument.AssertNotNullOrEmpty(name, nameof(name));
         Argument.AssertNotNullOrEmpty(value, nameof(value));
+        ValidateHeaderValue(name, value, nameof(value));
 
         if (_headers.TryAdd(new IgnoreCaseString(name), value, out object? currentValue))
         {
@@ -87,6 +92,14 @@ internal class ArrayBackedRequestHeaders : PipelineRequestHeaders
     }
 
     #region Implementation
+    private static void ValidateHeaderValue(string name, string value, string paramName)
+    {
+        if (value != null && value.AsSpan().IndexOfAny('\r', '\n', '\0') >= 0)
+        {
+            throw new ArgumentException($"The value of header '{name}' cannot contain CR, LF, or NUL characters.", paramName);
+        }
+    }
+
     private IEnumerable<KeyValuePair<string, string>> GetHeadersStringValues()
     {
         for (int i = 0; i < _headers.Count; i++)

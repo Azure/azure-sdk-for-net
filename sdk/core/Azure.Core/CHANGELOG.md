@@ -7,6 +7,8 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed `RequestHeaders.Add` and `RequestHeaders.SetValue` to reject header values containing carriage return (`\r`), line feed (`\n`), or NUL (`\0`) characters to prevent header injection.
+- Fixed `RequestHeaders.Add(HttpHeader)` to report `ArgumentException.ParamName` as `header` when header value validation fails.
 
 ### Other Changes
 
@@ -19,7 +21,6 @@
 ### Bugs Fixed
 
 - Fixed `ManagedIdentityCredential` truncating federated token files larger than 4096 characters during token exchange.
-- Fixed `RequestHeaders.Add` and `RequestHeaders.SetValue` to reject header values containing CR (`\r`) or LF (`\n`) characters to prevent header injection.
 
 ### Other Changes
 

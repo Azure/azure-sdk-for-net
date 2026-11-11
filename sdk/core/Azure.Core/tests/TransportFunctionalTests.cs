@@ -288,6 +288,7 @@ namespace Azure.Core.Tests
                 new object[] { "value\r" },
                 new object[] { "value\n" },
                 new object[] { "value\r\nInjected: 1" },
+                new object[] { "value\0" },
             };
 
         [TestCaseSource(nameof(HeaderValuesWithCrlf))]
@@ -307,7 +308,7 @@ namespace Azure.Core.Tests
 
             ArgumentException ex = Assert.Throws<ArgumentException>(() => request.Headers.Add(new HttpHeader("Custom-Header", headerValue)));
 
-            Assert.AreEqual("value", ex.ParamName);
+            Assert.AreEqual("header", ex.ParamName);
         }
 
         [TestCaseSource(nameof(HeaderValuesWithCrlf))]
