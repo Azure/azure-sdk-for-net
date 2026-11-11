@@ -22,14 +22,15 @@ called end of life (EOL).
 |----------|------------------|
 | Libraries (`SupportsNetStandard20`, on by default for `Azure.*` projects) | `netstandard2.0` and the current LTS |
 | Core packages: Azure.Core, System.ClientModel, and Azure.Core.Experimental | `netstandard2.0` and every supported LTS, each until 6 months after it reaches end of support |
+| Packages that must target a runnable framework, such as ASP.NET Core extensions and the Azure.AI.AgentServer hosts | Every supported LTS, each until 6 months after it reaches end of support |
 | Analyzers and source generators | `netstandard2.0` only |
 | Code generator projects (`IsGeneratorLibrary`) | The current LTS only |
 
 - ✅ **DO** adopt a new LTS as soon as it ships and the CI agent images include
   its SDK (see [CI agent images](#ci-agent-images)). It becomes the current LTS
-  for every package, and Core packages also keep the outgoing LTS. For example,
-  when .NET 12 ships, libraries move from `net10.0` to `net12.0`, and Core
-  packages move from `net10.0` to `net12.0` and `net10.0`.
+  for every package, and packages that target every supported LTS also keep the
+  outgoing LTS. For example, when .NET 12 ships, libraries move from `net10.0` to
+  `net12.0`, and Core packages move from `net10.0` to `net12.0` and `net10.0`.
 - ✅ **YOU MAY** add another supported framework, LTS or STS, to a package when
   the benefit justifies it, such as using an API from that release or opting in
   to runtime performance improvements that only apply to code targeting it. For
@@ -66,8 +67,8 @@ How targets change over the next four releases:
 | .NET 13 (STS), Nov 2028 | `net12.0` | `net12.0`, `net10.0` until May 2029 | `net12.0`, `net13.0` |
 | .NET 14 (LTS), Nov 2029 | `net14.0` | `net14.0`, `net12.0` | `net12.0`, `net13.0`, `net14.0` |
 
-All packages also target `netstandard2.0`, and tests also run on .NET Framework
-on Windows. Optional targets are not shown.
+Libraries and Core packages also target `netstandard2.0`, and tests also run on
+.NET Framework on Windows. Optional targets are not shown.
 
 ## global.json
 
@@ -91,7 +92,7 @@ Once the agent images include the new SDK:
 1. `global.json`: move `sdk.version` to the new SDK.
 2. `eng/Directory.Build.Common.props`: update `AllActiveCurrentTargetFrameworks`
    for the test targets. For an LTS, also update `LtsTargetFramework`, keep the
-   outgoing LTS in the Core packages' targets, and update
+   outgoing LTS for packages that target every supported LTS, and update
    `ApiCompatRunnableTargetFramework`, which must be a framework that
    already-released packages contain.
 3. `eng/pipelines/templates/stages/platform-matrix.json`: add and remove
@@ -117,7 +118,7 @@ Once the agent images include the new SDK:
 
 Six months after a version reaches end of support:
 
-1. Remove its package targets: the retired LTS in the Core packages' targets in
+1. Remove its package targets: the retired LTS in
    `eng/Directory.Build.Common.props`, and package-specific targets such as
    System.ClientModel's `net9.0`.
 2. Delete the API listings for the removed framework.
