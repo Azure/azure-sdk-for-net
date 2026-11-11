@@ -49,6 +49,11 @@
 ### Breaking Changes
 - Renamed `ModelCredentialRequest` to `ModelCredentialContent`.
 
+### Bugs Fixed
+
+### Other Changes
+- Added endpoint-based evaluator samples for endpoint contract schema version `0.0.2` (recommended) and the legacy schema version `0.0.1`.
+
 ## 3.0.0-beta.6 (2026-10-30)
 
 ### Features Added

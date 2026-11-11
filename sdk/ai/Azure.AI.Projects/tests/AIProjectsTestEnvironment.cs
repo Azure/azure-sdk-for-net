@@ -35,6 +35,7 @@ namespace Azure.AI.Projects.Tests
         public string STORAGECONNECTIONNAME => GetRecordedVariable("STORAGE_CONNECTION_NAME");
         public string STORAGECONNECTIONTYPE => GetRecordedVariable("STORAGE_CONNECTION_TYPE");
         public string AOAI_CONNECTION_NAME => GetRecordedVariable(nameof(AOAI_CONNECTION_NAME));
+        public string ENDPOINT_CONNECTION_NAME => GetRecordedOptionalVariable(nameof(ENDPOINT_CONNECTION_NAME));
         public string TESTIMAGEPNGINPUTPATH => GetRecordedVariable("TEST_IMAGE_PNG_INPUT_PATH");
         public string SAMPLEFILEPATH => GetRecordedVariable("SAMPLE_FILE_PATH");
         public string SAMPLEFOLDERPATH => GetRecordedVariable("SAMPLE_FOLDER_PATH");
