@@ -19,13 +19,15 @@ param(
 
 <#
 .SYNOPSIS
-    Updates release status using an explicit release-plan ID or SDK PR when supplied, otherwise the legacy package lookup.
+    Updates release status using an explicit release-plan ID or SDK PR when supplied, otherwise the plan that recorded this release run, otherwise the legacy package lookup.
 
 .DESCRIPTION
     Uses the requester-supplied release-plan ID for manual releases, or the triggering SDK PR
     for automatic releases. azsdk resolves the existing ADO plan and validates the language/package.
-    TRANSITIONAL: when neither is supplied, the original package-name lookup is used and an informational message is logged
-    so pipelines that do not yet forward the association keep working. Remove once every pipeline forwards one.
+    When neither is supplied, azsdk updates the one plan that already recorded this release run URL for the package
+    (the auto-release preparation stage records it), so callers need no stage-to-stage output mapping.
+    Several matching plans stop the update. TRANSITIONAL: when no plan recorded this run, the original package-name lookup
+    is used so pipelines that do not yet forward the association keep working.
 
 .PARAMETER PackageInfoFilePath
     The path to the package information file (required) or path to the directory containing package information files.
@@ -40,13 +42,26 @@ param(
     The unambiguous SDK PR that triggered the automatic release. Not a spec PR or a previous package PR.
 
 .PARAMETER PipelineUrl
-    The current release pipeline URL, recorded for manual and automatic releases.
+    The current release pipeline URL, recorded for manual and automatic releases. When omitted, it is built from the
+    standard Azure Pipelines variables (SYSTEM_COLLECTIONURI, SYSTEM_TEAMPROJECT, BUILD_BUILDID) if all are set.
 #>
 
 Set-StrictMode -Version 4
 $ErrorActionPreference = 'Stop'
 [int]$suppliedPlanId = [int]::Parse($ReleasePlanId, [System.Globalization.CultureInfo]::InvariantCulture)
 . (Join-Path $PSScriptRoot common.ps1)
+
+# Same format the auto-release preparation stage records on the release plan.
+if ([string]::IsNullOrWhiteSpace($PipelineUrl))
+{
+    $collectionUri = [Environment]::GetEnvironmentVariable('SYSTEM_COLLECTIONURI')
+    $teamProject = [Environment]::GetEnvironmentVariable('SYSTEM_TEAMPROJECT')
+    $buildId = [Environment]::GetEnvironmentVariable('BUILD_BUILDID')
+    if ($collectionUri -and $teamProject -and $buildId)
+    {
+        $PipelineUrl = "$($collectionUri.TrimEnd('/'))/$teamProject/_build/results?buildId=$buildId"
+    }
+}
 
 #Validate azsdk executable path
 if (-Not (Test-Path $AzsdkExePath))
@@ -81,7 +96,7 @@ function Process-Package([string]$packageInfoPath)
     $isLegacyLookup = ($suppliedPlanId -eq 0 -and [string]::IsNullOrWhiteSpace($SdkPullRequest))
     if ($isLegacyLookup)
     {
-        Write-Host "LEGACY_RELEASE_PLAN_LOOKUP: Package '$PackageName' has no release-plan ID or triggering SDK PR; using the legacy package lookup. Forward ReleasePlanId or SdkPullRequest from the release pipeline."
+        Write-Host "LEGACY_RELEASE_PLAN_LOOKUP: Package '$PackageName' has no release-plan ID or triggering SDK PR. azsdk uses the plan that recorded this release run when exactly one did; otherwise it uses the legacy package lookup."
     }
 
     # Do not inherit plan IDs from package metadata; unrelated bug-fix builds can reuse those files.
