@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Log probability. </summary>
-    public partial class LogProb : IJsonModel<LogProb>
+    internal partial class LogProb : IJsonModel<LogProb>
     {
         /// <summary> Initializes a new instance of <see cref="LogProb"/> for deserialization. </summary>
         internal LogProb()

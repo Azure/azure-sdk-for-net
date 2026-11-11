@@ -17,7 +17,7 @@ enforce these contracts. **When a test fails, fix the service — not the test.*
 | `input` | `string \| InputItem[]` | No | — | String shorthand = single user message |
 | `instructions` | string \| null | No | — | System/developer instructions |
 | `tools` | Tool[] | No | — | Available tools |
-| `tool_choice` | `"none" \| "auto" \| "required" \| object` | No | — | String shorthands expand to ToolChoiceAllowed |
+| `tool_choice` | `"none" \| "auto" \| "required" \| object` | No | — | Exposed as `ResponseToolChoice` (`Kind` / `FunctionName`) |
 | `temperature` | number(0–2) \| null | No | 1 | |
 | `top_p` | number(0–1) \| null | No | 1 | |
 | `max_output_tokens` | integer \| null | No | — | |

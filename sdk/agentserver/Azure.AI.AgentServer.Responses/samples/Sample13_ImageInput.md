@@ -6,7 +6,7 @@ This sample shows how to build handlers that receive images as input. The Respon
 2. **Base64 data URL** — the image bytes inline as `data:image/<format>;base64,<data>`
 3. **File ID** — a path or identifier pointing to an image in a file store of your choice (uploaded separately)
 
-The server library deserializes all three into `MessageContentInputImageContent`.
+The server library deserializes all three into a `ResponseContentPart` whose `Kind` is `ResponseContentPartKind.InputImage`.
 
 ## Prerequisites
 
@@ -16,7 +16,7 @@ dotnet add package Azure.AI.AgentServer.Responses --prerelease
 
 ## Handle URL image input
 
-Clients send image URLs via the `input_image` content type. The handler receives these as `MessageContentInputImageContent` items with an `ImageUrl` property:
+Clients send image URLs via the `input_image` content type. The handler receives these as `ResponseContentPart` items (`Kind == ResponseContentPartKind.InputImage`) with an `InputImageUri` property:
 
 ```C# Snippet:Responses_Sample13_ImageUrlHandler
 public class ImageUrlHandler : ResponseHandler
@@ -35,10 +35,9 @@ public class ImageUrlHandler : ResponseHandler
         var items = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
         var imageUrls = items
             .OfType<MessageResponseItem>()
-            .SelectMany(msg => msg.GetContentExpanded())
-            .OfType<MessageContentInputImageContent>()
-            .Where(img => img.ImageUrl != null)
-            .Select(img => img.ImageUrl)
+            .SelectMany(msg => msg.Content)
+            .Where(part => part.Kind == ResponseContentPartKind.InputImage && part.InputImageUri != null)
+            .Select(part => part.InputImageUri)
             .ToList();
 
         // Describe what we received (a real handler would call a vision model).
@@ -76,15 +75,14 @@ public class ImageBase64Handler : ResponseHandler
         // Find all image content parts.
         var images = items
             .OfType<MessageResponseItem>()
-            .SelectMany(msg => msg.GetContentExpanded())
-            .OfType<MessageContentInputImageContent>()
-            .Where(img => img.ImageUrl != null)
+            .SelectMany(msg => msg.Content)
+            .Where(part => part.Kind == ResponseContentPartKind.InputImage && part.InputImageUri != null)
             .ToList();
 
         string reply;
-        if (images.Count > 0 && DataUrl.TryDecodeBytes(images[0].ImageUrl, out byte[] imageBytes))
+        if (images.Count > 0 && DataUrl.TryDecodeBytes(images[0].InputImageUri, out byte[] imageBytes))
         {
-            string? mediaType = DataUrl.GetMediaType(images[0].ImageUrl);
+            string? mediaType = DataUrl.GetMediaType(images[0].InputImageUri);
             reply = $"Received a {mediaType ?? "unknown"} image ({imageBytes.Length} bytes).";
         }
         else
@@ -122,13 +120,12 @@ public class ImageFileIdHandler : ResponseHandler
         // Find image content parts that use file_id (a path in your file store).
         var images = items
             .OfType<MessageResponseItem>()
-            .SelectMany(msg => msg.GetContentExpanded())
-            .OfType<MessageContentInputImageContent>()
-            .Where(img => img.FileId != null)
+            .SelectMany(msg => msg.Content)
+            .Where(part => part.Kind == ResponseContentPartKind.InputImage && part.InputImageFileId != null)
             .ToList();
 
         string reply = images.Count > 0
-            ? $"Received {images.Count} image(s) by file ID. First: {images[0].FileId}"
+            ? $"Received {images.Count} image(s) by file ID. First: {images[0].InputImageFileId}"
             : "No file_id images found in the input.";
 
         foreach (var evt in stream.OutputItemMessage(reply))

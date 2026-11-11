@@ -1023,26 +1023,25 @@ The `CreateResponseOptions` object also provides:
 - `request.Stream` — whether SSE streaming was requested
 - `request.Background` — whether background mode was requested
 
-### Expanding Message Content
+### Reading Message Content
 
-To access typed content parts from a `MessageResponseItem` (e.g., in resolved input items or history), use `GetContentExpanded()`:
+To access content parts from a `MessageResponseItem` (e.g., in resolved input items or history), use its `Content` property and switch on `ResponseContentPart.Kind`:
 
 ```csharp
 var inputItems = await context.GetInputItemsAsync(cancellationToken);
 foreach (var item in inputItems.OfType<MessageResponseItem>())
 {
-    var contentParts = item.GetContentExpanded();
-    foreach (var part in contentParts)
+    foreach (var part in item.Content)
     {
-        if (part is MessageContentInputTextContent textContent)
+        if (part.Kind == ResponseContentPartKind.InputText)
         {
-            Console.WriteLine(textContent.Text);
+            Console.WriteLine(part.Text);
         }
     }
 }
 ```
 
-This complements the context-level helpers (`GetInputItemsAsync`, `GetInputTextAsync`) — they resolve and return input items from the `ResponseContext`, while `GetContentExpanded` operates on individual `MessageResponseItem` instances.
+This complements the context-level helpers (`GetInputItemsAsync`, `GetInputTextAsync`) — they resolve and return input items from the `ResponseContext`, while `Content` exposes the parts of an individual `MessageResponseItem`.
 
 ---
 

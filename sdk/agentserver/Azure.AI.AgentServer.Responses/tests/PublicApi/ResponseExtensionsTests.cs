@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Primitives;
-using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 
@@ -10,99 +8,6 @@ namespace Azure.AI.AgentServer.Responses.Tests.PublicApi;
 
 public class ResponseExtensionsTests
 {
-    // ── GetToolChoiceExpanded ──────────────────────────────────────────
-
-    [Test]
-    public void GetToolChoiceExpanded_NullResponse_ThrowsArgumentNullException()
-    {
-        ResponseObject? response = null;
-        Assert.Throws<ArgumentNullException>(() => response!.GetToolChoiceExpanded());
-    }
-
-    [Test]
-    public void GetToolChoiceExpanded_NullToolChoice_ReturnsNull()
-    {
-        var response = new ResponseObject { Id = "resp_1", Model = "gpt-4o" };
-        Assert.That(response.GetToolChoiceExpanded(), Is.Null);
-    }
-
-    [Test]
-    public void GetToolChoiceExpanded_Auto_ReturnsToolChoiceAllowedAuto()
-    {
-        var response = new ResponseObject { Id = "resp_1", Model = "gpt-4o", ToolChoice = OpenAIJson.Read<ResponseToolChoice>(BinaryData.FromObjectAsJson("auto")) };
-
-        var result = response.GetToolChoiceExpanded();
-
-        var allowed = XAssert.IsType<ToolChoiceAllowed>(result);
-        Assert.That(allowed.Mode, Is.EqualTo(ToolChoiceAllowedMode.Auto));
-    }
-
-    [Test]
-    public void GetToolChoiceExpanded_None_ReturnsNull()
-    {
-        var response = new ResponseObject { Id = "resp_1", Model = "gpt-4o", ToolChoice = OpenAIJson.Read<ResponseToolChoice>(BinaryData.FromObjectAsJson("none")) };
-
-        Assert.That(response.GetToolChoiceExpanded(), Is.Null);
-    }
-
-    // ── SetToolChoice(ToolChoiceParam) ────────────────────────────────
-
-    [Test]
-    public void SetToolChoice_ToolChoiceParam_RoundTrips()
-    {
-        var response = new ResponseObject { Id = "resp_1", Model = "gpt-4o" };
-        var toolChoice = new ToolChoiceAllowed(ToolChoiceAllowedMode.Required, Array.Empty<IDictionary<string, BinaryData>>());
-
-        response.SetToolChoice(toolChoice);
-        var result = response.GetToolChoiceExpanded();
-
-        var allowed = XAssert.IsType<ToolChoiceAllowed>(result);
-        Assert.That(allowed.Mode, Is.EqualTo(ToolChoiceAllowedMode.Required));
-    }
-
-    [Test]
-    public void SetToolChoice_NullParam_ThrowsArgumentNullException()
-    {
-        var response = new ResponseObject { Id = "resp_1", Model = "gpt-4o" };
-        Assert.Throws<ArgumentNullException>(() => response.SetToolChoice((ToolChoiceParam)null!));
-    }
-
-    // ── SetToolChoice(ToolChoiceOptions) ──────────────────────────────
-
-    [Test]
-    public void SetToolChoice_OptionsAuto_RoundTrips()
-    {
-        var response = new ResponseObject { Id = "resp_1", Model = "gpt-4o" };
-
-        response.SetToolChoice(ToolChoiceOptions.Auto);
-        var result = response.GetToolChoiceExpanded();
-
-        var allowed = XAssert.IsType<ToolChoiceAllowed>(result);
-        Assert.That(allowed.Mode, Is.EqualTo(ToolChoiceAllowedMode.Auto));
-    }
-
-    [Test]
-    public void SetToolChoice_OptionsRequired_RoundTrips()
-    {
-        var response = new ResponseObject { Id = "resp_1", Model = "gpt-4o" };
-
-        response.SetToolChoice(ToolChoiceOptions.Required);
-        var result = response.GetToolChoiceExpanded();
-
-        var allowed = XAssert.IsType<ToolChoiceAllowed>(result);
-        Assert.That(allowed.Mode, Is.EqualTo(ToolChoiceAllowedMode.Required));
-    }
-
-    [Test]
-    public void SetToolChoice_OptionsNone_GetReturnsNull()
-    {
-        var response = new ResponseObject { Id = "resp_1", Model = "gpt-4o" };
-
-        response.SetToolChoice(ToolChoiceOptions.None);
-
-        Assert.That(response.GetToolChoiceExpanded(), Is.Null);
-    }
-
     // ── GetInstructionItems ───────────────────────────────────────────
 
     [Test]
@@ -129,9 +34,8 @@ public class ResponseExtensionsTests
         var msg = XAssert.Single(result);
         var itemMsg = XAssert.IsType<ItemMessage>(msg);
         Assert.That(itemMsg.Role, Is.EqualTo(MessageRole.Developer));
-        var content = itemMsg.GetContentExpanded();
-        var textContent = XAssert.Single(content);
-        var inputText = XAssert.IsType<MessageContentInputTextContent>(textContent);
+        var inputText = XAssert.Single(itemMsg.Content);
+        Assert.That(inputText.Kind, Is.EqualTo(ResponseContentPartKind.InputText));
         Assert.That(inputText.Text, Is.EqualTo("You are helpful."));
     }
 
@@ -159,9 +63,8 @@ public class ResponseExtensionsTests
 
         var msg = XAssert.Single(result);
         var itemMsg = XAssert.IsType<ItemMessage>(msg);
-        var content = itemMsg.GetContentExpanded();
-        var textContent = XAssert.Single(content);
-        var inputText = XAssert.IsType<MessageContentInputTextContent>(textContent);
+        var inputText = XAssert.Single(itemMsg.Content);
+        Assert.That(inputText.Kind, Is.EqualTo(ResponseContentPartKind.InputText));
         Assert.That(inputText.Text, Is.EqualTo("You are a helpful assistant."));
     }
 
@@ -191,9 +94,8 @@ public class ResponseExtensionsTests
 
         var msg = XAssert.Single(result);
         var itemMsg = XAssert.IsType<ItemMessage>(msg);
-        var content = itemMsg.GetContentExpanded();
-        var textContent = XAssert.Single(content);
-        var inputText = XAssert.IsType<MessageContentInputTextContent>(textContent);
+        var inputText = XAssert.Single(itemMsg.Content);
+        Assert.That(inputText.Kind, Is.EqualTo(ResponseContentPartKind.InputText));
         Assert.That(inputText.Text, Is.EqualTo("Be helpful."));
     }
 

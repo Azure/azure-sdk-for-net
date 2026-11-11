@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Refusal. </summary>
-    public partial class MessageContentRefusalContent : MessageContent, IJsonModel<MessageContentRefusalContent>
+    internal partial class MessageContentRefusalContent : MessageContent, IJsonModel<MessageContentRefusalContent>
     {
         /// <summary> Initializes a new instance of <see cref="MessageContentRefusalContent"/> for deserialization. </summary>
         internal MessageContentRefusalContent()

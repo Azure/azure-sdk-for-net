@@ -19,20 +19,8 @@ namespace Azure.AI.AgentServer.Responses
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.ComputerCallAction is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ComputerAction))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.ComputerCallAction is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(ComputerScreenshotContent))]
-    [ModelReaderWriterBuildable(typeof(ConversationParam))]
     [ModelReaderWriterBuildable(typeof(DirectToolCallCaller))]
     [ModelReaderWriterBuildable(typeof(DirectToolCallCallerParam))]
-    [ModelReaderWriterBuildable(typeof(LogProb))]
-    [ModelReaderWriterBuildable(typeof(MessageContent))]
-    [ModelReaderWriterBuildable(typeof(MessageContentInputFileContent))]
-    [ModelReaderWriterBuildable(typeof(MessageContentInputImageContent))]
-    [ModelReaderWriterBuildable(typeof(MessageContentInputTextContent))]
-#pragma warning disable OPENAI001 // global::Azure.AI.AgentServer.Responses.Models.MessageContentOutputTextContent is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(MessageContentOutputTextContent))]
-#pragma warning restore OPENAI001 // global::Azure.AI.AgentServer.Responses.Models.MessageContentOutputTextContent is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(MessageContentReasoningTextContent))]
-    [ModelReaderWriterBuildable(typeof(MessageContentRefusalContent))]
 #pragma warning disable OPENAI001 // global::Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(OutputItemCustomToolCall))]
 #pragma warning restore OPENAI001 // global::Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCall is experimental and may change in future versions.
@@ -41,7 +29,6 @@ namespace Azure.AI.AgentServer.Responses
 #pragma warning restore OPENAI001 // global::Azure.AI.AgentServer.Responses.Models.OutputItemCustomToolCallOutput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ProgramToolCallCaller))]
     [ModelReaderWriterBuildable(typeof(ProgramToolCallCallerParam))]
-    [ModelReaderWriterBuildable(typeof(PromptCacheBreakpointConfig))]
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.ResponseConversationOptions is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ConversationReference))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.ResponseConversationOptions is experimental and may change in future versions.
@@ -84,27 +71,8 @@ namespace Azure.AI.AgentServer.Responses
 #pragma warning disable OPENAI001 // global::OpenAI.Responses.ResponseToolChoice is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ResponseToolChoice))]
 #pragma warning restore OPENAI001 // global::OpenAI.Responses.ResponseToolChoice is experimental and may change in future versions.
-    [ModelReaderWriterBuildable(typeof(SpecificApplyPatchParam))]
-    [ModelReaderWriterBuildable(typeof(SpecificFunctionShellParam))]
-    [ModelReaderWriterBuildable(typeof(SpecificProgrammaticToolCallingParam))]
-    [ModelReaderWriterBuildable(typeof(SummaryTextContent))]
-    [ModelReaderWriterBuildable(typeof(TextContent))]
     [ModelReaderWriterBuildable(typeof(ToolCallCaller))]
     [ModelReaderWriterBuildable(typeof(ToolCallCallerParam))]
-    [ModelReaderWriterBuildable(typeof(ToolChoiceAllowed))]
-    [ModelReaderWriterBuildable(typeof(ToolChoiceCodeInterpreter))]
-    [ModelReaderWriterBuildable(typeof(ToolChoiceComputer))]
-    [ModelReaderWriterBuildable(typeof(ToolChoiceComputerUse))]
-    [ModelReaderWriterBuildable(typeof(ToolChoiceComputerUsePreview))]
-    [ModelReaderWriterBuildable(typeof(ToolChoiceCustom))]
-    [ModelReaderWriterBuildable(typeof(ToolChoiceFileSearch))]
-    [ModelReaderWriterBuildable(typeof(ToolChoiceFunction))]
-    [ModelReaderWriterBuildable(typeof(ToolChoiceImageGeneration))]
-    [ModelReaderWriterBuildable(typeof(ToolChoiceMCP))]
-    [ModelReaderWriterBuildable(typeof(ToolChoiceParam))]
-    [ModelReaderWriterBuildable(typeof(ToolChoiceWebSearchPreview))]
-    [ModelReaderWriterBuildable(typeof(ToolChoiceWebSearchPreview20250311))]
-    [ModelReaderWriterBuildable(typeof(TopLogProb))]
     public partial class AzureAIAgentServerResponsesContext : ModelReaderWriterContext
     {
     }

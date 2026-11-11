@@ -9,8 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Input image. </summary>
-    public partial class MessageContentInputImageContent : MessageContent
+    internal partial class MessageContentInputImageContent : MessageContent
     {
         private Uri _imageUrl;
         private bool _imageUrlIsDefined;

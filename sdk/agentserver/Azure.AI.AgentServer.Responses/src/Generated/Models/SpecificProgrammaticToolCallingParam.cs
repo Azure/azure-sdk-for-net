@@ -9,8 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> The SpecificProgrammaticToolCallingParam. </summary>
-    public partial class SpecificProgrammaticToolCallingParam : ToolChoiceParam
+    internal partial class SpecificProgrammaticToolCallingParam : ToolChoiceParam
     {
         /// <summary> Initializes a new instance of <see cref="SpecificProgrammaticToolCallingParam"/>. </summary>
         public SpecificProgrammaticToolCallingParam() : base(ToolChoiceParamType.ProgrammaticToolCalling)

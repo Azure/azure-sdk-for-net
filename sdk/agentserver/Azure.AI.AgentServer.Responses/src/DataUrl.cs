@@ -11,8 +11,8 @@ namespace Azure.AI.AgentServer.Responses;
 /// <para>
 /// Data URLs follow the format <c>data:[&lt;mediatype&gt;][;base64],&lt;data&gt;</c>.
 /// These utilities help handlers extract the raw bytes and media type from
-/// <see cref="Models.MessageContentInputImageContent.ImageUrl"/> and
-/// <see cref="Models.MessageContentInputFileContent.FileData"/> values.
+/// <see cref="OpenAI.Responses.ResponseContentPart.InputImageUri"/> values and other
+/// data URL strings.
 /// </para>
 /// </summary>
 public static class DataUrl

@@ -6,8 +6,7 @@
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary></summary>
-    public enum FileInputDetail
+    internal enum FileInputDetail
     {
         /// <summary> Auto. </summary>
         Auto,

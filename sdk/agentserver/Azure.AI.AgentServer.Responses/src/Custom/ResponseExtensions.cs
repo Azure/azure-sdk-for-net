@@ -2,73 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Text.Json;
 
 namespace Azure.AI.AgentServer.Responses.Models;
 
 /// <summary>
 /// Extension methods for <see cref="ResponseObject"/> that provide typed access
-/// to BinaryData properties like <see cref="ResponseObject.ToolChoice"/> and
-/// <see cref="ResponseObject.Instructions"/>.
+/// to <see cref="ResponseObject.Instructions"/>.
 /// </summary>
 [Experimental("OPENAI001")]
 public static class ResponseExtensions
 {
-    /// <summary>
-    /// Expands the <see cref="ResponseObject.ToolChoice"/> BinaryData into a typed
-    /// <see cref="ToolChoiceParam"/>. String shorthands (<c>"auto"</c>, <c>"required"</c>)
-    /// are expanded to <see cref="ToolChoiceAllowed"/> with the corresponding mode.
-    /// <c>"none"</c> returns <c>null</c>.
-    /// </summary>
-    /// <param name="response">The response.</param>
-    /// <returns>
-    /// The typed tool choice, or <c>null</c> if the tool choice is <c>"none"</c> or unset.
-    /// </returns>
-    /// <exception cref="ArgumentNullException"><paramref name="response"/> is <c>null</c>.</exception>
-    /// <exception cref="FormatException">
-    /// The ToolChoice BinaryData contains an unrecognized value.
-    /// </exception>
-    public static ToolChoiceParam? GetToolChoiceExpanded(this ResponseObject response)
-    {
-        Argument.AssertNotNull(response, nameof(response));
-        return BinaryDataExpansionHelpers.ExpandToolChoice(response.ToolChoice);
-    }
-
-    /// <summary>
-    /// Sets the <see cref="ResponseObject.ToolChoice"/> property from a typed
-    /// <see cref="ToolChoiceParam"/> object.
-    /// </summary>
-    /// <param name="response">The response.</param>
-    /// <param name="toolChoice">The tool choice to set.</param>
-    /// <exception cref="ArgumentNullException">
-    /// <paramref name="response"/> or <paramref name="toolChoice"/> is <c>null</c>.
-    /// </exception>
-    public static void SetToolChoice(this ResponseObject response, ToolChoiceParam toolChoice)
-    {
-        Argument.AssertNotNull(response, nameof(response));
-        Argument.AssertNotNull(toolChoice, nameof(toolChoice));
-        response.ToolChoice = Internal.OpenAIModelFactory.ReadToolChoice(
-            Internal.ModelJson.Write(toolChoice, ModelReaderWriterOptions.Json));
-    }
-
-    /// <summary>
-    /// Sets the <see cref="ResponseObject.ToolChoice"/> property from a
-    /// <see cref="ToolChoiceOptions"/> enum value (string shorthand).
-    /// </summary>
-    /// <param name="response">The response.</param>
-    /// <param name="toolChoice">The tool choice option to set.</param>
-    /// <exception cref="ArgumentNullException"><paramref name="response"/> is <c>null</c>.</exception>
-    public static void SetToolChoice(this ResponseObject response, ToolChoiceOptions toolChoice)
-    {
-        Argument.AssertNotNull(response, nameof(response));
-        response.ToolChoice = Internal.OpenAIModelFactory.ReadToolChoice(
-            BinaryData.FromObjectAsJson(toolChoice.ToSerialString()));
-    }
-
     /// <summary>
     /// Expands the <see cref="ResponseObject.Instructions"/> BinaryData into a typed list of
     /// <see cref="Item"/> objects. A plain string is wrapped as a single <see cref="ItemMessage"/>

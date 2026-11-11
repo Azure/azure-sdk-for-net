@@ -6,23 +6,18 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> MCP tool. </summary>
-    public partial class ToolChoiceMCP : ToolChoiceParam
+    internal partial class ToolChoiceMCP : ToolChoiceParam
     {
         private string _name;
         private bool _nameIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ToolChoiceMCP"/>. </summary>
         /// <param name="serverLabel"> The label of the MCP server to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serverLabel"/> is null. </exception>
         public ToolChoiceMCP(string serverLabel) : base(ToolChoiceParamType.Mcp)
         {
-            Argument.AssertNotNull(serverLabel, nameof(serverLabel));
-
             ServerLabel = serverLabel;
         }
 

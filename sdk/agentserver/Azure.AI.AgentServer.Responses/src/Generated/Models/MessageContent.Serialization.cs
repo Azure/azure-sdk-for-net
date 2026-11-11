@@ -11,12 +11,8 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary>
-    /// A content part that makes up an input or output item.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ComputerScreenshotContent"/>, <see cref="MessageContentInputFileContent"/>, <see cref="MessageContentInputImageContent"/>, <see cref="MessageContentInputTextContent"/>, <see cref="MessageContentOutputTextContent"/>, <see cref="MessageContentReasoningTextContent"/>, <see cref="MessageContentRefusalContent"/>, <see cref="SummaryTextContent"/>, and <see cref="TextContent"/>.
-    /// </summary>
     [PersistableModelProxy(typeof(UnknownMessageContent))]
-    public abstract partial class MessageContent : IJsonModel<MessageContent>
+    internal abstract partial class MessageContent : IJsonModel<MessageContent>
     {
         /// <summary> Initializes a new instance of <see cref="MessageContent"/> for deserialization. </summary>
         internal MessageContent()

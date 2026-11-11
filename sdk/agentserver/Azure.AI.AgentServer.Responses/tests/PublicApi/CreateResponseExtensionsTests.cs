@@ -92,89 +92,6 @@ public class CreateResponseExtensionsTests
         Assert.That(request.GetConversationId(), Is.Null);
     }
 
-    // ── GetToolChoiceExpanded ──────────────────────────────────────────
-
-    [Test]
-    public void GetToolChoiceExpanded_NullRequest_ThrowsArgumentNullException()
-    {
-        CreateResponse? request = null;
-        Assert.Throws<ArgumentNullException>(() => request!.GetToolChoiceExpanded());
-    }
-
-    [Test]
-    public void GetToolChoiceExpanded_NullToolChoice_ReturnsNull()
-    {
-        var request = new CreateResponse();
-        Assert.That(request.GetToolChoiceExpanded(), Is.Null);
-    }
-
-    [Test]
-    public void GetToolChoiceExpanded_Auto_ReturnsToolChoiceAllowedAuto()
-    {
-        var request = new CreateResponse
-        {
-            ToolChoice = OpenAIJson.Read<ResponseToolChoice>(BinaryData.FromObjectAsJson("auto")),
-        };
-
-        var result = request.GetToolChoiceExpanded();
-
-        var allowed = XAssert.IsType<ToolChoiceAllowed>(result);
-        Assert.That(allowed.Mode, Is.EqualTo(ToolChoiceAllowedMode.Auto));
-        Assert.That(allowed.Tools, Is.Empty);
-    }
-
-    [Test]
-    public void GetToolChoiceExpanded_Required_ReturnsToolChoiceAllowedRequired()
-    {
-        var request = new CreateResponse
-        {
-            ToolChoice = OpenAIJson.Read<ResponseToolChoice>(BinaryData.FromObjectAsJson("required")),
-        };
-
-        var result = request.GetToolChoiceExpanded();
-
-        var allowed = XAssert.IsType<ToolChoiceAllowed>(result);
-        Assert.That(allowed.Mode, Is.EqualTo(ToolChoiceAllowedMode.Required));
-        Assert.That(allowed.Tools, Is.Empty);
-    }
-
-    [Test]
-    public void GetToolChoiceExpanded_None_ReturnsNull()
-    {
-        var request = new CreateResponse
-        {
-            ToolChoice = OpenAIJson.Read<ResponseToolChoice>(BinaryData.FromObjectAsJson("none")),
-        };
-
-        Assert.That(request.GetToolChoiceExpanded(), Is.Null);
-    }
-
-    [Test]
-    public void GetToolChoiceExpanded_ObjectForm_DeserializesCorrectly()
-    {
-        var json = """{"type":"allowed_tools","mode":"auto","tools":[]}""";
-        var request = new CreateResponse
-        {
-            ToolChoice = OpenAIJson.Read<ResponseToolChoice>(BinaryData.FromString(json)),
-        };
-
-        var result = request.GetToolChoiceExpanded();
-
-        var allowed = XAssert.IsType<ToolChoiceAllowed>(result);
-        Assert.That(allowed.Mode, Is.EqualTo(ToolChoiceAllowedMode.Auto));
-    }
-
-    [Test]
-    public void GetToolChoiceExpanded_UnrecognizedString_ThrowsFormatException()
-    {
-        var request = new CreateResponse
-        {
-            ToolChoice = OpenAIJson.Read<ResponseToolChoice>(BinaryData.FromObjectAsJson("invalid_value")),
-        };
-
-        Assert.Throws<FormatException>(() => request.GetToolChoiceExpanded());
-    }
-
     // ── GetInputExpanded ──────────────────────────────────────────────
 
     [Test]
@@ -205,9 +122,8 @@ public class CreateResponseExtensionsTests
         var msg = XAssert.Single(result);
         var itemMsg = XAssert.IsType<ItemMessage>(msg);
         Assert.That(itemMsg.Role, Is.EqualTo(MessageRole.User));
-        var content = itemMsg.GetContentExpanded();
-        var textContent = XAssert.Single(content);
-        var inputText = XAssert.IsType<MessageContentInputTextContent>(textContent);
+        var inputText = XAssert.Single(itemMsg.Content);
+        Assert.That(inputText.Kind, Is.EqualTo(ResponseContentPartKind.InputText));
         Assert.That(inputText.Text, Is.EqualTo("Hello world"));
     }
 
@@ -264,9 +180,9 @@ public class CreateResponseExtensionsTests
         using var doc = System.Text.Json.JsonDocument.Parse(BinaryData.FromObjectAsJson(itemMsg.Content).ToMemory());
         Assert.That(doc.RootElement.ValueKind, Is.EqualTo(System.Text.Json.JsonValueKind.Array));
 
-        // GetContentExpanded should still work correctly
-        var content = itemMsg.GetContentExpanded();
-        var textContent = XAssert.IsType<MessageContentInputTextContent>(XAssert.Single(content));
+        // Typed Content should still expose the text part
+        var textContent = XAssert.Single(itemMsg.Content);
+        Assert.That(textContent.Kind, Is.EqualTo(ResponseContentPartKind.InputText));
         Assert.That(textContent.Text, Is.EqualTo("Hello world"));
     }
 
@@ -287,8 +203,8 @@ public class CreateResponseExtensionsTests
         using var doc = System.Text.Json.JsonDocument.Parse(BinaryData.FromObjectAsJson(itemMsg.Content).ToMemory());
         Assert.That(doc.RootElement.ValueKind, Is.EqualTo(System.Text.Json.JsonValueKind.Array));
 
-        var content = itemMsg.GetContentExpanded();
-        var textContent = XAssert.IsType<MessageContentInputTextContent>(XAssert.Single(content));
+        var textContent = XAssert.Single(itemMsg.Content);
+        Assert.That(textContent.Kind, Is.EqualTo(ResponseContentPartKind.InputText));
         Assert.That(textContent.Text, Is.EqualTo("Already expanded"));
     }
 
@@ -390,50 +306,6 @@ public class CreateResponseExtensionsTests
         }
 
         Assert.That(request.GetInputText(), Is.EqualTo(string.Empty));
-    }
-
-    // ── GetConversationExpanded ────────────────────────────────────────
-
-    [Test]
-    public void GetConversationExpanded_NullRequest_ThrowsArgumentNullException()
-    {
-        CreateResponse? request = null;
-        Assert.Throws<ArgumentNullException>(() => request!.GetConversationExpanded());
-    }
-
-    [Test]
-    public void GetConversationExpanded_NullConversation_ReturnsNull()
-    {
-        var request = new CreateResponse();
-        Assert.That(request.GetConversationExpanded(), Is.Null);
-    }
-
-    [Test]
-    public void GetConversationExpanded_StringId_ReturnsConversationParamWithId()
-    {
-        var request = new CreateResponse
-        {
-            ConversationOptions = new ResponseConversationOptions("conv_abc123"),
-        };
-
-        var result = request.GetConversationExpanded();
-
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result.Id, Is.EqualTo("conv_abc123"));
-    }
-
-    [Test]
-    public void GetConversationExpanded_ObjectForm_Deserialized()
-    {
-        var request = new CreateResponse
-        {
-            ConversationOptions = new ResponseConversationOptions("conv_xyz"),
-        };
-
-        var result = request.GetConversationExpanded();
-
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result.Id, Is.EqualTo("conv_xyz"));
     }
 
     // ── GetInstructionsBinaryData ──────────────────────────────────────

@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Computer screenshot. </summary>
-    public partial class ComputerScreenshotContent : MessageContent, IJsonModel<ComputerScreenshotContent>
+    internal partial class ComputerScreenshotContent : MessageContent, IJsonModel<ComputerScreenshotContent>
     {
         /// <summary> Initializes a new instance of <see cref="ComputerScreenshotContent"/> for deserialization. </summary>
         internal ComputerScreenshotContent()

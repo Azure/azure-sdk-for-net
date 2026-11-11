@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Conversation object. </summary>
-    public partial class ConversationParam : IJsonModel<ConversationParam>
+    internal partial class ConversationParam : IJsonModel<ConversationParam>
     {
         /// <summary> Initializes a new instance of <see cref="ConversationParam"/> for deserialization. </summary>
         internal ConversationParam()

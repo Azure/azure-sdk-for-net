@@ -65,10 +65,9 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 var items = await context.GetInputItemsAsync(cancellationToken: cancellationToken);
                 var imageUrls = items
                     .OfType<MessageResponseItem>()
-                    .SelectMany(msg => msg.GetContentExpanded())
-                    .OfType<MessageContentInputImageContent>()
-                    .Where(img => img.ImageUrl != null)
-                    .Select(img => img.ImageUrl)
+                    .SelectMany(msg => msg.Content)
+                    .Where(part => part.Kind == ResponseContentPartKind.InputImage && part.InputImageUri != null)
+                    .Select(part => part.InputImageUri)
                     .ToList();
 
                 // Describe what we received (a real handler would call a vision model).
@@ -104,15 +103,14 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 // Find all image content parts.
                 var images = items
                     .OfType<MessageResponseItem>()
-                    .SelectMany(msg => msg.GetContentExpanded())
-                    .OfType<MessageContentInputImageContent>()
-                    .Where(img => img.ImageUrl != null)
+                    .SelectMany(msg => msg.Content)
+                    .Where(part => part.Kind == ResponseContentPartKind.InputImage && part.InputImageUri != null)
                     .ToList();
 
                 string reply;
-                if (images.Count > 0 && DataUrl.TryDecodeBytes(images[0].ImageUrl, out byte[] imageBytes))
+                if (images.Count > 0 && DataUrl.TryDecodeBytes(images[0].InputImageUri, out byte[] imageBytes))
                 {
-                    string? mediaType = DataUrl.GetMediaType(images[0].ImageUrl);
+                    string? mediaType = DataUrl.GetMediaType(images[0].InputImageUri);
                     reply = $"Received a {mediaType ?? "unknown"} image ({imageBytes.Length} bytes).";
                 }
                 else
@@ -148,13 +146,12 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 // Find image content parts that use file_id (a path in your file store).
                 var images = items
                     .OfType<MessageResponseItem>()
-                    .SelectMany(msg => msg.GetContentExpanded())
-                    .OfType<MessageContentInputImageContent>()
-                    .Where(img => img.FileId != null)
+                    .SelectMany(msg => msg.Content)
+                    .Where(part => part.Kind == ResponseContentPartKind.InputImage && part.InputImageFileId != null)
                     .ToList();
 
                 string reply = images.Count > 0
-                    ? $"Received {images.Count} image(s) by file ID. First: {images[0].FileId}"
+                    ? $"Received {images.Count} image(s) by file ID. First: {images[0].InputImageFileId}"
                     : "No file_id images found in the input.";
 
                 foreach (var evt in stream.OutputItemMessage(reply))

@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models;
 
@@ -15,9 +16,8 @@ public static class ItemExtensions
 {
     /// <summary>
     /// Extracts all text content from a sequence of <see cref="Item"/> instances as a single string.
-    /// Filters for <see cref="ItemMessage"/> items, expands their content via
-    /// <see cref="ItemMessageExtensions.GetContentExpanded"/>, and joins all
-    /// <see cref="MessageContentInputTextContent.Text"/> values with newline separators.
+    /// Filters for <see cref="ItemMessage"/> items and joins the text of all
+    /// <see cref="ResponseContentPartKind.InputText"/> content parts with newline separators.
     /// </summary>
     /// <param name="items">The input items to extract text from.</param>
     /// <returns>
@@ -37,11 +37,11 @@ public static class ItemExtensions
                 continue;
             }
 
-            foreach (MessageContent content in msg.GetContentExpanded())
+            foreach (ResponseContentPart part in msg.Content)
             {
-                if (content is MessageContentInputTextContent textContent)
+                if (part.Kind == ResponseContentPartKind.InputText)
                 {
-                    texts.Add(textContent.Text);
+                    texts.Add(part.Text);
                 }
             }
         }

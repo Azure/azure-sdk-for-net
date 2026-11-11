@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Runtime.CompilerServices;
 using Azure.AI.AgentServer.Responses;
 using Azure.AI.AgentServer.Responses.Models;
@@ -66,15 +67,16 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 // Find file content parts from user messages.
                 var files = items
                     .OfType<MessageResponseItem>()
-                    .SelectMany(msg => msg.GetContentExpanded())
-                    .OfType<MessageContentInputFileContent>()
+                    .SelectMany(msg => msg.Content)
+                    .Where(part => part.Kind == ResponseContentPartKind.InputFile)
                     .ToList();
 
                 string reply;
-                if (files.Count > 0 && DataUrl.TryDecodeBytes(files[0].FileData, out byte[] fileBytes))
+                // OpenAI decodes the file_data data URL into InputFileBytes.
+                if (files.Count > 0 && files[0].InputFileBytes is BinaryData fileBytes)
                 {
-                    string filename = files[0].Filename ?? "unknown";
-                    reply = $"Received file '{filename}' ({fileBytes.Length} bytes inline).";
+                    string filename = files[0].InputFilename ?? "unknown";
+                    reply = $"Received file '{filename}' ({fileBytes.ToMemory().Length} bytes inline).";
                 }
                 else
                 {
@@ -108,15 +110,15 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
                 var files = items
                     .OfType<MessageResponseItem>()
-                    .SelectMany(msg => msg.GetContentExpanded())
-                    .OfType<MessageContentInputFileContent>()
+                    .SelectMany(msg => msg.Content)
+                    .Where(part => part.Kind == ResponseContentPartKind.InputFile)
                     .ToList();
 
                 string reply;
-                if (files.Count > 0 && files[0].FileUrl != null)
+                if (files.Count > 0 && files[0].InputFileUri != null)
                 {
-                    string filename = files[0].Filename ?? "unknown";
-                    reply = $"Received file '{filename}' via URL: {files[0].FileUrl}";
+                    string filename = files[0].InputFilename ?? "unknown";
+                    reply = $"Received file '{filename}' via URL: {files[0].InputFileUri}";
                 }
                 else
                 {
@@ -150,15 +152,15 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
 
                 var files = items
                     .OfType<MessageResponseItem>()
-                    .SelectMany(msg => msg.GetContentExpanded())
-                    .OfType<MessageContentInputFileContent>()
+                    .SelectMany(msg => msg.Content)
+                    .Where(part => part.Kind == ResponseContentPartKind.InputFile)
                     .ToList();
 
                 string reply;
-                if (files.Count > 0 && files[0].FileId != null)
+                if (files.Count > 0 && files[0].InputFileId != null)
                 {
-                    string filename = files[0].Filename ?? "unknown";
-                    reply = $"Received file '{filename}' with ID: {files[0].FileId}";
+                    string filename = files[0].InputFilename ?? "unknown";
+                    reply = $"Received file '{filename}' with ID: {files[0].InputFileId}";
                 }
                 else
                 {

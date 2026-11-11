@@ -34,27 +34,6 @@ public static class CreateResponseExtensions
     }
 
     /// <summary>
-    /// Expands the <see cref="CreateResponse.ToolChoice"/> BinaryData into a typed
-    /// <see cref="ToolChoiceParam"/>. String shorthands (<c>"auto"</c>, <c>"required"</c>)
-    /// are expanded to <see cref="ToolChoiceAllowed"/> with the corresponding mode.
-    /// <c>"none"</c> returns <c>null</c>.
-    /// </summary>
-    /// <param name="request">The create-response request.</param>
-    /// <returns>
-    /// The typed tool choice, or <c>null</c> if the tool choice is <c>"none"</c> or unset.
-    /// </returns>
-    /// <exception cref="ArgumentNullException"><paramref name="request"/> is <c>null</c>.</exception>
-    /// <exception cref="FormatException">
-    /// The ToolChoice BinaryData contains a JSON value that is neither a recognized string
-    /// nor a valid ToolChoiceParam object.
-    /// </exception>
-    public static ToolChoiceParam? GetToolChoiceExpanded(this CreateResponse request)
-    {
-        Argument.AssertNotNull(request, nameof(request));
-        return BinaryDataExpansionHelpers.ExpandToolChoice(request.ToolChoice);
-    }
-
-    /// <summary>
     /// Expands the <see cref="CreateResponse.InputItems"/> BinaryData into a typed list of
     /// <see cref="Item"/> objects. A plain string input is wrapped as a single
     /// <see cref="ItemMessage"/> with <see cref="MessageRole.User"/> role and text content.
@@ -79,9 +58,8 @@ public static class CreateResponseExtensions
     /// <summary>
     /// Extracts all text content from the input items as a single string.
     /// Expands the input via <see cref="GetInputExpanded"/>, filters for
-    /// <see cref="ItemMessage"/> items, expands their content via
-    /// <see cref="ItemMessageExtensions.GetContentExpanded"/>, and joins all
-    /// <see cref="MessageContentInputTextContent.Text"/> values with newline separators.
+    /// <see cref="ItemMessage"/> items, and joins the text of all
+    /// <see cref="ResponseContentPartKind.InputText"/> content parts with newline separators.
     /// </summary>
     /// <param name="request">The create-response request.</param>
     /// <returns>
@@ -102,21 +80,6 @@ public static class CreateResponseExtensions
             .Select(part => part.Text);
 
         return string.Join("\n", texts);
-    }
-
-    /// <summary>
-    /// Expands the <see cref="CreateResponse.ConversationOptions"/> BinaryData into a typed
-    /// <see cref="ConversationParam"/>. A plain string is treated as the conversation ID.
-    /// </summary>
-    /// <param name="request">The create-response request.</param>
-    /// <returns>
-    /// The typed conversation parameter, or <c>null</c> if no conversation is set.
-    /// </returns>
-    /// <exception cref="ArgumentNullException"><paramref name="request"/> is <c>null</c>.</exception>
-    public static ConversationParam? GetConversationExpanded(this CreateResponse request)
-    {
-        Argument.AssertNotNull(request, nameof(request));
-        return BinaryDataExpansionHelpers.ExpandConversation(request.ConversationOptions);
     }
 
     /// <summary>

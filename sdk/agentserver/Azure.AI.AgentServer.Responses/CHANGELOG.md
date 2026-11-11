@@ -56,11 +56,19 @@
   `CompactResource`, `ResponseIncompleteDetails`, `Error` / `ApiErrorResponse`, `DeleteResponseResult`,
   and `AgentsPagedResultOutputItem`. Use the equivalent `OpenAI.Responses` or
   `Azure.AI.Extensions.OpenAI` types instead.
-- `ConversationParam` no longer has a public constructor, and its properties no longer have
-  setters.
-- `MessageContentOutputTextContent` is now constructed from its text alone (the `annotations` and
-  `logprobs` constructor parameters were dropped), and its `Annotations` are
-  `OpenAI.Responses.ResponseMessageAnnotation`.
+- The "expanded" helpers that duplicated the OpenAI types are removed:
+  `ItemMessageExtensions.GetContentExpanded`, `GetToolChoiceExpanded` on `CreateResponseOptions`
+  and `ResponseResult`, `ResponseResult.SetToolChoice`, and
+  `CreateResponseOptions.GetConversationExpanded`. Use `MessageResponseItem.Content`
+  (`ResponseContentPart`, switching on `Kind`), `ToolChoice` (`ResponseToolChoice`, with `Kind` and
+  `FunctionName`), and `ConversationOptions.ConversationId` instead. The models that only these
+  helpers exposed are now internal: `MessageContent` and its `MessageContent*Content` subtypes,
+  `SummaryTextContent`, `TextContent`, `ComputerScreenshotContent`, `ImageDetail`,
+  `FileInputDetail`, `LogProb`, `TopLogProb`, `ToolChoiceParam` and its `ToolChoice*` subtypes,
+  `ToolChoiceOptions`, `ToolChoiceAllowedMode`, `Specific*Param`, `PromptCacheBreakpointConfig`,
+  and `ConversationParam`. The remaining public models in `Azure.AI.AgentServer.Responses.Models`
+  (status enums, tool-call callers and the custom tool call items) are tracked for removal in
+  [#64833](https://github.com/Azure/azure-sdk-for-net/issues/64833).
 - `ResponsesProvider.GetInputItemsAsync` now returns `OpenAI.Responses.ResponseItemCollectionPage`
   (was `AgentsPagedResultOutputItem`) and is marked `[Experimental("OPENAI001")]`, so custom
   `ResponsesProvider` implementations must update their override.

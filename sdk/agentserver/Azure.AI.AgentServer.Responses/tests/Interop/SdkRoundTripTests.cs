@@ -290,9 +290,10 @@ public class SdkRoundTripTests
         Assert.That(items, Has.Count.EqualTo(1));
         var msg = XAssert.IsType<ItemMessage>(items[0]);
         Assert.That(msg.Role, Is.EqualTo(AzureMessageRole.User));
-        var content = msg.GetContentExpanded();
+        var content = msg.Content;
         Assert.That(content, Has.Count.EqualTo(1));
-        var text = XAssert.IsType<MessageContentInputTextContent>(content[0]);
+        var text = content[0];
+        Assert.That(text.Kind, Is.EqualTo(ResponseContentPartKind.InputText));
         Assert.That(text.Text, Is.EqualTo("Hello from SDK"));
     }
 

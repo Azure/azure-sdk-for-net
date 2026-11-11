@@ -9,8 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Computer screenshot. </summary>
-    public partial class ComputerScreenshotContent : MessageContent
+    internal partial class ComputerScreenshotContent : MessageContent
     {
         /// <summary> Initializes a new instance of <see cref="ComputerScreenshotContent"/>. </summary>
         /// <param name="imageUrl"></param>

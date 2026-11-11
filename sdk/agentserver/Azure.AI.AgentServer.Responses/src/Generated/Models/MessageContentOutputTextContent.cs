@@ -12,17 +12,13 @@ using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Output text. </summary>
     [Experimental("OPENAI001")]
-    public partial class MessageContentOutputTextContent : MessageContent
+    internal partial class MessageContentOutputTextContent : MessageContent
     {
         /// <summary> Initializes a new instance of <see cref="MessageContentOutputTextContent"/>. </summary>
         /// <param name="text"> The text output from the model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public MessageContentOutputTextContent(string text) : base(MessageContentType.OutputText)
         {
-            Argument.AssertNotNull(text, nameof(text));
-
             Text = text;
             Annotations = new ChangeTrackingList<ResponseMessageAnnotation>();
             Logprobs = new ChangeTrackingList<LogProb>();

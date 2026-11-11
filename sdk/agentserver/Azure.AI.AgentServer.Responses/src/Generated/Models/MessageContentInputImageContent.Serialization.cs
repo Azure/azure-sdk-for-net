@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Input image. </summary>
-    public partial class MessageContentInputImageContent : MessageContent, IJsonModel<MessageContentInputImageContent>
+    internal partial class MessageContentInputImageContent : MessageContent, IJsonModel<MessageContentInputImageContent>
     {
         /// <summary> Initializes a new instance of <see cref="MessageContentInputImageContent"/> for deserialization. </summary>
         internal MessageContentInputImageContent()

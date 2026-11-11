@@ -9,8 +9,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Input file. </summary>
-    public partial class MessageContentInputFileContent : MessageContent
+    internal partial class MessageContentInputFileContent : MessageContent
     {
         private string _fileId;
         private bool _fileIdIsDefined;

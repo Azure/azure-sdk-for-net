@@ -6,20 +6,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Input text. </summary>
-    public partial class MessageContentInputTextContent : MessageContent
+    internal partial class MessageContentInputTextContent : MessageContent
     {
         /// <summary> Initializes a new instance of <see cref="MessageContentInputTextContent"/>. </summary>
         /// <param name="text"> The text input to the model. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public MessageContentInputTextContent(string text) : base(MessageContentType.InputText)
         {
-            Argument.AssertNotNull(text, nameof(text));
-
             Text = text;
         }
 

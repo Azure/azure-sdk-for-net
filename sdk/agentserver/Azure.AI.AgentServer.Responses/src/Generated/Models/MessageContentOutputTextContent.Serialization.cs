@@ -13,8 +13,7 @@ using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Output text. </summary>
-    public partial class MessageContentOutputTextContent : MessageContent, IJsonModel<MessageContentOutputTextContent>
+    internal partial class MessageContentOutputTextContent : MessageContent, IJsonModel<MessageContentOutputTextContent>
     {
         /// <summary> Initializes a new instance of <see cref="MessageContentOutputTextContent"/> for deserialization. </summary>
         internal MessageContentOutputTextContent()

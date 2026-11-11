@@ -12,8 +12,7 @@ using Azure.AI.AgentServer.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
-    /// <summary> Prompt cache breakpoint. </summary>
-    public partial class PromptCacheBreakpointConfig : IJsonModel<PromptCacheBreakpointConfig>
+    internal partial class PromptCacheBreakpointConfig : IJsonModel<PromptCacheBreakpointConfig>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
