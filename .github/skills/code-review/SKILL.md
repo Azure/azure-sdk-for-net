@@ -53,8 +53,8 @@ relaxes the hard breaking-change or Framework Design Guideline rules in `review-
 1. **Open-ended review:** bugs, security, correctness, reliability, concurrency, resource lifetime,
    tests, performance, and maintainability.
 2. **Hard rules:** `references/review-quality.md`.
-3. **Azure SDK repository rules:** relevant sections of `references/repository-rules.md`,
-   including management-specific clauses for the owning library.
+3. **Azure SDK repository rules:** relevant sections of `references/repository-rules.md` and
+   `references/naming-rules.md`, including management-specific clauses for the owning library.
 4. **Derived convention:** local project, then repository, then ecosystem practice.
 
 Do not emit duplicate findings when multiple layers identify the same problem.
@@ -76,7 +76,8 @@ evidence is unavailable, state the limitation rather than inventing a baseline o
 ### 2. Load only the relevant repository-rule sections
 
 Use the changed paths and symbols to select sections from
-[references/repository-rules.md](references/repository-rules.md):
+[references/repository-rules.md](references/repository-rules.md) and
+[references/naming-rules.md](references/naming-rules.md):
 
 | Changed area | Sections to consult |
 |---|---|
@@ -126,3 +127,4 @@ When no candidate survives the evidence filter, leave no comments.
 
 - [Review quality and general rules](references/review-quality.md)
 - [Azure SDK for .NET repository rules](references/repository-rules.md)
+- [C# naming rules](references/naming-rules.md)

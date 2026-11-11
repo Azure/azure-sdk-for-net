@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RestorePoints>> GetRestorePointsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProtectedItemRestorePoints>> GetRestorePointsAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _protectedItemsClientDiagnostics.CreateScope("ProtectedItemResource.GetRestorePoints");
             scope.Start();
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 };
                 HttpMessage message = _protectedItemsRestClient.CreateGetRestorePointsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<RestorePoints> response = Response.FromValue(RestorePoints.FromResponse(result), result);
+                Response<ProtectedItemRestorePoints> response = Response.FromValue(ProtectedItemRestorePoints.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RestorePoints> GetRestorePoints(CancellationToken cancellationToken = default)
+        public virtual Response<ProtectedItemRestorePoints> GetRestorePoints(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _protectedItemsClientDiagnostics.CreateScope("ProtectedItemResource.GetRestorePoints");
             scope.Start();
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.CommvaultContentStore
                 };
                 HttpMessage message = _protectedItemsRestClient.CreateGetRestorePointsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<RestorePoints> response = Response.FromValue(RestorePoints.FromResponse(result), result);
+                Response<ProtectedItemRestorePoints> response = Response.FromValue(ProtectedItemRestorePoints.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

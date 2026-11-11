@@ -15,11 +15,6 @@ namespace Azure.Communication.JobRouter
     /// <summary> A rule providing inline expression rules. </summary>
     public partial class ExpressionRouterRule : RouterRule, IJsonModel<ExpressionRouterRule>
     {
-        /// <summary> Initializes a new instance of <see cref="ExpressionRouterRule"/> for deserialization. </summary>
-        internal ExpressionRouterRule()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override RouterRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

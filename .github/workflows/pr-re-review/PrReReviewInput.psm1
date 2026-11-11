@@ -38,7 +38,7 @@ function Get-PrReReviewPullRequestInput {
         throw "The pull request head or base changed while listing files: expected $ExpectedHeadSha/$ExpectedBaseSha, got $($after.head.sha)/$($after.base.sha)."
     }
     $mergeBaseSha = ''
-    $missingExistingPatches = @($files | Where-Object { $null -eq $_.patch -and $_.status -cne 'added' -and $_.status -cne 'removed' })
+    $missingExistingPatches = @($files | Where-Object { $null -eq $_.patch -and $_.status -cne 'added' })
     if ($missingExistingPatches.Count -gt 0) {
         # The PR diff compares against the merge base, which can differ from the base branch tip.
         $comparison = ConvertFrom-Json (Invoke-PrReReviewGhApi @("repos/$Repository/compare/$ExpectedBaseSha...${ExpectedHeadSha}?per_page=1"))
@@ -106,10 +106,29 @@ function Export-PrReReviewInput {
         $patchFile = "patches/$("$number".PadLeft($width, '0')).patch"
         $marker = [Convert]::ToHexString([Security.Cryptography.RandomNumberGenerator]::GetBytes(8)).ToLowerInvariant()
 
+        # Zero line counts also describe binary changes, including binary renames. Only skip
+        # the full-content fallback after confirming that the old and new blobs are identical.
+        $unchangedRename = $false
+        if ($null -eq $file.patch -and $file.status -ceq 'renamed' -and $file.additions -eq 0 -and $file.deletions -eq 0) {
+            if (!$MergeBaseSha) { throw "GitHub returned no patch for '$($file.filename)', and the merge base is unavailable." }
+            if (!$file.previous_filename) { throw "GitHub returned no patch or previous path for renamed file '$($file.filename)'." }
+            $previousPath = ($file.previous_filename -split '/' | ForEach-Object { [uri]::EscapeDataString($_) }) -join '/'
+            $previousMetadata = ConvertFrom-Json (Invoke-PrReReviewGhApi @("repos/$Repository/contents/${previousPath}?ref=$MergeBaseSha"))
+            $unchangedRename = $file.sha -cmatch '^(?:[0-9a-f]{40}|[0-9a-f]{64})$' -and $previousMetadata.sha -ceq $file.sha
+        }
+
         $body = if ($null -ne $file.patch) {
             [string]$file.patch
         } elseif ($file.status -ceq 'removed') {
-            throw "GitHub returned no patch for removed file '$($file.filename)'; its deletion cannot be reviewed."
+            if (!$MergeBaseSha) { throw "GitHub returned no patch for removed file '$($file.filename)', and the merge base is unavailable." }
+            $previous = Get-PrReReviewHeadContent -Repository $Repository -HeadSha $MergeBaseSha -Path $file.filename
+            if ($null -eq $previous) {
+                'GitHub returned no patch, and the removed file has no text content at the merge base.'
+            } else {
+                "GitHub returned no patch; this is the removed file's full content at the merge base.`n$previous"
+            }
+        } elseif ($unchangedRename) {
+            'GitHub returned no patch; the renamed file has identical content at the merge base and head commit.'
         } else {
             $content = Get-PrReReviewHeadContent -Repository $Repository -HeadSha $HeadSha -Path $file.filename
             $headText = if ($null -eq $content) {
@@ -137,8 +156,9 @@ function Export-PrReReviewInput {
             "# End of review input ${number}/${total} [$marker]`n"
         [IO.File]::WriteAllText((Join-Path $InputDirectory $patchFile), $text)
 
-        # Keep each independently verifiable read small enough for a tool result. The original
-        # patch remains available for context; large patches must be read through these parts.
+        # Keep each independently verifiable read small enough for a tool result, and cut at line
+        # boundaries so no diff line loses its +/- prefix. The original patch remains available for
+        # context; large patches must be read through these parts.
         $readFiles = [System.Collections.Generic.List[string]]::new()
         $chunks = [System.Collections.Generic.List[object]]::new()
         if ($text.Length -le 4000) {
@@ -147,7 +167,11 @@ function Export-PrReReviewInput {
         } else {
             for ($offset = 0; $offset -lt $text.Length;) {
                 $length = [Math]::Min(4000, $text.Length - $offset)
-                if ($offset + $length -lt $text.Length -and [char]::IsHighSurrogate($text[$offset + $length - 1])) { $length-- }
+                if ($offset + $length -lt $text.Length) {
+                    $newline = $text.LastIndexOf([char]"`n", $offset + $length - 1, $length)
+                    if ($newline -gt $offset) { $length = $newline - $offset + 1 }
+                    elseif ([char]::IsHighSurrogate($text[$offset + $length - 1])) { $length-- }
+                }
                 $partNumber = $chunks.Count + 1
                 $partFile = "patches/$number-part-$partNumber.txt"
                 $partMarker = [Convert]::ToHexString([Security.Cryptography.RandomNumberGenerator]::GetBytes(8)).ToLowerInvariant()

@@ -193,6 +193,7 @@ public class ResponseNormalizationLiveTests : ProjectsOpenAITestBase
     // Bing grounding item is typed on the incremental output_item.added / output_item.done updates
     // AND on the terminal completed update's response snapshot, with no opaque item leaking anywhere.
     [RecordedTest]
+    [AsyncOnly]
     public async Task BingGroundingToolCallDeserializesInStreamingFunnel()
     {
         BingGroundingTool bingGroundingTool = await GetBingGroundingToolAsync();
@@ -204,7 +205,7 @@ public class ResponseNormalizationLiveTests : ProjectsOpenAITestBase
         bool sawTypedItemUpdate = false;
         StreamingResponseCompletedUpdate completedUpdate = null;
 
-        await foreach (StreamingResponseUpdate update in responsesClient.CreateResponseStreamingAsync(options))
+        await foreach (StreamingResponseUpdate update in await responsesClient.CreateResponseStreamingAsync(options))
         {
             switch (update)
             {

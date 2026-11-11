@@ -367,7 +367,7 @@ namespace Azure.Monitor.Query.Logs
         /// <param name="body"> The batch request body. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<BatchResult> QueryBatch(BatchRequest body, CancellationToken cancellationToken = default)
+        internal virtual Response<BatchResult> QueryBatch(BatchContent body, CancellationToken cancellationToken = default)
         {
             Response result = QueryBatch(body, cancellationToken.ToRequestContext());
             return Response.FromValue((BatchResult)result, result);
@@ -381,7 +381,7 @@ namespace Azure.Monitor.Query.Logs
         /// <param name="body"> The batch request body. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<BatchResult>> QueryBatchAsync(BatchRequest body, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<BatchResult>> QueryBatchAsync(BatchContent body, CancellationToken cancellationToken = default)
         {
             Response result = await QueryBatchAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((BatchResult)result, result);

@@ -15,11 +15,6 @@ namespace Azure.Compute.Batch
     /// <summary> The endpoint configuration for a Pool. </summary>
     public partial class BatchPoolEndpointConfiguration : IJsonModel<BatchPoolEndpointConfiguration>
     {
-        /// <summary> Initializes a new instance of <see cref="BatchPoolEndpointConfiguration"/> for deserialization. </summary>
-        internal BatchPoolEndpointConfiguration()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BatchPoolEndpointConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

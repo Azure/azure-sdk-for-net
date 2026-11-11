@@ -3972,6 +3972,7 @@ namespace Azure.Analytics.PlanetaryComputer
     }
     public partial class IngestionInformation : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.IngestionInformation>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.PlanetaryComputer.IngestionInformation>
     {
+        public IngestionInformation() { }
         public IngestionInformation(Azure.Analytics.PlanetaryComputer.IngestionKind importKind) { }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }
@@ -4143,6 +4144,7 @@ namespace Azure.Analytics.PlanetaryComputer
     }
     public partial class LineString : Azure.Analytics.PlanetaryComputer.GeoJsonGeometry, System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.LineString>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.PlanetaryComputer.LineString>
     {
+        public LineString() { }
         public LineString(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<float>> coordinates) { }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<float>> Coordinates { get { throw null; } }
         protected override Azure.Analytics.PlanetaryComputer.GeoJsonGeometry JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4172,6 +4174,7 @@ namespace Azure.Analytics.PlanetaryComputer
     }
     public partial class ManagedIdentityIngestionSource : Azure.Analytics.PlanetaryComputer.IngestionSource, System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.ManagedIdentityIngestionSource>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.PlanetaryComputer.ManagedIdentityIngestionSource>
     {
+        public ManagedIdentityIngestionSource(Azure.Analytics.PlanetaryComputer.ManagedIdentityConnection connectionInfo) { }
         public ManagedIdentityIngestionSource(System.Guid id, Azure.Analytics.PlanetaryComputer.ManagedIdentityConnection connectionInfo) { }
         public Azure.Analytics.PlanetaryComputer.ManagedIdentityConnection ConnectionInfo { get { throw null; } set { } }
         protected override Azure.Analytics.PlanetaryComputer.IngestionSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4255,6 +4258,7 @@ namespace Azure.Analytics.PlanetaryComputer
     }
     public partial class MultiLineString : Azure.Analytics.PlanetaryComputer.GeoJsonGeometry, System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.MultiLineString>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.PlanetaryComputer.MultiLineString>
     {
+        public MultiLineString() { }
         public MultiLineString(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.Collections.Generic.IList<float>>> coordinates) { }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<float>>> Coordinates { get { throw null; } }
         protected override Azure.Analytics.PlanetaryComputer.GeoJsonGeometry JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4269,6 +4273,7 @@ namespace Azure.Analytics.PlanetaryComputer
     }
     public partial class MultiPoint : Azure.Analytics.PlanetaryComputer.GeoJsonGeometry, System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.MultiPoint>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.PlanetaryComputer.MultiPoint>
     {
+        public MultiPoint() { }
         public MultiPoint(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<float>> coordinates) { }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<float>> Coordinates { get { throw null; } }
         protected override Azure.Analytics.PlanetaryComputer.GeoJsonGeometry JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4283,6 +4288,7 @@ namespace Azure.Analytics.PlanetaryComputer
     }
     public partial class MultiPolygon : Azure.Analytics.PlanetaryComputer.GeoJsonGeometry, System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.MultiPolygon>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.PlanetaryComputer.MultiPolygon>
     {
+        public MultiPolygon() { }
         public MultiPolygon(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<float>>>> coordinates) { }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<float>>>> Coordinates { get { throw null; } }
         protected override Azure.Analytics.PlanetaryComputer.GeoJsonGeometry JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4655,6 +4661,7 @@ namespace Azure.Analytics.PlanetaryComputer
     }
     public partial class PointGeometry : Azure.Analytics.PlanetaryComputer.GeoJsonGeometry, System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.PointGeometry>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.PlanetaryComputer.PointGeometry>
     {
+        public PointGeometry() { }
         public PointGeometry(System.Collections.Generic.IEnumerable<float> coordinates) { }
         public System.Collections.Generic.IList<float> Coordinates { get { throw null; } }
         protected override Azure.Analytics.PlanetaryComputer.GeoJsonGeometry JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4669,6 +4676,7 @@ namespace Azure.Analytics.PlanetaryComputer
     }
     public partial class PolygonGeometry : Azure.Analytics.PlanetaryComputer.GeoJsonGeometry, System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.PolygonGeometry>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.PlanetaryComputer.PolygonGeometry>
     {
+        public PolygonGeometry() { }
         public PolygonGeometry(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.Collections.Generic.IList<float>>> coordinates) { }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<System.Collections.Generic.IList<float>>> Coordinates { get { throw null; } }
         protected override Azure.Analytics.PlanetaryComputer.GeoJsonGeometry JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4925,6 +4933,7 @@ namespace Azure.Analytics.PlanetaryComputer
     }
     public partial class SharedAccessSignatureTokenIngestionSource : Azure.Analytics.PlanetaryComputer.IngestionSource, System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.SharedAccessSignatureTokenIngestionSource>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.PlanetaryComputer.SharedAccessSignatureTokenIngestionSource>
     {
+        public SharedAccessSignatureTokenIngestionSource(Azure.Analytics.PlanetaryComputer.SharedAccessSignatureTokenConnection connectionInfo) { }
         public SharedAccessSignatureTokenIngestionSource(System.Guid id, Azure.Analytics.PlanetaryComputer.SharedAccessSignatureTokenConnection connectionInfo) { }
         public Azure.Analytics.PlanetaryComputer.SharedAccessSignatureTokenConnection ConnectionInfo { get { throw null; } set { } }
         protected override Azure.Analytics.PlanetaryComputer.IngestionSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -5277,6 +5286,7 @@ namespace Azure.Analytics.PlanetaryComputer
     }
     public partial class StacItem : Azure.Analytics.PlanetaryComputer.StacItemOrStacItemCollection, System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.StacItem>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.PlanetaryComputer.StacItem>
     {
+        public StacItem() { }
         public StacItem(Azure.Analytics.PlanetaryComputer.GeoJsonGeometry geometry, string id, System.Collections.Generic.IEnumerable<float> boundingBox, Azure.Analytics.PlanetaryComputer.StacItemProperties properties, System.Collections.Generic.IDictionary<string, Azure.Analytics.PlanetaryComputer.StacAsset> assets) { }
         public System.Collections.Generic.IDictionary<string, Azure.Analytics.PlanetaryComputer.StacAsset> Assets { get { throw null; } }
         public System.Collections.Generic.IList<float> BoundingBox { get { throw null; } }
@@ -5396,6 +5406,7 @@ namespace Azure.Analytics.PlanetaryComputer
     }
     public partial class StacItemProperties : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.StacItemProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.PlanetaryComputer.StacItemProperties>
     {
+        public StacItemProperties() { }
         public StacItemProperties(string datetime) { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public string Constellation { get { throw null; } set { } }

@@ -2228,7 +2228,7 @@ namespace BasicTypeSpec
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         [Experimental("SCME0004")]
-        public virtual Response MultipartRequest(MultipartRequestRequest body, CancellationToken cancellationToken = default)
+        public virtual Response MultipartRequest(MultipartRequestContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
@@ -2243,7 +2243,7 @@ namespace BasicTypeSpec
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         [Experimental("SCME0004")]
-        public virtual async Task<Response> MultipartRequestAsync(MultipartRequestRequest body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> MultipartRequestAsync(MultipartRequestContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 

@@ -14,10 +14,9 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class SharedAccessSignatureTokenIngestionSource : IngestionSource
     {
         /// <summary> Initializes a new instance of <see cref="SharedAccessSignatureTokenIngestionSource"/>. </summary>
-        /// <param name="id"> Ingestion source id. </param>
         /// <param name="connectionInfo"> SAS token connection information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionInfo"/> is null. </exception>
-        public SharedAccessSignatureTokenIngestionSource(Guid id, SharedAccessSignatureTokenConnection connectionInfo) : base(id, IngestionSourceKind.SharedAccessSignatureToken)
+        public SharedAccessSignatureTokenIngestionSource(SharedAccessSignatureTokenConnection connectionInfo) : base(IngestionSourceKind.SharedAccessSignatureToken)
         {
             Argument.AssertNotNull(connectionInfo, nameof(connectionInfo));
 
@@ -33,6 +32,14 @@ namespace Azure.Analytics.PlanetaryComputer
         internal SharedAccessSignatureTokenIngestionSource(Guid id, DateTimeOffset? createdOn, IngestionSourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, SharedAccessSignatureTokenConnection connectionInfo) : base(id, createdOn, kind, additionalBinaryDataProperties)
         {
             ConnectionInfo = connectionInfo;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SharedAccessSignatureTokenIngestionSource"/>. </summary>
+        /// <param name="id"> Ingestion source id. </param>
+        /// <param name="connectionInfo"> SAS token connection information. </param>
+        public SharedAccessSignatureTokenIngestionSource(Guid id, SharedAccessSignatureTokenConnection connectionInfo) : this(connectionInfo)
+        {
+            Id = id;
         }
 
         /// <summary> SAS token connection information. </summary>
