@@ -84,11 +84,16 @@ namespace Azure.Compute.Batch.Custom
             message.Request.Headers.TryGetValue(Constants.HeaderNames.IfUnmodifiedSince, out var ifUnmodifiedSince);
             message.Request.Headers.TryGetValue(Constants.HeaderNames.Range, out var range);
 
-            string contentLengthString = string.Empty;
+            string contentLengthString = null;
 
             if (message.Request.Content != null && message.Request.Content.TryComputeLength(out long contentLength))
             {
                 contentLengthString = contentLength.ToString(CultureInfo.InvariantCulture);
+            }
+            if (message.Request.Method == RequestMethod.Post)
+            {
+                // For POST requests, the content length must be included in the signature, even if it is empty body.
+                contentLengthString ??= "0";
             }
             var uri = message.Request.Uri.ToUri();
 
@@ -96,8 +101,8 @@ namespace Azure.Compute.Batch.Custom
             stringBuilder.Append(message.Request.Method.ToString().ToUpperInvariant()).Append('\n');
             stringBuilder.Append(contentEncoding ?? "").Append('\n');
             stringBuilder.Append(contentLanguage ?? "").Append('\n');
-            stringBuilder.Append(contentLengthString == "0" ? "" : contentLengthString ?? "").Append('\n');
-            stringBuilder.Append(contentMD5 ?? "");// todo: fix base 64 VALUE
+            stringBuilder.Append(contentLengthString ?? "").Append('\n');
+            stringBuilder.Append(contentMD5 ?? "");
             stringBuilder.Append('\n');
             stringBuilder.Append(contentType ?? "").Append('\n');
             stringBuilder.Append('\n');
