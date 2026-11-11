@@ -2193,5 +2193,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         {
             return new IPv4Address(address, default);
         }
+
+        /// <summary> A fixed singleton under a variable subscription location. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Tests.LocationSingletonData"/> instance for mocking. </returns>
+        public static LocationSingletonData LocationSingletonData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PlaywrightQuotaProperties properties = default)
+        {
+            return new LocationSingletonData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
     }
 }

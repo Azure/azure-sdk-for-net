@@ -91,6 +91,11 @@ namespace Azure.Generator.Management.Providers
         internal RequestPathPattern? ParentResourceIdPattern => _resourceMetadata.ParentResourceId;
         internal RequestPathPattern ResourceIdPattern => _resourceMetadata.ResourceIdPattern;
 
+        internal bool IsAzureLocationPathParameter(string parameterName)
+            => _readMethod.InputMethod.Operation.Parameters.OfType<InputPathParameter>().Any(parameter =>
+                parameter.SerializedName == parameterName &&
+                ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(parameter.Type)?.Equals(typeof(AzureLocation)) == true);
+
         internal bool IsExtensionResource => ResourceScope == ResourceScope.Extension;
 
         internal ResourceCollectionClientProvider? ResourceCollection { get; private set; }

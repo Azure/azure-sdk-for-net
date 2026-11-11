@@ -6,10 +6,13 @@ using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -117,15 +120,76 @@ namespace Azure.Generator.Management.Providers
                 $"Returns a {resource.Type:C} object.",
                 [idParameter]);
 
-            var body = new MethodBodyStatement[]
+            var body = new List<MethodBodyStatement>();
+            var pattern = resource.ResourceIdPattern;
+
+            // A scope placeholder can span several segments, and malformed query-suffixed
+            // routes can be misclassified as singletons. Do not treat either as a fixed path.
+            var hasFixedPath = resource.SingletonResourceName is not null &&
+                !resource.IsExtensionResource &&
+                resource.ResourceType.All(segment => segment.IsConstant) &&
+                pattern.SerializedPath.StartsWith('/') &&
+                pattern.All(segment => !segment.IsConstant || segment.Value.IndexOfAny(['{', '}', '?', '#']) < 0);
+
+            if (hasFixedPath)
             {
-                Static(resource.Type).Invoke("ValidateResourceId", idParameter).Terminate(),
-                Return(New.Instance(resource.Type,
-                    [
-                        This.As<ArmResource>().Client(),
-                        idParameter
-                    ]))
-            };
+                body.Add(new IfStatement(idParameter.Equal(Null))
+                {
+                    Throw(New.Instance(typeof(ArgumentNullException), Nameof(idParameter)))
+                });
+
+                body.Add(Declare("segments", typeof(string[]), idParameter.Invoke("ToString").Invoke("Split", Literal('/')), out var segments));
+                var invalid = idParameter.As<ResourceIdentifier>().ResourceType().NotEqual(Static(resource.Type).Property("ResourceType"))
+                    .Or(segments.Property("Length").NotEqual(Literal(pattern.Count + 1)))
+                    .Or(new IndexerExpression(segments, Literal(0)).NotEqual(Literal(string.Empty)));
+
+                for (var index = 0; index < pattern.Count; index++)
+                {
+                    var segment = pattern[index];
+                    var value = new IndexerExpression(segments, Literal(index + 1));
+                    invalid = invalid.Or(segment.IsConstant
+                        ? Not(StringSnippets.Equals(value.As<string>(), Literal(segment.Value).As<string>(), StringComparison.OrdinalIgnoreCase))
+                        : value.Equal(Literal(string.Empty)));
+
+                    // AzureLocation converts display names such as "East US" to "eastus".
+                    // Reject IDs that would therefore target a different path than their Id.
+                    if (!segment.IsConstant && resource.IsAzureLocationPathParameter(segment.VariableName))
+                    {
+                        var normalizedLocation = New.Instance(typeof(AzureLocation), value).Invoke(nameof(ToString));
+                        invalid = invalid.Or(Not(StringSnippets.Equals(value.As<string>(), normalizedLocation.As<string>(), StringComparison.OrdinalIgnoreCase)));
+                    }
+                }
+
+                body.Add(new IfStatement(invalid)
+                {
+                    Throw(New.ArgumentException(idParameter, StringSnippets.Format(Literal("Invalid singleton resource ID {0} expected path {1}"), idParameter, Literal(pattern.SerializedPath)), wrapInNameOf: true))
+                });
+            }
+
+            body.Add(Static(resource.Type).Invoke("ValidateResourceId", idParameter).Terminate());
+
+            // Keep the existing name check for singleton extension resources and ambiguous
+            // paths; an extension scope is not necessarily a single path segment.
+            if (!hasFixedPath && resource.SingletonResourceName is { } singletonName && singletonName.IndexOfAny(['{', '}', '?', '#']) < 0)
+            {
+                var nameMatches = StringSnippets.Equals(
+                    idParameter.Property(nameof(ResourceIdentifier.Name)).As<string>(),
+                    Literal(singletonName).As<string>(),
+                    StringComparison.OrdinalIgnoreCase);
+                body.Add(new IfStatement(
+                    idParameter.NotEqual(Null)
+                        .And(idParameter.As<ResourceIdentifier>().ResourceType().Equal(Static(resource.Type).Property("ResourceType")))
+                        .And(Not(nameMatches)))
+                {
+                    Throw(New.ArgumentException(idParameter, StringSnippets.Format(Literal("Invalid singleton resource name {0} expected {1}"), idParameter.Property(nameof(ResourceIdentifier.Name)), Literal(singletonName)), wrapInNameOf: true))
+                });
+            }
+
+            body.Add(Return(New.Instance(resource.Type,
+                [
+                    This.As<ArmResource>().Client(),
+                    idParameter
+                ])));
 
             return new MethodProvider(signature, body, this);
         }
