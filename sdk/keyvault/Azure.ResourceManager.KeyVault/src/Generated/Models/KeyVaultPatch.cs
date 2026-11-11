@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.KeyVault;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -24,15 +25,21 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultPatch"/>. </summary>
+        /// <param name="identity"> Managed service identity assigned to the vault. </param>
         /// <param name="tags"> The tags that will be assigned to the key vault. </param>
         /// <param name="properties"> Properties of the vault. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultPatch(IDictionary<string, string> tags, KeyVaultPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, KeyVaultPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Identity = identity;
             Tags = tags;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Managed service identity assigned to the vault. </summary>
+        [WirePath("identity")]
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The tags that will be assigned to the key vault. </summary>
         [WirePath("tags")]
