@@ -82,16 +82,43 @@ Describe 'Export-PrReReviewInput' {
         $inputText | Should -Match 'content of src/New\.cs at abc1234'
     }
 
-    It 'notes a rename with no line changes instead of exporting both copies' {
+    It 'notes a rename with identical blobs instead of exporting both copies' {
         Mock -ModuleName PrReReviewInput Get-PrReReviewHeadContent { throw 'unexpected content fetch' }
+        Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi { '{"sha":"1111111111111111111111111111111111111111"}' }
         $file = New-ChangedFile 'tests/Samples/Sample.cs' -Status 'renamed' -Patch $null
         $file.additions = 0
         $file.deletions = 0
+        $file | Add-Member -NotePropertyName sha -NotePropertyValue '1111111111111111111111111111111111111111'
         $file | Add-Member -NotePropertyName previous_filename -NotePropertyValue 'tests/Generated/Samples/Sample.cs'
         $export = Invoke-Export @($file)
         $inputText = & $export.Read $export.Files[0]
         $inputText | Should -Match 'renamed from tests/Generated/Samples/Sample\.cs'
-        $inputText | Should -Match 'no line changes'
+        $inputText | Should -Match 'identical content'
+        Assert-MockCalled Invoke-PrReReviewGhApi -ModuleName PrReReviewInput -Times 1 -Exactly -ParameterFilter { $Arguments -contains 'repos/Azure/azure-sdk-for-net/contents/tests/Generated/Samples/Sample.cs?ref=base1234' }
+    }
+
+    It 'exports both sides of a binary rename with different blobs and no line changes' {
+        Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi { '{"sha":"1111111111111111111111111111111111111111"}' }
+        Mock -ModuleName PrReReviewInput Get-PrReReviewHeadContent { if ($HeadSha -eq 'base1234') { '// deleted declaration' } else { $null } }
+        $file = New-ChangedFile 'src/New.cs' -Status 'renamed' -Patch $null
+        $file.additions = 0
+        $file.deletions = 0
+        $file | Add-Member -NotePropertyName sha -NotePropertyValue '2222222222222222222222222222222222222222'
+        $file | Add-Member -NotePropertyName previous_filename -NotePropertyValue 'src/Old.cs'
+        $export = Invoke-Export @($file)
+        $inputText = & $export.Read $export.Files[0]
+        $inputText | Should -Match '// deleted declaration'
+        $inputText | Should -Match 'no text content at the head commit'
+    }
+
+    It 'fails if the old blob metadata cannot be fetched for a zero-line rename' {
+        Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi { throw 'metadata unavailable' }
+        $file = New-ChangedFile 'src/New.cs' -Status 'renamed' -Patch $null
+        $file.additions = 0
+        $file.deletions = 0
+        $file | Add-Member -NotePropertyName sha -NotePropertyValue '2222222222222222222222222222222222222222'
+        $file | Add-Member -NotePropertyName previous_filename -NotePropertyValue 'src/Old.cs'
+        { Invoke-Export @($file) } | Should -Throw -ExpectedMessage '*metadata unavailable*'
     }
 
     It 'fails if the old content cannot be fetched for a missing modified patch' {
@@ -248,7 +275,6 @@ Describe 'Get-PrReReviewPullRequestInput' {
 
     It 'does not query the merge base for <Label> without a patch' -ForEach @(
         @{ Label = 'an added file'; File = '{"filename":"a.cs","status":"added"}' }
-        @{ Label = 'a rename with no line changes'; File = '{"filename":"b.cs","previous_filename":"a.cs","status":"renamed","additions":0,"deletions":0}' }
     ) {
         Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi -ParameterFilter { $Arguments -like '*/files*' } {
             "[[$File]]"
@@ -260,6 +286,20 @@ Describe 'Get-PrReReviewPullRequestInput' {
         $pullRequest = Get-PrReReviewPullRequestInput -Repository 'Azure/azure-sdk-for-net' -Number 1 -ExpectedHeadSha 'abc1234' -ExpectedBaseSha 'base'
         $pullRequest.MergeBaseSha | Should -BeExactly ''
         Assert-MockCalled Invoke-PrReReviewGhApi -ModuleName PrReReviewInput -Times 0 -Exactly -ParameterFilter { $Arguments -like '*/compare/*' }
+    }
+
+    It 'resolves the merge base for a rename with no patch or line changes' {
+        Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi -ParameterFilter { $Arguments -like '*/files*' } {
+            '[[{"filename":"b.cs","previous_filename":"a.cs","status":"renamed","additions":0,"deletions":0}]]'
+        }
+        Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi -ParameterFilter { $Arguments -like '*/compare/*' } {
+            '{"merge_base_commit":{"sha":"0123456789012345678901234567890123456789"}}'
+        }
+        Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi -ParameterFilter { -not ($Arguments -like '*/files*') -and -not ($Arguments -like '*/compare/*') } {
+            '{"changed_files":1,"head":{"sha":"abc1234"},"base":{"sha":"base"}}'
+        }
+        $pullRequest = Get-PrReReviewPullRequestInput -Repository 'Azure/azure-sdk-for-net' -Number 1 -ExpectedHeadSha 'abc1234' -ExpectedBaseSha 'base'
+        $pullRequest.MergeBaseSha | Should -BeExactly '0123456789012345678901234567890123456789'
     }
 
     It 'rejects a head that differs from the event head' {
@@ -314,6 +354,33 @@ Describe 'Invoke-PrReReviewInputExport.ps1' {
         foreach ($envName in $script:PreviousExportEnvironment.Keys) {
             [Environment]::SetEnvironmentVariable($envName, $script:PreviousExportEnvironment[$envName])
         }
+    }
+
+    It 'exports the old text when a binary modification has no patch or line counts' {
+        Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi -ParameterFilter { $Arguments -like '*/files*' } {
+            '[[{"filename":"src/Changed.cs","status":"modified","sha":"2222222222222222222222222222222222222222","additions":0,"deletions":0}]]'
+        }
+        Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi -ParameterFilter { $Arguments -like '*/compare/*' } {
+            '{"merge_base_commit":{"sha":"0123456789012345678901234567890123456789"}}'
+        }
+        Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi -ParameterFilter { $Arguments -like '*/contents/*ref=abc1234' } { "binary$([char]0)content" }
+        Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi -ParameterFilter { $Arguments -like '*/contents/*ref=0123456789012345678901234567890123456789' } { '// deleted declaration' }
+        Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi -ParameterFilter { $Arguments -contains 'repos/Azure/azure-sdk-for-net/pulls/1' } {
+            '{"changed_files":1,"head":{"sha":"abc1234"},"base":{"sha":"base"}}'
+        }
+        $root = Join-Path $TestDrive ([guid]::NewGuid())
+        $env:GITHUB_REPOSITORY = 'Azure/azure-sdk-for-net'
+        $env:PR_NUMBER = '1'
+        $env:PR_HEAD_SHA = 'abc1234'
+        $env:PR_BASE_SHA = 'base'
+        $env:REVIEW_INPUT_DIR = Join-Path $root 'input'
+        $env:REVIEW_INPUT_MARKERS = Join-Path $root 'private' 'markers.json'
+        & (Join-Path $PSScriptRoot 'Invoke-PrReReviewInputExport.ps1')
+        $files = (Get-Content (Join-Path $env:REVIEW_INPUT_DIR 'files.json') -Raw | ConvertFrom-Json).files
+        $text = Get-Content (Join-Path $env:REVIEW_INPUT_DIR $files[0].patchFile) -Raw
+        $text | Should -Match '// deleted declaration'
+        $text | Should -Match 'no text content at the head commit'
+        Assert-MockCalled Invoke-PrReReviewGhApi -ModuleName PrReReviewInput -Times 1 -Exactly -ParameterFilter { $Arguments -like '*/compare/*' }
     }
 
     It 'passes the resolved merge base to the exporter when a modified patch is absent' {
