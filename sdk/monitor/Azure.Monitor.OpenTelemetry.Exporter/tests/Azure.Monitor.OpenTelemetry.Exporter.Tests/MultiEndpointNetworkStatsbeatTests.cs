@@ -33,24 +33,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Theory]
         [InlineData(false)]
         [InlineData(true)]
-        public void MixedCustomerKeysCountOncePerRequestAndRouteByHost(bool configured)
+        public void MixedCustomerKeysCountOncePerCustomerAndRouteByHost(bool configured)
         {
             using var scope = new NetworkTestScope(configured: configured);
             var batch = MockStatsbeatScope.CreateRouteBatch(
-                ("us-1", EastUs), ("us-2", EastUs), ("eu-1", WestEurope), ("eu-2", WestEurope));
+                ("us-1", EastUs), ("us-2", EastUs), ("us-1", EastUs),
+                ("eu-1", WestEurope), ("eu-2", WestEurope), ("eu-2", WestEurope));
 
             Assert.Equal(ExportResult.Success, scope.Send(batch));
             Assert.Equal(2, scope.Requests);
             scope.Flush();
 
             Assert.Equal(4, scope.Stats.TelemetryItems.Count(item => Name(item) == "Attach"));
-            Assert.Equal(2, scope.NetworkItems("Request_Success_Count").Length);
-            Assert.Equal(2, scope.NetworkItems("Request_Duration").Length);
+            Assert.Equal(4, scope.NetworkItems("Request_Success_Count").Length);
+            Assert.Equal(4, scope.NetworkItems("Request_Duration").Length);
             Assert.All(scope.NetworkItems("Request_Success_Count"), item =>
             {
                 var data = Data(item);
                 Assert.Equal(1, Assert.Single(data.Metrics).Value);
-                Assert.Equal("N/A", data.Properties["cikey"]);
+                Assert.Contains(data.Properties["cikey"], new[] { "us-1", "us-2", "eu-1", "eu-2" });
+                Assert.Equal(data.Properties["cikey"].StartsWith("eu", StringComparison.Ordinal) ? "westeurope-5" : "eastus-1", data.Properties["host"]);
                 Assert.Equal("breeze", data.Properties["endpoint"]);
                 Assert.Equal(SdkVersionUtils.GetVersion(typeof(AzureMonitorTraceExporter), truncate: false), data.Properties["version"]);
                 Assert.DoesNotContain(item.Tags.Keys, key => key.StartsWith("ai.cloud.", StringComparison.Ordinal) || key.StartsWith("ai.operation.", StringComparison.Ordinal));
@@ -66,7 +68,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Empty(scope.Stats.TelemetryItems);
             Assert.Equal(ExportResult.Success, scope.Send(batch));
             scope.Flush();
-            Assert.Equal(2, scope.NetworkItems("Request_Success_Count").Length);
+            Assert.Equal(4, scope.NetworkItems("Request_Success_Count").Length);
             Assert.DoesNotContain(scope.Stats.TelemetryItems, item => Name(item) == "Attach");
         }
 
@@ -89,28 +91,31 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("eastus-1", Data(failure).Properties["host"]);
             Assert.Equal(status.ToString(), Data(failure).Properties["statusCode"]);
             Assert.Equal(1, Assert.Single(Data(failure).Metrics).Value);
-            Assert.Equal("N/A", Data(failure).Properties["cikey"]);
+            Assert.Equal("us", Data(failure).Properties["cikey"]);
             Assert.Equal("westeurope-5", Data(Assert.Single(scope.NetworkItems("Request_Success_Count"))).Properties["host"]);
             Assert.Equal(2, scope.NetworkItems("Request_Duration").Length);
         }
 
         [Fact]
-        public void PartialSuccessKeepsExistingPerEnvelopeAccounting()
+        public void PartialSuccessAttributesAcceptedAndRejectedEnvelopesToTheirCustomers()
         {
             using var scope = new NetworkTestScope();
             scope.Response = _ => new MockResponse(206).SetContent(
-                "{\"itemsReceived\":4,\"itemsAccepted\":2,\"errors\":[{\"index\":2,\"statusCode\":503,\"message\":\"retry\"},{\"index\":3,\"statusCode\":400,\"message\":\"invalid\"}]}");
-            scope.Send(MockStatsbeatScope.CreateRouteBatch(("a", EastUs), ("b", EastUs), ("c", EastUs), ("d", EastUs)));
+                "{\"itemsReceived\":6,\"itemsAccepted\":3,\"errors\":[{\"index\":1,\"statusCode\":503,\"message\":\"retry\"},{\"index\":3,\"statusCode\":400,\"message\":\"invalid\"},{\"index\":5,\"statusCode\":429,\"message\":\"retry\"}]}");
+            scope.Send(MockStatsbeatScope.CreateRouteBatch(("a", EastUs), ("b", EastUs), ("a", EastUs), ("a", EastUs), ("c", EastUs), ("c", EastUs)));
             scope.Flush();
 
             Assert.Equal(1, scope.Requests);
-            Assert.Equal(2, Assert.Single(Data(Assert.Single(scope.NetworkItems("Request_Success_Count"))).Metrics).Value);
-            Assert.Single(scope.NetworkItems("Retry_Count"));
-            Assert.Single(scope.NetworkItems("Exception_Count"));
-            Assert.Single(scope.NetworkItems("Request_Duration"));
+            var successes = scope.NetworkItems("Request_Success_Count").ToDictionary(item => Data(item).Properties["cikey"], item => Assert.Single(Data(item).Metrics).Value);
+            Assert.Equal(2, successes.Count);
+            Assert.Equal(2, successes["a"]);
+            Assert.Equal(1, successes["c"]);
+            Assert.Equal(new[] { "b", "c" }, scope.NetworkItems("Retry_Count").Select(item => Data(item).Properties["cikey"]).OrderBy(key => key));
+            Assert.Equal("a", Data(Assert.Single(scope.NetworkItems("Exception_Count"))).Properties["cikey"]);
+            Assert.Equal(3, scope.NetworkItems("Request_Duration").Length);
             Assert.All(scope.Stats.TelemetryItems.Where(item => Name(item) != "Attach"), item =>
             {
-                Assert.Equal("N/A", Data(item).Properties["cikey"]);
+                Assert.Contains(Data(item).Properties["cikey"], new[] { "a", "b", "c" });
                 Assert.Equal("eastus-1", Data(item).Properties["host"]);
             });
         }
@@ -133,6 +138,139 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.DoesNotContain(success.Tags.Keys, key => key.StartsWith("ai.cloud.", StringComparison.Ordinal) || key.StartsWith("ai.operation.", StringComparison.Ordinal));
             Assert.Equal(StatsbeatConstants.Statsbeat_InstrumentationKey_NonEU,
                 Assert.Single(scope.Stats.TelemetryItems.Where(item => Name(item) == "Attach")).InstrumentationKey);
+        }
+
+        [Theory]
+        [InlineData("{\"itemsReceived\":2,\"itemsAccepted\":0,\"errors\":[{\"index\":0,\"statusCode\":503},{\"index\":0,\"statusCode\":400}]}")]
+        [InlineData("{\"itemsReceived\":2,\"itemsAccepted\":1,\"errors\":[{\"index\":2,\"statusCode\":503}]}")]
+        [InlineData("{\"itemsReceived\":2,\"itemsAccepted\":2,\"errors\":[{\"index\":0,\"statusCode\":503}]}")]
+        public void InvalidPartialResponseDoesNotMisattributeCustomerOutcomes(string response)
+        {
+            using var scope = new NetworkTestScope();
+            scope.Response = _ => new MockResponse(206).SetContent(response);
+            scope.Send(MockStatsbeatScope.CreateRouteBatch(("one", EastUs), ("two", EastUs)));
+            scope.Flush();
+
+            Assert.Empty(scope.NetworkItems("Request_Success_Count"));
+            Assert.Empty(scope.NetworkItems("Retry_Count"));
+            Assert.Empty(scope.NetworkItems("Exception_Count"));
+            Assert.Equal(2, scope.NetworkItems("Request_Duration").Length);
+        }
+
+        [Fact]
+        public void PartialResponsePersistsAndReplaysOnlyTheRetryingCustomer()
+        {
+            using var scope = new NetworkTestScope(storage: true);
+            scope.Response = _ => new MockResponse(206).SetContent(
+                "{\"itemsReceived\":3,\"itemsAccepted\":1,\"errors\":[{\"index\":1,\"statusCode\":503,\"message\":\"retry\"},{\"index\":2,\"statusCode\":400,\"message\":\"invalid\"}]}");
+            Assert.Equal(ExportResult.Success, scope.Send(MockStatsbeatScope.CreateRouteBatch(
+                ("accepted", EastUs), ("retry", EastUs), ("rejected", EastUs))));
+            scope.Flush();
+            Assert.Equal("accepted", Data(Assert.Single(scope.NetworkItems("Request_Success_Count"))).Properties["cikey"]);
+            Assert.Equal("retry", Data(Assert.Single(scope.NetworkItems("Retry_Count"))).Properties["cikey"]);
+            Assert.Equal("rejected", Data(Assert.Single(scope.NetworkItems("Exception_Count"))).Properties["cikey"]);
+            scope.Stats.TelemetryItems.Clear();
+
+            scope.Response = _ => new MockResponse(200);
+            var partition = scope.Transmitter._multiEndpointStorage!.TryGet(EastUs)!;
+            partition.TransmissionStateManager.ResetConsecutiveErrors();
+            partition.TransmissionStateManager.CloseTransmission();
+            partition.TransmitFromStorageHandler.Drain();
+            scope.Flush();
+
+            Assert.Equal("retry", Data(Assert.Single(scope.NetworkItems("Request_Success_Count"))).Properties["cikey"]);
+            Assert.Equal("retry", Data(Assert.Single(scope.NetworkItems("Request_Duration"))).Properties["cikey"]);
+            Assert.DoesNotContain(scope.Stats.TelemetryItems, item => Name(item) == "Attach");
+        }
+
+        [Fact]
+        public void PartialReplayAttributesErrorsWithinCoalescedBlobs()
+        {
+            using var scope = new NetworkTestScope(storage: true);
+            scope.Response = _ => new MockResponse(503);
+            scope.Send(MockStatsbeatScope.CreateRouteBatch(("one", EastUs)));
+            scope.Send(MockStatsbeatScope.CreateRouteBatch(("two", EastUs)));
+            scope.Flush();
+            scope.Stats.TelemetryItems.Clear();
+
+            string? rejectedKey = null;
+            scope.Response = request =>
+            {
+                using var content = new MemoryStream();
+                request.Content!.WriteTo(content, CancellationToken.None);
+                var lines = System.Text.Encoding.UTF8.GetString(content.ToArray()).Split('\n');
+                using var first = System.Text.Json.JsonDocument.Parse(lines[0]);
+                rejectedKey = first.RootElement.GetProperty("iKey").GetString();
+                return new MockResponse(206).SetContent(
+                    "{\"itemsReceived\":2,\"itemsAccepted\":1,\"errors\":[{\"index\":0,\"statusCode\":400,\"message\":\"invalid\"}]}");
+            };
+            var partition = scope.Transmitter._multiEndpointStorage!.TryGet(EastUs)!;
+            partition.TransmissionStateManager.ResetConsecutiveErrors();
+            partition.TransmissionStateManager.CloseTransmission();
+            partition.TransmitFromStorageHandler.Drain();
+            scope.Flush();
+
+            Assert.NotNull(rejectedKey);
+            Assert.Equal(rejectedKey, Data(Assert.Single(scope.NetworkItems("Exception_Count"))).Properties["cikey"]);
+            Assert.Equal(rejectedKey == "one" ? "two" : "one",
+                Data(Assert.Single(scope.NetworkItems("Request_Success_Count"))).Properties["cikey"]);
+        }
+
+        [Fact]
+        public void UnreadablePartialReplayResponseRetainsCustomerAttribution()
+        {
+            using var scope = new NetworkTestScope(storage: true);
+            scope.Response = _ => new MockResponse(503);
+            scope.Send(MockStatsbeatScope.CreateRouteBatch(("one", EastUs), ("two", EastUs)));
+            scope.Flush();
+            scope.Stats.TelemetryItems.Clear();
+
+            scope.Response = _ => new MockResponse(206).SetContent("invalid-json");
+            var partition = scope.Transmitter._multiEndpointStorage!.TryGet(EastUs)!;
+            partition.TransmissionStateManager.ResetConsecutiveErrors();
+            partition.TransmissionStateManager.CloseTransmission();
+            partition.TransmitFromStorageHandler.Drain();
+            scope.Flush();
+
+            Assert.Equal(new[] { "one", "two" },
+                scope.NetworkItems("Exception_Count").Select(item => Data(item).Properties["cikey"]).OrderBy(key => key));
+            Assert.All(scope.NetworkItems("Exception_Count"), item => Assert.Equal(1, Assert.Single(Data(item).Metrics).Value));
+            Assert.Equal(2, scope.NetworkItems("Request_Duration").Length);
+            Assert.All(scope.NetworkItems("Request_Duration"), item => Assert.Equal(1, Assert.Single(Data(item).Metrics).Count));
+            Assert.Empty(scope.NetworkItems("Request_Success_Count"));
+        }
+
+        [Theory]
+        [InlineData(200)]
+        [InlineData(206)]
+        [InlineData(0)]
+        public void ConfiguredStorageReplayRetainsCustomerKeyWhenRoutingEnabled(int status)
+        {
+            using var scope = new NetworkTestScope(configured: true, storage: true);
+            scope.Response = _ => new MockResponse(503);
+            var batch = MockStatsbeatScope.CreateRouteBatch(("configured", WestEurope), ("configured", WestEurope));
+            Assert.Equal(ExportResult.Success, scope.Transmitter.TrackAsync(batch[0].TelemetryItems,
+                new TelemetrySchemaTypeCounter(), TelemetryItemOrigin.AzureMonitorTraceExporter, false, CancellationToken.None).Result);
+            scope.Flush();
+            Assert.Equal("configured", Data(Assert.Single(scope.NetworkItems("Retry_Count"))).Properties["cikey"]);
+            scope.Stats.TelemetryItems.Clear();
+
+            scope.Response = _ => status switch
+            {
+                0 => throw new IOException("Mock replay failure"),
+                206 => new MockResponse(206).SetContent(
+                    "{\"itemsReceived\":2,\"itemsAccepted\":1,\"errors\":[{\"index\":1,\"statusCode\":400,\"message\":\"invalid\"}]}"),
+                _ => new MockResponse(status)
+            };
+            scope.Transmitter._transmissionStateManager.ResetConsecutiveErrors();
+            scope.Transmitter._transmissionStateManager.CloseTransmission();
+            scope.Transmitter._transmitFromStorageHandler!.Drain();
+            scope.Flush();
+
+            Assert.Single(scope.NetworkItems(status == 0 ? "Exception_Count" : "Request_Success_Count"));
+            Assert.Single(scope.NetworkItems("Request_Duration"));
+            Assert.All(scope.Stats.TelemetryItems.Where(item => Name(item) != "Attach"),
+                item => Assert.Equal("configured", Data(item).Properties["cikey"]));
         }
 
         [Theory]
@@ -167,14 +305,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             using var scope = new NetworkTestScope(credential: new TestCredential());
             var batch = MockStatsbeatScope.CreateRouteBatch(("ikey", EastUs));
-            batch.GetOrAdd(EastUs, isAad: true).TelemetryItems.Add(
+            batch.GetOrAdd(EastUs, isAad: true).Add(
                 MockStatsbeatScope.CreateRouteBatch(("aad", EastUs))[0].TelemetryItems[0]);
 
             Assert.Equal(ExportResult.Success, scope.Send(batch));
             scope.Flush();
 
             Assert.Equal(2, scope.Requests);
-            Assert.Equal(2, Assert.Single(Data(Assert.Single(scope.NetworkItems("Request_Success_Count"))).Metrics).Value);
+            Assert.Equal(2, scope.NetworkItems("Request_Success_Count").Length);
+            Assert.All(scope.NetworkItems("Request_Success_Count"), item => Assert.Equal(1, Assert.Single(Data(item).Metrics).Value));
         }
 
         [Fact]
@@ -182,7 +321,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         {
             using var scope = new NetworkTestScope();
             var batch = new EndpointRouteBatch();
-            batch.GetOrAdd(EastUs, isAad: true).TelemetryItems.Add(
+            batch.GetOrAdd(EastUs, isAad: true).Add(
                 MockStatsbeatScope.CreateRouteBatch(("aad", EastUs))[0].TelemetryItems[0]);
             Assert.Equal(ExportResult.Failure, scope.Send(batch));
             Assert.Equal(ExportResult.Failure, scope.Transmitter.Track(
@@ -206,7 +345,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(ExportResult.Success, scope.Send(batch));
             Assert.Equal(1, scope.Requests);
             scope.Flush();
-            Assert.Single(scope.NetworkItems("Retry_Count"));
+            Assert.Equal(2, scope.NetworkItems("Retry_Count").Length);
             scope.Stats.TelemetryItems.Clear();
 
             scope.Response = _ => failReplay ? throw new IOException("Mock replay failure") : new MockResponse(200);
@@ -217,14 +356,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             scope.Flush();
 
             Assert.Equal(2, scope.Requests);
-            var network = Assert.Single(scope.NetworkItems(failReplay ? "Exception_Count" : "Request_Success_Count"));
-            Assert.Equal("westeurope-5", Data(network).Properties["host"]);
-            Assert.Equal("N/A", Data(network).Properties["cikey"]);
-            Assert.Equal(1, Assert.Single(Data(network).Metrics).Value);
-            Assert.Equal(StatsbeatConstants.Statsbeat_InstrumentationKey_EU, network.InstrumentationKey);
-            var duration = Data(Assert.Single(scope.NetworkItems("Request_Duration")));
-            Assert.Equal("westeurope-5", duration.Properties["host"]);
-            Assert.Equal(1, Assert.Single(duration.Metrics).Count);
+            var network = scope.NetworkItems(failReplay ? "Exception_Count" : "Request_Success_Count");
+            Assert.Equal(new[] { "one", "two" }, network.Select(item => Data(item).Properties["cikey"]).OrderBy(key => key));
+            Assert.All(network, item =>
+            {
+                Assert.Equal("westeurope-5", Data(item).Properties["host"]);
+                Assert.Equal(1, Assert.Single(Data(item).Metrics).Value);
+                Assert.Equal(StatsbeatConstants.Statsbeat_InstrumentationKey_EU, item.InstrumentationKey);
+            });
+            Assert.Equal(2, scope.NetworkItems("Request_Duration").Length);
+            Assert.All(scope.NetworkItems("Request_Duration"), item => Assert.Equal(1, Assert.Single(Data(item).Metrics).Count));
             Assert.DoesNotContain(scope.Stats.TelemetryItems, item => Name(item) == "Attach");
         }
 
@@ -311,10 +452,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(StatsbeatConstants.Statsbeat_InstrumentationKey_NonEU, success.InstrumentationKey);
         }
 
-        [Fact]
-        public void SingleEndpointTransmissionRetainsItsCustomerKeyAndDestination()
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
+        public void ConfiguredTransmissionRetainsItsCustomerKeyAndDestination(bool multiEndpoint)
         {
-            using var scope = new NetworkTestScope(configured: true, multiEndpointEnabled: false);
+            using var scope = new NetworkTestScope(configured: true, multiEndpointEnabled: multiEndpoint);
             var batch = MockStatsbeatScope.CreateRouteBatch(("configured", WestEurope));
             Assert.Equal(ExportResult.Success, scope.Transmitter.TrackAsync(batch[0].TelemetryItems,
                 new TelemetrySchemaTypeCounter(), TelemetryItemOrigin.AzureMonitorTraceExporter, false, CancellationToken.None).Result);

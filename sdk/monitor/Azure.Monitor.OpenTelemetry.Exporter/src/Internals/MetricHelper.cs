@@ -150,7 +150,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                             RemoveNetworkStatsContext(telemetryItem, metric);
                         }
 
-                        routeBatch.GetOrAdd(ingestionEndpoint, isAad).TelemetryItems.Add(telemetryItem);
+                        routeBatch.GetOrAdd(ingestionEndpoint, isAad).Add(telemetryItem);
                         collected++;
 
                         AzureMonitorExporterEventSource.Log.RoutedMetricCollected(routeBatch.Sequence, ingestionEndpoint, instrumentationKey, metric.MeterName, metric.Name);
