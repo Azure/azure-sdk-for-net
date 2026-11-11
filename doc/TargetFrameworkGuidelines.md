@@ -21,15 +21,15 @@ called end of life (EOL).
 | Packages | Required targets |
 |----------|------------------|
 | Libraries (`SupportsNetStandard20`, on by default for `Azure.*` projects) | `netstandard2.0` and the current LTS |
-| Core packages: Azure.Core, System.ClientModel, and Azure.Core.Experimental | `netstandard2.0`, the current LTS, and the previous LTS until 6 months after it reaches end of support |
+| Core packages: Azure.Core, System.ClientModel, and Azure.Core.Experimental | `netstandard2.0` and every supported LTS, each until 6 months after it reaches end of support |
 | Analyzers and source generators | `netstandard2.0` only |
 | Code generator projects (`IsGeneratorLibrary`) | The current LTS only |
 
 - ✅ **DO** adopt a new LTS as soon as it ships and the CI agent images include
   its SDK (see [CI agent images](#ci-agent-images)). It becomes the current LTS
-  for every package, and Core packages keep the outgoing LTS as their previous
-  LTS. For example, when .NET 12 ships, libraries move from `net10.0` to
-  `net12.0`, and Core packages move from `net10.0` to `net12.0` and `net10.0`.
+  for every package, and Core packages also keep the outgoing LTS. For example,
+  when .NET 12 ships, libraries move from `net10.0` to `net12.0`, and Core
+  packages move from `net10.0` to `net12.0` and `net10.0`.
 - ✅ **YOU MAY** add another supported framework, LTS or STS, to a package when
   the benefit justifies it. For example, System.ClientModel targets `net9.0` so
   `JsonPatch` can look up keys by `ReadOnlySpan<byte>` with
@@ -87,8 +87,8 @@ Once the agent images include the new SDK:
 
 1. `global.json`: move `sdk.version` to the new SDK.
 2. `eng/Directory.Build.Common.props`: update `AllActiveCurrentTargetFrameworks`
-   for the test targets. For an LTS, also update `LtsTargetFramework`, make the
-   outgoing LTS the previous LTS that Core packages target, and update
+   for the test targets. For an LTS, also update `LtsTargetFramework`, keep the
+   outgoing LTS in the Core packages' targets, and update
    `ApiCompatRunnableTargetFramework`, which must be a framework that
    already-released packages contain.
 3. `eng/pipelines/templates/stages/platform-matrix.json`: add and remove
@@ -114,7 +114,7 @@ Once the agent images include the new SDK:
 
 Six months after a version reaches end of support:
 
-1. Remove its package targets: the previous LTS that Core packages target in
+1. Remove its package targets: the retired LTS in the Core packages' targets in
    `eng/Directory.Build.Common.props`, and package-specific targets such as
    System.ClientModel's `net9.0`.
 2. Delete the API listings for the removed framework.
