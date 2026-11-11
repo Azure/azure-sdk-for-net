@@ -1,6 +1,6 @@
 # Release History
 
-## 4.11.0-beta.7 (Unreleased)
+## 4.11.0-beta.5 (Unreleased)
 
 ### Features Added
 
@@ -12,8 +12,6 @@
 - Improved authentication challenge resource validation.
 
 ### Other Changes
-
-- Updated the `Azure.Core` dependency to `1.65.0`, which includes the MSAL `4.92.0` update.
 
 ## 4.11.0-beta.4 (2026-09-27)
 
