@@ -9,61 +9,61 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Compute.Recommender;
+using Azure.ResourceManager.RedisEnterprise;
 
-namespace Azure.ResourceManager.Compute.Recommender.Models
+namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    /// <summary> A VM size with optional rank for prioritization. </summary>
-    public partial class SkuMixPlacementVMSize : IJsonModel<SkuMixPlacementVMSize>
+    /// <summary> A firewall rule associated with the cluster. </summary>
+    public partial class RedisEnterpriseFirewallRule : IJsonModel<RedisEnterpriseFirewallRule>
     {
-        /// <summary> Initializes a new instance of <see cref="SkuMixPlacementVMSize"/> for deserialization. </summary>
-        internal SkuMixPlacementVMSize()
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseFirewallRule"/> for deserialization. </summary>
+        internal RedisEnterpriseFirewallRule()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SkuMixPlacementVMSize PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual RedisEnterpriseFirewallRule PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SkuMixPlacementVMSize>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseFirewallRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSkuMixPlacementVMSize(document.RootElement, options);
+                        return DeserializeRedisEnterpriseFirewallRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SkuMixPlacementVMSize)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisEnterpriseFirewallRule)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SkuMixPlacementVMSize>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseFirewallRule>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeRecommenderContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisEnterpriseContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SkuMixPlacementVMSize)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisEnterpriseFirewallRule)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SkuMixPlacementVMSize>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<RedisEnterpriseFirewallRule>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SkuMixPlacementVMSize IPersistableModel<SkuMixPlacementVMSize>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RedisEnterpriseFirewallRule IPersistableModel<RedisEnterpriseFirewallRule>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SkuMixPlacementVMSize>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RedisEnterpriseFirewallRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SkuMixPlacementVMSize>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RedisEnterpriseFirewallRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,18 +74,15 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SkuMixPlacementVMSize>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseFirewallRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuMixPlacementVMSize)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisEnterpriseFirewallRule)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Rank))
-            {
-                writer.WritePropertyName("rank"u8);
-                writer.WriteNumberValue(Rank.Value);
-            }
+            writer.WritePropertyName("sourceAddressPrefix"u8);
+            writer.WriteStringValue(SourceAddressPrefix);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -105,31 +102,31 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SkuMixPlacementVMSize IJsonModel<SkuMixPlacementVMSize>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RedisEnterpriseFirewallRule IJsonModel<RedisEnterpriseFirewallRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SkuMixPlacementVMSize JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual RedisEnterpriseFirewallRule JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SkuMixPlacementVMSize>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseFirewallRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuMixPlacementVMSize)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisEnterpriseFirewallRule)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSkuMixPlacementVMSize(document.RootElement, options);
+            return DeserializeRedisEnterpriseFirewallRule(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SkuMixPlacementVMSize DeserializeSkuMixPlacementVMSize(JsonElement element, ModelReaderWriterOptions options)
+        internal static RedisEnterpriseFirewallRule DeserializeRedisEnterpriseFirewallRule(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            int? rank = default;
+            string sourceAddressPrefix = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -138,13 +135,9 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                     name = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("rank"u8))
+                if (prop.NameEquals("sourceAddressPrefix"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    rank = prop.Value.GetInt32();
+                    sourceAddressPrefix = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -152,7 +145,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SkuMixPlacementVMSize(name, rank, additionalBinaryDataProperties);
+            return new RedisEnterpriseFirewallRule(name, sourceAddressPrefix, additionalBinaryDataProperties);
         }
     }
 }

@@ -893,6 +893,7 @@ namespace Azure.AI.Extensions.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.FabricIQPreviewTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.FabricIQPreviewTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class FabricIQPreviewToolRequireApprovalChoice : System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.FabricIQPreviewToolRequireApprovalChoice>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.FabricIQPreviewToolRequireApprovalChoice>
     {
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
@@ -1391,13 +1392,13 @@ namespace Azure.AI.Extensions.OpenAI
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
         public virtual Azure.AI.Extensions.OpenAI.ProjectConversationsClient GetProjectConversationsClient() { throw null; }
         public virtual Azure.AI.Extensions.OpenAI.ProjectFilesClient GetProjectFilesClient() { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
         public virtual Azure.AI.Extensions.OpenAI.ProjectResponsesClient GetProjectResponsesClient() { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
         public virtual Azure.AI.Extensions.OpenAI.ProjectResponsesClient GetProjectResponsesClientForAgent(Azure.AI.Extensions.OpenAI.AgentReference defaultAgent, string defaultConversationId = null) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
         public virtual Azure.AI.Extensions.OpenAI.ProjectResponsesClient GetProjectResponsesClientForAgentEndpoint(string agentName, string defaultConversationId = null, Azure.AI.Extensions.OpenAI.ProjectOpenAIClientOptions options = null) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
         public virtual Azure.AI.Extensions.OpenAI.ProjectResponsesClient GetProjectResponsesClientForModel(string defaultModel, string defaultConversationId = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
         public virtual Azure.AI.Extensions.OpenAI.ProjectVectorStoresClient GetProjectVectorStoresClient() { throw null; }
@@ -1416,7 +1417,7 @@ namespace Azure.AI.Extensions.OpenAI
         public Azure.AI.Extensions.OpenAI.ProjectOpenAIClientOptions Options { get { throw null; } set { } }
         protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
-    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
     public partial class ProjectResponsesClient : OpenAI.Responses.ResponsesClient
     {
         protected ProjectResponsesClient() { }
@@ -1771,6 +1772,7 @@ namespace Azure.AI.Extensions.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.WebIQPreviewTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.WebIQPreviewTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class WebIQPreviewToolRequireApprovalChoice : System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.WebIQPreviewToolRequireApprovalChoice>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.WebIQPreviewToolRequireApprovalChoice>
     {
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]

@@ -31,8 +31,30 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             Collection = ResourceGroup.GetRedisEnterpriseClusters();
         }
 
+        private RedisEnterpriseClusterData CreateFirewallClusterData(params RedisEnterpriseFirewallRule[] rules)
+        {
+            var data = new RedisEnterpriseClusterData(
+                DefaultLocation,
+                new RedisEnterpriseSku(RedisEnterpriseSkuName.BalancedB1))
+            {
+                PublicNetworkAccess = RedisEnterprisePublicNetworkAccess.Enabled
+            };
+            foreach (RedisEnterpriseFirewallRule rule in rules)
+            {
+                data.FirewallRules.Add(rule);
+            }
+            return data;
+        }
+
+        private static void AssertFirewallRules(RedisEnterpriseClusterResource cluster, params RedisEnterpriseFirewallRule[] expected)
+        {
+            Assert.That(cluster.Data.FirewallRules, Is.Not.Null);
+            Assert.That(
+                cluster.Data.FirewallRules.Select(rule => new { rule.Name, rule.SourceAddressPrefix }),
+                Is.EquivalentTo(expected.Select(rule => new { rule.Name, rule.SourceAddressPrefix })));
+        }
+
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/30766")]
         public async Task CreateUpdateDeleteTest()
         {
             await SetCollectionsAsync();
@@ -72,7 +94,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             var databaseData = new RedisEnterpriseDatabaseData()
             {
                 ClientProtocol = RedisEnterpriseClientProtocol.Encrypted,
-                ClusteringPolicy = RedisEnterpriseClusteringPolicy.OssCluster,
+                ClusteringPolicy = RedisEnterpriseClusteringPolicy.EnterpriseCluster,
                 EvictionPolicy = RedisEnterpriseEvictionPolicy.NoEviction,
                 Persistence = new RedisPersistenceSettings()
                 {
@@ -96,14 +118,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             var databaseResponse = (await databaseCollection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, databaseData)).Value;
             Assert.AreEqual(databaseName, databaseResponse.Data.Name);
             Assert.AreEqual(RedisEnterpriseClientProtocol.Encrypted, databaseResponse.Data.ClientProtocol);
-            Assert.AreEqual(RedisEnterpriseClusteringPolicy.OssCluster, databaseResponse.Data.ClusteringPolicy);
+            Assert.AreEqual(RedisEnterpriseClusteringPolicy.EnterpriseCluster, databaseResponse.Data.ClusteringPolicy);
             Assert.AreEqual(RedisEnterpriseEvictionPolicy.NoEviction, databaseResponse.Data.EvictionPolicy);
             Assert.AreEqual(3, databaseResponse.Data.Modules.Count);
 
             databaseResponse = await databaseCollection.GetAsync(databaseName);
             Assert.AreEqual(databaseName, databaseResponse.Data.Name);
             Assert.AreEqual(RedisEnterpriseClientProtocol.Encrypted, databaseResponse.Data.ClientProtocol);
-            Assert.AreEqual(RedisEnterpriseClusteringPolicy.OssCluster, databaseResponse.Data.ClusteringPolicy);
+            Assert.AreEqual(RedisEnterpriseClusteringPolicy.EnterpriseCluster, databaseResponse.Data.ClusteringPolicy);
             Assert.AreEqual(RedisEnterpriseEvictionPolicy.NoEviction, databaseResponse.Data.EvictionPolicy);
             Assert.AreEqual(3, databaseResponse.Data.Modules.Count);
 
@@ -256,6 +278,177 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             await clusterResponse.DeleteAsync(WaitUntil.Completed);
             falseResult = (await Collection.ExistsAsync(redisEnterpriseCacheName)).Value;
             Assert.IsFalse(falseResult);
+        }
+
+        [Test]
+        public async Task CreateUpdateDeleteWithFirewallRules()
+        {
+            await SetCollectionsAsync();
+
+            try
+            {
+                string clusterName = Recording.GenerateAssetName("RedisFirewall");
+                var initialRules = new[]
+                {
+                    new RedisEnterpriseFirewallRule("allow-ip", "203.0.113.1"),
+                    new RedisEnterpriseFirewallRule("allow-subnet", "203.0.113.0/24"),
+                    new RedisEnterpriseFirewallRule("allow-service", "AzureCloud")
+                };
+                var data = CreateFirewallClusterData(initialRules);
+                var cluster = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data)).Value;
+                AssertFirewallRules(cluster, initialRules);
+
+                cluster = (await cluster.GetAsync()).Value;
+                AssertFirewallRules(cluster, initialRules);
+
+                var listedCluster = (await Collection.GetAllAsync().ToEnumerableAsync())
+                    .Single(item => item.Data.Name == clusterName);
+                AssertFirewallRules(listedCluster, initialRules);
+
+                var replacementRules = new[]
+                {
+                    new RedisEnterpriseFirewallRule("allow-ip", "203.0.113.2"),
+                    new RedisEnterpriseFirewallRule("allow-new-subnet", "198.51.100.0/24")
+                };
+                var replacement = new RedisEnterpriseClusterPatch();
+                foreach (RedisEnterpriseFirewallRule rule in replacementRules)
+                {
+                    replacement.FirewallRules.Add(rule);
+                }
+                cluster = (await cluster.UpdateAsync(WaitUntil.Completed, replacement)).Value;
+                AssertFirewallRules(cluster, replacementRules);
+                cluster = (await cluster.GetAsync()).Value;
+                AssertFirewallRules(cluster, replacementRules);
+
+                var preserveRules = new RedisEnterpriseClusterPatch
+                {
+                    PublicNetworkAccess = RedisEnterprisePublicNetworkAccess.Enabled
+                };
+                cluster = (await cluster.UpdateAsync(WaitUntil.Completed, preserveRules)).Value;
+                AssertFirewallRules(cluster, replacementRules);
+                cluster = (await cluster.GetAsync()).Value;
+                Assert.AreEqual(RedisEnterprisePublicNetworkAccess.Enabled, cluster.Data.PublicNetworkAccess);
+                AssertFirewallRules(cluster, replacementRules);
+
+                var clearRules = new RedisEnterpriseClusterPatch();
+                clearRules.FirewallRules.Clear();
+                cluster = (await cluster.UpdateAsync(WaitUntil.Completed, clearRules)).Value;
+                AssertFirewallRules(cluster);
+                cluster = (await cluster.GetAsync()).Value;
+                AssertFirewallRules(cluster);
+                Assert.AreEqual(RedisEnterprisePublicNetworkAccess.Enabled, cluster.Data.PublicNetworkAccess);
+
+                await cluster.DeleteAsync(WaitUntil.Completed);
+                Assert.IsFalse((await Collection.ExistsAsync(clusterName)).Value);
+            }
+            finally
+            {
+                await ResourceGroup.DeleteAsync(WaitUntil.Completed);
+            }
+        }
+
+        [TestCase(false, TestName = "ReplaceAndClearFirewallRulesWithEmptyPut")]
+        [TestCase(true, TestName = "ReplaceAndClearFirewallRulesWithOmittedPut")]
+        public async Task ReplaceAndClearFirewallRulesWithPut(bool omitFirewallRules)
+        {
+            await SetCollectionsAsync();
+
+            try
+            {
+                string clusterName = Recording.GenerateAssetName("RedisFirewall");
+                var data = CreateFirewallClusterData(
+                    new RedisEnterpriseFirewallRule("allow-ip", "203.0.113.1"),
+                    new RedisEnterpriseFirewallRule("allow-subnet", "203.0.113.0/24"));
+                var cluster = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data)).Value;
+                AssertFirewallRules(cluster, data.FirewallRules.ToArray());
+
+                var replacementRule = new RedisEnterpriseFirewallRule("allow-ip", "198.51.100.1");
+                data.FirewallRules.Clear();
+                data.FirewallRules.Add(replacementRule);
+                cluster = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data)).Value;
+                AssertFirewallRules(cluster, replacementRule);
+                cluster = (await cluster.GetAsync()).Value;
+                AssertFirewallRules(cluster, replacementRule);
+
+                if (omitFirewallRules)
+                {
+                    data = CreateFirewallClusterData();
+                }
+                else
+                {
+                    data.FirewallRules.Clear();
+                }
+                cluster = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data)).Value;
+                AssertFirewallRules(cluster);
+                cluster = (await cluster.GetAsync()).Value;
+                AssertFirewallRules(cluster);
+                Assert.AreEqual(RedisEnterprisePublicNetworkAccess.Enabled, cluster.Data.PublicNetworkAccess);
+            }
+            finally
+            {
+                await ResourceGroup.DeleteAsync(WaitUntil.Completed);
+            }
+        }
+
+        [TestCase(false, TestName = "DisablingPublicNetworkAccessClearsFirewallRules")]
+        [TestCase(true, TestName = "UpdatingPublicNetworkAccessWithExplicitFirewallRules")]
+        public async Task UpdatePublicNetworkAccessWithFirewallRules(bool specifyFirewallRules)
+        {
+            await SetCollectionsAsync();
+
+            try
+            {
+                string clusterName = Recording.GenerateAssetName("RedisFirewall");
+                var rule = new RedisEnterpriseFirewallRule("allow-ip", "203.0.113.1");
+                var data = CreateFirewallClusterData(rule);
+                var cluster = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data)).Value;
+                AssertFirewallRules(cluster, rule);
+
+                var conflictingRules = new RedisEnterpriseClusterPatch
+                {
+                    PublicNetworkAccess = RedisEnterprisePublicNetworkAccess.Disabled,
+                    FirewallRules = { rule }
+                };
+                RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(
+                    async () => await cluster.UpdateAsync(WaitUntil.Completed, conflictingRules));
+                Assert.AreEqual(400, exception.Status);
+                cluster = (await cluster.GetAsync()).Value;
+                Assert.AreEqual(RedisEnterprisePublicNetworkAccess.Enabled, cluster.Data.PublicNetworkAccess);
+                AssertFirewallRules(cluster, rule);
+
+                var disablePublicNetworkAccess = new RedisEnterpriseClusterPatch
+                {
+                    PublicNetworkAccess = RedisEnterprisePublicNetworkAccess.Disabled
+                };
+                if (specifyFirewallRules)
+                {
+                    disablePublicNetworkAccess.FirewallRules.Clear();
+                }
+                cluster = (await cluster.UpdateAsync(WaitUntil.Completed, disablePublicNetworkAccess)).Value;
+                AssertFirewallRules(cluster);
+                cluster = (await cluster.GetAsync()).Value;
+                Assert.AreEqual(RedisEnterprisePublicNetworkAccess.Disabled, cluster.Data.PublicNetworkAccess);
+                AssertFirewallRules(cluster);
+
+                var enablePublicNetworkAccess = new RedisEnterpriseClusterPatch
+                {
+                    PublicNetworkAccess = RedisEnterprisePublicNetworkAccess.Enabled
+                };
+                if (specifyFirewallRules)
+                {
+                    enablePublicNetworkAccess.FirewallRules.Add(new RedisEnterpriseFirewallRule("allow-new-ip", "198.51.100.1"));
+                }
+                RedisEnterpriseFirewallRule[] expectedRules = enablePublicNetworkAccess.FirewallRules.ToArray();
+                cluster = (await cluster.UpdateAsync(WaitUntil.Completed, enablePublicNetworkAccess)).Value;
+                AssertFirewallRules(cluster, expectedRules);
+                cluster = (await cluster.GetAsync()).Value;
+                Assert.AreEqual(RedisEnterprisePublicNetworkAccess.Enabled, cluster.Data.PublicNetworkAccess);
+                AssertFirewallRules(cluster, expectedRules);
+            }
+            finally
+            {
+                await ResourceGroup.DeleteAsync(WaitUntil.Completed);
+            }
         }
 
         [Test]

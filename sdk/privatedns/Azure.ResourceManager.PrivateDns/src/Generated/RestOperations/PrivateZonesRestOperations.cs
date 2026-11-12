@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.PrivateDns
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/privateDnsZones/", false);
             uri.AppendPath(privateZoneName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2024-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PrivateDns
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/privateDnsZones/", false);
             uri.AppendPath(privateZoneName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2024-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.PrivateDns
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/privateDnsZones/", false);
             uri.AppendPath(privateZoneName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2024-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.PrivateDns
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/privateDnsZones/", false);
             uri.AppendPath(privateZoneName, true);
-            uri.AppendQuery("api-version", _apiVersion ?? "2024-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.PrivateDns
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/privateDnsZones", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2024-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-01-preview", true);
             if (top != null)
             {
                 uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2024-06-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-06-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.PrivateDns
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Microsoft.Network/privateDnsZones", false);
-            uri.AppendQuery("api-version", _apiVersion ?? "2024-06-01", true);
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-06-01-preview", true);
             if (top != null)
             {
                 uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            uri.UpdateQuery("api-version", _apiVersion ?? "2024-06-01");
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-06-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

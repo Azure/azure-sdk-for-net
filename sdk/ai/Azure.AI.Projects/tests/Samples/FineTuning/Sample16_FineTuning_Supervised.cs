@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 #nullable disable
-#pragma warning disable OPENAI001 // Type is for evaluation purposes only
+#pragma warning disable AAIP002 // Type is for evaluation purposes only
 
 using System;
 using System.ClientModel;
