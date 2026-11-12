@@ -71,7 +71,7 @@ BeforeAll {
 
 Describe 'Assert-PrReReviewReadCoverage' {
     BeforeAll {
-        Import-Module (Join-Path $PSScriptRoot 'PrReReviewGuard.psm1') -Force
+        Import-Module (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'PrReReviewGuard.psm1') -Force
         $script:Paths = @('sdk/widgets/Azure.Widgets/CHANGELOG.md', 'sdk/widgets/Azure.Widgets/src/WidgetClient.cs', 'sdk/widgets/Azure.Widgets/api/Azure.Widgets.net8.0.cs')
         $script:CompleteOutput = New-AgentOutput @(New-Review "Re-review of head abc1234.`n`n$script:Complete")
     }
@@ -185,7 +185,7 @@ Describe 'Invoke-PrReReviewCoverageGuard.ps1' {
         $env:GH_TOKEN = 'synthetic-token'
         $env:TEST_CURRENT_HEAD = 'abc1234'
         $env:TEST_CURRENT_BASE = 'base'
-        Import-Module (Join-Path $PSScriptRoot 'PrReReviewInput.psm1')
+        Import-Module (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'PrReReviewInput.psm1')
         Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi {
             ConvertTo-Json -Compress @{ head = @{ sha = $env:TEST_CURRENT_HEAD }; base = @{ sha = $env:TEST_CURRENT_BASE } }
         }
@@ -208,7 +208,7 @@ Describe 'Invoke-PrReReviewCoverageGuard.ps1' {
         $env:AGENT_OUTPUT = Join-Path $TestDrive 'stale-review.json'
         [IO.File]::WriteAllText($env:AGENT_OUTPUT, (ConvertTo-Json -InputObject (New-AgentOutput @(New-Review 'Coverage: 0/0 threads fetched, 0/0 unresolved threads verified, 1/1 changed files reviewed')) -Depth 10))
         $env:AGENT_SESSION_LOG = New-SessionLog @((New-ToolResult (New-PatchRead $markers.Files[0])))
-        { & (Join-Path $PSScriptRoot 'Invoke-PrReReviewCoverageGuard.ps1') } | Should -Throw -ExpectedMessage '*head*base*'
+        { & (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'Invoke-PrReReviewCoverageGuard.ps1') } | Should -Throw -ExpectedMessage '*head*base*'
         Assert-MockCalled Invoke-PrReReviewGhApi -ModuleName PrReReviewInput -Times 1 -Exactly -ParameterFilter { $Arguments -contains 'repos/Azure/azure-sdk-for-net/pulls/1' }
     }
 
@@ -221,14 +221,14 @@ Describe 'Invoke-PrReReviewCoverageGuard.ps1' {
         $env:AGENT_OUTPUT = Join-Path $TestDrive 'stale-action.json'
         $output = New-AgentOutput @(@{ type = 'report_incomplete' }, @{ type = $Type })
         [IO.File]::WriteAllText($env:AGENT_OUTPUT, (ConvertTo-Json -InputObject $output -Depth 10))
-        { & (Join-Path $PSScriptRoot 'Invoke-PrReReviewCoverageGuard.ps1') } | Should -Throw -ExpectedMessage '*head*base*'
+        { & (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'Invoke-PrReReviewCoverageGuard.ps1') } | Should -Throw -ExpectedMessage '*head*base*'
         Assert-MockCalled Invoke-PrReReviewGhApi -ModuleName PrReReviewInput -Times 1 -Exactly -ParameterFilter { $Arguments -contains 'repos/Azure/azure-sdk-for-net/pulls/1' }
     }
 
     It 'does not query the PR when an incomplete run has no publishable action' {
         $env:AGENT_OUTPUT = Join-Path $TestDrive 'no-actions.json'
         [IO.File]::WriteAllText($env:AGENT_OUTPUT, (ConvertTo-Json -InputObject (New-AgentOutput @(@{ type = 'report_incomplete' })) -Depth 10))
-        { & (Join-Path $PSScriptRoot 'Invoke-PrReReviewCoverageGuard.ps1') } | Should -Not -Throw
+        { & (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'Invoke-PrReReviewCoverageGuard.ps1') } | Should -Not -Throw
         Assert-MockCalled Invoke-PrReReviewGhApi -ModuleName PrReReviewInput -Times 0 -Exactly
     }
 
@@ -245,7 +245,7 @@ Describe 'Invoke-PrReReviewCoverageGuard.ps1' {
         [IO.File]::WriteAllText($env:AGENT_OUTPUT, (ConvertTo-Json -InputObject (New-AgentOutput @(New-Review 'Coverage: 0/0 threads fetched, 0/0 unresolved threads verified, 1/1 changed files reviewed')) -Depth 10))
         $env:AGENT_SESSION_LOG = New-SessionLog @((New-ToolResult (New-PatchRead $markers.Files[0])))
         [Environment]::SetEnvironmentVariable($Name, $null)
-        { & (Join-Path $PSScriptRoot 'Invoke-PrReReviewCoverageGuard.ps1') } | Should -Throw -ExpectedMessage "*Missing $Name*"
+        { & (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'Invoke-PrReReviewCoverageGuard.ps1') } | Should -Throw -ExpectedMessage "*Missing $Name*"
         Assert-MockCalled Invoke-PrReReviewGhApi -ModuleName PrReReviewInput -Times 0 -Exactly
     }
 
@@ -256,7 +256,7 @@ Describe 'Invoke-PrReReviewCoverageGuard.ps1' {
         $env:AGENT_OUTPUT = Join-Path $TestDrive 'lookup-failure.json'
         [IO.File]::WriteAllText($env:AGENT_OUTPUT, (ConvertTo-Json -InputObject (New-AgentOutput @(New-Review 'Coverage: 0/0 threads fetched, 0/0 unresolved threads verified, 1/1 changed files reviewed')) -Depth 10))
         $env:AGENT_SESSION_LOG = New-SessionLog @((New-ToolResult (New-PatchRead $markers.Files[0])))
-        { & (Join-Path $PSScriptRoot 'Invoke-PrReReviewCoverageGuard.ps1') } | Should -Throw -ExpectedMessage '*lookup failed*'
+        { & (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'Invoke-PrReReviewCoverageGuard.ps1') } | Should -Throw -ExpectedMessage '*lookup failed*'
     }
 
     It 'runs both output and read-coverage checks' {
@@ -265,9 +265,9 @@ Describe 'Invoke-PrReReviewCoverageGuard.ps1' {
         $env:AGENT_OUTPUT = Join-Path $TestDrive 'review.json'
         [IO.File]::WriteAllText($env:AGENT_OUTPUT, (ConvertTo-Json -InputObject (New-AgentOutput @(New-Review 'Coverage: 0/0 threads fetched, 0/0 unresolved threads verified, 1/1 changed files reviewed')) -Depth 10))
         $env:AGENT_SESSION_LOG = New-SessionLog @((New-ToolResult (New-PatchRead $markers.Files[0])))
-        { & (Join-Path $PSScriptRoot 'Invoke-PrReReviewCoverageGuard.ps1') } | Should -Not -Throw
+        { & (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'Invoke-PrReReviewCoverageGuard.ps1') } | Should -Not -Throw
         Assert-MockCalled Invoke-PrReReviewGhApi -ModuleName PrReReviewInput -Times 1 -Exactly -ParameterFilter { $Arguments -contains 'repos/Azure/azure-sdk-for-net/pulls/1' }
         $env:AGENT_SESSION_LOG = New-SessionLog @((New-ToolResult "# End [$($markers.Files[0].marker)]"))
-        { & (Join-Path $PSScriptRoot 'Invoke-PrReReviewCoverageGuard.ps1') } | Should -Throw -ExpectedMessage '*0 of 1*a.cs*'
+        { & (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'Invoke-PrReReviewCoverageGuard.ps1') } | Should -Throw -ExpectedMessage '*0 of 1*a.cs*'
     }
 }

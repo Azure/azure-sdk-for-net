@@ -2,9 +2,9 @@
 # Licensed under the MIT License.
 
 BeforeAll {
-    $script:WorkflowPath = Join-Path $PSScriptRoot '..' 'pr-re-review.md'
+    $script:WorkflowPath = Join-Path $PSScriptRoot '..' '..' 'pr-re-review.md'
     $script:Workflow = [IO.File]::ReadAllText($script:WorkflowPath)
-    $script:LockLines = [IO.File]::ReadAllLines((Join-Path $PSScriptRoot '..' 'pr-re-review.lock.yml'))
+    $script:LockLines = [IO.File]::ReadAllLines((Join-Path $PSScriptRoot '..' '..' 'pr-re-review.lock.yml'))
     function Get-ApiWorkflowCompiledJob([string]$Name) {
         $start = [array]::IndexOf($script:LockLines, "  ${Name}:")
         if ($start -lt 0) { return '' }

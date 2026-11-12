@@ -2,7 +2,7 @@
 # Licensed under the MIT License.
 
 BeforeAll {
-    Import-Module (Join-Path $PSScriptRoot 'PrReReviewInput.psm1') -Force
+    Import-Module (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'PrReReviewInput.psm1') -Force
 }
 
 Describe 'Deterministic API-work flag for the workflow gate' {
@@ -35,7 +35,7 @@ Describe 'Deterministic API-work flag for the workflow gate' {
         Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi -ParameterFilter { $Arguments -like '*/files*' } {
             '[[{"filename":"sdk/widgets/Azure.Widgets/api/Azure.Widgets.cs","status":"modified","patch":"@@ -1 +1 @@\n-old\n+new"}]]'
         }
-        & (Join-Path $PSScriptRoot 'Invoke-PrReReviewInputExport.ps1')
+        & (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'Invoke-PrReReviewInputExport.ps1')
         Test-Path $env:GITHUB_OUTPUT | Should -BeTrue
         [IO.File]::ReadAllText($env:GITHUB_OUTPUT) | Should -Match '(?m)^has_api_changes=true$'
         [IO.File]::ReadAllText($env:GITHUB_OUTPUT) | Should -Match '(?m)^api_files=1$'
@@ -44,7 +44,7 @@ Describe 'Deterministic API-work flag for the workflow gate' {
         Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi -ParameterFilter { $Arguments -like '*/files*' } {
             '[[{"filename":".github/workflows/pr-re-review.lock.yml","status":"modified","patch":"unrelated"}]]'
         }
-        & (Join-Path $PSScriptRoot 'Invoke-PrReReviewInputExport.ps1')
+        & (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'Invoke-PrReReviewInputExport.ps1')
         Test-Path $env:GITHUB_OUTPUT | Should -BeTrue
         [IO.File]::ReadAllText($env:GITHUB_OUTPUT) | Should -Match '(?m)^has_api_changes=false$'
         [IO.File]::ReadAllText($env:GITHUB_OUTPUT) | Should -Match '(?m)^api_files=0$'
@@ -60,12 +60,12 @@ Describe 'Deterministic API-work flag for the workflow gate' {
             if ($script:PrReads -ge 3) { return '{"changed_files":1,"head":{"sha":"new-head"},"base":{"sha":"base"}}' }
             '{"changed_files":1,"head":{"sha":"head"},"base":{"sha":"base"}}'
         }
-        { & (Join-Path $PSScriptRoot 'Invoke-PrReReviewInputExport.ps1') } | Should -Throw '*stale*'
+        { & (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'Invoke-PrReReviewInputExport.ps1') } | Should -Throw '*stale*'
         Test-Path $env:GITHUB_OUTPUT | Should -BeFalse
     }
     It 'does not emit an affirmative flag when the independently captured inventory is incomplete' {
         Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi -ParameterFilter { $Arguments -like '*/files*' } { '[]' }
-        { & (Join-Path $PSScriptRoot 'Invoke-PrReReviewInputExport.ps1') } | Should -Throw '*listed 0*'
+        { & (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'Invoke-PrReReviewInputExport.ps1') } | Should -Throw '*listed 0*'
         Test-Path $env:GITHUB_OUTPUT | Should -BeFalse
     }
 }

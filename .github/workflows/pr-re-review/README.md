@@ -28,4 +28,4 @@ The generic helper contracts and their regression tests remain available, but th
 
 ## Local validation
 
-Run the Pester tests in this directory and the existing routing/thread regressions under `../test/`. After modifying `../pr-re-review.md`, regenerate `../pr-re-review.lock.yml` with the repository's exact pinned gh-aw compiler in strict mode. Offline tests and compilation validate the scope/publication contract; they do not prove completion of a live model review. Live workflow dispatch or inference requires separate authorization.
+Run the Pester tests under `../test/` (including `../test/pr-re-review/`) and the Node thread regressions in `../test/pr-re-review-unresolve-thread.test.cjs`. After modifying `../pr-re-review.md`, regenerate `../pr-re-review.lock.yml` with the repository's exact pinned gh-aw compiler in strict mode. Offline tests and compilation validate the scope/publication contract; they do not prove completion of a live model review. Live workflow dispatch or inference requires separate authorization.

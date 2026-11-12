@@ -3,8 +3,8 @@
 # Licensed under the MIT License.
 
 BeforeAll {
-    Import-Module (Join-Path $PSScriptRoot 'PrReReviewInput.psm1') -Force
-    Import-Module (Join-Path $PSScriptRoot 'PrReReviewGuard.psm1') -Force
+    Import-Module (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'PrReReviewInput.psm1') -Force
+    Import-Module (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'PrReReviewGuard.psm1') -Force
 }
 
 Describe 'API capture, read evidence and publication guard integration' {
@@ -39,7 +39,7 @@ Describe 'API capture, read evidence and publication guard integration' {
             )
             ConvertTo-Json -InputObject (,$files) -Depth 6 -Compress
         }
-        & (Join-Path $PSScriptRoot 'Invoke-PrReReviewInputExport.ps1')
+        & (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'Invoke-PrReReviewInputExport.ps1')
         $markers = Get-Content $env:REVIEW_INPUT_MARKERS -Raw | ConvertFrom-Json
         $events = foreach ($file in $markers.files) {
             foreach ($chunk in $file.chunks) {
@@ -57,15 +57,15 @@ Describe 'API capture, read evidence and publication guard integration' {
         foreach ($name in $script:OldEnvironment.Keys) { [Environment]::SetEnvironmentVariable($name, $script:OldEnvironment[$name]) }
     }
     It 'accepts a source finding against the real API selector, marker and changed-line contracts' {
-        { & (Join-Path $PSScriptRoot 'Invoke-PrReReviewGuard.ps1') -ApiOnly } | Should -Not -Throw
+        { & (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'Invoke-PrReReviewGuard.ps1') -ApiOnly } | Should -Not -Throw
     }
     It 'rejects a line outside the actual changed source diff, even when the API file was read' {
         $script:Items[0].line = 11
         [IO.File]::WriteAllText($env:AGENT_OUTPUT, (ConvertTo-Json -Depth 10 -Compress @{errors = @(); items = $script:Items}))
-        { & (Join-Path $PSScriptRoot 'Invoke-PrReReviewGuard.ps1') -ApiOnly } | Should -Throw '*not in the available source diff*'
+        { & (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'Invoke-PrReReviewGuard.ps1') -ApiOnly } | Should -Throw '*not in the available source diff*'
     }
     It 'rejects publication when the API read evidence is missing' {
         [IO.File]::WriteAllText($env:AGENT_SESSION_LOG, '')
-        { & (Join-Path $PSScriptRoot 'Invoke-PrReReviewGuard.ps1') -ApiOnly } | Should -Throw '*missing*'
+        { & (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'Invoke-PrReReviewGuard.ps1') -ApiOnly } | Should -Throw '*missing*'
     }
 }

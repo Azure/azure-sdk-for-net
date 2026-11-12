@@ -5,7 +5,7 @@
 # Licensed under the MIT License.
 
 BeforeAll {
-    Import-Module (Join-Path $PSScriptRoot 'PrReReviewGuard.psm1') -Force
+    Import-Module (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'PrReReviewGuard.psm1') -Force
     $script:ApiPath = 'sdk/widgets/Azure.Widgets/api/Azure.Widgets.net8.0.cs'
     $script:SourcePath = 'sdk/widgets/Azure.Widgets/src/Generated/Models/Widget.cs'
     function New-ApiOutput([string]$Body = 'API coverage: 1/1 API files reviewed', [object[]]$Extra = @()) {

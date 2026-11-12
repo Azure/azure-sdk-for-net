@@ -16,8 +16,8 @@ Describe 'API-only wrapper with an isolated input boundary' {
         foreach ($name in $script:Names) { $script:Previous[$name] = [Environment]::GetEnvironmentVariable($name) }
         $dir = Join-Path $TestDrive ([guid]::NewGuid().ToString())
         [void][IO.Directory]::CreateDirectory($dir)
-        Copy-Item (Join-Path $PSScriptRoot 'Invoke-PrReReviewGuard.ps1') $dir
-        Copy-Item (Join-Path $PSScriptRoot 'PrReReviewGuard.psm1') $dir
+        Copy-Item (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'Invoke-PrReReviewGuard.ps1') $dir
+        Copy-Item (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'PrReReviewGuard.psm1') $dir
         # This boundary deliberately has no transport; it cannot contact GitHub.
         $stub = @'
 function Get-PrReReviewPullRequestInput {

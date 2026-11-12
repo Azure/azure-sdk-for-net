@@ -4,10 +4,10 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
 
-param([string]$GuardModulePath = (Join-Path $PSScriptRoot 'PrReReviewGuard.psm1'))
+param([string]$GuardModulePath = (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'PrReReviewGuard.psm1'))
 
 BeforeAll {
-    Import-Module (Join-Path $PSScriptRoot 'PrReReviewInput.psm1') -Force
+    Import-Module (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'PrReReviewInput.psm1') -Force
     Import-Module $GuardModulePath -Force
 
     function New-ChangedFile {
@@ -377,7 +377,7 @@ Describe 'Invoke-PrReReviewInputExport.ps1' {
         $env:PR_BASE_SHA = 'base'
         $env:REVIEW_INPUT_DIR = Join-Path $root 'input'
         $env:REVIEW_INPUT_MARKERS = Join-Path $root 'private' 'markers.json'
-        & (Join-Path $PSScriptRoot 'Invoke-PrReReviewInputExport.ps1')
+        & (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'Invoke-PrReReviewInputExport.ps1')
         $files = (Get-Content (Join-Path $env:REVIEW_INPUT_DIR 'files.json') -Raw | ConvertFrom-Json).files
         $text = Get-Content (Join-Path $env:REVIEW_INPUT_DIR $files[0].patchFile) -Raw
         $text | Should -Match '// deleted declaration'
@@ -404,7 +404,7 @@ Describe 'Invoke-PrReReviewInputExport.ps1' {
         $env:PR_BASE_SHA = 'base'
         $env:REVIEW_INPUT_DIR = Join-Path $root 'input'
         $env:REVIEW_INPUT_MARKERS = Join-Path $root 'private' 'markers.json'
-        & (Join-Path $PSScriptRoot 'Invoke-PrReReviewInputExport.ps1')
+        & (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'Invoke-PrReReviewInputExport.ps1')
         $files = (Get-Content (Join-Path $env:REVIEW_INPUT_DIR 'files.json') -Raw | ConvertFrom-Json).files
         $text = Get-Content (Join-Path $env:REVIEW_INPUT_DIR $files[0].patchFile) -Raw
         $text | Should -Match '// deleted declaration'

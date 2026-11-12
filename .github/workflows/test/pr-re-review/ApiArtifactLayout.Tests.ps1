@@ -3,7 +3,7 @@
 # Licensed under the MIT License.
 
 BeforeAll {
-    Import-Module (Join-Path $PSScriptRoot 'PrReReviewGuard.psm1') -Force
+    Import-Module (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'PrReReviewGuard.psm1') -Force
     function Write-ToolResult([string]$Path, [string]$Content) {
         $event = @{type = 'tool.execution_complete'; data = @{success = $true; result = @{content = $Content}}}
         [IO.File]::WriteAllText($Path, ((ConvertTo-Json $event -Depth 10 -Compress) + "`n"))

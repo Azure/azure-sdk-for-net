@@ -5,7 +5,7 @@
 # Licensed under the MIT License.
 
 BeforeAll {
-    Import-Module (Join-Path $PSScriptRoot 'PrReReviewInput.psm1') -Force
+    Import-Module (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'PrReReviewInput.psm1') -Force
 
     function New-ApiChangedFile {
         param(
@@ -69,7 +69,7 @@ Describe 'API-only wrapper scope regression' {
         Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi -ParameterFilter { -not ($Arguments -like '*/files*') } {
             '{"changed_files":3,"head":{"sha":"head"},"base":{"sha":"base"}}'
         }
-        & (Join-Path $PSScriptRoot 'Invoke-PrReReviewInputExport.ps1')
+        & (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'Invoke-PrReReviewInputExport.ps1')
         $index = Get-Content (Join-Path $env:REVIEW_INPUT_DIR 'files.json') -Raw | ConvertFrom-Json
         @($index.files.path) | Should -Be @('sdk/widgets/Azure.Widgets/api/Azure.Widgets.net8.0.cs')
         @(Get-ChildItem (Join-Path $env:REVIEW_INPUT_DIR 'patches') -File).Count | Should -Be 1

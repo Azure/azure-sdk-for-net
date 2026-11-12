@@ -284,6 +284,32 @@ function Assert-PrReReviewOutput {
     return "Re-review coverage is complete: $line"
 }
 
+function ConvertFrom-PrReReviewNumberedView {
+    param([string]$Text)
+
+    # Only called for successful, correlated view results. Validate the entire
+    # window before using any part of it; numbers may start at any positive line.
+    $Text = $Text.Replace("`r`n", "`n")
+    $decoded = [System.Text.StringBuilder]::new()
+    $offset = 0
+    [long]$previous = 0
+    while ($offset -lt $Text.Length) {
+        $end = $Text.IndexOf([char]"`n", $offset)
+        if ($end -lt 0) { $end = $Text.Length }
+        $dot = $Text.IndexOf([char]'.', $offset, $end - $offset)
+        if ($dot -le $offset -or $dot + 1 -ge $end -or $Text[$dot + 1] -ne [char]' ') { return $null }
+        [long]$number = 0
+        if (![long]::TryParse($Text.Substring($offset, $dot - $offset), [System.Globalization.NumberStyles]::None, [System.Globalization.CultureInfo]::InvariantCulture, [ref]$number) -or $number -le 0) { return $null }
+        if ($previous -ne 0 -and ($previous -eq [long]::MaxValue -or $number -ne $previous + 1)) { return $null }
+        $previous = $number
+        [void]$decoded.Append($Text, $dot + 2, $end - $dot - 2)
+        if ($end -lt $Text.Length) { [void]$decoded.Append([char]"`n") }
+        $offset = $end + 1
+    }
+    if ($previous -eq 0) { return $null }
+    return $decoded.ToString()
+}
+
 function Assert-PrReReviewReadCoverage {
     param(
         [AllowNull()]$AgentOutput,
@@ -344,16 +370,37 @@ function Assert-PrReReviewReadCoverage {
     # Check for ordinary missed or truncated reads. The agent can influence its session log,
     # so these matches are not tamper-proof evidence and cannot establish comprehension.
     # Each complete chunk must appear in one successful tool result.
-    $results = [System.Collections.Generic.List[string]]::new()
+    $results = [System.Collections.Generic.List[object]]::new()
     foreach ($sessionLog in $sessionLogs) {
+        # Call IDs are scoped to one session; ambiguous or reused IDs cannot
+        # qualify a completion as a view. Legacy raw results remain independent.
+        $starts = [System.Collections.Generic.Dictionary[string,string]]::new([StringComparer]::Ordinal)
+        $seen = [System.Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
         foreach ($line in [IO.File]::ReadLines($sessionLog)) {
-            if (!$line.Contains('"tool.execution_complete"', [StringComparison]::Ordinal)) { continue }
+            if (!$line.Contains('"tool.execution_start"', [StringComparison]::Ordinal) -and !$line.Contains('"tool.execution_complete"', [StringComparison]::Ordinal)) { continue }
             try { $event = ConvertFrom-PrReReviewJson $line } catch { continue }
-            if ($event -isnot [System.Collections.IDictionary] -or $event.type -cne 'tool.execution_complete' -or $event.data.success -eq $false) { continue }
+            if ($event -isnot [System.Collections.IDictionary] -or $event.data -isnot [System.Collections.IDictionary]) { continue }
+            $id = $event.data.toolCallId
+            if ($event.type -ceq 'tool.execution_start') {
+                if ($id -is [string] -and $id.Length -gt 0) {
+                    if ($seen.Add($id)) { $starts[$id] = [string]$event.data.toolName } else { [void]$starts.Remove($id) }
+                }
+                continue
+            }
+            if ($event.type -cne 'tool.execution_complete') { continue }
+            $isView = $false
+            if ($id -is [string] -and $id.Length -gt 0) {
+                if ($starts.ContainsKey($id)) {
+                    $isView = $starts[$id] -ceq 'view' -and $event.data.success -is [bool] -and $event.data.success
+                    [void]$starts.Remove($id)
+                } else { [void]$seen.Add($id) }
+            }
+            if ($event.data.success -eq $false) { continue }
             $content = $event.data.result.content
             if ($null -eq $content) { continue }
             $text = if ($content -is [string]) { $content } else { ConvertTo-Json -InputObject $content -Depth 20 -Compress }
-            $results.Add($text)
+            $decoded = if ($isView) { ConvertFrom-PrReReviewNumberedView -Text $text } else { $null }
+            $results.Add(@{ text = $text; decoded = $decoded })
         }
     }
 
@@ -361,7 +408,11 @@ function Assert-PrReReviewReadCoverage {
         foreach ($file in $files) {
             foreach ($chunk in $file.chunks) {
                 $expectedChunk = $chunk.content.TrimEnd([char[]]"`r`n")
-                if (!$expectedChunk -or !@($results | Where-Object { $_.Contains($expectedChunk, [StringComparison]::Ordinal) }).Count) {
+                $normalizedChunk = $expectedChunk.Replace("`r`n", "`n")
+                if (!$expectedChunk -or !@($results | Where-Object {
+                    $_.text.Contains($expectedChunk, [StringComparison]::Ordinal) -or
+                    ($null -ne $_.decoded -and $_.decoded.Contains($normalizedChunk, [StringComparison]::Ordinal))
+                }).Count) {
                     [string]$file.path
                     break
                 }

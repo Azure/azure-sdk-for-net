@@ -2,7 +2,7 @@
 # Licensed under the MIT License.
 
 BeforeAll {
-    Import-Module (Join-Path $PSScriptRoot 'PrReReviewGuard.psm1') -Force
+    Import-Module (Join-Path $PSScriptRoot '..' '..' 'pr-re-review' 'PrReReviewGuard.psm1') -Force
     function New-ApiTargetExpected {
         return @{
             Scope = 'api'; Repository = 'Azure/azure-sdk-for-net'; Number = 123
