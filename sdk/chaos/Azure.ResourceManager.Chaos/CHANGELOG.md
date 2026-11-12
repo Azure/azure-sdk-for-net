@@ -4,9 +4,9 @@
 
 ### Features Added
 
-### Breaking Changes
+- Updated the default API version to `2026-11-01`.
 
-- Renamed `ScenarioRunSummaryResource` to `ScenarioRunResourceSummary` to distinguish the nested action-summary model from ARM resource clients.
+### Breaking Changes
 
 ### Bugs Fixed
 
