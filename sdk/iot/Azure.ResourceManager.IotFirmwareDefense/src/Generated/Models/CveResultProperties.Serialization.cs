@@ -209,6 +209,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(PublishedOn))
+            {
+                writer.WritePropertyName("publishedDate"u8);
+                writer.WriteStringValue(PublishedOn.Value, "O");
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -278,6 +283,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             IList<CweProperties> cwes = default;
             KevProperties kev = default;
             IList<string> fixedInVersions = default;
+            DateTimeOffset? publishedOn = default;
             FirmwareProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -459,6 +465,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     fixedInVersions = array;
                     continue;
                 }
+                if (prop.NameEquals("publishedDate"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    publishedOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (prop.NameEquals("provisioningState"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -496,6 +511,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 cwes ?? new ChangeTrackingList<CweProperties>(),
                 kev,
                 fixedInVersions ?? new ChangeTrackingList<string>(),
+                publishedOn,
                 provisioningState,
                 additionalBinaryDataProperties);
         }

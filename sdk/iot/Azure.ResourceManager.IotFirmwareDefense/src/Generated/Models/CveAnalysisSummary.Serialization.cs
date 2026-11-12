@@ -110,6 +110,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WritePropertyName("schemaVersion"u8);
                 writer.WriteStringValue(SchemaVersion);
             }
+            if (Optional.IsDefined(CisaKevCount))
+            {
+                writer.WritePropertyName("cisaKevCount"u8);
+                writer.WriteNumberValue(CisaKevCount.Value);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -147,6 +152,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             long? lowCveCount = default;
             long? unknownCveCount = default;
             string schemaVersion = default;
+            long? cisaKevCount = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("summaryType"u8))
@@ -222,6 +228,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     schemaVersion = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("cisaKevCount"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cisaKevCount = prop.Value.GetInt64();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -237,7 +252,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 mediumCveCount,
                 lowCveCount,
                 unknownCveCount,
-                schemaVersion);
+                schemaVersion,
+                cisaKevCount);
         }
     }
 }

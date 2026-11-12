@@ -190,6 +190,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotFirmwareDefense.IotFirmwareResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardeningResult> GetBinaryHardeningResults(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.IotFirmwareDefense.Models.BinaryHardeningResult> GetBinaryHardeningResultsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveResource> GetByFirmware(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveResource> GetByFirmwareAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.IotFirmwareDefense.Models.CveResult> GetCommonVulnerabilitiesAndExposures(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.IotFirmwareDefense.Models.CveResult> GetCommonVulnerabilitiesAndExposuresAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.IotFirmwareDefense.Models.CryptoCertificateResult> GetCryptoCertificates(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -305,12 +307,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public static Azure.ResourceManager.IotFirmwareDefense.Models.CryptoKeySummary CryptoKeySummary(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState? provisioningState = default(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState?), long? totalKeyCount = default(long?), long? publicKeyCount = default(long?), long? privateKeyCount = default(long?), long? pairedKeyCount = default(long?), long? shortKeySizeCount = default(long?)) { throw null; }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.CryptoKeySummary CryptoKeySummary(long? totalKeys, long? publicKeys, long? privateKeys, long? pairedKeys, long? shortKeySize) { throw null; }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.CryptoPairedKey CryptoPairedKey(string pairedKeyId = null, string pairedKeyType = null) { throw null; }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.CveAnalysisSummary CveAnalysisSummary(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState? provisioningState = default(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState?), long? totalCveCount = default(long?), long? criticalCveCount = default(long?), long? highCveCount = default(long?), long? mediumCveCount = default(long?), long? lowCveCount = default(long?), long? unknownCveCount = default(long?), string schemaVersion = null) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.CveAnalysisSummary CveAnalysisSummary(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState? provisioningState = default(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState?), long? totalCveCount = default(long?), long? criticalCveCount = default(long?), long? highCveCount = default(long?), long? mediumCveCount = default(long?), long? lowCveCount = default(long?), long? unknownCveCount = default(long?), string schemaVersion = null, long? cisaKevCount = default(long?)) { throw null; }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.CveComponent CveComponent(string componentId = null, string name = null, string version = null) { throw null; }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.CveLink CveLink(System.Uri href = null, string label = null) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.CveModification CveModification(string fieldName = null, Azure.ResourceManager.IotFirmwareDefense.Models.RiskTrend riskTrend = default(Azure.ResourceManager.IotFirmwareDefense.Models.RiskTrend)) { throw null; }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.CveResult CveResult(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string cveId, Azure.ResourceManager.IotFirmwareDefense.Models.CveComponent component, string severity, string namePropertiesName, string cvssScore, string cvssVersion, string cvssV2Score, string cvssV3Score, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotFirmwareDefense.Models.CveLink> links, string description) { throw null; }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.CveResult CveResult(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string cveId, string componentId, string componentName, string componentVersion, string severity, string cveName, Azure.ResourceManager.IotFirmwareDefense.Models.CveComponent component, string cvssScore, string cvssV2Score, string cvssV3Score, string cvssVersion, float? effectiveCvssScore, int? effectiveCvssVersion, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotFirmwareDefense.Models.CvssScore> cvssScores, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotFirmwareDefense.Models.CveLink> links, string description, Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState? provisioningState) { throw null; }
-        public static Azure.ResourceManager.IotFirmwareDefense.Models.CveResult CveResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string cveId = null, string componentId = null, string componentName = null, string componentVersion = null, string severity = null, string cveName = null, Azure.ResourceManager.IotFirmwareDefense.Models.CveComponent component = null, string cvssScore = null, string cvssV2Score = null, string cvssV3Score = null, string cvssVersion = null, float? effectiveCvssScore = default(float?), int? effectiveCvssVersion = default(int?), string effectiveVectorString = null, Azure.ResourceManager.IotFirmwareDefense.Models.ExploitMaturityLevel? effectiveExploitMaturity = default(Azure.ResourceManager.IotFirmwareDefense.Models.ExploitMaturityLevel?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotFirmwareDefense.Models.CvssScore> cvssScores = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotFirmwareDefense.Models.CveLink> links = null, string description = null, Azure.ResourceManager.IotFirmwareDefense.Models.EpssProperties epss = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotFirmwareDefense.Models.CweProperties> cwes = null, Azure.ResourceManager.IotFirmwareDefense.Models.KevProperties kev = null, System.Collections.Generic.IEnumerable<string> fixedInVersions = null, Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState? provisioningState = default(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.CveResult CveResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string cveId = null, string componentId = null, string componentName = null, string componentVersion = null, string severity = null, string cveName = null, Azure.ResourceManager.IotFirmwareDefense.Models.CveComponent component = null, string cvssScore = null, string cvssV2Score = null, string cvssV3Score = null, string cvssVersion = null, float? effectiveCvssScore = default(float?), int? effectiveCvssVersion = default(int?), string effectiveVectorString = null, Azure.ResourceManager.IotFirmwareDefense.Models.ExploitMaturityLevel? effectiveExploitMaturity = default(Azure.ResourceManager.IotFirmwareDefense.Models.ExploitMaturityLevel?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotFirmwareDefense.Models.CvssScore> cvssScores = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotFirmwareDefense.Models.CveLink> links = null, string description = null, Azure.ResourceManager.IotFirmwareDefense.Models.EpssProperties epss = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotFirmwareDefense.Models.CweProperties> cwes = null, Azure.ResourceManager.IotFirmwareDefense.Models.KevProperties kev = null, System.Collections.Generic.IEnumerable<string> fixedInVersions = null, System.DateTimeOffset? publishedOn = default(System.DateTimeOffset?), Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState? provisioningState = default(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.CveSummary CveSummary(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState? provisioningState = default(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState?), long? criticalCveCount = default(long?), long? highCveCount = default(long?), long? mediumCveCount = default(long?), long? lowCveCount = default(long?), long? unknownCveCount = default(long?)) { throw null; }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.CveSummary CveSummary(long? critical, long? high, long? medium, long? low, long? unknown) { throw null; }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.CvssScore CvssScore(int version = 0, float? score = default(float?), string vectorString = null, Azure.ResourceManager.IotFirmwareDefense.Models.ExploitMaturityLevel? exploitMaturity = default(Azure.ResourceManager.IotFirmwareDefense.Models.ExploitMaturityLevel?)) { throw null; }
@@ -331,8 +334,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareUriToken FirmwareUriToken(System.Uri uri = null) { throw null; }
         public static Azure.ResourceManager.IotFirmwareDefense.IotFirmwareData IotFirmwareData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string fileName = null, string vendor = null, string model = null, string version = null, string description = null, long? fileSize = default(long?), Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisStatus? status = default(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisStatusMessage> statusMessages = null, Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState? provisioningState = default(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.IotFirmwareDefenseSku IotFirmwareDefenseSku(string name = null, Azure.ResourceManager.IotFirmwareDefense.Models.IotFirmwareDefenseSkuTier? tier = default(Azure.ResourceManager.IotFirmwareDefense.Models.IotFirmwareDefenseSkuTier?), string size = null, string family = null, int? capacity = default(int?)) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.IotFirmwareDefenseSkuUpdate IotFirmwareDefenseSkuUpdate(string name = null, Azure.ResourceManager.IotFirmwareDefense.Models.IotFirmwareDefenseSkuTier? tier = default(Azure.ResourceManager.IotFirmwareDefense.Models.IotFirmwareDefenseSkuTier?), string size = null, string family = null, int? capacity = default(int?)) { throw null; }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.IotFirmwarePatch IotFirmwarePatch(string fileName = null, string vendor = null, string model = null, string version = null, string description = null, long? fileSize = default(long?), Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisStatus? status = default(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisStatusMessage> statusMessages = null, Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState? provisioningState = default(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.KevProperties KevProperties(Azure.ResourceManager.IotFirmwareDefense.Models.RansomwareCampaignUse? knownRansomwareCampaignUse = default(Azure.ResourceManager.IotFirmwareDefense.Models.RansomwareCampaignUse?), System.DateTimeOffset? addedOn = default(System.DateTimeOffset?), System.DateTimeOffset? remediationDueOn = default(System.DateTimeOffset?), string requiredAction = null) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveResource LatestCveResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveResult properties = null) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveResult LatestCveResult(string cveId = null, string componentId = null, string componentName = null, string componentVersion = null, string severity = null, string cveName = null, Azure.ResourceManager.IotFirmwareDefense.Models.CveComponent component = null, string cvssScore = null, string cvssV2Score = null, string cvssV3Score = null, string cvssVersion = null, float? effectiveCvssScore = default(float?), int? effectiveCvssVersion = default(int?), string effectiveVectorString = null, Azure.ResourceManager.IotFirmwareDefense.Models.ExploitMaturityLevel? effectiveExploitMaturity = default(Azure.ResourceManager.IotFirmwareDefense.Models.ExploitMaturityLevel?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotFirmwareDefense.Models.CvssScore> cvssScores = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotFirmwareDefense.Models.CveLink> links = null, string description = null, Azure.ResourceManager.IotFirmwareDefense.Models.EpssProperties epss = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotFirmwareDefense.Models.CweProperties> cwes = null, Azure.ResourceManager.IotFirmwareDefense.Models.KevProperties kev = null, System.Collections.Generic.IEnumerable<string> fixedInVersions = null, System.DateTimeOffset? publishedOn = default(System.DateTimeOffset?), Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState? provisioningState = default(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState?), Azure.ResourceManager.IotFirmwareDefense.Models.ChangeStatus? changeStatus = default(Azure.ResourceManager.IotFirmwareDefense.Models.ChangeStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotFirmwareDefense.Models.CveModification> modifications = null) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveSummaryResource LatestCveSummaryResource(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState? provisioningState = default(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState?), long? totalCveCount = default(long?), long? criticalCveCount = default(long?), long? highCveCount = default(long?), long? mediumCveCount = default(long?), long? lowCveCount = default(long?), long? unknownCveCount = default(long?), long? cisaKevCount = default(long?), string schemaVersion = null, Azure.ResourceManager.IotFirmwareDefense.Models.RescanStatus? rescanStatus = default(Azure.ResourceManager.IotFirmwareDefense.Models.RescanStatus?), long? diffCriticalCveCount = default(long?), long? diffHighCveCount = default(long?), long? diffMediumCveCount = default(long?), long? diffLowCveCount = default(long?), long? diffUnknownCveCount = default(long?), long? diffCisaKevCount = default(long?), System.DateTimeOffset? lastCveDatabaseUpdate = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHashResult PasswordHashResult(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string passwordHashId, string filePath, string salt, string hash, string context, string username, string algorithm) { throw null; }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHashResult PasswordHashResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string passwordHashId = null, string filePath = null, string salt = null, string hash = null, string context = null, string username = null, string algorithm = null, Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState? provisioningState = default(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHashSummary PasswordHashSummary(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState? provisioningState = default(Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState?), long? totalPasswordHashCount = default(long?)) { throw null; }
@@ -443,6 +450,25 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public static implicit operator Azure.ResourceManager.IotFirmwareDefense.Models.CertificateUsage (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.IotFirmwareDefense.Models.CertificateUsage? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.IotFirmwareDefense.Models.CertificateUsage left, Azure.ResourceManager.IotFirmwareDefense.Models.CertificateUsage right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ChangeStatus : System.IEquatable<Azure.ResourceManager.IotFirmwareDefense.Models.ChangeStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ChangeStatus(string value) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.ChangeStatus Modified { get { throw null; } }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.ChangeStatus New { get { throw null; } }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.ChangeStatus Original { get { throw null; } }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.ChangeStatus Removed { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.IotFirmwareDefense.Models.ChangeStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.IotFirmwareDefense.Models.ChangeStatus left, Azure.ResourceManager.IotFirmwareDefense.Models.ChangeStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotFirmwareDefense.Models.ChangeStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotFirmwareDefense.Models.ChangeStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.IotFirmwareDefense.Models.ChangeStatus left, Azure.ResourceManager.IotFirmwareDefense.Models.ChangeStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class CryptoCertificateEntity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.CryptoCertificateEntity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.CryptoCertificateEntity>
@@ -613,6 +639,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     public partial class CveAnalysisSummary : Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveAnalysisSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveAnalysisSummary>
     {
         public CveAnalysisSummary() { }
+        public long? CisaKevCount { get { throw null; } set { } }
         public long? CriticalCveCount { get { throw null; } set { } }
         public long? HighCveCount { get { throw null; } set { } }
         public long? LowCveCount { get { throw null; } set { } }
@@ -661,6 +688,21 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveLink>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveLink>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class CveModification : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveModification>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveModification>
+    {
+        internal CveModification() { }
+        public string FieldName { get { throw null; } }
+        public Azure.ResourceManager.IotFirmwareDefense.Models.RiskTrend RiskTrend { get { throw null; } }
+        protected virtual Azure.ResourceManager.IotFirmwareDefense.Models.CveModification JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.IotFirmwareDefense.Models.CveModification PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.IotFirmwareDefense.Models.CveModification System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveModification>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveModification>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.IotFirmwareDefense.Models.CveModification System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveModification>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveModification>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveModification>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class CveResult : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.CveResult>
     {
         public CveResult() { }
@@ -687,6 +729,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.IotFirmwareDefense.Models.CveLink> Links { get { throw null; } }
         public string NamePropertiesName { get { throw null; } set { } }
         public Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState? ProvisioningState { get { throw null; } }
+        public System.DateTimeOffset? PublishedOn { get { throw null; } set { } }
         public string Severity { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -885,6 +928,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryType CryptoKey { get { throw null; } }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryType Cve { get { throw null; } }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryType Firmware { get { throw null; } }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryType LatestCve { get { throw null; } }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryType PasswordHash { get { throw null; } }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryType Sbom { get { throw null; } }
         public static Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryType UnsafeFunctionCalls { get { throw null; } }
@@ -1080,6 +1124,88 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.KevProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.KevProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class LatestCveResource : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveResource>
+    {
+        internal LatestCveResource() { }
+        public Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveResult Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class LatestCveResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveResult>
+    {
+        internal LatestCveResult() { }
+        public Azure.ResourceManager.IotFirmwareDefense.Models.ChangeStatus? ChangeStatus { get { throw null; } }
+        public Azure.ResourceManager.IotFirmwareDefense.Models.CveComponent Component { get { throw null; } }
+        public string ComponentId { get { throw null; } }
+        public string ComponentName { get { throw null; } }
+        public string ComponentVersion { get { throw null; } }
+        public string CveId { get { throw null; } }
+        public string CveName { get { throw null; } }
+        public string CvssScore { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.IotFirmwareDefense.Models.CvssScore> CvssScores { get { throw null; } }
+        public string CvssV2Score { get { throw null; } }
+        public string CvssV3Score { get { throw null; } }
+        public string CvssVersion { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.IotFirmwareDefense.Models.CweProperties> Cwes { get { throw null; } }
+        public string Description { get { throw null; } }
+        public float? EffectiveCvssScore { get { throw null; } }
+        public int? EffectiveCvssVersion { get { throw null; } }
+        public Azure.ResourceManager.IotFirmwareDefense.Models.ExploitMaturityLevel? EffectiveExploitMaturity { get { throw null; } }
+        public string EffectiveVectorString { get { throw null; } }
+        public Azure.ResourceManager.IotFirmwareDefense.Models.EpssProperties Epss { get { throw null; } }
+        public System.Collections.Generic.IList<string> FixedInVersions { get { throw null; } }
+        public Azure.ResourceManager.IotFirmwareDefense.Models.KevProperties Kev { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.IotFirmwareDefense.Models.CveLink> Links { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.IotFirmwareDefense.Models.CveModification> Modifications { get { throw null; } }
+        public Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareProvisioningState? ProvisioningState { get { throw null; } }
+        public System.DateTimeOffset? PublishedOn { get { throw null; } }
+        public string Severity { get { throw null; } }
+        protected virtual Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class LatestCveSummaryResource : Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveSummaryResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveSummaryResource>
+    {
+        public LatestCveSummaryResource() { }
+        public long? CisaKevCount { get { throw null; } set { } }
+        public long? CriticalCveCount { get { throw null; } set { } }
+        public long? DiffCisaKevCount { get { throw null; } set { } }
+        public long? DiffCriticalCveCount { get { throw null; } set { } }
+        public long? DiffHighCveCount { get { throw null; } set { } }
+        public long? DiffLowCveCount { get { throw null; } set { } }
+        public long? DiffMediumCveCount { get { throw null; } set { } }
+        public long? DiffUnknownCveCount { get { throw null; } set { } }
+        public long? HighCveCount { get { throw null; } set { } }
+        public System.DateTimeOffset? LastCveDatabaseUpdate { get { throw null; } set { } }
+        public long? LowCveCount { get { throw null; } set { } }
+        public long? MediumCveCount { get { throw null; } set { } }
+        public Azure.ResourceManager.IotFirmwareDefense.Models.RescanStatus? RescanStatus { get { throw null; } set { } }
+        public string SchemaVersion { get { throw null; } set { } }
+        public long? TotalCveCount { get { throw null; } set { } }
+        public long? UnknownCveCount { get { throw null; } set { } }
+        protected override Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected override Azure.ResourceManager.IotFirmwareDefense.Models.FirmwareAnalysisSummaryProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveSummaryResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveSummaryResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveSummaryResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveSummaryResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveSummaryResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveSummaryResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.LatestCveSummaryResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class PasswordHashResult : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHashResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.PasswordHashResult>
     {
         public PasswordHashResult() { }
@@ -1130,6 +1256,44 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public static implicit operator Azure.ResourceManager.IotFirmwareDefense.Models.RansomwareCampaignUse (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.IotFirmwareDefense.Models.RansomwareCampaignUse? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.IotFirmwareDefense.Models.RansomwareCampaignUse left, Azure.ResourceManager.IotFirmwareDefense.Models.RansomwareCampaignUse right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RescanStatus : System.IEquatable<Azure.ResourceManager.IotFirmwareDefense.Models.RescanStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RescanStatus(string value) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.RescanStatus Complete { get { throw null; } }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.RescanStatus Error { get { throw null; } }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.RescanStatus InProgress { get { throw null; } }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.RescanStatus NotAvailable { get { throw null; } }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.RescanStatus Stale { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.IotFirmwareDefense.Models.RescanStatus other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.IotFirmwareDefense.Models.RescanStatus left, Azure.ResourceManager.IotFirmwareDefense.Models.RescanStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotFirmwareDefense.Models.RescanStatus (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotFirmwareDefense.Models.RescanStatus? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.IotFirmwareDefense.Models.RescanStatus left, Azure.ResourceManager.IotFirmwareDefense.Models.RescanStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RiskTrend : System.IEquatable<Azure.ResourceManager.IotFirmwareDefense.Models.RiskTrend>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RiskTrend(string value) { throw null; }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.RiskTrend Decreased { get { throw null; } }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.RiskTrend Increased { get { throw null; } }
+        public static Azure.ResourceManager.IotFirmwareDefense.Models.RiskTrend Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.IotFirmwareDefense.Models.RiskTrend other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.IotFirmwareDefense.Models.RiskTrend left, Azure.ResourceManager.IotFirmwareDefense.Models.RiskTrend right) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotFirmwareDefense.Models.RiskTrend (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.IotFirmwareDefense.Models.RiskTrend? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.IotFirmwareDefense.Models.RiskTrend left, Azure.ResourceManager.IotFirmwareDefense.Models.RiskTrend right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class SbomComponentResult : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponentResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotFirmwareDefense.Models.SbomComponentResult>

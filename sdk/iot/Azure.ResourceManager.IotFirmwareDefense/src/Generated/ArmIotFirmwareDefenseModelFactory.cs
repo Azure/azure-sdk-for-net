@@ -142,6 +142,24 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             return new FirmwareAnalysisWorkspacePatch(sku, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> The resource model definition representing SKU. </summary>
+        /// <param name="name"> The name of the SKU. Ex - P3. It is typically a letter+number code. </param>
+        /// <param name="tier"> This field is required to be implemented by the Resource Provider if the service has more than one tier, but is not required on a PUT. </param>
+        /// <param name="size"> The SKU size. When the name field is the combination of tier and some other value, this would be the standalone code. </param>
+        /// <param name="family"> If the service has different generations of hardware, for the same SKU, then that can be captured here. </param>
+        /// <param name="capacity"> If the SKU supports scale out/in then the capacity integer should be included. If scale out/in is not possible for the resource this may be omitted. </param>
+        /// <returns> A new <see cref="Models.IotFirmwareDefenseSkuUpdate"/> instance for mocking. </returns>
+        public static IotFirmwareDefenseSkuUpdate IotFirmwareDefenseSkuUpdate(string name = default, IotFirmwareDefenseSkuTier? tier = default, string size = default, string family = default, int? capacity = default)
+        {
+            return new IotFirmwareDefenseSkuUpdate(
+                name,
+                tier,
+                size,
+                family,
+                capacity,
+                default);
+        }
+
         /// <summary> Properties for generating an upload URL. </summary>
         /// <param name="firmwareId"> A unique ID for the firmware to be uploaded. </param>
         /// <returns> A new <see cref="Models.FirmwareUploadUriContent"/> instance for mocking. </returns>
@@ -356,16 +374,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="cwes"> CWE (Common Weakness Enumeration) information related to this CVE. </param>
         /// <param name="kev"> KEV (Known Exploited Vulnerabilities) information related to this CVE. </param>
         /// <param name="fixedInVersions"> The component versions in which this weakness was fixed, if any. </param>
+        /// <param name="publishedOn"> The date the CVE was published. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.CveResult"/> instance for mocking. </returns>
-        public static CveResult CveResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string cveId = default, string componentId = default, string componentName = default, string componentVersion = default, string severity = default, string cveName = default, CveComponent component = default, string cvssScore = default, string cvssV2Score = default, string cvssV3Score = default, string cvssVersion = default, float? effectiveCvssScore = default, int? effectiveCvssVersion = default, string effectiveVectorString = default, ExploitMaturityLevel? effectiveExploitMaturity = default, IEnumerable<CvssScore> cvssScores = default, IEnumerable<CveLink> links = default, string description = default, EpssProperties epss = default, IEnumerable<CweProperties> cwes = default, KevProperties kev = default, IEnumerable<string> fixedInVersions = default, FirmwareProvisioningState? provisioningState = default)
+        public static CveResult CveResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string cveId = default, string componentId = default, string componentName = default, string componentVersion = default, string severity = default, string cveName = default, CveComponent component = default, string cvssScore = default, string cvssV2Score = default, string cvssV3Score = default, string cvssVersion = default, float? effectiveCvssScore = default, int? effectiveCvssVersion = default, string effectiveVectorString = default, ExploitMaturityLevel? effectiveExploitMaturity = default, IEnumerable<CvssScore> cvssScores = default, IEnumerable<CveLink> links = default, string description = default, EpssProperties epss = default, IEnumerable<CweProperties> cwes = default, KevProperties kev = default, IEnumerable<string> fixedInVersions = default, DateTimeOffset? publishedOn = default, FirmwareProvisioningState? provisioningState = default)
         {
             return new CveResult(
                 id,
                 name,
                 resourceType,
                 systemData,
-                cveId is null && componentId is null && componentName is null && componentVersion is null && severity is null && cveName is null && component is null && cvssScore is null && cvssV2Score is null && cvssV3Score is null && cvssVersion is null && effectiveCvssScore is null && effectiveCvssVersion is null && effectiveVectorString is null && effectiveExploitMaturity is null && cvssScores is null && links is null && description is null && epss is null && cwes is null && kev is null && fixedInVersions is null && provisioningState is null ? default : new CveResultProperties(
+                cveId is null && componentId is null && componentName is null && componentVersion is null && severity is null && cveName is null && component is null && cvssScore is null && cvssV2Score is null && cvssV3Score is null && cvssVersion is null && effectiveCvssScore is null && effectiveCvssVersion is null && effectiveVectorString is null && effectiveExploitMaturity is null && cvssScores is null && links is null && description is null && epss is null && cwes is null && kev is null && fixedInVersions is null && publishedOn is null && provisioningState is null ? default : new CveResultProperties(
                     cveId,
                     componentId,
                     componentName,
@@ -388,6 +407,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     (cwes ?? new ChangeTrackingList<CweProperties>()).ToList(),
                     kev,
                     (fixedInVersions ?? new ChangeTrackingList<string>()).ToList(),
+                    publishedOn,
                     provisioningState,
                     default),
                 default);
@@ -451,6 +471,99 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         public static KevProperties KevProperties(RansomwareCampaignUse? knownRansomwareCampaignUse = default, DateTimeOffset? addedOn = default, DateTimeOffset? remediationDueOn = default, string requiredAction = default)
         {
             return new KevProperties(knownRansomwareCampaignUse, addedOn, remediationDueOn, requiredAction, default);
+        }
+
+        /// <summary> The object representing a firmware analysis CVE rescan result resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.LatestCveResource"/> instance for mocking. </returns>
+        public static LatestCveResource LatestCveResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, LatestCveResult properties = default)
+        {
+            return new LatestCveResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <summary> Details of a CVE rescan result, including how it changed relative to the prior CVE analysis. </summary>
+        /// <param name="cveId"> ID of the CVE result. </param>
+        /// <param name="componentId"> ID of the affected SBOM component. </param>
+        /// <param name="componentName"> Name of the affected SBOM component. </param>
+        /// <param name="componentVersion"> Version of the affected SBOM component. </param>
+        /// <param name="severity"> Severity of the CVE. </param>
+        /// <param name="cveName"> Name of the CVE. </param>
+        /// <param name="component"> Legacy property for what is now componentName. </param>
+        /// <param name="cvssScore"> Legacy property for the effective CVE score (deprecated). </param>
+        /// <param name="cvssV2Score"> Legacy property for the CVE CVSS version 2 score, if one existed. (deprecated). </param>
+        /// <param name="cvssV3Score"> Legacy property for the CVE CVSS version 3 score, if one existed. (deprecated). </param>
+        /// <param name="cvssVersion"> Legacy property for the what CVSS version score was stored in the cvssScore property (deprecated). </param>
+        /// <param name="effectiveCvssScore"> The most recent CVSS score of the CVE. </param>
+        /// <param name="effectiveCvssVersion"> The version of the effectiveCvssScore property. </param>
+        /// <param name="effectiveVectorString"> The CVSS vector string for the effectiveCvssVersion. </param>
+        /// <param name="effectiveExploitMaturity"> The CVSS exploit maturity value for the effectiveCvssVersion. </param>
+        /// <param name="cvssScores"> All known CVSS scores for the CVE. </param>
+        /// <param name="links"> The list of reference links for the CVE. </param>
+        /// <param name="description"> The CVE description. </param>
+        /// <param name="epss"> EPSS (Exploit Prediction Scoring System) information related to this CVE. </param>
+        /// <param name="cwes"> CWE (Common Weakness Enumeration) information related to this CVE. </param>
+        /// <param name="kev"> KEV (Known Exploited Vulnerabilities) information related to this CVE. </param>
+        /// <param name="fixedInVersions"> The component versions in which this weakness was fixed, if any. </param>
+        /// <param name="publishedOn"> The date the CVE was published. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="changeStatus"> Describes how this CVE changed relative to the prior CVE analysis. </param>
+        /// <param name="modifications"> The fields that changed relative to the prior CVE analysis. </param>
+        /// <returns> A new <see cref="Models.LatestCveResult"/> instance for mocking. </returns>
+        public static LatestCveResult LatestCveResult(string cveId = default, string componentId = default, string componentName = default, string componentVersion = default, string severity = default, string cveName = default, CveComponent component = default, string cvssScore = default, string cvssV2Score = default, string cvssV3Score = default, string cvssVersion = default, float? effectiveCvssScore = default, int? effectiveCvssVersion = default, string effectiveVectorString = default, ExploitMaturityLevel? effectiveExploitMaturity = default, IEnumerable<CvssScore> cvssScores = default, IEnumerable<CveLink> links = default, string description = default, EpssProperties epss = default, IEnumerable<CweProperties> cwes = default, KevProperties kev = default, IEnumerable<string> fixedInVersions = default, DateTimeOffset? publishedOn = default, FirmwareProvisioningState? provisioningState = default, ChangeStatus? changeStatus = default, IEnumerable<CveModification> modifications = default)
+        {
+            cvssScores ??= new ChangeTrackingList<CvssScore>();
+            links ??= new ChangeTrackingList<CveLink>();
+            cwes ??= new ChangeTrackingList<CweProperties>();
+            fixedInVersions ??= new ChangeTrackingList<string>();
+            modifications ??= new ChangeTrackingList<CveModification>();
+
+            return new LatestCveResult(
+                cveId,
+                componentId,
+                componentName,
+                componentVersion,
+                severity,
+                cveName,
+                component,
+                cvssScore,
+                cvssV2Score,
+                cvssV3Score,
+                cvssVersion,
+                effectiveCvssScore,
+                effectiveCvssVersion,
+                effectiveVectorString,
+                effectiveExploitMaturity,
+                (cvssScores ?? new ChangeTrackingList<CvssScore>()).ToList(),
+                (links ?? new ChangeTrackingList<CveLink>()).ToList(),
+                description,
+                epss,
+                (cwes ?? new ChangeTrackingList<CweProperties>()).ToList(),
+                kev,
+                (fixedInVersions ?? new ChangeTrackingList<string>()).ToList(),
+                publishedOn,
+                provisioningState,
+                changeStatus,
+                (modifications ?? new ChangeTrackingList<CveModification>()).ToList(),
+                default);
+        }
+
+        /// <summary> Describes a single field that changed value between this rescan and the prior CVE analysis. </summary>
+        /// <param name="fieldName"> The name of the field that changed. Always the swagger field name. </param>
+        /// <param name="riskTrend"> The risk trend resulting from the change to this field. </param>
+        /// <returns> A new <see cref="Models.CveModification"/> instance for mocking. </returns>
+        public static CveModification CveModification(string fieldName = default, RiskTrend riskTrend = default)
+        {
+            return new CveModification(fieldName, riskTrend, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -535,7 +648,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         /// <summary>
         /// Properties of an analysis summary.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BinaryHardeningSummary"/>, <see cref="Models.CryptoCertificateSummary"/>, <see cref="Models.CryptoKeySummary"/>, <see cref="Models.CveAnalysisSummary"/>, <see cref="Models.CveSummary"/>, <see cref="Models.FirmwareSummary"/>, <see cref="Models.PasswordHashSummary"/>, <see cref="Models.SbomSummary"/>, and <see cref="Models.UnsafeFunctionCallsSummary"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BinaryHardeningSummary"/>, <see cref="Models.CryptoCertificateSummary"/>, <see cref="Models.CryptoKeySummary"/>, <see cref="Models.CveAnalysisSummary"/>, <see cref="Models.CveSummary"/>, <see cref="Models.FirmwareSummary"/>, <see cref="Models.LatestCveSummaryResource"/>, <see cref="Models.PasswordHashSummary"/>, <see cref="Models.SbomSummary"/>, and <see cref="Models.UnsafeFunctionCallsSummary"/>.
         /// </summary>
         /// <param name="summaryType"> The type of summary. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
@@ -669,8 +782,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="lowCveCount"> The total number of low severity CVEs detected. </param>
         /// <param name="unknownCveCount"> The total number of unknown severity CVEs detected. </param>
         /// <param name="schemaVersion"> Schema version of the CVE data for this firmware. </param>
+        /// <param name="cisaKevCount"> Total number of CVEs found in the CISA KEV (Known Exploited Vulnerabilities) catalog. </param>
         /// <returns> A new <see cref="Models.CveAnalysisSummary"/> instance for mocking. </returns>
-        public static CveAnalysisSummary CveAnalysisSummary(FirmwareProvisioningState? provisioningState = default, long? totalCveCount = default, long? criticalCveCount = default, long? highCveCount = default, long? mediumCveCount = default, long? lowCveCount = default, long? unknownCveCount = default, string schemaVersion = default)
+        public static CveAnalysisSummary CveAnalysisSummary(FirmwareProvisioningState? provisioningState = default, long? totalCveCount = default, long? criticalCveCount = default, long? highCveCount = default, long? mediumCveCount = default, long? lowCveCount = default, long? unknownCveCount = default, string schemaVersion = default, long? cisaKevCount = default)
         {
             return new CveAnalysisSummary(
                 FirmwareAnalysisSummaryType.Cve,
@@ -682,7 +796,51 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 mediumCveCount,
                 lowCveCount,
                 unknownCveCount,
-                schemaVersion);
+                schemaVersion,
+                cisaKevCount);
+        }
+
+        /// <summary> Properties for a CVE rescan analysis summary, describing the difference between this rescan and the prior CVE analysis. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="totalCveCount"> Total number of CVEs found. </param>
+        /// <param name="criticalCveCount"> The total number of critical severity CVEs detected. </param>
+        /// <param name="highCveCount"> The total number of high severity CVEs detected. </param>
+        /// <param name="mediumCveCount"> The total number of medium severity CVEs detected. </param>
+        /// <param name="lowCveCount"> The total number of low severity CVEs detected. </param>
+        /// <param name="unknownCveCount"> The total number of unknown severity CVEs detected. </param>
+        /// <param name="cisaKevCount"> Total number of CVEs found in the CISA KEV (Known Exploited Vulnerabilities) catalog. </param>
+        /// <param name="schemaVersion"> Schema version of the CVE data for this firmware. </param>
+        /// <param name="rescanStatus"> The status of the CVE rescan. </param>
+        /// <param name="diffCriticalCveCount"> The change in the number of critical severity CVEs detected since the prior CVE analysis. </param>
+        /// <param name="diffHighCveCount"> The change in the number of high severity CVEs detected since the prior CVE analysis. </param>
+        /// <param name="diffMediumCveCount"> The change in the number of medium severity CVEs detected since the prior CVE analysis. </param>
+        /// <param name="diffLowCveCount"> The change in the number of low severity CVEs detected since the prior CVE analysis. </param>
+        /// <param name="diffUnknownCveCount"> The change in the number of unknown severity CVEs detected since the prior CVE analysis. </param>
+        /// <param name="diffCisaKevCount"> The change in the number of CVEs found in the CISA KEV (Known Exploited Vulnerabilities) catalog since the prior CVE analysis. </param>
+        /// <param name="lastCveDatabaseUpdate"> The timestamp of the last update to the CVE database used for this rescan. </param>
+        /// <returns> A new <see cref="Models.LatestCveSummaryResource"/> instance for mocking. </returns>
+        public static LatestCveSummaryResource LatestCveSummaryResource(FirmwareProvisioningState? provisioningState = default, long? totalCveCount = default, long? criticalCveCount = default, long? highCveCount = default, long? mediumCveCount = default, long? lowCveCount = default, long? unknownCveCount = default, long? cisaKevCount = default, string schemaVersion = default, RescanStatus? rescanStatus = default, long? diffCriticalCveCount = default, long? diffHighCveCount = default, long? diffMediumCveCount = default, long? diffLowCveCount = default, long? diffUnknownCveCount = default, long? diffCisaKevCount = default, DateTimeOffset? lastCveDatabaseUpdate = default)
+        {
+            return new LatestCveSummaryResource(
+                FirmwareAnalysisSummaryType.LatestCve,
+                provisioningState,
+                default,
+                totalCveCount,
+                criticalCveCount,
+                highCveCount,
+                mediumCveCount,
+                lowCveCount,
+                unknownCveCount,
+                cisaKevCount,
+                schemaVersion,
+                rescanStatus,
+                diffCriticalCveCount,
+                diffHighCveCount,
+                diffMediumCveCount,
+                diffLowCveCount,
+                diffUnknownCveCount,
+                diffCisaKevCount,
+                lastCveDatabaseUpdate);
         }
 
         /// <summary> Properties for SBOM analysis summary. </summary>
@@ -972,6 +1130,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     default,
                     default,
                     default,
+                    default,
                     default),
                 default);
         }
@@ -1150,6 +1309,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     (cvssScores ?? new ChangeTrackingList<CvssScore>()).ToList(),
                     (links ?? new ChangeTrackingList<CveLink>()).ToList(),
                     description,
+                    default,
                     default,
                     default,
                     default,

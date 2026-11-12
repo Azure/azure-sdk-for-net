@@ -33,6 +33,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         private const string PasswordHashValue = "PasswordHash";
         /// <summary> The summary contains information about the unsafe function call analysis results. </summary>
         private const string UnsafeFunctionCallsValue = "UnsafeFunctionCalls";
+        /// <summary> The summary contains information about the latest CVE rescan analysis results. </summary>
+        private const string LatestCveValue = "LatestCve";
 
         /// <summary> Initializes a new instance of <see cref="FirmwareAnalysisSummaryType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -70,6 +72,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         /// <summary> The summary contains information about the unsafe function call analysis results. </summary>
         public static FirmwareAnalysisSummaryType UnsafeFunctionCalls { get; } = new FirmwareAnalysisSummaryType(UnsafeFunctionCallsValue);
+
+        /// <summary> The summary contains information about the latest CVE rescan analysis results. </summary>
+        public static FirmwareAnalysisSummaryType LatestCve { get; } = new FirmwareAnalysisSummaryType(LatestCveValue);
 
         /// <summary> Determines if two <see cref="FirmwareAnalysisSummaryType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

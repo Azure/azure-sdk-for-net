@@ -49,9 +49,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="cwes"> CWE (Common Weakness Enumeration) information related to this CVE. </param>
         /// <param name="kev"> KEV (Known Exploited Vulnerabilities) information related to this CVE. </param>
         /// <param name="fixedInVersions"> The component versions in which this weakness was fixed, if any. </param>
+        /// <param name="publishedOn"> The date the CVE was published. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CveResultProperties(string cveId, string componentId, string componentName, string componentVersion, string severity, string cveName, CveComponent component, string cvssScore, string cvssV2Score, string cvssV3Score, string cvssVersion, float? effectiveCvssScore, int? effectiveCvssVersion, string effectiveVectorString, ExploitMaturityLevel? effectiveExploitMaturity, IList<CvssScore> cvssScores, IReadOnlyList<CveLink> links, string description, EpssProperties epss, IList<CweProperties> cwes, KevProperties kev, IList<string> fixedInVersions, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CveResultProperties(string cveId, string componentId, string componentName, string componentVersion, string severity, string cveName, CveComponent component, string cvssScore, string cvssV2Score, string cvssV3Score, string cvssVersion, float? effectiveCvssScore, int? effectiveCvssVersion, string effectiveVectorString, ExploitMaturityLevel? effectiveExploitMaturity, IList<CvssScore> cvssScores, IReadOnlyList<CveLink> links, string description, EpssProperties epss, IList<CweProperties> cwes, KevProperties kev, IList<string> fixedInVersions, DateTimeOffset? publishedOn, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CveId = cveId;
             ComponentId = componentId;
@@ -75,6 +76,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Cwes = cwes;
             Kev = kev;
             FixedInVersions = fixedInVersions;
+            PublishedOn = publishedOn;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -144,6 +146,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         /// <summary> The component versions in which this weakness was fixed, if any. </summary>
         public IList<string> FixedInVersions { get; } = new ChangeTrackingList<string>();
+
+        /// <summary> The date the CVE was published. </summary>
+        public DateTimeOffset? PublishedOn { get; set; }
 
         /// <summary> The status of the last operation. </summary>
         public FirmwareProvisioningState? ProvisioningState { get; }

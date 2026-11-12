@@ -34,6 +34,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         private readonly CryptoKeys _cryptoKeysRestClient;
         private readonly ClientDiagnostics _cvesClientDiagnostics;
         private readonly Cves _cvesRestClient;
+        private readonly ClientDiagnostics _latestCvesClientDiagnostics;
+        private readonly LatestCves _latestCvesRestClient;
         private readonly ClientDiagnostics _passwordHashesClientDiagnostics;
         private readonly PasswordHashes _passwordHashesRestClient;
         private readonly ClientDiagnostics _sbomComponentsClientDiagnostics;
@@ -65,21 +67,23 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             TryGetApiVersion(ResourceType, out string iotFirmwareApiVersion);
             _firmwaresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ResourceType.Namespace, Diagnostics);
-            _firmwaresRestClient = new Firmwares(_firmwaresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotFirmwareApiVersion ?? "2026-06-01-preview");
+            _firmwaresRestClient = new Firmwares(_firmwaresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotFirmwareApiVersion ?? "2026-10-01-preview");
             _binaryHardeningClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ResourceType.Namespace, Diagnostics);
-            _binaryHardeningRestClient = new BinaryHardening(_binaryHardeningClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotFirmwareApiVersion ?? "2026-06-01-preview");
+            _binaryHardeningRestClient = new BinaryHardening(_binaryHardeningClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotFirmwareApiVersion ?? "2026-10-01-preview");
             _cryptoCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ResourceType.Namespace, Diagnostics);
-            _cryptoCertificatesRestClient = new CryptoCertificates(_cryptoCertificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotFirmwareApiVersion ?? "2026-06-01-preview");
+            _cryptoCertificatesRestClient = new CryptoCertificates(_cryptoCertificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotFirmwareApiVersion ?? "2026-10-01-preview");
             _cryptoKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ResourceType.Namespace, Diagnostics);
-            _cryptoKeysRestClient = new CryptoKeys(_cryptoKeysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotFirmwareApiVersion ?? "2026-06-01-preview");
+            _cryptoKeysRestClient = new CryptoKeys(_cryptoKeysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotFirmwareApiVersion ?? "2026-10-01-preview");
             _cvesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ResourceType.Namespace, Diagnostics);
-            _cvesRestClient = new Cves(_cvesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotFirmwareApiVersion ?? "2026-06-01-preview");
+            _cvesRestClient = new Cves(_cvesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotFirmwareApiVersion ?? "2026-10-01-preview");
+            _latestCvesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ResourceType.Namespace, Diagnostics);
+            _latestCvesRestClient = new LatestCves(_latestCvesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotFirmwareApiVersion ?? "2026-10-01-preview");
             _passwordHashesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ResourceType.Namespace, Diagnostics);
-            _passwordHashesRestClient = new PasswordHashes(_passwordHashesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotFirmwareApiVersion ?? "2026-06-01-preview");
+            _passwordHashesRestClient = new PasswordHashes(_passwordHashesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotFirmwareApiVersion ?? "2026-10-01-preview");
             _sbomComponentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ResourceType.Namespace, Diagnostics);
-            _sbomComponentsRestClient = new SbomComponents(_sbomComponentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotFirmwareApiVersion ?? "2026-06-01-preview");
+            _sbomComponentsRestClient = new SbomComponents(_sbomComponentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotFirmwareApiVersion ?? "2026-10-01-preview");
             _unsafeFunctionCallsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ResourceType.Namespace, Diagnostics);
-            _unsafeFunctionCallsRestClient = new UnsafeFunctionCalls(_unsafeFunctionCallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotFirmwareApiVersion ?? "2026-06-01-preview");
+            _unsafeFunctionCallsRestClient = new UnsafeFunctionCalls(_unsafeFunctionCallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotFirmwareApiVersion ?? "2026-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -133,7 +137,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -181,7 +185,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -229,7 +233,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -281,7 +285,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -333,7 +337,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -384,7 +388,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -435,7 +439,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -474,7 +478,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -513,7 +517,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -552,7 +556,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -591,7 +595,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -630,7 +634,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -669,7 +673,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -708,7 +712,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -735,6 +739,84 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary>
+        /// Lists the latest CVE analysis results of a firmware, including how each CVE changed relative to the prior CVE analysis.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/latestCves. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LatestCves_ListByFirmware. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotFirmwareResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="LatestCveResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<LatestCveResource> GetByFirmwareAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new LatestCveResourceAsyncCollectionResultOfT(
+                _latestCvesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "IotFirmwareResource.GetByFirmware");
+        }
+
+        /// <summary>
+        /// Lists the latest CVE analysis results of a firmware, including how each CVE changed relative to the prior CVE analysis.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/latestCves. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> LatestCves_ListByFirmware. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-10-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="IotFirmwareResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="LatestCveResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<LatestCveResource> GetByFirmware(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new LatestCveResourceCollectionResultOfT(
+                _latestCvesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Parent.Name,
+                Id.Name,
+                context,
+                "IotFirmwareResource.GetByFirmware");
+        }
+
+        /// <summary>
         /// Lists password hash analysis results of a firmware.
         /// <list type="bullet">
         /// <item>
@@ -747,7 +829,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -786,7 +868,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -825,7 +907,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -864,7 +946,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -903,7 +985,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -942,7 +1024,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

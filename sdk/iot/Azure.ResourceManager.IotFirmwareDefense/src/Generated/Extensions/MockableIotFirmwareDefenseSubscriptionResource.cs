@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
 
         private ClientDiagnostics WorkspacesClientDiagnostics => _workspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(WorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.IoTFirmwareDefense/workspaces", out string apiVersion) ? apiVersion : "2026-06-01-preview");
+        private Workspaces WorkspacesRestClient => _workspacesRestClient ??= new Workspaces(WorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.IoTFirmwareDefense/workspaces", out string apiVersion) ? apiVersion : "2026-10-01-preview");
 
         /// <summary>
         /// Lists all of the firmware analysis workspaces in the specified subscription.
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

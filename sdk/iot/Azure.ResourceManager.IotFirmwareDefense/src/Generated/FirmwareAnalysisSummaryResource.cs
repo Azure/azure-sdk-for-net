@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
             TryGetApiVersion(ResourceType, out string firmwareAnalysisSummaryApiVersion);
             _summariesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotFirmwareDefense", ResourceType.Namespace, Diagnostics);
-            _summariesRestClient = new Summaries(_summariesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, firmwareAnalysisSummaryApiVersion ?? "2026-06-01-preview");
+            _summariesRestClient = new Summaries(_summariesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, firmwareAnalysisSummaryApiVersion ?? "2026-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01-preview. </description>
+        /// <description> 2026-10-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

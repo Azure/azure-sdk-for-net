@@ -380,6 +380,23 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
         }
 
+        /// <summary> The date the CVE was published. </summary>
+        public DateTimeOffset? PublishedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublishedOn;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CveResultProperties();
+                }
+                Properties.PublishedOn = value;
+            }
+        }
+
         /// <summary> The status of the last operation. </summary>
         public FirmwareProvisioningState? ProvisioningState
         {

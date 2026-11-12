@@ -29,7 +29,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="lowCveCount"> The total number of low severity CVEs detected. </param>
         /// <param name="unknownCveCount"> The total number of unknown severity CVEs detected. </param>
         /// <param name="schemaVersion"> Schema version of the CVE data for this firmware. </param>
-        internal CveAnalysisSummary(FirmwareAnalysisSummaryType summaryType, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? totalCveCount, long? criticalCveCount, long? highCveCount, long? mediumCveCount, long? lowCveCount, long? unknownCveCount, string schemaVersion) : base(summaryType, provisioningState, additionalBinaryDataProperties)
+        /// <param name="cisaKevCount"> Total number of CVEs found in the CISA KEV (Known Exploited Vulnerabilities) catalog. </param>
+        internal CveAnalysisSummary(FirmwareAnalysisSummaryType summaryType, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? totalCveCount, long? criticalCveCount, long? highCveCount, long? mediumCveCount, long? lowCveCount, long? unknownCveCount, string schemaVersion, long? cisaKevCount) : base(summaryType, provisioningState, additionalBinaryDataProperties)
         {
             TotalCveCount = totalCveCount;
             CriticalCveCount = criticalCveCount;
@@ -38,6 +39,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             LowCveCount = lowCveCount;
             UnknownCveCount = unknownCveCount;
             SchemaVersion = schemaVersion;
+            CisaKevCount = cisaKevCount;
         }
 
         /// <summary> Total number of CVEs found. </summary>
@@ -60,5 +62,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         /// <summary> Schema version of the CVE data for this firmware. </summary>
         public string SchemaVersion { get; set; }
+
+        /// <summary> Total number of CVEs found in the CISA KEV (Known Exploited Vulnerabilities) catalog. </summary>
+        public long? CisaKevCount { get; set; }
     }
 }
