@@ -61,6 +61,14 @@ stages:
           variables:
             - template: /eng/pipelines/templates/variables/globals.yml
             - template: /eng/pipelines/templates/variables/image.yml
+            # Post-merge CI (IndividualCI) is an auto-release, so the AutoReleasePrepare stage exists. Pass its SDK PR on
+            # so completion updates the release plan linked to it. Manual releases have no SDK PR.
+            - ${{ if eq(variables['Build.Reason'], 'IndividualCI') }}:
+              - name: AutoReleaseSdkPullRequestUrl
+                value: $[ stageDependencies.AutoReleasePrepare.ResolveAutoReleasePackages.outputs['resolve.AutoReleaseSdkPullRequestUrl'] ]
+            - ${{ else }}:
+              - name: AutoReleaseSdkPullRequestUrl
+                value: ''
           displayName: 'Release: ${{artifact.name}}'
           ${{ if eq(variables['Build.Reason'], 'IndividualCI') }}:
             # Auto-release path: only release when the merged PR is labeled and changed this package.
