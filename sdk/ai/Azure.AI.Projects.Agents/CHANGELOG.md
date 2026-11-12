@@ -7,6 +7,7 @@
 - Renamed `GenerateVoiceAgentRequest` to `GenerateVoiceAgentContent` and `UpdateToolboxRequest` to `UpdateToolboxContent`.
 - Removed the `AgentCard(string, IEnumerable<AgentCardSkill>)` and `VersionSelector(IEnumerable<VersionSelectionRule>)` constructors. Use the parameterless constructors and set `Version`/`Skills` and `VersionSelectionRules` with initializers.
 - `TelephonyTransferTarget` constructor no longer takes `name`; set the `Name` property instead.
+- `VoiceAgentDefinition`, `VoiceAgentEventGridPostCallDestination`, `VoiceAgentPostCallConfig`, `VoiceAgentPostCallDestination`, `VoiceAgentPostCallIncludeOption` and `VoiceAgentRoutinePostCallDestination` were temporary removed.
 
 ### Bugs Fixed
 - Fixed the cancellation of `ToolboxRecord` update.
