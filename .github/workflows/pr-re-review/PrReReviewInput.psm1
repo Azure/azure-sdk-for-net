@@ -15,12 +15,125 @@ function Invoke-PrReReviewGhApi {
     return ($output -join "`n")
 }
 
+function Test-PrReReviewRelativePath {
+    param([AllowNull()][AllowEmptyString()][string]$Path)
+
+    if (!$Path -or $Path -match '[\\:\p{Cc}]') { return $false }
+    foreach ($segment in $Path.Split('/')) {
+        if ($segment -cin @('', '.', '..')) { return $false }
+    }
+    return $true
+}
+
+function Test-PrReReviewApiPath {
+    param([AllowNull()][AllowEmptyString()][string]$Path)
+
+    return (Test-PrReReviewRelativePath $Path) -and $Path -cmatch '^sdk/(?:[^/]+/)*api/[^/]+\.cs$'
+}
+
+function Get-PrReReviewApiRoots {
+    param([object[]]$Files)
+
+    $roots = [System.Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+    foreach ($file in $Files) {
+        foreach ($path in @($file.filename, $file.previous_filename)) {
+            if (Test-PrReReviewApiPath $path) {
+                [void]$roots.Add($path.Substring(0, $path.LastIndexOf('/api/', [StringComparison]::Ordinal)))
+            }
+        }
+    }
+    return ,$roots
+}
+
+function Test-PrReReviewSourcePath {
+    param([string]$Path, [System.Collections.Generic.HashSet[string]]$Roots)
+
+    if (Test-PrReReviewApiPath $Path) { return $false }
+    if (!$Path.EndsWith('.cs', [StringComparison]::Ordinal)) { return $false }
+    foreach ($root in $Roots) {
+        if ($Path.StartsWith("$root/src/", [StringComparison]::Ordinal)) { return $true }
+    }
+    return $false
+}
+
+function Get-PrReReviewNewLineRanges {
+    param([AllowNull()]$Patch)
+
+    # GitHub patch snippets contain complete unified hunks. Fail closed on malformed or
+    # truncated hunks rather than fabricating a publishable line (especially line zero).
+    if ($Patch -isnot [string] -or !$Patch) { return ,@() }
+    $ranges = [System.Collections.Generic.List[object]]::new()
+    $oldRemaining = 0
+    $newRemaining = 0
+    $seenHunk = $false
+    $lines = $Patch -split "`n"
+    for ($i = 0; $i -lt $lines.Count; $i++) {
+        $line = $lines[$i].TrimEnd("`r")
+        if ($i -eq $lines.Count - 1 -and $line -ceq '') { continue }
+        if ($line -cmatch '^@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@(?: .*)?$') {
+            if ($oldRemaining -ne 0 -or $newRemaining -ne 0) { return ,@() }
+            $oldStart = $newStart = $oldCount = $newCount = 0
+            if (![int]::TryParse($Matches[1], [ref]$oldStart) -or ![int]::TryParse($Matches[3], [ref]$newStart)) { return ,@() }
+            if ($Matches[2]) {
+                if (![int]::TryParse($Matches[2], [ref]$oldCount)) { return ,@() }
+            } else { $oldCount = 1 }
+            if ($Matches[4]) {
+                if (![int]::TryParse($Matches[4], [ref]$newCount)) { return ,@() }
+            } else { $newCount = 1 }
+            if (($oldCount -gt 0 -and $oldStart -eq 0) -or ($newCount -gt 0 -and $newStart -eq 0)) { return ,@() }
+            $end = [long]$newStart + $newCount - 1
+            if ($end -gt [int]::MaxValue) { return ,@() }
+            if ($newCount -gt 0) { $ranges.Add([ordered]@{ start = $newStart; end = [int]$end }) }
+            $oldRemaining = $oldCount
+            $newRemaining = $newCount
+            $seenHunk = $true
+        } elseif ($seenHunk -and $line -ceq '\ No newline at end of file') {
+            continue
+        } elseif ($seenHunk -and $line.Length -gt 0) {
+            switch -CaseSensitive ($line[0]) {
+                ' ' { $oldRemaining--; $newRemaining-- }
+                '-' { $oldRemaining-- }
+                '+' { $newRemaining-- }
+                default { return ,@() }
+            }
+            if ($oldRemaining -lt 0 -or $newRemaining -lt 0) { return ,@() }
+        } else { return ,@() }
+    }
+    if (!$seenHunk -or $oldRemaining -ne 0 -or $newRemaining -ne 0) { return ,@() }
+    return ,$ranges.ToArray()
+}
+
+function Get-PrReReviewApiScope {
+    param([Parameter(Mandatory)][AllowEmptyCollection()][object[]]$Files)
+
+    $apiFiles = @($Files | Where-Object { (Test-PrReReviewApiPath $_.filename) -or (Test-PrReReviewApiPath $_.previous_filename) })
+    $paths = [System.Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+    foreach ($file in $apiFiles) {
+        if (!(Test-PrReReviewRelativePath $file.filename) -or ($file.previous_filename -and !(Test-PrReReviewRelativePath $file.previous_filename))) {
+            throw 'An API change has an invalid repository-relative path.'
+        }
+        if (!$paths.Add($file.filename)) { throw "Duplicate API path '$($file.filename)'." }
+    }
+    $roots = Get-PrReReviewApiRoots $apiFiles
+    # A publishing allowlist, not a symbol map: the agent must inspect source to justify an anchor.
+    $targets = [System.Collections.Generic.List[object]]::new()
+    $paths.Clear()
+    foreach ($file in $Files) {
+        if (!$file.filename -or !(Test-PrReReviewSourcePath $file.filename $roots)) { continue }
+        if (!(Test-PrReReviewRelativePath $file.filename)) { throw "Invalid source path '$($file.filename)'." }
+        if (!$paths.Add($file.filename)) { throw "Duplicate source path '$($file.filename)'." }
+        $targets.Add([ordered]@{ path = [string]$file.filename; lineRanges = (Get-PrReReviewNewLineRanges $file.patch) })
+    }
+    return [pscustomobject]@{ ApiFiles = $apiFiles; InlineTargets = $targets.ToArray() }
+}
+
 function Get-PrReReviewPullRequestInput {
     param(
         [Parameter(Mandatory)][string]$Repository,
         [Parameter(Mandatory)][int]$Number,
         [Parameter(Mandatory)][string]$ExpectedHeadSha,
-        [Parameter(Mandatory)][string]$ExpectedBaseSha
+        [Parameter(Mandatory)][string]$ExpectedBaseSha,
+        [switch]$ApiOnly
     )
 
     $pullRequest = ConvertFrom-Json (Invoke-PrReReviewGhApi @("repos/$Repository/pulls/$Number"))
@@ -37,6 +150,13 @@ function Get-PrReReviewPullRequestInput {
     if ($after.head.sha -cne $ExpectedHeadSha -or $after.base.sha -cne $ExpectedBaseSha) {
         throw "The pull request head or base changed while listing files: expected $ExpectedHeadSha/$ExpectedBaseSha, got $($after.head.sha)/$($after.base.sha)."
     }
+    $prChangedFiles = $files.Count
+    $inlineTargets = @()
+    if ($ApiOnly) {
+        $scope = Get-PrReReviewApiScope -Files $files
+        $files = $scope.ApiFiles
+        $inlineTargets = $scope.InlineTargets
+    }
     $mergeBaseSha = ''
     $missingExistingPatches = @($files | Where-Object { $null -eq $_.patch -and $_.status -cne 'added' })
     if ($missingExistingPatches.Count -gt 0) {
@@ -47,7 +167,7 @@ function Get-PrReReviewPullRequestInput {
             throw 'GitHub did not return a valid merge-base commit for the pull request.'
         }
     }
-    return [pscustomobject]@{ HeadSha = $ExpectedHeadSha; MergeBaseSha = $mergeBaseSha; Files = $files }
+    return [pscustomobject]@{ HeadSha = $ExpectedHeadSha; MergeBaseSha = $mergeBaseSha; Files = $files; PrChangedFiles = $prChangedFiles; InlineTargets = $inlineTargets }
 }
 
 function Assert-PrReReviewCurrentState {
@@ -83,7 +203,10 @@ function Export-PrReReviewInput {
         [Parameter(Mandatory)][string]$HeadSha,
         [AllowEmptyString()][string]$MergeBaseSha = '',
         [Parameter(Mandatory)][string]$InputDirectory,
-        [Parameter(Mandatory)][string]$MarkersPath
+        [Parameter(Mandatory)][string]$MarkersPath,
+        [switch]$ApiOnly,
+        [AllowEmptyCollection()][object[]]$InlineTargets = @(),
+        [int]$PrChangedFiles
     )
 
     $separators = [char[]]@([IO.Path]::DirectorySeparatorChar, [IO.Path]::AltDirectorySeparatorChar)
@@ -91,6 +214,31 @@ function Export-PrReReviewInput {
     $markersFullPath = [IO.Path]::GetFullPath($MarkersPath)
     if ($markersFullPath.StartsWith($visibleRoot, [StringComparison]::OrdinalIgnoreCase)) {
         throw "The markers file must be written outside the agent-visible directory '$InputDirectory'."
+    }
+
+    if ($ApiOnly) {
+        if (!$PSBoundParameters.ContainsKey('PrChangedFiles')) { $PrChangedFiles = $Files.Count }
+        if ($PrChangedFiles -lt $Files.Count) { throw 'The full PR changed-file count cannot be less than the supplied file count.' }
+        $scope = Get-PrReReviewApiScope -Files $Files
+        $Files = $scope.ApiFiles
+        if (!$PSBoundParameters.ContainsKey('InlineTargets')) { $InlineTargets = $scope.InlineTargets }
+        $roots = Get-PrReReviewApiRoots $Files
+        $paths = [System.Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+        $safeTargets = @(foreach ($target in $InlineTargets) {
+            if (!(Test-PrReReviewRelativePath $target.path) -or !(Test-PrReReviewSourcePath $target.path $roots)) {
+                throw 'An inline target is not a valid source path in the API package scope.'
+            }
+            if (!$paths.Add($target.path)) { throw "Duplicate inline target '$($target.path)'." }
+            $ranges = @(foreach ($range in $target.lineRanges) {
+                if (($range.start -isnot [int] -and $range.start -isnot [long]) -or
+                    ($range.end -isnot [int] -and $range.end -isnot [long]) -or
+                    $range.start -lt 1 -or $range.end -lt $range.start -or $range.end -gt [int]::MaxValue) {
+                    throw "Invalid inline line range for '$($target.path)'."
+                }
+                [ordered]@{ start = [int]$range.start; end = [int]$range.end }
+            })
+            [ordered]@{ path = [string]$target.path; lineRanges = $ranges }
+        })
     }
 
     [void][IO.Directory]::CreateDirectory((Join-Path $InputDirectory 'patches'))
@@ -195,8 +343,18 @@ function Export-PrReReviewInput {
         $markers.Add([ordered]@{ path = [string]$file.filename; marker = $marker; chunks = $chunks.ToArray() })
     }
 
-    [IO.File]::WriteAllText((Join-Path $InputDirectory 'files.json'), (ConvertTo-Json -InputObject ([ordered]@{ headSha = $HeadSha; files = $list.ToArray() }) -Depth 5))
-    [IO.File]::WriteAllText($markersFullPath, (ConvertTo-Json -InputObject ([ordered]@{ headSha = $HeadSha; files = $markers.ToArray() }) -Depth 10))
+    $index = [ordered]@{ headSha = $HeadSha; files = $list.ToArray() }
+    $markerIndex = [ordered]@{ headSha = $HeadSha; files = $markers.ToArray() }
+    if ($ApiOnly) {
+        $sourceFilesPath = [IO.Path]::GetFullPath((Join-Path $InputDirectory 'source-files.json'))
+        $index.scope = 'api'
+        $index.prChangedFiles = $PrChangedFiles
+        $index.sourceFilesPath = $sourceFilesPath
+        $markerIndex.scope = 'api'
+        [IO.File]::WriteAllText($sourceFilesPath, (ConvertTo-Json -InputObject ([ordered]@{ headSha = $HeadSha; files = $safeTargets }) -Depth 5))
+    }
+    [IO.File]::WriteAllText((Join-Path $InputDirectory 'files.json'), (ConvertTo-Json -InputObject $index -Depth 5))
+    [IO.File]::WriteAllText($markersFullPath, (ConvertTo-Json -InputObject $markerIndex -Depth 10))
 }
 
-Export-ModuleMember -Function Invoke-PrReReviewGhApi, Get-PrReReviewPullRequestInput, Assert-PrReReviewCurrentState, Get-PrReReviewHeadContent, Export-PrReReviewInput
+Export-ModuleMember -Function Invoke-PrReReviewGhApi, Test-PrReReviewApiPath, Get-PrReReviewApiScope, Get-PrReReviewPullRequestInput, Assert-PrReReviewCurrentState, Get-PrReReviewHeadContent, Export-PrReReviewInput
