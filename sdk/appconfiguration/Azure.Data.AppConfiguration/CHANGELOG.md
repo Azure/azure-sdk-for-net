@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Added Microsoft Entra audience inference for App Configuration staging endpoints that use regional DNS (`*.appconfig-stage.azure.com`). These endpoints now use the staging audience instead of falling back to the Azure Public Cloud audience.
+
 ## 1.11.1 (2026-08-18)
 
 ### Bugs Fixed
