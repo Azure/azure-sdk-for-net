@@ -97,6 +97,14 @@ namespace Azure.ResourceManager.PrivateDns.Models
             return new PrivateDnsTxtRecordInfo((values ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Reference to another subresource. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <returns> A new <see cref="Models.PrivateDnsSubResourceInfo"/> instance for mocking. </returns>
+        public static PrivateDnsSubResourceInfo PrivateDnsSubResourceInfo(ResourceIdentifier id = default)
+        {
+            return new PrivateDnsSubResourceInfo(id, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -113,7 +121,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
         /// <param name="internalId"> Private zone internal Id. </param>
         /// <param name="eTag"> The ETag of the zone. </param>
         /// <returns> A new <see cref="PrivateDns.PrivateDnsZoneData"/> instance for mocking. </returns>
-        public static PrivateDnsZoneData PrivateDnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, long? maxNumberOfRecords, long? numberOfRecords, long? maxNumberOfVirtualNetworkLinks, long? numberOfVirtualNetworkLinks, long? maxNumberOfVirtualNetworkLinksWithRegistration, long? numberOfVirtualNetworkLinksWithRegistration, PrivateDnsProvisioningState? privateDnsProvisioningState, string internalId, ETag? eTag)
+        public static PrivateDnsZoneData PrivateDnsZoneData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, long? maxNumberOfRecords = default, long? numberOfRecords = default, long? maxNumberOfVirtualNetworkLinks = default, long? numberOfVirtualNetworkLinks = default, long? maxNumberOfVirtualNetworkLinksWithRegistration = default, long? numberOfVirtualNetworkLinksWithRegistration = default, PrivateDnsProvisioningState? privateDnsProvisioningState = default, string internalId = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -138,6 +146,30 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 default);
         }
 
+        /// <param name="targetResources"> A list of references to azure resources for which referencing private DNS records need to be queried. </param>
+        /// <returns> A new <see cref="Models.PrivateDnsResourceReferenceContent"/> instance for mocking. </returns>
+        public static PrivateDnsResourceReferenceContent PrivateDnsResourceReferenceContent(IEnumerable<PrivateDnsSubResourceInfo> targetResources = default)
+        {
+            return new PrivateDnsResourceReferenceContent(targetResources is null ? default : new PrivateDnsResourceReferenceRequestProperties((targetResources ?? new ChangeTrackingList<PrivateDnsSubResourceInfo>()).ToList(), default), default);
+        }
+
+        /// <param name="privateDnsResourceReferences"> The result of private dns resource reference request. A list of private dns resource references for each of the azure resource in the request. </param>
+        /// <returns> A new <see cref="Models.PrivateDnsResourceReferenceResult"/> instance for mocking. </returns>
+        public static PrivateDnsResourceReferenceResult PrivateDnsResourceReferenceResult(IEnumerable<PrivateDnsResourceReference> privateDnsResourceReferences = default)
+        {
+            return new PrivateDnsResourceReferenceResult(privateDnsResourceReferences is null ? default : new PrivateDnsResourceReferenceResultProperties((privateDnsResourceReferences ?? new ChangeTrackingList<PrivateDnsResourceReference>()).ToList(), default), default);
+        }
+
+        /// <param name="privateDnsResources"> A list of private DNS record sets that reference the target resource. </param>
+        /// <param name="targetResourceId"> Resource ID. </param>
+        /// <returns> A new <see cref="Models.PrivateDnsResourceReference"/> instance for mocking. </returns>
+        public static PrivateDnsResourceReference PrivateDnsResourceReference(IEnumerable<PrivateDnsSubResourceInfo> privateDnsResources = default, ResourceIdentifier targetResourceId = default)
+        {
+            privateDnsResources ??= new ChangeTrackingList<PrivateDnsSubResourceInfo>();
+
+            return new PrivateDnsResourceReference((privateDnsResources ?? new ChangeTrackingList<PrivateDnsSubResourceInfo>()).ToList(), targetResourceId is null ? default : new PrivateDnsSubResourceInfo(targetResourceId, default), default);
+        }
+
         /// <summary> Describes a Private DNS zone. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -156,7 +188,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
         /// <param name="internalId"> Private zone internal Id. </param>
         /// <returns> A new <see cref="PrivateDns.PrivateDnsZoneData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PrivateDnsZoneData PrivateDnsZoneData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, long? maxNumberOfRecords = default, long? numberOfRecords = default, long? maxNumberOfVirtualNetworkLinks = default, long? numberOfVirtualNetworkLinks = default, long? maxNumberOfVirtualNetworkLinksWithRegistration = default, long? numberOfVirtualNetworkLinksWithRegistration = default, PrivateDnsProvisioningState? privateDnsProvisioningState = default, string internalId = default)
+        public static PrivateDnsZoneData PrivateDnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, long? maxNumberOfRecords, long? numberOfRecords, long? maxNumberOfVirtualNetworkLinks, long? numberOfVirtualNetworkLinks, long? maxNumberOfVirtualNetworkLinksWithRegistration, long? numberOfVirtualNetworkLinksWithRegistration, PrivateDnsProvisioningState? privateDnsProvisioningState, string internalId)
         {
             return new PrivateDnsZoneData(
                 id,

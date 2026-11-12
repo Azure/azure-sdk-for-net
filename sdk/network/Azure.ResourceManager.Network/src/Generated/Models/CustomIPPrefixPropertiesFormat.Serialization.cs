@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
@@ -95,10 +94,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("authorizationMessage"u8);
                 writer.WriteStringValue(AuthorizationMessage);
             }
-            if (Optional.IsDefined(CustomIPPrefixParent))
+            if (Optional.IsDefined(ParentCustomIPPrefix))
             {
                 writer.WritePropertyName("customIpPrefixParent"u8);
-                writer.WriteStringValue(CustomIPPrefixParent);
+                writer.WriteObjectValue(ParentCustomIPPrefix, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ChildCustomIPPrefixes))
             {
@@ -206,7 +205,7 @@ namespace Azure.ResourceManager.Network.Models
             string cidr = default;
             string signedMessage = default;
             string authorizationMessage = default;
-            ResourceIdentifier customIPPrefixParent = default;
+            NetworkSubResource parentCustomIPPrefix = default;
             IReadOnlyList<NetworkSubResource> childCustomIPPrefixes = default;
             CommissionedState? commissionedState = default;
             bool? expressRouteAdvertise = default;
@@ -246,7 +245,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    customIPPrefixParent = new ResourceIdentifier(prop.Value.GetString());
+                    parentCustomIPPrefix = NetworkSubResource.DeserializeNetworkSubResource(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("childCustomIpPrefixes"u8))
@@ -355,7 +354,7 @@ namespace Azure.ResourceManager.Network.Models
                 cidr,
                 signedMessage,
                 authorizationMessage,
-                customIPPrefixParent,
+                parentCustomIPPrefix,
                 childCustomIPPrefixes ?? new ChangeTrackingList<NetworkSubResource>(),
                 commissionedState,
                 expressRouteAdvertise,

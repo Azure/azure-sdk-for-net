@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> An object representing collection of ResourceGroupSecurityAlerts and their operations over a ResourceGroupSecurityAlertResource. </returns>
         public virtual ResourceGroupSecurityAlertCollection GetResourceGroupSecurityAlerts(AzureLocation ascLocation)
         {
-            return GetCachedClient(client => new ResourceGroupSecurityAlertCollection(client, Id, ascLocation));
+            return new ResourceGroupSecurityAlertCollection(Client, Id, ascLocation);
         }
 
         /// <summary>
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> An object representing collection of JitNetworkAccessPolicies and their operations over a JitNetworkAccessPolicyResource. </returns>
         public virtual JitNetworkAccessPolicyCollection GetJitNetworkAccessPolicies(AzureLocation ascLocation)
         {
-            return GetCachedClient(client => new JitNetworkAccessPolicyCollection(client, Id, ascLocation));
+            return new JitNetworkAccessPolicyCollection(Client, Id, ascLocation);
         }
 
         /// <summary>
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.SecurityCenter.Mocking
         /// <returns> An object representing collection of ResourceGroupSecurityTasks and their operations over a ResourceGroupSecurityTaskResource. </returns>
         public virtual ResourceGroupSecurityTaskCollection GetResourceGroupSecurityTasks(AzureLocation ascLocation)
         {
-            return GetCachedClient(client => new ResourceGroupSecurityTaskCollection(client, Id, ascLocation));
+            return new ResourceGroupSecurityTaskCollection(Client, Id, ascLocation);
         }
 
         /// <summary>

@@ -1642,7 +1642,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="residencyType"> DataResidencyType enum. </param>
         /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeDeviceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataBoxEdgeDeviceData DataBoxEdgeDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DataBoxEdgeSku sku = default, ETag? etag = default, ManagedServiceIdentity identity = default, DataBoxEdgeDeviceKind? kind = default, DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus = default, string serialNumber = default, string description = default, string modelDescription = default, DataBoxEdgeDeviceType? deviceType = default, string friendlyName = default, string culture = default, string deviceModel = default, string deviceSoftwareVersion = default, long? deviceLocalCapacity = default, string timeZone = default, string deviceHcsVersion = default, IEnumerable<DataBoxEdgeRoleType> configuredRoleTypes = default, int? nodeCount = default, DataBoxEdgeResourceMoveDetails resourceMoveDetails = default, EdgeProfileSubscription edgeSubscription = default, DataBoxEdgeDataResidencyType? residencyType = default)
+        public static DataBoxEdgeDeviceData DataBoxEdgeDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataBoxEdgeSku sku, ETag? etag, ManagedServiceIdentity identity, DataBoxEdgeDeviceKind? kind, DataBoxEdgeDeviceStatus? dataBoxEdgeDeviceStatus, string serialNumber, string description, string modelDescription, DataBoxEdgeDeviceType? deviceType, string friendlyName, string culture, string deviceModel, string deviceSoftwareVersion, long? deviceLocalCapacity, string timeZone, string deviceHcsVersion, IEnumerable<DataBoxEdgeRoleType> configuredRoleTypes, int? nodeCount, DataBoxEdgeResourceMoveDetails resourceMoveDetails, EdgeProfileSubscription edgeSubscription, DataBoxEdgeDataResidencyType? residencyType)
         {
             return new DataBoxEdgeDeviceData(
                 id,
@@ -1699,7 +1699,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="folder"> If only subfolders need to be refreshed, then the subfolder path inside the share or container. (The path is empty if there are no subfolders.). </param>
         /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeJobData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataBoxEdgeJobData DataBoxEdgeJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataBoxEdgeJobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, int? percentComplete = default, DataBoxEdgeJobErrorDetails error = default, DataBoxEdgeJobType? jobType = default, UpdateOperationStage? currentStage = default, UpdateDownloadProgress downloadProgress = default, UpdateInstallProgress installProgress = default, int? totalRefreshErrors = default, string errorManifestFile = default, ResourceIdentifier refreshedEntityId = default, string folder = default)
+        public static DataBoxEdgeJobData DataBoxEdgeJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, int? percentComplete, DataBoxEdgeJobErrorDetails error, DataBoxEdgeJobType? jobType, UpdateOperationStage? currentStage, UpdateDownloadProgress downloadProgress, UpdateInstallProgress installProgress, int? totalRefreshErrors, string errorManifestFile, ResourceIdentifier refreshedEntityId, string folder)
         {
             return new DataBoxEdgeJobData(
                 id,
@@ -1741,7 +1741,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="shipmentType"> ShipmentType of the order. </param>
         /// <returns> A new <see cref="DataBoxEdge.DataBoxEdgeOrderData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataBoxEdgeOrderData DataBoxEdgeOrderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string orderId = default, DataBoxEdgeContactDetails contactInformation = default, DataBoxEdgeShippingAddress shippingAddress = default, DataBoxEdgeOrderStatus currentStatus = default, IEnumerable<DataBoxEdgeOrderStatus> orderHistory = default, string serialNumber = default, IEnumerable<DataBoxEdgeTrackingInfo> deliveryTrackingInfo = default, IEnumerable<DataBoxEdgeTrackingInfo> returnTrackingInfo = default, DataBoxEdgeShipmentType? shipmentType = default)
+        public static DataBoxEdgeOrderData DataBoxEdgeOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string orderId, DataBoxEdgeContactDetails contactInformation, DataBoxEdgeShippingAddress shippingAddress, DataBoxEdgeOrderStatus currentStatus, IEnumerable<DataBoxEdgeOrderStatus> orderHistory, string serialNumber, IEnumerable<DataBoxEdgeTrackingInfo> deliveryTrackingInfo, IEnumerable<DataBoxEdgeTrackingInfo> returnTrackingInfo, DataBoxEdgeShipmentType? shipmentType)
         {
             return new DataBoxEdgeOrderData(
                 id,
@@ -1777,7 +1777,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="roleStatus"> Role status. </param>
         /// <returns> A new <see cref="Models.CloudEdgeManagementRole"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static CloudEdgeManagementRole CloudEdgeManagementRole(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DataBoxEdgeRoleStatus? localManagementStatus = default, EdgeProfileSubscription edgeSubscription = default, DataBoxEdgeRoleStatus? roleStatus = default)
+        public static CloudEdgeManagementRole CloudEdgeManagementRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleStatus? localManagementStatus, EdgeProfileSubscription edgeSubscription, DataBoxEdgeRoleStatus? roleStatus)
         {
             return new CloudEdgeManagementRole(
                 id,
@@ -1799,7 +1799,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="customContextTag"> A custom context tag typically used to correlate the trigger against its usage. For example, if a periodic timer trigger is intended for certain specific IoT modules in the device, the tag can be the name or the image URL of the module. </param>
         /// <returns> A new <see cref="Models.EdgeFileEventTrigger"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static EdgeFileEventTrigger EdgeFileEventTrigger(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier sourceInfoShareId = default, ResourceIdentifier sinkInfoRoleId = default, string customContextTag = default)
+        public static EdgeFileEventTrigger EdgeFileEventTrigger(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier sourceInfoShareId, ResourceIdentifier sinkInfoRoleId, string customContextTag)
         {
             return new EdgeFileEventTrigger(
                 id,
@@ -1816,7 +1816,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="version"> Load balancer version. </param>
         /// <returns> A new <see cref="Models.DataBoxEdgeLoadBalancerConfig"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataBoxEdgeLoadBalancerConfig DataBoxEdgeLoadBalancerConfig(string loadBalancerConfigType = default, string version = default)
+        public static DataBoxEdgeLoadBalancerConfig DataBoxEdgeLoadBalancerConfig(string loadBalancerConfigType, string version)
         {
             return new DataBoxEdgeLoadBalancerConfig(loadBalancerConfigType, version, default, default);
         }
@@ -1831,7 +1831,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="customContextTag"> A custom context tag typically used to correlate the trigger against its usage. For example, if a periodic timer trigger is intended for certain specific IoT modules in the device, the tag can be the name or the image URL of the module. </param>
         /// <returns> A new <see cref="Models.PeriodicTimerEventTrigger"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PeriodicTimerEventTrigger PeriodicTimerEventTrigger(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PeriodicTimerSourceInfo sourceInfo = default, ResourceIdentifier sinkInfoRoleId = default, string customContextTag = default)
+        public static PeriodicTimerEventTrigger PeriodicTimerEventTrigger(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PeriodicTimerSourceInfo sourceInfo, ResourceIdentifier sinkInfoRoleId, string customContextTag)
         {
             return new PeriodicTimerEventTrigger(
                 id,

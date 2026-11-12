@@ -727,7 +727,7 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         internal virtual ClientResult<TelephonyCallRecord> TransferTelephonyCall(string agentName, string callId, string target, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            TransferTelephonyCallRequest spreadModel = new TransferTelephonyCallRequest(target, default);
+            TransferTelephonyCallContent spreadModel = new TransferTelephonyCallContent(target, default);
             ClientResult result = TransferTelephonyCall(agentName, callId, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((TelephonyCallRecord)result, result.GetRawResponse());
         }
@@ -741,7 +741,7 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         internal virtual async Task<ClientResult<TelephonyCallRecord>> TransferTelephonyCallAsync(string agentName, string callId, string target, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            TransferTelephonyCallRequest spreadModel = new TransferTelephonyCallRequest(target, default);
+            TransferTelephonyCallContent spreadModel = new TransferTelephonyCallContent(target, default);
             ClientResult result = await TransferTelephonyCallAsync(agentName, callId, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((TelephonyCallRecord)result, result.GetRawResponse());
         }
@@ -981,7 +981,7 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         internal virtual ClientResult<TelephonyTransferTargets> ReplaceTelephonyTransferTargets(string agentName, string ifMatch, IEnumerable<TelephonyTransferTarget> transferTargets, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ReplaceTelephonyTransferTargetsRequest spreadModel = new ReplaceTelephonyTransferTargetsRequest(transferTargets?.ToList() as IList<TelephonyTransferTarget> ?? new ChangeTrackingList<TelephonyTransferTarget>(), default);
+            ReplaceTelephonyTransferTargetsContent spreadModel = new ReplaceTelephonyTransferTargetsContent(transferTargets?.ToList() as IList<TelephonyTransferTarget> ?? new ChangeTrackingList<TelephonyTransferTarget>(), default);
             ClientResult result = ReplaceTelephonyTransferTargets(agentName, ifMatch, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((TelephonyTransferTargets)result, result.GetRawResponse());
         }
@@ -995,7 +995,7 @@ namespace Azure.AI.Projects.Agents
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         internal virtual async Task<ClientResult<TelephonyTransferTargets>> ReplaceTelephonyTransferTargetsAsync(string agentName, string ifMatch, IEnumerable<TelephonyTransferTarget> transferTargets, AgentDefinitionOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
-            ReplaceTelephonyTransferTargetsRequest spreadModel = new ReplaceTelephonyTransferTargetsRequest(transferTargets?.ToList() as IList<TelephonyTransferTarget> ?? new ChangeTrackingList<TelephonyTransferTarget>(), default);
+            ReplaceTelephonyTransferTargetsContent spreadModel = new ReplaceTelephonyTransferTargetsContent(transferTargets?.ToList() as IList<TelephonyTransferTarget> ?? new ChangeTrackingList<TelephonyTransferTarget>(), default);
             ClientResult result = await ReplaceTelephonyTransferTargetsAsync(agentName, ifMatch, spreadModel, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((TelephonyTransferTargets)result, result.GetRawResponse());
         }

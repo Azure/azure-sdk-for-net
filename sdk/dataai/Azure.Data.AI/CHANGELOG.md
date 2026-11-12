@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,19 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2026-11-10)
+
+### Features Added
+
+- First stable release of the Azure.Data.AI client library for semantic reranking.
+- Supports the generally available service API version `2026-10-30`.
+
+### Breaking Changes
+
+- Renamed `SemanticRerankingInferenceContent` to `SemanticRerankingContent`, `SemanticRerankingInferenceResult` to `SemanticRerankingResult`, and `SemanticRerankingMetaResult` to `SemanticRerankingMetadata`, including the corresponding model factory methods.
+- Renamed the result's `Meta` property to `Metadata`; the JSON property remains `meta`.
+- Changed `TargetPaths` from a settable string to an `IList<string>` collection with an API contract limit of 100 paths.
 
 ## 1.0.0-beta.1 (2026-09-28)
 

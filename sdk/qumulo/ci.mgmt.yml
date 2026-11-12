@@ -8,6 +8,7 @@ trigger:
     - release/*
   paths:
     include:
+    - sdk/qumulo/Azure.Provisioning.Qumulo
     - sdk/qumulo/Azure.ResourceManager.Qumulo
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -15,5 +16,7 @@ extends:
     ServiceDirectory: qumulo
     LimitForPullRequest: true
     Artifacts:
+    - name: Azure.Provisioning.Qumulo
+      safeName: AzureProvisioningQumulo
     - name: Azure.ResourceManager.Qumulo
       safeName: AzureResourceManagerQumulo

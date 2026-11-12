@@ -81,6 +81,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         [Test]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/64511")]
         public async Task ClientThrowsWithNonExistingResourceEndpoint()
         {
             var client = CreateInstrumentedClient();

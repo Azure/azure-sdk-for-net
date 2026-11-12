@@ -29,7 +29,7 @@ namespace Azure.Provisioning.AppContainers
         private ManagedEnvironmentProperties _properties;
         private BicepValue<string> _kind;
         private ManagedServiceIdentity _identity;
-        private ResourceReference<ContainerAppManagedEnvironment> _parent;
+        private ProvisioningResourceReference<ContainerAppManagedEnvironment> _parent;
 
         /// <summary> Creates a new ContainerAppManagedEnvironmentDetectorResourceProperty. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -48,13 +48,18 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -529,7 +534,7 @@ namespace Azure.Provisioning.AppContainers
             _properties = DefineModelProperty<ManagedEnvironmentProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<ContainerAppManagedEnvironment>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<ContainerAppManagedEnvironment>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

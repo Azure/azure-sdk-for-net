@@ -203,7 +203,7 @@ Console.WriteLine(response.GetOutputText());
 
 Alternatively, we can stream the response.
 ```C# Snippet:Sample_WriteOutput_ResponseStreaming_Async
-await foreach (StreamingResponseUpdate streamResponse in responsesClient.CreateResponseStreamingAsync("What is the size of France in square miles?"))
+await foreach (StreamingResponseUpdate streamResponse in await responsesClient.CreateResponseStreamingAsync("What is the size of France in square miles?"))
 {
     if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
     {
@@ -537,7 +537,7 @@ Configure an Agent endpoint for Responses protocol.
 ```C# Snippet:Sample_CreateTheEndpoint_HostedAgent_Sync
 AgentEndpointConfiguration config = new()
 {
-    VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+    VersionSelector = new() { VersionSelectionRules = { new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100) } },
     ProtocolConfiguration = new()
     {
         Responses = new()
@@ -558,6 +558,42 @@ To use the `ProjectResponsesClient` with the endpoint, we need to get it using `
 ```C# Snippet:Sample_GetResponseFromAgentEndpoint_HostedAgent_Async
 ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
 ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
+Console.WriteLine(response.GetOutputText());
+```
+
+Hosted agent responses can be isolated per delegated user by sending the `x-ms-user-identity` header. To attribute responses to a specific identity, configure the response client with a policy that adds this header to each request.
+
+Create the policy, adding headers:
+
+```C# Snippet:Sample_IdentityHeader_HostedAgentIdentityIsolation
+internal class UserIdentityHeaderPolicy(string userIdentity) : PipelinePolicy
+{
+    private const string _imageDeploymentHeader = "x-ms-user-identity";
+
+    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+    {
+        message.Request.Headers.Add(_imageDeploymentHeader, userIdentity);
+        ProcessNext(message, pipeline, currentIndex);
+    }
+
+    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
+    {
+        // Add your desired header name and value
+        message.Request.Headers.Add(_imageDeploymentHeader, userIdentity);
+        await ProcessNextAsync(message, pipeline, currentIndex);
+    }
+}
+```
+
+Get the response for specific user identity:
+
+```C# Snippet:Sample_GetResponseFromAgentEndpointUser1_HostedAgentIdentityIsolation_Async
+string userID1 = Guid.NewGuid().ToString();
+string userID2 = Guid.NewGuid().ToString();
+ProjectOpenAIClientOptions options = new();
+options.AddPolicy(new UserIdentityHeaderPolicy(userID1), PipelinePosition.PerCall);
+ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name, options: options);
+ResponseResult response = await responseClient.CreateResponseAsync("1 + 1 = ?");
 Console.WriteLine(response.GetOutputText());
 ```
 
@@ -788,7 +824,7 @@ do
         if (responseItem is ComputerCallResponseItem computerCall)
         {
             currentScreenshot = ProcessComputerUseCall(computerCall, currentScreenshot);
-            responseOptions.InputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageFileId: screenshots[currentScreenshot])));
+            responseOptions.InputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateComputerScreenshotOutput(screenshotImageFileId: screenshots[currentScreenshot])));
         }
     }
     limitIteration--;
@@ -1064,7 +1100,7 @@ ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClien
 The Web search tool also can use the custom Bing instances to perform more specific search.
 **Note:** Please do not set `userLocation` parameter in the `CreateWebSearchTool` method as it will result in regular Web search.
 
-```C# Snippet:Sample_CreateAgent_WebSearchCustomStreaming_Sync
+```C# Snippet:Sample_CreateAgent_WebSearchCustomStreaming_Async
 AIProjectConnection bingConnection = projectClient.Connections.GetConnection(connectionName: connectionName);
 WebSearchTool webSearchTool = ResponseTool.CreateWebSearchTool();
 webSearchTool.CustomSearchConfiguration = new(bingConnection.Id, customInstanceName);
@@ -1073,7 +1109,7 @@ DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
     Instructions = "You are a helpful agent.",
     Tools = { webSearchTool }
 };
-ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
+ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
     options: new(agentDefinition));
 ```
@@ -1186,7 +1222,7 @@ ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetPro
 
 string annotation = "";
 string text = "";
-await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync("What is the temperature rating of the cozynights sleeping bag?"))
+await foreach (StreamingResponseUpdate streamResponse in await responseClient.CreateResponseStreamingAsync("What is the temperature rating of the cozynights sleeping bag?"))
 {
     if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
     {
@@ -1252,7 +1288,7 @@ ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetPro
 
 string annotation = "";
 string text = "";
-await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync("How does wikipedia explain Euler's Identity?"))
+await foreach (StreamingResponseUpdate streamResponse in await responseClient.CreateResponseStreamingAsync("How does wikipedia explain Euler's Identity?"))
 {
     if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
     {
@@ -1564,7 +1600,7 @@ CreateResponseOptions responseOptions = new()
             "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
     }
 };
-await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(responseOptions))
+await foreach (StreamingResponseUpdate update in await responseClient.CreateResponseStreamingAsync(responseOptions))
 {
     ParseResponse(update);
 }
@@ -1579,7 +1615,7 @@ await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName:
 #### Browser automation preview tool
 
 Along with `BrowserAutomationTool`, Azure.AI.Extensions.OpenAI contain `BrowserAutomationPreviewTool`, which has the same functionality as `BrowserAutomationTool`.
-This tool was released to preview the functionality, please use the stable version of the tool.
+This tool was released to preview the functionality and is now deprecated, please use the stable version of the tool.
 
 `BrowserAutomationPreviewTool` uses a Serverless Model connection as opposed to the Browser Automation connection used by `BrowserAutomationTool`. Please follow the steps below to create it.
 

@@ -12,9 +12,13 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Common writable subresource representation used by the previous C# AutoRest projection. </summary>
-    public partial class NetworkWritableResourceData : NetworkSubResource
+    /// <summary> Common resource representation. </summary>
+    public partial class NetworkWritableResourceData
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected string _name;
+
         /// <summary> Initializes a new instance of <see cref="NetworkWritableResourceData"/>. </summary>
         public NetworkWritableResourceData()
         {
@@ -22,14 +26,20 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="NetworkWritableResourceData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
-        internal NetworkWritableResourceData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType) : base(id, additionalBinaryDataProperties)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkWritableResourceData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Id = id;
             Name = name;
             ResourceType = resourceType;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("id")]
+        public ResourceIdentifier Id { get; set; }
 
         /// <summary> Resource name. </summary>
         [WirePath("name")]

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -25,10 +26,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Name of the resource. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="properties"> Properties of the VpnServerConfigurationPolicyGroup. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal VpnServerConfigurationPolicyGroupData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, VpnServerConfigurationPolicyGroupProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
+        internal VpnServerConfigurationPolicyGroupData(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, ResourceType? resourceType, VpnServerConfigurationPolicyGroupProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, resourceType)
         {
             Properties = properties;
             ETag = eTag;
@@ -89,6 +90,20 @@ namespace Azure.ResourceManager.Network
                     Properties = new VpnServerConfigurationPolicyGroupProperties();
                 }
                 return Properties.PolicyMembers;
+            }
+        }
+
+        /// <summary> List of references to P2SConnectionConfigurations. </summary>
+        [WirePath("properties.p2SConnectionConfigurations")]
+        public IReadOnlyList<WritableSubResource> P2SConnectionConfigurations
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnServerConfigurationPolicyGroupProperties();
+                }
+                return Properties.P2SConnectionConfigurations;
             }
         }
 

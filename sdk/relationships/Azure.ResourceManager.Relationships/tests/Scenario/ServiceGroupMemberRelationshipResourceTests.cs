@@ -15,7 +15,8 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
     /// <summary>
     /// Tests for ServiceGroupMember relationship resource operations.
     /// A ServiceGroupMember relationship makes an ARM resource a member of a Service Group.
-    /// The relationship is created ON the member resource, with targetId pointing to the Service Group.
+    /// The relationship is created on the member resource, with sourceId pointing to the Service Group
+    /// and targetId pointing to the member.
     /// </summary>
     public class ServiceGroupMemberRelationshipResourceTests : RelationshipsManagementTestBase
     {
@@ -59,12 +60,12 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
         private async Task<ServiceGroupMemberRelationshipResource> CreateRelationshipAsync(
             ServiceGroupMemberRelationshipCollection collection,
             string name,
-            ResourceIdentifier sourceId,
-            ResourceIdentifier targetId)
+            ResourceIdentifier memberResourceId,
+            ResourceIdentifier serviceGroupId)
         {
             var data = new ServiceGroupMemberRelationshipData
             {
-                Properties = ArmRelationshipsModelFactory.ServiceGroupMemberRelationshipProperties(sourceId, targetId, null, null, null, null)
+                Properties = ArmRelationshipsModelFactory.ServiceGroupMemberRelationshipProperties(serviceGroupId, memberResourceId, null, null, null, null)
             };
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
             return lro.Value;
@@ -73,8 +74,8 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
         [RecordedTest]
         public async Task Get()
         {
-            // source resource group becomes a member of target service group.
-            // The relationship lives on the source resource's scope.
+            // The resource group becomes a member of the Service Group.
+            // The relationship lives on the member resource's scope.
             _target = await CreateServiceGroup("sg-");
             _source = await CreateResourceGroup(DefaultSubscription, "rg-member-", AzureLocation.WestUS);
 
@@ -89,8 +90,8 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
             Assert.IsNotNull(retrieved.Value.Data);
             Assert.AreEqual(relationshipName, retrieved.Value.Data.Name);
             Assert.AreEqual(ServiceGroupMemberRelationshipResource.ResourceType, retrieved.Value.Data.ResourceType);
-            Assert.AreEqual(_source.Id, retrieved.Value.Data.Properties.SourceId);
-            Assert.AreEqual(_target.Id, retrieved.Value.Data.Properties.TargetId);
+            Assert.AreEqual(_target.Id, retrieved.Value.Data.Properties.SourceId);
+            Assert.AreEqual(_source.Id, retrieved.Value.Data.Properties.TargetId);
         }
 
         [RecordedTest]
@@ -131,8 +132,8 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
             Assert.IsNotNull(retrieved.Value);
             Assert.AreEqual(relationshipName, retrieved.Value.Data.Name);
             Assert.AreEqual(ServiceGroupMemberRelationshipResource.ResourceType, retrieved.Value.Data.ResourceType);
-            Assert.AreEqual(DefaultSubscription.Id, retrieved.Value.Data.Properties.SourceId);
-            Assert.AreEqual(_target.Id, retrieved.Value.Data.Properties.TargetId);
+            Assert.AreEqual(_target.Id, retrieved.Value.Data.Properties.SourceId);
+            Assert.AreEqual(DefaultSubscription.Id, retrieved.Value.Data.Properties.TargetId);
         }
 
         /// <summary>
@@ -155,8 +156,8 @@ namespace Azure.ResourceManager.Relationships.Tests.Scenario
             Assert.IsNotNull(retrieved.Value);
             Assert.AreEqual(relationshipName, retrieved.Value.Data.Name);
             Assert.AreEqual(ServiceGroupMemberRelationshipResource.ResourceType, retrieved.Value.Data.ResourceType);
-            Assert.AreEqual(vault.Id, retrieved.Value.Data.Properties.SourceId);
-            Assert.AreEqual(_target.Id, retrieved.Value.Data.Properties.TargetId);
+            Assert.AreEqual(_target.Id, retrieved.Value.Data.Properties.SourceId);
+            Assert.AreEqual(vault.Id, retrieved.Value.Data.Properties.TargetId);
         }
     }
 }

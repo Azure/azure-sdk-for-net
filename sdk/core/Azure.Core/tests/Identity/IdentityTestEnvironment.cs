@@ -3,9 +3,8 @@
 
 using System.IO;
 using Azure.Core.TestFramework;
-using NUnit.Framework;
-
 using Azure.Identity;
+using NUnit.Framework;
 namespace Azure.Core.Tests.Identity
 {
     public class IdentityTestEnvironment : TestEnvironment
@@ -23,6 +22,10 @@ namespace Azure.Core.Tests.Identity
         public string IMDSEnable => GetRecordedOptionalVariable("IDENTITYTEST_IMDSTEST_ENABLE");
         public string IMDSClientId => GetRecordedOptionalVariable("IDENTITYTEST_IMDSTEST_CLIENTID");
         public string ArcEnable => GetRecordedOptionalVariable("IDENTITYTEST_ARCTEST_ENABLE");
+        public string ArcClientId => GetOptionalVariable("IDENTITYTEST_ARCTEST_CLIENTID");
+        public string ArcResourceId => GetOptionalVariable("IDENTITYTEST_ARCTEST_RESOURCEID");
+        public string ArcObjectId => GetOptionalVariable("IDENTITYTEST_ARCTEST_OBJECTID");
+        public string ArcUnassignedClientId => GetOptionalVariable("IDENTITYTEST_ARCTEST_UNASSIGNEDCLIENTID");
         public string SFEnable => GetRecordedOptionalVariable("IDENTITYTEST_SFTEST_ENABLE");
         public string IdentityEndpoint => GetRecordedOptionalVariable("IDENTITY_ENDPOINT");
         public string ImdsEndpoint => GetRecordedOptionalVariable("IMDS_ENDPOINT");

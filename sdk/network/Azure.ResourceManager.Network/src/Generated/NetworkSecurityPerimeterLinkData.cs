@@ -69,6 +69,16 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Remote NSP Guid with which the link gets created. </summary>
+        [WirePath("properties.remotePerimeterGuid")]
+        public Guid? RemotePerimeterGuid
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RemotePerimeterGuid;
+            }
+        }
+
         /// <summary> Remote NSP location with which the link gets created. </summary>
         [WirePath("properties.remotePerimeterLocation")]
         public string RemotePerimeterLocation

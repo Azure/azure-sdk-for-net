@@ -24,12 +24,12 @@ namespace Azure.Provisioning.Network
         private BicepValue<ETag> _eTag;
         private BicepValue<AzureLocation> _location;
         private BicepDictionary<string> _tags;
-        private ResourceReference<NetworkWatcher> _parent;
+        private ProvisioningResourceReference<NetworkWatcher> _parent;
 
         /// <summary> Creates a new ConnectionMonitor. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public ConnectionMonitor(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/networkWatchers/connectionMonitors", resourceVersion ?? "2026-01-01")
+        public ConnectionMonitor(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/networkWatchers/connectionMonitors", resourceVersion ?? "2026-03-01")
         {
         }
 
@@ -354,7 +354,7 @@ namespace Azure.Provisioning.Network
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _parent = DefineResource<NetworkWatcher>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<NetworkWatcher>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 
@@ -374,6 +374,8 @@ namespace Azure.Provisioning.Network
         /// <summary></summary>
         public static partial class ResourceVersions
         {
+            /// <summary> API version "2026-03-01". </summary>
+            public static readonly string V2026_03_01 = "2026-03-01";
             /// <summary> API version "2026-01-01". </summary>
             public static readonly string V2026_01_01 = "2026-01-01";
             /// <summary> API version "2025-09-01". </summary>

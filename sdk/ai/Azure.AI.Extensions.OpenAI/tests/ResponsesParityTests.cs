@@ -252,13 +252,14 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
     }
 
     [RecordedTest]
+    [AsyncOnly]
     public async Task StreamingResponsesWork()
     {
         ProjectOpenAIClient client = GetTestProjectOpenAIClient();
         ProjectResponsesClient responseClient = client.GetProjectResponsesClientForModel(TestEnvironment.FOUNDRY_MODEL_NAME);
 
         List<StreamingResponseUpdate> streamedUpdates = [];
-        await foreach (StreamingResponseUpdate streamedUpdate in responseClient.CreateResponseStreamingAsync("Hello, model!"))
+        await foreach (StreamingResponseUpdate streamedUpdate in await responseClient.CreateResponseStreamingAsync("Hello, model!"))
         {
             Assert.That(streamedUpdate.SequenceNumber, Is.EqualTo(streamedUpdates.Count));
             streamedUpdates.Add(streamedUpdate);
@@ -331,13 +332,14 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
     [RecordedTest]
     [TestCase(OpenAIClientMode.UseFDPOpenAI)]
     [TestCase(OpenAIClientMode.UseExternalOpenAI)]
+    [AsyncOnly]
     public async Task GetResponseStreamingWorks(OpenAIClientMode clientMode)
     {
         ResponsesClient client = GetTestResponsesClient(clientMode);
 
         ResponseResult startedResponse = null;
         await foreach (StreamingResponseUpdate update
-            in client.CreateResponseStreamingAsync(
+            in await client.CreateResponseStreamingAsync(
                 new CreateResponseOptions()
                 {
                     Model = TestEnvironment.FOUNDRY_MODEL_NAME,
@@ -360,7 +362,7 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
         Assert.That(startedResponse.Status, Is.EqualTo(ResponseStatus.Queued).Or.EqualTo(ResponseStatus.InProgress));
 
         List<StreamingResponseUpdate> streamedUpdates = [];
-        await foreach (StreamingResponseUpdate responseUpdate in client.GetResponseStreamingAsync(startedResponse.Id))
+        await foreach (StreamingResponseUpdate responseUpdate in await client.GetResponseStreamingAsync(startedResponse.Id))
         {
             streamedUpdates.Add(responseUpdate);
         }

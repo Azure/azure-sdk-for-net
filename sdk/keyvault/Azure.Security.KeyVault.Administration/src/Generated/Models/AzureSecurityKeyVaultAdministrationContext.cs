@@ -38,7 +38,6 @@ namespace Azure.Security.KeyVault.Administration
     [ModelReaderWriterBuildable(typeof(SASTokenParameter))]
     [ModelReaderWriterBuildable(typeof(SelectiveKeyRestoreDetailsInternal))]
     [ModelReaderWriterBuildable(typeof(SelectiveKeyRestoreOperationParameters))]
-    [ModelReaderWriterBuildable(typeof(UpdateSettingRequest))]
     public partial class AzureSecurityKeyVaultAdministrationContext : ModelReaderWriterContext
     {
     }

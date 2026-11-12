@@ -1,6 +1,6 @@
 # Release History
 
-## 12.29.0-beta.1 (Unreleased)
+## 12.29.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,15 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.29.0-beta.1 (2026-11-05)
+
+### Bugs Fixed
+- Fixed SAS timestamp handling for non-UTC `DateTimeOffset` values. SAS times are now normalized to UTC before formatting/signing, preventing unintended validity windows in st/se (Start Time, Expiry Time) and related delegation key fields. Affected APIs include:
+  - `QueueClient.GenerateSasUri(...)`
+  - `QueueClient.GenerateUserDelegationSasUri(...)`
+  - `QueueServiceClient.GenerateAccountSasUri(...)`
+  - `QueueSasBuilder`
 
 ## 12.28.1 (2026-10-05)
 

@@ -321,7 +321,7 @@
 # ServiceOwners: @axisc @hmlam @j7nw4r @sagar0207 @sjkwak @SwayGom
 
 # PRLabel: %Functions %Service Bus
-/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/    @EldertGrootenboer @j7nw4r @sagar0207 @skarri-microsoft @SwayGom
+/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/    @EldertGrootenboer @j7nw4r @sagar0207 @skarri-microsoft @SwayGom @pranz1996
 
 # ServiceLabel: %Functions
 # ServiceOwners: @fabiocav @mathewc @alrod
@@ -438,10 +438,10 @@
 # ServiceOwners: @efrainretana @lc48t @mattgotteiner
 
 # PRLabel: %Service Bus
-/sdk/servicebus/    @EldertGrootenboer @j7nw4r @sagar0207 @skarri-microsoft @SwayGom
+/sdk/servicebus/    @EldertGrootenboer @j7nw4r @sagar0207 @skarri-microsoft @SwayGom @pranz1996
 
 # ServiceLabel: %Service Bus
-# ServiceOwners: @EldertGrootenboer @j7nw4r @sagar0207 @skarri-microsoft @SwayGom
+# ServiceOwners: @EldertGrootenboer @j7nw4r @sagar0207 @skarri-microsoft @SwayGom @pranz1996
 
 # PRLabel: %SignalR
 /sdk/signalr/    @chenkennt @JialinXin @vicancy @Y-Sindo
@@ -706,10 +706,10 @@
 # ServiceOwners: @jbhanuchand
 
 # PRLabel: %Device Registry
-/sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/          @atastrophic @rohankhandelwal @siongithub @mryanlo
+/sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/          @jobeland @chgennar @vascoveigams @siongithub
 
 # ServiceLabel: %Device Registry %Mgmt
-# ServiceOwners:                                                   @atastrophic @rohankhandelwal
+# ServiceOwners:                                                   @jobeland @chgennar @vascoveigams
 
 # PRLabel: %Device Update
 /sdk/deviceupdate/                                                 @wuqiten @devlie
@@ -722,6 +722,9 @@
 
 # ServiceLabel: %Durable Task Scheduler %Mgmt
 # ServiceOwners:                                                   @berndverst @kaibocai @torosent @philliphoff @cgillum
+
+# PRLabel: %Mgmt
+/sdk/edgeoperator/                                                @kleyvaortega
 
 # PRLabel: %Elastic
 /sdk/elastic/Azure.ResourceManager.Elastic/                        @ArthurMa1978
@@ -779,6 +782,9 @@
 
 # ServiceLabel: %NetApp Files %Mgmt
 # ServiceOwners:                                                   @audunn
+
+# PRLabel: %Network
+/sdk/networksecurity/    @Satya-Kotha1008 @thatmattlong
 
 # PRLabel: %Network - CDN
 /sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978
@@ -921,10 +927,10 @@
 /eng/centralpackagemanagement/Directory.Generation.Packages.props  @Azure/azure-sdk-write-net-core @JonathanGiles @ArthurMa1978 @jorgerangel-msft
 
 # Add owners for emitter version changes
-/eng/azure-typespec-http-client-csharp-emitter-package.json             @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
-/eng/azure-typespec-http-client-csharp-emitter-package-lock.json        @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
-/eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json        @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
-/eng/azure-typespec-http-client-csharp-mgmt-emitter-package-lock.json   @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
+/eng/azure-typespec-http-client-csharp-emitter-package.json             @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @alzimmermsft
+/eng/azure-typespec-http-client-csharp-emitter-package-lock.json        @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @alzimmermsft
+/eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json        @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @alzimmermsft
+/eng/azure-typespec-http-client-csharp-mgmt-emitter-package-lock.json   @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @alzimmermsft
 /eng/http-client-csharp-emitter-package.json                            @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
 /eng/http-client-csharp-emitter-package-lock.json                       @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
 
@@ -934,7 +940,7 @@
 /sdk/tools/Azure.GeneratorAgent/                                   @JoshLove-msft @radhgupta @jorgerangel-msft @MaiLinhP @JonathanCrd
 
 #PRLabel: %CodeGen %Client
-/eng/packages/http-client-csharp/                                  @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @JonathanGiles
+/eng/packages/http-client-csharp/                                  @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @JonathanGiles @alzimmermsft
 
 #PRLabel: %CodeGen %Mgmt
 /eng/packages/http-client-csharp-mgmt/                             @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang

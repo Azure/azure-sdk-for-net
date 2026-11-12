@@ -24,6 +24,8 @@ namespace Azure.Generator.Providers
 
         public override CSharpType ClientResponseOfTType => typeof(Response<>);
 
+        public override bool SupportsPageResumption => true;
+
         // There is no non-generic Pageable type. Instead we use Pageable<T> with T = BinaryData.
         public override CSharpType ClientCollectionResponseType => new CSharpType(typeof(Pageable<>), typeof(BinaryData));
         public override CSharpType ClientCollectionAsyncResponseType => new CSharpType(typeof(AsyncPageable<>), typeof(BinaryData));

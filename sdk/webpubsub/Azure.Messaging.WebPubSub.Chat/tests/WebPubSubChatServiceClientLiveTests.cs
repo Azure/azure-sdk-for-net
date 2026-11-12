@@ -250,9 +250,11 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
                 messageId = createdMessage.Id;
 
                 string updatedText = $"{messageText} updated";
-                var updatedMessage = new WebPubSubChatMessage(
-                    userId,
-                    new WebPubSubChatMessageContent { Text = updatedText });
+                var updatedMessage = new WebPubSubChatMessage
+                {
+                    CreatedBy = userId,
+                    Content = new WebPubSubChatMessageContent { Text = updatedText },
+                };
                 await _client.UpdateMessageAsync(conversationId, messageId, updatedMessage);
 
                 WebPubSubChatMessage fetchedMessage = null;

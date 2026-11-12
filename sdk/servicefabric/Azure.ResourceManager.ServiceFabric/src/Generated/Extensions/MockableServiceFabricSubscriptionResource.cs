@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ServiceFabric.Mocking
         /// <returns> An object representing collection of ServiceFabricVmSizeResources and their operations over a ServiceFabricVmSizeResource. </returns>
         public virtual ServiceFabricVmSizeResourceCollection GetServiceFabricVmSizeResources(AzureLocation location)
         {
-            return GetCachedClient(client => new ServiceFabricVmSizeResourceCollection(client, Id, location));
+            return new ServiceFabricVmSizeResourceCollection(Client, Id, location);
         }
 
         /// <summary>

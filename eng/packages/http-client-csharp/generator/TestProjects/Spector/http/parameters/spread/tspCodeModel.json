@@ -668,7 +668,6 @@
                 "$id": "56",
                 "name": "spreadAsRequestBody",
                 "isExactName": false,
-                "resourceName": "Model",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -808,7 +807,6 @@
                 "$id": "63",
                 "name": "spreadCompositeRequestOnlyWithBody",
                 "isExactName": false,
-                "resourceName": "Model",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -944,7 +942,6 @@
                 "$id": "69",
                 "name": "spreadCompositeRequestWithoutBody",
                 "isExactName": false,
-                "resourceName": "Model",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1086,7 +1083,6 @@
                 "$id": "79",
                 "name": "spreadCompositeRequest",
                 "isExactName": false,
-                "resourceName": "Model",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1321,7 +1317,6 @@
                 "$id": "93",
                 "name": "spreadCompositeRequestMix",
                 "isExactName": false,
-                "resourceName": "Model",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1610,7 +1605,6 @@
                 "$id": "112",
                 "name": "spreadAsRequestBody",
                 "isExactName": false,
-                "resourceName": "Alias",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1750,7 +1744,6 @@
                 "$id": "119",
                 "name": "spreadParameterWithInnerModel",
                 "isExactName": false,
-                "resourceName": "Alias",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1989,7 +1982,6 @@
                 "$id": "134",
                 "name": "spreadAsRequestParameter",
                 "isExactName": false,
-                "resourceName": "Alias",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2228,7 +2220,6 @@
                 "$id": "149",
                 "name": "spreadWithMultipleParameters",
                 "isExactName": false,
-                "resourceName": "Alias",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2530,7 +2521,6 @@
                 "$id": "168",
                 "name": "spreadParameterWithInnerAlias",
                 "isExactName": false,
-                "resourceName": "Alias",
                 "doc": "spread an alias with contains another alias property as body.",
                 "accessibility": "public",
                 "parameters": [

@@ -25,7 +25,6 @@ using OpenAI.Conversations;
 using OpenAI.Files;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
-using OpenTelemetry.Trace;
 
 namespace Azure.AI.Projects.Tests;
 #pragma warning disable OPENAICUA001
@@ -135,13 +134,14 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
+    [AsyncOnly]
     public async Task TestResponsesStreaming()
     {
         AIProjectClient projectClient = GetTestProjectClient();
         ProjectResponsesClient client = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForModel(TestEnvironment.FOUNDRY_MODEL_NAME);
         bool isCreated = false;
         bool textReceived = false;
-        await foreach (StreamingResponseUpdate streamResponse in client.CreateResponseStreamingAsync("What is steam reactor?"))
+        await foreach (StreamingResponseUpdate streamResponse in await client.CreateResponseStreamingAsync("What is steam reactor?"))
         {
             if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
             {
@@ -501,7 +501,9 @@ public class AgentsTests : AgentsTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
 
+#pragma warning disable CS0618 // Preserve test coverage for legacy workflow agents.
         ProjectsAgentDefinition workflowProjectsAgentDefinition = WorkflowAgentDefinition.FromYaml(s_HelloWorkflowYaml);
+#pragma warning restore CS0618
 
         ProjectsAgentVersion newProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             "TestWorkflowAgentFromDotnet234",
@@ -531,11 +533,14 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
+    [AsyncOnly]
     public async Task SimpleWorkflowAgentStreaming()
     {
         AIProjectClient projectClient = GetTestProjectClient();
 
+#pragma warning disable CS0618 // Preserve test coverage for legacy workflow agents.
         ProjectsAgentDefinition workflowProjectsAgentDefinition = WorkflowAgentDefinition.FromYaml(s_HelloWorkflowYaml);
+#pragma warning restore CS0618
 
         ProjectsAgentVersion newProjectsAgentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
             "TestWorkflowAgentFromDotnet234",
@@ -551,7 +556,7 @@ public class AgentsTests : AgentsTestBase
 
         AgentWorkflowPreviewActionResponseItem streamedWorkflowActionItem = null;
 
-        await foreach (StreamingResponseUpdate responseUpdate in responseClient.CreateResponseStreamingAsync("Hello, agent!"))
+        await foreach (StreamingResponseUpdate responseUpdate in await responseClient.CreateResponseStreamingAsync("Hello, agent!"))
         {
             if (responseUpdate is StreamingResponseOutputItemDoneUpdate itemDoneUpdate)
             {
@@ -941,6 +946,7 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
+    [AsyncOnly]
     [TestCase(ToolType.FileSearch)]
     [TestCase(ToolType.CodeInterpreter)]
     [TestCase(ToolType.CodeInterpreterGen)]
@@ -985,7 +991,7 @@ public class AgentsTests : AgentsTestBase
             StreamingEnabled = true,
         };
         bool updateFound = !ExpectedUpdateTypes.TryGetValue(toolType, out Type expectedUpdateType);
-        await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync(responseOptions))
+        await foreach (StreamingResponseUpdate streamResponse in await responseClient.CreateResponseStreamingAsync(responseOptions))
         {
             if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
             {
@@ -1163,6 +1169,7 @@ public class AgentsTests : AgentsTestBase
     }
 
     [RecordedTest]
+    [AsyncOnly]
     [TestCase(ToolType.FunctionCall)]
     [TestCase(ToolType.MCP)]
     [TestCase(ToolType.MCPConnection)]
@@ -1194,7 +1201,7 @@ public class AgentsTests : AgentsTestBase
 
         do
         {
-            await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync(nextResponseOptions))
+            await foreach (StreamingResponseUpdate streamResponse in await responseClient.CreateResponseStreamingAsync(nextResponseOptions))
             {
                 if (streamResponse is StreamingResponseCreatedUpdate createdUpdate)
                 {
@@ -1273,13 +1280,13 @@ public class AgentsTests : AgentsTestBase
         {
             if (currentScreenshotStr.StartsWith("data:image"))
             {
-                return ResponseItem.CreateComputerCallOutputItem(callId: item.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageUri: new Uri(currentScreenshotStr)));
+                return ResponseItem.CreateComputerCallOutputItem(callId: item.CallId, output: ComputerCallOutput.CreateComputerScreenshotOutput(screenshotImageUri: new Uri(currentScreenshotStr)));
             }
-            return ResponseItem.CreateComputerCallOutputItem(callId: item.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageFileId: currentScreenshotStr));
+            return ResponseItem.CreateComputerCallOutputItem(callId: item.CallId, output: ComputerCallOutput.CreateComputerScreenshotOutput(screenshotImageFileId: currentScreenshotStr));
         }
         if (currentScreenshot is BinaryData currentScreenshotBin)
         {
-            return ResponseItem.CreateComputerCallOutputItem(callId: item.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageBytes: currentScreenshotBin, screenshotImageBytesMediaType: "image/png"));
+            return ResponseItem.CreateComputerCallOutputItem(callId: item.CallId, output: ComputerCallOutput.CreateComputerScreenshotOutput(screenshotImageBytes: currentScreenshotBin, screenshotImageBytesMediaType: "image/png"));
         }
         throw new InvalidDataException("screenshots must be a Dictionary<string, string>, Dictionary<string, BinaryData>");
     }
@@ -1643,7 +1650,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(agentVersion.Status, Is.EqualTo(AgentVersionStatus.Active));
         AgentEndpointConfiguration config = new()
         {
-            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+            VersionSelector = new() { VersionSelectionRules = { new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100) } },
             ProtocolConfiguration = new()
             {
                 Responses = new()
@@ -1712,7 +1719,7 @@ public class AgentsTests : AgentsTestBase
         Assert.That(agentVersion.Status, Is.EqualTo(AgentVersionStatus.Active));
         AgentEndpointConfiguration config = new()
         {
-            VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100)]),
+            VersionSelector = new() { VersionSelectionRules = { new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100) } },
             ProtocolConfiguration = new()
             {
                 Responses = new()
@@ -1777,6 +1784,65 @@ public class AgentsTests : AgentsTestBase
         response = await responseClient.CreateResponseAsync(responseOptions);
         Assert.That(response.GetRawResponse().Headers, Does.Contain(new KeyValuePair<string, string>("x-agent-session-id", session.AgentSessionId)));
         Assert.That(response.Value.GetOutputText(), Is.Not.Empty);
+    }
+
+    [RecordedTest]
+    public async Task TestHostedAgentIdentity()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        HostedAgentDefinition agentDefinition = new(
+            versions: [new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "2.0.0")],
+            cpu: "0.5",
+            memory: "1Gi"
+        )
+        {
+            ContainerConfiguration = new(TestEnvironment.AGENT_DOCKER_IMAGE),
+        };
+        ProjectsAgentVersionCreationOptions creationOptions = new(agentDefinition);
+        creationOptions.Metadata["enableVnextExperience"] = "true";
+        ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
+            agentName: HOSTED_AGENT,
+            options: creationOptions);
+        while (agentVersion.Status != AgentVersionStatus.Active && agentVersion.Status != AgentVersionStatus.Failed)
+        {
+            await Delay();
+            agentVersion = await projectClient.AgentAdministrationClient.GetAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
+        }
+        Assert.That(agentVersion.Status, Is.EqualTo(AgentVersionStatus.Active));
+        AgentEndpointConfiguration config = new()
+        {
+            VersionSelector = new() { VersionSelectionRules = { new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 100) } },
+            ProtocolConfiguration = new()
+            {
+                Responses = new()
+            }
+        };
+        PatchAgentOptions patchOptions = new()
+        {
+            AgentEndpoint = config,
+        };
+        ProjectsAgentRecord patchedRecord = await projectClient.AgentAdministrationClient.PatchAgentAsync(
+            agentName: agentVersion.Name,
+            patchAgentOptions: patchOptions);
+        ProjectOpenAIClientOptions responsesOptions = CreateTestProjectOpenAIClientOptions(
+            apiVersion: "v1"
+        );
+        responsesOptions.AgentName = agentVersion.Name;
+        responsesOptions.AddPolicy(new UserIdentityHeaderPolicy("id1"), PipelinePosition.PerCall);
+        ProjectResponsesClient responseClient1 = CreateProxyFromClient(projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(patchedRecord.Name, options: responsesOptions));
+        ResponseResult response = await responseClient1.CreateResponseAsync("1 + 1 = ?");
+        Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);
+        // Another identity
+        responsesOptions = CreateTestProjectOpenAIClientOptions(
+            apiVersion: "v1"
+        );
+        responsesOptions.AgentName = agentVersion.Name;
+        responsesOptions.AddPolicy(new UserIdentityHeaderPolicy("id2"), PipelinePosition.PerCall);
+        ProjectResponsesClient responseClient2 = CreateProxyFromClient(projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(patchedRecord.Name, options: responsesOptions));
+        ClientResultException error = Assert.ThrowsAsync<ClientResultException>(async () => await responseClient2.CreateResponseAsync("Then add 10 to the previous result", previousResponseId: response.Id));
+        Assert.That(error.Status, Is.EqualTo(404));
+        response = await responseClient1.CreateResponseAsync("Then add 10 to the previous result", previousResponseId: response.Id);
+        Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);
     }
 
     [RecordedTest]
