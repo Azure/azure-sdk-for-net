@@ -265,6 +265,16 @@ stages:
                         ArtifactName: ${{parameters.ArtifactName}}
                         PackageName: ${{artifact.name}}
                         SourceRootPath: $(sdk-repo-path)
+                    # Log whether this is an auto-release or a manual release, and the auto-release SDK PR.
+                    - pwsh: |
+                        $type = if ($env:BUILD_REASON -eq 'IndividualCI') { 'auto-release' } else { 'manual release' }
+                        $pr = if ($env:AUTO_RELEASE_SDK_PR) { $env:AUTO_RELEASE_SDK_PR } else { 'none' }
+                        Write-Host "Release type: $type"
+                        Write-Host "Auto-release SDK PR: $pr"
+                      displayName: Show release type and auto-release SDK PR
+                      env:
+                        BUILD_REASON: $(Build.Reason)
+                        AUTO_RELEASE_SDK_PR: $(AutoReleaseSdkPullRequestUrl)
                     - template: /eng/common/pipelines/templates/steps/mark-release-completion.yml
                       parameters:
                         ConfigFileDir: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}/PackageInfo'
