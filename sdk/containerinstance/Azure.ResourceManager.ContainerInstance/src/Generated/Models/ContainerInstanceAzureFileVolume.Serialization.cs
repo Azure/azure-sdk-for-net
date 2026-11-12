@@ -98,6 +98,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WritePropertyName("storageAccountKeyReference"u8);
                 writer.WriteStringValue(StorageAccountKeyReference);
             }
+            if (Optional.IsDefined(UserManagedIdentityClientId))
+            {
+                writer.WritePropertyName("userManagedIdentityClientId"u8);
+                writer.WriteStringValue(UserManagedIdentityClientId);
+            }
             if (Optional.IsDefined(UserAssignedIdentityClientId))
             {
                 writer.WritePropertyName("userAssignedIdentityClientId"u8);
@@ -150,6 +155,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             string storageAccountName = default;
             string storageAccountKey = default;
             string storageAccountKeyReference = default;
+            string userManagedIdentityClientId = default;
             string userAssignedIdentityClientId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -183,6 +189,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     storageAccountKeyReference = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("userManagedIdentityClientId"u8))
+                {
+                    userManagedIdentityClientId = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("userAssignedIdentityClientId"u8))
                 {
                     userAssignedIdentityClientId = prop.Value.GetString();
@@ -199,6 +210,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 storageAccountName,
                 storageAccountKey,
                 storageAccountKeyReference,
+                userManagedIdentityClientId,
                 userAssignedIdentityClientId,
                 additionalBinaryDataProperties);
         }

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
 
         private ClientDiagnostics SubnetServiceAssociationLinkClientDiagnostics => _subnetServiceAssociationLinkClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerInstance.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SubnetServiceAssociationLink SubnetServiceAssociationLinkRestClient => _subnetServiceAssociationLinkRestClient ??= new SubnetServiceAssociationLink(SubnetServiceAssociationLinkClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+        private SubnetServiceAssociationLink SubnetServiceAssociationLinkRestClient => _subnetServiceAssociationLinkRestClient ??= new SubnetServiceAssociationLink(SubnetServiceAssociationLinkClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-01-preview");
 
         /// <summary> Gets an object representing a <see cref="ContainerGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -74,13 +74,13 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
             return new ContainerGroupProfileResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ContainerGroupSandboxResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="AiAgentsGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerGroupSandboxResource"/> object. </returns>
-        public virtual ContainerGroupSandboxResource GetContainerGroupSandboxResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AiAgentsGroupResource"/> object. </returns>
+        public virtual AiAgentsGroupResource GetAiAgentsGroupResource(ResourceIdentifier id)
         {
-            ContainerGroupSandboxResource.ValidateResourceId(id);
-            return new ContainerGroupSandboxResource(Client, id);
+            AiAgentsGroupResource.ValidateResourceId(id);
+            return new AiAgentsGroupResource(Client, id);
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-01. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
