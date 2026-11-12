@@ -3,6 +3,7 @@
   <PropertyGroup>
     <RequiredTargetFrameworks>$(LtsTargetFramework)</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+		<IsGeneratorLibrary>true</IsGeneratorLibrary>
   </PropertyGroup>
 
   <ItemGroup>
