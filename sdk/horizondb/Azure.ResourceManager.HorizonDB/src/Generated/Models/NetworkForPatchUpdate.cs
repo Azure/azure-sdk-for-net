@@ -32,5 +32,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Specifies whether public access is enabled for the cluster. Omission preserves the current value. </summary>
         public HorizonDBPublicNetworkAccessState? PublicAccess { get; set; }
+
+        internal bool IsNetworkForPatchUpdateEmptyForFlattening()
+        {
+            return true && PublicAccess is null && (_additionalBinaryDataProperties is null || _additionalBinaryDataProperties.Count == 0);
+        }
     }
 }

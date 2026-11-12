@@ -55,10 +55,7 @@ namespace Azure.ResourceManager.HorizonDB
             uri.AppendPath("/providers/Microsoft.HorizonDb/clusters/", false);
             uri.AppendPath(clusterName, true);
             uri.AppendPath("/authentications", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion ?? "2026-10-01-preview", true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
@@ -79,10 +76,7 @@ namespace Azure.ResourceManager.HorizonDB
             {
                 uri.Reset(new Uri(_endpoint, nextPage));
             }
-            if (_apiVersion != null)
-            {
-                uri.UpdateQuery("api-version", _apiVersion);
-            }
+            uri.UpdateQuery("api-version", _apiVersion ?? "2026-10-01-preview");
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

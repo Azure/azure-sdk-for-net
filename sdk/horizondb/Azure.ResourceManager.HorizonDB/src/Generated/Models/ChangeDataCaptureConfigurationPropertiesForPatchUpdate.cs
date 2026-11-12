@@ -32,5 +32,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> The requested configuration state. </summary>
         public ChangeDataCaptureDesiredState? DesiredState { get; set; }
+
+        internal bool IsChangeDataCaptureConfigurationPropertiesForPatchUpdateEmptyForFlattening()
+        {
+            return true && DesiredState is null && (_additionalBinaryDataProperties is null || _additionalBinaryDataProperties.Count == 0);
+        }
     }
 }

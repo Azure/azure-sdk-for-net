@@ -126,17 +126,6 @@ namespace Azure.ResourceManager.HorizonDB.Models
             return new UnknownHorizonDBComputeModelCapability(@type is null ? default : new PoolComputeModelType(@type), default);
         }
 
-        /// <summary> The capabilities of the Provisioned compute model. </summary>
-        /// <param name="recommendedVCoreCount"> The provisioned vCore count recommended for clients to select. This recommendation does not describe backend behavior when vCores is omitted from a request. </param>
-        /// <param name="supportedComputeSizes"> The supported provisioned compute sizes. </param>
-        /// <returns> A new <see cref="Models.HorizonDBProvisionedComputeModelCapability"/> instance for mocking. </returns>
-        public static HorizonDBProvisionedComputeModelCapability HorizonDBProvisionedComputeModelCapability(int recommendedVCoreCount = default, IEnumerable<HorizonDBComputeSizeCapability> supportedComputeSizes = default)
-        {
-            supportedComputeSizes ??= new ChangeTrackingList<HorizonDBComputeSizeCapability>();
-
-            return new HorizonDBProvisionedComputeModelCapability(PoolComputeModelType.Provisioned, default, recommendedVCoreCount, (supportedComputeSizes ?? new ChangeTrackingList<HorizonDBComputeSizeCapability>()).ToList());
-        }
-
         /// <summary> A vCore configuration supported by a HorizonDB processor generation. </summary>
         /// <param name="vCores"> The number of vCores in the configuration. </param>
         /// <param name="memoryPerVCoreInMb"> The memory in megabytes available for each vCore. </param>
@@ -972,7 +961,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <returns> A new <see cref="Models.ActivateChangeDataCaptureIdentityResult"/> instance for mocking. </returns>
         public static ActivateChangeDataCaptureIdentityResult ActivateChangeDataCaptureIdentityResult(ResourceIdentifier targetIdentityAssignmentResourceId = default, ResourceIdentifier previousIdentityAssignmentResourceId = default)
         {
-            return new ActivateChangeDataCaptureIdentityResult(default, targetIdentityAssignmentResourceId, previousIdentityAssignmentResourceId, default);
+            return new ActivateChangeDataCaptureIdentityResult("Succeeded", targetIdentityAssignmentResourceId, previousIdentityAssignmentResourceId, default);
         }
 
         /// <summary> A user-assigned managed identity authorized for a HorizonDB change data capture destination. </summary>

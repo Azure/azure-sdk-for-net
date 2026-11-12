@@ -32,5 +32,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> The target Microsoft Entra authentication state. Omission preserves the current state. </summary>
         public HorizonDBAuthenticationState? State { get; set; }
+
+        internal bool IsMicrosoftEntraAuthenticationPropertiesForPatchUpdateEmptyForFlattening()
+        {
+            return true && State is null && (_additionalBinaryDataProperties is null || _additionalBinaryDataProperties.Count == 0);
+        }
     }
 }

@@ -32,5 +32,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> Specifies whether scheduled maintenance is managed by the system or by the user. When scheduledMaintenance is supplied, this property is required by the service. </summary>
         public HorizonDBScheduledMaintenanceManagementType? MaintenanceManagementType { get; set; }
+
+        internal bool IsScheduledMaintenancePropertiesForPatchUpdateEmptyForFlattening()
+        {
+            return true && MaintenanceManagementType is null && (_additionalBinaryDataProperties is null || _additionalBinaryDataProperties.Count == 0);
+        }
     }
 }

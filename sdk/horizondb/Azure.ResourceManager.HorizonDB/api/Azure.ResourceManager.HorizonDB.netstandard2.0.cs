@@ -415,6 +415,7 @@ namespace Azure.ResourceManager.HorizonDB
         public static Azure.ResourceManager.HorizonDB.ChangeDataCaptureDestinationResource GetChangeDataCaptureDestinationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.HorizonDB.ChangeDataCaptureIdentityAssignmentResource GetChangeDataCaptureIdentityAssignmentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.HorizonDB.HorizonDBCapabilityResource GetHorizonDBCapability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
+        public static Azure.ResourceManager.HorizonDB.HorizonDBCapabilityResource GetHorizonDBCapability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location) { throw null; }
         public static Azure.ResourceManager.HorizonDB.HorizonDBCapabilityResource GetHorizonDBCapabilityResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.HorizonDB.HorizonDBClusterResource> GetHorizonDBCluster(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HorizonDB.HorizonDBClusterResource>> GetHorizonDBClusterAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1053,6 +1054,7 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
     {
         protected MockableHorizonDBSubscriptionResource() { }
         public virtual Azure.ResourceManager.HorizonDB.HorizonDBCapabilityResource GetHorizonDBCapability() { throw null; }
+        public virtual Azure.ResourceManager.HorizonDB.HorizonDBCapabilityResource GetHorizonDBCapability(Azure.Core.AzureLocation location) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.HorizonDB.HorizonDBClusterResource> GetHorizonDBClusters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HorizonDB.HorizonDBClusterResource> GetHorizonDBClustersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HorizonDB.HorizonDBDefaultParameterGroupResource> GetHorizonDBDefaultParameterGroup(Azure.Core.AzureLocation location, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -2086,6 +2088,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
     public abstract partial class HorizonDBComputeModelCapability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModelCapability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModelCapability>
     {
         internal HorizonDBComputeModelCapability() { }
+        public Azure.ResourceManager.HorizonDB.Models.PoolComputeModelType Type { get { throw null; } }
         protected virtual Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModelCapability JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModelCapability PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

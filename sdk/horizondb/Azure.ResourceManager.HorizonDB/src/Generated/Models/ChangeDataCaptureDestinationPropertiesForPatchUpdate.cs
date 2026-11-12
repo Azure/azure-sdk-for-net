@@ -32,5 +32,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> The requested destination state. </summary>
         public ChangeDataCaptureDesiredState? DesiredState { get; set; }
+
+        internal bool IsChangeDataCaptureDestinationPropertiesForPatchUpdateEmptyForFlattening()
+        {
+            return true && DesiredState is null && (_additionalBinaryDataProperties is null || _additionalBinaryDataProperties.Count == 0);
+        }
     }
 }

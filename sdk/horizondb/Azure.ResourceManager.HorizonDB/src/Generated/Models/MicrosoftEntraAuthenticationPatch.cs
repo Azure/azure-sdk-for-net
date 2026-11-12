@@ -42,11 +42,19 @@ namespace Azure.ResourceManager.HorizonDB.Models
             }
             set
             {
+                if (value is null && Properties is null)
+                {
+                    return;
+                }
                 if (Properties is null)
                 {
                     Properties = new MicrosoftEntraAuthenticationPropertiesForPatchUpdate();
                 }
                 Properties.State = value;
+                if (Properties.IsMicrosoftEntraAuthenticationPropertiesForPatchUpdateEmptyForFlattening())
+                {
+                    Properties = null;
+                }
             }
         }
     }

@@ -62,11 +62,19 @@ namespace Azure.ResourceManager.HorizonDB.Models
             }
             set
             {
+                if (value is null && HighAvailability is null)
+                {
+                    return;
+                }
                 if (HighAvailability is null)
                 {
                     HighAvailability = new PoolHighAvailabilityPatch();
                 }
                 HighAvailability.Mode = value;
+                if (HighAvailability.IsPoolHighAvailabilityPatchEmptyForFlattening())
+                {
+                    HighAvailability = null;
+                }
             }
         }
 
@@ -79,11 +87,19 @@ namespace Azure.ResourceManager.HorizonDB.Models
             }
             set
             {
+                if (value is null && ScheduledMaintenance is null)
+                {
+                    return;
+                }
                 if (ScheduledMaintenance is null)
                 {
                     ScheduledMaintenance = new ScheduledMaintenancePropertiesForPatchUpdate();
                 }
                 ScheduledMaintenance.MaintenanceManagementType = value;
+                if (ScheduledMaintenance.IsScheduledMaintenancePropertiesForPatchUpdateEmptyForFlattening())
+                {
+                    ScheduledMaintenance = null;
+                }
             }
         }
     }

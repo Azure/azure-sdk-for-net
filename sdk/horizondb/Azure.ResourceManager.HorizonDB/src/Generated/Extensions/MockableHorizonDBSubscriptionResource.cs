@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
 
         private ClientDiagnostics HorizonDBParameterGroupsClientDiagnostics => _horizonDBParameterGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HorizonDB.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private HorizonDBParameterGroups HorizonDBParameterGroupsRestClient => _horizonDBParameterGroupsRestClient ??= new HorizonDBParameterGroups(HorizonDBParameterGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.HorizonDb/parameterGroups", out string apiVersion0) ? apiVersion0 : "2026-10-01-preview");
+        private HorizonDBParameterGroups HorizonDBParameterGroupsRestClient => _horizonDBParameterGroupsRestClient ??= new HorizonDBParameterGroups(HorizonDBParameterGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion0) ? apiVersion0 : null);
 
         /// <summary>
         /// Gets the singleton HorizonDB capability catalog entry available to a subscription in a specific region.
@@ -66,10 +66,18 @@ namespace Azure.ResourceManager.HorizonDB.Mocking
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> Returns a <see cref="HorizonDBCapabilityResource"/> object. </returns>
+        public virtual HorizonDBCapabilityResource GetHorizonDBCapability(AzureLocation location)
+        {
+            return new HorizonDBCapabilityResource(Client, new ResourceIdentifier($"{Id}/providers/Microsoft.HorizonDb/locations/{location}/capabilities/default"));
+        }
+
+        /// <summary> This resource requires path parameters. Use the GetHorizonDBCapability overload that supplies them. </summary>
         /// <returns> Returns a <see cref="HorizonDBCapabilityResource"/> object. </returns>
         public virtual HorizonDBCapabilityResource GetHorizonDBCapability()
         {
-            return new HorizonDBCapabilityResource(Client, Id.AppendProviderResource("Microsoft.HorizonDb", "locations", "default"));
+            throw new InvalidOperationException("This resource requires a location or other path parameters. Use the GetHorizonDBCapability overload that supplies them.");
         }
 
         /// <summary> Gets a collection of HorizonDBDefaultParameterGroups in the <see cref="SubscriptionResource"/>. </summary>

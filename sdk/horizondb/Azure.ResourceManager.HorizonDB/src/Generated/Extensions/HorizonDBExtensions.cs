@@ -511,6 +511,24 @@ namespace Azure.ResourceManager.HorizonDB
         /// Gets an object representing a <see cref="HorizonDBCapabilityResource"/> along with the instance operations that can be performed on it in the <see cref="SubscriptionResource"/>.
         /// <item>
         /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableHorizonDBSubscriptionResource.GetHorizonDBCapability(AzureLocation)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="location"> The location for the resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> Returns a <see cref="HorizonDBCapabilityResource"/> object. </returns>
+        public static HorizonDBCapabilityResource GetHorizonDBCapability(this SubscriptionResource subscriptionResource, AzureLocation location)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHorizonDBSubscriptionResource(subscriptionResource).GetHorizonDBCapability(location);
+        }
+
+        /// <summary>
+        /// This resource requires path parameters. Use the GetHorizonDBCapability overload that supplies them.
+        /// <item>
+        /// <term> Mocking. </term>
         /// <description> To mock this method, please mock <see cref="MockableHorizonDBSubscriptionResource.GetHorizonDBCapability()"/> instead. </description>
         /// </item>
         /// </summary>

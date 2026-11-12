@@ -57,11 +57,19 @@ namespace Azure.ResourceManager.HorizonDB.Models
             }
             set
             {
+                if (value is null && Network is null)
+                {
+                    return;
+                }
                 if (Network is null)
                 {
                     Network = new NetworkForPatchUpdate();
                 }
                 Network.PublicAccess = value;
+                if (Network.IsNetworkForPatchUpdateEmptyForFlattening())
+                {
+                    Network = null;
+                }
             }
         }
 
@@ -74,11 +82,19 @@ namespace Azure.ResourceManager.HorizonDB.Models
             }
             set
             {
+                if (value is null && Backup is null)
+                {
+                    return;
+                }
                 if (Backup is null)
                 {
                     Backup = new BackupPropertiesForPatchUpdate();
                 }
                 Backup.RetentionDays = value;
+                if (Backup.IsBackupPropertiesForPatchUpdateEmptyForFlattening())
+                {
+                    Backup = null;
+                }
             }
         }
     }

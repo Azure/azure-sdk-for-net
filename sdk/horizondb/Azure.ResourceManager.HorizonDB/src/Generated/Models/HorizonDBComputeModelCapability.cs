@@ -32,8 +32,5 @@ namespace Azure.ResourceManager.HorizonDB.Models
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The compute model represented by these capabilities. </summary>
-        internal PoolComputeModelType Type { get; set; }
     }
 }

@@ -32,5 +32,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> The number of days that automatic backups are retained. </summary>
         public int? RetentionDays { get; set; }
+
+        internal bool IsBackupPropertiesForPatchUpdateEmptyForFlattening()
+        {
+            return true && RetentionDays is null && (_additionalBinaryDataProperties is null || _additionalBinaryDataProperties.Count == 0);
+        }
     }
 }

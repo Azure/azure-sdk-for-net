@@ -42,11 +42,19 @@ namespace Azure.ResourceManager.HorizonDB.Models
             }
             set
             {
+                if (value is null && Properties is null)
+                {
+                    return;
+                }
                 if (Properties is null)
                 {
                     Properties = new ChangeDataCaptureConfigurationPropertiesForPatchUpdate();
                 }
                 Properties.DesiredState = value;
+                if (Properties.IsChangeDataCaptureConfigurationPropertiesForPatchUpdateEmptyForFlattening())
+                {
+                    Properties = null;
+                }
             }
         }
     }

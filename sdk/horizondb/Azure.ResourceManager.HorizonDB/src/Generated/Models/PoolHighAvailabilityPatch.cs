@@ -32,5 +32,10 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <summary> The high-availability mode. Omission preserves the current mode before the service validates it with the effective nodeCount. </summary>
         public PoolHighAvailabilityMode? Mode { get; set; }
+
+        internal bool IsPoolHighAvailabilityPatchEmptyForFlattening()
+        {
+            return true && Mode is null && (_additionalBinaryDataProperties is null || _additionalBinaryDataProperties.Count == 0);
+        }
     }
 }

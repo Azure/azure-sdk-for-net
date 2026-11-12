@@ -98,11 +98,19 @@ namespace Azure.ResourceManager.HorizonDB.Models
             }
             set
             {
+                if (value is null && Network is null)
+                {
+                    return;
+                }
                 if (Network is null)
                 {
                     Network = new Network();
                 }
                 Network.PublicAccess = value;
+                if (Network.IsNetworkEmptyForFlattening())
+                {
+                    Network = null;
+                }
             }
         }
 
@@ -111,7 +119,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         {
             get
             {
-                return ReadWritePool.DesignatedPoolResourceId;
+                return ReadWritePool is null ? default : ReadWritePool.DesignatedPoolResourceId;
             }
         }
     }
