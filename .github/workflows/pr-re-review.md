@@ -346,66 +346,25 @@ jobs:
           script: |
             const fs = require('fs');
             const path = require('path');
-            // BEGIN CHANGED FILE CAPTURE (also exercised by ChangedFiles.Tests.cjs)
-            async function captureChangedFiles(github, { owner, repo, pullNumber, headSha }) {
-              if (!owner || !repo || !Number.isSafeInteger(pullNumber) || pullNumber <= 0 ||
-                  !/^[0-9a-f]{40}$/i.test(headSha)) {
-                throw new Error('Invalid pull request identity.');
-              }
-              const request = { owner, repo, pull_number: pullNumber };
-              const readPull = async () => (await github.rest.pulls.get(request)).data;
-              const first = await readPull();
-              const baseSha = first.base?.sha;
-              if (!/^[0-9a-f]{40}$/i.test(baseSha || '')) throw new Error('Invalid pull request base.');
-              const assertCurrent = (pull) => {
-                if (pull.state !== 'open' || pull.draft || pull.head?.sha !== headSha || pull.base?.sha !== baseSha) {
-                  throw new Error('Pull request state, head or base changed; refusing a stale review.');
-                }
-                if (!Number.isSafeInteger(pull.changed_files) || pull.changed_files < 0 || pull.changed_files > 3000) {
-                  throw new Error('Invalid changed-file count or GitHub 3000-file endpoint limit exceeded.');
-                }
-              };
-
-              assertCurrent(first);
-              const files = [];
-              const filenames = new Set();
-              for (let page = 1; ; page++) {
-                const result = await github.rest.pulls.listFiles({ ...request, per_page: 100, page });
-                if (!Array.isArray(result.data) || result.data.length > 100) throw new Error('Invalid changed-file page.');
-                for (const file of result.data) {
-                  if (typeof file.filename !== 'string' || !file.filename || filenames.has(file.filename)) {
-                    throw new Error('Invalid or duplicate changed filename.');
-                  }
-                  filenames.add(file.filename);
-                  // Do not infer an empty patch when GitHub omits it.
-                  const entry = { filename: file.filename, status: file.status };
-                  if (file.previous_filename !== undefined) entry.previous_filename = file.previous_filename;
-                  if (file.patch !== undefined) entry.patch = file.patch;
-                  files.push(entry);
-                }
-                if (files.length > first.changed_files) throw new Error('Changed-file count exceeds PR metadata.');
-                if (result.data.length < 100 || files.length === 3000) break;
-              }
-              if (files.length !== first.changed_files) throw new Error('Incomplete changed-file listing: count differs from PR metadata.');
-              const last = await readPull();
-              assertCurrent(last);
-              if (last.changed_files !== first.changed_files) throw new Error('Changed-file count changed during capture.');
-              return { pull_number: pullNumber, head_sha: headSha, base_sha: baseSha, changed_files: files.length, files };
-            }
-            // END CHANGED FILE CAPTURE
+            // Capture policy lives in one private PowerShell session. Native
+            // callbacks retain fixed-path filesystem operations and encoding.
             const pr = context.payload.pull_request;
-            const manifest = await captureChangedFiles(github, {
-              ...context.repo, pullNumber: pr.number, headSha: pr.head.sha
-            });
             const output = path.join(process.env.RUNNER_TEMP, 'gh-aw', 'pr-re-review-files.json');
-            fs.mkdirSync(path.dirname(output), { recursive: true });
-            fs.writeFileSync(output, JSON.stringify(manifest), { mode: 0o644 });
-            const { captureContext, exportContext } = require(path.join(process.env.GITHUB_WORKSPACE, '.github/workflows/pr-re-review/ReviewSnapshot.cjs'));
-            const snapshot = await captureContext(github, context.repo, manifest);
             const reviewRoot = '/tmp/gh-aw/pr-re-review';
-            fs.mkdirSync(reviewRoot, { recursive: true });
-            fs.writeFileSync(path.join(reviewRoot, 'snapshot.json'), JSON.stringify(snapshot), { mode: 0o644 });
-            await exportContext(snapshot, path.join(process.env.RUNNER_TEMP, 'gh-aw', 'actions', 'review-input')); // Read-only in the worker sandbox.
+            const { captureWorkflowInputs } = require(path.join(process.env.GITHUB_WORKSPACE, '.github/workflows/pr-re-review/ReviewSnapshot.cjs'));
+            const { manifest, snapshot } = await captureWorkflowInputs(github, {
+              ...context.repo, pullNumber: pr.number, headSha: pr.head.sha
+            }, {
+              onManifest: manifest => {
+                fs.mkdirSync(path.dirname(output), { recursive: true });
+                fs.writeFileSync(output, JSON.stringify(manifest), { mode: 0o644 });
+              },
+              onSnapshot: snapshot => {
+                fs.mkdirSync(reviewRoot, { recursive: true });
+                fs.writeFileSync(path.join(reviewRoot, 'snapshot.json'), JSON.stringify(snapshot), { mode: 0o644 });
+              },
+              exportDirectory: path.join(process.env.RUNNER_TEMP, 'gh-aw', 'actions', 'review-input')
+            });
             fs.mkdirSync(path.join(process.env.RUNNER_TEMP, 'gh-aw', 'safeoutputs', 'review-receipts'), { recursive: true });
             // Custom harnesses are provisioned into gh-aw's trusted action folder;
             // selecting harness.use does not copy a repository script by itself.

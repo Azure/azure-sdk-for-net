@@ -11,6 +11,10 @@ try {
         try {
             $snapshot = Get-JsonProperty $case 'snapshot'
             $mode = Get-JsonProperty $case 'mode'
+            if ($null -ne $mode -and (Get-JsString $mode) -ceq 'worker-prompt') {
+                $output.Add((ConvertTo-ContinuationJson (New-ContinuationWorkerPrompt (Get-JsonProperty $case 'payload'))))
+                continue
+            }
             if ($null -ne $mode -and (Get-JsString $mode) -ceq 'batch') {
                 $count = Select-JsReviewBatch (Get-JsonProperty $case 'work') (Get-JsonProperty $case 'maxItems').GetInt64() (Get-JsonProperty $case 'maxBytes').GetInt64()
                 $output.Add(('{"count":' + $count + '}'))

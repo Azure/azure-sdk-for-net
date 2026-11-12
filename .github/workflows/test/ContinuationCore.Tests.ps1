@@ -16,6 +16,61 @@ BeforeAll {
         return Element @{results=$results}
     }
 }
+Describe 'Read-only continuation prompt policy' {
+    BeforeEach {
+        $snapshot = Element ([ordered]@{head_sha=('a'*40);base_sha=('b'*40);diff_base_sha=('c'*40);pull_number=1;changed_files=2;files=@([ordered]@{filename='f0.cs';status='modified';patch='diff'},[ordered]@{filename='f1.cs';status='modified';patch='diff'});threads=@()})
+        $script:promptState = New-ContinuationState $snapshot (Get-JsDigest ($snapshot.GetRawText()))
+        $script:promptAssignment = Get-ContinuationAssignment $script:promptState ('1'*32)
+        $script:promptPayload = [ordered]@{
+            snapshot=(ConvertFrom-Json -InputObject $snapshot.GetRawText() -AsHashtable -DateKind String)
+            batch=@([ordered]@{id='file:0';file=[ordered]@{filename='f0.cs';status='modified';patch='diff'}},[ordered]@{id='file:1';file=[ordered]@{filename='f1.cs';status='modified';patch='diff'}})
+            original='Trusted rules.';nonce=('1'*32);attempt_id=$script:promptAssignment.attempt_id;maxPatchBytes=48000
+            context_index='/context/index.json';prior_results_path='/root/progress.json'
+            input_paths=@{'file:0'=@{patch='/context/file-0.patch';history='/context/file-0.json'};'file:1'=@{patch='/context/file-1.patch';history='/context/file-1.json'}}
+        }
+    }
+    It 'constructs prompts without committing results, attempts, or backoff' {
+        $before = ConvertTo-ContinuationJson (Get-ContinuationCheckpoint $script:promptState)
+        $value = Get-ContinuationWorkerPrompt $script:promptState (Element $script:promptPayload)
+        $value.prefix | Should -Match 'read-only worker, NOT the publisher'
+        $value.payloadJson | Should -Match '"delivery_nonce":"11111111111111111111111111111111"'
+        (ConvertTo-ContinuationJson (Get-ContinuationCheckpoint $script:promptState)) | Should -BeExactly $before
+        $script:promptState.Pending.Count | Should -Be 2
+        $script:promptState.BatchLimit | Should -Be 8
+        $script:promptState.Active.Id | Should -Be $script:promptAssignment.attempt_id
+        { Complete-ContinuationReview $script:promptState } | Should -Throw '*Incomplete*'
+    }
+    It 'rejects stale prompt bindings while preserving the original active assignment' {
+        $script:promptPayload.attempt_id++
+        { Get-ContinuationWorkerPrompt $script:promptState (Element $script:promptPayload) } | Should -Throw '*active assignment*'
+        $script:promptPayload.attempt_id--
+        $script:promptPayload.nonce = '2'*32
+        { Get-ContinuationWorkerPrompt $script:promptState (Element $script:promptPayload) } | Should -Throw '*nonce*'
+        $script:promptPayload.nonce = '1'*32
+        $script:promptPayload.batch[0].file.patch = 'forged'
+        { Get-ContinuationWorkerPrompt $script:promptState (Element $script:promptPayload) } | Should -Throw '*active assignment*'
+        $script:promptPayload.batch[0].file.patch = 'diff'
+        $script:promptPayload.snapshot.head_sha = 'd'*40
+        { Get-ContinuationWorkerPrompt $script:promptState (Element $script:promptPayload) } | Should -Throw '*captured snapshot*'
+        $script:promptPayload.snapshot.head_sha = 'a'*40
+        $null = Get-ContinuationWorkerPrompt $script:promptState (Element $script:promptPayload)
+        $script:promptState.Results.Count | Should -Be 0
+        $script:promptState.Attempts.Count | Should -Be 0
+    }
+    It 'keeps completion transactional and delivery-gated after constructing a prompt' {
+        $null = Get-ContinuationWorkerPrompt $script:promptState (Element $script:promptPayload)
+        $ids = @($script:promptAssignment.ids[0], 'foreign')
+        { Complete-ContinuationAssignment $script:promptState (Element $script:promptAssignment.attempt_id) ('1'*32) (Element $true) (Completion $ids) } | Should -Throw '*Unassigned*'
+        $script:promptState.Results.Count | Should -Be 0
+        $script:promptState.Attempts.Count | Should -Be 0
+        $script:promptState.Pending.Count | Should -Be 2
+        { Complete-ContinuationAssignment $script:promptState (Element $script:promptAssignment.attempt_id) ('1'*32) (Element $false) (Completion $script:promptAssignment.ids) } | Should -Throw '*verified delivery*'
+        { Complete-ContinuationAssignment $script:promptState (Element $script:promptAssignment.attempt_id) ('2'*32) (Element $true) (Completion $script:promptAssignment.ids) } | Should -Throw '*nonce*'
+        $null = Complete-ContinuationAssignment $script:promptState (Element $script:promptAssignment.attempt_id) ('1'*32) (Element $true) (Completion $script:promptAssignment.ids)
+        $script:promptState.Results.Count | Should -Be 2
+        $script:promptState.Attempts.Count | Should -Be 1
+    }
+}
 Describe 'Transactional continuation policy' {
     BeforeEach { $script:state = Test-State; $script:nonce = '1'*32 }
     It 'rejects a differently encoded snapshot rather than hashing pretty artifact bytes' {

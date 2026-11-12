@@ -4,12 +4,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const { test } = require('node:test');
 const path = require('node:path');
-const vm = require('node:vm');
-
-const workflow = fs.readFileSync(path.join(__dirname, '..', 'pr-re-review.md'), 'utf8');
-const section = workflow.match(/\/\/ BEGIN CHANGED FILE CAPTURE[^\n]*\n([\s\S]*?)\n\s*\/\/ END CHANGED FILE CAPTURE/)?.[1];
-assert.ok(section, 'missing inline changed-file capture');
-const captureChangedFiles = vm.runInThisContext(`(function () { ${section}\nreturn captureChangedFiles; })()`);
+const { captureChangedFiles } = require('../pr-re-review/ReviewSnapshot.cjs');
 const HEAD = 'a'.repeat(40);
 const BASE = 'b'.repeat(40);
 

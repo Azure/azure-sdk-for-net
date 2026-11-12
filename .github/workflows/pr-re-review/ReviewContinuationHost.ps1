@@ -12,7 +12,7 @@ Import-Module (Join-Path $PSScriptRoot 'ReviewSerialization.psm1') -Force
 $options=[Text.Json.JsonDocumentOptions]::new(); $options.MaxDepth=10000
 $state=$null; $purpose=$null; $finished=$false
 $operations=[Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
-foreach ($name in @('initialize','next','complete','finish','assert-publication')) { [void]$operations.Add($name) }
+foreach ($name in @('initialize','next','worker-prompt','complete','finish','assert-publication')) { [void]$operations.Add($name) }
 function Write-CoreResponse([long] $Id, $Result) {
     [Console]::Out.WriteLine((ConvertTo-ContinuationJson ([ordered]@{id=$Id;result=$Result})))
 }
@@ -41,6 +41,11 @@ while ($null -ne ($line=[Console]::In.ReadLine())) {
             'next' {
                 Require-Queue
                 $result=Get-ContinuationAssignment $state (Get-JsString (Get-JsonProperty $payload 'nonce'))
+                break
+            }
+            'worker-prompt' {
+                Require-Queue
+                $result=Get-ContinuationWorkerPrompt $state $payload
                 break
             }
             'complete' {

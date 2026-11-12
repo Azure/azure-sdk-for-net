@@ -102,3 +102,30 @@ function Select-JsReviewBatch($Work, [long] $MaxItems, [long] $MaxBytes) {
     return $count
 }
 Export-ModuleMember -Function Get-JsonProperty, Get-JsString, Test-JsTruthy, Get-JsDigest, ConvertTo-JsJsonText, Format-JsPrettyJson, Get-JsRequiredInputs, Select-JsReviewBatch
+
+function ConvertTo-JsValueString($Value) {
+    # JSON-domain JavaScript String(value), assuming the trusted native adapter
+    # has preserved canonical finite numbers rather than reformatted them.
+    if ($null -eq $Value) { return 'undefined' }
+    switch ($Value.ValueKind) {
+        ([Text.Json.JsonValueKind]::String) { return Get-JsString $Value }
+        ([Text.Json.JsonValueKind]::Null) { return 'null' }
+        ([Text.Json.JsonValueKind]::True) { return 'true' }
+        ([Text.Json.JsonValueKind]::False) { return 'false' }
+        ([Text.Json.JsonValueKind]::Number) { return $Value.GetRawText() }
+        ([Text.Json.JsonValueKind]::Array) {
+            $parts = [Collections.Generic.List[string]]::new()
+            foreach ($entry in $Value.EnumerateArray()) {
+                if ($entry.ValueKind -eq [Text.Json.JsonValueKind]::Null) { $parts.Add('') }
+                else { $parts.Add((ConvertTo-JsValueString $entry)) }
+            }
+            return $parts -join ','
+        }
+        ([Text.Json.JsonValueKind]::Object) {
+            if ($null -ne (Get-JsonProperty $Value 'toString')) { throw 'Cannot convert object to primitive value.' }
+            return '[object Object]'
+        }
+        default { throw 'Unsupported captured value.' }
+    }
+}
+Export-ModuleMember -Function ConvertTo-JsValueString

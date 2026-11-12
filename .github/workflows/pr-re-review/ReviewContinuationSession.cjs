@@ -7,10 +7,11 @@ const path = require('node:path');
 const { spawn } = require('node:child_process');
 const { TextDecoder } = require('node:util');
 
-function startContinuationSession() {
+function startContinuationSession({ script = 'ReviewContinuationHost.ps1', env = process.env } = {}) {
+  if (!['ReviewContinuationHost.ps1', 'ReviewCaptureHost.ps1'].includes(script)) throw new Error('Invalid private policy host.');
   const child = spawn(process.env.GH_AW_REVIEW_PWSH || 'pwsh', [
-    '-NoLogo', '-NoProfile', '-NonInteractive', '-File', path.join(__dirname, 'ReviewContinuationHost.ps1'),
-  ], { stdio: ['pipe', 'pipe', 'pipe'], detached: process.platform !== 'win32' });
+    '-NoLogo', '-NoProfile', '-NonInteractive', '-File', path.join(__dirname, script),
+  ], { env, stdio: ['pipe', 'pipe', 'pipe'], detached: process.platform !== 'win32' });
   let pending = null, serial = 0, error = null, exitFailure = null, stopping = false, exited = false, closed = false, normalClose = false;
   const failureController = new AbortController();
   let chunks = [], frameBytes = 0, stderr = '', stderrBytes = 0, killTimer, drainTimer, closeTimer;

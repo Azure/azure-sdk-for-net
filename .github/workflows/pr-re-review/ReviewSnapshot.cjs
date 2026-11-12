@@ -1,171 +1,155 @@
 'use strict';
+const fs=require('node:fs'),path=require('node:path');
+const {snapshotDigest,MAX_BATCH_BYTES}=require('./ReviewDelivery.cjs');
+function encodeScalar(value){
+ if(value===null)return {kind:'null'};
+ const kind=typeof value;
+ if(kind==='undefined')return {kind};
+ if(kind==='number'&&Number.isNaN(value))return {kind:'nan'};
+ if(['string','number','boolean'].includes(kind))return {kind,value:String(value)};
+ return {kind};
+}
+function encodeReviewProof(review){
+ // The original validator checks the actual entry/path before dereferencing
+ // the expected review. Defer that native error until PowerShell reaches it.
+ if(review==null)return {expectedReadError:review===null?'null':'undefined',expectedCanonical:JSON.stringify(review)};
+ return {expectedId:encodeScalar(review.id),expectedState:encodeScalar(review.state),expectedCanonical:JSON.stringify(review)};
+}
+function encodeExportOptions(snapshot,directory,{timeoutMs=22*60*1000}={}){
+ if(!Number.isSafeInteger(timeoutMs)||timeoutMs<=0)throw Error('Invalid delivery capture deadline.');
+ if(!directory)throw Error('Invalid review context directory.');
+ const marker='__REVIEW_BASENAME__';
+ return {directory:path.normalize(directory),pathPrefix:path.join(directory,marker).slice(0,-marker.length),timeoutMs,reviews:snapshot.reviews||[]};
+}
+async function runContextExporter(snapshot,settings,signal,runner){
+ const run=runner||require('./ReviewDelivery.cjs').runPowerShell;
+ const result=await run('Export-ReviewContext.ps1',JSON.stringify({snapshot,maxBatchBytes:MAX_BATCH_BYTES,directory:settings.directory,pathPrefix:settings.pathPrefix}),{timeoutMs:settings.timeoutMs,timeoutReason:'Delivery index capture timed out.',label:'Delivery index capture',maxOutputBytes:Math.max(16*1024*1024,(snapshot.files.length+snapshot.threads.length)*256+1024*1024),signal});
+ let delivery;try{delivery=JSON.parse(result.stdout);}catch{throw Error('Invalid captured delivery index.');}
+ return {delivery,snapshotHash:snapshotDigest(snapshot),indexCanonical:JSON.stringify(delivery)};
+}
+function readExportedContext(settings){
+ try{
+  const snapshot=JSON.parse(fs.readFileSync(path.join(settings.directory,'snapshot.json'),'utf8'));
+  const index=JSON.parse(fs.readFileSync(path.join(settings.directory,'delivery-index.json'),'utf8'));
+  const context=JSON.parse(fs.readFileSync(path.join(settings.directory,'index.json'),'utf8'));
+  return {snapshotHash:snapshotDigest(snapshot),indexCanonical:JSON.stringify(index),context};
+ }catch{return {readError:true};}
+}
+function readExportedReview(settings,context,index){
+ const expectedPath=path.join(settings.directory,`review-${index}.json`);
+ let history;try{history=JSON.parse(fs.readFileSync(expectedPath,'utf8'));}catch{return {readError:true};}
+ const entry=context.reviews[index],expected=encodeReviewProof(settings.reviews[index]);
+ return {expectedPath,actualCanonical:JSON.stringify(history),...expected,actualId:encodeScalar(entry?.id),actualState:encodeScalar(entry?.state)};
+}
 
-// Trusted GitHub adapter: capture paginated PR history at pinned commits and
-// recheck mutable state before publication or thread mutation. PR text remains
-// untrusted; this module never executes PR-derived code.
-const CAPTURE_TIMEOUT_MS = 22 * 60 * 1000;
-const QUERY = `query($owner:String!,$repo:String!,$number:Int!,$after:String){
-  repository(owner:$owner,name:$repo){pullRequest(number:$number){
-    reviewThreads(first:100,after:$after){totalCount pageInfo{hasNextPage endCursor} nodes{
-      id isResolved isOutdated isCollapsed comments(first:100){pageInfo{hasNextPage endCursor} nodes{
-        databaseId body path line originalLine startLine originalStartLine url createdAt updatedAt publishedAt author{login} pullRequestReview{submittedAt}
-      }}
-    }}
-  }}
-}`;
-const COMMENTS = `query($id:ID!,$after:String){node(id:$id){... on PullRequestReviewThread{
-  comments(first:100,after:$after){pageInfo{hasNextPage endCursor} nodes{databaseId body path line originalLine startLine originalStartLine url createdAt updatedAt publishedAt author{login} pullRequestReview{submittedAt}}}
-}}}`;
-
-async function captureReviewState(github, repo, files, { includeReviews = true } = {}) {
-  const before = (await github.rest.pulls.get({ ...repo, pull_number: files.pull_number })).data;
-  const assertCurrent = pull => {
-    if (pull.state !== 'open' || pull.draft || pull.head?.sha !== files.head_sha || pull.base?.sha !== files.base_sha || pull.changed_files !== files.changed_files) {
-      throw new Error('PR state, head, base or file count changed; refusing a stale review.');
-    }
-  };
-  assertCurrent(before);
-  const threads = [];
-  const ids = new Set();
-  const cursors = new Set();
-  let after = null;
-  let total;
-  while (true) {
-    const response = await github.graphql(QUERY, { ...repo, number: files.pull_number, after });
-    const connection = response.repository?.pullRequest?.reviewThreads;
-    if (!connection || !Array.isArray(connection.nodes) || !Number.isSafeInteger(connection.totalCount)) throw new Error('Incomplete thread listing.');
-    if (total !== undefined && total !== connection.totalCount) throw new Error('Thread count changed during capture.');
-    total = connection.totalCount;
-    for (const thread of connection.nodes) {
-      if (!thread || typeof thread.id !== 'string' || ids.has(thread.id) || typeof thread.isResolved !== 'boolean' || !Array.isArray(thread.comments?.nodes)) throw new Error('Invalid or duplicate thread.');
-      ids.add(thread.id);
-      const comments = [...thread.comments.nodes];
-      let pageInfo = thread.comments.pageInfo;
-      const commentCursors = new Set();
-      while (pageInfo?.hasNextPage) {
-        const cursor = pageInfo.endCursor;
-        if (typeof cursor !== 'string' || !cursor || commentCursors.has(cursor)) throw new Error('Invalid thread comment cursor.');
-        commentCursors.add(cursor);
-        const next = (await github.graphql(COMMENTS, { id: thread.id, after: cursor })).node?.comments;
-        if (!next || !Array.isArray(next.nodes)) throw new Error('Incomplete thread comment listing.');
-        comments.push(...next.nodes);
-        pageInfo = next.pageInfo;
-      }
-      if (!pageInfo || !comments.length || new Set(comments.map(c => c.databaseId)).size !== comments.length) throw new Error('Incomplete or duplicate thread comments.');
-      threads.push({ id: thread.id, isResolved: thread.isResolved,
-        ...(thread.isOutdated !== undefined ? { isOutdated: thread.isOutdated } : {}),
-        ...(thread.isCollapsed !== undefined ? { isCollapsed: thread.isCollapsed } : {}), comments });
-    }
-    if (!connection.pageInfo) throw new Error('Missing thread pagination state.');
-    if (!connection.pageInfo.hasNextPage) break;
-    const cursor = connection.pageInfo.endCursor;
-    if (typeof cursor !== 'string' || !cursor || cursors.has(cursor)) throw new Error('Invalid thread cursor.');
-    cursors.add(cursor);
-    after = cursor;
+// Native boundary only: execute read-only effects with the caller's
+// existing injected client. PowerShell owns capture order and acceptance.
+const {startContinuationSession}=require('./ReviewContinuationSession.cjs');
+function add(a,b){if(!Number.isSafeInteger(a)||a<0||!Number.isSafeInteger(b)||b<0||!Number.isSafeInteger(a+b))throw Error('Capture byte accounting overflow.');return a+b;}
+function budget(bytes,generated){const value=6*bytes+generated+32768;if(!Number.isSafeInteger(value)||value<=0)throw Error('Capture response budget overflow.');return value;}
+async function effectResult(github,effect,signal,options){
+ if(signal.aborted)throw signal.reason||Error('Capture host failed.');
+ let cancel;
+ const aborted=new Promise((_,reject)=>{cancel=()=>reject(signal.reason||Error('Capture host failed.'));if(signal.aborted)cancel();else signal.addEventListener('abort',cancel,{once:true});});
+ const action=async()=>{
+  switch(effect.kind){
+   case 'pull':return (await github.rest.pulls.get(effect.arguments)).data;
+   case 'files':return (await github.rest.pulls.listFiles(effect.arguments)).data;
+   case 'threads':case 'comments':return await github.graphql(effect.query,effect.arguments);
+   case 'reviews':return await github.paginate(github.rest.pulls.listReviews,effect.arguments);
+   case 'compare':return (await github.request('GET /repos/{owner}/{repo}/compare/{basehead}',effect.arguments)).data;
+   case 'manifest':
+    if(typeof options.onManifest!=='function')throw Error('Missing manifest checkpoint writer.');
+    await options.onManifest(effect.arguments.manifest);return true;
+   case 'baseline': {
+    const timeoutMs=options.timeoutMs===undefined?22*60*1000:options.timeoutMs;
+    if(!Number.isSafeInteger(timeoutMs)||timeoutMs<=0)throw Error('Invalid baseline capture deadline.');
+    let result;
+    try{const run=options.runBaseline||require('./ReviewDelivery.cjs').runPowerShell;result=await run('ReviewBaselines.ps1',JSON.stringify(effect.arguments),{scriptArgs:['-Capture'],timeoutMs,timeoutReason:'Baseline capture timed out.',label:'Baseline capture',maxOutputBytes:16*1024*1024,signal});}
+    catch(error){throw Error(`Cannot capture baselines: ${error.message}`);}
+    return JSON.parse(result.stdout);
+   }
+   case 'export': {
+    if(typeof options.onSnapshot==='function')await options.onSnapshot(structuredClone(effect.arguments.snapshot));
+    options._exportSettings=options.exportSettings||encodeExportOptions(effect.arguments.snapshot,options.exportDirectory,{timeoutMs:options.exportTimeoutMs});
+    return await runContextExporter(effect.arguments.snapshot,options._exportSettings,signal,options.runExporter);
+   }
+   case 'export-base': {
+    const value=readExportedContext(options._exportSettings);options._exportContext=value.context;return value;
+   }
+   case 'export-history': {
+    const index=effect.arguments.index;
+    if(!Number.isSafeInteger(index)||index<0||index>=options._exportSettings.reviews.length)throw Error('Invalid exported history read.');
+    return readExportedReview(options._exportSettings,options._exportContext,index);
+   }
+   default:throw Error('Invalid capture transport effect.');
   }
-  if (threads.length !== total) throw new Error('Incomplete thread listing: count mismatch.');
-  const reviews = includeReviews ? await github.paginate(github.rest.pulls.listReviews, { ...repo, pull_number: files.pull_number, per_page: 100 }) : [];
-  assertCurrent((await github.rest.pulls.get({ ...repo, pull_number: files.pull_number })).data);
-  return { ...files, head_repo: before.head.repo?.full_name || `${repo.owner}/${repo.repo}`, base_repo: before.base.repo?.full_name || `${repo.owner}/${repo.repo}`, threads, reviews: reviews.map(r => ({ id: r.id, body: r.body, state: r.state, commit_id: r.commit_id, author: r.user?.login ?? null, submittedAt: r.submitted_at ?? null, url: r.html_url ?? null, authorAssociation: r.author_association ?? null })) };
-}
-
-async function captureContext(github, repo, files, { timeoutMs = CAPTURE_TIMEOUT_MS } = {}) {
-  const snapshot = await captureReviewState(github, repo, files);
-  // GitHub's PR diff is merge-base-to-head; the base tip remains the freshness anchor.
-  const comparison = await github.request('GET /repos/{owner}/{repo}/compare/{basehead}', {
-    ...repo, basehead: `${snapshot.base_sha}...${snapshot.head_sha}`, per_page: 1,
-  });
-  const diffBase = comparison.data?.merge_base_commit?.sha;
-  if (!/^[a-f0-9]{40}$/i.test(diffBase || '') || comparison.data?.base_commit?.sha !== snapshot.base_sha) {
-    throw new Error('Cannot establish the captured PR diff base.');
+ };
+ const running=action();
+ try{return await Promise.race([running,aborted]);}
+ catch(error){
+  // HTTP effects retain their existing non-abortable client semantics. A
+  // supervised child is different: do not return while its bounded teardown
+  // is still in flight, especially while it retains capture credentials.
+  if(['baseline','export'].includes(effect.kind)&&signal.aborted){
+   try{await running;}catch(cleanupError){if(cleanupError!==error)throw new AggregateError([error,cleanupError],`${error.message}; ${cleanupError.message}`);}
   }
-  snapshot.diff_base_sha = diffBase;
-  // Baselines are immutable at the captured SHAs; fetch and validate them once.
-  // Only filename metadata is needed by the PowerShell capture, not large patches or histories.
-  const { runPowerShell } = require('./ReviewDelivery.cjs');
-  const input = { repo, snapshot: { head_sha: snapshot.head_sha, base_sha: snapshot.base_sha,
-    diff_base_sha: snapshot.diff_base_sha, head_repo: snapshot.head_repo,
-    files: snapshot.files.map(({ filename, previous_filename, status }) => ({ filename, previous_filename, status })) } };
-  if (!Number.isSafeInteger(timeoutMs) || timeoutMs <= 0) throw new Error('Invalid baseline capture deadline.');
-  let result;
-  try {
-    result = await runPowerShell('ReviewBaselines.ps1', JSON.stringify(input), {
-      scriptArgs: ['-Capture'], timeoutMs, timeoutReason: 'Baseline capture timed out.', label: 'Baseline capture', maxOutputBytes: 16 * 1024 * 1024,
-    });
-  } catch (error) { throw new Error(`Cannot capture baselines: ${error.message}`); }
-  const inventory = JSON.parse(result.stdout);
-  if (!Array.isArray(inventory)) throw new Error('Invalid baseline comparison output.');
-  snapshot.baseline_suppressions = inventory;
-  return snapshot;
+  throw error;
+ }finally{signal.removeEventListener('abort',cancel);}
 }
-
-async function assertFresh(github, repo, snapshot) {
-  const pull = (await github.rest.pulls.get({ ...repo, pull_number: snapshot.pull_number })).data;
-  if (pull.state !== 'open' || pull.draft || pull.head?.sha !== snapshot.head_sha || pull.base?.sha !== snapshot.base_sha || pull.changed_files !== snapshot.changed_files) {
-    throw new Error('PR state, head or base changed before publication.');
+async function capture(github,input,options={}){
+ const env=Object.fromEntries(Object.entries(process.env).filter(([name])=>!/(?:TOKEN|SECRET|PASSWORD|CREDENTIAL)/i.test(name)&&!['SSH_AUTH_SOCK','GIT_ASKPASS','SSH_ASKPASS'].includes(name)));
+ const session=startContinuationSession({script:'ReviewCaptureHost.ps1',env});let failure,result,totalBytes=0,generated=0,lastEffect=0;
+ const account=bytes=>{totalBytes=add(totalBytes,bytes);return 4096;};
+ const responseBudget=bytes=>{totalBytes=add(totalBytes,bytes);return budget(totalBytes,generated);};
+ try{
+  const init=(await session.request('initialize',input,{maxResponseBytes:account})).value;
+  if(!init||init.initialized!==true||Object.keys(init).length!==1)throw Error('Invalid capture initialization.');
+  while(true){
+   const next=(await session.request('next',{},{maxResponseBytes:responseBudget})).value;
+   if(!next||typeof next.done!=='boolean')throw Error('Invalid capture response.');
+   if(next.done){if(Object.keys(next).length!==1)throw Error('Invalid completed capture response.');break;}
+   const effect=next.effect;
+   if(Object.keys(next).length!==2||!effect||!Number.isSafeInteger(effect.effect_id)||effect.effect_id!==lastEffect+1||!effect.arguments||typeof effect.arguments!=='object'||Array.isArray(effect.arguments)||
+      !['pull','files','threads','comments','reviews','compare','manifest','baseline','export','export-base','export-history'].includes(effect.kind)||(['threads','comments'].includes(effect.kind)&&typeof effect.query!=='string'))throw Error('Invalid capture effect.');
+   if(input.mode==='files'&&!['pull','files'].includes(effect.kind))throw Error('Invalid changed-file effect.');
+   lastEffect=effect.effect_id;
+   const response=await effectResult(github,effect,session.signal,options);session.assertHealthy();
+   // These are actual API-array lengths, not helper/model size estimates. Review
+   // projection can generate fixed nullable fields even for tiny input rows.
+   if(effect.kind==='reviews'&&Array.isArray(response))generated=add(generated,256*response.length);
+   const accepted=(await session.request('accept',{effect_id:effect.effect_id,response},{maxResponseBytes:account})).value;
+   if(!accepted||accepted.accepted!==true||Object.keys(accepted).length!==1)throw Error('Invalid capture acceptance response.');
   }
-  // Reread thread state/history too. Reuse capture rather than trusting the
-  // agent's assertion that its old thread-resolution decisions are still current.
-  const current = await captureReviewState(github, repo, snapshot);
-  await checkFreshness('publication', snapshot, current);
+  result=(await session.request('finish',{},{maxResponseBytes:responseBudget})).value;
+  if(!result||typeof result!=='object'||Array.isArray(result))throw Error('Invalid finalized capture.');
+ }catch(error){failure=error;throw error;}
+ finally{
+  try{await session.close();}catch(error){if(!failure)throw error;if(error!==failure&&!(failure instanceof AggregateError&&failure.errors.includes(error)))throw new AggregateError([failure,error],`${failure.message}; capture cleanup failed: ${error.message}`);}
+ }
+ return result;
+}
+const captureChangedFiles=(github,identity)=>capture(github,{mode:'files',identity});
+const captureReviewState=(github,repo,files,{includeReviews=true,preflight=false}={})=>capture(github,{mode:'review',repo,files,includeReviews,preflight});
+const captureContext=(github,repo,files,options={})=>capture(github,{mode:'context',repo,files},options);
+const captureWorkflowInputs=(github,identity,options={})=>capture(github,{mode:'full',identity,exportEnabled:options.exportDirectory!==undefined},options);
+async function exportContext(snapshot,directory,options={}){
+ const exportSettings=encodeExportOptions(snapshot,directory,options);
+ const result=await capture(null,{mode:'export',snapshot},{exportSettings,runExporter:options.runExporter});
+ if(result.exported!==true||Object.keys(result).length!==1)throw Error('Invalid export finalization.');
 }
 
-async function assertMutationFresh(github, repo, snapshot, rootIds, receipts) {
-  // Mutation freshness compares the targeted threads, not the review list.
-  const current=await captureReviewState(github,repo,snapshot,{includeReviews:false});
-  await checkFreshness('mutation', snapshot, current, { rootIds, receipts });
+async function compareFreshness(input) {
+ const {runPowerShell}=require('./ReviewDelivery.cjs');
+ const result=await runPowerShell('ReviewFreshness.ps1',JSON.stringify(input),{timeoutMs:22*60*1000,timeoutReason:'Freshness verification timed out.',label:'Freshness verification',maxOutputBytes:4096});
+ if(result.stdout!=='{}')throw Error(result.stderr||'Freshness verification failed.');
 }
-
-async function checkFreshness(mode, expected, current, extra = {}) {
-  const { runPowerShell } = require('./ReviewDelivery.cjs');
-  // Only freshness-relevant state is sent; baseline inventory and patches do not need refetching.
-  const compact = state => mode === 'mutation' ? { threads: state.threads } :
-    { threads: state.threads, reviews: state.reviews, head_repo: state.head_repo, base_repo: state.base_repo };
-  const result = await runPowerShell('ReviewFreshness.ps1', JSON.stringify({ mode, expected: compact(expected), current: compact(current), ...extra }), {
-    timeoutMs: CAPTURE_TIMEOUT_MS, timeoutReason: 'Freshness verification timed out.', label: 'Freshness verification', maxOutputBytes: 4096,
-  });
-  if (result.stdout !== '{}') throw new Error(result.stderr || 'Freshness verification failed.');
+async function assertFresh(github,repo,snapshot){
+ const input=await capture(github,{mode:'review',repo,files:snapshot,includeReviews:true,preflight:true,freshnessMode:'publication',extra:{}});
+ await compareFreshness(input);
 }
-
-async function exportContext(snapshot, directory, { timeoutMs = CAPTURE_TIMEOUT_MS } = {}) {
-  const fs = require('node:fs'); const path = require('node:path');
-  const { MAX_BATCH_BYTES, snapshotDigest, runPowerShell } = require('./ReviewDelivery.cjs');
-  if (!Number.isSafeInteger(timeoutMs) || timeoutMs <= 0) throw new Error('Invalid delivery capture deadline.');
-  if (!directory) throw new Error('Invalid review context directory.');
-  const marker = '__REVIEW_BASENAME__';
-  const pathPrefix = path.join(directory, marker).slice(0, -marker.length);
-  const normalizedDirectory = path.normalize(directory);
-  const result = await runPowerShell('Export-ReviewContext.ps1', JSON.stringify({ snapshot, maxBatchBytes: MAX_BATCH_BYTES, directory: normalizedDirectory, pathPrefix }), {
-    timeoutMs, timeoutReason: 'Delivery index capture timed out.', label: 'Delivery index capture',
-    maxOutputBytes: Math.max(16 * 1024 * 1024, (snapshot.files.length + snapshot.threads.length) * 256 + 1024 * 1024),
-  });
-  let delivery;
-  try { delivery = JSON.parse(result.stdout); } catch { throw new Error('Invalid captured delivery index.'); }
-  if (!delivery || delivery.snapshot !== snapshotDigest(snapshot) || !delivery.items || typeof delivery.items !== 'object' || Array.isArray(delivery.items)) throw new Error('Invalid captured delivery index.');
-  const expectedItems = [...snapshot.files.map((_, i) => [`file:${i}`, 'patch']), ...snapshot.threads.map((_, i) => [`thread:${i}`, 'history'])];
-  if (Object.keys(delivery.items).length !== expectedItems.length) throw new Error('Invalid captured delivery assignments.');
-  for (const [id, kind] of expectedItems) {
-    const inputs = delivery.items[id];
-    if (!Object.hasOwn(delivery.items, id) || !Array.isArray(inputs) || inputs.length > 1 || (kind === 'history' && inputs.length !== 1) ||
-        inputs.some(input => !input || input.kind !== kind || typeof input.key !== 'string' || !new RegExp(`^${kind}:[a-f0-9]{64}$`).test(input.key))) throw new Error('Invalid captured delivery assignments.');
-  }
-  let capturedSnapshot, capturedIndex, context;
-  try {
-    capturedSnapshot = JSON.parse(fs.readFileSync(path.join(directory, 'snapshot.json'), 'utf8'));
-    capturedIndex = JSON.parse(fs.readFileSync(path.join(directory, 'delivery-index.json'), 'utf8'));
-    context = JSON.parse(fs.readFileSync(path.join(directory, 'index.json'), 'utf8'));
-  } catch { throw new Error('Missing or invalid exported review context.'); }
-  if (snapshotDigest(capturedSnapshot) !== delivery.snapshot || JSON.stringify(capturedIndex) !== JSON.stringify(delivery) ||
-      !context || !Array.isArray(context.files) || context.files.length !== snapshot.files.length ||
-      !Array.isArray(context.threads) || context.threads.length !== snapshot.threads.length ||
-      !Array.isArray(context.reviews) || context.reviews.length !== (snapshot.reviews || []).length) throw new Error('Exported review context does not match the captured snapshot.');
-  for (const [index, review] of (snapshot.reviews || []).entries()) {
-    const expectedPath = path.join(directory, `review-${index}.json`), exported = context.reviews[index];
-    let history;
-    try { history = JSON.parse(fs.readFileSync(expectedPath, 'utf8')); } catch { throw new Error('Missing or invalid exported review history.'); }
-    if (!exported || exported.history_path !== expectedPath || exported.id !== review.id || exported.state !== review.state ||
-        JSON.stringify(history) !== JSON.stringify(review)) throw new Error('Exported review history does not match the captured snapshot.');
-  }
+async function assertMutationFresh(github,repo,snapshot,rootIds,receipts){
+ const input=await capture(github,{mode:'review',repo,files:snapshot,includeReviews:false,freshnessMode:'mutation',extra:{rootIds,receipts}});
+ await compareFreshness(input);
 }
-
-module.exports = { captureContext, assertFresh, assertMutationFresh, exportContext };
+module.exports={captureChangedFiles,captureReviewState,captureContext,captureWorkflowInputs,assertFresh,assertMutationFresh,exportContext};

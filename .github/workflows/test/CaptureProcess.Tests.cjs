@@ -33,7 +33,20 @@ function fixture(t) {
     if (fs.existsSync(pidsFile)) for (const pid of JSON.parse(fs.readFileSync(pidsFile, 'utf8'))) if (Number.isSafeInteger(pid) && pid > 1) { try { process.kill(pid, 'SIGKILL'); } catch { /* exited */ } }
     fs.rmSync(dir, { recursive: true, force: true });
   });
-  fs.writeFileSync(executable, `#!/usr/bin/env node\nconst fs=require('node:fs'),{spawn}=require('node:child_process');process.on('SIGTERM',()=>fs.writeFileSync(${JSON.stringify(termFile)},'term'));const child=spawn(process.execPath,['-e',"process.on('SIGTERM',()=>{});process.send('ready');setInterval(()=>{},1000)"],{stdio:['ignore','ignore','ignore','ipc']});child.once('message',()=>{fs.writeFileSync(${JSON.stringify(pidsFile + '.tmp')},JSON.stringify([process.pid,child.pid]));fs.renameSync(${JSON.stringify(pidsFile + '.tmp')},${JSON.stringify(pidsFile)});child.disconnect();});process.stdin.resume();setInterval(()=>{},1000);`, { mode: 0o755 });
+  // Only the new capture-policy host is real. Baseline/export and the existing
+  // continuation-host fixture must still reach the stubborn process group.
+  fs.writeFileSync(executable, `#!/usr/bin/env node
+const fs=require('node:fs'),{spawn}=require('node:child_process');
+if(process.argv.some(arg=>arg.endsWith('/ReviewCaptureHost.ps1'))){
+  const child=spawn(${JSON.stringify(previous || 'pwsh')},process.argv.slice(2),{stdio:'inherit'});
+  child.on('error',error=>{console.error(error);process.exitCode=1;});
+  child.on('exit',(code,signal)=>{process.exitCode=signal?1:code;});
+}else{
+  process.on('SIGTERM',()=>fs.writeFileSync(${JSON.stringify(termFile)},'term'));
+  const child=spawn(process.execPath,['-e',"process.on('SIGTERM',()=>{});process.send('ready');setInterval(()=>{},1000)"],{stdio:['ignore','ignore','ignore','ipc']});
+  child.once('message',()=>{fs.writeFileSync(${JSON.stringify(pidsFile + '.tmp')},JSON.stringify([process.pid,child.pid]));fs.renameSync(${JSON.stringify(pidsFile + '.tmp')},${JSON.stringify(pidsFile)});child.disconnect();});
+  process.stdin.resume();setInterval(()=>{},1000);
+}`, { mode: 0o755 });
   process.env.GH_AW_REVIEW_PWSH = executable;
   return { dir, pidsFile, termFile };
 }
@@ -108,7 +121,10 @@ test('capture SIGTERM terminates a stubborn exporter and its process group', { s
   let timer;
   const [code] = await Promise.race([closed, new Promise((_, reject) => { timer = setTimeout(() => reject(new Error('Capture cancellation did not finish promptly')), 3500); })]).finally(() => clearTimeout(timer));
   assert.equal(code, 1);
-  assert.match(stderr, /capture cancelled by SIGTERM/i);
+  // The policy host now owns controller signals; the exporter is cancelled
+  // through its abort signal. Require both the original signal and helper abort.
+  assert.match(stderr, /Continuation host cancelled by SIGTERM/i);
+  assert.match(stderr, /Delivery index capture cancelled/i);
   assert.equal(fs.readFileSync(termFile, 'utf8'), 'term');
   for (const pid of pids) await waitForExit(pid);
   fs.unlinkSync(pidsFile);

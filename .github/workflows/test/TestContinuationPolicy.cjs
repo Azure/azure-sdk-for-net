@@ -44,4 +44,8 @@ async function runQueue(work,{deadline,runBatch,checkpoint=()=>{}}){
  finally{try{await session.close();}catch(error){if(!failure)throw error;}}
  return ledger;
 }
-module.exports={...native,makeWorklist,buildOutputs,assertPublication,nextBatch,runQueue};
+function workerPrompt(original,snapshot,batch,nonce){
+ const value=probe({mode:'worker-prompt',payload:native.encodeWorkerPromptRequest(original,snapshot,batch,nonce)});
+ return value.prefix+JSON.stringify(JSON.parse(value.payloadJson));
+}
+module.exports={...native,makeWorklist,buildOutputs,assertPublication,nextBatch,runQueue,workerPrompt};

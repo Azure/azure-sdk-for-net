@@ -462,5 +462,6 @@ test('trusted helper checkout precedes capture on a clean agent runner', () => {
   assert.match(captureStep, /for \(const helper of \[[^\]]*'ReviewSerialization\.psm1'[^\]]*\]\)/, 'The capture step must copy the delivery module.');
   assert.match(captureStep, /for \(const helper of \[[^\]]*'ReviewContinuationHost\.ps1'[^\]]*\]\)/, 'The capture step must copy the persistent policy host.');
   assert.match(captureStep, /for \(const helper of \[[^\]]*'ReviewContinuationSession\.cjs'[^\]]*\]\)/, 'The capture step must copy the policy host lifecycle adapter.');
-  assert.ok(captureStep.includes('await exportContext('), 'Capture must finish before the workflow proceeds.');
+  assert.ok(captureStep.includes('await captureWorkflowInputs('), 'Capture must finish before the workflow proceeds.');
+  assert.match(captureStep, /exportDirectory: path\.join\(process\.env\.RUNNER_TEMP, 'gh-aw', 'actions', 'review-input'\)/, 'The awaited capture must include context export.');
 });
