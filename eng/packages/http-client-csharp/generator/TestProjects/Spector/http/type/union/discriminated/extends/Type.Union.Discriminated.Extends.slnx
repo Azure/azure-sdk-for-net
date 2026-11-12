@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/Type.Union.Discriminated.Extends.csproj" />
-  <Project Path="tests/Type.Union.Discriminated.Extends.Tests.csproj" />
-</Solution>
