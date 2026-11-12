@@ -248,6 +248,18 @@ Describe 'Get-PrReReviewHeadContent' {
         Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi { "abc$([char]0)def" }
         Get-PrReReviewHeadContent -Repository 'Azure/azure-sdk-for-net' -HeadSha 'abc1234' -Path 'binary.dat' | Should -BeNullOrEmpty
     }
+
+    It 'reads native output byte-for-byte when <Label>' -ForEach @(
+        @{ Label = 'it ends with a newline'; Text = "a`nb`n" }
+        @{ Label = 'it has no final newline'; Text = "a`nb" }
+    ) {
+        $encoded = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($Text))
+        $arguments = @('-NoProfile', '-NonInteractive', '-Command', "[Console]::Out.Write([Text.Encoding]::UTF8.GetString([Convert]::FromBase64String('$encoded')))")
+        $output = InModuleScope PrReReviewInput -Parameters @{ FilePath = (Get-Process -Id $PID).Path; Arguments = $arguments } {
+            Read-PrReReviewNativeOutput -FilePath $FilePath -Arguments $Arguments
+        }
+        $output | Should -BeExactly $Text
+    }
 }
 
 Describe 'Get-PrReReviewPullRequestInput' {

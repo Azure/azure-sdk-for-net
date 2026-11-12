@@ -6,13 +6,33 @@
 $ErrorActionPreference = 'Stop'
 
 function Invoke-PrReReviewGhApi {
-    param([Parameter(Mandatory)][string[]]$Arguments)
+    param([Parameter(Mandatory)][string[]]$Arguments, [switch]$Raw)
 
+    if ($Raw) {
+        return Read-PrReReviewNativeOutput -FilePath 'gh' -Arguments (@('api') + $Arguments)
+    }
     $output = & gh api @Arguments
     if ($LASTEXITCODE -ne 0) {
         throw "gh api $($Arguments -join ' ') failed with exit code $LASTEXITCODE."
     }
     return ($output -join "`n")
+}
+
+function Read-PrReReviewNativeOutput {
+    param([Parameter(Mandatory)][string]$FilePath, [Parameter(Mandatory)][string[]]$Arguments)
+
+    # Capturing a native command's stdout splits it into lines and drops the final newline;
+    # PowerShell 7.4+ keeps the exact bytes when the output is redirected to a file.
+    $path = [IO.Path]::GetTempFileName()
+    try {
+        & $FilePath @Arguments > $path
+        if ($LASTEXITCODE -ne 0) {
+            throw "$FilePath $($Arguments -join ' ') failed with exit code $LASTEXITCODE."
+        }
+        return [Text.UTF8Encoding]::new($false).GetString([IO.File]::ReadAllBytes($path))
+    } finally {
+        Remove-Item -LiteralPath $path -Force -ErrorAction SilentlyContinue
+    }
 }
 
 function Get-PrReReviewPullRequestInput {
@@ -69,7 +89,7 @@ function Get-PrReReviewHeadContent {
     param([Parameter(Mandatory)][string]$Repository, [Parameter(Mandatory)][string]$HeadSha, [Parameter(Mandatory)][string]$Path)
 
     $encodedPath = ($Path -split '/' | ForEach-Object { [uri]::EscapeDataString($_) }) -join '/'
-    $content = Invoke-PrReReviewGhApi @('-H', 'Accept: application/vnd.github.raw+json', "repos/$Repository/contents/${encodedPath}?ref=$HeadSha")
+    $content = Invoke-PrReReviewGhApi -Raw -Arguments @('-H', 'Accept: application/vnd.github.raw+json', "repos/$Repository/contents/${encodedPath}?ref=$HeadSha")
     if ($content.Contains([char]0)) {
         return $null
     }
