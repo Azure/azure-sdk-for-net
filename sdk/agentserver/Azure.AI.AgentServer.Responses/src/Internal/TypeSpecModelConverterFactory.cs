@@ -75,9 +75,11 @@ internal sealed class TypeSpecModelConverter<T> : JsonConverter<T>
 
         var raw = BinaryData.FromString(jsonDoc.RootElement.GetRawText());
 
-        // A function_call_output with array-form output must go through ModelJson, which
-        // restores the array after the read (see FunctionCallOutputParts).
-        if (raw.ToMemory().Span.IndexOf("function_call_output"u8) < 0)
+        // A function_call_output with array-form output, or a custom tool call item with an
+        // object-form created_by, must go through ModelJson, which restores the original value
+        // after the read (see FunctionCallOutputParts and CustomToolCallCreatedBy).
+        if (raw.ToMemory().Span.IndexOf("function_call_output"u8) < 0 &&
+            !CustomToolCallCreatedBy.MayContain(raw.ToMemory().Span))
         {
             try
             {

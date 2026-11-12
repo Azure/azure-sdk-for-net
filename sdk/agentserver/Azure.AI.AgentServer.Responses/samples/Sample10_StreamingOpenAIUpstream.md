@@ -93,6 +93,8 @@ public class StreamingUpstreamHandler : ResponseHandler
 
             // Clear upstream response_id on output items so the
             // orchestrator's auto-stamp fills in this server's ID.
+            // Patch is evaluation-only in System.ClientModel (SCME0001).
+            #pragma warning disable SCME0001
             if (update is StreamingResponseOutputItemAddedUpdate added)
                 added.Item.Patch.Remove("$.response_id"u8);
             else if (update is StreamingResponseOutputItemDoneUpdate done)
@@ -100,6 +102,7 @@ public class StreamingUpstreamHandler : ResponseHandler
                 done.Item.Patch.Remove("$.response_id"u8);
                 outputItems.Add(done.Item);
             }
+            #pragma warning restore SCME0001
 
             yield return update;
         }

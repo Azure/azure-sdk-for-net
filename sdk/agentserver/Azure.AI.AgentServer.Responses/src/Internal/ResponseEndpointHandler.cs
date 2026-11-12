@@ -1330,6 +1330,8 @@ internal sealed class ResponseEndpointHandler
         var result = await _provider.GetInputItemsAsync(
             responseId, platformContext, limit, ascending, after, before, httpContext.RequestAborted);
 
+        // Custom providers may build the page without the list envelope discriminator.
+        result.Object ??= "list";
         return JsonForClient(result);
     }
 

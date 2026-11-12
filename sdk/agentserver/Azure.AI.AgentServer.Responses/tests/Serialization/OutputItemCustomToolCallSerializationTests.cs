@@ -326,6 +326,39 @@ public class OutputItemCustomToolCallSerializationTests
     }
 
     // ========================================
+    // Storage read-back
+    // ========================================
+
+    // OpenAI's ResponseItem reader dispatches custom tool calls to its own CustomToolCallItem types, which only
+    // accept a string created_by; the stored object form must still read back with its attribution intact.
+    [Test]
+    public void StoredCustomToolCall_WithObjectCreatedBy_ReadsBack()
+        => AssertStoredItemReadsBack(CreateCustomToolCall(), "ctc_123");
+
+    [Test]
+    public void StoredCustomToolCallOutput_WithObjectCreatedBy_ReadsBack()
+        => AssertStoredItemReadsBack(CreateCustomToolCallOutput(), "ctco_123");
+
+    private static void AssertStoredItemReadsBack(OutputItem item, string expectedId)
+    {
+        var stored = "[" + ModelJson.Write(item) + "]";
+
+        var read = StorageEnvelopeSerializer.DeserializeItemsArray(stored).Single();
+
+        Assert.That(read, Is.Not.Null);
+        Assert.That(read!.Id, Is.EqualTo(expectedId));
+        Assert.That(read.CreatedBy, Is.Not.Null);
+        using var createdBy = JsonDocument.Parse(read.CreatedBy!.ToString());
+        AssertSameJson(CreatedByJson, createdBy.RootElement);
+
+        using var rewritten = JsonDocument.Parse(ModelJson.Write(read).ToString());
+        Assert.That(
+            rewritten.RootElement.EnumerateObject().Count(p => p.Name == "created_by"),
+            Is.EqualTo(1),
+            "created_by must be written exactly once after a storage round trip");
+    }
+
+    // ========================================
     // Helpers
     // ========================================
 

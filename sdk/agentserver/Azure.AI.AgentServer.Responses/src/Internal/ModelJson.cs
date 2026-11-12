@@ -17,7 +17,9 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// </para>
 /// <para>
 /// Reads also accept the array form of a <c>function_call_output</c> item's <c>output</c> for
-/// models that only accept the string form; see <see cref="FunctionCallOutputParts"/>.
+/// models that only accept the string form; see <see cref="FunctionCallOutputParts"/>. They also
+/// accept the object form of <c>created_by</c> on custom tool call items, which OpenAI's reader
+/// rejects; see <see cref="CustomToolCallCreatedBy"/>.
 /// </para>
 /// </summary>
 internal static class ModelJson
@@ -54,12 +56,14 @@ internal static class ModelJson
         options ??= ModelReaderWriterOptions.Json;
         var original = data;
         var flattened = FunctionCallOutputParts.Flatten(ref data);
+        var createdBy = CustomToolCallCreatedBy.Strip(ref data);
 #pragma warning disable AZC0150
-        if (flattened is not null)
+        if (flattened is not null || createdBy is not null)
         {
-            // Models that carry output as BinaryData (e.g. ItemFieldFunctionToolCallOutput) read the
-            // array form natively and would lose image/file parts if flattened, so only fall back to
-            // flatten-and-restore when the plain read rejects the array (the OpenAI reader throws).
+            // Models that carry these values natively (e.g. ItemFieldFunctionToolCallOutput's
+            // BinaryData output, or OutputItemCustomToolCall's created_by) would lose data if
+            // rewritten, so only fall back to rewrite-and-restore when the plain read rejects the
+            // original payload (the OpenAI reader throws).
             try
             {
                 return ModelReaderWriter.Read(original, returnType, options);
@@ -74,6 +78,11 @@ internal static class ModelJson
         if (flattened is not null)
         {
             FunctionCallOutputParts.Restore(model, flattened);
+        }
+
+        if (createdBy is not null)
+        {
+            CustomToolCallCreatedBy.Restore(model, createdBy);
         }
 
         return model;

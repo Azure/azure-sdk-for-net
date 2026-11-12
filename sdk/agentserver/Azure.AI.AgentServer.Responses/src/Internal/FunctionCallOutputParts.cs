@@ -77,13 +77,7 @@ internal static class FunctionCallOutputParts
 #pragma warning disable OPENAI001
         foreach (var (path, parts) in flattened)
         {
-            object? target = model;
-            foreach (var segment in path)
-            {
-                target = Step(target, segment);
-            }
-
-            if (target is FunctionCallOutputResponseItem item)
+            if (Navigate(model, path) is FunctionCallOutputResponseItem item)
             {
                 SetParts(item, parts);
             }
@@ -184,6 +178,24 @@ internal static class FunctionCallOutputParts
 
                 break;
         }
+    }
+
+    /// <summary>
+    /// Follows a JSON location recorded while walking a payload to the model instance read from it.
+    /// </summary>
+    /// <param name="model">The model read from the payload.</param>
+    /// <param name="path">The property names and array indices leading to the target.</param>
+    /// <returns>The model instance at <paramref name="path"/>, or <see langword="null"/> when the model graph does not expose it.</returns>
+    [Experimental("OPENAI001")]
+    internal static object? Navigate(object? model, object[] path)
+    {
+        object? target = model;
+        foreach (var segment in path)
+        {
+            target = Step(target, segment);
+        }
+
+        return target;
     }
 
     [Experimental("OPENAI001")]

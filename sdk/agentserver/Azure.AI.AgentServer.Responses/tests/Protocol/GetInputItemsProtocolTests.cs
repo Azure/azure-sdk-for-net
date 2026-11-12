@@ -4,8 +4,12 @@
 using System.Net;
 using System.Text;
 using System.Text.Json;
+using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Protocol;
 
@@ -68,6 +72,32 @@ public class GetInputItemsProtocolTests : IDisposable
         Assert.That(doc.RootElement.GetProperty("has_more").GetBoolean(), Is.False);
         Assert.That(doc.RootElement.GetProperty("object").GetString(), Is.EqualTo("list"),
             "Empty input items list must still include 'object': 'list'");
+    }
+
+    /// <summary>
+    /// A custom provider may build the page without the list discriminator; the endpoint still emits
+    /// <c>"object": "list"</c>.
+    /// </summary>
+    [Test]
+    public async Task Get_InputItems_CustomProviderWithoutObject_Returns_List_Envelope()
+    {
+        using var factory = new TestWebApplicationFactory(
+            _handler,
+            configureTestServices: services => services.AddSingleton<ResponsesProvider>(
+                new PageWithoutObjectProvider(new InMemoryResponsesProvider(
+                    Options.Create(new InMemoryProviderOptions()), TimeProvider.System))));
+        using var client = factory.CreateClient();
+
+        var create = await client.PostAsync("/responses",
+            new StringContent(JsonSerializer.Serialize(new { model = "test" }), Encoding.UTF8, "application/json"));
+        using var created = JsonDocument.Parse(await create.Content.ReadAsStringAsync());
+        var responseId = created.RootElement.GetProperty("id").GetString();
+
+        var response = await client.GetAsync($"/responses/{responseId}/input_items");
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        using var doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+        Assert.That(doc.RootElement.GetProperty("object").GetString(), Is.EqualTo("list"));
     }
 
     /// <summary>
@@ -715,6 +745,44 @@ public class GetInputItemsProtocolTests : IDisposable
         }
 
         return null;
+    }
+
+    /// <summary>Delegates to an inner provider but returns input-item pages without <c>Object</c> set.</summary>
+    private sealed class PageWithoutObjectProvider(ResponsesProvider inner) : ResponsesProvider
+    {
+        public override Task CreateResponseAsync(
+            CreateResponsePersistRequest request, PlatformContext context, CancellationToken cancellationToken = default)
+            => inner.CreateResponseAsync(request, context, cancellationToken);
+
+        public override Task UpdateResponseAsync(
+            ResponseObject response, PlatformContext context, CancellationToken cancellationToken = default)
+            => inner.UpdateResponseAsync(response, context, cancellationToken);
+
+        public override Task<ResponseObject> GetResponseAsync(
+            string responseId, PlatformContext context, CancellationToken cancellationToken = default)
+            => inner.GetResponseAsync(responseId, context, cancellationToken);
+
+        public override Task DeleteResponseAsync(
+            string responseId, PlatformContext context, CancellationToken cancellationToken = default)
+            => inner.DeleteResponseAsync(responseId, context, cancellationToken);
+
+        public override async Task<ResponseItemCollectionPage> GetInputItemsAsync(
+            string responseId, PlatformContext context, int limit = 20, bool ascending = false,
+            string? after = null, string? before = null, CancellationToken cancellationToken = default)
+        {
+            var page = await inner.GetInputItemsAsync(responseId, context, limit, ascending, after, before, cancellationToken);
+            page.Object = null;
+            return page;
+        }
+
+        public override Task<IEnumerable<OutputItem?>> GetItemsAsync(
+            IEnumerable<string> itemIds, PlatformContext context, CancellationToken cancellationToken = default)
+            => inner.GetItemsAsync(itemIds, context, cancellationToken);
+
+        public override Task<IEnumerable<string>> GetHistoryItemIdsAsync(
+            string? previousResponseId, string? conversationId, int limit, PlatformContext context,
+            CancellationToken cancellationToken = default)
+            => inner.GetHistoryItemIdsAsync(previousResponseId, conversationId, limit, context, cancellationToken);
     }
 
     public void Dispose()
