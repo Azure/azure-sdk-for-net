@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -12,6 +13,56 @@ namespace Azure.Core.Tests
 {
     public class NextLinkOperationImplementationTests
     {
+        [TestCase(true, "Succeeded")]
+        [TestCase(false, "Succeeded")]
+        [TestCase(true, "Failed")]
+        [TestCase(false, "Canceled")]
+        public async Task ObservesMonitorResponseBeforeFinalResult(bool async, string status)
+        {
+            var monitorResponse = new MockResponse(200);
+            monitorResponse.SetContent($$"""{"status":"{{status}}","progress":100}""");
+            var finalResponse = new MockResponse(200);
+            finalResponse.SetContent("""{"value":"result"}""");
+            var pipeline = new HttpPipeline(new MockTransport(monitorResponse, finalResponse), default);
+            var initialResponse = new MockResponse(202);
+            initialResponse.AddHeader("Operation-Location", "https://test/operations/job-123?api-version=1");
+            var observed = new List<Response>();
+            var operation = NextLinkOperationImplementation.Create(
+                pipeline, RequestMethod.Post, new Uri("https://test/resource"), initialResponse,
+                OperationFinalStateVia.OriginalUri, statusMonitorResponseReceived: observed.Add);
+
+            var state = await operation.UpdateStateAsync(async, default);
+
+            Assert.AreEqual(1, observed.Count);
+            Assert.AreSame(monitorResponse, observed[0]);
+            Assert.AreSame(status == "Succeeded" ? finalResponse : monitorResponse, state.RawResponse);
+            Assert.AreEqual(status == "Succeeded", state.HasSucceeded);
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task ObservesMonitorAfterRehydration(bool async)
+        {
+            const string pollingUri = "https://test/operations/job-123?api-version=1&opaque=retained";
+            var response = new MockResponse(200);
+            response.SetContent("""{"status":"Running","progress":25}""");
+            var transport = new MockTransport(response);
+            var pipeline = new HttpPipeline(transport, default);
+            var token = new RehydrationToken(
+                "job-123", null, "OperationLocation", pollingUri, "https://test/resource",
+                RequestMethod.Post, null, OperationFinalStateVia.OperationLocation.ToString());
+            Response observed = null;
+            var operation = NextLinkOperationImplementation.Create(
+                pipeline, token, statusMonitorResponseReceived: value => observed = value);
+
+            Assert.IsNull(observed);
+            var state = await operation.UpdateStateAsync(async, default);
+
+            Assert.AreSame(response, observed);
+            Assert.IsFalse(state.HasCompleted);
+            Assert.AreEqual(pollingUri, transport.Requests[0].Uri.ToUri().AbsoluteUri);
+        }
+
         [Test]
         public void ConstructRehydrationToken()
         {

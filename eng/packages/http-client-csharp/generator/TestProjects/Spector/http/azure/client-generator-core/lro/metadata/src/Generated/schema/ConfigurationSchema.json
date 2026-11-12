@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "properties": {
+    "AzureClients": {
+      "type": "object",
+      "properties": {
+        "MetadataClient": {
+          "type": "object",
+          "description": "Configuration for MetadataClient.",
+          "properties": {
+            "Endpoint": {
+              "type": "string",
+              "format": "uri",
+              "description": "Gets or sets the Endpoint."
+            },
+            "Credential": {
+              "$ref": "#/definitions/credential"
+            },
+            "Options": {
+              "$ref": "#/definitions/metadataClientOptions"
+            }
+          }
+        }
+      },
+      "additionalProperties": {
+        "type": "object",
+        "description": "Configuration for a named client instance."
+      }
+    }
+  },
+  "definitions": {
+    "metadataClientOptions": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/azureOptions"
+        }
+      ]
+    }
+  }
+}

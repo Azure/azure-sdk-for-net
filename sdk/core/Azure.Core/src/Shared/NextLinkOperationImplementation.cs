@@ -29,6 +29,7 @@ namespace Azure.Core
         private readonly OperationFinalStateVia _finalStateVia;
         private readonly HttpPipeline _pipeline;
         private readonly string? _apiVersion;
+        private readonly Action<Response>? _statusMonitorResponseReceived;
 
         private string? _lastKnownLocation;
         private string _nextRequestUri;
@@ -46,7 +47,8 @@ namespace Azure.Core
             Response response,
             OperationFinalStateVia finalStateVia,
             bool skipApiVersionOverride = false,
-            string? apiVersionOverrideValue = null)
+            string? apiVersionOverrideValue = null,
+            Action<Response>? statusMonitorResponseReceived = null)
         {
             string? apiVersionStr = null;
             if (apiVersionOverrideValue is not null)
@@ -65,7 +67,7 @@ namespace Azure.Core
                 lastKnownLocation = null;
             }
 
-            NextLinkOperationImplementation operation = new(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, apiVersionStr, isNextRequestPolling: isNextRequestPolling);
+            NextLinkOperationImplementation operation = new(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, apiVersionStr, isNextRequestPolling: isNextRequestPolling, statusMonitorResponseReceived: statusMonitorResponseReceived);
 
             if (headerSource == HeaderSource.None && IsFinalState(response, headerSource, out var failureState, out _))
             {
@@ -96,7 +98,8 @@ namespace Azure.Core
 
         public static IOperation Create(
             HttpPipeline pipeline,
-            RehydrationToken rehydrationToken)
+            RehydrationToken rehydrationToken,
+            Action<Response>? statusMonitorResponseReceived = null)
         {
             AssertNotNull(rehydrationToken, nameof(rehydrationToken));
             AssertNotNull(pipeline, nameof(pipeline));
@@ -142,7 +145,7 @@ namespace Azure.Core
                 headerSource = HeaderSource.None;
             }
 
-            return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, null, rehydrationToken.Id);
+            return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, null, rehydrationToken.Id, statusMonitorResponseReceived: statusMonitorResponseReceived);
         }
 
         private NextLinkOperationImplementation(
@@ -155,7 +158,8 @@ namespace Azure.Core
             OperationFinalStateVia finalStateVia,
             string? apiVersion,
             string? operationId = null,
-            bool isNextRequestPolling = false)
+            bool isNextRequestPolling = false,
+            Action<Response>? statusMonitorResponseReceived = null)
         {
             AssertNotNull(pipeline, nameof(pipeline));
             AssertNotNull(requestMethod, nameof(requestMethod));
@@ -172,6 +176,7 @@ namespace Azure.Core
             _finalStateVia = finalStateVia;
             _pipeline = pipeline;
             _apiVersion = apiVersion;
+            _statusMonitorResponseReceived = statusMonitorResponseReceived;
             if (operationId is not null)
             {
                 OperationId = operationId;
@@ -243,6 +248,7 @@ namespace Azure.Core
                 ? await GetResponseAsync(_nextRequestUri, cancellationToken).ConfigureAwait(false)
                 : GetResponse(_nextRequestUri, cancellationToken);
 
+            _statusMonitorResponseReceived?.Invoke(response);
             var hasCompleted = IsFinalState(response, _headerSource, out var failureState, out var resourceLocation);
             if (failureState != null)
             {

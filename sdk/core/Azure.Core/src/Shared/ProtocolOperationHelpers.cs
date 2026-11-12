@@ -4,6 +4,10 @@
 #nullable enable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Text;
+using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -12,6 +16,130 @@ namespace Azure.Core
 {
     internal static class ProtocolOperationHelpers
     {
+        public static TOperation Convert<TFrom, TTo, TOperation>(
+            Operation<TFrom> operation, Func<Response, TTo> convertFunc,
+            ClientDiagnostics diagnostics, string scopeName,
+            Func<Operation<TTo>, Func<Response?>, TOperation> createOperation)
+            where TFrom : notnull
+            where TTo : notnull
+            where TOperation : Operation
+            => createOperation(
+                Convert(operation, convertFunc, diagnostics, scopeName),
+                ((IStatusMonitorOperation)operation).GetStatusMonitorResponse);
+
+        public static async ValueTask<TOperation> ProcessMessageAsync<T, TOperation>(
+            HttpPipeline pipeline, HttpMessage message, ClientDiagnostics clientDiagnostics,
+            string scopeName, OperationFinalStateVia finalStateVia, RequestContext? requestContext,
+            WaitUntil waitUntil, Func<Response, T> resultSelector,
+            Func<Operation<T>, Func<Response?>, TOperation> createOperation)
+            where T : notnull
+            where TOperation : Operation
+        {
+            var response = await pipeline.ProcessMessageAsync(message, requestContext).ConfigureAwait(false);
+            Response? monitorResponse = response;
+            var innerOperation = new ProtocolOperation<T>(
+                clientDiagnostics, pipeline, message.Request, response, finalStateVia, scopeName,
+                resultSelector, received => monitorResponse = received);
+            var operation = createOperation(innerOperation, () => monitorResponse);
+            if (waitUntil == WaitUntil.Completed)
+            {
+                await operation.WaitForCompletionResponseAsync(requestContext?.CancellationToken ?? default).ConfigureAwait(false);
+            }
+            return operation;
+        }
+
+        public static TOperation ProcessMessage<T, TOperation>(
+            HttpPipeline pipeline, HttpMessage message, ClientDiagnostics clientDiagnostics,
+            string scopeName, OperationFinalStateVia finalStateVia, RequestContext? requestContext,
+            WaitUntil waitUntil, Func<Response, T> resultSelector,
+            Func<Operation<T>, Func<Response?>, TOperation> createOperation)
+            where T : notnull
+            where TOperation : Operation
+        {
+            var response = pipeline.ProcessMessage(message, requestContext);
+            Response? monitorResponse = response;
+            var innerOperation = new ProtocolOperation<T>(
+                clientDiagnostics, pipeline, message.Request, response, finalStateVia, scopeName,
+                resultSelector, received => monitorResponse = received);
+            var operation = createOperation(innerOperation, () => monitorResponse);
+            if (waitUntil == WaitUntil.Completed)
+            {
+                operation.WaitForCompletionResponse(requestContext?.CancellationToken ?? default);
+            }
+            return operation;
+        }
+
+        public static TOperation Rehydrate<T, TOperation>(
+            HttpPipeline pipeline, RehydrationToken rehydrationToken, ClientOptions? options,
+            string scopeName, Func<Response, T> resultSelector,
+            Func<Operation<T>, Func<Response?>, TOperation> createOperation)
+            where T : notnull
+            where TOperation : Operation
+        {
+            Response? monitorResponse = null;
+            var innerOperation = new ProtocolOperation<T>(
+                new ClientDiagnostics(options ?? ClientOptions.Default), pipeline, rehydrationToken, scopeName,
+                resultSelector, received => monitorResponse = received);
+            return createOperation(innerOperation, () => monitorResponse);
+        }
+
+        public static JsonElement? GetStatusMetadata(Response? response, params string[] propertySegments)
+        {
+            if (response?.Content is not { } content || content.ToMemory().IsEmpty)
+            {
+                return null;
+            }
+
+            using var document = JsonDocument.Parse(content);
+            var element = document.RootElement;
+            foreach (var segment in propertySegments)
+            {
+                if (element.ValueKind == JsonValueKind.Null || !element.TryGetProperty(segment, out element))
+                {
+                    return null;
+                }
+            }
+            return element.ValueKind is JsonValueKind.Null ? null : element.Clone();
+        }
+
+        public static string GetOperationId(
+            RehydrationToken? rehydrationToken, Response? monitorResponse,
+            string? pollingPath, string? pathParameter, string[]? propertySegments)
+        {
+            if (propertySegments is not null &&
+                GetStatusMetadata(monitorResponse, propertySegments) is { } property)
+            {
+                return property.GetString() ?? NextLinkOperationImplementation.NotSet;
+            }
+            if (rehydrationToken is null || pollingPath is null || pathParameter is null)
+            {
+                return NextLinkOperationImplementation.NotSet;
+            }
+
+            var data = ModelReaderWriter.Write(rehydrationToken.Value, ModelReaderWriterOptions.Json, AzureCoreContext.Default);
+            using var document = JsonDocument.Parse(data);
+            var nextUri = document.RootElement.GetProperty("nextRequestUri").GetString();
+            var initialUri = document.RootElement.GetProperty("initialUri").GetString();
+            var pollingUri = new Uri(new Uri(initialUri!), nextUri);
+            var pattern = new StringBuilder();
+            int position = 0;
+            foreach (Match parameter in Regex.Matches(pollingPath, @"\{(\+?)([^}]+)\}"))
+            {
+                pattern.Append(Regex.Escape(pollingPath.Substring(position, parameter.Index - position)));
+                var capture = parameter.Groups[2].Value == pathParameter;
+                pattern.Append(capture ? "(?<operationId>" : "(?:");
+                pattern.Append(parameter.Groups[1].Success && parameter.Groups[1].Length > 0 ? ".+?" : "[^/]+");
+                pattern.Append(')');
+                position = parameter.Index + parameter.Length;
+            }
+            pattern.Append(Regex.Escape(pollingPath.Substring(position)));
+            pattern.Append('$');
+            var match = Regex.Match(pollingUri.AbsolutePath, pattern.ToString());
+            return match.Success && match.Groups["operationId"].Success
+                ? Uri.UnescapeDataString(match.Groups["operationId"].Value)
+                : NextLinkOperationImplementation.NotSet;
+        }
+
         public static Operation<TTo> Convert<TFrom, TTo>(Operation<TFrom> operation, Func<Response, TTo> convertFunc, ClientDiagnostics diagnostics, string scopeName)
             where TFrom : notnull
             where TTo : notnull
@@ -218,5 +346,10 @@ namespace Azure.Core
                 return scope;
             }
         }
+    }
+
+    internal interface IStatusMonitorOperation
+    {
+        Response? GetStatusMonitorResponse();
     }
 }

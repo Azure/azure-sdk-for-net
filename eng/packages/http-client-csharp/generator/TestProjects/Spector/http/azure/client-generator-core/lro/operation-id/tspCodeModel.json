@@ -1,0 +1,1776 @@
+{
+  "name": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId",
+  "apiVersions": [
+    "2022-12-01-preview"
+  ],
+  "enums": [
+    {
+      "$id": "1",
+      "kind": "enum",
+      "name": "OperationState",
+      "apiVersions": [],
+      "crossLanguageDefinitionId": "Azure.Core.Foundations.OperationState",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "3",
+          "kind": "enumvalue",
+          "name": "NotStarted",
+          "value": "NotStarted",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "The operation has not started.",
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "4",
+          "kind": "enumvalue",
+          "name": "Running",
+          "value": "Running",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "The operation is in progress.",
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "5",
+          "kind": "enumvalue",
+          "name": "Succeeded",
+          "value": "Succeeded",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "The operation has completed successfully.",
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "6",
+          "kind": "enumvalue",
+          "name": "Failed",
+          "value": "Failed",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "The operation has failed.",
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "7",
+          "kind": "enumvalue",
+          "name": "Canceled",
+          "value": "Canceled",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "The operation has been canceled by the user.",
+          "decorators": [],
+          "isExactName": false
+        }
+      ],
+      "namespace": "Azure.Core.Foundations",
+      "doc": "Enum describing allowed operation states.",
+      "isFixed": false,
+      "isFlags": false,
+      "usage": "Output,Json,LroPolling,LroFinalEnvelope",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "8",
+      "kind": "enum",
+      "name": "Versions",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
+      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.Versions",
+      "valueType": {
+        "$id": "9",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "10",
+          "kind": "enumvalue",
+          "name": "v2022_12_01_preview",
+          "value": "2022-12-01-preview",
+          "valueType": {
+            "$ref": "9"
+          },
+          "enumType": {
+            "$ref": "8"
+          },
+          "decorators": [],
+          "isExactName": false
+        }
+      ],
+      "namespace": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId",
+      "isFixed": true,
+      "isFlags": false,
+      "usage": "ApiVersionEnum",
+      "decorators": [],
+      "isExactName": false
+    }
+  ],
+  "constants": [
+    {
+      "$id": "11",
+      "kind": "constant",
+      "name": "GetDocumentAnalysisStatusAccept",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "12",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "13",
+      "kind": "constant",
+      "name": "GetDocumentAnalysisStatusAccept1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "14",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "15",
+      "kind": "constant",
+      "name": "GetDocumentAnalysisStatusAccept2",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "16",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    }
+  ],
+  "models": [
+    {
+      "$id": "17",
+      "kind": "model",
+      "name": "DocumentAnalysisStatus",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
+      "namespace": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId",
+      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.DocumentAnalysisStatus",
+      "usage": "Output,Json,LroPolling,LroFinalEnvelope",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "DocumentAnalysisStatus"
+        }
+      },
+      "isExactName": false,
+      "properties": [
+        {
+          "$id": "18",
+          "kind": "property",
+          "name": "status",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
+          "serializedName": "status",
+          "type": {
+            "$ref": "1"
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.DocumentAnalysisStatus.status",
+          "serializationOptions": {
+            "json": {
+              "name": "status"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "19",
+          "kind": "property",
+          "name": "result",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
+          "serializedName": "result",
+          "type": {
+            "$id": "20",
+            "kind": "model",
+            "name": "DocumentAnalysisResult",
+            "apiVersions": [
+              "2022-12-01-preview"
+            ],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId",
+            "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.DocumentAnalysisResult",
+            "usage": "Output,Json,LroPolling,LroFinalEnvelope",
+            "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": "DocumentAnalysisResult"
+              }
+            },
+            "isExactName": false,
+            "properties": [
+              {
+                "$id": "21",
+                "kind": "property",
+                "name": "summary",
+                "apiVersions": [
+                  "2022-12-01-preview"
+                ],
+                "serializedName": "summary",
+                "type": {
+                  "$id": "22",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.DocumentAnalysisResult.summary",
+                "serializationOptions": {
+                  "json": {
+                    "name": "summary"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              }
+            ]
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.DocumentAnalysisStatus.result",
+          "serializationOptions": {
+            "json": {
+              "name": "result"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
+    },
+    {
+      "$ref": "20"
+    },
+    {
+      "$id": "23",
+      "kind": "model",
+      "name": "TranslationStatus",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
+      "namespace": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId",
+      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.TranslationStatus",
+      "usage": "Output,Json,LroPolling,LroFinalEnvelope",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "TranslationStatus"
+        }
+      },
+      "isExactName": false,
+      "properties": [
+        {
+          "$id": "24",
+          "kind": "property",
+          "name": "id",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
+          "serializedName": "id",
+          "type": {
+            "$id": "25",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.TranslationStatus.id",
+          "serializationOptions": {
+            "json": {
+              "name": "id"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "26",
+          "kind": "property",
+          "name": "status",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
+          "serializedName": "status",
+          "type": {
+            "$ref": "1"
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.TranslationStatus.status",
+          "serializationOptions": {
+            "json": {
+              "name": "status"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "27",
+          "kind": "property",
+          "name": "result",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
+          "serializedName": "result",
+          "type": {
+            "$id": "28",
+            "kind": "model",
+            "name": "TranslationResult",
+            "apiVersions": [
+              "2022-12-01-preview"
+            ],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId",
+            "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.TranslationResult",
+            "usage": "Output,Json,LroPolling,LroFinalEnvelope",
+            "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": "TranslationResult"
+              }
+            },
+            "isExactName": false,
+            "properties": [
+              {
+                "$id": "29",
+                "kind": "property",
+                "name": "translatedCharacters",
+                "apiVersions": [
+                  "2022-12-01-preview"
+                ],
+                "serializedName": "translatedCharacters",
+                "type": {
+                  "$id": "30",
+                  "kind": "int32",
+                  "name": "int32",
+                  "crossLanguageDefinitionId": "TypeSpec.int32",
+                  "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.TranslationResult.translatedCharacters",
+                "serializationOptions": {
+                  "json": {
+                    "name": "translatedCharacters"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              }
+            ]
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.TranslationStatus.result",
+          "serializationOptions": {
+            "json": {
+              "name": "result"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
+    },
+    {
+      "$ref": "28"
+    },
+    {
+      "$id": "31",
+      "kind": "model",
+      "name": "TranslationWithPathStatus",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
+      "namespace": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId",
+      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.TranslationWithPathStatus",
+      "usage": "Output,Json,LroPolling,LroFinalEnvelope",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "TranslationWithPathStatus"
+        }
+      },
+      "isExactName": false,
+      "properties": [
+        {
+          "$id": "32",
+          "kind": "property",
+          "name": "id",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
+          "serializedName": "id",
+          "type": {
+            "$id": "33",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.TranslationWithPathStatus.id",
+          "serializationOptions": {
+            "json": {
+              "name": "id"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "34",
+          "kind": "property",
+          "name": "status",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
+          "serializedName": "status",
+          "type": {
+            "$ref": "1"
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.TranslationWithPathStatus.status",
+          "serializationOptions": {
+            "json": {
+              "name": "status"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "35",
+          "kind": "property",
+          "name": "result",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
+          "serializedName": "result",
+          "type": {
+            "$ref": "28"
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.TranslationWithPathStatus.result",
+          "serializationOptions": {
+            "json": {
+              "name": "result"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
+    }
+  ],
+  "clients": [
+    {
+      "$id": "36",
+      "kind": "client",
+      "name": "OperationIdClient",
+      "isExactName": false,
+      "namespace": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId",
+      "doc": "Defines a legacy service-shaped HTTP flow for testing URI-derived LRO operation identity.",
+      "methods": [
+        {
+          "$id": "37",
+          "kind": "basic",
+          "name": "getDocumentAnalysisStatus",
+          "isExactName": false,
+          "accessibility": "public",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
+          "operation": {
+            "$id": "38",
+            "name": "getDocumentAnalysisStatus",
+            "isExactName": false,
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "39",
+                "kind": "path",
+                "name": "modelId",
+                "serializedName": "modelId",
+                "type": {
+                  "$id": "40",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "isApiVersion": false,
+                "explode": false,
+                "style": "simple",
+                "allowReserved": false,
+                "skipUrlEncoding": false,
+                "optional": false,
+                "scope": "Method",
+                "decorators": [],
+                "readOnly": false,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getDocumentAnalysisStatus.modelId",
+                "methodParameterSegments": [
+                  {
+                    "$id": "41",
+                    "kind": "method",
+                    "name": "modelId",
+                    "serializedName": "modelId",
+                    "type": {
+                      "$id": "42",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "Path",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getDocumentAnalysisStatus.modelId",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
+              },
+              {
+                "$id": "43",
+                "kind": "path",
+                "name": "resultId",
+                "serializedName": "resultId",
+                "type": {
+                  "$id": "44",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "isApiVersion": false,
+                "explode": false,
+                "style": "simple",
+                "allowReserved": false,
+                "skipUrlEncoding": false,
+                "optional": false,
+                "scope": "Method",
+                "decorators": [],
+                "readOnly": false,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getDocumentAnalysisStatus.resultId",
+                "methodParameterSegments": [
+                  {
+                    "$id": "45",
+                    "kind": "method",
+                    "name": "resultId",
+                    "serializedName": "resultId",
+                    "type": {
+                      "$id": "46",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "Path",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getDocumentAnalysisStatus.resultId",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
+              },
+              {
+                "$id": "47",
+                "kind": "query",
+                "name": "apiVersion",
+                "serializedName": "api-version",
+                "doc": "The API version to use for this operation.",
+                "type": {
+                  "$id": "48",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "isApiVersion": true,
+                "explode": false,
+                "defaultValue": {
+                  "type": {
+                    "$id": "49",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2022-12-01-preview"
+                },
+                "optional": false,
+                "scope": "Client",
+                "decorators": [],
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getDocumentAnalysisStatus.apiVersion",
+                "readOnly": false,
+                "methodParameterSegments": [
+                  {
+                    "$id": "50",
+                    "kind": "method",
+                    "name": "apiVersion",
+                    "serializedName": "apiVersion",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "51",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "",
+                    "isApiVersion": true,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "52",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2022-12-01-preview"
+                    },
+                    "optional": true,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getDocumentAnalysisStatus.apiVersion",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
+              },
+              {
+                "$id": "53",
+                "kind": "header",
+                "name": "accept",
+                "serializedName": "Accept",
+                "type": {
+                  "$ref": "11"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": false,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getDocumentAnalysisStatus.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "54",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "11"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getDocumentAnalysisStatus.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "17"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
+              }
+            ],
+            "httpMethod": "GET",
+            "uri": "{endpoint}",
+            "path": "/azure/client-generator-core/lro/operation-id/documentModels/{modelId}/analyzeResults/{resultId}",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getDocumentAnalysisStatus",
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId"
+          },
+          "parameters": [
+            {
+              "$ref": "41"
+            },
+            {
+              "$ref": "45"
+            },
+            {
+              "$ref": "54"
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "17"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getDocumentAnalysisStatus"
+        },
+        {
+          "$id": "55",
+          "kind": "lro",
+          "name": "analyze",
+          "isExactName": false,
+          "accessibility": "public",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
+          "operation": {
+            "$id": "56",
+            "name": "analyze",
+            "isExactName": false,
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "57",
+                "kind": "path",
+                "name": "modelId",
+                "serializedName": "modelId",
+                "type": {
+                  "$id": "58",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "isApiVersion": false,
+                "explode": false,
+                "style": "simple",
+                "allowReserved": false,
+                "skipUrlEncoding": false,
+                "optional": false,
+                "scope": "Method",
+                "decorators": [],
+                "readOnly": false,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.analyze.modelId",
+                "methodParameterSegments": [
+                  {
+                    "$id": "59",
+                    "kind": "method",
+                    "name": "modelId",
+                    "serializedName": "modelId",
+                    "type": {
+                      "$id": "60",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "Path",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.analyze.modelId",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
+              },
+              {
+                "$id": "61",
+                "kind": "query",
+                "name": "apiVersion",
+                "serializedName": "api-version",
+                "doc": "The API version to use for this operation.",
+                "type": {
+                  "$id": "62",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "isApiVersion": true,
+                "explode": false,
+                "defaultValue": {
+                  "type": {
+                    "$id": "63",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2022-12-01-preview"
+                },
+                "optional": false,
+                "scope": "Client",
+                "decorators": [],
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.analyze.apiVersion",
+                "readOnly": false,
+                "methodParameterSegments": [
+                  {
+                    "$ref": "50"
+                  }
+                ],
+                "isExactName": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  202
+                ],
+                "headers": [
+                  {
+                    "name": "operationLocation",
+                    "nameInResponse": "Operation-Location",
+                    "doc": "The location for monitoring the operation state.",
+                    "type": {
+                      "$id": "64",
+                      "kind": "url",
+                      "name": "ResourceLocation",
+                      "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+                      "baseType": {
+                        "$id": "65",
+                        "kind": "url",
+                        "name": "url",
+                        "crossLanguageDefinitionId": "TypeSpec.url",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    }
+                  }
+                ],
+                "isErrorResponse": false,
+                "serializationOptions": {}
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}",
+            "path": "/azure/client-generator-core/lro/operation-id/documentModels/{modelId}:analyze",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.analyze",
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId"
+          },
+          "parameters": [
+            {
+              "$ref": "59"
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "20"
+            },
+            "resultSegments": [
+              "result"
+            ]
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.analyze",
+          "lroMetadata": {
+            "finalStateVia": 3,
+            "finalResponse": {
+              "statusCodes": [
+                200
+              ],
+              "bodyType": {
+                "$ref": "17"
+              }
+            },
+            "resultPath": "result",
+            "operationId": [
+              {
+                "$id": "66",
+                "kind": "path",
+                "source": {
+                  "location": "ResponseHeader",
+                  "property": {
+                    "$id": "67",
+                    "kind": "property",
+                    "name": "operationLocation",
+                    "apiVersions": [],
+                    "serializedName": "Operation-Location",
+                    "doc": "The location for monitoring the operation state.",
+                    "type": {
+                      "$id": "68",
+                      "kind": "url",
+                      "name": "ResourceLocation",
+                      "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+                      "baseType": {
+                        "$id": "69",
+                        "kind": "url",
+                        "name": "url",
+                        "crossLanguageDefinitionId": "TypeSpec.url",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "optional": false,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId..anonymous.operationLocation",
+                    "serializationOptions": {},
+                    "isHttpMetadata": true,
+                    "isExactName": false
+                  }
+                },
+                "pathParameter": {
+                  "$id": "70",
+                  "kind": "path",
+                  "name": "resultId",
+                  "serializedName": "resultId",
+                  "type": {
+                    "$id": "71",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "isApiVersion": false,
+                  "explode": false,
+                  "style": "simple",
+                  "allowReserved": false,
+                  "skipUrlEncoding": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "decorators": [],
+                  "readOnly": false,
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getDocumentAnalysisStatus.resultId",
+                  "methodParameterSegments": [
+                    {
+                      "$ref": "45"
+                    }
+                  ],
+                  "isExactName": false
+                },
+                "pollingPath": "/azure/client-generator-core/lro/operation-id/documentModels/{modelId}/analyzeResults/{resultId}"
+              }
+            ]
+          }
+        },
+        {
+          "$id": "72",
+          "kind": "basic",
+          "name": "getTranslationStatus",
+          "isExactName": false,
+          "accessibility": "public",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
+          "operation": {
+            "$id": "73",
+            "name": "getTranslationStatus",
+            "isExactName": false,
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "74",
+                "kind": "query",
+                "name": "apiVersion",
+                "serializedName": "api-version",
+                "doc": "The API version to use for this operation.",
+                "type": {
+                  "$id": "75",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "isApiVersion": true,
+                "explode": false,
+                "defaultValue": {
+                  "type": {
+                    "$id": "76",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2022-12-01-preview"
+                },
+                "optional": false,
+                "scope": "Client",
+                "decorators": [],
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getTranslationStatus.apiVersion",
+                "readOnly": false,
+                "methodParameterSegments": [
+                  {
+                    "$ref": "50"
+                  }
+                ],
+                "isExactName": false
+              },
+              {
+                "$id": "77",
+                "kind": "header",
+                "name": "accept",
+                "serializedName": "Accept",
+                "type": {
+                  "$ref": "13"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": false,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getTranslationStatus.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "78",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "13"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getTranslationStatus.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "23"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
+              }
+            ],
+            "httpMethod": "GET",
+            "uri": "{endpoint}",
+            "path": "/azure/client-generator-core/lro/operation-id/translations/status",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getTranslationStatus",
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId"
+          },
+          "parameters": [
+            {
+              "$ref": "78"
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "23"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getTranslationStatus"
+        },
+        {
+          "$id": "79",
+          "kind": "lro",
+          "name": "startTranslation",
+          "isExactName": false,
+          "accessibility": "public",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
+          "operation": {
+            "$id": "80",
+            "name": "startTranslation",
+            "isExactName": false,
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "81",
+                "kind": "query",
+                "name": "apiVersion",
+                "serializedName": "api-version",
+                "doc": "The API version to use for this operation.",
+                "type": {
+                  "$id": "82",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "isApiVersion": true,
+                "explode": false,
+                "defaultValue": {
+                  "type": {
+                    "$id": "83",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2022-12-01-preview"
+                },
+                "optional": false,
+                "scope": "Client",
+                "decorators": [],
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.startTranslation.apiVersion",
+                "readOnly": false,
+                "methodParameterSegments": [
+                  {
+                    "$ref": "50"
+                  }
+                ],
+                "isExactName": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  202
+                ],
+                "headers": [
+                  {
+                    "name": "operationLocation",
+                    "nameInResponse": "Operation-Location",
+                    "doc": "The location for monitoring the operation state.",
+                    "type": {
+                      "$id": "84",
+                      "kind": "url",
+                      "name": "ResourceLocation",
+                      "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+                      "baseType": {
+                        "$id": "85",
+                        "kind": "url",
+                        "name": "url",
+                        "crossLanguageDefinitionId": "TypeSpec.url",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    }
+                  }
+                ],
+                "isErrorResponse": false,
+                "serializationOptions": {}
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}",
+            "path": "/azure/client-generator-core/lro/operation-id/translations:start",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.startTranslation",
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId"
+          },
+          "parameters": [],
+          "response": {
+            "type": {
+              "$ref": "28"
+            },
+            "resultSegments": [
+              "result"
+            ]
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.startTranslation",
+          "lroMetadata": {
+            "finalStateVia": 3,
+            "finalResponse": {
+              "statusCodes": [
+                200
+              ],
+              "bodyType": {
+                "$ref": "23"
+              }
+            },
+            "resultPath": "result",
+            "operationId": [
+              {
+                "$id": "86",
+                "kind": "property",
+                "property": {
+                  "$ref": "24"
+                },
+                "propertySegments": [
+                  {
+                    "$ref": "24"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "$id": "87",
+          "kind": "basic",
+          "name": "getTranslationWithPathStatus",
+          "isExactName": false,
+          "accessibility": "public",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
+          "operation": {
+            "$id": "88",
+            "name": "getTranslationWithPathStatus",
+            "isExactName": false,
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "89",
+                "kind": "path",
+                "name": "operationId",
+                "serializedName": "operationId",
+                "type": {
+                  "$id": "90",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "isApiVersion": false,
+                "explode": false,
+                "style": "simple",
+                "allowReserved": false,
+                "skipUrlEncoding": false,
+                "optional": false,
+                "scope": "Method",
+                "decorators": [],
+                "readOnly": false,
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getTranslationWithPathStatus.operationId",
+                "methodParameterSegments": [
+                  {
+                    "$id": "91",
+                    "kind": "method",
+                    "name": "operationId",
+                    "serializedName": "operationId",
+                    "type": {
+                      "$id": "92",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "Path",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getTranslationWithPathStatus.operationId",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
+              },
+              {
+                "$id": "93",
+                "kind": "query",
+                "name": "apiVersion",
+                "serializedName": "api-version",
+                "doc": "The API version to use for this operation.",
+                "type": {
+                  "$id": "94",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "isApiVersion": true,
+                "explode": false,
+                "defaultValue": {
+                  "type": {
+                    "$id": "95",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2022-12-01-preview"
+                },
+                "optional": false,
+                "scope": "Client",
+                "decorators": [],
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getTranslationWithPathStatus.apiVersion",
+                "readOnly": false,
+                "methodParameterSegments": [
+                  {
+                    "$ref": "50"
+                  }
+                ],
+                "isExactName": false
+              },
+              {
+                "$id": "96",
+                "kind": "header",
+                "name": "accept",
+                "serializedName": "Accept",
+                "type": {
+                  "$ref": "15"
+                },
+                "isApiVersion": false,
+                "optional": false,
+                "isContentType": false,
+                "scope": "Constant",
+                "readOnly": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getTranslationWithPathStatus.accept",
+                "methodParameterSegments": [
+                  {
+                    "$id": "97",
+                    "kind": "method",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "15"
+                    },
+                    "location": "Header",
+                    "isApiVersion": false,
+                    "optional": false,
+                    "scope": "Constant",
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getTranslationWithPathStatus.accept",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "bodyType": {
+                  "$ref": "31"
+                },
+                "headers": [],
+                "isErrorResponse": false,
+                "contentTypes": [
+                  "application/json"
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
+              }
+            ],
+            "httpMethod": "GET",
+            "uri": "{endpoint}",
+            "path": "/azure/client-generator-core/lro/operation-id/translations/operations/{operationId}",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getTranslationWithPathStatus",
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId"
+          },
+          "parameters": [
+            {
+              "$ref": "91"
+            },
+            {
+              "$ref": "97"
+            }
+          ],
+          "response": {
+            "type": {
+              "$ref": "31"
+            }
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getTranslationWithPathStatus"
+        },
+        {
+          "$id": "98",
+          "kind": "lro",
+          "name": "startTranslationWithPath",
+          "isExactName": false,
+          "accessibility": "public",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
+          "operation": {
+            "$id": "99",
+            "name": "startTranslationWithPath",
+            "isExactName": false,
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "100",
+                "kind": "query",
+                "name": "apiVersion",
+                "serializedName": "api-version",
+                "doc": "The API version to use for this operation.",
+                "type": {
+                  "$id": "101",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "isApiVersion": true,
+                "explode": false,
+                "defaultValue": {
+                  "type": {
+                    "$id": "102",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2022-12-01-preview"
+                },
+                "optional": false,
+                "scope": "Client",
+                "decorators": [],
+                "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.startTranslationWithPath.apiVersion",
+                "readOnly": false,
+                "methodParameterSegments": [
+                  {
+                    "$ref": "50"
+                  }
+                ],
+                "isExactName": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  202
+                ],
+                "headers": [
+                  {
+                    "name": "operationLocation",
+                    "nameInResponse": "Operation-Location",
+                    "doc": "The location for monitoring the operation state.",
+                    "type": {
+                      "$id": "103",
+                      "kind": "url",
+                      "name": "ResourceLocation",
+                      "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+                      "baseType": {
+                        "$id": "104",
+                        "kind": "url",
+                        "name": "url",
+                        "crossLanguageDefinitionId": "TypeSpec.url",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    }
+                  }
+                ],
+                "isErrorResponse": false,
+                "serializationOptions": {}
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}",
+            "path": "/azure/client-generator-core/lro/operation-id/translations:start-with-path",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.startTranslationWithPath",
+            "decorators": [],
+            "namespace": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId"
+          },
+          "parameters": [],
+          "response": {
+            "type": {
+              "$ref": "28"
+            },
+            "resultSegments": [
+              "result"
+            ]
+          },
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.startTranslationWithPath",
+          "lroMetadata": {
+            "finalStateVia": 3,
+            "finalResponse": {
+              "statusCodes": [
+                200
+              ],
+              "bodyType": {
+                "$ref": "31"
+              }
+            },
+            "resultPath": "result",
+            "operationId": [
+              {
+                "$id": "105",
+                "kind": "path",
+                "source": {
+                  "location": "ResponseHeader",
+                  "property": {
+                    "$id": "106",
+                    "kind": "property",
+                    "name": "operationLocation",
+                    "apiVersions": [],
+                    "serializedName": "Operation-Location",
+                    "doc": "The location for monitoring the operation state.",
+                    "type": {
+                      "$id": "107",
+                      "kind": "url",
+                      "name": "ResourceLocation",
+                      "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+                      "baseType": {
+                        "$id": "108",
+                        "kind": "url",
+                        "name": "url",
+                        "crossLanguageDefinitionId": "TypeSpec.url",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "optional": false,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId..anonymous.operationLocation",
+                    "serializationOptions": {},
+                    "isHttpMetadata": true,
+                    "isExactName": false
+                  }
+                },
+                "pathParameter": {
+                  "$id": "109",
+                  "kind": "path",
+                  "name": "operationId",
+                  "serializedName": "operationId",
+                  "type": {
+                    "$id": "110",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "isApiVersion": false,
+                  "explode": false,
+                  "style": "simple",
+                  "allowReserved": false,
+                  "skipUrlEncoding": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "decorators": [],
+                  "readOnly": false,
+                  "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.getTranslationWithPathStatus.operationId",
+                  "methodParameterSegments": [
+                    {
+                      "$ref": "91"
+                    }
+                  ],
+                  "isExactName": false
+                },
+                "pollingPath": "/azure/client-generator-core/lro/operation-id/translations/operations/{operationId}"
+              },
+              {
+                "$id": "111",
+                "kind": "property",
+                "property": {
+                  "$ref": "32"
+                },
+                "propertySegments": [
+                  {
+                    "$ref": "32"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "parameters": [
+        {
+          "$id": "112",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "113",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "114",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "http://localhost:3000"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId.endpoint",
+          "isExactName": false
+        },
+        {
+          "$ref": "50"
+        }
+      ],
+      "initializedBy": 1,
+      "decorators": [],
+      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.Lro.OperationId",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
+      "isMultiServiceClient": false
+    }
+  ]
+}
