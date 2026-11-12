@@ -29,7 +29,11 @@ namespace Azure.AI.Projects.Agents
             ServerLabel = serverLabel;
             Headers = new ChangeTrackingDictionary<string, string>();
             AllowedCallers = new ChangeTrackingList<CallableToolAllowedCaller>();
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentMcpTool"/>. </summary>
@@ -66,7 +70,11 @@ namespace Azure.AI.Projects.Agents
             RequireApprovalInternal = requireApprovalInternal;
             DeferLoading = deferLoading;
             ProjectConnectionId = projectConnectionId;
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
             ToolConfigs = toolConfigs;
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
             ResponseScheduling = responseScheduling;
         }
 
@@ -116,6 +124,7 @@ namespace Azure.AI.Projects.Agents
         public string ProjectConnectionId { get; set; }
 
         /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
+        [Obsolete("This property is deprecated and will be removed in a future version.")]
         public IDictionary<string, ToolConfig> ToolConfigs { get; }
 
         /// <summary> When the MCP invocation creates a follow-up response. Defaults to `when_idle`. </summary>

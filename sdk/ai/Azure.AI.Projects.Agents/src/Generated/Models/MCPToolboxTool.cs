@@ -77,7 +77,11 @@ namespace Azure.AI.Projects.Agents
         {
             ServerLabel = serverLabel;
             ServerUri = serverUri;
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
             ConnectorId = connectorId;
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
             TunnelId = tunnelId;
             Authorization = authorization;
             ServerDescription = serverDescription;
@@ -102,6 +106,7 @@ namespace Azure.AI.Projects.Agents
         ///   Currently supported `connector_id` values are:
         /// <list type="bullet"><item><description>Dropbox: `connector_dropbox`</description></item><item><description>Gmail: `connector_gmail`</description></item><item><description>Google Calendar: `connector_googlecalendar`</description></item><item><description>Google Drive: `connector_googledrive`</description></item><item><description>Microsoft Teams: `connector_microsoftteams`</description></item><item><description>Outlook Calendar: `connector_outlookcalendar`</description></item><item><description>Outlook Email: `connector_outlookemail`</description></item><item><description>SharePoint: `connector_sharepoint`</description></item></list>
         /// </summary>
+        [Obsolete("deprecated")]
         [Experimental("AAIP002")]
         public McpToolConnectorId? ConnectorId { get; set; }
 

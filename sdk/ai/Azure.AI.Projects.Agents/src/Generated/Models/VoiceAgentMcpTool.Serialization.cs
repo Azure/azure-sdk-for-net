@@ -169,6 +169,8 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("project_connection_id"u8);
                 writer.WriteStringValue(ProjectConnectionId);
             }
+#pragma warning disable CS0612 // This generated code references obsolete functionality.
+#pragma warning disable CS0618 // This generated code references obsolete functionality.
             if (Optional.IsCollectionDefined(ToolConfigs))
             {
                 writer.WritePropertyName("tool_configs"u8);
@@ -185,6 +187,8 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndObject();
             }
+#pragma warning restore CS0618 // This generated code references obsolete functionality.
+#pragma warning restore CS0612 // This generated code references obsolete functionality.
             if (Optional.IsDefined(ResponseScheduling))
             {
                 writer.WritePropertyName("response_scheduling"u8);
