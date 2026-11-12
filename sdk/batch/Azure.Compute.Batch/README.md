@@ -439,17 +439,8 @@ foreach (BatchPoolNodeCounts item in batchClient.GetPoolNodeCounts())
 
 #### List PoolUsageMetrics
 
-`GetPoolUsageMetricsAsync` can be used to list pool usage metrics.
-
-```C# Snippet:Batch_Migration_GetPoolUsageMetrics
-BatchClient batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-foreach (BatchPoolUsageMetrics item in batchClient.GetPoolUsageMetrics())
-{
-    // do something
-}
-```
+Pool usage metrics are no longer supported by service API version `2026-10-01`.
+`Azure.Compute.Batch` version `2.0.0` removes the pool usage-metrics methods and models.
 
 #### Get Supported Images
 
