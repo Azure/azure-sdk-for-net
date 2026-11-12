@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _eventType;
-        internal bool _eventTypeIsDefined;
+        private protected bool _eventTypeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningWebhook"/>. </summary>
         /// <param name="webhookType"> [Required] Specifies the type of service to send a callback. </param>

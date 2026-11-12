@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MonitorNotificationSettings)} does not support writing '{format}' format.");
             }
-            if (_emailNotificationSettingsIsDefined || Optional.IsDefined(EmailNotificationSettings))
+            if (Optional.IsDefined(EmailNotificationSettings, _emailNotificationSettingsIsDefined))
             {
                 if (EmailNotificationSettings != null)
                 {

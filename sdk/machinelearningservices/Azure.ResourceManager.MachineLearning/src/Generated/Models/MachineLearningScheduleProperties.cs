@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningScheduleProperties : MachineLearningResourceBase
     {
         private string _displayName;
-        internal bool _displayNameIsDefined;
+        private bool _displayNameIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningScheduleProperties"/>. </summary>
         /// <param name="action"> [Required] Specifies the action of the schedule. </param>

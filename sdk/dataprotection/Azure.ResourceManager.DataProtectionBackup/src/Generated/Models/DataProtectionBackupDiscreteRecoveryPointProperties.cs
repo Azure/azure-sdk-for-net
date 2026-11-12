@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="retentionTagVersion"></param>
         /// <param name="expireOn"></param>
         /// <param name="recoveryPointState"> Specifies recovery point completeness. Partial (i.e., only some of the intended items were backed up), or Completed (i.e., ALL intended items were backed up). </param>
-        internal DataProtectionBackupDiscreteRecoveryPointProperties(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string friendlyName, IList<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails, DateTimeOffset recoverOn, string policyName, string policyVersion, string recoveryPointId, string recoveryPointType, string retentionTagName, string retentionTagVersion, DateTimeOffset? expireOn, DataProtectionBackupRecoveryPointCompletionState? recoveryPointState) : base(objectType, additionalBinaryDataProperties)
+        /// <param name="immutabilityProperties"> Immutability properties of the recovery point. </param>
+        internal DataProtectionBackupDiscreteRecoveryPointProperties(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string friendlyName, IList<RecoveryPointDataStoreDetail> recoveryPointDataStoresDetails, DateTimeOffset recoverOn, string policyName, string policyVersion, string recoveryPointId, string recoveryPointType, string retentionTagName, string retentionTagVersion, DateTimeOffset? expireOn, DataProtectionBackupRecoveryPointCompletionState? recoveryPointState, RecoveryPointImmutabilityProperties immutabilityProperties) : base(objectType, additionalBinaryDataProperties)
         {
             FriendlyName = friendlyName;
             RecoveryPointDataStoresDetails = recoveryPointDataStoresDetails;
@@ -49,6 +50,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             RetentionTagVersion = retentionTagVersion;
             ExpireOn = expireOn;
             RecoveryPointState = recoveryPointState;
+            ImmutabilityProperties = immutabilityProperties;
         }
 
         /// <summary> Gets or sets the FriendlyName. </summary>
@@ -83,5 +85,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Specifies recovery point completeness. Partial (i.e., only some of the intended items were backed up), or Completed (i.e., ALL intended items were backed up). </summary>
         public DataProtectionBackupRecoveryPointCompletionState? RecoveryPointState { get; set; }
+
+        /// <summary> Immutability properties of the recovery point. </summary>
+        public RecoveryPointImmutabilityProperties ImmutabilityProperties { get; }
     }
 }

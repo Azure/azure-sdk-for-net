@@ -11,6 +11,7 @@ using System.Threading;
 using OpenAI;
 using OpenAI.Conversations;
 using OpenAI.Files;
+using OpenAI.VectorStores;
 
 namespace Azure.AI.Extensions.OpenAI;
 
@@ -94,8 +95,15 @@ public partial class ProjectOpenAIClient : OpenAIClient
     [Experimental("OPENAI001")]
     public virtual ProjectConversationsClient GetProjectConversationsClient()
     {
+        ConversationClientOptions conversationOptions = new()
+        {
+            Endpoint = _options.Endpoint,
+            OrganizationId = _options.OrganizationId,
+            ProjectId = _options.ProjectId,
+            UserAgentApplicationId = _options.UserAgentApplicationId,
+        };
         return Volatile.Read(ref _cachedConversationClient)
-            ?? Interlocked.CompareExchange(ref _cachedConversationClient, new ProjectConversationsClient(Pipeline, _options), null)
+            ?? Interlocked.CompareExchange(ref _cachedConversationClient, new ProjectConversationsClient(Pipeline, conversationOptions), null)
             ?? _cachedConversationClient;
     }
 
@@ -118,8 +126,15 @@ public partial class ProjectOpenAIClient : OpenAIClient
     [Experimental("OPENAI001")]
     public virtual ProjectVectorStoresClient GetProjectVectorStoresClient()
     {
+        VectorStoreClientOptions vectorStoreOptions = new()
+        {
+            Endpoint = _options.Endpoint,
+            OrganizationId = _options.OrganizationId,
+            ProjectId = _options.ProjectId,
+            UserAgentApplicationId = _options.UserAgentApplicationId,
+        };
         return Volatile.Read(ref _cachedVectorStoreClient)
-            ?? Interlocked.CompareExchange(ref _cachedVectorStoreClient, new ProjectVectorStoresClient(Pipeline, _options), null)
+            ?? Interlocked.CompareExchange(ref _cachedVectorStoreClient, new ProjectVectorStoresClient(Pipeline, vectorStoreOptions), null)
             ?? _cachedVectorStoreClient;
     }
 
@@ -205,7 +220,7 @@ public partial class ProjectOpenAIClient : OpenAIClient
         }
         PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "User-Agent", $"{prefix} {telemetryDetails.UserAgent}");
         PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "x-ms-client-request-id", () => Guid.NewGuid().ToString().ToLowerInvariant());
-        PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "Foundry-Features", "MemoryStores=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview,AgentInsights=V1Preview,DigitalWorker=V1Preview,GitHubCopilot=V1Preview,FineTuningSessions=V1Preview");
+        PipelinePolicyHelpers.AddRequestHeaderPolicy(options, "Foundry-Features", "MemoryStores=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview,ModelRouterControls=V1Preview,AgentInsights=V1Preview,DigitalWorker=V1Preview,GitHubCopilot=V1Preview,FineTuningSessions=V1Preview,MicrosoftCopilot=V1Preview");
         PipelinePolicyHelpers.OpenAI.AddResponseItemInputTransformPolicy(options);
         PipelinePolicyHelpers.OpenAI.AddErrorTransformPolicy(options);
         PipelinePolicyHelpers.OpenAI.AddAzureFinetuningParityPolicy(options);

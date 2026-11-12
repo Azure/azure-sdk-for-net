@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 throw new FormatException($"The model {nameof(AccessReviewDecisionUserSignInInsightProperties)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (options.Format != "W" && (_lastSignInOnIsDefined || Optional.IsDefined(LastSignInOn)))
+            if (options.Format != "W" && Optional.IsDefined(LastSignInOn, _lastSignInOnIsDefined))
             {
                 if (LastSignInOn != null)
                 {

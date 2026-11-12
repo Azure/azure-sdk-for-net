@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private DateTimeOffset? _expiresOn;
-        internal bool _expiresOnIsDefined;
+        private bool _expiresOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ScheduleCreateOrUpdateProperties"/>. </summary>
         /// <param name="startsOn"> Gets or sets the start time of the schedule. </param>

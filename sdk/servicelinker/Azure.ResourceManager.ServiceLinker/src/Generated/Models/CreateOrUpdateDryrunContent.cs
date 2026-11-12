@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     public partial class CreateOrUpdateDryrunContent : DryrunContent
     {
         private VnetSolution _vNetSolution;
-        internal bool _vNetSolutionIsDefined;
+        private bool _vNetSolutionIsDefined;
         private LinkerSecretStore _secretStore;
-        internal bool _secretStoreIsDefined;
+        private bool _secretStoreIsDefined;
         private string _scope;
-        internal bool _scopeIsDefined;
+        private bool _scopeIsDefined;
         private LinkerPublicNetworkSolution _publicNetworkSolution;
-        internal bool _publicNetworkSolutionIsDefined;
+        private bool _publicNetworkSolutionIsDefined;
         private LinkerConfigurationInfo _configurationInfo;
-        internal bool _configurationInfoIsDefined;
+        private bool _configurationInfoIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CreateOrUpdateDryrunContent"/>. </summary>
         public CreateOrUpdateDryrunContent() : base(DryrunActionName.CreateOrUpdate)

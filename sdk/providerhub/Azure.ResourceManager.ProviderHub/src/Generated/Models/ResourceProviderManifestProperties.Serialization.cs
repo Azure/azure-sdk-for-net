@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (_enableTenantLinkedNotificationIsDefined || Optional.IsDefined(EnableTenantLinkedNotification))
+            if (Optional.IsDefined(EnableTenantLinkedNotification, _enableTenantLinkedNotificationIsDefined))
             {
                 if (EnableTenantLinkedNotification != null)
                 {

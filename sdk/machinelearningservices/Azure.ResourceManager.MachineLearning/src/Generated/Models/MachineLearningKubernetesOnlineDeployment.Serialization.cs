@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MachineLearningKubernetesOnlineDeployment)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_containerResourceRequirementsIsDefined || Optional.IsDefined(ContainerResourceRequirements))
+            if (Optional.IsDefined(ContainerResourceRequirements, _containerResourceRequirementsIsDefined))
             {
                 if (ContainerResourceRequirements != null)
                 {

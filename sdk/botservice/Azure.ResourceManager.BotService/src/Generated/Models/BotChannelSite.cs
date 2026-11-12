@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private bool? _isBlockUserUploadEnabled;
-        internal bool _isBlockUserUploadEnabledIsDefined;
+        private protected bool _isBlockUserUploadEnabledIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="BotChannelSite"/>. </summary>
         /// <param name="siteName"> Site name. </param>

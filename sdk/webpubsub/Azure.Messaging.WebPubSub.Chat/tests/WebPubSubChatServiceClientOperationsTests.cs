@@ -182,6 +182,27 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             AssertPagingRequests(transport, "users/alice%20smith/rooms");
         }
 
+        [TestCase("GetRoles")]
+        [TestCase("GetRoomMembers")]
+        [TestCase("GetRooms")]
+        [TestCase("GetUsers")]
+        [TestCase("GetTopics")]
+        [TestCase("GetRoomsForUser")]
+        public void NextLinkListsDoNotExposeRequestContinuationTokens(string methodName)
+        {
+            foreach (string name in new[] { methodName, methodName + "Async" })
+            {
+                var methods = typeof(WebPubSubChatServiceClient).GetMethods().Where(m => m.Name == name).ToArray();
+                Assert.That(methods, Has.Length.EqualTo(2));
+                foreach (var method in methods)
+                {
+                    Assert.That(method.GetParameters().Select(p => p.Name), Does.Not.Contain("continuationToken"));
+                }
+            }
+        }
+
+        [TestCase("roles")]
+        [TestCase("rooms/room1/members")]
         [TestCase("rooms")]
         [TestCase("users")]
         [TestCase("rooms/room1/topics")]
@@ -193,10 +214,12 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             var client = CreateClient(transport);
             AsyncPageable<BinaryData> results = path switch
             {
-                "rooms" => client.GetRoomsAsync(null, null, new RequestContext()),
-                "users" => client.GetUsersAsync(null, null, new RequestContext()),
-                "rooms/room1/topics" => client.GetTopicsAsync("room1", null, null, new RequestContext()),
-                "users/alice/rooms" => client.GetRoomsForUserAsync("alice", null, null, new RequestContext()),
+                "roles" => client.GetRolesAsync(null, new RequestContext()),
+                "rooms/room1/members" => client.GetRoomMembersAsync("room1", null, new RequestContext()),
+                "rooms" => client.GetRoomsAsync(null, new RequestContext()),
+                "users" => client.GetUsersAsync(null, new RequestContext()),
+                "rooms/room1/topics" => client.GetTopicsAsync("room1", null, new RequestContext()),
+                "users/alice/rooms" => client.GetRoomsForUserAsync("alice", null, new RequestContext()),
                 "conversations/c.room1.default/messages" => client.GetMessagesAsync("c.room1.default", null, null, null, new RequestContext()),
                 _ => throw new ArgumentOutOfRangeException(nameof(path))
             };
@@ -214,20 +237,24 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             Assert.That(transport.SingleRequest.Uri.ToUri().AbsoluteUri, Is.EqualTo(nextLink));
         }
 
+        [TestCase("roles")]
+        [TestCase("members")]
         [TestCase("rooms")]
         [TestCase("users")]
         [TestCase("topics")]
         [TestCase("userRooms")]
-        public async Task ListsSendContinuationTokenAndPageSizeHint(string collection)
+        public async Task ListsSendPageSizeHintWithoutInitialContinuationToken(string collection)
         {
             var transport = new MockTransport(JsonResponse(200, """{"value":[]}"""));
             var client = CreateClient(transport);
             AsyncPageable<BinaryData> results = collection switch
             {
-                "rooms" => client.GetRoomsAsync(10, "next+page", new RequestContext()),
-                "users" => client.GetUsersAsync(10, "next+page", new RequestContext()),
-                "topics" => client.GetTopicsAsync("room1", 10, "next+page", new RequestContext()),
-                "userRooms" => client.GetRoomsForUserAsync("alice", 10, "next+page", new RequestContext()),
+                "roles" => client.GetRolesAsync(10, new RequestContext()),
+                "members" => client.GetRoomMembersAsync("room1", 10, new RequestContext()),
+                "rooms" => client.GetRoomsAsync(10, new RequestContext()),
+                "users" => client.GetUsersAsync(10, new RequestContext()),
+                "topics" => client.GetTopicsAsync("room1", 10, new RequestContext()),
+                "userRooms" => client.GetRoomsForUserAsync("alice", 10, new RequestContext()),
                 _ => throw new ArgumentOutOfRangeException(nameof(collection))
             };
             await foreach (Page<BinaryData> page in results.AsPages(pageSizeHint: 2))
@@ -236,7 +263,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             }
 
             Assert.That(transport.SingleRequest.Uri.Query, Does.Contain("maxpagesize=2"));
-            Assert.That(transport.SingleRequest.Uri.Query, Does.Contain("continuationToken=next%2Bpage"));
+            Assert.That(transport.SingleRequest.Uri.Query, Does.Not.Contain("continuationToken="));
         }
 
         [TestCase(200)]

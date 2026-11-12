@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="azureRegion"> The Azure region associated with the peering location. </param>
         /// <returns> A new <see cref="Models.PeeringLocation"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PeeringLocation PeeringLocation(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PeeringKind? kind = default, DirectPeeringLocationProperties direct = default, IEnumerable<ExchangePeeringFacility> exchangePeeringFacilities = default, string peeringLocationValue = default, string country = default, AzureLocation? azureRegion = default)
+        public static PeeringLocation PeeringLocation(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PeeringKind? kind, DirectPeeringLocationProperties direct, IEnumerable<ExchangePeeringFacility> exchangePeeringFacilities, string peeringLocationValue, string country, AzureLocation? azureRegion)
         {
             return new PeeringLocation(
                 id,
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="logAnalyticsWorkspaceProperties"> The Log Analytics Workspace Properties. </param>
         /// <returns> A new <see cref="Peering.PeeringServiceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PeeringServiceData PeeringServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string skuName = default, string peeringServiceLocation = default, string peeringServiceProvider = default, PeeringProvisioningState? provisioningState = default, string providerPrimaryPeeringLocation = default, string providerBackupPeeringLocation = default, PeeringLogAnalyticsWorkspaceProperties logAnalyticsWorkspaceProperties = default)
+        public static PeeringServiceData PeeringServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string skuName, string peeringServiceLocation, string peeringServiceProvider, PeeringProvisioningState? provisioningState, string providerPrimaryPeeringLocation, string providerBackupPeeringLocation, PeeringLogAnalyticsWorkspaceProperties logAnalyticsWorkspaceProperties)
         {
             return new PeeringServiceData(
                 id,

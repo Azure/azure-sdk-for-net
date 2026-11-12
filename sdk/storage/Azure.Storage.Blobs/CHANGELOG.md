@@ -1,6 +1,6 @@
 # Release History
 
-## 12.31.0-beta.1 (Unreleased)
+## 12.31.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,30 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.31.0-beta.1 (2026-11-05)
+
+### Features Added
+- Added support for Session Authentication for `TokenCredential`-authenticated clients using GET Blob operations. This is currently disabled by default and can be enabled via `BlobClientOptions.SessionOptions.SessionMode`.
+- Changed the default value of `GetBlobsOptions.ResponseFormat` and `GetBlobsByHierarchyOptions.ResponseFormat` to `StorageResponseFormat.Arrow`. The default value was previously `StorageResponseFormat.Xml`. This change will improve performance and modify the response format of the `GetBlobs` and `GetBlobsByHierarchy` APIs when the caller does not explicitly set the response format. Callers that require XML responses should explicitly set the response format to `StorageResponseFormat.Xml`.
+- Added support for locality-aware downloads for `BlobBaseClient.DownloadTo`, `BlobBaseClient.DownloadToAsync`, `BlobBaseClient.OpenRead`, and `BlobBaseClient.OpenReadAsync` operations. This is currently disabled by default and can be enabled via `BlobDownloadToOptions.LayoutAwareRouting` and `BlobOpenReadOptions.LayoutAwareRouting`.
+
+### Breaking Changes
+- Changed the default value of `StorageTransferOptions.InitialTransferSize` used by partitioned uploads and downloads when it is not set by the caller. It now matches the default size of subsequent chunks instead of 256 MB:
+  - Downloads (`BlobBaseClient.DownloadTo`/`DownloadToAsync`): the first range request now defaults to 4 MB, the same as subsequent ranges. Previously, it was 256 MB when no transfer checksum was used.
+  - Uploads (`BlobClient.Upload`/`UploadAsync`, `BlockBlobClient.Upload`/`UploadAsync`): a blob is now uploaded in a single Put Blob request only if its content is smaller than the default block size (4 MB, or 8 MB for content of 100 MB or more). Previously, content smaller than 256 MB was uploaded in a single request.
+  - This means uploads and downloads may be partitioned more often, leading to more requests.
+  - Explicitly set `InitialTransferSize` and `MaximumTransferSize` values are still respected. To restore the previous behavior, set `StorageTransferOptions.InitialTransferSize` to 256 MB.
+
+### Bugs Fixed
+- Fixed client-side encryption v1 decryption of ranged downloads so the 16-byte IV is fully read even when the ciphertext stream returns short reads, and a truncated IV now fails instead of silently corrupting plaintext.
+- Fixed SAS timestamp handling for non-UTC `DateTimeOffset` values. SAS times are now normalized to UTC before formatting/signing, preventing unintended validity windows in st/se (Start Time, Expiry Time) and related delegation key fields. Affected APIs include:
+  - `BlobBaseClient.GenerateSasUri(...)`
+  - `BlobBaseClient.GenerateUserDelegationSasUri(...)`
+  - `BlobContainerClient.GenerateSasUri(...)`
+  - `BlobContainerClient.GenerateUserDelegationSasUri(...)`
+  - `BlobServiceClient.GenerateAccountSasUri(...)`
+  - `BlobSasBuilder`
 
 ## 12.30.1 (2026-10-05)
 
@@ -20,13 +44,13 @@
 ### Features Added
 - Includes all features from 12.30.0-beta.1 and 12.30.0-beta.2.
 
-## 12.29.2 (2026-08-24)
+## 12.30.0-beta.2 (2026-08-24)
 
 ### Bugs Fixed
 - Fixed a bug where client-side encryption 2.0 could not detect a rearrangement of otherwise-untampered authenticated regions in blob content. This is now detected and exceptions are thrown. For data recovery purposes, this behavior can be reverted by enabling "Azure.Storage.CseV2AllowMisorderedAuthRegions" in the AppContext switch or "AZURE_STORAGE_CSE_V2_ALLOW_MISORDERED_AUTH_REGIONS" in environment variables.
 - Fixed a bug in client-side encryption where version downgrades were only detected at the start of a download.
 
-## 12.30.0-beta.2 (2026-08-24)
+## 12.29.2 (2026-08-24)
 
 ### Bugs Fixed
 - Fixed a bug where client-side encryption 2.0 could not detect a rearrangement of otherwise-untampered authenticated regions in blob content. This is now detected and exceptions are thrown. For data recovery purposes, this behavior can be reverted by enabling "Azure.Storage.CseV2AllowMisorderedAuthRegions" in the AppContext switch or "AZURE_STORAGE_CSE_V2_ALLOW_MISORDERED_AUTH_REGIONS" in environment variables.

@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("successStatusJsonPath"u8);
                 writer.WriteStringValue(SuccessStatusJsonPath);
             }
-            if (_successStatusValueIsDefined || Optional.IsDefined(SuccessStatusValue))
+            if (Optional.IsDefined(SuccessStatusValue, _successStatusValueIsDefined))
             {
                 if (SuccessStatusValue != null)
                 {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("csvDelimiter"u8);
                 writer.WriteStringValue(CsvDelimiter);
             }
-            if (_hasCsvBoundaryIsDefined || Optional.IsDefined(HasCsvBoundary))
+            if (Optional.IsDefined(HasCsvBoundary, _hasCsvBoundaryIsDefined))
             {
                 if (HasCsvBoundary != null)
                 {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     writer.WriteNull("hasCsvBoundary"u8);
                 }
             }
-            if (_hasCsvHeaderIsDefined || Optional.IsDefined(HasCsvHeader))
+            if (Optional.IsDefined(HasCsvHeader, _hasCsvHeaderIsDefined))
             {
                 if (HasCsvHeader != null)
                 {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     writer.WriteNull("hasCsvHeader"u8);
                 }
             }
-            if (_isConvertChildPropertiesToArrayIsDefined || Optional.IsDefined(IsConvertChildPropertiesToArray))
+            if (Optional.IsDefined(IsConvertChildPropertiesToArray, _isConvertChildPropertiesToArrayIsDefined))
             {
                 if (IsConvertChildPropertiesToArray != null)
                 {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     writer.WriteNull("convertChildPropertiesToArray"u8);
                 }
             }
-            if (_csvEscapeIsDefined || Optional.IsDefined(CsvEscape))
+            if (Optional.IsDefined(CsvEscape, _csvEscapeIsDefined))
             {
                 if (CsvEscape != null)
                 {

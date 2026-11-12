@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("logVerbosity"u8);
                 writer.WriteStringValue(LogVerbosity.Value.ToString());
             }
-            if (_targetColumnNameIsDefined || Optional.IsDefined(TargetColumnName))
+            if (Optional.IsDefined(TargetColumnName, _targetColumnNameIsDefined))
             {
                 if (TargetColumnName != null)
                 {

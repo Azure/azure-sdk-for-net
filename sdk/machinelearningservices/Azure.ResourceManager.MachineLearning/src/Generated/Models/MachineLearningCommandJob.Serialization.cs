@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("command"u8);
             writer.WriteStringValue(Command);
-            if (_distributionIsDefined || Optional.IsDefined(Distribution))
+            if (Optional.IsDefined(Distribution, _distributionIsDefined))
             {
                 if (Distribution != null)
                 {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("outputs"u8);
                 }
             }
-            if (options.Format != "W" && (_parametersIsDefined || Optional.IsDefined(Parameters)))
+            if (options.Format != "W" && Optional.IsDefined(Parameters, _parametersIsDefined))
             {
                 if (Parameters != null)
                 {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("parameters"u8);
                 }
             }
-            if (_queueSettingsIsDefined || Optional.IsDefined(QueueSettings))
+            if (Optional.IsDefined(QueueSettings, _queueSettingsIsDefined))
             {
                 if (QueueSettings != null)
                 {

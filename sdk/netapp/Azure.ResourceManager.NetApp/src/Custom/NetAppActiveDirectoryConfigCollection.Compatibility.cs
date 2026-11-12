@@ -32,10 +32,9 @@ namespace Azure.ResourceManager.NetApp
 
         internal NetAppActiveDirectoryConfigCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _activeDirectoryConfigsClientDiagnostics = null;
-            _activeDirectoryConfigsRestClient = null;
-            _ = _activeDirectoryConfigsClientDiagnostics;
-            _ = _activeDirectoryConfigsRestClient;
+            TryGetApiVersion(NetAppActiveDirectoryConfigResource.ResourceType, out string netAppActiveDirectoryConfigApiVersion);
+            _activeDirectoryConfigsClientDiagnostics = new Azure.Core.Pipeline.ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppActiveDirectoryConfigResource.ResourceType.Namespace, Diagnostics);
+            _activeDirectoryConfigsRestClient = new ActiveDirectoryConfigs(_activeDirectoryConfigsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, netAppActiveDirectoryConfigApiVersion ?? "2026-08-15-preview");
             ValidateResourceId(id);
         }
 
@@ -68,10 +67,10 @@ namespace Azure.ResourceManager.NetApp
 
         public virtual NullableResponse<NetAppActiveDirectoryConfigResource> GetIfExists(string activeDirectoryConfigName, CancellationToken cancellationToken = default) => throw new NotSupportedException();
 
-        public IEnumerator<NetAppActiveDirectoryConfigResource> GetEnumerator() => throw new NotSupportedException();
+        public IEnumerator<NetAppActiveDirectoryConfigResource> GetEnumerator() => GetAll().GetEnumerator();
 
-        IEnumerator IEnumerable.GetEnumerator() => throw new NotSupportedException();
+        IEnumerator IEnumerable.GetEnumerator() => GetAll().GetEnumerator();
 
-        public IAsyncEnumerator<NetAppActiveDirectoryConfigResource> GetAsyncEnumerator(CancellationToken cancellationToken = default) => throw new NotSupportedException();
+        public IAsyncEnumerator<NetAppActiveDirectoryConfigResource> GetAsyncEnumerator(CancellationToken cancellationToken = default) => GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
     }
 }

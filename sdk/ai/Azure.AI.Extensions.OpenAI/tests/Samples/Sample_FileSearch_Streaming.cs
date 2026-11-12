@@ -113,7 +113,7 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
         #region Snippet:Sample_StreamingResponse_FileSearch_Streaming_Async
         responseOptions.InputItems.Clear();
         responseOptions.InputItems.Add(ResponseItem.CreateUserMessageItem("Can you give me the documented codes for 'banana' and 'orange'?"));
-        await foreach (StreamingResponseUpdate streamResponse in projectClient.ProjectOpenAIClient.GetProjectResponsesClient().CreateResponseStreamingAsync(responseOptions))
+        await foreach (StreamingResponseUpdate streamResponse in await projectClient.ProjectOpenAIClient.GetProjectResponsesClient().CreateResponseStreamingAsync(responseOptions))
         {
             ParseResponse(streamResponse);
         }
@@ -122,7 +122,7 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
         Console.WriteLine("Demonstrating follow-up query with streaming...");
         responseOptions.InputItems.Clear();
         responseOptions.InputItems.Add(ResponseItem.CreateUserMessageItem("What was my previous question about?"));
-        await foreach (StreamingResponseUpdate streamResponse in projectClient.ProjectOpenAIClient.GetProjectResponsesClient().CreateResponseStreamingAsync(responseOptions))
+        await foreach (StreamingResponseUpdate streamResponse in await projectClient.ProjectOpenAIClient.GetProjectResponsesClient().CreateResponseStreamingAsync(responseOptions))
         {
             ParseResponse(streamResponse);
         }
@@ -132,81 +132,6 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
         await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
         await projectClient.ProjectOpenAIClient.GetProjectVectorStoresClient().DeleteVectorStoreAsync(vectorStoreId: vectorStore.Id);
         await projectClient.ProjectOpenAIClient.GetProjectFilesClient().DeleteFileAsync(uploadedFile.Id);
-        #endregion
-    }
-
-    [Test]
-    [SyncOnly]
-    public void FileSearch_StreamingSync()
-    {
-        IgnoreSampleMayBe();
-#if SNIPPET
-        var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-#else
-        var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
-        var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
-#endif
-        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
-        #region Snippet:Sample_UploadFile_FileSearch_Streaming_Sync
-        string filePath = "sample_file_for_upload.txt";
-        File.WriteAllText(
-            path: filePath,
-            contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
-        OpenAIFile uploadedFile = projectClient.ProjectOpenAIClient.GetProjectFilesClient().UploadFile(filePath: filePath, purpose: FileUploadPurpose.Assistants);
-        File.Delete(filePath);
-        #endregion
-        #region Snippet:Sample_CreateVectorStore_FileSearch_Streaming_Sync
-        VectorStoreCreationOptions options = new()
-        {
-            Name = "MySampleStore",
-            FileIds = { uploadedFile.Id }
-        };
-        VectorStore vectorStore = projectClient.ProjectOpenAIClient.GetProjectVectorStoresClient().CreateVectorStore(options);
-        #endregion
-        #region Snippet:Sample_CreateAgent_FileSearch_Streaming_Sync
-        DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
-        {
-            Instructions = "You are a helpful agent that can help fetch data from files you know about.",
-            Tools = { ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]), }
-        };
-        ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
-            agentName: "myAgent",
-            options: new(agentDefinition)
-        );
-        #endregion
-        #region Snippet:Sample_CreateResponse_FileSearch_Streaming_Sync
-        ConversationResource conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation();
-        CreateResponseOptions responseOptions = new()
-        {
-            Agent = new(name: agentVersion.Name, version: agentVersion.Version),
-            AgentConversationId = conversation.Id,
-            StreamingEnabled = true,
-        };
-        #endregion
-
-        #region Snippet:Sample_StreamingResponse_FileSearch_Streaming_Sync
-        responseOptions.InputItems.Clear();
-        responseOptions.InputItems.Add(ResponseItem.CreateUserMessageItem("Can you give me the documented codes for 'banana' and 'orange'?"));
-        foreach (StreamingResponseUpdate streamResponse in projectClient.ProjectOpenAIClient.GetProjectResponsesClient().CreateResponseStreaming(responseOptions))
-        {
-            ParseResponse(streamResponse);
-        }
-        #endregion
-        #region Snippet:Sample_FollowUp_FileSearch_Streaming_Sync
-        Console.WriteLine("Demonstrating follow-up query with streaming...");
-        responseOptions.InputItems.Clear();
-        responseOptions.InputItems.Add(ResponseItem.CreateUserMessageItem("What was my previous question about?"));
-        foreach (StreamingResponseUpdate streamResponse in projectClient.ProjectOpenAIClient.GetProjectResponsesClient().CreateResponseStreaming(responseOptions))
-        {
-            ParseResponse(streamResponse);
-        }
-        #endregion
-
-        #region Snippet:Sample_Cleanup_FileSearch_Streaming_Sync
-        projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-        projectClient.ProjectOpenAIClient.GetProjectVectorStoresClient().DeleteVectorStore(vectorStoreId: vectorStore.Id);
-        projectClient.ProjectOpenAIClient.GetProjectFilesClient().DeleteFile(uploadedFile.Id);
         #endregion
     }
 

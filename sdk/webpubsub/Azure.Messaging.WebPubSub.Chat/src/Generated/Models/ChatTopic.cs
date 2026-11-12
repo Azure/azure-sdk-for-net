@@ -18,6 +18,11 @@ namespace Azure.Messaging.WebPubSub.Chat
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ChatTopic"/>. </summary>
+        public ChatTopic()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChatTopic"/>. </summary>
         /// <param name="id"> Topic identifier unique within the room. </param>
         /// <param name="title"> Topic title. </param>
         /// <param name="createdOn"> Timestamp when the topic was created. </param>

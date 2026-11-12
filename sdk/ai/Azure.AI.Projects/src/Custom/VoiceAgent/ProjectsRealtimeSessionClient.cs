@@ -3,6 +3,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Threading;
@@ -36,6 +37,7 @@ public class ProjectsRealtimeSessionClient : RealtimeSessionClient
     private readonly AuthenticationTokenProvider _tokenProvider;
     private readonly IReadOnlyDictionary<string, object> _tokenProperties;
     private readonly string _apiVersion;
+    private readonly VoiceAgentRealtimeTelemetry _telemetry;
 
     /// <summary>
     /// Internal empty constructor for mocking.
@@ -66,7 +68,8 @@ public class ProjectsRealtimeSessionClient : RealtimeSessionClient
         string intent,
         IReadOnlyDictionary<string, object> tokenProperties,
         string apiVersion,
-        ProjectsRealtimeClient parentClient)
+        ProjectsRealtimeClient parentClient,
+        VoiceAgentRealtimeTelemetry telemetry = null)
         : base(
             credential: null,
             endpoint: RealtimeClientHelper.GetAgentWebSocketEndpoint(endpoint, model),
@@ -80,6 +83,7 @@ public class ProjectsRealtimeSessionClient : RealtimeSessionClient
         _tokenProvider = tokenProvider;
         _tokenProperties = tokenProperties;
         _apiVersion = apiVersion;
+        _telemetry = telemetry;
         _experimentalHeaders = parentClient?.ExperimentalHeaders ?? RealtimeClientHelper.ExperimentalHeaders(null);
     }
 
@@ -104,42 +108,60 @@ public class ProjectsRealtimeSessionClient : RealtimeSessionClient
     /// <param name="cancellationToken"></param>
     protected override async Task ConnectAsync(string queryString = null, IDictionary<string, string> headers = null, CancellationToken cancellationToken = default)
     {
-        GetTokenOptions tokenOptions = new(_tokenProperties);
-        AuthenticationToken token = await _tokenProvider.GetTokenAsync(tokenOptions, cancellationToken).ConfigureAwait(false);
+        Activity previousActivity = Activity.Current;
+        if (_telemetry?.ConnectionActivity != null)
+        {
+            Activity.Current = _telemetry.ConnectionActivity;
+        }
+        try
+        {
+            GetTokenOptions tokenOptions = new(_tokenProperties);
+            AuthenticationToken token = await _tokenProvider.GetTokenAsync(tokenOptions, cancellationToken).ConfigureAwait(false);
 
-        // No "User-Agent" here: RealtimeSessionClient.ConnectAsync applies every entry in this
-        // dictionary via ClientWebSocketOptions.SetRequestHeader, and .NET Framework's
-        // implementation of that method rejects "User-Agent" as a restricted header (throwing
-        // ArgumentException), unlike .NET/.NET Core. Since Azure.AI.Projects also targets
-        // netstandard2.0 (loadable by .NET Framework consumers), sending it here would break the
-        // WebSocket handshake for them.
-        Dictionary<string, string> connectionHeaders = new()
-        {
-            ["Foundry-Features"] = _experimentalHeaders,
-            ["Authorization"] = $"{token.TokenType} {token.TokenValue}",
-        };
-        if (headers is not null)
-        {
-            foreach (KeyValuePair<string, string> nameHeader in headers)
+            // No "User-Agent" here: RealtimeSessionClient.ConnectAsync applies every entry in this
+            // dictionary via ClientWebSocketOptions.SetRequestHeader, and .NET Framework's
+            // implementation of that method rejects "User-Agent" as a restricted header (throwing
+            // ArgumentException), unlike .NET/.NET Core. Since Azure.AI.Projects also targets
+            // netstandard2.0 (loadable by .NET Framework consumers), sending it here would break the
+            // WebSocket handshake for them.
+            Dictionary<string, string> connectionHeaders = new()
             {
-                connectionHeaders[nameHeader.Key] = nameHeader.Value;
+                ["Foundry-Features"] = _experimentalHeaders,
+                ["Authorization"] = $"{token.TokenType} {token.TokenValue}",
+            };
+            if (headers is not null)
+            {
+                foreach (KeyValuePair<string, string> nameHeader in headers)
+                {
+                    connectionHeaders[nameHeader.Key] = nameHeader.Value;
+                }
+            }
+            _telemetry?.AddTraceHeaders(connectionHeaders);
+
+            StringBuilder mergedQueryString = new();
+            RealtimeClientHelper.AppendQueryParameter(mergedQueryString, "api-version", _apiVersion);
+            if (!string.IsNullOrEmpty(queryString))
+            {
+                if (mergedQueryString.Length > 0)
+                {
+                    mergedQueryString.Append('&');
+                }
+                mergedQueryString.Append(queryString);
+            }
+
+            await base.ConnectAsync(
+                queryString: mergedQueryString.ToString(),
+                headers: connectionHeaders,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
+            if (_telemetry != null)
+            {
+                WebSocket = new TelemetryWebSocket(WebSocket, _telemetry);
+                _telemetry.Connected();
             }
         }
-
-        StringBuilder mergedQueryString = new();
-        RealtimeClientHelper.AppendQueryParameter(mergedQueryString, "api-version", _apiVersion);
-        if (!string.IsNullOrEmpty(queryString))
+        finally
         {
-            if (mergedQueryString.Length > 0)
-            {
-                mergedQueryString.Append('&');
-            }
-            mergedQueryString.Append(queryString);
+            Activity.Current = previousActivity;
         }
-
-        await base.ConnectAsync(
-            queryString: mergedQueryString.ToString(),
-            headers: connectionHeaders,
-            cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class PyTorchDistributionConfiguration : MachineLearningDistributionConfiguration
     {
         private int? _processCountPerInstance;
-        internal bool _processCountPerInstanceIsDefined;
+        private bool _processCountPerInstanceIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="PyTorchDistributionConfiguration"/>. </summary>
         public PyTorchDistributionConfiguration() : base(DistributionType.PyTorch)

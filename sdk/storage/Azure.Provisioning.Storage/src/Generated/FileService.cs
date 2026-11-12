@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Storage
         private SystemData _systemData;
         private FileServicePropertiesProperties _fileServiceProperties;
         private StorageSku _sku;
-        private ResourceReference<StorageAccount> _parent;
+        private ProvisioningResourceReference<StorageAccount> _parent;
 
         /// <summary> Creates a new FileService. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -39,13 +39,18 @@ namespace Azure.Provisioning.Storage
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -159,7 +164,7 @@ namespace Azure.Provisioning.Storage
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _fileServiceProperties = DefineModelProperty<FileServicePropertiesProperties>(nameof(FileServiceProperties), new string[] { "properties" });
             _sku = DefineModelProperty<StorageSku>(nameof(Sku), new string[] { "sku" }, isOutput: true);
-            _parent = DefineResource<StorageAccount>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<StorageAccount>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

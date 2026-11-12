@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _keyVaultSecretName;
-        internal bool _keyVaultSecretNameIsDefined;
+        private bool _keyVaultSecretNameIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="LinkerSecretStore"/>. </summary>
         public LinkerSecretStore()

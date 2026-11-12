@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("authMode"u8);
             writer.WriteStringValue(AuthMode.ToString());
-            if (_contentSafetyIsDefined || Optional.IsDefined(ContentSafety))
+            if (Optional.IsDefined(ContentSafety, _contentSafetyIsDefined))
             {
                 if (ContentSafety != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("endpointState"u8);
                 writer.WriteStringValue(EndpointState.Value.ToString());
             }
-            if (options.Format != "W" && (_inferenceEndpointIsDefined || Optional.IsDefined(InferenceEndpoint)))
+            if (options.Format != "W" && Optional.IsDefined(InferenceEndpoint, _inferenceEndpointIsDefined))
             {
                 if (InferenceEndpoint != null)
                 {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("inferenceEndpoint"u8);
                 }
             }
-            if (options.Format != "W" && (_marketplaceSubscriptionIdIsDefined || Optional.IsDefined(MarketplaceSubscriptionId)))
+            if (options.Format != "W" && Optional.IsDefined(MarketplaceSubscriptionId, _marketplaceSubscriptionIdIsDefined))
             {
                 if (MarketplaceSubscriptionId != null)
                 {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("marketplaceSubscriptionId"u8);
                 }
             }
-            if (_modelSettingsIsDefined || Optional.IsDefined(ModelSettings))
+            if (Optional.IsDefined(ModelSettings, _modelSettingsIsDefined))
             {
                 if (ModelSettings != null)
                 {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     internal partial class TiTaxiiDataConnectorProperties : DataConnectorTenantId
     {
         private DateTimeOffset? _taxiiLookbackOn;
-        internal bool _taxiiLookbackOnIsDefined;
+        private bool _taxiiLookbackOnIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="TiTaxiiDataConnectorProperties"/>. </summary>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>

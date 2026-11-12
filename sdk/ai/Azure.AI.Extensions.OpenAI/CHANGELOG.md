@@ -1,14 +1,43 @@
 # Release History
 
-## 3.0.0-beta.5 (Unreleased)
+## 3.0.0-beta.7 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
+- Removed the synchronous `ProjectResponsesClient.CreateResponseStreaming` overloads. Use `CreateResponseStreamingAsync` and asynchronous enumeration.
+- `ProjectResponsesClient.CreateResponseStreamingAsync` overloads now return
+  `Task<AsyncStreamingResult<StreamingResponseUpdate>>` instead of
+  `AsyncCollectionResult<StreamingResponseUpdate>`. Await stream creation
+  before enumerating updates.
+- The `ProjectConversationsClient` constructor now accepts `ConversationClientOptions` instead of `OpenAIClientOptions`.
+- `ProjectResponsesClient.GetResponseStreamingAsync` now yields strongly typed response items.
 
 ### Bugs Fixed
 
 ### Other Changes
+- Updated the `OpenAI` package dependency to `2.15.0`. See the [OpenAI 2.15.0 release notes](https://github.com/openai/openai-dotnet/blob/OpenAI_2.15.0/CHANGELOG.md#2150-2026-11-04) for the upstream breaking changes to experimental APIs, including the async-only streaming methods that `ProjectResponsesClient` inherits.
+
+### Sample Updates
+- Synchronous streaming samples were removed, because streaming in synchronous scenarios is not supported anymore. 
+
+## 3.0.0-beta.6 (2026-10-30)
+
+### Features Added
+- Exposed the constructors of `GitHubCopilotToolsetPreview`, `GitHubCopilotToolsetDefaultConfig` `GitHubCopilotToolsetConfig`, `MicrosoftCopilotToolsetPreview`, `MicrosoftCopilotToolsetDefaultConfig` and `MicrosoftCopilotToolsetConfig`.
+
+### Breaking Changes
+- `BrowserAutomationPreviewTool` is deprecated and hidden from IntelliSense. Please use `BrowserAutomationTool` instead.
+- Removed the `type` parameter from response-item methods on `ExtensionsOpenAIModelFactory`. Each factory now uses the discriminator value for its concrete response-item type.
+
+### Sample Updates
+- Added sample for Hosted Agent identity isolation.
+
+## 3.0.0-beta.5 (2026-10-16)
+
+### Breaking Changes
+- The `MicrosoftCopilotToolsetPreview` tool was added as a replacement for `GitHubCopilotToolsetPreview`.
+- `GitHubCopilotToolsetPreview` was marked as legacy and will be removed in the future releases.
 
 ## 3.0.0-beta.4 (2026-10-12)
 

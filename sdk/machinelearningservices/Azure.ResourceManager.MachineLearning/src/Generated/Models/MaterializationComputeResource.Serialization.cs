@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MaterializationComputeResource)} does not support writing '{format}' format.");
             }
-            if (_instanceTypeIsDefined || Optional.IsDefined(InstanceType))
+            if (Optional.IsDefined(InstanceType, _instanceTypeIsDefined))
             {
                 if (InstanceType != null)
                 {

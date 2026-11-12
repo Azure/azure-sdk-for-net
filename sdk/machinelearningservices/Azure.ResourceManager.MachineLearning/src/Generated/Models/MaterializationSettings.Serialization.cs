@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MaterializationSettings)} does not support writing '{format}' format.");
             }
-            if (_notificationIsDefined || Optional.IsDefined(Notification))
+            if (Optional.IsDefined(Notification, _notificationIsDefined))
             {
                 if (Notification != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("notification"u8);
                 }
             }
-            if (_resourceIsDefined || Optional.IsDefined(Resource))
+            if (Optional.IsDefined(Resource, _resourceIsDefined))
             {
                 if (Resource != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resource"u8);
                 }
             }
-            if (_scheduleIsDefined || Optional.IsDefined(Schedule))
+            if (Optional.IsDefined(Schedule, _scheduleIsDefined))
             {
                 if (Schedule != null)
                 {

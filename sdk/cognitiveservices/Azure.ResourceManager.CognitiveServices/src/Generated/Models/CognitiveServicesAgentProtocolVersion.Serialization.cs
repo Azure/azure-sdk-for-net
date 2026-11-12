@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
             }
-            if (_versionIsDefined || Optional.IsDefined(Version))
+            if (Optional.IsDefined(Version, _versionIsDefined))
             {
                 if (Version != null)
                 {

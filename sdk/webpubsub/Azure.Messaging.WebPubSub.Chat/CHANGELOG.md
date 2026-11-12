@@ -16,6 +16,7 @@
 - Renamed typed create-or-replace request parameters from `resource` to `role`, `room`, `member`, `user`, and `topic`.
 - The typed `UpdateMessage` and `UpdateMessageAsync` overloads now accept `UpdateMessageOptions` instead of `WebPubSubChatMessage`. The `RequestContent` overloads are unchanged.
 - Create message content with `WebPubSubChatMessageContent.FromText` or `FromBinary` instead of a parameterless constructor and writable properties.
+- Removed the initial `continuationToken` parameter from next-link pageable list methods. Resume paging with `AsPages(page.ContinuationToken)` instead.
 
 ### Bugs Fixed
 
@@ -23,6 +24,7 @@
 ### Other Changes
 
 - Clarified message ID cursor pagination and continuation-token resumption for message listings.
+- Regenerated model constructors with the updated emitter's request-aware constructor handling: `ChatTopic` also has a parameterless constructor, and `WebPubSubChatMessage` uses a parameterless constructor instead of requiring a creator and content.
 
 ## 1.0.0-beta.1 (2026-09-21)
 

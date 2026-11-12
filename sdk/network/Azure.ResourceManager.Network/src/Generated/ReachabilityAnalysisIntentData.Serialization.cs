@@ -25,6 +25,23 @@ namespace Azure.ResourceManager.Network
         {
         }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ReachabilityAnalysisIntentData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeReachabilityAnalysisIntentData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ReachabilityAnalysisIntentData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
@@ -43,7 +60,7 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ReachabilityAnalysisIntentData IPersistableModel<ReachabilityAnalysisIntentData>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ReachabilityAnalysisIntentData IPersistableModel<ReachabilityAnalysisIntentData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ReachabilityAnalysisIntentData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ReachabilityAnalysisIntentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -105,7 +122,20 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ReachabilityAnalysisIntentData IJsonModel<ReachabilityAnalysisIntentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ReachabilityAnalysisIntentData IJsonModel<ReachabilityAnalysisIntentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ReachabilityAnalysisIntentData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ReachabilityAnalysisIntentData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReachabilityAnalysisIntentData)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReachabilityAnalysisIntentData(document.RootElement, options);
+        }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

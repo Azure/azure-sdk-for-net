@@ -1,14 +1,30 @@
 # Release History
 
-## 1.4.0-beta.3 (Unreleased)
+## 1.5.0-beta.1 (2026-11-11)
 
 ### Features Added
 
-### Breaking Changes
+- Updated the default service API version to `2026-10-01-preview`.
+- Added cluster firewall rules for Azure Managed Redis. Use an empty array to clear rules; omit `firewallRules` on PATCH to leave them unchanged unless public network access is disabled.
+- Reintroduced custom Redis ACL access strings and provisioning error details to access policy assignments, previously available in `1.4.0-beta.2` but not in `1.4.0`.
 
-### Bugs Fixed
+## 1.4.0 (2026-10-30)
+
+### Features Added
+
+- Updated the default service API version to stable `2026-09-01`.
+- Added migration workflows for validation, start, retrieval, undo, and migrated-endpoint unlink.
+- Added migration rollback metadata through `RollbackEligibilityExpiresOn`.
+- Added `Undo` and `UndoAsync` migration operations with optional rollback reasons.
+- Added migrated-endpoint unlink operations for Azure Cache for Redis and Azure Cache for Redis Enterprise migration workflows.
+- Added `Unlinking`, `Unlinked`, and `UnlinkFailed` migration provisioning states.
 
 ### Other Changes
+
+- The stable `1.3.0` to `1.4.0` upgrade remains API compatible. The following changes apply only when moving from the prerelease `1.4.0-beta.2` package:
+  - Renamed the preview migration `Cancel` and `CancelAsync` operations to `Undo` and `UndoAsync`. The undo operations also accept an optional rollback reason.
+  - Removed the preview-only `AccessString` and `ProvisioningError` properties from access policy assignments and removed the `AccessPolicyAssignmentProvisioningError` model. Access policy assignments again use `AccessPolicyName`, with only the `"default"` policy currently supported.
+  - Updated the related model factory methods to match the stable API, removing preview-only parameters and adding migration rollback metadata.
 
 ## 1.4.0-beta.2 (2026-09-14)
 

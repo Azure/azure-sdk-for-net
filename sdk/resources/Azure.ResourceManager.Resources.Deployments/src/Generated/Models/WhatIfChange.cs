@@ -27,9 +27,10 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WhatIfChange"/>. </summary>
-        /// <param name="resourceId"> Resource ID. </param>
+        /// <param name="resourceId"> The fully-qualified ARM resource ID for this change. </param>
         /// <param name="deploymentId"> The resource id of the Deployment responsible for this change. </param>
         /// <param name="symbolicName"> The symbolic name of the resource responsible for this change. </param>
+        /// <param name="resourceType"> The resource type of the resource. </param>
         /// <param name="identifiers"> A subset of properties that uniquely identify a Bicep extensible resource because it lacks a resource id like an Azure resource has. </param>
         /// <param name="extension"> The extension the resource was deployed with. </param>
         /// <param name="changeType"> Type of change that will be made to the resource when the deployment is executed. </param>
@@ -38,11 +39,12 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
         /// <param name="after"> The predicted snapshot of the resource after the deployment is executed. </param>
         /// <param name="delta"> The predicted changes to resource properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WhatIfChange(string resourceId, string deploymentId, string symbolicName, BinaryData identifiers, ArmDeploymentExtensionDefinition extension, WhatIfChangeType changeType, string unsupportedReason, BinaryData before, BinaryData after, IList<WhatIfPropertyChange> delta, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WhatIfChange(string resourceId, string deploymentId, string symbolicName, string resourceType, BinaryData identifiers, ArmDeploymentExtensionDefinition extension, WhatIfChangeType changeType, string unsupportedReason, BinaryData before, BinaryData after, IList<WhatIfPropertyChange> delta, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             DeploymentId = deploymentId;
             SymbolicName = symbolicName;
+            ResourceType = resourceType;
             Identifiers = identifiers;
             Extension = extension;
             ChangeType = changeType;
@@ -53,7 +55,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Resource ID. </summary>
+        /// <summary> The fully-qualified ARM resource ID for this change. </summary>
         [WirePath("resourceId")]
         public string ResourceId { get; }
 
@@ -64,6 +66,10 @@ namespace Azure.ResourceManager.Resources.Deployments.Models
         /// <summary> The symbolic name of the resource responsible for this change. </summary>
         [WirePath("symbolicName")]
         public string SymbolicName { get; }
+
+        /// <summary> The resource type of the resource. </summary>
+        [WirePath("resourceType")]
+        public string ResourceType { get; }
 
         /// <summary>
         /// A subset of properties that uniquely identify a Bicep extensible resource because it lacks a resource id like an Azure resource has.

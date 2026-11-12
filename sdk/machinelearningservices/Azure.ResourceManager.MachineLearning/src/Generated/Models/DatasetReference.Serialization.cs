@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(DatasetReference)} does not support writing '{format}' format.");
             }
-            if (_nameIsDefined || Optional.IsDefined(Name))
+            if (Optional.IsDefined(Name, _nameIsDefined))
             {
                 if (Name != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("name"u8);
                 }
             }
-            if (_idIsDefined || Optional.IsDefined(Id))
+            if (Optional.IsDefined(Id, _idIsDefined))
             {
                 if (Id != null)
                 {

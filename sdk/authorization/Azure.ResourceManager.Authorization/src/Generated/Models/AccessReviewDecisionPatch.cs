@@ -17,19 +17,19 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private AccessReviewDecisionIdentity _principal;
-        internal bool _principalIsDefined;
+        private bool _principalIsDefined;
         private AccessReviewDecisionResourceTarget _resource;
-        internal bool _resourceIsDefined;
+        private bool _resourceIsDefined;
         private DateTimeOffset? _reviewedOn;
-        internal bool _reviewedOnIsDefined;
+        private bool _reviewedOnIsDefined;
         private AccessReviewActorIdentity _reviewedBy;
-        internal bool _reviewedByIsDefined;
+        private bool _reviewedByIsDefined;
         private DateTimeOffset? _appliedOn;
-        internal bool _appliedOnIsDefined;
+        private bool _appliedOnIsDefined;
         private AccessReviewActorIdentity _appliedBy;
-        internal bool _appliedByIsDefined;
+        private bool _appliedByIsDefined;
         private AccessReviewDecisionPrincipalResourceMembership _principalResourceMembership;
-        internal bool _principalResourceMembershipIsDefined;
+        private bool _principalResourceMembershipIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="AccessReviewDecisionPatch"/>. </summary>
         public AccessReviewDecisionPatch()

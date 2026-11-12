@@ -1739,7 +1739,6 @@
                 "$id": "116",
                 "name": "link",
                 "isExactName": false,
-                "resourceName": "ServerDrivenPagination",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1852,7 +1851,6 @@
                 "$id": "120",
                 "name": "linkString",
                 "isExactName": false,
-                "resourceName": "ServerDrivenPagination",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -1965,7 +1963,6 @@
                 "$id": "124",
                 "name": "nestedLink",
                 "isExactName": false,
-                "resourceName": "ServerDrivenPagination",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -2131,7 +2128,6 @@
                     "$id": "132",
                     "name": "post",
                     "isExactName": false,
-                    "resourceName": "AlternateInitialVerb",
                     "accessibility": "public",
                     "parameters": [
                       {
@@ -2387,7 +2383,6 @@
                     "$id": "144",
                     "name": "requestQueryResponseBody",
                     "isExactName": false,
-                    "resourceName": "ContinuationToken",
                     "accessibility": "public",
                     "parameters": [
                       {
@@ -2433,7 +2428,8 @@
                             "isExactName": false
                           }
                         ],
-                        "isExactName": false
+                        "isExactName": false,
+                        "isContinuationToken": true
                       },
                       {
                         "$id": "149",
@@ -2646,7 +2642,6 @@
                     "$id": "160",
                     "name": "requestHeaderResponseBody",
                     "isExactName": false,
-                    "resourceName": "ContinuationToken",
                     "accessibility": "public",
                     "parameters": [
                       {
@@ -2692,7 +2687,8 @@
                             "isExactName": false
                           }
                         ],
-                        "isExactName": false
+                        "isExactName": false,
+                        "isContinuationToken": true
                       },
                       {
                         "$id": "165",
@@ -2905,7 +2901,6 @@
                     "$id": "176",
                     "name": "requestQueryResponseHeader",
                     "isExactName": false,
-                    "resourceName": "ContinuationToken",
                     "accessibility": "public",
                     "parameters": [
                       {
@@ -2951,7 +2946,8 @@
                             "isExactName": false
                           }
                         ],
-                        "isExactName": false
+                        "isExactName": false,
+                        "isContinuationToken": true
                       },
                       {
                         "$id": "181",
@@ -3176,7 +3172,6 @@
                     "$id": "193",
                     "name": "requestHeaderResponseHeader",
                     "isExactName": false,
-                    "resourceName": "ContinuationToken",
                     "accessibility": "public",
                     "parameters": [
                       {
@@ -3222,7 +3217,8 @@
                             "isExactName": false
                           }
                         ],
-                        "isExactName": false
+                        "isExactName": false,
+                        "isContinuationToken": true
                       },
                       {
                         "$id": "198",
@@ -3447,7 +3443,6 @@
                     "$id": "210",
                     "name": "requestQueryNestedResponseBody",
                     "isExactName": false,
-                    "resourceName": "ContinuationToken",
                     "accessibility": "public",
                     "parameters": [
                       {
@@ -3493,7 +3488,8 @@
                             "isExactName": false
                           }
                         ],
-                        "isExactName": false
+                        "isExactName": false,
+                        "isContinuationToken": true
                       },
                       {
                         "$id": "215",
@@ -3709,7 +3705,6 @@
                     "$id": "226",
                     "name": "requestHeaderNestedResponseBody",
                     "isExactName": false,
-                    "resourceName": "ContinuationToken",
                     "accessibility": "public",
                     "parameters": [
                       {
@@ -3755,7 +3750,8 @@
                             "isExactName": false
                           }
                         ],
-                        "isExactName": false
+                        "isExactName": false,
+                        "isContinuationToken": true
                       },
                       {
                         "$id": "231",
@@ -4024,7 +4020,6 @@
                 "$id": "246",
                 "name": "listWithoutContinuation",
                 "isExactName": false,
-                "resourceName": "PageSize",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4130,7 +4125,6 @@
                 "$id": "250",
                 "name": "listWithPageSize",
                 "isExactName": false,
-                "resourceName": "PageSize",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4336,7 +4330,6 @@
                 "$id": "262",
                 "name": "listWithContinuation",
                 "isExactName": false,
-                "resourceName": "XmlPagination",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -4382,7 +4375,8 @@
                         "isExactName": false
                       }
                     ],
-                    "isExactName": false
+                    "isExactName": false,
+                    "isContinuationToken": true
                   },
                   {
                     "$id": "267",
@@ -4507,7 +4501,6 @@
                 "$id": "270",
                 "name": "listWithNextLink",
                 "isExactName": false,
-                "resourceName": "XmlPagination",
                 "accessibility": "public",
                 "parameters": [
                   {

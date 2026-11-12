@@ -317,7 +317,7 @@ namespace Azure.AI.ContentUnderstanding
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            AnalyzeInlineRequest spreadModel = new AnalyzeInlineRequest(
+            AnalyzeInlineContent spreadModel = new AnalyzeInlineContent(
                 options.Inputs.ToList(),
                 options.ModelDeployments,
                 new ChangeTrackingDictionary<string, BinaryData>());
@@ -342,7 +342,7 @@ namespace Azure.AI.ContentUnderstanding
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            AnalyzeInlineRequest spreadModel = new AnalyzeInlineRequest(
+            AnalyzeInlineContent spreadModel = new AnalyzeInlineContent(
                 options.Inputs.ToList(),
                 options.ModelDeployments,
                 new ChangeTrackingDictionary<string, BinaryData>());

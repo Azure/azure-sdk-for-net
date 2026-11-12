@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ResilienceManagement
     /// <summary>
     /// A class representing a collection of <see cref="GoalMembersResource"/> and their operations.
     /// Each <see cref="GoalMembersResource"/> in the collection will belong to the same instance of <see cref="GoalAssignmentResource"/>.
-    /// To get a <see cref="GoalMembersCollection"/> instance call the GetGoalMembers method from an instance of <see cref="GoalAssignmentResource"/>.
+    /// To get a <see cref="GoalMembersCollection"/> instance call the GetAllGoalMembers method from an instance of <see cref="GoalAssignmentResource"/>.
     /// </summary>
     public partial class GoalMembersCollection : ArmCollection, IEnumerable<GoalMembersResource>, IAsyncEnumerable<GoalMembersResource>
     {

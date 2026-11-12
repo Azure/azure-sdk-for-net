@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class ImageInstanceSegmentation : AutoMLVertical
     {
         private ImageModelSettingsObjectDetection _modelSettings;
-        internal bool _modelSettingsIsDefined;
+        private bool _modelSettingsIsDefined;
         private ImageSweepSettings _sweepSettings;
-        internal bool _sweepSettingsIsDefined;
+        private bool _sweepSettingsIsDefined;
         private MachineLearningTableJobInput _validationData;
-        internal bool _validationDataIsDefined;
+        private bool _validationDataIsDefined;
         private double? _validationDataSize;
-        internal bool _validationDataSizeIsDefined;
+        private bool _validationDataSizeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ImageInstanceSegmentation"/>. </summary>
         /// <param name="trainingData"> [Required] Training data input. </param>

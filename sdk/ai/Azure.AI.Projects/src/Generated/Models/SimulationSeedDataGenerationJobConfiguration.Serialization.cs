@@ -12,6 +12,11 @@ namespace Azure.AI.Projects
     /// <summary> The configuration for a task generation data generation job. Use with multiturn evaluation scenarios and with prompt, file, or agent sources. Generated dataset rows include fields such as `id`, `category`, `test_case_description`, and `desired_num_turns`. </summary>
     public partial class SimulationSeedDataGenerationJobConfiguration : DataGenerationJobConfiguration, IJsonModel<SimulationSeedDataGenerationJobConfiguration>
     {
+        /// <summary> Initializes a new instance of <see cref="SimulationSeedDataGenerationJobConfiguration"/> for deserialization. </summary>
+        internal SimulationSeedDataGenerationJobConfiguration()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataGenerationJobConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -71,6 +76,8 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(SimulationSeedDataGenerationJobConfiguration)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("max_samples"u8);
+            writer.WriteNumberValue(MaxSamples);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -102,6 +109,7 @@ namespace Azure.AI.Projects
             float? trainSplit = default;
             DataGenerationModelOptions modelOptions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            int maxSamples = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -127,12 +135,17 @@ namespace Azure.AI.Projects
                     modelOptions = DataGenerationModelOptions.DeserializeDataGenerationModelOptions(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("max_samples"u8))
+                {
+                    maxSamples = prop.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SimulationSeedDataGenerationJobConfiguration(@type, trainSplit, modelOptions, additionalBinaryDataProperties);
+            return new SimulationSeedDataGenerationJobConfiguration(@type, trainSplit, modelOptions, additionalBinaryDataProperties, maxSamples);
         }
     }
 }

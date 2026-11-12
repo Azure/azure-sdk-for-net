@@ -30,8 +30,8 @@ Create `user1` and add it to a room as shown in
 [Manage rooms and members](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/webpubsub/Azure.Messaging.WebPubSub.Chat/tests/Samples/Sample1_ManageRoomsAndMembers.md)
 before listing its rooms:
 
-`GetRoomsForUserAsync` also accepts `maxPageSize` and `continuationToken`
-to request a page size or resume using a service continuation token. As with
+`GetRoomsForUserAsync` also accepts `maxPageSize` to request a page size. Resume
+with `AsPages(page.ContinuationToken)` rather than an operation parameter. As with
 the other lists, use `AsPages` with a returned `Page<T>.ContinuationToken`
 when resuming from the SDK's opaque continuation link.
 
@@ -102,9 +102,8 @@ await client.DeleteTopicAsync(
 
 ## Resume a room listing
 
-Use `Page<T>.ContinuationToken` with `AsPages` to resume enumeration. Treat it
-as opaque; do not pass this link to the operation's service `continuationToken`
-query parameter:
+Use `Page<T>.ContinuationToken` with `AsPages` to resume enumeration. Treat the
+continuation link as opaque:
 
 ```C# Snippet:WebPubSubChatResumeRoomListing
 string continuationToken = null;

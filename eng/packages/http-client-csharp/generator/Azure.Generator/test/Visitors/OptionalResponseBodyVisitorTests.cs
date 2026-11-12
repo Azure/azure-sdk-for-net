@@ -26,7 +26,10 @@ namespace Azure.Generator.Tests.Visitors
                     InputFactory.OperationResponse([200], InputPrimitiveType.String),
                     InputFactory.OperationResponse([204])
                 ]);
-            var serviceMethod = InputFactory.BasicServiceMethod("GetLayout", operation);
+            var serviceMethod = InputFactory.BasicServiceMethod(
+                "GetLayout",
+                operation,
+                response: InputFactory.ServiceMethodResponse(InputPrimitiveType.String, null));
             var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
 
             MockHelpers.LoadMockGenerator(
@@ -66,7 +69,10 @@ namespace Azure.Generator.Tests.Visitors
                     InputFactory.OperationResponse([200], InputPrimitiveType.String),
                     InputFactory.OperationResponse([204, 205])
                 ]);
-            var serviceMethod = InputFactory.BasicServiceMethod("GetLayout", operation);
+            var serviceMethod = InputFactory.BasicServiceMethod(
+                "GetLayout",
+                operation,
+                response: InputFactory.ServiceMethodResponse(InputPrimitiveType.String, null));
             var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
 
             MockHelpers.LoadMockGenerator(
@@ -98,7 +104,10 @@ namespace Azure.Generator.Tests.Visitors
                     InputFactory.OperationResponse([200], InputPrimitiveType.String),
                     InputFactory.OperationResponse([200])
                 ]);
-            var serviceMethod = InputFactory.BasicServiceMethod("GetLayout", operation);
+            var serviceMethod = InputFactory.BasicServiceMethod(
+                "GetLayout",
+                operation,
+                response: InputFactory.ServiceMethodResponse(InputPrimitiveType.String, null));
             var inputClient = InputFactory.Client("TestClient", methods: [serviceMethod]);
 
             MockHelpers.LoadMockGenerator(
@@ -114,6 +123,8 @@ namespace Azure.Generator.Tests.Visitors
                 m => m.Kind == ScmMethodKind.Convenience && m.Signature.Name == "GetLayout");
             var originalReturnType = method.Signature.ReturnType;
             var originalBody = method.BodyStatements!.ToDisplayString();
+
+            Assert.AreEqual(new CSharpType(typeof(Response<>), typeof(string)), originalReturnType);
 
             new TestOptionalResponseBodyVisitor().Visit(method);
 

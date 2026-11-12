@@ -9,8 +9,9 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="eventName"> The name of the event. </param>
         /// <param name="eventProperty"> The key of the event property to aggregate. </param>
         public AverageMetricDefinition(string eventName, string eventProperty)
-            : this(new AggregatedValue(eventName, eventProperty))
+            : this()
         {
+            Value = new AggregatedValue { EventName = eventName, EventProperty = eventProperty };
         }
     }
 }

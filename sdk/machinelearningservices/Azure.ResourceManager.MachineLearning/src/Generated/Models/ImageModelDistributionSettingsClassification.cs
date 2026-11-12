@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class ImageModelDistributionSettingsClassification : ImageModelDistributionSettings
     {
         private string _trainingCropSize;
-        internal bool _trainingCropSizeIsDefined;
+        private bool _trainingCropSizeIsDefined;
         private string _validationCropSize;
-        internal bool _validationCropSizeIsDefined;
+        private bool _validationCropSizeIsDefined;
         private string _validationResizeSize;
-        internal bool _validationResizeSizeIsDefined;
+        private bool _validationResizeSizeIsDefined;
         private string _weightedLoss;
-        internal bool _weightedLossIsDefined;
+        private bool _weightedLossIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ImageModelDistributionSettingsClassification"/>. </summary>
         public ImageModelDistributionSettingsClassification()

@@ -383,13 +383,12 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// </list>
         /// </summary>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetRoles(int? maxPageSize, string continuationToken, RequestContext context)
+        public virtual Pageable<BinaryData> GetRoles(int? maxPageSize, RequestContext context)
         {
-            return new WebPubSubChatServiceClientGetRolesCollectionResult(this, maxPageSize, continuationToken, context, "WebPubSubChatServiceClient.GetRoles");
+            return new WebPubSubChatServiceClientGetRolesCollectionResult(this, maxPageSize, default, context, "WebPubSubChatServiceClient.GetRoles");
         }
 
         /// <summary>
@@ -401,33 +400,30 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// </list>
         /// </summary>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetRolesAsync(int? maxPageSize, string continuationToken, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetRolesAsync(int? maxPageSize, RequestContext context)
         {
-            return new WebPubSubChatServiceClientGetRolesAsyncCollectionResult(this, maxPageSize, continuationToken, context, "WebPubSubChatServiceClient.GetRoles");
+            return new WebPubSubChatServiceClientGetRolesAsyncCollectionResult(this, maxPageSize, default, context, "WebPubSubChatServiceClient.GetRoles");
         }
 
         /// <summary> Query roles in a hub. </summary>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<WebPubSubChatRole> GetRoles(int? maxPageSize = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<WebPubSubChatRole> GetRoles(int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new WebPubSubChatServiceClientGetRolesCollectionResultOfT(this, maxPageSize, continuationToken, cancellationToken.ToRequestContext(), "WebPubSubChatServiceClient.GetRoles");
+            return new WebPubSubChatServiceClientGetRolesCollectionResultOfT(this, maxPageSize, default, cancellationToken.ToRequestContext(), "WebPubSubChatServiceClient.GetRoles");
         }
 
         /// <summary> Query roles in a hub. </summary>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<WebPubSubChatRole> GetRolesAsync(int? maxPageSize = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WebPubSubChatRole> GetRolesAsync(int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new WebPubSubChatServiceClientGetRolesAsyncCollectionResultOfT(this, maxPageSize, continuationToken, cancellationToken.ToRequestContext(), "WebPubSubChatServiceClient.GetRoles");
+            return new WebPubSubChatServiceClientGetRolesAsyncCollectionResultOfT(this, maxPageSize, default, cancellationToken.ToRequestContext(), "WebPubSubChatServiceClient.GetRoles");
         }
 
         /// <summary>
@@ -729,13 +725,12 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// </list>
         /// </summary>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetRooms(int? maxPageSize, string continuationToken, RequestContext context)
+        public virtual Pageable<BinaryData> GetRooms(int? maxPageSize, RequestContext context)
         {
-            return new WebPubSubChatServiceClientGetRoomsCollectionResult(this, maxPageSize, continuationToken, context, "WebPubSubChatServiceClient.GetRooms");
+            return new WebPubSubChatServiceClientGetRoomsCollectionResult(this, maxPageSize, default, context, "WebPubSubChatServiceClient.GetRooms");
         }
 
         /// <summary>
@@ -747,33 +742,30 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// </list>
         /// </summary>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetRoomsAsync(int? maxPageSize, string continuationToken, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetRoomsAsync(int? maxPageSize, RequestContext context)
         {
-            return new WebPubSubChatServiceClientGetRoomsAsyncCollectionResult(this, maxPageSize, continuationToken, context, "WebPubSubChatServiceClient.GetRooms");
+            return new WebPubSubChatServiceClientGetRoomsAsyncCollectionResult(this, maxPageSize, default, context, "WebPubSubChatServiceClient.GetRooms");
         }
 
         /// <summary> List rooms with pagination. </summary>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<WebPubSubChatRoom> GetRooms(int? maxPageSize = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<WebPubSubChatRoom> GetRooms(int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new WebPubSubChatServiceClientGetRoomsCollectionResultOfT(this, maxPageSize, continuationToken, cancellationToken.ToRequestContext(), "WebPubSubChatServiceClient.GetRooms");
+            return new WebPubSubChatServiceClientGetRoomsCollectionResultOfT(this, maxPageSize, default, cancellationToken.ToRequestContext(), "WebPubSubChatServiceClient.GetRooms");
         }
 
         /// <summary> List rooms with pagination. </summary>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<WebPubSubChatRoom> GetRoomsAsync(int? maxPageSize = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WebPubSubChatRoom> GetRoomsAsync(int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new WebPubSubChatServiceClientGetRoomsAsyncCollectionResultOfT(this, maxPageSize, continuationToken, cancellationToken.ToRequestContext(), "WebPubSubChatServiceClient.GetRooms");
+            return new WebPubSubChatServiceClientGetRoomsAsyncCollectionResultOfT(this, maxPageSize, default, cancellationToken.ToRequestContext(), "WebPubSubChatServiceClient.GetRooms");
         }
 
         /// <summary>
@@ -1076,13 +1068,12 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// </summary>
         /// <param name="roomId"> Room identifier. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roomId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetTopics(string roomId, int? maxPageSize, string continuationToken, RequestContext context)
+        public virtual Pageable<BinaryData> GetTopics(string roomId, int? maxPageSize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(roomId, nameof(roomId));
 
@@ -1090,7 +1081,7 @@ namespace Azure.Messaging.WebPubSub.Chat
                 this,
                 roomId,
                 maxPageSize,
-                continuationToken,
+                default,
                 context,
                 "WebPubSubChatServiceClient.GetTopics");
         }
@@ -1105,13 +1096,12 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// </summary>
         /// <param name="roomId"> Room identifier. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roomId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetTopicsAsync(string roomId, int? maxPageSize, string continuationToken, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetTopicsAsync(string roomId, int? maxPageSize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(roomId, nameof(roomId));
 
@@ -1119,7 +1109,7 @@ namespace Azure.Messaging.WebPubSub.Chat
                 this,
                 roomId,
                 maxPageSize,
-                continuationToken,
+                default,
                 context,
                 "WebPubSubChatServiceClient.GetTopics");
         }
@@ -1127,12 +1117,11 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <summary> List topics in a room with pagination. </summary>
         /// <param name="roomId"> Room identifier. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roomId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<ChatTopic> GetTopics(string roomId, int? maxPageSize = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ChatTopic> GetTopics(string roomId, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roomId, nameof(roomId));
 
@@ -1140,7 +1129,7 @@ namespace Azure.Messaging.WebPubSub.Chat
                 this,
                 roomId,
                 maxPageSize,
-                continuationToken,
+                default,
                 cancellationToken.ToRequestContext(),
                 "WebPubSubChatServiceClient.GetTopics");
         }
@@ -1148,12 +1137,11 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <summary> List topics in a room with pagination. </summary>
         /// <param name="roomId"> Room identifier. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roomId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<ChatTopic> GetTopicsAsync(string roomId, int? maxPageSize = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ChatTopic> GetTopicsAsync(string roomId, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roomId, nameof(roomId));
 
@@ -1161,7 +1149,7 @@ namespace Azure.Messaging.WebPubSub.Chat
                 this,
                 roomId,
                 maxPageSize,
-                continuationToken,
+                default,
                 cancellationToken.ToRequestContext(),
                 "WebPubSubChatServiceClient.GetTopics");
         }
@@ -1564,13 +1552,12 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// </summary>
         /// <param name="roomId"> Room identifier. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roomId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetRoomMembers(string roomId, int? maxPageSize, string continuationToken, RequestContext context)
+        public virtual Pageable<BinaryData> GetRoomMembers(string roomId, int? maxPageSize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(roomId, nameof(roomId));
 
@@ -1578,7 +1565,7 @@ namespace Azure.Messaging.WebPubSub.Chat
                 this,
                 roomId,
                 maxPageSize,
-                continuationToken,
+                default,
                 context,
                 "WebPubSubChatServiceClient.GetRoomMembers");
         }
@@ -1593,13 +1580,12 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// </summary>
         /// <param name="roomId"> Room identifier. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roomId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetRoomMembersAsync(string roomId, int? maxPageSize, string continuationToken, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetRoomMembersAsync(string roomId, int? maxPageSize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(roomId, nameof(roomId));
 
@@ -1607,7 +1593,7 @@ namespace Azure.Messaging.WebPubSub.Chat
                 this,
                 roomId,
                 maxPageSize,
-                continuationToken,
+                default,
                 context,
                 "WebPubSubChatServiceClient.GetRoomMembers");
         }
@@ -1615,12 +1601,11 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <summary> Get room members. </summary>
         /// <param name="roomId"> Room identifier. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roomId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<WebPubSubChatRoomMember> GetRoomMembers(string roomId, int? maxPageSize = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<WebPubSubChatRoomMember> GetRoomMembers(string roomId, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roomId, nameof(roomId));
 
@@ -1628,7 +1613,7 @@ namespace Azure.Messaging.WebPubSub.Chat
                 this,
                 roomId,
                 maxPageSize,
-                continuationToken,
+                default,
                 cancellationToken.ToRequestContext(),
                 "WebPubSubChatServiceClient.GetRoomMembers");
         }
@@ -1636,12 +1621,11 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <summary> Get room members. </summary>
         /// <param name="roomId"> Room identifier. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="roomId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roomId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<WebPubSubChatRoomMember> GetRoomMembersAsync(string roomId, int? maxPageSize = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WebPubSubChatRoomMember> GetRoomMembersAsync(string roomId, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(roomId, nameof(roomId));
 
@@ -1649,7 +1633,7 @@ namespace Azure.Messaging.WebPubSub.Chat
                 this,
                 roomId,
                 maxPageSize,
-                continuationToken,
+                default,
                 cancellationToken.ToRequestContext(),
                 "WebPubSubChatServiceClient.GetRoomMembers");
         }
@@ -1877,13 +1861,12 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// </list>
         /// </summary>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetUsers(int? maxPageSize, string continuationToken, RequestContext context)
+        public virtual Pageable<BinaryData> GetUsers(int? maxPageSize, RequestContext context)
         {
-            return new WebPubSubChatServiceClientGetUsersCollectionResult(this, maxPageSize, continuationToken, context, "WebPubSubChatServiceClient.GetUsers");
+            return new WebPubSubChatServiceClientGetUsersCollectionResult(this, maxPageSize, default, context, "WebPubSubChatServiceClient.GetUsers");
         }
 
         /// <summary>
@@ -1895,33 +1878,30 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// </list>
         /// </summary>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetUsersAsync(int? maxPageSize, string continuationToken, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetUsersAsync(int? maxPageSize, RequestContext context)
         {
-            return new WebPubSubChatServiceClientGetUsersAsyncCollectionResult(this, maxPageSize, continuationToken, context, "WebPubSubChatServiceClient.GetUsers");
+            return new WebPubSubChatServiceClientGetUsersAsyncCollectionResult(this, maxPageSize, default, context, "WebPubSubChatServiceClient.GetUsers");
         }
 
         /// <summary> List all users with pagination. </summary>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<WebPubSubChatUser> GetUsers(int? maxPageSize = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<WebPubSubChatUser> GetUsers(int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new WebPubSubChatServiceClientGetUsersCollectionResultOfT(this, maxPageSize, continuationToken, cancellationToken.ToRequestContext(), "WebPubSubChatServiceClient.GetUsers");
+            return new WebPubSubChatServiceClientGetUsersCollectionResultOfT(this, maxPageSize, default, cancellationToken.ToRequestContext(), "WebPubSubChatServiceClient.GetUsers");
         }
 
         /// <summary> List all users with pagination. </summary>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<WebPubSubChatUser> GetUsersAsync(int? maxPageSize = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WebPubSubChatUser> GetUsersAsync(int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
-            return new WebPubSubChatServiceClientGetUsersAsyncCollectionResultOfT(this, maxPageSize, continuationToken, cancellationToken.ToRequestContext(), "WebPubSubChatServiceClient.GetUsers");
+            return new WebPubSubChatServiceClientGetUsersAsyncCollectionResultOfT(this, maxPageSize, default, cancellationToken.ToRequestContext(), "WebPubSubChatServiceClient.GetUsers");
         }
 
         /// <summary>
@@ -2224,13 +2204,12 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// </summary>
         /// <param name="userId"> User identifier. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetRoomsForUser(string userId, int? maxPageSize, string continuationToken, RequestContext context)
+        public virtual Pageable<BinaryData> GetRoomsForUser(string userId, int? maxPageSize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
@@ -2238,7 +2217,7 @@ namespace Azure.Messaging.WebPubSub.Chat
                 this,
                 userId,
                 maxPageSize,
-                continuationToken,
+                default,
                 context,
                 "WebPubSubChatServiceClient.GetRoomsForUser");
         }
@@ -2253,13 +2232,12 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// </summary>
         /// <param name="userId"> User identifier. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetRoomsForUserAsync(string userId, int? maxPageSize, string continuationToken, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetRoomsForUserAsync(string userId, int? maxPageSize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
@@ -2267,7 +2245,7 @@ namespace Azure.Messaging.WebPubSub.Chat
                 this,
                 userId,
                 maxPageSize,
-                continuationToken,
+                default,
                 context,
                 "WebPubSubChatServiceClient.GetRoomsForUser");
         }
@@ -2275,12 +2253,11 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <summary> List rooms for a user with pagination. </summary>
         /// <param name="userId"> User identifier. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<ChatUserRoom> GetRoomsForUser(string userId, int? maxPageSize = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<ChatUserRoom> GetRoomsForUser(string userId, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
@@ -2288,7 +2265,7 @@ namespace Azure.Messaging.WebPubSub.Chat
                 this,
                 userId,
                 maxPageSize,
-                continuationToken,
+                default,
                 cancellationToken.ToRequestContext(),
                 "WebPubSubChatServiceClient.GetRoomsForUser");
         }
@@ -2296,12 +2273,11 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <summary> List rooms for a user with pagination. </summary>
         /// <param name="userId"> User identifier. </param>
         /// <param name="maxPageSize"> The maximum number of result items per page. </param>
-        /// <param name="continuationToken"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="userId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<ChatUserRoom> GetRoomsForUserAsync(string userId, int? maxPageSize = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ChatUserRoom> GetRoomsForUserAsync(string userId, int? maxPageSize = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
@@ -2309,7 +2285,7 @@ namespace Azure.Messaging.WebPubSub.Chat
                 this,
                 userId,
                 maxPageSize,
-                continuationToken,
+                default,
                 cancellationToken.ToRequestContext(),
                 "WebPubSubChatServiceClient.GetRoomsForUser");
         }

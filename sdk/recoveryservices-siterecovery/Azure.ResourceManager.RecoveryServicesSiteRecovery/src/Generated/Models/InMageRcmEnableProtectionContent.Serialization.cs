@@ -232,6 +232,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("targetCapacityReservationGroupId"u8);
                 writer.WriteStringValue(TargetCapacityReservationGroupId);
             }
+            if (Optional.IsDefined(TargetExtendedLocation))
+            {
+                writer.WritePropertyName("targetExtendedLocation"u8);
+                writer.WriteObjectValue(TargetExtendedLocation, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -288,6 +293,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string userSelectedOSName = default;
             RecoveryServicesSiteRecoverySecurityProfileProperties targetVmSecurityProfile = default;
             string targetCapacityReservationGroupId = default;
+            SiteRecoveryExtendedLocation targetExtendedLocation = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("instanceType"u8))
@@ -515,6 +521,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     targetCapacityReservationGroupId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("targetExtendedLocation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -549,7 +564,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 targetNicTags ?? new ChangeTrackingList<UserCreatedResourceTag>(),
                 userSelectedOSName,
                 targetVmSecurityProfile,
-                targetCapacityReservationGroupId);
+                targetCapacityReservationGroupId,
+                targetExtendedLocation);
         }
     }
 }

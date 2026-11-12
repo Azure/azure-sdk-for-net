@@ -23,7 +23,7 @@ namespace Azure.Provisioning.CosmosDB
         private BicepValue<AzureLocation> _location;
         private ThroughputSettingsProperties _properties;
         private ManagedServiceIdentity _identity;
-        private ResourceReference<CosmosDBTable> _parent;
+        private ProvisioningResourceReference<CosmosDBTable> _parent;
 
         /// <summary> Creates a new CosmosTableThroughputSetting. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -42,13 +42,18 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -166,7 +171,7 @@ namespace Azure.Provisioning.CosmosDB
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<ThroughputSettingsProperties>(nameof(Properties), new string[] { "properties" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<CosmosDBTable>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<CosmosDBTable>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

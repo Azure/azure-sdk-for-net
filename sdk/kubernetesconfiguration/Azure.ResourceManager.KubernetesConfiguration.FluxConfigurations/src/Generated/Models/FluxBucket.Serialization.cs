@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 writer.WritePropertyName("insecure"u8);
                 writer.WriteBooleanValue(IsInsecure.Value);
             }
-            if (_timeoutInSecondsIsDefined || Optional.IsDefined(TimeoutInSeconds))
+            if (Optional.IsDefined(TimeoutInSeconds, _timeoutInSecondsIsDefined))
             {
                 if (TimeoutInSeconds != null)
                 {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("timeoutInSeconds"u8);
                 }
             }
-            if (_syncIntervalInSecondsIsDefined || Optional.IsDefined(SyncIntervalInSeconds))
+            if (Optional.IsDefined(SyncIntervalInSeconds, _syncIntervalInSecondsIsDefined))
             {
                 if (SyncIntervalInSeconds != null)
                 {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("syncIntervalInSeconds"u8);
                 }
             }
-            if (_accessKeyIsDefined || Optional.IsDefined(AccessKey))
+            if (Optional.IsDefined(AccessKey, _accessKeyIsDefined))
             {
                 if (AccessKey != null)
                 {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("accessKey"u8);
                 }
             }
-            if (_localAuthRefIsDefined || Optional.IsDefined(LocalAuthRef))
+            if (Optional.IsDefined(LocalAuthRef, _localAuthRefIsDefined))
             {
                 if (LocalAuthRef != null)
                 {

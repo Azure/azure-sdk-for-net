@@ -11,7 +11,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
     {
         protected override TokenCredential CreateDeveloperCredential()
             => new ChainedTokenCredential(
-                new AzureCliCredential(),
+                new AzureCliCredential(new AzureCliCredentialOptions
+                {
+                    ProcessTimeout = System.TimeSpan.FromSeconds(180)
+                }),
                 base.CreateDeveloperCredential());
     }
 }

@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Compute.Models
         internal LifecycleHooksProfile LifecycleHooksProfile { get; set; }
 
         /// <summary> Resource Id. </summary>
-        public ResourceIdentifier ProximityPlacementGroupId
+        public virtual ResourceIdentifier ProximityPlacementGroupId
         {
             get
             {

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption, options);
             }
-            if (_nfsV4IdDomainIsDefined || Optional.IsDefined(NfsV4IdDomain))
+            if (Optional.IsDefined(NfsV4IdDomain, _nfsV4IdDomainIsDefined))
             {
                 if (NfsV4IdDomain != null)
                 {

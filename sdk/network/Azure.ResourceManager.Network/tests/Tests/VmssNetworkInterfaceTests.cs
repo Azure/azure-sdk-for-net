@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Tests
             }
 
             // Verify getting individual nic
-            var getNic = await ArmClient.GetVirtualMachineScaleSetVmNetworkResource(vmssVmId).GetNetworkInterfaceDataAsync(virtualMachineScaleSetName, nicName, System.Threading.CancellationToken.None);
+            var getNic = await ArmClient.GetVirtualMachineScaleSetVmNetworkResource(vmssVmId).GetNetworkInterfaceDataAsync(networkInterfaceName: nicName, cancellationToken: System.Threading.CancellationToken.None);
             Assert.NotNull(getNic);
             VerifyVmssNicProperties(getNic);
         }

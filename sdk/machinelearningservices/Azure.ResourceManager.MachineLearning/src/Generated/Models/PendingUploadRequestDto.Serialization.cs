@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(PendingUploadRequestDto)} does not support writing '{format}' format.");
             }
-            if (_pendingUploadIdIsDefined || Optional.IsDefined(PendingUploadId))
+            if (Optional.IsDefined(PendingUploadId, _pendingUploadIdIsDefined))
             {
                 if (PendingUploadId != null)
                 {

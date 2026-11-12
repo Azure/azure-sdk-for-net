@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _version;
-        internal bool _versionIsDefined;
+        private bool _versionIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FunctionAppRuntime"/>. </summary>
         public FunctionAppRuntime()

@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("fields"u8);
                 }
             }
-            if (_parametersIsDefined || Optional.IsDefined(Parameters))
+            if (Optional.IsDefined(Parameters, _parametersIsDefined))
             {
                 if (Parameters != null)
                 {

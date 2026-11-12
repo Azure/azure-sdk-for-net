@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningOnlineEndpointProperties : MachineLearningEndpointProperties
     {
         private string _compute;
-        internal bool _computeIsDefined;
+        private bool _computeIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineEndpointProperties"/>. </summary>
         /// <param name="authMode"> [Required] The authentication method for invoking the endpoint (data plane operation). Use 'Key' for key-based authentication. Use 'AMLToken' for Azure Machine Learning token-based authentication. Use 'AADToken' for Microsoft Entra token-based authentication. </param>

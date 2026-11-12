@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(SasCredentialDto)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_sasUriIsDefined || Optional.IsDefined(SasUri))
+            if (Optional.IsDefined(SasUri, _sasUriIsDefined))
             {
                 if (SasUri != null)
                 {

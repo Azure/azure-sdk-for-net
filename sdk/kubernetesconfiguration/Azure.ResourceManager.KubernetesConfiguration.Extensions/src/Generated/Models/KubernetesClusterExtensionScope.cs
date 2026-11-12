@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private KubernetesClusterExtensionScopeCluster _cluster;
-        internal bool _clusterIsDefined;
+        private bool _clusterIsDefined;
         private KubernetesClusterExtensionScopeNamespace _namespace;
-        internal bool _namespaceIsDefined;
+        private bool _namespaceIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="KubernetesClusterExtensionScope"/>. </summary>
         public KubernetesClusterExtensionScope()

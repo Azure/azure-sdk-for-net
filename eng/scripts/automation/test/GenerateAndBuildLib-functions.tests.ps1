@@ -297,6 +297,43 @@ options:
         $expected = Join-Path $testSdkRoot "testservice" "Azure.TestService.NewEmitter"
         $result | Should -Be $expected
     }
+
+    it("should resolve namespace with the core C# emitter") {
+        $testTspConfigFileCore = Join-Path $testTspConfigDir "tspconfig-core-emitter.yaml"
+        $testConfigCoreEmitter = @"
+parameters:
+  service-dir:
+    default: testservice
+options:
+  "@typespec/http-client-csharp":
+    namespace: TestService.CoreClient
+"@
+        $testConfigCoreEmitter | Out-File -FilePath $testTspConfigFileCore -Encoding UTF8
+
+        $testSdkRoot = "/test/sdk/root"
+        $result = GetSDKProjectFolder -typespecConfigurationFile $testTspConfigFileCore -sdkRepoRoot $testSdkRoot
+        $expected = Join-Path $testSdkRoot "testservice" "TestService.CoreClient"
+        $result | Should -Be $expected
+    }
+
+    it("should resolve core C# emitter output using package-name without namespace") {
+        $testTspConfigFileCoreOutput = Join-Path $testTspConfigDir "tspconfig-core-output.yaml"
+        $testConfigCoreOutput = @"
+parameters:
+  service-dir:
+    default: sdk/ai
+options:
+  "@typespec/http-client-csharp":
+    emitter-output-dir: "{output-dir}/{service-dir}/{package-name}"
+    package-name: Azure.AI.Extensions.OpenAI
+"@
+        $testConfigCoreOutput | Out-File -FilePath $testTspConfigFileCoreOutput -Encoding UTF8
+
+        $testSdkRoot = "/test/sdk/root"
+        $result = GetSDKProjectFolder -typespecConfigurationFile $testTspConfigFileCoreOutput -sdkRepoRoot $testSdkRoot
+        $expected = Join-Path $testSdkRoot "sdk" "ai" "Azure.AI.Extensions.OpenAI"
+        $result | Should -Be $expected
+    }
     
     it("should prioritize package-dir over namespace with new emitter") {
         $testTspConfigFileNewPackageDir = Join-Path $testTspConfigDir "tspconfig-new-emitter-package-dir.yaml"

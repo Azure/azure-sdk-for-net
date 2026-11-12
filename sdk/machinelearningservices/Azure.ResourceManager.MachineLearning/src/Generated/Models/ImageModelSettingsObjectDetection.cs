@@ -19,27 +19,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class ImageModelSettingsObjectDetection : ImageModelSettings
     {
         private int? _boxDetectionsPerImage;
-        internal bool _boxDetectionsPerImageIsDefined;
+        private bool _boxDetectionsPerImageIsDefined;
         private float? _boxScoreThreshold;
-        internal bool _boxScoreThresholdIsDefined;
+        private bool _boxScoreThresholdIsDefined;
         private int? _imageSize;
-        internal bool _imageSizeIsDefined;
+        private bool _imageSizeIsDefined;
         private int? _maxSize;
-        internal bool _maxSizeIsDefined;
+        private bool _maxSizeIsDefined;
         private int? _minSize;
-        internal bool _minSizeIsDefined;
+        private bool _minSizeIsDefined;
         private bool? _multiScale;
-        internal bool _multiScaleIsDefined;
+        private bool _multiScaleIsDefined;
         private float? _nmsIouThreshold;
-        internal bool _nmsIouThresholdIsDefined;
+        private bool _nmsIouThresholdIsDefined;
         private string _tileGridSize;
-        internal bool _tileGridSizeIsDefined;
+        private bool _tileGridSizeIsDefined;
         private float? _tileOverlapRatio;
-        internal bool _tileOverlapRatioIsDefined;
+        private bool _tileOverlapRatioIsDefined;
         private float? _tilePredictionsNmsThreshold;
-        internal bool _tilePredictionsNmsThresholdIsDefined;
+        private bool _tilePredictionsNmsThresholdIsDefined;
         private float? _validationIouThreshold;
-        internal bool _validationIouThresholdIsDefined;
+        private bool _validationIouThresholdIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="ImageModelSettingsObjectDetection"/>. </summary>
         public ImageModelSettingsObjectDetection()

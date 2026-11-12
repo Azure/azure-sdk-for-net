@@ -579,9 +579,27 @@ namespace Azure.Storage.Files.DataLake
                 BufferSize = options.BufferSize,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 Position = options.Position,
-                TransferValidation = options.TransferValidation
+                TransferValidation = options.TransferValidation,
+                LayoutAwareRouting = options.LayoutAwareRouting
             };
         }
+
+        // TODO: Data Locality temporarily hidden; restore when feature stabilizes
+        /*
+        internal static BlobGetLayoutOptions ToBlobGetLayoutOptions(this DataLakeFileGetLayoutOptions options)
+        {
+            if (options == null)
+            {
+                return null;
+            }
+
+            return new BlobGetLayoutOptions
+            {
+                Range = options.Range,
+                Conditions = options.Conditions.ToBlobRequestConditions(),
+            };
+        }
+        */
 
         internal static BlobDownloadOptions ToBlobBaseDownloadOptions(this DataLakeFileReadOptions options)
         {
@@ -594,7 +612,9 @@ namespace Azure.Storage.Files.DataLake
             {
                 Range = options.Range,
                 Conditions = options.Conditions.ToBlobRequestConditions(),
-                TransferValidation = options.TransferValidation
+                TransferValidation = options.TransferValidation,
+                // TODO: Data Locality temporarily hidden; restore when feature stabilizes
+                // LayoutEndpoint = options.LayoutEndpoint
             };
         }
 
@@ -608,9 +628,94 @@ namespace Azure.Storage.Files.DataLake
             {
                 Conditions = options.Conditions.ToBlobRequestConditions(),
                 TransferOptions = options.TransferOptions,
-                TransferValidation = options.TransferValidation
+                TransferValidation = options.TransferValidation,
+                LayoutAwareRouting = options.LayoutAwareRouting
             };
         }
+
+        // TODO: Data Locality temporarily hidden; restore when feature stabilizes
+        /*
+        internal static DataLakeFileLayoutEndpoint ToDataLakeFileLayoutEndpoint(this BlobLayoutEndpoint item)
+        {
+            if (item == null)
+            {
+                return null;
+            }
+
+            return new DataLakeFileLayoutEndpoint
+            {
+                Index = item.Index,
+                Value = item.Value
+            };
+        }
+
+        internal static DataLakeFileLayoutRange ToDataLakeFileLayoutRange(this BlobLayoutRange item)
+        {
+            if (item == null)
+            {
+                return null;
+            }
+
+            return new DataLakeFileLayoutRange
+            {
+                Start = item.Start,
+                End = item.End,
+                EndpointIndex = item.EndpointIndex
+            };
+        }
+
+        internal static DataLakeFileLayoutInfo ToDataLakeFileLayoutInfo(this BlobLayoutInfo blobLayoutInfo)
+        {
+            if (blobLayoutInfo == null)
+            {
+                return null;
+            }
+
+            return new DataLakeFileLayoutInfo
+            {
+                Endpoints = blobLayoutInfo.Endpoints?.Select(e => e.ToDataLakeFileLayoutEndpoint()).ToList(),
+                Ranges = blobLayoutInfo.Ranges?.Select(r => r.ToDataLakeFileLayoutRange()).ToList(),
+                LastModifiedOn = blobLayoutInfo.LastModifiedOn,
+                CreatedOn = blobLayoutInfo.CreatedOn,
+                Metadata = blobLayoutInfo.Metadata,
+                CopyCompletedOn = blobLayoutInfo.CopyCompletedOn,
+                CopyStatusDescription = blobLayoutInfo.CopyStatusDescription,
+                CopyId = blobLayoutInfo.CopyId,
+                CopyProgress = blobLayoutInfo.CopyProgress,
+                CopySource = blobLayoutInfo.CopySource,
+                CopyStatus = blobLayoutInfo.BlobCopyStatus.HasValue
+                    ? (Models.CopyStatus?)(Models.CopyStatus)blobLayoutInfo.BlobCopyStatus.Value
+                    : null,
+                IsIncrementalCopy = blobLayoutInfo.IsIncrementalCopy,
+                LeaseDuration = (DataLakeLeaseDuration)blobLayoutInfo.LeaseDuration,
+                LeaseState = (DataLakeLeaseState)blobLayoutInfo.LeaseState,
+                LeaseStatus = (DataLakeLeaseStatus)blobLayoutInfo.LeaseStatus,
+                ContentLength = blobLayoutInfo.ContentLength,
+                ContentType = blobLayoutInfo.ContentType,
+                ETag = blobLayoutInfo.ETag,
+                ContentHash = blobLayoutInfo.ContentHash,
+                ContentEncoding = blobLayoutInfo.ContentEncoding,
+                ContentDisposition = blobLayoutInfo.ContentDisposition,
+                ContentLanguage = blobLayoutInfo.ContentLanguage,
+                CacheControl = blobLayoutInfo.CacheControl,
+                AcceptRanges = blobLayoutInfo.AcceptRanges,
+                IsServerEncrypted = blobLayoutInfo.IsServerEncrypted,
+                EncryptionKeySha256 = blobLayoutInfo.EncryptionKeySha256,
+                EncryptionScope = blobLayoutInfo.EncryptionScope,
+                AccessTier = blobLayoutInfo.AccessTier,
+                AccessTierInferred = blobLayoutInfo.AccessTierInferred,
+                SmartAccessTier = blobLayoutInfo.SmartAccessTier,
+                ArchiveStatus = blobLayoutInfo.ArchiveStatus,
+                AccessTierChangedOn = blobLayoutInfo.AccessTierChangedOn,
+                ExpiresOn = blobLayoutInfo.ExpiresOn,
+                FileContentLength = blobLayoutInfo.BlobContentLength,
+                FileContentType = blobLayoutInfo.BlobContentType,
+                FileContentEncoding = blobLayoutInfo.BlobContentEncoding,
+                FileContentMD5 = blobLayoutInfo.BlobContentMD5,
+                FileCreatedOn = blobLayoutInfo.BlobCreatedOn
+            };
+        }
+        */
 
         internal const string ContinuationHeader = "x-ms-continuation";
         private const string LastModifiedHeader = "Last-Modified";

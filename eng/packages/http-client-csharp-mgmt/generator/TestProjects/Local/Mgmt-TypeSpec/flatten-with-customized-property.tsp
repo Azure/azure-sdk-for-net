@@ -23,6 +23,12 @@ model SafeFlattenInner {
   selectionType: string;
 }
 
+/** A public wire property plus independent internal state supplied by customization. */
+model IndependentInternalPropertyModel {
+  /** Public value that must remain nested when the model has independent internal state. */
+  value?: string;
+}
+
 /** Extensible enum type whose property will be overridden via [CodeGenMember]. */
 union FlattenChannel {
   string,
@@ -46,6 +52,9 @@ model MultiFlattenProperties {
 
   /** Additional property after inner to verify it is not skipped. */
   disabled?: boolean;
+
+  /** Must not safe-flatten because its model also has an independent internal property. */
+  independentInternal?: IndependentInternalPropertyModel;
 }
 
 @resource("multiFlatten")

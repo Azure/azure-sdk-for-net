@@ -20,6 +20,51 @@ namespace Azure.Generator.Mgmt.Tests
 {
     internal class ModelFactoryVisitorTests
     {
+        [TestCase(false)]
+        [TestCase(true)]
+        public void ConstructorRepairPreservesFixedLiteralValues(bool repairViaWriter)
+        {
+            // Issue #64624: required literals are omitted from the public factory signature, but must
+            // still be passed to the full constructor instead of overwriting the property initializers.
+            var thresholdType = InputFactory.StringEnum(
+                "CostControlThresholdType",
+                [("Percentage", "Percentage"), ("Absolute", "Absolute")],
+                isExtensible: true);
+            var model = InputFactory.Model("CostControlAction", properties:
+            [
+                InputFactory.Property("type", InputFactory.Literal.String("Block"), isRequired: true),
+                InputFactory.Property("thresholdType", thresholdType, isRequired: true),
+                InputFactory.Property("threshold", InputPrimitiveType.Float64, isRequired: true),
+                InputFactory.Property("operator", InputFactory.Literal.String("GreaterThanOrEqualTo"), isRequired: true)
+            ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [model], inputEnums: () => [thresholdType]);
+
+            var factory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var method = factory.Methods.Single(m => m.Signature.ReturnType!.Name == "CostControlAction");
+            Assert.That(method.Signature.Parameters.Select(p => p.Name), Is.EqualTo(new[] { "thresholdType", "threshold" }));
+            Assert.That(method.BodyStatements!.ToDisplayString(), Does.Contain("\"Block\""));
+            Assert.That(method.BodyStatements!.ToDisplayString(), Does.Contain("\"GreaterThanOrEqualTo\""));
+
+            if (repairViaWriter)
+            {
+                _ = plugin.Object.GetWriter(factory).Write();
+            }
+            else
+            {
+                var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                    "VisitType", BindingFlags.NonPublic | BindingFlags.Instance)!;
+                visitType.Invoke(new Management.Visitors.ModelFactoryVisitor(), [factory]);
+            }
+
+            var body = method.BodyStatements!.ToDisplayString();
+            Assert.Multiple(() =>
+            {
+                Assert.That(body, Does.Contain("\"Block\""));
+                Assert.That(body, Does.Contain("\"GreaterThanOrEqualTo\""));
+                Assert.That(body, Does.Contain("thresholdType, threshold"));
+            });
+        }
+
         [Test]
         public void ConstructorRepairPreservesDefaultEnumDiscriminator(
             [Values(false, true)] bool isExtensible,
@@ -506,6 +551,157 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(rendered, Does.Contain("EditorBrowsable"));
             Assert.That(rendered, Does.Contain("EditorBrowsableState.Never"));
             Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel"));
+        }
+
+        [Test]
+        public void RestoringHiddenFactoryOverloadDoesNotMutateLastContractParameters()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var previousParameter = new ParameterProvider(
+                "value",
+                $"Published parameter description.",
+                typeof(string),
+                Default,
+                attributes: [new AttributeStatement(typeof(System.Diagnostics.CodeAnalysis.AllowNullAttribute))],
+                property: model.Properties.Single(),
+                initializationValue: Literal("initialized"),
+                location: ParameterLocation.Query,
+                wireInfo: new WireInformation(default, "publishedValue"),
+                validation: ParameterValidationType.AssertNotNull,
+                inputParameter: InputFactory.MethodParameter("value", InputPrimitiveType.String))
+            {
+                SpreadSource = model
+            };
+            var previousDescription = previousParameter.Description;
+            var previousSignature = new MethodSignature(
+                "TestModel",
+                $"Published factory description.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                model.Type,
+                $"Published return description.",
+                [previousParameter]);
+            var lastContractView = new TestModelFactoryView(modelFactory.Name);
+            lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
+            ModelTestHelper.SetLastContractView(modelFactory, lastContractView);
+            modelFactory.Update(methods: []);
+
+            var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                "VisitType", BindingFlags.NonPublic | BindingFlags.Instance)!;
+            visitType.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
+
+            var restoredMethod = modelFactory.Methods.Single();
+            var restoredParameter = restoredMethod.Signature.Parameters.Single();
+            Assert.Multiple(() =>
+            {
+                Assert.That(Management.Visitors.ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(restoredMethod), Is.True);
+                Assert.That(restoredParameter.DefaultValue, Is.Null,
+                    "The restored hidden overload still requires an explicit argument.");
+                Assert.That(restoredParameter, Is.Not.SameAs(previousParameter),
+                    "A restored signature must own its mutable parameter providers.");
+                Assert.That(restoredParameter.Name, Is.EqualTo(previousParameter.Name));
+                Assert.That(restoredParameter.Type, Is.SameAs(previousParameter.Type));
+                Assert.That(restoredParameter.Attributes, Is.SameAs(previousParameter.Attributes));
+                Assert.That(restoredParameter.Property, Is.SameAs(previousParameter.Property));
+                Assert.That(restoredParameter.InitializationValue, Is.SameAs(previousParameter.InitializationValue));
+                Assert.That(restoredParameter.Location, Is.EqualTo(previousParameter.Location));
+                Assert.That(restoredParameter.WireInfo, Is.SameAs(previousParameter.WireInfo));
+                Assert.That(restoredParameter.Validation, Is.EqualTo(previousParameter.Validation));
+                Assert.That(restoredParameter.InputParameter, Is.SameAs(previousParameter.InputParameter));
+                Assert.That(restoredParameter.SpreadSource, Is.SameAs(previousParameter.SpreadSource));
+                Assert.That(lastContractView.Methods.Single().Signature.Parameters.Single(), Is.SameAs(previousParameter));
+                Assert.That(previousParameter.DefaultValue, Is.SameAs(Default),
+                    "Requiring a hidden overload's arguments must not change published optionality.");
+                Assert.That(previousParameter.Description, Is.SameAs(previousDescription),
+                    "Regenerating documentation must not change the historical contract either.");
+            });
+        }
+
+        [Test]
+        public void RestoredHiddenFactoryOverloadRequiresAllParametersAndKeepsCurrentOverloadOptional()
+        {
+            // Regression for #63828: DataProtectionBackup replaces the nullable enum with a settings model.
+            // MPG must restore the legacy CLR signature without giving it the current overload's defaults.
+            var state = InputFactory.StringEnum(
+                "BackupVaultImmutabilityState", [("Locked", "Locked")],
+                isExtensible: true, clientNamespace: "Samples.Models");
+            var softDeleteSettings = InputFactory.Model("BackupVaultSoftDeleteSettings", properties: []);
+            var encryptionSettings = InputFactory.Model("BackupVaultEncryptionSettings", properties: []);
+            var configuration = InputFactory.Model("ImmutabilityConfiguration", properties:
+            [
+                InputFactory.Property("type", InputPrimitiveType.String),
+                InputFactory.Property("duration", InputPrimitiveType.Int32)
+            ]);
+            var immutabilitySettings = InputFactory.Model("ImmutabilitySettings", properties:
+            [
+                InputFactory.Property("state", state),
+                InputFactory.Property("configuration", configuration)
+            ]);
+            var inputModel = InputFactory.Model("BackupVaultSecuritySettings", properties:
+            [
+                InputFactory.Property("softDeleteSettings", softDeleteSettings),
+                InputFactory.Property("immutabilitySettings", immutabilitySettings),
+                InputFactory.Property("encryptionSettings", encryptionSettings)
+            ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [inputModel, softDeleteSettings, immutabilitySettings, encryptionSettings, configuration],
+                inputEnums: () => [state],
+                configurationJson: """{"package-name":"Samples"}""",
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", """
+                    namespace Samples.Models
+                    {
+                        public partial class BackupVaultSecuritySettings { }
+                        public partial class BackupVaultSoftDeleteSettings { }
+                        public partial class BackupVaultEncryptionSettings { }
+                        public readonly partial struct BackupVaultImmutabilityState { }
+                    }
+                    namespace Samples
+                    {
+                        public static partial class SamplesModelFactory
+                        {
+                            public static Samples.Models.BackupVaultSecuritySettings BackupVaultSecuritySettings(
+                                Samples.Models.BackupVaultSoftDeleteSettings softDeleteSettings = default,
+                                Samples.Models.BackupVaultImmutabilityState? immutabilityState = default,
+                                Samples.Models.BackupVaultEncryptionSettings encryptionSettings = default) => default;
+                        }
+                    }
+                    """)
+                ]));
+            var output = plugin.Object.OutputLibrary;
+            var factory = output.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            Assert.That(factory.LastContractView, Is.Not.Null);
+
+            var visitLibrary = typeof(LibraryVisitor).GetMethod(
+                "VisitLibrary", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!;
+            foreach (var visitor in plugin.Object.Visitors)
+            {
+                visitLibrary.Invoke(visitor, [output]);
+            }
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(factory);
+            var generated = plugin.Object.GetWriter(factory).Write().Content;
+
+            var overloads = factory.Methods.Where(m => m.Signature.Name == "BackupVaultSecuritySettings").ToArray();
+            Assert.That(overloads, Has.Length.EqualTo(2), generated);
+            Assert.That(overloads.Select(m => m.Signature.Parameters[1].Type.Name),
+                Is.EquivalentTo(new[] { "BackupVaultImmutabilityState", "ImmutabilitySettings" }), generated);
+            var legacyOverload = overloads.Single(m => m.Signature.Parameters[1].Type.Name == "BackupVaultImmutabilityState");
+            var currentOverload = overloads.Single(m => m.Signature.Parameters[1].Type.Name == "ImmutabilitySettings");
+            Assert.Multiple(() =>
+            {
+                Assert.That(Management.Visitors.ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(legacyOverload), Is.True);
+                Assert.That(Management.Visitors.ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(currentOverload), Is.False);
+                Assert.That(legacyOverload.Signature.Parameters.Select(p => p.DefaultValue), Is.All.Null,
+                    "Hidden compatibility overloads must require every parameter, as in TypeSpec #11832.");
+                Assert.That(currentOverload.Signature.Parameters.Select(p => p.DefaultValue), Is.All.Not.Null,
+                    "The new overload must retain defaults for its optional current-model parameters.");
+            });
         }
 
         [Test]

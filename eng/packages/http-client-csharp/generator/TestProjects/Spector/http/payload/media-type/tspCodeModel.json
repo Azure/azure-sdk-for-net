@@ -206,7 +206,6 @@
                 "$id": "23",
                 "name": "sendAsText",
                 "isExactName": false,
-                "resourceName": "StringBody",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -344,7 +343,6 @@
                 "$id": "31",
                 "name": "getAsText",
                 "isExactName": false,
-                "resourceName": "StringBody",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -449,7 +447,6 @@
                 "$id": "36",
                 "name": "sendAsJson",
                 "isExactName": false,
-                "resourceName": "StringBody",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -591,7 +588,6 @@
                 "$id": "44",
                 "name": "getAsJson",
                 "isExactName": false,
-                "resourceName": "StringBody",
                 "accessibility": "public",
                 "parameters": [
                   {

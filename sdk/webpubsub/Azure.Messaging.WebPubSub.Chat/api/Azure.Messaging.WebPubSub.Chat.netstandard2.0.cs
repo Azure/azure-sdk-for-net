@@ -35,6 +35,7 @@ namespace Azure.Messaging.WebPubSub.Chat
     }
     public partial class ChatTopic : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.WebPubSub.Chat.ChatTopic>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.WebPubSub.Chat.ChatTopic>
     {
+        public ChatTopic() { }
         public ChatTopic(string title) { }
         public string ConversationId { get { throw null; } }
         public string CreatedBy { get { throw null; } }
@@ -134,7 +135,7 @@ namespace Azure.Messaging.WebPubSub.Chat
     }
     public partial class WebPubSubChatMessage : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessage>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessage>
     {
-        public WebPubSubChatMessage(string createdBy, Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessageContent content) { }
+        public WebPubSubChatMessage() { }
         public Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessageContent Content { get { throw null; } set { } }
         public string CreatedBy { get { throw null; } set { } }
         public System.DateTimeOffset CreatedOn { get { throw null; } }
@@ -306,42 +307,42 @@ namespace Azure.Messaging.WebPubSub.Chat
         public virtual Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRole> GetRole(string roleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetRoleAsync(string roleName, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRole>> GetRoleAsync(string roleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetRoles(int? maxPageSize, string continuationToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRole> GetRoles(int? maxPageSize = default(int?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetRolesAsync(int? maxPageSize, string continuationToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRole> GetRolesAsync(int? maxPageSize = default(int?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetRoles(int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRole> GetRoles(int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetRolesAsync(int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRole> GetRolesAsync(int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetRoom(string roomId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoom> GetRoom(string roomId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetRoomAsync(string roomId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoom>> GetRoomAsync(string roomId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetRoomMembers(string roomId, int? maxPageSize, string continuationToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoomMember> GetRoomMembers(string roomId, int? maxPageSize = default(int?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetRoomMembersAsync(string roomId, int? maxPageSize, string continuationToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoomMember> GetRoomMembersAsync(string roomId, int? maxPageSize = default(int?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetRooms(int? maxPageSize, string continuationToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoom> GetRooms(int? maxPageSize = default(int?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetRoomsAsync(int? maxPageSize, string continuationToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoom> GetRoomsAsync(int? maxPageSize = default(int?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetRoomsForUser(string userId, int? maxPageSize, string continuationToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Messaging.WebPubSub.Chat.ChatUserRoom> GetRoomsForUser(string userId, int? maxPageSize = default(int?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetRoomsForUserAsync(string userId, int? maxPageSize, string continuationToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Messaging.WebPubSub.Chat.ChatUserRoom> GetRoomsForUserAsync(string userId, int? maxPageSize = default(int?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetRoomMembers(string roomId, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoomMember> GetRoomMembers(string roomId, int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetRoomMembersAsync(string roomId, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoomMember> GetRoomMembersAsync(string roomId, int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetRooms(int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoom> GetRooms(int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetRoomsAsync(int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoom> GetRoomsAsync(int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetRoomsForUser(string userId, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Messaging.WebPubSub.Chat.ChatUserRoom> GetRoomsForUser(string userId, int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetRoomsForUserAsync(string userId, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Messaging.WebPubSub.Chat.ChatUserRoom> GetRoomsForUserAsync(string userId, int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetTopic(string roomId, string topicId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Messaging.WebPubSub.Chat.ChatTopic> GetTopic(string roomId, string topicId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTopicAsync(string roomId, string topicId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.WebPubSub.Chat.ChatTopic>> GetTopicAsync(string roomId, string topicId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetTopics(string roomId, int? maxPageSize, string continuationToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Messaging.WebPubSub.Chat.ChatTopic> GetTopics(string roomId, int? maxPageSize = default(int?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetTopicsAsync(string roomId, int? maxPageSize, string continuationToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Messaging.WebPubSub.Chat.ChatTopic> GetTopicsAsync(string roomId, int? maxPageSize = default(int?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetTopics(string roomId, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Messaging.WebPubSub.Chat.ChatTopic> GetTopics(string roomId, int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetTopicsAsync(string roomId, int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Messaging.WebPubSub.Chat.ChatTopic> GetTopicsAsync(string roomId, int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetUser(string userId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatUser> GetUser(string userId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetUserAsync(string userId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatUser>> GetUserAsync(string userId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<System.BinaryData> GetUsers(int? maxPageSize, string continuationToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Messaging.WebPubSub.Chat.WebPubSubChatUser> GetUsers(int? maxPageSize = default(int?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetUsersAsync(int? maxPageSize, string continuationToken, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Messaging.WebPubSub.Chat.WebPubSubChatUser> GetUsersAsync(int? maxPageSize = default(int?), string continuationToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetUsers(int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Messaging.WebPubSub.Chat.WebPubSubChatUser> GetUsers(int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetUsersAsync(int? maxPageSize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Messaging.WebPubSub.Chat.WebPubSubChatUser> GetUsersAsync(int? maxPageSize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateMessage(string conversationId, string messageId, Azure.Core.RequestContent content, Azure.MatchConditions matchConditions = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessage> UpdateMessage(string conversationId, string messageId, Azure.Messaging.WebPubSub.Chat.UpdateMessageOptions options, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateMessageAsync(string conversationId, string messageId, Azure.Core.RequestContent content, Azure.MatchConditions matchConditions = null, Azure.RequestContext context = null) { throw null; }

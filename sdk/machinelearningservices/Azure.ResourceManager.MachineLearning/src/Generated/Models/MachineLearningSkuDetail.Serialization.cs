@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningSkuDetail)} does not support writing '{format}' format.");
             }
-            if (_capacityIsDefined || Optional.IsDefined(Capacity))
+            if (Optional.IsDefined(Capacity, _capacityIsDefined))
             {
                 if (Capacity != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("capacity"u8);
                 }
             }
-            if (options.Format != "W" && (_resourceTypeIsDefined || Optional.IsDefined(ResourceType)))
+            if (options.Format != "W" && Optional.IsDefined(ResourceType, _resourceTypeIsDefined))
             {
                 if (ResourceType != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("resourceType"u8);
                 }
             }
-            if (_skuIsDefined || Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku, _skuIsDefined))
             {
                 if (Sku != null)
                 {

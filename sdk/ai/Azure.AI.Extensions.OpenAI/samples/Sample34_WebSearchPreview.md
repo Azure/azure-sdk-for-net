@@ -18,20 +18,6 @@ AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenPro
 
 2. Create an Agent capable of using Web search preview tool.
 
-
-Synchronous sample:
-```C# Snippet:Sample_CreateAgent_WebSearchPreviewStreaming_Sync
-DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
-{
-    Instructions = "You are a helpful assistant that can search the web.",
-    Tools = { ResponseTool.CreateWebSearchPreviewTool(userLocation: WebSearchToolLocation.CreateApproximateLocation(country: "GB", city: "London", region: "London")), }
-};
-ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
-    agentName: "myAgent",
-    options: new(agentDefinition));
-```
-
-Asynchronous sample:
 ```C# Snippet:Sample_CreateAgent_WebSearchPreviewStreaming_Async
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
@@ -67,48 +53,6 @@ private static string GetFormattedAnnotation(ResponseItem item)
 
 4. Ask the question and stream the response.
 
-Synchronous sample:
-```C# Snippet:Sample_StreamResponse_WebSearchPreviewStreaming_Sync
-ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
-
-string annotation = "";
-string text = "";
-CreateResponseOptions options = new()
-{
-    ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
-    InputItems = { ResponseItem.CreateUserMessageItem("Show me the latest London Underground service updates") },
-};
-
-foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreaming(options))
-{
-    if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
-    {
-        Console.WriteLine($"Stream response created with ID: {createUpdate.Response.Id}");
-    }
-    else if (streamResponse is StreamingResponseOutputTextDeltaUpdate textDelta)
-    {
-        Console.WriteLine($"Delta: {textDelta.Delta}");
-    }
-    else if (streamResponse is StreamingResponseOutputTextDoneUpdate textDoneUpdate)
-    {
-        text = textDoneUpdate.Text;
-    }
-    else if (streamResponse is StreamingResponseOutputItemDoneUpdate itemDoneUpdate)
-    {
-        if (annotation.Length == 0)
-        {
-            annotation = GetFormattedAnnotation(itemDoneUpdate.Item);
-        }
-    }
-    else if (streamResponse is StreamingResponseErrorUpdate errorUpdate)
-    {
-        throw new InvalidOperationException($"The stream has failed: {errorUpdate.Message}");
-    }
-}
-Console.WriteLine($"{text}{annotation}");
-```
-
-Asynchronous sample:
 ```C# Snippet:Sample_StreamResponse_WebSearchPreviewStreaming_Async
 ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(agentVersion.Name);
 
@@ -119,7 +63,7 @@ CreateResponseOptions options = new()
     ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
     InputItems = { ResponseItem.CreateUserMessageItem("Show me the latest London Underground service updates") },
 };
-await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync(options))
+await foreach (StreamingResponseUpdate streamResponse in await responseClient.CreateResponseStreamingAsync(options))
 {
     if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
     {
@@ -150,12 +94,6 @@ Console.WriteLine($"{text}{annotation}");
 
 5. Finally, delete all the resources we have created in this sample.
 
-Synchronous sample:
-```C# Snippet:Sample_Cleanup_WebSearchPreviewStreaming_Sync
-projectClient.AgentAdministrationClient.DeleteAgentVersion(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
-```
-
-Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_WebSearchPreviewStreaming_Async
 await projectClient.AgentAdministrationClient.DeleteAgentVersionAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version);
 ```

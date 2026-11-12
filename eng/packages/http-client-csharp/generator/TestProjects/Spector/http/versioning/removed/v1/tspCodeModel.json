@@ -705,7 +705,6 @@
             "$id": "57",
             "name": "v1",
             "isExactName": false,
-            "resourceName": "Removed",
             "doc": "This operation should not be generated with latest version's signature.",
             "accessibility": "public",
             "parameters": [
@@ -898,7 +897,6 @@
             "$id": "65",
             "name": "v2",
             "isExactName": false,
-            "resourceName": "Removed",
             "accessibility": "public",
             "parameters": [
               {
@@ -1139,7 +1137,6 @@
             "$id": "77",
             "name": "modelV3",
             "isExactName": false,
-            "resourceName": "Removed",
             "doc": "This operation will pass different paths and different request bodies based on different versions.",
             "accessibility": "public",
             "parameters": [
@@ -1400,7 +1397,6 @@
                 "$id": "90",
                 "name": "v1InInterface",
                 "isExactName": false,
-                "resourceName": "InterfaceV1",
                 "accessibility": "public",
                 "parameters": [
                   {

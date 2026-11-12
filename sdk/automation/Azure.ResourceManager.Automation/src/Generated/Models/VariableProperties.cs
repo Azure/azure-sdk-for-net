@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private bool? _isEncrypted;
-        internal bool _isEncryptedIsDefined;
+        private bool _isEncryptedIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VariableProperties"/>. </summary>
         public VariableProperties()

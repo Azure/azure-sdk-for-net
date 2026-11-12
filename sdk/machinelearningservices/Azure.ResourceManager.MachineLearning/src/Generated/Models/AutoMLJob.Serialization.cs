@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(AutoMLJob)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (_environmentIdIsDefined || Optional.IsDefined(EnvironmentId))
+            if (Optional.IsDefined(EnvironmentId, _environmentIdIsDefined))
             {
                 if (EnvironmentId != null)
                 {
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("outputs"u8);
                 }
             }
-            if (_queueSettingsIsDefined || Optional.IsDefined(QueueSettings))
+            if (Optional.IsDefined(QueueSettings, _queueSettingsIsDefined))
             {
                 if (QueueSettings != null)
                 {

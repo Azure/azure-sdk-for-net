@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _tag;
-        internal bool _tagIsDefined;
+        private bool _tagIsDefined;
         private string _semver;
-        internal bool _semverIsDefined;
+        private bool _semverIsDefined;
         private string _digest;
-        internal bool _digestIsDefined;
+        private bool _digestIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="OciRepositoryRefPatch"/>. </summary>
         public OciRepositoryRefPatch()

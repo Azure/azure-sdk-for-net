@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Storage
         private SystemData _systemData;
         private ContainerProperties _containerProperties;
         private BicepValue<ETag> _eTag;
-        private ResourceReference<BlobService> _parent;
+        private ProvisioningResourceReference<BlobService> _parent;
 
         /// <summary> Creates a new BlobContainer. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -383,7 +383,7 @@ namespace Azure.Provisioning.Storage
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _containerProperties = DefineModelProperty<ContainerProperties>(nameof(ContainerProperties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<BlobService>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<BlobService>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 
@@ -403,7 +403,7 @@ namespace Azure.Provisioning.Storage
         /// <summary> Get the requirements for naming this resource. </summary>
         /// <returns> Naming requirements. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(3, 63, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore | ResourceNameCharacters.Period | ResourceNameCharacters.Parentheses);
+        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(3, 63, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen);
 
         /// <summary></summary>
         public static partial class ResourceVersions

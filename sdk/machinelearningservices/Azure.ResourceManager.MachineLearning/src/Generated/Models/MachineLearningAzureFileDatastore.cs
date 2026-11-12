@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningAzureFileDatastore : MachineLearningDatastoreProperties
     {
         private string _resourceGroup;
-        internal bool _resourceGroupIsDefined;
+        private bool _resourceGroupIsDefined;
         private string _subscriptionId;
-        internal bool _subscriptionIdIsDefined;
+        private bool _subscriptionIdIsDefined;
         private string _endpoint;
-        internal bool _endpointIsDefined;
+        private bool _endpointIsDefined;
         private string _protocol;
-        internal bool _protocolIsDefined;
+        private bool _protocolIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningAzureFileDatastore"/>. </summary>
         /// <param name="credentials"> [Required] Account credentials. </param>

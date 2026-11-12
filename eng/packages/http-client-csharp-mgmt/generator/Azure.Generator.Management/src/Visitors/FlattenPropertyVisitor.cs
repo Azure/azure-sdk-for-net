@@ -119,9 +119,13 @@ namespace Azure.Generator.Management.Visitors
         private static bool IsPublicModelProperty(PropertyProvider property)
         {
             return property.Modifiers.HasFlag(MethodSignatureModifiers.Public)
-                && !IsObsoleteProperty(property)
-                && !IsJsonPatchProperty(property);
+                && IsEffectiveModelProperty(property);
         }
+
+        private static bool IsEffectiveModelProperty(PropertyProvider property)
+            => !IsObsoleteProperty(property)
+                && !IsJsonPatchProperty(property)
+                && !property.Modifiers.HasFlag(MethodSignatureModifiers.Static);
 
 #pragma warning disable SCME0001 // JsonPatch is experimental.
         private static bool IsJsonPatchProperty(PropertyProvider property)
@@ -582,10 +586,13 @@ namespace Azure.Generator.Management.Visitors
                         continue;
                     }
 
-                    // Only safe flatten a model with one effective public property. JsonPatch is an
-                    // infrastructure property and does not contribute to the model's public data shape.
-                    var publicProperties = innerProperties.Where(IsPublicModelProperty).ToArray();
-                    if (publicProperties.Length != 1 || !IsFlattenableProperty(publicProperties[0]))
+                    // Count independent instance properties, but do not count a backing wrapper
+                    // again when its data is already represented by flattened properties.
+                    var flattenedWrappers = innerProperties.OfType<FlattenedPropertyProvider>()
+                        .Select(p => p.FlattenedProperty).ToHashSet();
+                    var effectiveProperties = innerProperties
+                        .Where(p => IsEffectiveModelProperty(p) && !flattenedWrappers.Contains(p)).ToArray();
+                    if (effectiveProperties.Length != 1 || !IsFlattenableProperty(effectiveProperties[0]))
                     {
                         continue;
                     }

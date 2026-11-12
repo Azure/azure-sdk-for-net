@@ -844,7 +844,7 @@ namespace Azure.AI.Projects.Memory
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(content, nameof(content));
 
-            CreateMemoryRequest spreadModel = new CreateMemoryRequest(scope, content, kind, default);
+            CreateMemoryContent spreadModel = new CreateMemoryContent(scope, content, kind, default);
             ClientResult result = CreateMemory(name, spreadModel, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((MemoryItem)result, result.GetRawResponse());
         }
@@ -864,7 +864,7 @@ namespace Azure.AI.Projects.Memory
             Argument.AssertNotNullOrEmpty(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(content, nameof(content));
 
-            CreateMemoryRequest spreadModel = new CreateMemoryRequest(scope, content, kind, default);
+            CreateMemoryContent spreadModel = new CreateMemoryContent(scope, content, kind, default);
             ClientResult result = await CreateMemoryAsync(name, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((MemoryItem)result, result.GetRawResponse());
         }
@@ -955,7 +955,7 @@ namespace Azure.AI.Projects.Memory
             Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
             Argument.AssertNotNullOrEmpty(content, nameof(content));
 
-            UpdateMemoryRequest spreadModel = new UpdateMemoryRequest(content, default);
+            UpdateMemoryContent spreadModel = new UpdateMemoryContent(content, default);
             ClientResult result = UpdateMemory(name, memoryId, spreadModel, cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((MemoryItem)result, result.GetRawResponse());
         }
@@ -974,7 +974,7 @@ namespace Azure.AI.Projects.Memory
             Argument.AssertNotNullOrEmpty(memoryId, nameof(memoryId));
             Argument.AssertNotNullOrEmpty(content, nameof(content));
 
-            UpdateMemoryRequest spreadModel = new UpdateMemoryRequest(content, default);
+            UpdateMemoryContent spreadModel = new UpdateMemoryContent(content, default);
             ClientResult result = await UpdateMemoryAsync(name, memoryId, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((MemoryItem)result, result.GetRawResponse());
         }
@@ -1238,54 +1238,6 @@ namespace Azure.AI.Projects.Memory
 
             ClientResult result = await DeleteMemoryAsync(name, memoryId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((MemoryDeletionResult)result, result.GetRawResponse());
-        }
-
-        /// <summary>
-        /// [Protocol Method] Starts an update that writes conversation memories into the specified memory store.
-        /// The operation returns a long-running status location for polling the update result.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The name of the memory store to update. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult UpdateMemories(string name, BinaryContent content, RequestOptions options = null)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
-
-            return OperationResultHelpers.ToClientResult(UpdateMemories(false, name, content, options));
-        }
-
-        /// <summary>
-        /// [Protocol Method] Starts an update that writes conversation memories into the specified memory store.
-        /// The operation returns a long-running status location for polling the update result.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="name"> The name of the memory store to update. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Task<ClientResult> UpdateMemoriesAsync(string name, BinaryContent content, RequestOptions options = null)
-        {
-            Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
-
-            return OperationResultHelpers.ToClientResultAsync(UpdateMemoriesAsync(false, name, content, options));
         }
     }
 }

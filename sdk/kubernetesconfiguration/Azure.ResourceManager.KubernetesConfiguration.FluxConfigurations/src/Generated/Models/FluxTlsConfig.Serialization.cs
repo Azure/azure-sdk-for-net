@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 throw new FormatException($"The model {nameof(FluxTlsConfig)} does not support writing '{format}' format.");
             }
-            if (_clientCertificateIsDefined || Optional.IsDefined(ClientCertificate))
+            if (Optional.IsDefined(ClientCertificate, _clientCertificateIsDefined))
             {
                 if (ClientCertificate != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("clientCertificate"u8);
                 }
             }
-            if (_privateKeyIsDefined || Optional.IsDefined(PrivateKey))
+            if (Optional.IsDefined(PrivateKey, _privateKeyIsDefined))
             {
                 if (PrivateKey != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("privateKey"u8);
                 }
             }
-            if (_caCertificateIsDefined || Optional.IsDefined(CaCertificate))
+            if (Optional.IsDefined(CaCertificate, _caCertificateIsDefined))
             {
                 if (CaCertificate != null)
                 {

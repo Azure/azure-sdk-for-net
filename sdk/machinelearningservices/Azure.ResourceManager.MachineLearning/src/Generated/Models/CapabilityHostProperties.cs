@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class CapabilityHostProperties : MachineLearningResourceBase
     {
         private string _customerSubnet;
-        internal bool _customerSubnetIsDefined;
+        private bool _customerSubnetIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="CapabilityHostProperties"/>. </summary>
         public CapabilityHostProperties()

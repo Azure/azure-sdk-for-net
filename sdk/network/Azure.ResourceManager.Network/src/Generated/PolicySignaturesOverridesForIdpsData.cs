@@ -13,7 +13,7 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary> Contains all specific policy signatures overrides for the IDPS. </summary>
-    public partial class PolicySignaturesOverridesForIdpsData : NetworkWritableResource
+    public partial class PolicySignaturesOverridesForIdpsData : NetworkWritableResourceData
     {
         /// <summary> Initializes a new instance of <see cref="PolicySignaturesOverridesForIdpsData"/>. </summary>
         public PolicySignaturesOverridesForIdpsData()
@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="PolicySignaturesOverridesForIdpsData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
-        /// <param name="type"> Resource type. </param>
+        /// <param name="resourceType"> Resource type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Will contain the properties of the resource (the actual signature overrides). </param>
-        internal PolicySignaturesOverridesForIdpsData(ResourceIdentifier id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, SignaturesOverridesProperties properties) : base(id, name, @type, additionalBinaryDataProperties)
+        internal PolicySignaturesOverridesForIdpsData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, SignaturesOverridesProperties properties) : base(id, name, resourceType, additionalBinaryDataProperties)
         {
             Properties = properties;
         }

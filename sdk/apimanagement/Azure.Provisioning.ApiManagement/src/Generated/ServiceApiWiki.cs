@@ -20,7 +20,7 @@ namespace Azure.Provisioning.ApiManagement
         private BicepValue<string> _name;
         private SystemData _systemData;
         private WikiContractProperties _properties;
-        private ResourceReference<ApiManagementApi> _parent;
+        private ProvisioningResourceReference<ApiManagementApi> _parent;
 
         /// <summary> Creates a new ServiceApiWiki. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -39,13 +39,18 @@ namespace Azure.Provisioning.ApiManagement
             }
         }
 
-        /// <summary> Gets the Name. </summary>
+        /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> Name
         {
             get
             {
                 Initialize();
                 return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -114,7 +119,7 @@ namespace Azure.Provisioning.ApiManagement
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true, defaultValue: "default");
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<WikiContractProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ApiManagementApi>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _parent = new ProvisioningResourceReference<ApiManagementApi>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

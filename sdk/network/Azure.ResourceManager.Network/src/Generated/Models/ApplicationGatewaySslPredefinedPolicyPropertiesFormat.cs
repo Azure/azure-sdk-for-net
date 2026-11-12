@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslPredefinedPolicyPropertiesFormat"/>. </summary>
-        internal ApplicationGatewaySslPredefinedPolicyPropertiesFormat()
+        public ApplicationGatewaySslPredefinedPolicyPropertiesFormat()
         {
             CipherSuites = new ChangeTrackingList<ApplicationGatewaySslCipherSuite>();
         }
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Minimum version of Ssl protocol to be supported on application gateway. </summary>
         [WirePath("minProtocolVersion")]
-        public ApplicationGatewaySslProtocol? MinProtocolVersion { get; }
+        public ApplicationGatewaySslProtocol? MinProtocolVersion { get; set; }
     }
 }

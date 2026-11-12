@@ -255,6 +255,114 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ExternalClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetExternalClusterResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ExternalClusterResource"/> object. </returns>
+        public static ExternalClusterResource GetExternalClusterResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetAppArmClient(client).GetExternalClusterResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ClusterPeerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetClusterPeerResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ClusterPeerResource"/> object. </returns>
+        public static ClusterPeerResource GetClusterPeerResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetAppArmClient(client).GetClusterPeerResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ExternalSvmResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetExternalSvmResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ExternalSvmResource"/> object. </returns>
+        public static ExternalSvmResource GetExternalSvmResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetAppArmClient(client).GetExternalSvmResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SvmPeerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetSvmPeerResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SvmPeerResource"/> object. </returns>
+        public static SvmPeerResource GetSvmPeerResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetAppArmClient(client).GetSvmPeerResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ExternalCacheResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetExternalCacheResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ExternalCacheResource"/> object. </returns>
+        public static ExternalCacheResource GetExternalCacheResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetAppArmClient(client).GetExternalCacheResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ExternalCacheConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppArmClient.GetExternalCacheConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ExternalCacheConnectionResource"/> object. </returns>
+        public static ExternalCacheConnectionResource GetExternalCacheConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetAppArmClient(client).GetExternalCacheConnectionResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="NetAppSubscriptionQuotaItemResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -342,6 +450,116 @@ namespace Azure.ResourceManager.NetApp
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableNetAppArmClient(client).GetNetAppSubvolumeInfoResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of ExternalClusters in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppResourceGroupResource.GetExternalClusters()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of ExternalClusters and their operations over a ExternalClusterResource. </returns>
+        public static ExternalClusterCollection GetExternalClusters(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetAppResourceGroupResource(resourceGroupResource).GetExternalClusters();
+        }
+
+        /// <summary>
+        /// Get the External Cluster
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppResourceGroupResource.GetExternalClusterAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="externalClusterName"> The name of the ExternalCluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ExternalClusterResource>> GetExternalClusterAsync(this ResourceGroupResource resourceGroupResource, string externalClusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNetAppResourceGroupResource(resourceGroupResource).GetExternalClusterAsync(externalClusterName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the External Cluster
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppResourceGroupResource.GetExternalCluster(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="externalClusterName"> The name of the ExternalCluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ExternalClusterResource> GetExternalCluster(this ResourceGroupResource resourceGroupResource, string externalClusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetAppResourceGroupResource(resourceGroupResource).GetExternalCluster(externalClusterName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ExternalCacheConnections in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppResourceGroupResource.GetExternalCacheConnections()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of ExternalCacheConnections and their operations over a ExternalCacheConnectionResource. </returns>
+        public static ExternalCacheConnectionCollection GetExternalCacheConnections(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetAppResourceGroupResource(resourceGroupResource).GetExternalCacheConnections();
+        }
+
+        /// <summary>
+        /// Get the External Cache Connection
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppResourceGroupResource.GetExternalCacheConnectionAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="externalCacheConnectionName"> The name of the ExternalCacheConnection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ExternalCacheConnectionResource>> GetExternalCacheConnectionAsync(this ResourceGroupResource resourceGroupResource, string externalCacheConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNetAppResourceGroupResource(resourceGroupResource).GetExternalCacheConnectionAsync(externalCacheConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the External Cache Connection
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppResourceGroupResource.GetExternalCacheConnection(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="externalCacheConnectionName"> The name of the ExternalCacheConnection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ExternalCacheConnectionResource> GetExternalCacheConnection(this ResourceGroupResource resourceGroupResource, string externalCacheConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetAppResourceGroupResource(resourceGroupResource).GetExternalCacheConnection(externalCacheConnectionName, cancellationToken);
         }
 
         /// <summary>
@@ -472,6 +690,78 @@ namespace Azure.ResourceManager.NetApp
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableNetAppSubscriptionResource(subscriptionResource).GetRegionInfoResource();
+        }
+
+        /// <summary>
+        /// List all External Clusters in the subscription
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetExternalClustersAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ExternalClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ExternalClusterResource> GetExternalClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetExternalClustersAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List all External Clusters in the subscription
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetExternalClusters(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ExternalClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ExternalClusterResource> GetExternalClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetExternalClusters(cancellationToken);
+        }
+
+        /// <summary>
+        /// List all External Cache Connections in the subscription
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetExternalCacheConnectionsAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ExternalCacheConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ExternalCacheConnectionResource> GetExternalCacheConnectionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetExternalCacheConnectionsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List all External Cache Connections in the subscription
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetExternalCacheConnections(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ExternalCacheConnectionResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ExternalCacheConnectionResource> GetExternalCacheConnections(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetExternalCacheConnections(cancellationToken);
         }
 
         /// <summary>

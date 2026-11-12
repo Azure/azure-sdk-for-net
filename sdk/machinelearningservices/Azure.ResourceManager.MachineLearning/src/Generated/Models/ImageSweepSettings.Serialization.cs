@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(ImageSweepSettings)} does not support writing '{format}' format.");
             }
-            if (_earlyTerminationIsDefined || Optional.IsDefined(EarlyTermination))
+            if (Optional.IsDefined(EarlyTermination, _earlyTerminationIsDefined))
             {
                 if (EarlyTermination != null)
                 {

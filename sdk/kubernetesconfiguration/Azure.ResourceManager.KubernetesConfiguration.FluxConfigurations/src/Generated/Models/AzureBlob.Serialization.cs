@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             {
                 throw new FormatException($"The model {nameof(AzureBlob)} does not support writing '{format}' format.");
             }
-            if (_uriIsDefined || Optional.IsDefined(Uri))
+            if (Optional.IsDefined(Uri, _uriIsDefined))
             {
                 if (Uri != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("url"u8);
                 }
             }
-            if (_containerNameIsDefined || Optional.IsDefined(ContainerName))
+            if (Optional.IsDefined(ContainerName, _containerNameIsDefined))
             {
                 if (ContainerName != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("containerName"u8);
                 }
             }
-            if (_timeoutInSecondsIsDefined || Optional.IsDefined(TimeoutInSeconds))
+            if (Optional.IsDefined(TimeoutInSeconds, _timeoutInSecondsIsDefined))
             {
                 if (TimeoutInSeconds != null)
                 {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("timeoutInSeconds"u8);
                 }
             }
-            if (_syncIntervalInSecondsIsDefined || Optional.IsDefined(SyncIntervalInSeconds))
+            if (Optional.IsDefined(SyncIntervalInSeconds, _syncIntervalInSecondsIsDefined))
             {
                 if (SyncIntervalInSeconds != null)
                 {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 writer.WritePropertyName("servicePrincipal"u8);
                 writer.WriteObjectValue(ServicePrincipal, options);
             }
-            if (_accountKeyIsDefined || Optional.IsDefined(AccountKey))
+            if (Optional.IsDefined(AccountKey, _accountKeyIsDefined))
             {
                 if (AccountKey != null)
                 {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     writer.WriteNull("accountKey"u8);
                 }
             }
-            if (_sasTokenIsDefined || Optional.IsDefined(SasToken))
+            if (Optional.IsDefined(SasToken, _sasTokenIsDefined))
             {
                 if (SasToken != null)
                 {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 writer.WritePropertyName("managedIdentity"u8);
                 writer.WriteObjectValue(ManagedIdentity, options);
             }
-            if (_localAuthRefIsDefined || Optional.IsDefined(LocalAuthRef))
+            if (Optional.IsDefined(LocalAuthRef, _localAuthRefIsDefined))
             {
                 if (LocalAuthRef != null)
                 {

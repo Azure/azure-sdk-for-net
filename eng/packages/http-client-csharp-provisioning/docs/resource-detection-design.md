@@ -296,15 +296,23 @@ for structural child resources, but that property is not part of the provider
 body. Provisioning should model parent as a resource relationship, not as an
 ordinary serialized body property.
 
+The generated `Parent` relationship is optional. Callers can instead supply a
+slash-separated composite resource name. Child singleton names keep their
+relative default for explicit-parent declarations, but remain settable so that
+the composite-name form is also available.
+
 Some ARM paths skip intermediate resources. Therefore, a child resource may be
 addressed by a relative name tuple instead of a single relative name. The design
 must allow that identity shape.
 
 Extension resources are scoped by the path prefix before the final provider
-segment. The public Bicep reference shows a language-level `scope` property for
-writable extension resources, unless the resource is already treated as a
-structural child resource. Provisioning should model this as a scope
-relationship, not as a provider body property.
+segment. Both deployable and existing-only extension resources need a
+language-level `scope` relationship. Structural children instead expose their
+typed immediate `parent` and inherit its external scope; they must not emit both
+`parent` and `scope`. Provisioning models these relationships independently of
+body writability. The generated `Scope` relationship remains optional, including
+for extension-only and existing-only resources; the generator does not impose
+an explicit-scope requirement.
 
 Readable and writable scopes are sets of deployment scopes, not simple
 read/write booleans. GET contributes the path-derived scope to readable scopes.
@@ -327,10 +335,62 @@ at all, the surface should make the distinction clear.
 A resource with no reliable read or write resource operation should not be
 generated from model shape alone.
 
-Bicep can contain resources whose writable scope is `None`. Provisioning may
-choose not to generate those resources, or may represent them only as existing
-resource references. It should not accidentally expose them as normal deployable
-resources.
+Bicep can contain resources whose writable scope is `None`. Such a resource is
+not independently deployable. It can still need a public constructor and writable
+properties when its model is also an inline input to a writable parent. Public
+constructibility alone therefore does not establish standalone deployability.
+
+### Deployability is not model settability
+
+These are independent decisions and must not be used as substitutes for one
+another:
+
+| Decision | Source of truth | Consequence |
+| --- | --- | --- |
+| Standalone resource deployability | Nonempty `writableScopes` for that resource projection | Whether the resource supports a normal deployment declaration. |
+| Model settability | At least one writable usage of the model, including a writable path from a deployable resource's body | Whether authorable model properties retain setters and input requiredness. |
+| Existing-resource instance behavior | Construction through `FromExisting()` | The instance represents a Bicep `existing` reference, not a new input object. |
+
+Model settability is aggregated across shared usages. Traverse writable
+properties, collection elements, dictionary values, and model hierarchies from
+deployable resource bodies; a read-only property must not propagate writable
+usage to its value. A read-only usage must not erase a writable usage found
+elsewhere. Intrinsically output-only properties remain outputs even when their
+containing model has writable usage.
+
+In particular, a GET-only child resource can share its model with an inline
+input in a writable parent. For example, `FrontendEndpoint` is not independently
+deployable, but its body can be authored in `FrontDoor.FrontendEndpoints`.
+Similarly, a shared model can back both a deployable resource and a GET-only
+revision. Neither case makes the GET-only resource deployable, and neither
+justifies removing the shared model's input setters.
+
+**Preserving setters alone is insufficient: callers must also be able to
+construct and populate the inline input representation.** The current generator
+intentionally uses model settability for resource constructor accessibility as
+well as property input semantics. When the same generated type serves both
+roles, its constructor must remain public for writable inline usage, even if
+the resource has no writable scopes. Do not change constructor accessibility to
+depend solely on the resource's own operations or writable scopes.
+
+`FromExisting()` is not a general replacement for input construction: it marks
+the instance as existing and makes initialized body values read-only. Replacing
+or populating a nested model where supported does not change the instance into
+a deployable resource or prove that every inline input shape is usable.
+
+Consequently, do not fix constructor accessibility by making all properties of
+GET-only resources getter-only, and do not fix inline input construction by
+classifying a GET-only resource as deployable. Any representation used to bridge
+these roles must preserve both contracts.
+
+The existing generator test
+`ReadOnlyResourceModelReferencedByWritableParentBodyIsSettable` protects the
+public constructor and writable property metadata for this case. Future changes
+to this representation must also exercise customer construction and emitted
+parent-body Bicep, without emitting a standalone declaration for the GET-only
+child.
+
+See the [review discussion that motivates this distinction](https://github.com/Azure/azure-sdk-for-net/pull/64724#discussion_r4523221950).
 
 ---
 
@@ -348,6 +408,8 @@ Shared models may be used by multiple resources or by both input and output
 shapes. Their generated semantics should preserve usage context. A property
 should not become globally writable or globally read-only simply because the
 same model appears in one request or one response.
+Apply the [independent deployability and model-settability rules](#deployability-is-not-model-settability)
+when a supporting shape is also used as a resource model.
 
 Known provisioning framework types, such as common identity and system metadata
 constructs, should remain framework types when they accurately represent the
@@ -406,9 +468,16 @@ resource:
    requirements.
 9. Fixed names and discriminator values are emitted as fixed values.
 10. Same-type fixed-name variants preserve Bicep's variant semantics.
-11. Read-only/reference-only resources are not exposed as ordinary deployable
-   resources.
+11. Read-only/reference-only resources are not treated as ordinary deployable
+    resources. Public constructors required for writable inline usages do not
+    imply standalone deployability.
 12. If confidence is insufficient, the resource is skipped.
+13. Resource deployability is determined per projection, independently of shared
+    model settability.
+14. Models reachable through writable parent-body paths retain their authorable
+    properties, even when they also back GET-only resources. Public SDK callers
+    can construct and populate the required inline inputs without declaring those
+    GET-only resources as standalone deployments.
 
 These invariants intentionally allow incomplete resource coverage. The
 provisioning generator should first be correct for the resources it produces.

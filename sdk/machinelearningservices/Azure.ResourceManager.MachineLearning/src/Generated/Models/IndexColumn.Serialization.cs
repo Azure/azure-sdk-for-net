@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(IndexColumn)} does not support writing '{format}' format.");
             }
-            if (_columnNameIsDefined || Optional.IsDefined(ColumnName))
+            if (Optional.IsDefined(ColumnName, _columnNameIsDefined))
             {
                 if (ColumnName != null)
                 {

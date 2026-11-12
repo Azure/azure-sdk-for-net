@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (_versionIsDefined || Optional.IsDefined(Version))
+            if (Optional.IsDefined(Version, _versionIsDefined))
             {
                 if (Version != null)
                 {

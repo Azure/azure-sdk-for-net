@@ -29,9 +29,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
             Collection = ResourceGroup.GetRedisEnterpriseClusters();
         }
 
-        [Test]
-        // [Ignore("Tested in dog food environment and its working with record and playback mode. But disabling this for now as test framework does not seems to support dog food officialy. Will activate this test at the time of GA release.")]
-        public async Task AuthenticationTestAccessPolicyAssingment()
+        // Preserve the existing default-policy recording name.
+        [TestCase(false, TestName = "AuthenticationTestAccessPolicyAssingment")]
+        [TestCase(true, TestName = "AccessPolicyAssignmentLifecycleWithCustomAccessString")]
+        public async Task AccessPolicyAssignmentLifecycle(bool useCustomAccessString)
         {
             await SetCollectionsAsync();
 
@@ -82,35 +83,73 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
             Assert.AreEqual(RedisEnterpriseClusteringPolicy.OssCluster, databaseResponse.Data.ClusteringPolicy);
             Assert.AreEqual(RedisEnterpriseEvictionPolicy.NoEviction, databaseResponse.Data.EvictionPolicy);
 
-            // Create custom access policy assignment
             AccessPolicyAssignmentCollection accessPolicyAssignmentCollection = databaseResponse.GetAccessPolicyAssignments();
             string accessPolicyAssignmentName = "accessPolicyAssignmentName1";
             AccessPolicyAssignmentData accessPolicyAssignmentData = new AccessPolicyAssignmentData()
             {
-                AccessString = "+@read ~cache:*",
                 UserObjectId = new Guid("5eb3eb10-a8a2-4db7-8bb4-e377180f7427"),
             };
+            string expectedAccessString = useCustomAccessString ? "+@read ~cache:*" : "+@all ~*";
+            if (useCustomAccessString)
+            {
+                accessPolicyAssignmentData.AccessString = expectedAccessString;
+            }
+            else
+            {
+                accessPolicyAssignmentData.AccessPolicyName = "default";
+            }
             var accessPolicyAssignment = (await accessPolicyAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, accessPolicyAssignmentName, accessPolicyAssignmentData)).Value;
             Assert.AreEqual("default", accessPolicyAssignment.Data.AccessPolicyName);
-            Assert.AreEqual("+@read ~cache:*", accessPolicyAssignment.Data.AccessString);
+            Assert.AreEqual(expectedAccessString, accessPolicyAssignment.Data.AccessString);
+            Assert.AreEqual(RedisEnterpriseProvisioningStatus.Succeeded, accessPolicyAssignment.Data.ProvisioningState);
             Assert.IsNull(accessPolicyAssignment.Data.ProvisioningError);
             Assert.AreEqual(new Guid("5eb3eb10-a8a2-4db7-8bb4-e377180f7427"), accessPolicyAssignment.Data.UserObjectId);
             Assert.AreEqual("accessPolicyAssignmentName1", accessPolicyAssignment.Data.Name);
 
-            accessPolicyAssignmentData.AccessString = "+get +mget ~cache:*";
-            accessPolicyAssignment = (await accessPolicyAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, accessPolicyAssignmentName, accessPolicyAssignmentData)).Value;
-            Assert.AreEqual("+get +mget ~cache:*", accessPolicyAssignment.Data.AccessString);
-            Assert.IsNull(accessPolicyAssignment.Data.ProvisioningError);
+            if (useCustomAccessString)
+            {
+                expectedAccessString = "+get +mget ~cache:*";
+                accessPolicyAssignmentData.AccessString = expectedAccessString;
+                accessPolicyAssignment = (await accessPolicyAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, accessPolicyAssignmentName, accessPolicyAssignmentData)).Value;
+                Assert.AreEqual(expectedAccessString, accessPolicyAssignment.Data.AccessString);
+                Assert.AreEqual(accessPolicyAssignmentData.UserObjectId, accessPolicyAssignment.Data.UserObjectId);
+                Assert.AreEqual(RedisEnterpriseProvisioningStatus.Succeeded, accessPolicyAssignment.Data.ProvisioningState);
+                Assert.IsNull(accessPolicyAssignment.Data.ProvisioningError);
+            }
 
             accessPolicyAssignment = await accessPolicyAssignment.GetAsync();
-            Assert.AreEqual("+get +mget ~cache:*", accessPolicyAssignment.Data.AccessString);
+            Assert.AreEqual("default", accessPolicyAssignment.Data.AccessPolicyName);
+            Assert.AreEqual(expectedAccessString, accessPolicyAssignment.Data.AccessString);
+            Assert.AreEqual(RedisEnterpriseProvisioningStatus.Succeeded, accessPolicyAssignment.Data.ProvisioningState);
             Assert.IsNull(accessPolicyAssignment.Data.ProvisioningError);
+            Assert.AreEqual(new Guid("5eb3eb10-a8a2-4db7-8bb4-e377180f7427"), accessPolicyAssignment.Data.UserObjectId);
 
             // List access policy assignments
             var accessPolicyAssignmentList = await accessPolicyAssignmentCollection.GetAllAsync().ToEnumerableAsync();
             Assert.AreEqual(1, accessPolicyAssignmentList.Count);
-            Assert.AreEqual("+get +mget ~cache:*", accessPolicyAssignmentList[0].Data.AccessString);
+            Assert.AreEqual("default", accessPolicyAssignmentList[0].Data.AccessPolicyName);
+            Assert.AreEqual(expectedAccessString, accessPolicyAssignmentList[0].Data.AccessString);
+            Assert.AreEqual(RedisEnterpriseProvisioningStatus.Succeeded, accessPolicyAssignmentList[0].Data.ProvisioningState);
             Assert.IsNull(accessPolicyAssignmentList[0].Data.ProvisioningError);
+            Assert.AreEqual(new Guid("5eb3eb10-a8a2-4db7-8bb4-e377180f7427"), accessPolicyAssignmentList[0].Data.UserObjectId);
+
+            if (useCustomAccessString)
+            {
+                // A fresh PUT without accessString resets the ACL; it is not a partial update.
+                var resetData = new AccessPolicyAssignmentData
+                {
+                    AccessPolicyName = "default",
+                    UserObjectId = accessPolicyAssignmentData.UserObjectId
+                };
+                accessPolicyAssignment = (await accessPolicyAssignmentCollection.CreateOrUpdateAsync(WaitUntil.Completed, accessPolicyAssignmentName, resetData)).Value;
+                Assert.AreEqual("+@all ~*", accessPolicyAssignment.Data.AccessString);
+                accessPolicyAssignment = await accessPolicyAssignment.GetAsync();
+                Assert.AreEqual("default", accessPolicyAssignment.Data.AccessPolicyName);
+                Assert.AreEqual("+@all ~*", accessPolicyAssignment.Data.AccessString);
+                Assert.AreEqual(resetData.UserObjectId, accessPolicyAssignment.Data.UserObjectId);
+                Assert.AreEqual(RedisEnterpriseProvisioningStatus.Succeeded, accessPolicyAssignment.Data.ProvisioningState);
+                Assert.IsNull(accessPolicyAssignment.Data.ProvisioningError);
+            }
 
             // Delete access policy assignment
             await accessPolicyAssignment.DeleteAsync(WaitUntil.Completed);

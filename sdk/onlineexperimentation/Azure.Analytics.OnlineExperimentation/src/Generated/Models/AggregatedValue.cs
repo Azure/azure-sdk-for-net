@@ -17,16 +17,8 @@ namespace Azure.Analytics.OnlineExperimentation
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AggregatedValue"/>. </summary>
-        /// <param name="eventName"> The name of the event. </param>
-        /// <param name="eventProperty"> The key of the event property to aggregate. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="eventName"/> or <paramref name="eventProperty"/> is null. </exception>
-        public AggregatedValue(string eventName, string eventProperty)
+        public AggregatedValue()
         {
-            Argument.AssertNotNull(eventName, nameof(eventName));
-            Argument.AssertNotNull(eventProperty, nameof(eventProperty));
-
-            EventName = eventName;
-            EventProperty = eventProperty;
         }
 
         /// <summary> Initializes a new instance of <see cref="AggregatedValue"/>. </summary>

@@ -17,11 +17,6 @@ namespace Azure.Messaging.WebPubSub.Chat
     /// <summary> Represents a chat topic in a room. </summary>
     public partial class ChatTopic : IJsonModel<ChatTopic>
     {
-        /// <summary> Initializes a new instance of <see cref="ChatTopic"/> for deserialization. </summary>
-        internal ChatTopic()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ChatTopic PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

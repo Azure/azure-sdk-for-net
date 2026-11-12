@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateResetConnectionRequest(Guid subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, RequestContext context)
+        internal HttpMessage CreateResetConnectionVpnLinkConnectionRequest(Guid subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetIkeSasRequest(Guid subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, RequestContext context)
+        internal HttpMessage CreateGetIkeSasVpnLinkConnectionRequest(Guid subscriptionId, string resourceGroupName, string gatewayName, string connectionName, string linkConnectionName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

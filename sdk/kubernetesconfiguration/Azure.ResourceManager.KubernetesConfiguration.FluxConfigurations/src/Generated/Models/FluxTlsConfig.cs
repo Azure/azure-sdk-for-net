@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
         private string _clientCertificate;
-        internal bool _clientCertificateIsDefined;
+        private bool _clientCertificateIsDefined;
         private string _privateKey;
-        internal bool _privateKeyIsDefined;
+        private bool _privateKeyIsDefined;
         private string _caCertificate;
-        internal bool _caCertificateIsDefined;
+        private bool _caCertificateIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="FluxTlsConfig"/>. </summary>
         public FluxTlsConfig()

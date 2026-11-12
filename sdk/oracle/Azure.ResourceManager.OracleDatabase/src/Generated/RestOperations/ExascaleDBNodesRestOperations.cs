@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string exadbVmClusterName, string exascaleDbNodeName, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string exadbVmClusterName, string exascaleDBNodeName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath("/providers/Oracle.Database/exadbVmClusters/", false);
             uri.AppendPath(exadbVmClusterName, true);
             uri.AppendPath("/dbNodes/", false);
-            uri.AppendPath(exascaleDbNodeName, true);
+            uri.AppendPath(exascaleDBNodeName, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.OracleDatabase
             return message;
         }
 
-        internal HttpMessage CreateActionRequest(Guid subscriptionId, string resourceGroupName, string exadbVmClusterName, string exascaleDbNodeName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateActionRequest(Guid subscriptionId, string resourceGroupName, string exadbVmClusterName, string exascaleDBNodeName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.OracleDatabase
             uri.AppendPath("/providers/Oracle.Database/exadbVmClusters/", false);
             uri.AppendPath(exadbVmClusterName, true);
             uri.AppendPath("/dbNodes/", false);
-            uri.AppendPath(exascaleDbNodeName, true);
+            uri.AppendPath(exascaleDBNodeName, true);
             uri.AppendPath("/action", false);
             if (_apiVersion != null)
             {

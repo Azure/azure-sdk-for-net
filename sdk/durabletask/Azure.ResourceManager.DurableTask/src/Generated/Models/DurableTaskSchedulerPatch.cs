@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.ResourceManager.DurableTask;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DurableTask.Models
 {
@@ -26,11 +27,13 @@ namespace Azure.ResourceManager.DurableTask.Models
         /// <summary> Initializes a new instance of <see cref="DurableTaskSchedulerPatch"/>. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DurableTaskSchedulerPatch(DurableTaskSchedulerPatchProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DurableTaskSchedulerPatch(DurableTaskSchedulerPatchProperties properties, IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Tags = tags;
+            Identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,5 +42,8 @@ namespace Azure.ResourceManager.DurableTask.Models
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

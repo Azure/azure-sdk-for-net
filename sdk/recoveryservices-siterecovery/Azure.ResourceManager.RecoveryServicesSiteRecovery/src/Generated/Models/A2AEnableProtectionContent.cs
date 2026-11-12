@@ -51,7 +51,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryCapacityReservationGroupId"> The recovery capacity reservation group Id. </param>
         /// <param name="platformFaultDomain"> the platform fault domain. </param>
         /// <param name="autoProtectionOfDataDisk"> A value indicating whether the auto protection is enabled. </param>
-        internal A2AEnableProtectionContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier fabricObjectId, ResourceIdentifier recoveryContainerId, ResourceIdentifier recoveryResourceGroupId, string recoveryCloudServiceId, ResourceIdentifier recoveryAvailabilitySetId, ResourceIdentifier recoveryProximityPlacementGroupId, IList<A2AVmDiskDetails> vmDisks, IList<A2AVmManagedDiskDetails> vmManagedDisks, string multiVmGroupName, string multiVmGroupId, ResourceIdentifier protectionClusterId, ResourceIdentifier recoveryBootDiagStorageAccountId, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo, string recoveryAvailabilityZone, SiteRecoveryExtendedLocation recoveryExtendedLocation, ResourceIdentifier recoveryAzureNetworkId, string recoverySubnetName, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId, int? platformFaultDomain, AutoProtectionOfDataDisk? autoProtectionOfDataDisk) : base(instanceType, additionalBinaryDataProperties)
+        /// <param name="recoveryConfidentialDataDiskEncryptionIdentity"> The Azure resource ID of the confidential data disk encryption user-assigned identity. Applicable to CMK confidential VM data disks. </param>
+        internal A2AEnableProtectionContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier fabricObjectId, ResourceIdentifier recoveryContainerId, ResourceIdentifier recoveryResourceGroupId, string recoveryCloudServiceId, ResourceIdentifier recoveryAvailabilitySetId, ResourceIdentifier recoveryProximityPlacementGroupId, IList<A2AVmDiskDetails> vmDisks, IList<A2AVmManagedDiskDetails> vmManagedDisks, string multiVmGroupName, string multiVmGroupId, ResourceIdentifier protectionClusterId, ResourceIdentifier recoveryBootDiagStorageAccountId, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo, string recoveryAvailabilityZone, SiteRecoveryExtendedLocation recoveryExtendedLocation, ResourceIdentifier recoveryAzureNetworkId, string recoverySubnetName, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId, int? platformFaultDomain, AutoProtectionOfDataDisk? autoProtectionOfDataDisk, ResourceIdentifier recoveryConfidentialDataDiskEncryptionIdentity) : base(instanceType, additionalBinaryDataProperties)
         {
             FabricObjectId = fabricObjectId;
             RecoveryContainerId = recoveryContainerId;
@@ -74,6 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecoveryCapacityReservationGroupId = recoveryCapacityReservationGroupId;
             PlatformFaultDomain = platformFaultDomain;
             AutoProtectionOfDataDisk = autoProtectionOfDataDisk;
+            RecoveryConfidentialDataDiskEncryptionIdentity = recoveryConfidentialDataDiskEncryptionIdentity;
         }
 
         /// <summary> The fabric specific object Id of the virtual machine. </summary>
@@ -138,5 +140,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> A value indicating whether the auto protection is enabled. </summary>
         public AutoProtectionOfDataDisk? AutoProtectionOfDataDisk { get; set; }
+
+        /// <summary> The Azure resource ID of the confidential data disk encryption user-assigned identity. Applicable to CMK confidential VM data disks. </summary>
+        public ResourceIdentifier RecoveryConfidentialDataDiskEncryptionIdentity { get; set; }
     }
 }

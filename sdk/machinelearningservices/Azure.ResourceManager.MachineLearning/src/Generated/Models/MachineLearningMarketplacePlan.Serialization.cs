@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(MachineLearningMarketplacePlan)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && (_offerIdIsDefined || Optional.IsDefined(OfferId)))
+            if (options.Format != "W" && Optional.IsDefined(OfferId, _offerIdIsDefined))
             {
                 if (OfferId != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("offerId"u8);
                 }
             }
-            if (options.Format != "W" && (_planIdIsDefined || Optional.IsDefined(PlanId)))
+            if (options.Format != "W" && Optional.IsDefined(PlanId, _planIdIsDefined))
             {
                 if (PlanId != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("planId"u8);
                 }
             }
-            if (options.Format != "W" && (_publisherIdIsDefined || Optional.IsDefined(PublisherId)))
+            if (options.Format != "W" && Optional.IsDefined(PublisherId, _publisherIdIsDefined))
             {
                 if (PublisherId != null)
                 {

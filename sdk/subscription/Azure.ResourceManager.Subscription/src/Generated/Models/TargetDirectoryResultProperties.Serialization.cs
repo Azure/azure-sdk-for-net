@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && (_acceptedOnIsDefined || Optional.IsDefined(AcceptedOn)))
+            if (options.Format != "W" && Optional.IsDefined(AcceptedOn, _acceptedOnIsDefined))
             {
                 if (AcceptedOn != null)
                 {

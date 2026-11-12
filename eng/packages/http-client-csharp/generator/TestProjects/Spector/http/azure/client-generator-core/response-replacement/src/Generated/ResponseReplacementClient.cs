@@ -31,16 +31,16 @@ namespace Specs.Azure.ClientGenerator.Core.ResponseReplacement
 
         public virtual Task<Response> VoidResponseAsync(RequestContext context) => throw null;
 
-        public virtual Response<Widget> VoidResponse(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response VoidResponse(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Widget>> VoidResponseAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> VoidResponseAsync(CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response BytesResponse(RequestContext context) => throw null;
 
         public virtual Task<Response> BytesResponseAsync(RequestContext context) => throw null;
 
-        public virtual Response<Widget> BytesResponse(CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<BinaryData> BytesResponse(CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Widget>> BytesResponseAsync(CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response<BinaryData>> BytesResponseAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

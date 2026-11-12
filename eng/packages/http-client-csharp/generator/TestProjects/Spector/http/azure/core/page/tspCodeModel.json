@@ -1388,7 +1388,6 @@
             "$id": "97",
             "name": "listWithPage",
             "isExactName": false,
-            "resourceName": "Page",
             "doc": "List with Azure.Core.Page<>.",
             "accessibility": "public",
             "parameters": [
@@ -1570,7 +1569,6 @@
             "$id": "107",
             "name": "listWithParameters",
             "isExactName": false,
-            "resourceName": "Page",
             "doc": "List with extensible enum parameter Azure.Core.Page<>.",
             "accessibility": "public",
             "parameters": [
@@ -1860,7 +1858,6 @@
             "$id": "120",
             "name": "listWithCustomPageModel",
             "isExactName": false,
-            "resourceName": "Page",
             "doc": "List with custom page model.",
             "accessibility": "public",
             "parameters": [
@@ -2013,7 +2010,6 @@
             "$id": "127",
             "name": "withParameterizedNextLink",
             "isExactName": false,
-            "resourceName": "Page",
             "doc": "List with parameterized next link that re-injects parameters.",
             "accessibility": "public",
             "parameters": [
@@ -2231,7 +2227,6 @@
             "$id": "139",
             "name": "withRelativeNextLink",
             "isExactName": false,
-            "resourceName": "Page",
             "doc": "List with relative nextLink URL that requires endpoint resolution.",
             "accessibility": "public",
             "parameters": [
@@ -2399,7 +2394,6 @@
                 "$id": "147",
                 "name": "listFirstItem",
                 "isExactName": false,
-                "resourceName": "TwoModelsAsPageItem",
                 "doc": "Two operations with two different page item types should be successfully generated. Should generate model for FirstItem.",
                 "accessibility": "public",
                 "parameters": [
@@ -2552,7 +2546,6 @@
                 "$id": "154",
                 "name": "listSecondItem",
                 "isExactName": false,
-                "resourceName": "TwoModelsAsPageItem",
                 "doc": "Two operations with two different page item types should be successfully generated. Should generate model for SecondItem.",
                 "accessibility": "public",
                 "parameters": [
