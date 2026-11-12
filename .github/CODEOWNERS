@@ -673,7 +673,7 @@
 /sdk/certificateregistration/Azure.ResourceManager.*/              @antcp @AzureAppServiceCLI
 
 # PRLabel: %Communication - Resource Manager
-/sdk/communication/Azure.ResourceManager.Communication/            @anmolbohra97
+/sdk/communication/Azure.ResourceManager.Communication/            @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Compute - Fleet
 /sdk/computefleet/Azure.ResourceManager.*/                         @diyellap @sabanermsft
@@ -688,10 +688,10 @@
 # ServiceOwners:                                                   @Azure/azure-sdk-write-acl
 
 # PRLabel: %Container Orchestrator Runtime
-/sdk/containerorchestratorruntime/Azure.ResourceManager.*/         @HE-Xinyu
+/sdk/containerorchestratorruntime/Azure.ResourceManager.*/         @ArthurMa1978
 
 # ServiceLabel: %Container Orchestrator Runtime %Mgmt
-# ServiceOwners:                                                   @HE-Xinyu
+# ServiceOwners:                                                   @ArthurMa1978
 
 # PRLabel: %Database Watcher
 /sdk/databasewatcher/Azure.ResourceManager.*/                      @Renyx1219
