@@ -94,30 +94,69 @@ public class Sample_DatasetEvaluationRule : EvaluationSampleBase
     #endregion
 
     #region Snippet:Sample_WaitForProvisioning_DatasetEvaluationRule_Async
-    private static async Task<EvaluationRule> WaitForProvisioningAsync(AIProjectClient projectClient, string ruleId)
+    private static async Task<EvaluationRule> WaitForProvisioningAsync(
+        AIProjectClient projectClient,
+        string ruleId,
+        CancellationToken cancellationToken = default)
     {
-        EvaluationRule rule = await projectClient.EvaluationRules.GetAsync(ruleId);
-        while (rule.ProvisioningStatus == ScheduleProvisioningStatus.Creating
-            || rule.ProvisioningStatus == ScheduleProvisioningStatus.Updating)
+        TimeSpan timeout = TimeSpan.FromMinutes(5);
+        using CancellationTokenSource timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        timeoutCts.CancelAfter(timeout);
+        string lastStatus = "unknown";
+        try
         {
-            await Task.Delay(TimeSpan.FromSeconds(5));
-            rule = await projectClient.EvaluationRules.GetAsync(ruleId);
+            EvaluationRule rule = await projectClient.EvaluationRules.GetAsync(ruleId, timeoutCts.Token);
+            lastStatus = rule.ProvisioningStatus.ToString();
+            while (rule.ProvisioningStatus == ScheduleProvisioningStatus.Creating
+                || rule.ProvisioningStatus == ScheduleProvisioningStatus.Updating)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(5), timeoutCts.Token);
+                rule = await projectClient.EvaluationRules.GetAsync(ruleId, timeoutCts.Token);
+                lastStatus = rule.ProvisioningStatus.ToString();
+            }
+            return rule;
         }
-        return rule;
+        catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
+        {
+            throw new TimeoutException(
+                $"Evaluation rule '{ruleId}' provisioning timed out after {timeout}. "
+                + $"Last provisioning status: {lastStatus}.");
+        }
     }
     #endregion
 
     #region Snippet:Sample_WaitForProvisioning_DatasetEvaluationRule_Sync
-    private static EvaluationRule WaitForProvisioning(AIProjectClient projectClient, string ruleId)
+    private static EvaluationRule WaitForProvisioning(
+        AIProjectClient projectClient,
+        string ruleId,
+        CancellationToken cancellationToken = default)
     {
-        EvaluationRule rule = projectClient.EvaluationRules.Get(ruleId);
-        while (rule.ProvisioningStatus == ScheduleProvisioningStatus.Creating
-            || rule.ProvisioningStatus == ScheduleProvisioningStatus.Updating)
+        TimeSpan timeout = TimeSpan.FromMinutes(5);
+        using CancellationTokenSource timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        timeoutCts.CancelAfter(timeout);
+        string lastStatus = "unknown";
+        try
         {
-            Thread.Sleep(TimeSpan.FromSeconds(5));
-            rule = projectClient.EvaluationRules.Get(ruleId);
+            EvaluationRule rule = projectClient.EvaluationRules.Get(ruleId, timeoutCts.Token);
+            lastStatus = rule.ProvisioningStatus.ToString();
+            while (rule.ProvisioningStatus == ScheduleProvisioningStatus.Creating
+                || rule.ProvisioningStatus == ScheduleProvisioningStatus.Updating)
+            {
+                if (timeoutCts.Token.WaitHandle.WaitOne(TimeSpan.FromSeconds(5)))
+                {
+                    timeoutCts.Token.ThrowIfCancellationRequested();
+                }
+                rule = projectClient.EvaluationRules.Get(ruleId, timeoutCts.Token);
+                lastStatus = rule.ProvisioningStatus.ToString();
+            }
+            return rule;
         }
-        return rule;
+        catch (OperationCanceledException) when (!cancellationToken.IsCancellationRequested)
+        {
+            throw new TimeoutException(
+                $"Evaluation rule '{ruleId}' provisioning timed out after {timeout}. "
+                + $"Last provisioning status: {lastStatus}.");
+        }
     }
     #endregion
 
