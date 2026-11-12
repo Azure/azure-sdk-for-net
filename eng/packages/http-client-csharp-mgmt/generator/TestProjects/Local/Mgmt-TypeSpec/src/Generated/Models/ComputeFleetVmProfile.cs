@@ -60,12 +60,25 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             }
             set
             {
+                if (value is null && CapacityReservation is null)
+                {
+                    return;
+                }
                 if (CapacityReservation is null)
                 {
                     CapacityReservation = new CapacityReservationProfile();
                 }
                 CapacityReservation.CapacityReservationGroupId = value;
+                if (CapacityReservation.IsCapacityReservationProfileEmptyForFlattening())
+                {
+                    CapacityReservation = null;
+                }
             }
+        }
+
+        internal bool IsComputeFleetVmProfileEmptyForFlattening()
+        {
+            return true && CapacityReservation is null;
         }
     }
 }

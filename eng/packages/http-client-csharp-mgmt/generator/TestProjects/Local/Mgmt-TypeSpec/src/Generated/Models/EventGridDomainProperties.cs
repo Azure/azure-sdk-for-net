@@ -34,5 +34,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Domain endpoint. </summary>
         [WirePath("endpoint")]
         public string Endpoint { get; set; }
+
+        internal bool IsEventGridDomainPropertiesEmptyForFlattening()
+        {
+            return true && Endpoint is null && (_additionalBinaryDataProperties is null || _additionalBinaryDataProperties.Count == 0);
+        }
     }
 }

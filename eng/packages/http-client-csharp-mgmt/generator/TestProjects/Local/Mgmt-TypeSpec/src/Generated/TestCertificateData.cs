@@ -49,7 +49,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             get
             {
-                return Properties.Thumbprint;
+                return Properties is null ? default : Properties.Thumbprint;
             }
         }
     }

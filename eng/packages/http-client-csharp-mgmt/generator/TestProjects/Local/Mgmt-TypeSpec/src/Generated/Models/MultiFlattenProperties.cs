@@ -71,5 +71,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 Inner = new SafeFlattenInner(value);
             }
         }
+
+        internal bool IsMultiFlattenPropertiesEmptyForFlattening()
+        {
+            return true && Channel is null && Inner is null && Disabled is null;
+        }
     }
 }

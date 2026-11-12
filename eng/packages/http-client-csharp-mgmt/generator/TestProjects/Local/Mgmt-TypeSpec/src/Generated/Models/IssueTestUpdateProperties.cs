@@ -39,5 +39,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Property specific to updates. </summary>
         [WirePath("updateOnlyValue")]
         public string UpdateOnlyValue { get; set; }
+
+        internal bool IsIssueTestUpdatePropertiesEmptyForFlattening()
+        {
+            return true && DisplayName is null && NestedConfig is null && Status is null && UpdateOnlyValue is null && (_additionalBinaryDataProperties is null || _additionalBinaryDataProperties.Count == 0);
+        }
     }
 }

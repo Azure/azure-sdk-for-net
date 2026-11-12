@@ -10,11 +10,30 @@ using System;
 using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 using Microsoft.TypeSpec.Generator.Input;
+using Azure.Generator.Management.Models;
 
 namespace Azure.Generator.Management.Utilities;
 
 internal static class InputClientExtensions
 {
+    internal static ResourceTypePattern GetApiVersionResourceType(ArmResourceMetadata resource, InputServiceMethod method)
+    {
+        // A list can be exposed on its parent resource while targeting a distinct child type.
+        var resourceMethod = resource.Methods.First(m => ReferenceEquals(m.InputMethod, method));
+        return IsChildListRoute(resource, resourceMethod)
+            ? resourceMethod.OperationPath.ResourceType
+            : resource.ResourceType;
+    }
+
+    internal static bool IsChildListRoute(ArmResourceMetadata resource, ResourceMethod method)
+        => resource.ResourceIdPattern.IsAncestorOf(method.OperationPath)
+            && (method.Kind == ResourceOperationKind.List
+                // Lists of polymorphic singleton children are classified as parent actions.
+                || method.Kind == ResourceOperationKind.Action
+                    && method.InputMethod is InputPagingServiceMethod
+                    && method.InputMethod.Operation.HttpMethod == "GET"
+                    && method.OperationPath.Count == resource.ResourceIdPattern.Count + 1);
+
     /// <summary>
     /// Builds a resolver for explicit resource-type overrides. Keeping this separate from the
     /// client version allows requests in a shared REST client to retain different wire defaults.
@@ -59,7 +78,10 @@ internal static class InputClientExtensions
         /// </summary>
         internal bool NeedsOperationApiVersion => inputClient.HasOperationApiVersionDefaults
             || ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas.Any(resource =>
-                resource.CategorizeMethods().MethodsInExtension.Any(method => ReferenceEquals(method.InputClient, inputClient)));
+                resource.CategorizeMethods().MethodsInExtension.Any(method => ReferenceEquals(method.InputClient, inputClient))
+                || resource.Methods.Any(method => ReferenceEquals(method.InputClient, inputClient)
+                    && IsChildListRoute(resource, method)
+                    && !GetApiVersionResourceType(resource, method.InputMethod).Equals(resource.ResourceType)));
 
         /// <summary>
         /// A single fixed resource key and common wire default can be resolved by the caller
@@ -103,12 +125,12 @@ internal static class InputClientExtensions
                     var resources = ManagementClientGenerator.Instance.InputLibrary.ResourceMetadatas
                         .Where(resource => resource.Methods.Any(resourceMethod => ReferenceEquals(resourceMethod.InputMethod, method)))
                         .ToArray();
-                    if (resources.Length == 0 || resources.Any(resource => !resource.ResourceType.All(segment => segment.IsConstant)))
+                    if (resources.Length == 0 || resources.Any(resource => !GetApiVersionResourceType(resource, method).All(segment => segment.IsConstant)))
                     {
                         return null;
                     }
-                    string resourceType = resources[0].ResourceType.SerializedResourceType;
-                    if (resources.Any(resource => resource.ResourceType.SerializedResourceType != resourceType))
+                    string resourceType = GetApiVersionResourceType(resources[0], method).SerializedResourceType;
+                    if (resources.Any(resource => GetApiVersionResourceType(resource, method).SerializedResourceType != resourceType))
                     {
                         return null;
                     }

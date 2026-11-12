@@ -32,5 +32,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         internal PropertyOverrideCreateProperties(string baseOnlyProperty, string overridableProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(baseOnlyProperty, overridableProperty, additionalBinaryDataProperties)
         {
         }
+
+        internal bool IsPropertyOverrideCreatePropertiesEmptyForFlattening()
+        {
+            return true && BaseOnlyProperty is null && OverridableProperty is null && (_additionalBinaryDataProperties is null || _additionalBinaryDataProperties.Count == 0);
+        }
     }
 }

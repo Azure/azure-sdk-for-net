@@ -40,5 +40,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <summary> Inner flag that gets flattened. </summary>
         [WirePath("innerFlag")]
         public bool? InnerFlag { get; set; }
+
+        internal bool IsIssueTestNestedConfigEmptyForFlattening()
+        {
+            return true && InnerValue is null && InnerFlag is null && (_additionalBinaryDataProperties is null || _additionalBinaryDataProperties.Count == 0);
+        }
     }
 }

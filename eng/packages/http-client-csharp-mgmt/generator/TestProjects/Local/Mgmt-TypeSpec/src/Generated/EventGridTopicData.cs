@@ -54,11 +54,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
             set
             {
+                if (value is null && Properties is null)
+                {
+                    return;
+                }
                 if (Properties is null)
                 {
                     Properties = new EventGridTopicProperties();
                 }
                 Properties.Endpoint = value;
+                if (Properties.IsEventGridTopicPropertiesEmptyForFlattening())
+                {
+                    Properties = null;
+                }
             }
         }
     }

@@ -29,6 +29,106 @@ namespace Azure.Generator.Mgmt.Tests
 {
     internal class FlattenedCompatibilityTests
     {
+        [Test]
+        public void OptionalScalarWrapperIsOmittedAfterClearingItsLastLeaf([Values] bool withSibling)
+        {
+            var managementType = InputFactory.StringEnum("MaintenanceManagementType", [("System", "System")],
+                isExtensible: true, clientNamespace: "Samples.Models");
+            var properties = new List<InputModelProperty>
+            {
+                InputFactory.Property("maintenanceManagementType", managementType)
+            };
+            if (withSibling)
+            {
+                properties.Add(InputFactory.Property("description", InputPrimitiveType.String));
+            }
+            var inner = InputFactory.Model("ScheduledMaintenanceProperties", properties: properties);
+            var wrapper = InputFactory.Property("scheduledMaintenance", inner);
+            Flatten(wrapper);
+            var input = InputFactory.Model("PoolPatch", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, inner],
+                inputEnums: () => [managementType]);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Assert.That(new TypeProviderWriter(model).Write().Content,
+                Does.Contain("value) is null").And.Contain("IsScheduledMaintenancePropertiesEmptyForFlattening()"));
+
+            var assembly = Compile(plugin.Object);
+            var type = assembly.GetType("Samples.Models.PoolPatch")!;
+            var leaf = type.GetProperty("MaintenanceManagementType")!;
+            var wrapperProperty = type.GetProperty("ScheduledMaintenance", BindingFlags.Instance | BindingFlags.NonPublic)!;
+            var instance = Activator.CreateInstance(type)!;
+            leaf.SetValue(instance, null);
+            Assert.That(wrapperProperty.GetValue(instance), Is.Null);
+            AssertWrapperAbsent(instance);
+
+            var value = Activator.CreateInstance(assembly.GetType("Samples.Models.MaintenanceManagementType")!, ["System"]);
+            leaf.SetValue(instance, value);
+            Assert.That(wrapperProperty.GetValue(instance), Is.Not.Null);
+            leaf.SetValue(instance, null);
+            Assert.That(wrapperProperty.GetValue(instance), Is.Null);
+            AssertWrapperAbsent(instance);
+
+            if (withSibling)
+            {
+                type.GetProperty("Description")!.SetValue(instance, "retain me");
+                var existing = wrapperProperty.GetValue(instance);
+                leaf.SetValue(instance, value);
+                leaf.SetValue(instance, null);
+                Assert.That(wrapperProperty.GetValue(instance), Is.SameAs(existing));
+                using var json = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("J")));
+                Assert.That(json.RootElement.GetProperty("scheduledMaintenance").GetProperty("description").GetString(),
+                    Is.EqualTo("retain me"));
+                type.GetProperty("Description")!.SetValue(instance, null);
+                AssertWrapperAbsent(instance);
+            }
+
+            var options = new ModelReaderWriterOptions("J");
+            var unknown = ModelReaderWriter.Read(new BinaryData(
+                """{"scheduledMaintenance":{"maintenanceManagementType":"System","futureSetting":42}}"""), type, options)!;
+            leaf.SetValue(unknown, null);
+            using var unknownJson = JsonDocument.Parse(ModelReaderWriter.Write(unknown, options));
+            Assert.That(unknownJson.RootElement.GetProperty("scheduledMaintenance").GetProperty("futureSetting").GetInt32(),
+                Is.EqualTo(42), "Clearing a known leaf must preserve unknown wrapper data.");
+
+            static void AssertWrapperAbsent(object instance)
+            {
+                using var json = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("W")));
+                Assert.That(json.RootElement.TryGetProperty("scheduledMaintenance", out _), Is.False);
+            }
+        }
+
+        [Test]
+        public void RequiredReadOnlyScalarWrapperGetterToleratesDefaultConstruction()
+        {
+            var resourceId = InputFactory.Primitive.String("armResourceIdentifier", "Azure.Core.armResourceIdentifier");
+            var inner = InputFactory.Model("ReadWritePoolProperties", usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("designatedPoolResourceId", resourceId)]);
+            var wrapper = InputFactory.Property("readWritePool", inner, isRequired: true, isReadOnly: true);
+            Flatten(wrapper);
+            var input = InputFactory.Model("ClusterData", properties: [wrapper]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, inner],
+                configurationJson: """{"package-name":"Samples"}""");
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            var rendered = new TypeProviderWriter(model).Write().Content;
+            Assert.That(rendered, Does.Contain("ReadWritePool is null"));
+            var assembly = Compile(plugin.Object, includeFactory: true);
+            var type = assembly.GetType("Samples.Models.ClusterData")!;
+            var leaf = type.GetProperty("DesignatedPoolResourceId")!;
+            Assert.That(leaf.GetValue(Activator.CreateInstance(type)), Is.Null);
+
+            var factory = assembly.GetType("Samples.SamplesModelFactory")!.GetMethods()
+                .Single(m => m.Name == "ClusterData");
+            var mocked = factory.Invoke(null, factory.GetParameters().Select(p => p.DefaultValue).ToArray());
+            Assert.That(leaf.GetValue(mocked), Is.Null);
+            var deserialized = ModelReaderWriter.Read(new BinaryData(
+                """{"readWritePool":{"designatedPoolResourceId":"/subscriptions/sub/resourceGroups/rg/providers/Test/pools/a"}}"""),
+                type, new ModelReaderWriterOptions("J"))!;
+            Assert.That(leaf.GetValue(deserialized)?.ToString(),
+                Is.EqualTo("/subscriptions/sub/resourceGroups/rg/providers/Test/pools/a"));
+        }
+
         // Regression for #63717: a required, getter-only outer wrapper must not
         // hide the mutable collection exposed by the inner model's lazy getter.
         [Test]
@@ -274,7 +374,14 @@ namespace Azure.Generator.Mgmt.Tests
                 leaf.SetValue(instance, null);
                 Assert.That(leaf.GetValue(instance), Is.Null);
                 using var cleared = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("W")));
-                Assert.That(cleared.RootElement.GetProperty("capacity").TryGetProperty("size", out _), Is.False);
+                if (wrapperRequired)
+                {
+                    Assert.That(cleared.RootElement.GetProperty("capacity").TryGetProperty("size", out _), Is.False);
+                }
+                else
+                {
+                    Assert.That(cleared.RootElement.TryGetProperty("capacity", out _), Is.False);
+                }
             }
             else if (previouslyNullable)
             {
