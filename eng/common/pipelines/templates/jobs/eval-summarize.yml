@@ -11,6 +11,9 @@ parameters:
   - name: publishDashboardResults
     type: boolean
     default: false
+  - name: allowFeatureBranchPublishing
+    type: boolean
+    default: false
 
 jobs:
   - job: Summarize
@@ -76,6 +79,7 @@ jobs:
         - template: ../steps/eval-publish-results.yml
           parameters:
             publishDashboardResults: ${{ parameters.publishDashboardResults }}
+            allowFeatureBranchPublishing: ${{ parameters.allowFeatureBranchPublishing }}
 
       # Completed failing evals are useful data: publish BEFORE the evaluation gate.
       - task: PublishTestResults@2

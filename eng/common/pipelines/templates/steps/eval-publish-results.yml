@@ -3,6 +3,9 @@ parameters:
   - name: publishDashboardResults
     type: boolean
     default: false
+  - name: allowFeatureBranchPublishing
+    type: boolean
+    default: false
 
 steps:
   - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
@@ -37,11 +40,11 @@ steps:
     condition: and(succeeded(), eq(variables['EvalSummaryComplete'], 'true'))
 
   # Pipeline-owned account configuration is a runtime value, not a template parameter.
-  # Missing configuration skips the task; PRs/foreign repos/non-main never get this task.
-  - ${{ if and(parameters.publishDashboardResults, eq(variables['System.CollectionUri'], 'https://dev.azure.com/azure-sdk/'), eq(variables['System.TeamProject'], 'internal'), startsWith(variables['Build.Repository.Name'], 'Azure/'), not(endsWith(variables['Build.Repository.Name'], '-pr')), eq(variables['Build.SourceBranch'], 'refs/heads/main'), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Schedule', 'Manual')) }}:
+  # Feature branches require an explicit manual test opt-in; PRs and forks remain excluded.
+  - ${{ if and(parameters.publishDashboardResults, eq(variables['System.CollectionUri'], 'https://dev.azure.com/azure-sdk/'), eq(variables['System.TeamProject'], 'internal'), startsWith(variables['Build.Repository.Name'], 'Azure/'), not(endsWith(variables['Build.Repository.Name'], '-pr')), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Schedule', 'Manual'), or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), and(parameters.allowFeatureBranchPublishing, eq(variables['Build.Reason'], 'Manual'), startsWith(variables['Build.SourceBranch'], 'refs/heads/'), ne(variables['Build.SourceBranch'], 'refs/heads/')))) }}:
     - task: AzureCLI@2
       displayName: 'Publish saved build bundle directly to Blob'
-      condition: and(succeeded(), eq(variables['EvalSummaryComplete'], 'true'), ne(variables['EvalStorageAccountName'], ''), eq(variables['System.CollectionUri'], 'https://dev.azure.com/azure-sdk/'), eq(variables['System.TeamProject'], 'internal'), startsWith(variables['Build.Repository.Name'], 'Azure/'), not(endsWith(variables['Build.Repository.Name'], '-pr')), eq(variables['Build.SourceBranch'], 'refs/heads/main'), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Schedule', 'Manual'))
+      condition: and(succeeded(), eq(variables['EvalSummaryComplete'], 'true'), ne(variables['EvalStorageAccountName'], ''), eq(variables['System.CollectionUri'], 'https://dev.azure.com/azure-sdk/'), eq(variables['System.TeamProject'], 'internal'), startsWith(variables['Build.Repository.Name'], 'Azure/'), not(endsWith(variables['Build.Repository.Name'], '-pr')), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Schedule', 'Manual'), or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), and(eq('${{ parameters.allowFeatureBranchPublishing }}', 'true'), eq(variables['Build.Reason'], 'Manual'), startsWith(variables['Build.SourceBranch'], 'refs/heads/'), ne(variables['Build.SourceBranch'], 'refs/heads/'))))
       timeoutInMinutes: 20
       env:
         EVAL_STORAGE_ACCOUNT_NAME: $(EvalStorageAccountName)

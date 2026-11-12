@@ -69,6 +69,9 @@ parameters:
   - name: publishDashboardResults
     type: boolean
     default: false
+  - name: allowFeatureBranchPublishing
+    type: boolean
+    default: false
 
 extends:
   # 1es-redirect picks Official (internal) vs Unofficial; its Use1ESOfficial defaults true.
@@ -76,7 +79,7 @@ extends:
   parameters:
     # The checkbox controls compile-time egress; the account variable gates upload at runtime.
     # Keep trust policy in YAML, without hardcoding DevOps definition IDs in shared code.
-    ${{ if and(parameters.publishDashboardResults, eq(variables['System.CollectionUri'], 'https://dev.azure.com/azure-sdk/'), eq(variables['System.TeamProject'], 'internal'), startsWith(variables['Build.Repository.Name'], 'Azure/'), not(endsWith(variables['Build.Repository.Name'], '-pr')), eq(variables['Build.SourceBranch'], 'refs/heads/main'), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Schedule', 'Manual')) }}:
+    ${{ if and(parameters.publishDashboardResults, eq(variables['System.CollectionUri'], 'https://dev.azure.com/azure-sdk/'), eq(variables['System.TeamProject'], 'internal'), startsWith(variables['Build.Repository.Name'], 'Azure/'), not(endsWith(variables['Build.Repository.Name'], '-pr')), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Schedule', 'Manual'), or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), and(parameters.allowFeatureBranchPublishing, eq(variables['Build.Reason'], 'Manual'), startsWith(variables['Build.SourceBranch'], 'refs/heads/'), ne(variables['Build.SourceBranch'], 'refs/heads/')))) }}:
       AllowAzureStorage: true
     stages:
       - stage: Prepare
@@ -117,3 +120,4 @@ extends:
               failOnFailedTests: ${{ parameters.failOnFailedTests }}
               createDashboardBundle: ${{ parameters.createDashboardBundle }}
               publishDashboardResults: ${{ parameters.publishDashboardResults }}
+              allowFeatureBranchPublishing: ${{ parameters.allowFeatureBranchPublishing }}

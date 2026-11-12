@@ -357,9 +357,10 @@ test("one checkbox gates trusted-run egress; owner configuration additionally ga
     assert.ok(networkGate); assert.equal(networkGate, uploadGate);
     assert.doesNotMatch(networkGate, /System.DefinitionId|EvalStorageAccountName/);
     const runtime = steps.match(/      condition: (and\(.+\))/)?.[1]; assert.ok(runtime);
-    const evaluate = (expression, variables, enabled = true, succeeds = true) => runInNewContext(expression.replace(/\bin\(/g, "oneOf("), {
-        variables, parameters: { publishDashboardResults: enabled }, succeeded: () => succeeds,
+    const evaluate = (expression, variables, enabled = true, succeeds = true, featurePublishing = false) => runInNewContext(expression.replace(/\bin\(/g, "oneOf(").replace(/\$\{\{ parameters\.allowFeatureBranchPublishing \}\}/g, String(featurePublishing)), {
+        variables, parameters: { publishDashboardResults: enabled, allowFeatureBranchPublishing: featurePublishing }, succeeded: () => succeeds,
         and: (...values) => values.every(Boolean), eq: (a, b) => String(a ?? "").toLowerCase() === String(b ?? "").toLowerCase(),
+        or: (...values) => values.some(Boolean),
         not: value => !value,
         startsWith: (value, prefix) => String(value ?? "").toLowerCase().startsWith(String(prefix).toLowerCase()),
         endsWith: (value, suffix) => String(value ?? "").toLowerCase().endsWith(String(suffix).toLowerCase()),
@@ -388,6 +389,27 @@ test("one checkbox gates trusted-run egress; owner configuration additionally ga
             assert.equal(evaluate(networkGate, variables), false); assert.equal(evaluate(runtime, variables), false);
         }
     }
+    const feature = { ...base, "Build.Repository.Name": "Azure/azure-rest-api-specs", "Build.SourceBranch": "refs/heads/feature-test" };
+    assert.equal(evaluate(networkGate, feature), false);
+    assert.equal(evaluate(runtime, feature), false);
+    assert.equal(evaluate(networkGate, feature, true, true, true), true);
+    assert.equal(evaluate(runtime, feature, true, true, true), true);
+    assert.equal(evaluate(networkGate, feature, false, true, true), false);
+    assert.equal(evaluate(runtime, feature, true, false, true), false);
+    for (const [key, value] of [
+        ["Build.Reason", "Schedule"], ["Build.Reason", "IndividualCI"], ["Build.Reason", "BatchedCI"],
+        ["Build.Reason", "PullRequest"], ["Build.Reason", "ResourceTrigger"],
+        ["Build.Repository.Name", "example-org/azure-rest-api-specs"], ["Build.Repository.Name", "Azure/azure-rest-api-specs-pr"],
+        ["System.TeamProject", "public"], ["System.CollectionUri", "https://dev.azure.com/other/"],
+        ...["refs/pull/1/merge", "refs/tags/main", "refs/heads/", ""].map(branch => ["Build.SourceBranch", branch]),
+    ]) {
+        const variables = { ...feature, [key]: value };
+        assert.equal(evaluate(networkGate, variables, true, true, true), false, `${key}: ${value}`);
+        assert.equal(evaluate(runtime, variables, true, true, true), false, `${key}: ${value}`);
+    }
+    for (const [key, value] of [["EvalSummaryComplete", "false"], ["EvalSummaryComplete", ""], ["EvalStorageAccountName", ""]]) {
+        assert.equal(evaluate(runtime, { ...feature, [key]: value }, true, true, true), false);
+    }
     for (const id of ["8255", "9999"]) assert.equal(evaluate(networkGate, { ...base, "System.DefinitionId": id }), true, "Definition IDs are archive identity, not shared policy");
 });
 
@@ -395,6 +417,7 @@ test("shared publication defaults stay off", async () => {
     const root = resolve(import.meta.dirname, "../../../..");
     for (const path of ["templates/steps/eval-publish-results.yml", "templates/jobs/eval-summarize.yml", "templates/stages/archetype-eval.yml"]) {
         assert.match(await readFile(join(root, "pipelines", path), "utf8"), /name: publishDashboardResults\s+type: boolean\s+default: false/);
+        assert.match(await readFile(join(root, "pipelines", path), "utf8"), /name: allowFeatureBranchPublishing\s+type: boolean\s+default: false/);
     }
 });
 
