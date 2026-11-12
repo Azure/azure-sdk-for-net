@@ -15,7 +15,7 @@ async function runtime(t, mode) {
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
   const actions = path.join(root, 'actions');
   fs.mkdirSync(actions);
-  for (const helper of ['ReviewContinuation.cjs', 'ReviewDelivery.cjs', 'ReviewInputServer.ps1', 'ReviewVerifyDelivery.ps1', 'ReviewSerialization.psm1']) fs.copyFileSync(path.join(__dirname, '..', 'pr-re-review', helper), path.join(actions, helper));
+  for (const helper of ['ReviewContinuation.cjs', 'ReviewDelivery.cjs', 'ReviewInputServer.ps1', 'ReviewVerifyDelivery.ps1', 'ReviewSerialization.psm1', 'Select-ReviewBatch.ps1', 'ReviewBatchSession.cjs']) fs.copyFileSync(path.join(__dirname, '..', 'pr-re-review', helper), path.join(actions, helper));
   fs.copyFileSync(path.join(__dirname, 'TestDeliveryReference.cjs'), path.join(actions, 'TestDeliveryReference.cjs'));
   fs.mkdirSync(path.join(root, 'receipts'));
   const snapshot = {

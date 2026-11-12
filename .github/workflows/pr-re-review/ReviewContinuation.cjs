@@ -42,16 +42,11 @@ function makeWorklist(snapshot) {
   return [...threads, ...files];
 }
 
-function nextBatch(work) {
-  const batch = [];
-  let bytes = 0;
-  for (const item of work) {
-    const size = Buffer.byteLength(JSON.stringify(item));
-    if (batch.length && (Boolean(item.thread) !== Boolean(batch[0].thread) || batch.length === MAX_BATCH_ITEMS || bytes + size > MAX_BATCH_BYTES)) break;
-    batch.push(item);
-    bytes += size;
-  }
-  return batch;
+async function nextBatch(work, { deadline = Infinity } = {}) {
+  const { startBatchSession } = require('./ReviewBatchSession.cjs');
+  const selector = startBatchSession({ maxItems: MAX_BATCH_ITEMS, maxBytes: MAX_BATCH_BYTES });
+  try { return await selector.select(work, deadline); }
+  finally { await selector.close(); }
 }
 
 function acceptResults(batch, response) {
@@ -94,22 +89,50 @@ async function runQueue(work, { runBatch, deadline, checkpoint = () => {} }) {
   const ledger = { results: [], attempts: [] };
   let batchLimit = MAX_BATCH_ITEMS;
   checkpoint(ledger); // Empty reviews also need an authoritative completion artifact.
-  while (pending.size) {
-    if (Date.now() >= deadline) throw new Error(`Review deadline exhausted with ${pending.size} items remaining.`);
-    const batch = nextBatch([...pending.values()]).slice(0, batchLimit);
-    const response = await runBatch(batch, deadline);
-    if (Date.now() >= deadline) throw new Error(`Review deadline exhausted with ${pending.size} items remaining.`);
-    const accepted = acceptResults(batch, response);
-    ledger.attempts.push({ assigned: batch.map(x => x.id), completed: accepted.map(x => x.id), reason: typeof response.reason === 'string' ? response.reason : '', pending: response.results.filter(x => x.status !== 'complete').map(x => ({ id: x.id, status: x.status, reasoning: typeof x.reasoning === 'string' ? x.reasoning : '' })) });
-    for (const result of accepted) {
-      pending.delete(result.id);
-      ledger.results.push(result);
+  if (!pending.size) return ledger;
+  if (Date.now() >= deadline) throw new Error(`Review deadline exhausted with ${pending.size} items remaining.`);
+  const { startBatchSession } = require('./ReviewBatchSession.cjs');
+  const selector = startBatchSession({ maxItems: MAX_BATCH_ITEMS, maxBytes: MAX_BATCH_BYTES });
+  let failure;
+  try {
+    while (pending.size) {
+      if (Date.now() >= deadline) throw new Error(`Review deadline exhausted with ${pending.size} items remaining.`);
+      const batch = (await selector.select([...pending.values()], deadline)).slice(0, batchLimit);
+      selector.assertHealthy();
+      if (Date.now() >= deadline) throw new Error(`Review deadline exhausted with ${pending.size} items remaining.`);
+      let response;
+      try { response = await runBatch(batch, deadline, selector.signal); }
+      catch (error) {
+        try { selector.assertHealthy(); }
+        catch (selectorError) {
+          if (selectorError !== error) throw new AggregateError([error, selectorError], `${error.message}; ${selectorError.message}`);
+        }
+        throw error;
+      }
+      selector.assertHealthy();
+      if (Date.now() >= deadline) throw new Error(`Review deadline exhausted with ${pending.size} items remaining.`);
+      const accepted = acceptResults(batch, response);
+      ledger.attempts.push({ assigned: batch.map(x => x.id), completed: accepted.map(x => x.id), reason: typeof response.reason === 'string' ? response.reason : '', pending: response.results.filter(x => x.status !== 'complete').map(x => ({ id: x.id, status: x.status, reasoning: typeof x.reasoning === 'string' ? x.reasoning : '' })) });
+      for (const result of accepted) {
+        pending.delete(result.id);
+        ledger.results.push(result);
+      }
+      checkpoint(ledger);
+      // A clean refusal is not an enforced blocker. Reduce the assignment and
+      // continue while time remains; only actual errors/deadline end the run.
+      batchLimit = accepted.length ? MAX_BATCH_ITEMS : Math.max(1, Math.floor(batchLimit / 2));
     }
-    checkpoint(ledger);
-    // A clean refusal is not an enforced blocker. Reduce the assignment and
-    // continue while time remains; only actual errors/deadline end the run.
-    batchLimit = accepted.length ? MAX_BATCH_ITEMS : Math.max(1, Math.floor(batchLimit / 2));
+  } catch (error) { failure = error; throw error; }
+  finally {
+    try { await selector.close(); }
+    catch (error) {
+      if (!failure) throw error;
+      if (error !== failure && !(failure instanceof AggregateError && failure.errors.includes(error))) {
+        throw new AggregateError([failure, error], `${failure.message}; batch selector cleanup failed: ${error.message}`);
+      }
+    }
   }
+  if (Date.now() >= deadline) throw new Error('Review deadline exhausted before publication.');
   return ledger;
 }
 
@@ -255,9 +278,10 @@ function parseWorkerResult(output) {
   } catch { return { results: [], reason: last.slice(0, 2000) }; }
 }
 
-function runProcess(command, args, { deadline, env = process.env, outputFile }) {
+function runProcess(command, args, { deadline, env = process.env, outputFile, signal }) {
   return new Promise((resolve, reject) => {
     if (Date.now() >= deadline) return reject(new Error('Review deadline exhausted.'));
+    if (signal?.aborted) return reject(new Error('Review worker cancelled after batch selector failure.'));
     const output = fs.createWriteStream(outputFile, { flags: 'wx', mode: 0o600 });
     const child = spawn(command, args, { env, stdio: ['ignore', 'pipe', 'pipe'], detached: true });
     let stdout = '';
@@ -276,8 +300,11 @@ function runProcess(command, args, { deadline, env = process.env, outputFile }) 
     };
     const onTerm = () => { interrupted = 'SIGTERM'; stopGroup(); };
     const onInt = () => { interrupted = 'SIGINT'; stopGroup(); };
+    const onAbort = () => { interrupted = interrupted || 'batch selector failure'; stopGroup(); };
     process.once('SIGTERM', onTerm);
     process.once('SIGINT', onInt);
+    signal?.addEventListener('abort', onAbort, { once: true });
+    if (signal?.aborted) onAbort();
     output.on('error', error => { stopGroup(); reject(error); });
     child.on('exit', killGroup); // Also reap descendants on normal completion.
     const timeout = setTimeout(() => {
@@ -300,6 +327,7 @@ function runProcess(command, args, { deadline, env = process.env, outputFile }) 
       clearTimeout(shutdownTimer);
       process.removeListener('SIGTERM', onTerm);
       process.removeListener('SIGINT', onInt);
+      signal?.removeEventListener('abort', onAbort);
       output.end();
       if (interrupted) reject(new Error(`Review worker cancelled by ${interrupted}.`));
       else if (timedOut) reject(new Error('Review deadline exhausted during worker execution.'));
@@ -356,14 +384,14 @@ async function main() {
       fs.writeFileSync(path.join(root, 'progress.json'), JSON.stringify({ head_sha: snapshot.head_sha, base_sha: snapshot.base_sha, snapshot_sha256: digest, ...state }, null, 2), { mode: 0o600 });
       console.error(`[review-continuation] ${state.results.length}/${work.length} assigned items completed.`);
     },
-    runBatch: async (batch, deadline) => {
+    runBatch: async (batch, deadline, signal) => {
       const directory = path.join(root, `worker-${++invocation}`);
       fs.mkdirSync(directory, { recursive: false });
       const promptFile = path.join(directory, 'prompt.txt');
       const nonce = crypto.randomBytes(16).toString('hex');
       fs.writeFileSync(promptFile, workerPrompt(original, snapshot, batch, nonce), { mode: 0o600 });
       const env = { ...process.env, GITHUB_OUTPUT: path.join(directory, 'runtime-outputs.txt'), GH_AW_HARNESS_MAX_RETRIES: '0' };
-      const output = await runProcess(process.execPath, [harness, copilot, ...workerArguments(args, promptFile, path.join(directory, 'logs'))], { deadline, env, outputFile: path.join(directory, 'execution.log') });
+      const output = await runProcess(process.execPath, [harness, copilot, ...workerArguments(args, promptFile, path.join(directory, 'logs'))], { deadline, env, outputFile: path.join(directory, 'execution.log'), signal });
       unchangedOutputs();
       const response = parseWorkerResult(output);
       const receiptDir = process.env.GH_AW_REVIEW_RECEIPTS || path.join(process.env.RUNNER_TEMP || '', 'gh-aw', 'safeoutputs', 'review-receipts');
@@ -371,7 +399,7 @@ async function main() {
       const contents = fs.existsSync(receiptFile) ? fs.readFileSync(receiptFile, 'utf8') : '';
       if (Buffer.byteLength(contents) > 16 * 1024 * 1024) throw new Error('Delivery receipt limit exceeded.');
       const receipts = contents.split('\n').filter(Boolean).map(line => JSON.parse(line));
-      await verifyDelivery(snapshot, batch, response.results, nonce, receipts, { deadline });
+      await verifyDelivery(snapshot, batch, response.results, nonce, receipts, { deadline, signal });
       return response;
     },
   });

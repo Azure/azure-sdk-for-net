@@ -409,7 +409,7 @@ jobs:
             fs.mkdirSync(path.join(process.env.RUNNER_TEMP, 'gh-aw', 'safeoutputs', 'review-receipts'), { recursive: true });
             // Custom harnesses are provisioned into gh-aw's trusted action folder;
             // selecting harness.use does not copy a repository script by itself.
-            for (const helper of ['ReviewContinuation.cjs', 'ReviewDelivery.cjs', 'ReviewInputServer.ps1', 'ReviewVerifyDelivery.ps1', 'ReviewSerialization.psm1'])
+            for (const helper of ['ReviewContinuation.cjs', 'ReviewDelivery.cjs', 'ReviewInputServer.ps1', 'ReviewVerifyDelivery.ps1', 'ReviewSerialization.psm1', 'Select-ReviewBatch.ps1', 'ReviewBatchSession.cjs'])
               fs.copyFileSync(path.join(process.env.GITHUB_WORKSPACE, '.github/workflows/pr-re-review', helper),
                 path.join(process.env.RUNNER_TEMP, 'gh-aw', 'actions', helper));
             core.info(`Captured ${manifest.changed_files} changed files and ${snapshot.threads.length} threads for the event head.`);

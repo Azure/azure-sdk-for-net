@@ -72,6 +72,27 @@ test('baseline capture timeout terminates a stubborn exporter and its process gr
   fs.unlinkSync(pidsFile);
 });
 
+for (const signal of ['SIGTERM', 'SIGINT']) test(`batch selection ${signal} terminates a stubborn selector and its process group`, { skip: process.platform === 'win32', timeout: 10000 }, async t => {
+  const { spawn } = require('node:child_process'); const { once } = require('node:events');
+  const { dir, pidsFile, termFile } = fixture(t);
+  const script = path.join(dir, 'selector.cjs');
+  fs.writeFileSync(script, `const {nextBatch}=require(${JSON.stringify(path.join(__dirname, '../pr-re-review/ReviewContinuation.cjs'))});nextBatch([{id:'file:0',file:{filename:'f'}}],{deadline:Date.now()+10000}).then(()=>process.exitCode=2,error=>{console.error(error.message);process.exitCode=1;});`);
+  const controller = spawn(process.execPath, [script], { env: process.env, stdio: ['ignore', 'ignore', 'pipe'] });
+  t.after(() => { try { controller.kill('SIGKILL'); } catch { /* exited */ } });
+  let stderr = ''; controller.stderr.on('data', chunk => { stderr += chunk; });
+  const closed = once(controller, 'close');
+  await waitForFile(pidsFile);
+  const pids = JSON.parse(fs.readFileSync(pidsFile, 'utf8'));
+  controller.kill(signal);
+  let timer;
+  const [code] = await Promise.race([closed, new Promise((_, reject) => { timer = setTimeout(() => reject(new Error('Batch selection cancellation did not finish promptly')), 3500); })]).finally(() => clearTimeout(timer));
+  assert.equal(code, 1);
+  assert.match(stderr, new RegExp(`batch selection cancelled by ${signal}`, 'i'));
+  assert.equal(fs.readFileSync(termFile, 'utf8'), 'term');
+  for (const pid of pids) await waitForExit(pid);
+  fs.unlinkSync(pidsFile);
+});
+
 test('capture SIGTERM terminates a stubborn exporter and its process group', { skip: process.platform === 'win32', timeout: 10000 }, async t => {
   const { spawn } = require('node:child_process'); const { once } = require('node:events');
   const { dir, pidsFile, termFile } = fixture(t);

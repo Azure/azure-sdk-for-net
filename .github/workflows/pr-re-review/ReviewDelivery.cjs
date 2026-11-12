@@ -9,7 +9,7 @@ const MAX_BATCH_BYTES = 48000;
 const digest = value => crypto.createHash('sha256').update(value).digest('hex');
 const snapshotDigest = snapshot => digest(JSON.stringify(snapshot));
 
-async function verifyDelivery(snapshot, batch, results, nonce, receipts, { deadline = Infinity } = {}) {
+async function verifyDelivery(snapshot, batch, results, nonce, receipts, { deadline = Infinity, signal } = {}) {
   if (!/^[a-f0-9]{32}$/.test(nonce) || !Array.isArray(receipts)) throw new Error('Invalid delivery evidence.');
   // Preserve the compact JSON.stringify representation for independent
   // PowerShell recomputation of snapshot and required-input identities.
@@ -19,15 +19,16 @@ async function verifyDelivery(snapshot, batch, results, nonce, receipts, { deadl
   if (remaining <= 0) throw new Error('Review deadline exhausted during delivery verification.');
   const timeoutMs = Math.min(30000, remaining);
   const timeoutReason = remaining <= 30000 ? 'Review deadline exhausted during delivery verification.' : 'Delivery verifier timed out.';
-  const result = await runPowerShell('ReviewVerifyDelivery.ps1', payload, { timeoutMs, timeoutReason, maxOutputBytes: 4096, label: 'Delivery verifier' });
+  const result = await runPowerShell('ReviewVerifyDelivery.ps1', payload, { timeoutMs, timeoutReason, maxOutputBytes: 4096, label: 'Delivery verifier', signal });
   if (result.stdout !== '{}') throw new Error(result.stderr || 'Delivery verifier failed.');
 }
 
 // The pinned gh-aw integration requires Node. Share one process supervisor for
 // capture and verification so cancellation, limits, and process-group cleanup
 // do not depend on PowerShell signal callbacks.
-async function runPowerShell(script, payload, { timeoutMs, timeoutReason, maxOutputBytes, label, scriptArgs = [] }) {
+async function runPowerShell(script, payload, { timeoutMs, timeoutReason, maxOutputBytes, label, scriptArgs = [], signal }) {
   return await new Promise((resolve, reject) => {
+    if (signal?.aborted) return reject(new Error(`${label} cancelled after batch selector failure.`));
     const { spawn } = require('node:child_process');
     const path = require('node:path');
     const child = spawn(process.env.GH_AW_REVIEW_PWSH || 'pwsh', [
@@ -64,8 +65,11 @@ async function runPowerShell(script, payload, { timeoutMs, timeoutReason, maxOut
     }
     const onTerm = () => stop(`${label} cancelled by SIGTERM.`);
     const onInt = () => stop(`${label} cancelled by SIGINT.`);
+    const onAbort = () => stop(`${label} cancelled after batch selector failure.`);
     process.on('SIGTERM', onTerm);
     process.on('SIGINT', onInt);
+    signal?.addEventListener('abort', onAbort, { once: true });
+    if (signal?.aborted) onAbort();
     function finish(error) {
       if (finished) return;
       finished = true;
@@ -74,6 +78,7 @@ async function runPowerShell(script, payload, { timeoutMs, timeoutReason, maxOut
       clearTimeout(drainTimer);
       process.removeListener('SIGTERM', onTerm);
       process.removeListener('SIGINT', onInt);
+      signal?.removeEventListener('abort', onAbort);
       if (error) reject(error); else resolve({ stdout: Buffer.concat(stdout).toString('utf8'), stderr: Buffer.concat(stderr).toString('utf8') });
     }
     child.stdout.on('data', data => {

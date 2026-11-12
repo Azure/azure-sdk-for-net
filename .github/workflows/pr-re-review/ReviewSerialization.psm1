@@ -89,4 +89,16 @@ function Get-JsRequiredInputs($Item, [long] $MaxBytes) {
     if ($null -eq $patch -and -not @('added', 'modified', 'removed', 'renamed').Where({ [StringComparer]::Ordinal.Equals($_, $status) }).Count) { throw 'Unsupported file status for omitted patch delivery.' }
     return ,$result.ToArray()
 }
-Export-ModuleMember -Function Get-JsonProperty, Get-JsString, Test-JsTruthy, Get-JsDigest, ConvertTo-JsJsonText, Format-JsPrettyJson, Get-JsRequiredInputs
+function Select-JsReviewBatch($Work, [long] $MaxItems, [long] $MaxBytes) {
+    if ($null -eq $Work -or $Work.ValueKind -ne [Text.Json.JsonValueKind]::Array -or $MaxItems -le 0 -or $MaxBytes -le 0) { throw 'Invalid batch selection input.' }
+    $count = 0; $bytes = [long]0; $firstIsThread = $false
+    foreach ($item in $Work.EnumerateArray()) {
+        $size = $script:Utf8.GetByteCount($item.GetRawText())
+        $isThread = Test-JsTruthy (Get-JsonProperty $item 'thread')
+        if ($count -gt 0 -and ($isThread -ne $firstIsThread -or $count -eq $MaxItems -or $bytes + $size -gt $MaxBytes)) { break }
+        if ($count -eq 0) { $firstIsThread = $isThread }
+        $count++; $bytes += $size
+    }
+    return $count
+}
+Export-ModuleMember -Function Get-JsonProperty, Get-JsString, Test-JsTruthy, Get-JsDigest, ConvertTo-JsJsonText, Format-JsPrettyJson, Get-JsRequiredInputs, Select-JsReviewBatch

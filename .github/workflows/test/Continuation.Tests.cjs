@@ -63,12 +63,51 @@ test('clean no-progress responses do not abandon review while time remains', asy
   assert.ok(calls>5);
 });
 
+test('no-progress batches shrink 8→4→2→1 and reset after progress', async () => {
+  const s = snapshot(9); s.threads = [];
+  const sizes = [];
+  const ledger = await runQueue(makeWorklist(s), {
+    deadline: Date.now() + 60000,
+    runBatch: async items => { sizes.push(items.length); return sizes.length < 4 ? { results: [] } : complete(items); },
+  });
+  assert.deepEqual(sizes.slice(0, 5), [8, 4, 2, 1, 8]);
+  assert.equal(ledger.results.length, 9);
+});
+
 test('continued zero progress ends only at the actual deadline without a review', async t => {
   t.mock.timers.enable({apis:['Date'],now:1000});
   let calls=0;
-  await assert.rejects(runQueue(makeWorklist(snapshot()), {deadline:1100,
-    runBatch:async()=>{calls++;t.mock.timers.tick(10);return {results:[]};}}),/deadline/i);
+  // Preserve ten simulated attempts, with room for actual selector startup
+  // before the real subprocess timeout fires under the mocked Date clock.
+  await assert.rejects(runQueue(makeWorklist(snapshot()), {deadline:101000,
+    runBatch:async()=>{calls++;t.mock.timers.tick(10000);return {results:[]};}}),/deadline/i);
   assert.equal(calls,10);
+});
+
+test('selection deadline prevents starting a worker after a stalled selector', { skip: process.platform === 'win32', timeout: 5000 }, async t => {
+  const fs = require('node:fs'), os = require('node:os'), path = require('node:path');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'batch-deadline-'));
+  const fake = path.join(dir, 'fake-pwsh'), previous = process.env.GH_AW_REVIEW_PWSH;
+  t.after(() => { if (previous === undefined) delete process.env.GH_AW_REVIEW_PWSH; else process.env.GH_AW_REVIEW_PWSH = previous; fs.rmSync(dir, { recursive:true, force:true }); });
+  fs.writeFileSync(fake, '#!/usr/bin/env node\nprocess.stdin.resume();setTimeout(()=>process.stdout.write(\'{"count":1}\'),1000);', { mode:0o755 });
+  process.env.GH_AW_REVIEW_PWSH = fake;
+  let called = false;
+  await assert.rejects(runQueue(makeWorklist(snapshot(1)), { deadline: Date.now() + 150, runBatch: async () => { called = true; return { results:[] }; } }), /deadline/i);
+  assert.equal(called, false);
+});
+
+test('invalid batch-selector output fails closed', { skip: process.platform === 'win32' }, async t => {
+  const fs = require('node:fs'), os = require('node:os'), path = require('node:path');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'batch-output-'));
+  const fake = path.join(dir, 'fake-pwsh'), previous = process.env.GH_AW_REVIEW_PWSH, previousOutput = process.env.FAKE_BATCH_OUTPUT;
+  t.after(() => { if (previous === undefined) delete process.env.GH_AW_REVIEW_PWSH; else process.env.GH_AW_REVIEW_PWSH = previous; if (previousOutput === undefined) delete process.env.FAKE_BATCH_OUTPUT; else process.env.FAKE_BATCH_OUTPUT = previousOutput; fs.rmSync(dir, { recursive:true, force:true }); });
+  fs.writeFileSync(fake, '#!/usr/bin/env node\nrequire("node:readline").createInterface({input:process.stdin}).on("line",()=>process.stdout.write(process.env.FAKE_BATCH_OUTPUT+"\\n"));', { mode:0o755 });
+  process.env.GH_AW_REVIEW_PWSH = fake;
+  const work = makeWorklist(snapshot(1));
+  for (const text of ['not json', '{}', '{"id":1,"count":0}', '{"id":1,"count":99}', '{"id":1,"count":1,"extra":true}']) {
+    process.env.FAKE_BATCH_OUTPUT = text;
+    await assert.rejects(nextBatch(work), /invalid batch selection output/i);
+  }
 });
 
 test('real worker errors and exhausted deadlines fail without treating items as reviewed', async () => {
@@ -104,7 +143,7 @@ test('batches by patch size as well as file count without dropping oversized fil
   assert.ok(Math.max(...sizes) <= 8);
 });
 
-test('batches at the exact serialized UTF-8 limit and isolates oversized files', () => {
+test('batches at the exact serialized UTF-8 limit and isolates oversized files', async () => {
   const item = (index, bytes, multibyte = false) => {
     const value = { id: `file:${index}`, file: { filename: `src/${index}.cs`, status: 'modified', patch: '' } };
     const remaining = bytes - Buffer.byteLength(JSON.stringify(value));
@@ -115,10 +154,10 @@ test('batches at the exact serialized UTF-8 limit and isolates oversized files',
   };
   const small = item(0, 24000), at = item(1, 24000, true), over = item(1, 24001, true);
   const huge = item(0, 48001), next = item(1, 100);
-  assert.deepEqual(nextBatch([small, at]), [small, at]);
-  assert.deepEqual(nextBatch([small, over]), [small]);
-  assert.deepEqual(nextBatch([huge, next]), [huge]);
-  assert.deepEqual(nextBatch([next]), [next]);
+  assert.deepEqual(await nextBatch([small, at]), [small, at]);
+  assert.deepEqual(await nextBatch([small, over]), [small]);
+  assert.deepEqual(await nextBatch([huge, next]), [huge]);
+  assert.deepEqual(await nextBatch([next]), [next]);
 });
 
 test('offloading and receipt requirements agree at UTF-8 byte boundaries', () => {
@@ -421,5 +460,7 @@ test('trusted helper checkout precedes capture on a clean agent runner', () => {
   assert.ok(end > capture, 'The capture step must precede input preservation.');
   const captureStep = workflow.slice(capture, end);
   assert.match(captureStep, /for \(const helper of \[[^\]]*'ReviewSerialization\.psm1'[^\]]*\]\)/, 'The capture step must copy the delivery module.');
+  assert.match(captureStep, /for \(const helper of \[[^\]]*'Select-ReviewBatch\.ps1'[^\]]*\]\)/, 'The capture step must copy the batch selector.');
+  assert.match(captureStep, /for \(const helper of \[[^\]]*'ReviewBatchSession\.cjs'[^\]]*\]\)/, 'The capture step must copy the selector lifecycle adapter.');
   assert.ok(captureStep.includes('await exportContext('), 'Capture must finish before the workflow proceeds.');
 });
