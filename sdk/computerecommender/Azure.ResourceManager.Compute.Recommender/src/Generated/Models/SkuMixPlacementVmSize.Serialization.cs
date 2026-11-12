@@ -14,56 +14,56 @@ using Azure.ResourceManager.Compute.Recommender;
 namespace Azure.ResourceManager.Compute.Recommender.Models
 {
     /// <summary> A VM size with optional rank for prioritization. </summary>
-    public partial class SkuMixPlacementVMSize : IJsonModel<SkuMixPlacementVMSize>
+    public partial class SkuMixPlacementVmSize : IJsonModel<SkuMixPlacementVmSize>
     {
-        /// <summary> Initializes a new instance of <see cref="SkuMixPlacementVMSize"/> for deserialization. </summary>
-        internal SkuMixPlacementVMSize()
+        /// <summary> Initializes a new instance of <see cref="SkuMixPlacementVmSize"/> for deserialization. </summary>
+        internal SkuMixPlacementVmSize()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SkuMixPlacementVMSize PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SkuMixPlacementVmSize PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SkuMixPlacementVMSize>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SkuMixPlacementVmSize>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSkuMixPlacementVMSize(document.RootElement, options);
+                        return DeserializeSkuMixPlacementVmSize(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SkuMixPlacementVMSize)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkuMixPlacementVmSize)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SkuMixPlacementVMSize>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SkuMixPlacementVmSize>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeRecommenderContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SkuMixPlacementVMSize)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkuMixPlacementVmSize)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SkuMixPlacementVMSize>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SkuMixPlacementVmSize>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SkuMixPlacementVMSize IPersistableModel<SkuMixPlacementVMSize>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SkuMixPlacementVmSize IPersistableModel<SkuMixPlacementVmSize>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SkuMixPlacementVMSize>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SkuMixPlacementVmSize>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SkuMixPlacementVMSize>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SkuMixPlacementVmSize>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SkuMixPlacementVMSize>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SkuMixPlacementVmSize>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuMixPlacementVMSize)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SkuMixPlacementVmSize)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -105,24 +105,24 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SkuMixPlacementVMSize IJsonModel<SkuMixPlacementVMSize>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SkuMixPlacementVmSize IJsonModel<SkuMixPlacementVmSize>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SkuMixPlacementVMSize JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SkuMixPlacementVmSize JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SkuMixPlacementVMSize>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SkuMixPlacementVmSize>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuMixPlacementVMSize)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SkuMixPlacementVmSize)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSkuMixPlacementVMSize(document.RootElement, options);
+            return DeserializeSkuMixPlacementVmSize(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SkuMixPlacementVMSize DeserializeSkuMixPlacementVMSize(JsonElement element, ModelReaderWriterOptions options)
+        internal static SkuMixPlacementVmSize DeserializeSkuMixPlacementVmSize(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new SkuMixPlacementVMSize(name, rank, additionalBinaryDataProperties);
+            return new SkuMixPlacementVmSize(name, rank, additionalBinaryDataProperties);
         }
     }
 }

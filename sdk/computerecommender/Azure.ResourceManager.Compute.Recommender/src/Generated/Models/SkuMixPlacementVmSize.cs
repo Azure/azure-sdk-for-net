@@ -12,26 +12,26 @@ using Azure.ResourceManager.Compute.Recommender;
 namespace Azure.ResourceManager.Compute.Recommender.Models
 {
     /// <summary> A VM size with optional rank for prioritization. </summary>
-    public partial class SkuMixPlacementVMSize
+    public partial class SkuMixPlacementVmSize
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SkuMixPlacementVMSize"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuMixPlacementVmSize"/>. </summary>
         /// <param name="name"> SKU name (e.g. Standard_D2s_v3). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public SkuMixPlacementVMSize(string name)
+        public SkuMixPlacementVmSize(string name)
         {
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SkuMixPlacementVMSize"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuMixPlacementVmSize"/>. </summary>
         /// <param name="name"> SKU name (e.g. Standard_D2s_v3). </param>
         /// <param name="rank"> Rank of the VM size. Lower = higher priority (starting at 0). Only valid with Prioritized strategy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SkuMixPlacementVMSize(string name, int? rank, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SkuMixPlacementVmSize(string name, int? rank, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Rank = rank;

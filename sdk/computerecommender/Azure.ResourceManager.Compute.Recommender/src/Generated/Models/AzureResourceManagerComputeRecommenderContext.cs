@@ -16,8 +16,11 @@ namespace Azure.ResourceManager.Compute.Recommender
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
+    [ModelReaderWriterBuildable(typeof(ComputePlacementScoresData))]
+    [ModelReaderWriterBuildable(typeof(ComputePlacementScoresGenerateContent))]
+    [ModelReaderWriterBuildable(typeof(ComputePlacementScoresGenerateResult))]
+    [ModelReaderWriterBuildable(typeof(ComputePlacementScoresResource))]
     [ModelReaderWriterBuildable(typeof(ComputeRecommenderDiagnosticData))]
-    [ModelReaderWriterBuildable(typeof(ComputeRecommenderDiagnosticProperties))]
     [ModelReaderWriterBuildable(typeof(ComputeRecommenderDiagnosticResource))]
     [ModelReaderWriterBuildable(typeof(ComputeRecommenderGenerateContent))]
     [ModelReaderWriterBuildable(typeof(ComputeRecommenderGenerateResult))]
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Recommender
     [ModelReaderWriterBuildable(typeof(ComputeSkuMixPlacementResource))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SkuMixPlacementCapacityProfile))]
-    [ModelReaderWriterBuildable(typeof(SkuMixPlacementVMSize))]
+    [ModelReaderWriterBuildable(typeof(SkuMixPlacementVmSize))]
     [ModelReaderWriterBuildable(typeof(SkuMixPlacementZoneAllocationPolicy))]
     [ModelReaderWriterBuildable(typeof(SkuMixPlacementZonePreference))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

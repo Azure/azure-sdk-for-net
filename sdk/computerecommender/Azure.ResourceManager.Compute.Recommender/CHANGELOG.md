@@ -1,14 +1,16 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 1.1.0-beta.3 (2026-11-12)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Upgraded API version to `2026-10-05-preview`.
+- Added regular compute placement scoring through `GetComputePlacementScores(AzureLocation)`, which requires the scoring location. The new request and result models expose zonal scope as `IsZonal`.
+- Added `ComputeRecommenderPlacementScore.PlacementPreference`.
 
 ### Other Changes
+
+- Upgraded Azure.Core from 1.62.0 to 1.64.0.
 
 ## 1.1.0-beta.2 (2026-09-02)
 
