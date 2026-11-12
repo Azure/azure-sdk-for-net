@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
@@ -280,6 +281,10 @@ namespace Azure.Storage.Files.DataLake
             {
                 Audience = new DataLakeAudience(audience);
             }
+            if (int.TryParse(section["RequestPriority"], NumberStyles.Integer, CultureInfo.InvariantCulture, out int requestPriority))
+            {
+                RequestPriority = requestPriority;
+            }
             this.Initialize();
             AddHeadersAndQueryParameters();
             this.AddPolicy(DataLocalityPolicy.Shared, HttpPipelinePosition.PerCall);
@@ -304,6 +309,17 @@ namespace Azure.Storage.Files.DataLake
         /// Transfer validation options to be applied to blob transfers from this client.
         /// </summary>
         public TransferValidationOptions TransferValidation { get; } = new();
+
+        /// <summary>
+        /// Gets or sets the priority, from 0 through 7, that the service should apply to
+        /// every request sent by clients created with these options.
+        /// Values outside this range do not cause requests to fail; the service uses
+        /// a default priority of 3 instead.
+        /// If not set, no priority is sent and the service default applies.
+        /// To send requests with different priorities, create separate clients with
+        /// different options.
+        /// </summary>
+        public int? RequestPriority { get; set; }
 
         /// <summary>
         /// Add headers and query parameters in <see cref="DiagnosticsOptions.LoggedHeaderNames"/> and <see cref="DiagnosticsOptions.LoggedQueryParameters"/>

@@ -61,6 +61,7 @@ namespace Azure.Storage.Blobs
         public string EncryptionScope { get { throw null; } set { } }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
         public Azure.Storage.Request100ContinueOptions Request100ContinueOptions { get { throw null; } set { } }
+        public int? RequestPriority { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.SessionOptions SessionOptions { get { throw null; } set { } }
         public Azure.Storage.TransferValidationOptions TransferValidation { get { throw null; } }
         public bool TrimBlobNameSlashes { get { throw null; } set { } }

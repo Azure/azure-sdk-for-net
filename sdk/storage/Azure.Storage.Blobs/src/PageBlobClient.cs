@@ -1028,6 +1028,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await PageBlobRestClient.CreateAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             size: size,
                             tier: premiumPageBlobAccessTier,
                             blobContentType: httpHeaders?.ContentType,
@@ -1057,6 +1058,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = PageBlobRestClient.Create(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             size: size,
                             tier: premiumPageBlobAccessTier,
                             blobContentType: httpHeaders?.ContentType,
@@ -1441,6 +1443,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await PageBlobRestClient.UploadPagesAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             range: range.ToString(),
                             content: RequestContent.Create(content),
@@ -1468,6 +1471,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = PageBlobRestClient.UploadPages(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             range: range.ToString(),
                             content: RequestContent.Create(content),
@@ -1673,6 +1677,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await PageBlobRestClient.ClearPagesAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             range: range.ToString(),
                             leaseId: conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
@@ -1689,6 +1694,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = PageBlobRestClient.ClearPages(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             range: range.ToString(),
                             leaseId: conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
@@ -1893,6 +1899,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await PageBlobRestClient.GetPageRangesAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             snapshot: snapshot,
                             range: range?.ToString(),
                             leaseId: conditions?.LeaseId,
@@ -1906,6 +1913,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = PageBlobRestClient.GetPageRanges(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             snapshot: snapshot,
                             range: range?.ToString(),
                             leaseId: conditions?.LeaseId,
@@ -2113,6 +2121,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await PageBlobRestClient.GetPageRangesAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             snapshot: snapshot,
                             range: range?.ToString(),
                             leaseId: conditions?.LeaseId,
@@ -2124,6 +2133,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = PageBlobRestClient.GetPageRanges(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             snapshot: snapshot,
                             range: range?.ToString(),
                             leaseId: conditions?.LeaseId,
@@ -2357,6 +2367,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await PageBlobRestClient.GetPageRangesDiffAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             snapshot: snapshot,
                             prevsnapshot: previousSnapshot,
                             prevSnapshotUrl: previousSnapshotUri?.AbsoluteUri,
@@ -2372,6 +2383,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = PageBlobRestClient.GetPageRangesDiff(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             snapshot: snapshot,
                             prevsnapshot: previousSnapshot,
                             prevSnapshotUrl: previousSnapshotUri?.AbsoluteUri,
@@ -2633,6 +2645,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await PageBlobRestClient.GetPageRangesDiffAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             snapshot: snapshot,
                             prevsnapshot: previousSnapshot,
                             prevSnapshotUrl: previousSnapshotUri?.AbsoluteUri,
@@ -2646,6 +2659,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = PageBlobRestClient.GetPageRangesDiff(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             snapshot: snapshot,
                             prevsnapshot: previousSnapshot,
                             prevSnapshotUrl: previousSnapshotUri?.AbsoluteUri,
@@ -2972,6 +2986,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await PageBlobRestClient.ResizeAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             size: size,
                             leaseId: conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
@@ -2985,6 +3000,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = PageBlobRestClient.Resize(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             size: size,
                             leaseId: conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
@@ -3225,6 +3241,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await PageBlobRestClient.SetSequenceNumberAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             sequenceNumberAction: action,
                             leaseId: conditions?.LeaseId,
                             requestConditions: conditions,
@@ -3236,6 +3253,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = PageBlobRestClient.SetSequenceNumber(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             sequenceNumberAction: action,
                             leaseId: conditions?.LeaseId,
                             requestConditions: conditions,
@@ -3626,6 +3644,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await PageBlobRestClient.CopyIncrementalAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             copySource: sourcePageBlobClient.Uri.AbsoluteUri,
                             requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
@@ -3635,6 +3654,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = PageBlobRestClient.CopyIncremental(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             copySource: sourcePageBlobClient.Uri.AbsoluteUri,
                             requestConditions: conditions,
                             ifTags: conditions?.TagConditions,
@@ -4090,6 +4110,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await PageBlobRestClient.UploadPagesFromUriAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             sourceUrl: sourceUri.AbsoluteUri,
                             sourceRange: sourceRangeString,
                             contentLength: 0,
@@ -4122,6 +4143,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = PageBlobRestClient.UploadPagesFromUri(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             sourceUrl: sourceUri.AbsoluteUri,
                             sourceRange: sourceRangeString,
                             contentLength: 0,

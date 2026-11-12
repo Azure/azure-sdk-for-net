@@ -915,6 +915,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await AppendBlobRestClient.CreateAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             blobContentType: httpHeaders?.ContentType,
                             blobContentEncoding: httpHeaders?.ContentEncoding,
                             blobContentLanguage: httpHeaders?.ContentLanguage,
@@ -939,6 +940,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = AppendBlobRestClient.Create(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             blobContentType: httpHeaders?.ContentType,
                             blobContentEncoding: httpHeaders?.ContentEncoding,
                             blobContentLanguage: httpHeaders?.ContentLanguage,
@@ -1292,6 +1294,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await AppendBlobRestClient.AppendBlockAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             contentLength: (content.Length - content.Position),
                             content: RequestContent.Create(content),
                             transactionalContentCrc64: hashResult?.StorageCrc64AsArray != null ? BinaryData.FromBytes(hashResult.StorageCrc64AsArray) : null,
@@ -1313,6 +1316,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = AppendBlobRestClient.AppendBlock(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             contentLength: (content.Length - content.Position),
                             content: RequestContent.Create(content),
                             transactionalContentCrc64: hashResult?.StorageCrc64AsArray != null ? BinaryData.FromBytes(hashResult.StorageCrc64AsArray) : null,
@@ -1732,6 +1736,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await AppendBlobRestClient.AppendBlockFromUriAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             sourceUrl: sourceUri.AbsoluteUri,
                             contentLength: 0,
                             sourceRange: sourceRange.ToString(),
@@ -1760,6 +1765,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = AppendBlobRestClient.AppendBlockFromUri(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             sourceUrl: sourceUri.AbsoluteUri,
                             contentLength: 0,
                             sourceRange: sourceRange.ToString(),
@@ -1918,6 +1924,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await AppendBlobRestClient.SealAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             leaseId: conditions?.LeaseId,
                             requestConditions: conditions,
                             appendPosition: conditions?.IfAppendPositionEqual,
@@ -1927,6 +1934,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = AppendBlobRestClient.Seal(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             leaseId: conditions?.LeaseId,
                             requestConditions: conditions,
                             appendPosition: conditions?.IfAppendPositionEqual,

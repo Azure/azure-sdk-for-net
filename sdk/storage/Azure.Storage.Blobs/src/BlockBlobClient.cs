@@ -377,7 +377,8 @@ namespace Azure.Storage.Blobs.Specialized
                     customerProvidedKey: options.CustomerProvidedKey,
                     transferValidation: options.TransferValidation,
                     encryptionScope: null,
-                    trimBlobNameSlashes: options.TrimBlobNameSlashes));
+                    trimBlobNameSlashes: options.TrimBlobNameSlashes,
+                    requestPriority: options.RequestPriority));
         }
 
         private static void AssertNoClientSideEncryption(BlobClientOptions options)
@@ -921,6 +922,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await BlockBlobRestClient.UploadAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             content: RequestContent.Create(content),
                             blobContentType: blobHttpHeaders?.ContentType,
@@ -958,6 +960,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = BlockBlobRestClient.Upload(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             contentLength: (content?.Length - content?.Position) ?? 0,
                             content: RequestContent.Create(content),
                             blobContentType: blobHttpHeaders?.ContentType,
@@ -1379,6 +1382,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await BlockBlobRestClient.StageBlockAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             blockId: base64BlockId,
                             contentLength: contentLength,
                             content: RequestContent.Create(content),
@@ -1401,6 +1405,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = BlockBlobRestClient.StageBlock(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             blockId: base64BlockId,
                             contentLength: contentLength,
                             content: RequestContent.Create(content),
@@ -1862,6 +1867,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await BlockBlobRestClient.StageBlockFromUriAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             blockId: base64BlockId,
                             contentLength: 0,
                             sourceUrl: sourceUri.AbsoluteUri,
@@ -1891,6 +1897,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = BlockBlobRestClient.StageBlockFromUri(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             blockId: base64BlockId,
                             contentLength: 0,
                             sourceUrl: sourceUri.AbsoluteUri,
@@ -2337,6 +2344,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await BlockBlobRestClient.CommitBlockListAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             blocks: blocks,
                             blobCacheControl: blobHttpHeaders?.CacheControl,
                             blobContentType: blobHttpHeaders?.ContentType,
@@ -2365,6 +2373,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = BlockBlobRestClient.CommitBlockList(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             blocks: blocks,
                             blobCacheControl: blobHttpHeaders?.CacheControl,
                             blobContentType: blobHttpHeaders?.ContentType,
@@ -2597,6 +2606,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await BlockBlobRestClient.GetBlockListAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             listType: blockListTypes.ToBlockListType(),
                             snapshot: snapshot,
                             leaseId: conditions?.LeaseId,
@@ -2607,6 +2617,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = BlockBlobRestClient.GetBlockList(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             listType: blockListTypes.ToBlockListType(),
                             snapshot: snapshot,
                             leaseId: conditions?.LeaseId,
@@ -2776,6 +2787,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await BlockBlobRestClient.QueryAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             leaseId: options?.Conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
@@ -2789,6 +2801,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = BlockBlobRestClient.Query(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             leaseId: options?.Conditions?.LeaseId,
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
@@ -3255,6 +3268,7 @@ namespace Azure.Storage.Blobs.Specialized
                     if (async)
                     {
                         response = await BlockBlobRestClient.UploadBlobFromUriAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             copySource: copySource.AbsoluteUri,
                             blobContentType: options?.HttpHeaders?.ContentType,
                             blobContentEncoding: options?.HttpHeaders?.ContentEncoding,
@@ -3295,6 +3309,7 @@ namespace Azure.Storage.Blobs.Specialized
                     else
                     {
                         response = BlockBlobRestClient.UploadBlobFromUri(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             copySource: copySource.AbsoluteUri,
                             blobContentType: options?.HttpHeaders?.ContentType,
                             blobContentEncoding: options?.HttpHeaders?.ContentEncoding,

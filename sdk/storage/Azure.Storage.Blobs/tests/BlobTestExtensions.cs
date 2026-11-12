@@ -35,7 +35,8 @@ namespace Azure.Storage
                 customerProvidedKey: null,
                 transferValidation: clientConfiguration.TransferValidation,
                 encryptionScope: encryptionScope,
-                trimBlobNameSlashes: clientConfiguration.TrimBlobNameSlashes);
+                trimBlobNameSlashes: clientConfiguration.TrimBlobNameSlashes,
+                requestPriority: clientConfiguration.RequestPriority);
 
         private static BlobClientConfiguration BuildClientConfigurationWithCpk(
             BlobClientConfiguration clientConfiguration,
@@ -48,7 +49,8 @@ namespace Azure.Storage
                 customerProvidedKey: customerProvidedKey,
                 transferValidation: clientConfiguration.TransferValidation,
                 encryptionScope: null,
-                trimBlobNameSlashes: clientConfiguration.TrimBlobNameSlashes);
+                trimBlobNameSlashes: clientConfiguration.TrimBlobNameSlashes,
+                requestPriority: clientConfiguration.RequestPriority);
 
         /// <summary>
         /// Convert a base RequestConditions to BlobRequestConditions.

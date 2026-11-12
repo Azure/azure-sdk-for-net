@@ -2532,6 +2532,7 @@ namespace Azure.Storage.Files.DataLake
                     if (async)
                     {
                         response = await PathRestClient.AppendDataAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             content: RequestContent.Create(content),
                             position: offset,
                             contentLength: content?.Length - content?.Position ?? 0,
@@ -2553,6 +2554,7 @@ namespace Azure.Storage.Files.DataLake
                     else
                     {
                         response = PathRestClient.AppendData(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             content: RequestContent.Create(content),
                             position: offset,
                             contentLength: content?.Length - content?.Position ?? 0,
@@ -2937,6 +2939,7 @@ namespace Azure.Storage.Files.DataLake
                     if (async)
                     {
                         response = await PathRestClient.FlushDataAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             position: position,
                             retainUncommittedData: retainUncommittedData,
                             close: close,
@@ -2961,6 +2964,7 @@ namespace Azure.Storage.Files.DataLake
                     else
                     {
                         response = PathRestClient.FlushData(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             position: position,
                             retainUncommittedData: retainUncommittedData,
                             close: close,
@@ -5517,6 +5521,7 @@ namespace Azure.Storage.Files.DataLake
                     if (async)
                     {
                         response = await BlobPathRestClient.SetExpiryAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             expiryOptions: blobExpiryOptions,
                             expiresOn: expiresOn,
                             cancellationToken: cancellationToken)
@@ -5525,6 +5530,7 @@ namespace Azure.Storage.Files.DataLake
                     else
                     {
                         response = BlobPathRestClient.SetExpiry(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             expiryOptions: blobExpiryOptions,
                             expiresOn: expiresOn,
                             cancellationToken: cancellationToken);

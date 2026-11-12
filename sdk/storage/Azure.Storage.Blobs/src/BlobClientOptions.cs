@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
@@ -266,6 +267,17 @@ namespace Azure.Storage.Blobs
         /// </summary>
         public SessionOptions SessionOptions { get; set; }
 
+        /// <summary>
+        /// Gets or sets the priority, from 0 through 7, that the service should apply to
+        /// every request sent by clients created with these options.
+        /// Values outside this range do not cause requests to fail; the service uses
+        /// a default priority of 3 instead.
+        /// If not set, no priority is sent and the service default applies.
+        /// To send requests with different priorities, create separate clients with
+        /// different options.
+        /// </summary>
+        public int? RequestPriority { get; set; }
+
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;
         #endregion
@@ -333,6 +345,10 @@ namespace Azure.Storage.Blobs
             if (section["Audience"] is string audience)
             {
                 Audience = new BlobAudience(audience);
+            }
+            if (int.TryParse(section["RequestPriority"], NumberStyles.Integer, CultureInfo.InvariantCulture, out int requestPriority))
+            {
+                RequestPriority = requestPriority;
             }
             this.Initialize();
             AddHeadersAndQueryParameters();

@@ -537,6 +537,7 @@ namespace Azure.Storage.Files.DataLake
             BlobClientOptions options = new BlobClientOptions(clientOptions.Version.AsBlobsVersion())
             {
                 Diagnostics = { IsDistributedTracingEnabled = clientDiagnostics.IsActivityEnabled },
+                RequestPriority = clientOptions.RequestPriority,
             };
             clientOptions.TransferValidation.CopyTo(options.TransferValidation);
             return options;
@@ -2084,6 +2085,7 @@ namespace Azure.Storage.Files.DataLake
                     if (async)
                     {
                         response = await FileSystemRestClient.GetPathsAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             recursive: recursive,
                             continuation: continuation,
                             path: path,
@@ -2096,6 +2098,7 @@ namespace Azure.Storage.Files.DataLake
                     else
                     {
                         response = FileSystemRestClient.GetPaths(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             recursive: recursive,
                             continuation: continuation,
                             path: path,
@@ -3763,6 +3766,7 @@ namespace Azure.Storage.Files.DataLake
                     if (async)
                     {
                         response = await BlobFileSystemRestClient.GetBlobHierarchySegmentAsync(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             delimiter: null,
                             prefix: pathPrefix,
                             marker: continuation,
@@ -3776,6 +3780,7 @@ namespace Azure.Storage.Files.DataLake
                     else
                     {
                         response = BlobFileSystemRestClient.GetBlobHierarchySegment(
+                            requestPriority: ClientConfiguration.RequestPriority,
                             delimiter: null,
                             prefix: pathPrefix,
                             marker: continuation,
@@ -3896,6 +3901,7 @@ namespace Azure.Storage.Files.DataLake
                     if (async)
                     {
                         response = await pathClient.BlobPathRestClient.UndeleteAsync(
+                            requestPriority: pathClient.ClientConfiguration.RequestPriority,
                             timeout: null,
                             undeleteSource: undeleteSource,
                             cancellationToken: cancellationToken)
@@ -3904,6 +3910,7 @@ namespace Azure.Storage.Files.DataLake
                     else
                     {
                         response = pathClient.BlobPathRestClient.Undelete(
+                            requestPriority: pathClient.ClientConfiguration.RequestPriority,
                             timeout: null,
                             undeleteSource: undeleteSource,
                             cancellationToken: cancellationToken);
