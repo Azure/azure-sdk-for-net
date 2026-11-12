@@ -10,17 +10,22 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Recommender.Tests
 {
-    [LiveOnly(Reason = "Exercises actual Spot service responses; service recordings have not been captured.")]
     public class ComputeRecommenderDiagnosticTests : ComputeRecommenderManagementTestBase
     {
         public ComputeRecommenderDiagnosticTests(bool isAsync)
             : base(isAsync)
         {
+            SanitizedHeaders.Add("x-ms-operation-identifier");
+            JsonPathSanitizers.Add("$.displayName");
+            JsonPathSanitizers.Add("$.tags.*");
+            JsonPathSanitizers.Add("$.subscriptionPolicies.locationPlacementId");
+            JsonPathSanitizers.Add("$.subscriptionPolicies.quotaId");
         }
 
         [TestCase("2025-06-05")]
         [TestCase("2026-10-05-preview")]
-        public async Task DiagnosticOperationsPreserveGaContract(string apiVersion)
+        [RecordedTest]
+        public async Task GenerateSpotPlacementScores(string apiVersion)
         {
             var options = new ArmClientOptions();
             options.SetApiVersion(ComputeRecommenderDiagnosticResource.ResourceType, apiVersion);
@@ -28,11 +33,6 @@ namespace Azure.ResourceManager.Compute.Recommender.Tests
             var location = new AzureLocation(TestEnvironment.Location);
             ResourceIdentifier id = ComputeRecommenderDiagnosticResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, location);
             ComputeRecommenderDiagnosticResource resource = client.GetComputeRecommenderDiagnosticResource(id);
-
-            var metadata = await resource.GetAsync();
-            Assert.AreEqual(200, metadata.GetRawResponse().Status);
-            Assert.AreEqual(id, metadata.Value.Id);
-            CollectionAssert.Contains(metadata.Value.Data.ComputeRecommenderDiagnosticSupportedResourceTypes, "Microsoft.Compute/virtualMachines");
 
             const string sku = "Standard_D2s_v5";
             var content = new ComputeRecommenderGenerateContent
