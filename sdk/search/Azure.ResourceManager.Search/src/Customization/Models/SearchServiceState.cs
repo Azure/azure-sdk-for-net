@@ -10,7 +10,16 @@ namespace Azure.ResourceManager.Search.Models
     {
         /// <summary> Converts a legacy status to an extensible service status. </summary>
         /// <param name="value"> The legacy status. </param>
-        public static implicit operator SearchServiceState(SearchServiceStatus value) => new SearchServiceState(value.ToSerialString());
+        public static implicit operator SearchServiceState(SearchServiceStatus value) => value switch
+        {
+            SearchServiceStatus.Running => Running,
+            SearchServiceStatus.Provisioning => Provisioning,
+            SearchServiceStatus.Deleting => Deleting,
+            SearchServiceStatus.Degraded => Degraded,
+            SearchServiceStatus.Disabled => Disabled,
+            SearchServiceStatus.Error => Error,
+            _ => new SearchServiceState(value.ToString())
+        };
 
         /// <summary> Converts a string to a nullable service status, preserving null. </summary>
         /// <param name="value"> The status value. </param>

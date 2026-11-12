@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             Assert.AreEqual(expected, patch.Status);
             Assert.AreEqual(new SearchServiceState(wireValue), data.ServiceStatus);
             Assert.AreEqual(new SearchServiceState(wireValue), patch.ServiceStatus);
+            Assert.AreEqual(wireValue.ToLowerInvariant(), ((SearchServiceState)expected).ToString());
         }
 
         [TestCase("stopped")]
@@ -160,14 +161,34 @@ namespace Azure.ResourceManager.Search.Tests.Tests
         }
 
         [Test]
-        public void LegacyEnums_ShouldRejectInvalidValues_WhenUsedAsInputs()
+        public void SkuName_ShouldRejectInvalidValues_WhenUsedAsInputs()
         {
             var data = new SearchServiceData(AzureLocation.EastUS);
             var patch = new SearchServicePatch(AzureLocation.EastUS);
 
             Assert.Throws<ArgumentOutOfRangeException>(() => data.SkuName = (SearchSkuName)int.MaxValue);
             Assert.Throws<ArgumentOutOfRangeException>(() => patch.SkuName = (SearchSkuName)int.MaxValue);
-            Assert.Throws<ArgumentOutOfRangeException>(() => { SearchServiceState state = (SearchServiceStatus)int.MaxValue; });
+        }
+
+        [TestCase(-1)]
+        [TestCase(42)]
+        [TestCase(int.MinValue)]
+        [TestCase(int.MaxValue)]
+        public void SearchServiceState_ShouldPreserveUndefinedValues_WhenConvertingLegacyStatus(int value)
+        {
+            SearchServiceStatus legacyStatus = (SearchServiceStatus)value;
+            SearchServiceState state = legacyStatus;
+            SearchServiceStatus? nullableLegacyStatus = legacyStatus;
+            SearchServiceState? nullableState = nullableLegacyStatus;
+            SearchServiceData data = ArmSearchModelFactory.SearchServiceData(status: legacyStatus);
+            SearchServicePatch patch = ArmSearchModelFactory.SearchServicePatch(status: nullableLegacyStatus);
+
+            Assert.AreEqual(legacyStatus.ToString(), state.ToString());
+            Assert.AreEqual(state, nullableState);
+            Assert.AreEqual(state, data.ServiceStatus);
+            Assert.AreEqual(state, patch.ServiceStatus);
+            Assert.IsNull(data.Status);
+            Assert.IsNull(patch.Status);
         }
 
         [TestCase(SearchServiceStatus.Running)]
