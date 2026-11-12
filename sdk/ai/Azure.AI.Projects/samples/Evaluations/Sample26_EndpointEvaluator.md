@@ -13,7 +13,7 @@ An endpoint-based evaluator lets you bring your own HTTP scoring endpoint. The s
 
 The identity running the sample needs the **Foundry User** role on the project.
 
-This sample uses endpoint contract schema version `0.0.2`, which is recommended for new evaluators. With `0.0.2`, the evaluator must define exactly one metric, of type ordinal or continuous. For endpoints that still implement schema `0.0.1`, see [Sample27_EndpointEvaluatorSchema001](./Sample27_EndpointEvaluatorSchema001.md).
+This sample uses endpoint contract schema version `0.0.2`, which is recommended for new evaluators. With `0.0.2`, the evaluator must define exactly one metric, of type ordinal or continuous. For endpoints that still implement schema `0.0.1`, see [Sample27_EndpointEvaluatorSchema001](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Evaluations/Sample27_EndpointEvaluatorSchema001.md).
 
 Your endpoint must accept POST requests with a JSON body like:
 
@@ -152,7 +152,7 @@ private static BinaryData GetEvaluationData(string evaluatorName)
 }
 ```
 
-5. Create the evaluation. The `EvaluationClient` uses protocol methods, so we use the `ParseClientResult` helper to read the evaluation name and ID. The helper methods `ParseClientResult`, `GetErrorMessageOrEmpty`, `GetResultsCounts` and `GetResultsList` are described in [Sample3_EvaluationsCatalogPromptBased](./Sample3_EvaluationsCatalogPromptBased.md).
+5. Create the evaluation. The `EvaluationClient` uses protocol methods, so we use the `ParseClientResult` helper to read the evaluation name and ID. The helper methods `ParseClientResult`, `GetErrorMessageOrEmpty`, `GetResultsCounts` and `GetResultsList` are described in [Sample3_EvaluationsCatalogPromptBased](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Evaluations/Sample3_EvaluationsCatalogPromptBased.md).
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateEvaluationObject_EndpointEvaluator_Sync

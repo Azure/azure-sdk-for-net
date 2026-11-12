@@ -1,6 +1,6 @@
 # Sample of using an endpoint-based evaluator with legacy schema 0.0.1 in Azure.AI.Projects.
 
-**Legacy schema 0.0.1:** This sample is for endpoints that already implement this contract. `0.0.1` is also what the service uses when `SchemaVersion` is not set. For new evaluators, use schema version `0.0.2` instead, as shown in [Sample26_EndpointEvaluator](./Sample26_EndpointEvaluator.md).
+**Legacy schema 0.0.1:** This sample is for endpoints that already implement this contract. `0.0.1` is also what the service uses when `SchemaVersion` is not set. For new evaluators, use schema version `0.0.2` instead, as shown in [Sample26_EndpointEvaluator](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Evaluations/Sample26_EndpointEvaluator.md).
 
 **Note:** Endpoint-based evaluators are an experimental feature. To use them, disable the `AAIP001` warning.
 
@@ -8,7 +8,7 @@
 #pragma warning disable AAIP001
 ```
 
-An endpoint-based evaluator lets you bring your own HTTP scoring endpoint. The service POSTs each evaluation row to your endpoint and expects a JSON response with a score and optional reasoning. The evaluator references an existing project connection by name; the connection's target is the endpoint URL and it stores the credentials (API key or Microsoft Entra ID). See [Sample26_EndpointEvaluator](./Sample26_EndpointEvaluator.md) for how each authentication type is configured. The identity running the sample needs the **Foundry User** role on the project.
+An endpoint-based evaluator lets you bring your own HTTP scoring endpoint. The service POSTs each evaluation row to your endpoint and expects a JSON response with a score and optional reasoning. The evaluator references an existing project connection by name; the connection's target is the endpoint URL and it stores the credentials (API key or Microsoft Entra ID). See [Sample26_EndpointEvaluator](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Evaluations/Sample26_EndpointEvaluator.md) for how each authentication type is configured. The identity running the sample needs the **Foundry User** role on the project.
 
 An evaluator version keeps the schema version it was created with, so this sample uses a separate evaluator name from the `0.0.2` sample.
 
@@ -146,7 +146,7 @@ private static BinaryData GetEvaluationData(string evaluatorName)
 }
 ```
 
-5. Create the evaluation. The helper methods `ParseClientResult`, `GetErrorMessageOrEmpty`, `GetResultsCounts` and `GetResultsList` are described in [Sample3_EvaluationsCatalogPromptBased](./Sample3_EvaluationsCatalogPromptBased.md).
+5. Create the evaluation. The helper methods `ParseClientResult`, `GetErrorMessageOrEmpty`, `GetResultsCounts` and `GetResultsList` are described in [Sample3_EvaluationsCatalogPromptBased](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Evaluations/Sample3_EvaluationsCatalogPromptBased.md).
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateEvaluationObject_EndpointEvaluatorSchema001_Sync
