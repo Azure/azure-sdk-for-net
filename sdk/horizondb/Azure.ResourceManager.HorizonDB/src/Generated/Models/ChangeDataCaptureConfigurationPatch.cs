@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         internal ChangeDataCaptureConfigurationPropertiesForPatchUpdate Properties { get; set; }
 
         /// <summary> The requested configuration state. </summary>
-        public ChangeDataCaptureDesiredState? ChangeDataCaptureConfigurationPropertiesForPatchUpdateDesiredState
+        public ChangeDataCaptureDesiredState? DesiredState
         {
             get
             {

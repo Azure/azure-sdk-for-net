@@ -29,6 +29,149 @@ namespace Azure.Generator.Mgmt.Tests
 {
     internal class FlattenedCompatibilityTests
     {
+        [TestCase("ChangeDataCaptureConfigurationPropertiesForPatchUpdate", "desiredState", "DesiredState")]
+        [TestCase("ChangeDataCaptureDestinationPropertiesForPatchUpdate", "desiredState", "DesiredState")]
+        [TestCase("MicrosoftEntraAuthenticationPropertiesForPatchUpdate", "state", "State")]
+        public void SafeFlattenedPropertiesUseLeafNames(string wrapperName, string wireName, string propertyName)
+        {
+            var inner = InputFactory.Model(wrapperName, properties: [InputFactory.Property(wireName, InputPrimitiveType.String)]);
+            var input = InputFactory.Model("SettingsPatch", properties: [InputFactory.Property("properties", inner)]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, inner],
+                configurationJson: """{"package-name":"Samples"}""");
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            Visit(plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single());
+
+            var assembly = Compile(plugin.Object, includeFactory: true);
+            var type = assembly.GetType("Samples.Models.SettingsPatch")!;
+            var property = type.GetProperty(propertyName);
+            Assert.That(property, Is.Not.Null);
+            Assert.That(type.GetProperties().Select(p => p.Name), Does.Not.Contain(wrapperName + propertyName));
+            var instance = Activator.CreateInstance(type)!;
+            property!.SetValue(instance, "Enabled");
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("W")));
+            Assert.That(json.RootElement.GetProperty("properties").GetProperty(wireName).GetString(), Is.EqualTo("Enabled"));
+            Assert.That(json.RootElement.EnumerateObject().Select(p => p.Name), Is.EqualTo(new[] { "properties" }));
+
+            var roundTrip = ModelReaderWriter.Read(new BinaryData(json.RootElement.GetRawText()), type, new ModelReaderWriterOptions("J"));
+            Assert.That(property.GetValue(roundTrip), Is.EqualTo("Enabled"));
+            var factory = assembly.GetType("Samples.SamplesModelFactory")!.GetMethods().Single(m => m.Name == "SettingsPatch");
+            Assert.That(factory.GetParameters().Single().Name, Is.EqualTo(wireName));
+            Assert.That(property.GetValue(factory.Invoke(null, ["Disabled"])), Is.EqualTo("Disabled"));
+        }
+
+        [TestCase("authentication", "AuthenticationState")]
+        [TestCase("properties", "State")]
+        public void SafeFlattenedNamesFollowWireWrapperRatherThanTypeName(string wireName, string expectedName)
+        {
+            var inner = InputFactory.Model("AuthenticationPropertiesForPatchUpdate",
+                properties: [InputFactory.Property("state", InputPrimitiveType.String)]);
+            var input = InputFactory.Model("SettingsPatch", properties:
+                [InputFactory.Property("authentication", inner, serializedName: wireName)]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, inner]);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+
+            Assert.That(model.Properties.Single(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public)).Name,
+                Is.EqualTo(expectedName));
+        }
+
+        [TestCase("local")]
+        [TestCase("inherited")]
+        [TestCase("custom")]
+        [TestCase("flattened")]
+        [TestCase("flattened-after")]
+        [TestCase("declaring-type")]
+        public void SafeFlattenedPropertiesDoNotHideExistingLeaves(string collision)
+        {
+            var inner = InputFactory.Model("AuthenticationPropertiesForPatchUpdate",
+                properties: [InputFactory.Property("state", InputPrimitiveType.String)]);
+            var baseModel = InputFactory.Model("BaseSettings", properties:
+                collision == "inherited" ? [InputFactory.Property("state", InputPrimitiveType.String)] : []);
+            var properties = new List<InputModelProperty> { InputFactory.Property("properties", inner) };
+            if (collision == "local")
+            {
+                properties.Add(InputFactory.Property("state", InputPrimitiveType.String));
+            }
+            if (collision is "flattened" or "flattened-after")
+            {
+                var sibling = InputFactory.Property("other", inner);
+                Flatten(sibling);
+                properties.Insert(collision == "flattened" ? 0 : properties.Count, sibling);
+            }
+            var input = InputFactory.Model(collision == "declaring-type" ? "State" : "SettingsPatch", properties: properties,
+                baseModel: collision == "inherited" ? baseModel : null);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, inner, baseModel],
+                customizationSources: collision == "custom"
+                    ? ["""
+                        namespace Samples.Models
+                        {
+                            public partial class SettingsPatch
+                            {
+                                public string State { get; set; }
+                            }
+                        }
+                        """]
+                    : null);
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+
+            Assert.That(model.Properties.Any(p => p.Name == "AuthenticationPropertiesForPatchUpdateState" &&
+                p.Modifiers.HasFlag(MethodSignatureModifiers.Public)), Is.True);
+            _ = Compile(plugin.Object);
+        }
+
+        [Test]
+        public void SafeFlattenedPropertiesPreservePublishedPrefixedSignatures()
+        {
+            var inner = InputFactory.Model("AuthenticationPropertiesForPatchUpdate",
+                properties: [InputFactory.Property("state", InputPrimitiveType.String, isRequired: true)]);
+            var input = InputFactory.Model("SettingsPatch", properties:
+                [InputFactory.Property("properties", inner, isRequired: true)]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [input, inner],
+                configurationJson: """{"package-name":"Samples"}""",
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                [
+                    ("LastContract.cs", """
+                    namespace Samples.Models
+                    {
+                        public partial class SettingsPatch
+                        {
+                            public SettingsPatch(string authenticationPropertiesForPatchUpdateState) { }
+                            public string AuthenticationPropertiesForPatchUpdateState { get; set; }
+                        }
+                    }
+                    namespace Samples
+                    {
+                        public static partial class SamplesModelFactory
+                        {
+                            public static Samples.Models.SettingsPatch SettingsPatch(
+                                string authenticationPropertiesForPatchUpdateState = default) => default;
+                        }
+                    }
+                    """)
+                ]));
+            var model = plugin.Object.TypeFactory.CreateModel(input)!;
+            Visit(model);
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(model);
+            var factoryProvider = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            Visit(factoryProvider);
+            ManagementMockHelpers.ProcessTypeForBackCompatibility(factoryProvider);
+            var assembly = Compile(plugin.Object, includeFactory: true);
+            var type = assembly.GetType("Samples.Models.SettingsPatch")!;
+            var property = type.GetProperty("AuthenticationPropertiesForPatchUpdateState");
+            Assert.That(property, Is.Not.Null);
+            Assert.That(type.GetProperty("State"), Is.Null);
+            var constructor = type.GetConstructor([typeof(string)])!;
+            Assert.That(constructor.GetParameters().Single().Name, Is.EqualTo("authenticationPropertiesForPatchUpdateState"));
+            var instance = constructor.Invoke(["Enabled"]);
+            Assert.That(property!.GetValue(instance), Is.EqualTo("Enabled"));
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(instance, new ModelReaderWriterOptions("W")));
+            Assert.That(json.RootElement.GetProperty("properties").GetProperty("state").GetString(), Is.EqualTo("Enabled"));
+            var factory = assembly.GetType("Samples.SamplesModelFactory")!.GetMethods().Single(m => m.Name == "SettingsPatch");
+            Assert.That(factory.GetParameters().Single().Name, Is.EqualTo("authenticationPropertiesForPatchUpdateState"));
+        }
+
         [Test]
         public void OptionalScalarWrapperIsOmittedAfterClearingItsLastLeaf([Values] bool withSibling)
         {
@@ -1614,7 +1757,7 @@ namespace Azure.Generator.Mgmt.Tests
             => typeof(InputModelProperty).GetProperty(nameof(InputModelProperty.Decorators))!.SetValue(property,
                 new[] { new InputDecoratorInfo("Azure.ResourceManager.@flattenProperty", new Dictionary<string, BinaryData>()) });
 
-        private static void Visit(ModelProvider model)
+        private static void Visit(TypeProvider model)
         {
             var visit = typeof(LibraryVisitor).GetMethod("VisitTypeCore", BindingFlags.NonPublic | BindingFlags.Instance)!;
             foreach (var visitor in ManagementClientGenerator.Instance.Visitors)

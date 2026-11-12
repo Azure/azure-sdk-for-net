@@ -776,11 +776,11 @@ namespace Azure.ResourceManager.HorizonDB.Models
             return new MicrosoftEntraAuthenticationProperties(state, provisioningState, default);
         }
 
-        /// <param name="microsoftEntraAuthenticationPropertiesForPatchUpdateState"> The target Microsoft Entra authentication state. Omission preserves the current state. </param>
+        /// <param name="state"> The target Microsoft Entra authentication state. Omission preserves the current state. </param>
         /// <returns> A new <see cref="Models.MicrosoftEntraAuthenticationPatch"/> instance for mocking. </returns>
-        public static MicrosoftEntraAuthenticationPatch MicrosoftEntraAuthenticationPatch(HorizonDBAuthenticationState? microsoftEntraAuthenticationPropertiesForPatchUpdateState = default)
+        public static MicrosoftEntraAuthenticationPatch MicrosoftEntraAuthenticationPatch(HorizonDBAuthenticationState? state = default)
         {
-            return new MicrosoftEntraAuthenticationPatch(microsoftEntraAuthenticationPropertiesForPatchUpdateState is null ? default : new MicrosoftEntraAuthenticationPropertiesForPatchUpdate(microsoftEntraAuthenticationPropertiesForPatchUpdateState, default), default);
+            return new MicrosoftEntraAuthenticationPatch(state is null ? default : new MicrosoftEntraAuthenticationPropertiesForPatchUpdate(state, default), default);
         }
 
         /// <summary> The singleton change data capture capability for a HorizonDB cluster. </summary>
@@ -939,11 +939,11 @@ namespace Azure.ResourceManager.HorizonDB.Models
             return new FabricDestinationDetails(ChangeDataCaptureDestinationType.Fabric, protocol, default, workspaceId);
         }
 
-        /// <param name="changeDataCaptureDestinationPropertiesForPatchUpdateDesiredState"> The requested destination state. </param>
+        /// <param name="desiredState"> The requested destination state. </param>
         /// <returns> A new <see cref="Models.ChangeDataCaptureDestinationPatch"/> instance for mocking. </returns>
-        public static ChangeDataCaptureDestinationPatch ChangeDataCaptureDestinationPatch(ChangeDataCaptureDesiredState? changeDataCaptureDestinationPropertiesForPatchUpdateDesiredState = default)
+        public static ChangeDataCaptureDestinationPatch ChangeDataCaptureDestinationPatch(ChangeDataCaptureDesiredState? desiredState = default)
         {
-            return new ChangeDataCaptureDestinationPatch(changeDataCaptureDestinationPropertiesForPatchUpdateDesiredState is null ? default : new ChangeDataCaptureDestinationPropertiesForPatchUpdate(changeDataCaptureDestinationPropertiesForPatchUpdateDesiredState, default), default);
+            return new ChangeDataCaptureDestinationPatch(desiredState is null ? default : new ChangeDataCaptureDestinationPropertiesForPatchUpdate(desiredState, default), default);
         }
 
         /// <summary> The request to activate an identity assignment for a change data capture destination. </summary>
@@ -1089,11 +1089,11 @@ namespace Azure.ResourceManager.HorizonDB.Models
             return new ChangeDataCaptureTopologyBindingStatus(state, generation, activeClusterResourceId, replacementConfigurationResourceId, default);
         }
 
-        /// <param name="changeDataCaptureConfigurationPropertiesForPatchUpdateDesiredState"> The requested configuration state. </param>
+        /// <param name="desiredState"> The requested configuration state. </param>
         /// <returns> A new <see cref="Models.ChangeDataCaptureConfigurationPatch"/> instance for mocking. </returns>
-        public static ChangeDataCaptureConfigurationPatch ChangeDataCaptureConfigurationPatch(ChangeDataCaptureDesiredState? changeDataCaptureConfigurationPropertiesForPatchUpdateDesiredState = default)
+        public static ChangeDataCaptureConfigurationPatch ChangeDataCaptureConfigurationPatch(ChangeDataCaptureDesiredState? desiredState = default)
         {
-            return new ChangeDataCaptureConfigurationPatch(changeDataCaptureConfigurationPropertiesForPatchUpdateDesiredState is null ? default : new ChangeDataCaptureConfigurationPropertiesForPatchUpdate(changeDataCaptureConfigurationPropertiesForPatchUpdateDesiredState, default), default);
+            return new ChangeDataCaptureConfigurationPatch(desiredState is null ? default : new ChangeDataCaptureConfigurationPropertiesForPatchUpdate(desiredState, default), default);
         }
 
         /// <summary> Represents a service-generated, service-managed HorizonDB endpoint. The Cluster-scoped Endpoint is created and deleted with its parent Cluster. A Pool-scoped Endpoint is created and deleted with the Pool identified by associatedResourceId. Endpoints cannot be created or deleted independently from their lifecycle owner. </summary>

@@ -46,7 +46,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> Domain endpoint. </summary>
         [WirePath("properties.endpoint")]
-        public string EventGridDomainEndpoint
+        public string Endpoint
         {
             get
             {

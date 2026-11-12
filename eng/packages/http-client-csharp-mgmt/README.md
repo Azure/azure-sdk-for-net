@@ -33,6 +33,10 @@ options:
     option: value
 ```
 
+## Model property flattening
+
+When a single-property `properties` bag is flattened, its public member uses the leaf name (for example, `DesiredState`), not the internal bag type's name. Other wrappers retain their contextual naming. An existing public contract or a conflicting member preserves the combined name instead. Flattening does not change the JSON property path.
+
 ## Emitter options
 
 ### `emitter-output-dir`

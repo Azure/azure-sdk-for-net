@@ -169,6 +169,65 @@ namespace Azure.ResourceManager.HorizonDB.Tests
             Assert.That(roundTrip.LogicalStreamId, Is.EqualTo(logicalStreamId));
         }
 
+        [TestCase(false)]
+        [TestCase(true)]
+        public void ConfigurationPatchExposesDesiredState(bool useFactory)
+        {
+            var patch = useFactory
+                ? ArmHorizonDBModelFactory.ChangeDataCaptureConfigurationPatch(desiredState: ChangeDataCaptureDesiredState.Enabled)
+                : new ChangeDataCaptureConfigurationPatch { DesiredState = ChangeDataCaptureDesiredState.Enabled };
+
+            var roundTrip = AssertPatchStateRoundTrip(patch, "desiredState");
+            Assert.That(roundTrip.DesiredState, Is.EqualTo(ChangeDataCaptureDesiredState.Enabled));
+            patch.DesiredState = null;
+            AssertEmptyPatch(patch);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void DestinationPatchExposesDesiredState(bool useFactory)
+        {
+            var patch = useFactory
+                ? ArmHorizonDBModelFactory.ChangeDataCaptureDestinationPatch(desiredState: ChangeDataCaptureDesiredState.Enabled)
+                : new ChangeDataCaptureDestinationPatch { DesiredState = ChangeDataCaptureDesiredState.Enabled };
+
+            var roundTrip = AssertPatchStateRoundTrip(patch, "desiredState");
+            Assert.That(roundTrip.DesiredState, Is.EqualTo(ChangeDataCaptureDesiredState.Enabled));
+            patch.DesiredState = null;
+            AssertEmptyPatch(patch);
+        }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void EntraAuthenticationPatchExposesState(bool useFactory)
+        {
+            var patch = useFactory
+                ? ArmHorizonDBModelFactory.MicrosoftEntraAuthenticationPatch(state: HorizonDBAuthenticationState.Enabled)
+                : new MicrosoftEntraAuthenticationPatch { State = HorizonDBAuthenticationState.Enabled };
+
+            var roundTrip = AssertPatchStateRoundTrip(patch, "state");
+            Assert.That(roundTrip.State, Is.EqualTo(HorizonDBAuthenticationState.Enabled));
+            patch.State = null;
+            AssertEmptyPatch(patch);
+        }
+
+        private static T AssertPatchStateRoundTrip<T>(T patch, string propertyName)
+        {
+            var data = ModelReaderWriter.Write(patch, new ModelReaderWriterOptions("W"));
+            using var json = JsonDocument.Parse(data);
+            Assert.That(json.RootElement.EnumerateObject().Select(p => p.Name), Is.EqualTo(new[] { "properties" }));
+            var properties = json.RootElement.GetProperty("properties");
+            Assert.That(properties.EnumerateObject().Select(p => p.Name), Is.EqualTo(new[] { propertyName }));
+            Assert.That(properties.GetProperty(propertyName).GetString(), Is.EqualTo("Enabled"));
+            return ModelReaderWriter.Read<T>(data);
+        }
+
+        private static void AssertEmptyPatch<T>(T patch)
+        {
+            using var json = JsonDocument.Parse(ModelReaderWriter.Write(patch, new ModelReaderWriterOptions("W")));
+            Assert.That(json.RootElement.EnumerateObject().Any(), Is.False);
+        }
+
         private static ArmClient CreateClient(MockTransport transport)
             => new ArmClient(new MockCredential(), SubscriptionId, new ArmClientOptions { Transport = transport });
 

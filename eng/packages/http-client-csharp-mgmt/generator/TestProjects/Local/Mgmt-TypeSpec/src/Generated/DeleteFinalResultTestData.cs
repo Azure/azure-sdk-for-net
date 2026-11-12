@@ -46,7 +46,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> Gets or sets the Marker. </summary>
         [WirePath("properties.marker")]
-        public string DeleteFinalResultTestMarker
+        public string Marker
         {
             get
             {

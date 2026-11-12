@@ -724,9 +724,9 @@ namespace Azure.Generator.Management.Visitors
             var flattenPropertyName = ResolveFlattenedDateTimePropertyName(
                 model,
                 innerProperty,
-                PropertyHelpers.GetCombinedPropertyName(innerProperty, internalProperty),
+                GetSafeFlattenedPropertyName(model, innerProperty, internalProperty, propertyMap),
                 propertyMap,
-                historicalName => PropertyHelpers.GetCombinedPropertyName(innerProperty, internalProperty, historicalName)); // TODO: handle name conflicts
+                historicalName => GetSafeFlattenedPropertyName(model, innerProperty, internalProperty, propertyMap, historicalName));
 
             // Apply the same historical type preservation as explicit property flattening.
             var shouldLiftToNullable = ShouldLiftToNullable(internalProperty);
@@ -770,6 +770,46 @@ namespace Azure.Generator.Management.Visitors
                 propertyMap.Add(internalProperty, new List<FlattenPropertyInfo> { new(flattenedProperty, internalProperty) });
             }
             return isFlattened;
+        }
+
+        private static string GetSafeFlattenedPropertyName(
+            ModelProvider model,
+            PropertyProvider innerProperty,
+            PropertyProvider wrapperProperty,
+            IReadOnlyDictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap,
+            string? innerPropertyName = null)
+        {
+            var combinedName = PropertyHelpers.GetCombinedPropertyName(innerProperty, wrapperProperty, innerPropertyName);
+            if (wrapperProperty.WireInfo?.SerializedName != "properties")
+            {
+                return combinedName;
+            }
+
+            var previous = model.LastContractView?.Properties.FirstOrDefault(p =>
+                p.Name == combinedName && IsPublicApi(p.Modifiers) &&
+                p.Type.HasSamePublicType(innerProperty.Type, ignoreNullable: true));
+            if (previous is not null && !ModelCompatibilityValidator.IsPropertyRemovalAccepted(model, previous))
+            {
+                return combinedName;
+            }
+
+            var leafName = innerPropertyName ?? innerProperty.Name;
+            var conflictsWithExplicitFlatten =
+                ManagementClientGenerator.Instance.OutputLibrary.OutputFlattenPropertyMap.TryGetValue(model, out var propertiesToFlatten) &&
+                propertiesToFlatten.Any(p => p.Name != wrapperProperty.Name &&
+                    TryGetModelProvider(p.Type, out var nestedModel) &&
+                    PropertyHelpers.GetAllProperties(nestedModel).Any(inner => IsFlattenableProperty(inner) && inner.Name == leafName));
+            // A properties bag contributes settings, not a public type-name prefix.
+            // Keep the combined name when promoting the leaf would hide another member.
+            if (leafName == model.Name || conflictsWithExplicitFlatten ||
+                PropertyHelpers.GetAllProperties(model).Any(p => p != wrapperProperty && p.Name == leafName) ||
+                model.CustomCodeView?.Properties.Any(p => p.Name == leafName) == true ||
+                propertyMap.Values.SelectMany(v => v).Any(info => info.FlattenedProperty.Name == leafName))
+            {
+                return combinedName;
+            }
+
+            return leafName;
         }
 
         private static CSharpType GetFlattenedPropertyType(ModelProvider model, string name, PropertyProvider innerProperty, bool lifted)

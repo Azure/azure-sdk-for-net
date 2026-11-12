@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
         internal MicrosoftEntraAuthenticationPropertiesForPatchUpdate Properties { get; set; }
 
         /// <summary> The target Microsoft Entra authentication state. Omission preserves the current state. </summary>
-        public HorizonDBAuthenticationState? MicrosoftEntraAuthenticationPropertiesForPatchUpdateState
+        public HorizonDBAuthenticationState? State
         {
             get
             {
