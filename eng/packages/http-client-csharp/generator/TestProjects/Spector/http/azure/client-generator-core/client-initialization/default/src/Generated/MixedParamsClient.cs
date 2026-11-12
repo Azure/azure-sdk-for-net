@@ -44,8 +44,8 @@ namespace Specs.Azure.ClientGenerator.Core.ClientInitialization.DefaultClient
 
         public virtual Task<Response> WithBodyAsync(string region, RequestContent content, RequestContext context = null) => throw null;
 
-        public virtual Response WithBody(string region, WithBodyRequest body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response WithBody(string region, WithBodyContent body, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response> WithBodyAsync(string region, WithBodyRequest body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> WithBodyAsync(string region, WithBodyContent body, CancellationToken cancellationToken = default) => throw null;
     }
 }

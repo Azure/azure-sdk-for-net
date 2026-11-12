@@ -39,7 +39,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="recoveryCapacityReservationGroupId"> The recovery capacity reservation group Id. </param>
         /// <param name="platformFaultDomain"> the platform fault domain. </param>
         /// <param name="diskEncryptionInfo"> The recovery disk encryption information. </param>
-        internal A2ASwitchProtectionContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier recoveryContainerId, IList<A2AVmDiskDetails> vmDisks, IList<A2AVmManagedDiskDetails> vmManagedDisks, ResourceIdentifier recoveryResourceGroupId, string recoveryCloudServiceId, ResourceIdentifier recoveryAvailabilitySetId, ResourceIdentifier policyId, ResourceIdentifier recoveryBootDiagStorageAccountId, string recoveryAvailabilityZone, ResourceIdentifier recoveryProximityPlacementGroupId, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId, int? platformFaultDomain, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo) : base(instanceType, additionalBinaryDataProperties)
+        /// <param name="recoveryConfidentialDataDiskEncryptionIdentity"> The Azure resource ID of the confidential data disk encryption user-assigned identity. Applicable to CMK confidential VM data disks. </param>
+        internal A2ASwitchProtectionContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier recoveryContainerId, IList<A2AVmDiskDetails> vmDisks, IList<A2AVmManagedDiskDetails> vmManagedDisks, ResourceIdentifier recoveryResourceGroupId, string recoveryCloudServiceId, ResourceIdentifier recoveryAvailabilitySetId, ResourceIdentifier policyId, ResourceIdentifier recoveryBootDiagStorageAccountId, string recoveryAvailabilityZone, ResourceIdentifier recoveryProximityPlacementGroupId, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId, int? platformFaultDomain, SiteRecoveryDiskEncryptionInfo diskEncryptionInfo, ResourceIdentifier recoveryConfidentialDataDiskEncryptionIdentity) : base(instanceType, additionalBinaryDataProperties)
         {
             RecoveryContainerId = recoveryContainerId;
             VmDisks = vmDisks;
@@ -55,6 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecoveryCapacityReservationGroupId = recoveryCapacityReservationGroupId;
             PlatformFaultDomain = platformFaultDomain;
             DiskEncryptionInfo = diskEncryptionInfo;
+            RecoveryConfidentialDataDiskEncryptionIdentity = recoveryConfidentialDataDiskEncryptionIdentity;
         }
 
         /// <summary> The recovery container Id. </summary>
@@ -98,5 +100,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> The recovery disk encryption information. </summary>
         public SiteRecoveryDiskEncryptionInfo DiskEncryptionInfo { get; set; }
+
+        /// <summary> The Azure resource ID of the confidential data disk encryption user-assigned identity. Applicable to CMK confidential VM data disks. </summary>
+        public ResourceIdentifier RecoveryConfidentialDataDiskEncryptionIdentity { get; set; }
     }
 }

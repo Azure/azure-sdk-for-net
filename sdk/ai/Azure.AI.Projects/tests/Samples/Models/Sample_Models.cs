@@ -95,7 +95,7 @@ public class Sample_Models : SamplesBase
             throw new InvalidOperationException($"The model {modelName} v. {modelVersion} did not register successfully.");
         }
         Console.WriteLine($"Model {retrievedModel.Name}, v. {retrievedModel.Version}.");
-        ModelCredentialRequest credentialRequest = new(dataUri);
+        ModelCredentialContent credentialRequest = new(dataUri);
         DatasetCredential modelCredential = await projectClient.Models.GetModelCredentialsAsync(name: retrievedModel.Name, version: retrievedModel.Version, credentialRequest: credentialRequest);
         Console.WriteLine($"Model SAS URI: {modelCredential.BlobReference.Credential.SasUri}.");
         #endregion
@@ -195,7 +195,7 @@ public class Sample_Models : SamplesBase
             throw new InvalidOperationException($"The model {modelName} v. {modelVersion} did not register successfully.");
         }
         Console.WriteLine($"Model {retrievedModel.Name}, v. {retrievedModel.Version}.");
-        ModelCredentialRequest credentialRequest = new(dataUri);
+        ModelCredentialContent credentialRequest = new(dataUri);
         DatasetCredential modelCredential = projectClient.Models.GetModelCredentials(name: retrievedModel.Name, version: retrievedModel.Version, credentialRequest: credentialRequest);
         Console.WriteLine($"Model SAS URI: {modelCredential.BlobReference.Credential.SasUri}.");
         #endregion

@@ -126,7 +126,7 @@ namespace Azure.AI.Projects.Agents
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(tools, nameof(tools));
 
-            CreateToolboxVersionRequest spreadModel = new CreateToolboxVersionRequest(
+            CreateToolboxVersionContent spreadModel = new CreateToolboxVersionContent(
                 description,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 tools?.ToList() as IList<ToolboxTool> ?? new ChangeTrackingList<ToolboxTool>(),
@@ -153,7 +153,7 @@ namespace Azure.AI.Projects.Agents
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(tools, nameof(tools));
 
-            CreateToolboxVersionRequest spreadModel = new CreateToolboxVersionRequest(
+            CreateToolboxVersionContent spreadModel = new CreateToolboxVersionContent(
                 description,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 tools?.ToList() as IList<ToolboxTool> ?? new ChangeTrackingList<ToolboxTool>(),

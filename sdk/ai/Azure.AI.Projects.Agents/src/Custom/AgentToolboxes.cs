@@ -190,8 +190,8 @@ public partial class AgentToolboxes
         Argument.AssertNotNullOrEmpty(name, nameof(name));
         Argument.AssertNotNull(defaultVersion, nameof(defaultVersion));
 
-        UpdateToolboxRequest request = new(name, defaultVersion);
-        BinaryData requestBin = ((IJsonModel<UpdateToolboxRequest>)request).Write(ModelReaderWriterOptions.Json);
+        UpdateToolboxContent request = new(name, defaultVersion);
+        BinaryData requestBin = ((IJsonModel<UpdateToolboxContent>)request).Write(ModelReaderWriterOptions.Json);
         using BinaryContent content = BinaryContent.Create(requestBin);
         ClientResult result = UpdateDefaultVersion(name, content, options);
         return ClientResult.FromValue((ToolboxRecord)result, result.GetRawResponse());
@@ -217,8 +217,8 @@ public partial class AgentToolboxes
         Argument.AssertNotNullOrEmpty(name, nameof(name));
         Argument.AssertNotNull(defaultVersion, nameof(defaultVersion));
 
-        UpdateToolboxRequest request = new(name, defaultVersion);
-        BinaryData requestBin = ((IJsonModel<UpdateToolboxRequest>)request).Write(ModelReaderWriterOptions.Json);
+        UpdateToolboxContent request = new(name, defaultVersion);
+        BinaryData requestBin = ((IJsonModel<UpdateToolboxContent>)request).Write(ModelReaderWriterOptions.Json);
         using BinaryContent content = BinaryContent.Create(requestBin);
         ClientResult result = await UpdateDefaultVersionAsync(name, content, options).ConfigureAwait(false);
         return ClientResult.FromValue((ToolboxRecord)result, result.GetRawResponse());

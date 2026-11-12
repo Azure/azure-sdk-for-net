@@ -172,7 +172,7 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
                 if (responseItem is ComputerCallResponseItem computerCall)
                 {
                     currentScreenshot = ProcessComputerUseCall(computerCall, currentScreenshot);
-                    responseOptions.InputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageFileId: screenshots[currentScreenshot])));
+                    responseOptions.InputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateComputerScreenshotOutput(screenshotImageFileId: screenshots[currentScreenshot])));
                 }
             }
             limitIteration--;
@@ -272,7 +272,7 @@ public class Sample_ComputerUse : ProjectsOpenAITestBase
                 if (responseItem is ComputerCallResponseItem computerCall)
                 {
                     currentScreenshot = ProcessComputerUseCall(computerCall, currentScreenshot);
-                    responseOptions.InputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageFileId: screenshots[currentScreenshot])));
+                    responseOptions.InputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateComputerScreenshotOutput(screenshotImageFileId: screenshots[currentScreenshot])));
                 }
             }
             limitIteration--;

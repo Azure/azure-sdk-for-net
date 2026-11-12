@@ -14,21 +14,10 @@ namespace Azure.Developer.LoadTesting
     public partial class TestsNotificationRule : NotificationRule
     {
         /// <summary> Initializes a new instance of <see cref="TestsNotificationRule"/>. </summary>
-        /// <param name="displayName"> The name of the notification rule. </param>
-        /// <param name="actionGroupIds"> The action groups to notify. </param>
-        /// <param name="eventFilters">
-        /// The event to receive notifications for along with filtering conditions.
-        /// Key is a user-assigned identifier for the event filter.
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="displayName"/>, <paramref name="actionGroupIds"/> or <paramref name="eventFilters"/> is null. </exception>
-        public TestsNotificationRule(string displayName, IEnumerable<string> actionGroupIds, IDictionary<string, TestsNotificationEventFilter> eventFilters) : base(displayName, actionGroupIds, NotificationScopeType.Tests)
+        public TestsNotificationRule() : base(NotificationScopeType.Tests)
         {
-            Argument.AssertNotNull(displayName, nameof(displayName));
-            Argument.AssertNotNull(actionGroupIds, nameof(actionGroupIds));
-            Argument.AssertNotNull(eventFilters, nameof(eventFilters));
-
             TestIds = new ChangeTrackingList<string>();
-            EventFilters = eventFilters;
+            EventFilters = new ChangeTrackingDictionary<string, TestsNotificationEventFilter>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TestsNotificationRule"/>. </summary>

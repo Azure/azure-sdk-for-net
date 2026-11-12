@@ -31,10 +31,10 @@ namespace Payload.MultiPart._FormData.HttpParts
         public virtual Task<Response> JsonArrayAndFileArrayAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
 
         [Experimental("SCME0004")]
-        public virtual Response JsonArrayAndFileArray(ComplexHttpPartsModelRequest body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response JsonArrayAndFileArray(ComplexHttpPartsModelContent body, CancellationToken cancellationToken = default) => throw null;
 
         [Experimental("SCME0004")]
-        public virtual Task<Response> JsonArrayAndFileArrayAsync(ComplexHttpPartsModelRequest body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> JsonArrayAndFileArrayAsync(ComplexHttpPartsModelContent body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual FormDataHttpPartsContentType GetFormDataHttpPartsContentTypeClient() => throw null;
 

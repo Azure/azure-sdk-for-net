@@ -12,7 +12,7 @@ namespace Specs.Azure.Core.Basic
 {
     public partial class User
     {
-        public User(string name) => throw null;
+        public User() => throw null;
 
         public int Id => throw null;
 
