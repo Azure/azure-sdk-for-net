@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (LatestCveResource item in Value)
+            foreach (LatestCveData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            IList<LatestCveResource> value = default;
+            IList<LatestCveData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<LatestCveResource> array = new List<LatestCveResource>();
+                    List<LatestCveData> array = new List<LatestCveData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LatestCveResource.DeserializeLatestCveResource(item, options));
+                        array.Add(LatestCveData.DeserializeLatestCveData(item, options));
                     }
                     value = array;
                     continue;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LatestCveResourceListResult(value ?? new ChangeTrackingList<LatestCveResource>(), nextLink, additionalBinaryDataProperties);
+            return new LatestCveResourceListResult(value ?? new ChangeTrackingList<LatestCveData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

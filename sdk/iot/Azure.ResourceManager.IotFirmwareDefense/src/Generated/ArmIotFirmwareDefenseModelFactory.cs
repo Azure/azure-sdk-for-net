@@ -479,10 +479,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.LatestCveResource"/> instance for mocking. </returns>
-        public static LatestCveResource LatestCveResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, LatestCveResult properties = default)
+        /// <returns> A new <see cref="Models.LatestCveData"/> instance for mocking. </returns>
+        public static LatestCveData LatestCveData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, LatestCveResult properties = default)
         {
-            return new LatestCveResource(
+            return new LatestCveData(
                 id,
                 name,
                 resourceType,
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         /// <summary>
         /// Properties of an analysis summary.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BinaryHardeningSummary"/>, <see cref="Models.CryptoCertificateSummary"/>, <see cref="Models.CryptoKeySummary"/>, <see cref="Models.CveAnalysisSummary"/>, <see cref="Models.CveSummary"/>, <see cref="Models.FirmwareSummary"/>, <see cref="Models.LatestCveSummaryResource"/>, <see cref="Models.PasswordHashSummary"/>, <see cref="Models.SbomSummary"/>, and <see cref="Models.UnsafeFunctionCallsSummary"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BinaryHardeningSummary"/>, <see cref="Models.CryptoCertificateSummary"/>, <see cref="Models.CryptoKeySummary"/>, <see cref="Models.CveAnalysisSummary"/>, <see cref="Models.CveSummary"/>, <see cref="Models.FirmwareSummary"/>, <see cref="Models.LatestCveSummary"/>, <see cref="Models.PasswordHashSummary"/>, <see cref="Models.SbomSummary"/>, and <see cref="Models.UnsafeFunctionCallsSummary"/>.
         /// </summary>
         /// <param name="summaryType"> The type of summary. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
@@ -818,10 +818,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="diffUnknownCveCount"> The change in the number of unknown severity CVEs detected since the prior CVE analysis. </param>
         /// <param name="diffCisaKevCount"> The change in the number of CVEs found in the CISA KEV (Known Exploited Vulnerabilities) catalog since the prior CVE analysis. </param>
         /// <param name="lastCveDatabaseUpdate"> The timestamp of the last update to the CVE database used for this rescan. </param>
-        /// <returns> A new <see cref="Models.LatestCveSummaryResource"/> instance for mocking. </returns>
-        public static LatestCveSummaryResource LatestCveSummaryResource(FirmwareProvisioningState? provisioningState = default, long? totalCveCount = default, long? criticalCveCount = default, long? highCveCount = default, long? mediumCveCount = default, long? lowCveCount = default, long? unknownCveCount = default, long? cisaKevCount = default, string schemaVersion = default, RescanStatus? rescanStatus = default, long? diffCriticalCveCount = default, long? diffHighCveCount = default, long? diffMediumCveCount = default, long? diffLowCveCount = default, long? diffUnknownCveCount = default, long? diffCisaKevCount = default, DateTimeOffset? lastCveDatabaseUpdate = default)
+        /// <returns> A new <see cref="Models.LatestCveSummary"/> instance for mocking. </returns>
+        public static LatestCveSummary LatestCveSummary(FirmwareProvisioningState? provisioningState = default, long? totalCveCount = default, long? criticalCveCount = default, long? highCveCount = default, long? mediumCveCount = default, long? lowCveCount = default, long? unknownCveCount = default, long? cisaKevCount = default, string schemaVersion = default, RescanStatus? rescanStatus = default, long? diffCriticalCveCount = default, long? diffHighCveCount = default, long? diffMediumCveCount = default, long? diffLowCveCount = default, long? diffUnknownCveCount = default, long? diffCisaKevCount = default, DateTimeOffset? lastCveDatabaseUpdate = default)
         {
-            return new LatestCveSummaryResource(
+            return new LatestCveSummary(
                 FirmwareAnalysisSummaryType.LatestCve,
                 provisioningState,
                 default,

@@ -14,51 +14,51 @@ using Azure.ResourceManager.IotFirmwareDefense;
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Properties for a CVE rescan analysis summary, describing the difference between this rescan and the prior CVE analysis. </summary>
-    public partial class LatestCveSummaryResource : FirmwareAnalysisSummaryProperties, IJsonModel<LatestCveSummaryResource>
+    public partial class LatestCveSummary : FirmwareAnalysisSummaryProperties, IJsonModel<LatestCveSummary>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override FirmwareAnalysisSummaryProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LatestCveSummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LatestCveSummary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLatestCveSummaryResource(document.RootElement, options);
+                        return DeserializeLatestCveSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LatestCveSummaryResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LatestCveSummary)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LatestCveSummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LatestCveSummary>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LatestCveSummaryResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LatestCveSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LatestCveSummaryResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<LatestCveSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LatestCveSummaryResource IPersistableModel<LatestCveSummaryResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (LatestCveSummaryResource)PersistableModelCreateCore(data, options);
+        LatestCveSummary IPersistableModel<LatestCveSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => (LatestCveSummary)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LatestCveSummaryResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LatestCveSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LatestCveSummaryResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LatestCveSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LatestCveSummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LatestCveSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LatestCveSummaryResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LatestCveSummary)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(TotalCveCount))
@@ -159,24 +159,24 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LatestCveSummaryResource IJsonModel<LatestCveSummaryResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (LatestCveSummaryResource)JsonModelCreateCore(ref reader, options);
+        LatestCveSummary IJsonModel<LatestCveSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (LatestCveSummary)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override FirmwareAnalysisSummaryProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LatestCveSummaryResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LatestCveSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LatestCveSummaryResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LatestCveSummary)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLatestCveSummaryResource(document.RootElement, options);
+            return DeserializeLatestCveSummary(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LatestCveSummaryResource DeserializeLatestCveSummaryResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static LatestCveSummary DeserializeLatestCveSummary(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LatestCveSummaryResource(
+            return new LatestCveSummary(
                 summaryType,
                 provisioningState,
                 additionalBinaryDataProperties,

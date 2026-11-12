@@ -17,51 +17,51 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> The object representing a firmware analysis CVE rescan result resource. </summary>
-    public partial class LatestCveResource : ResourceData, IJsonModel<LatestCveResource>
+    public partial class LatestCveData : ResourceData, IJsonModel<LatestCveData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LatestCveResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LatestCveData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeLatestCveResource(document.RootElement, options);
+                        return DeserializeLatestCveData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LatestCveResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LatestCveData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LatestCveResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LatestCveData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(LatestCveResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LatestCveData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<LatestCveResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<LatestCveData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LatestCveResource IPersistableModel<LatestCveResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (LatestCveResource)PersistableModelCreateCore(data, options);
+        LatestCveData IPersistableModel<LatestCveData>.Create(BinaryData data, ModelReaderWriterOptions options) => (LatestCveData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<LatestCveResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<LatestCveData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<LatestCveResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<LatestCveData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LatestCveResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LatestCveData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LatestCveResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(LatestCveData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -102,24 +102,24 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        LatestCveResource IJsonModel<LatestCveResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (LatestCveResource)JsonModelCreateCore(ref reader, options);
+        LatestCveData IJsonModel<LatestCveData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (LatestCveData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<LatestCveResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LatestCveData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LatestCveResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(LatestCveData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeLatestCveResource(document.RootElement, options);
+            return DeserializeLatestCveData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static LatestCveResource DeserializeLatestCveResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static LatestCveData DeserializeLatestCveData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
                 }
             }
-            return new LatestCveResource(
+            return new LatestCveData(
                 id,
                 name,
                 resourceType,

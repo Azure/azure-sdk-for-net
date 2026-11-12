@@ -11,14 +11,14 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Properties for a CVE rescan analysis summary, describing the difference between this rescan and the prior CVE analysis. </summary>
-    public partial class LatestCveSummaryResource : FirmwareAnalysisSummaryProperties
+    public partial class LatestCveSummary : FirmwareAnalysisSummaryProperties
     {
-        /// <summary> Initializes a new instance of <see cref="LatestCveSummaryResource"/>. </summary>
-        public LatestCveSummaryResource() : base(FirmwareAnalysisSummaryType.LatestCve)
+        /// <summary> Initializes a new instance of <see cref="LatestCveSummary"/>. </summary>
+        public LatestCveSummary() : base(FirmwareAnalysisSummaryType.LatestCve)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="LatestCveSummaryResource"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="LatestCveSummary"/>. </summary>
         /// <param name="summaryType"> The type of summary. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="diffUnknownCveCount"> The change in the number of unknown severity CVEs detected since the prior CVE analysis. </param>
         /// <param name="diffCisaKevCount"> The change in the number of CVEs found in the CISA KEV (Known Exploited Vulnerabilities) catalog since the prior CVE analysis. </param>
         /// <param name="lastCveDatabaseUpdate"> The timestamp of the last update to the CVE database used for this rescan. </param>
-        internal LatestCveSummaryResource(FirmwareAnalysisSummaryType summaryType, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? totalCveCount, long? criticalCveCount, long? highCveCount, long? mediumCveCount, long? lowCveCount, long? unknownCveCount, long? cisaKevCount, string schemaVersion, RescanStatus? rescanStatus, long? diffCriticalCveCount, long? diffHighCveCount, long? diffMediumCveCount, long? diffLowCveCount, long? diffUnknownCveCount, long? diffCisaKevCount, DateTimeOffset? lastCveDatabaseUpdate) : base(summaryType, provisioningState, additionalBinaryDataProperties)
+        internal LatestCveSummary(FirmwareAnalysisSummaryType summaryType, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, long? totalCveCount, long? criticalCveCount, long? highCveCount, long? mediumCveCount, long? lowCveCount, long? unknownCveCount, long? cisaKevCount, string schemaVersion, RescanStatus? rescanStatus, long? diffCriticalCveCount, long? diffHighCveCount, long? diffMediumCveCount, long? diffLowCveCount, long? diffUnknownCveCount, long? diffCisaKevCount, DateTimeOffset? lastCveDatabaseUpdate) : base(summaryType, provisioningState, additionalBinaryDataProperties)
         {
             TotalCveCount = totalCveCount;
             CriticalCveCount = criticalCveCount;

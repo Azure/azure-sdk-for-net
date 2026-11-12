@@ -760,14 +760,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LatestCveResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LatestCveResource> GetByFirmwareAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="LatestCveData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<LatestCveData> GetByFirmwareAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new LatestCveResourceAsyncCollectionResultOfT(
+            return new LatestCveDataAsyncCollectionResultOfT(
                 _latestCvesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -799,14 +799,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LatestCveResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LatestCveResource> GetByFirmware(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="LatestCveData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<LatestCveData> GetByFirmware(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new LatestCveResourceCollectionResultOfT(
+            return new LatestCveDataCollectionResultOfT(
                 _latestCvesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,

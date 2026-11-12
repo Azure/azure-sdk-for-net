@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
         /// <summary> Initializes a new instance of <see cref="LatestCveResourceListResult"/>. </summary>
         /// <param name="value"> The LatestCveResource items on this page. </param>
-        internal LatestCveResourceListResult(IEnumerable<LatestCveResource> value)
+        internal LatestCveResourceListResult(IEnumerable<LatestCveData> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="value"> The LatestCveResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LatestCveResourceListResult(IList<LatestCveResource> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LatestCveResourceListResult(IList<LatestCveData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> The LatestCveResource items on this page. </summary>
-        public IList<LatestCveResource> Value { get; }
+        public IList<LatestCveData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
