@@ -15,6 +15,12 @@ BeforeAll {
 }
 
 Describe 'API review workflow scope and trusted input wiring' {
+    It 'labels the CI workflow and its check as API re-review' {
+        $ci = [IO.File]::ReadAllText((Join-Path $PSScriptRoot '..' '..' 'pr-re-review-tests.yml'))
+        ($ci -cmatch '(?m)^name: API PR Re-Review Tests\r?$') | Should -BeTrue
+        ($ci -cmatch '(?m)^    name: API PR re-review guards and routing\r?$') | Should -BeTrue
+    }
+
     It 'selects the input in a separate read-only job before invoking the model' {
         $job = Get-ApiWorkflowCompiledJob 'api_scope'
         $job | Should -Not -BeNullOrEmpty
