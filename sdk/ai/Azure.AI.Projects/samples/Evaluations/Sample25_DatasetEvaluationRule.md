@@ -2,7 +2,7 @@
 
 This sample demonstrates how to create a scheduled dataset evaluation rule that targets an agent. Every day at 09:00 UTC, the rule sends a fixed set of queries to the agent and evaluates its responses. The project managed identity needs the "Foundry User" role on the project.
 
-The `ParseClientResult` helper used below is defined in [Sample10_EvaluationsMonitor](./Sample10_EvaluationsMonitor.md); copy it into your sample.
+The `ParseClientResult` helper used below is defined in [Sample10_EvaluationsMonitor](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/ai/Azure.AI.Projects/samples/Evaluations/Sample10_EvaluationsMonitor.md); copy it into your sample.
 
 ## Run the sample
 
