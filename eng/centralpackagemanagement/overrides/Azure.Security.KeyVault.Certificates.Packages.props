@@ -1,4 +1,9 @@
 <Project>
+  <ItemGroup>
+    <!-- Use Core 1.65.0 for its MSAL 4.92.0 update on this release branch.
+         Remove this override when the central Core version reaches 1.65.0 or later. -->
+    <PackageVersion Update="Azure.Core" Version="1.65.0" />
+  </ItemGroup>
   <!--
     BouncyCastle is approved only for legacy use.
   -->
