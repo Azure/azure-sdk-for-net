@@ -80,7 +80,12 @@ internal class ResponsesActivitySource
 
         // Namespaced baggage items for downstream correlation
         activity.AddBaggage(ResponsesTracingConstants.Baggage.ResponseId, responseId);
-        activity.AddBaggage(ResponsesTracingConstants.Baggage.ConversationId, conversationId);
+        // Preserve a conversation ID propagated by the caller (for example, the workflow
+        // conversation of a multi-agent handoff) so downstream spans stay correlated with it.
+        if (string.IsNullOrEmpty(activity.GetBaggageItem(ResponsesTracingConstants.Baggage.ConversationId)))
+        {
+            activity.SetBaggage(ResponsesTracingConstants.Baggage.ConversationId, conversationId);
+        }
         activity.AddBaggage(ResponsesTracingConstants.Baggage.Streaming, isStreaming.ToString());
 
         // x-request-id propagation

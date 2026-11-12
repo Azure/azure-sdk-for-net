@@ -75,7 +75,8 @@ public sealed class DistributedTracingProtocolTests : IDisposable
         {
             foreach (var baggage in activity.Baggage)
             {
-                _capturedBaggage[baggage.Key] = baggage.Value;
+                // Activity.Baggage enumerates newest first; keep the effective value for duplicate keys.
+                _capturedBaggage.TryAdd(baggage.Key, baggage.Value);
             }
         }
 
@@ -113,6 +114,22 @@ public sealed class DistributedTracingProtocolTests : IDisposable
 
         Assert.That(_capturedBaggage[ResponsesTracingConstants.Baggage.ConversationId], Is.EqualTo("conv_xyz"));
         // Agent baggage no longer set (short-key baggage removed)
+    }
+
+    [Test]
+    public async Task Baggage_InboundConversationId_IsPreserved()
+    {
+        var request = new HttpRequestMessage(HttpMethod.Post, "/responses")
+        {
+            Content = new StringContent(
+                JsonSerializer.Serialize(new { model = "test", conversation = "conv_agent" }),
+                System.Text.Encoding.UTF8, "application/json")
+        };
+        request.Headers.Add("traceparent", "00-0af7651916cd43dd8448eb211c80319c-b7ad6b7169203331-01");
+        request.Headers.Add("baggage", $"{ResponsesTracingConstants.Baggage.ConversationId}=conv_workflow");
+        await _client.SendAsync(request);
+
+        Assert.That(_capturedBaggage[ResponsesTracingConstants.Baggage.ConversationId], Is.EqualTo("conv_workflow"));
     }
 
     [Test]
