@@ -98,18 +98,15 @@ namespace Azure.AI.Projects.Agents
             writer.WriteStringValue(ConnectionName);
             writer.WritePropertyName("source"u8);
             writer.WriteObjectValue(Source, options);
-            if (LifecycleModelReaderWriterOptions.IsVisible(options, LifecycleVisibility.Create))
+            if (Optional.IsCollectionDefined(Recipients))
             {
-                if (Optional.IsCollectionDefined(Recipients))
+                writer.WritePropertyName("recipients"u8);
+                writer.WriteStartArray();
+                foreach (TelephonyRecipient item in Recipients)
                 {
-                    writer.WritePropertyName("recipients"u8);
-                    writer.WriteStartArray();
-                    foreach (TelephonyRecipient item in Recipients)
-                    {
-                        writer.WriteObjectValue(item, options);
-                    }
-                    writer.WriteEndArray();
+                    writer.WriteObjectValue(item, options);
                 }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(RecipientDataset))
             {

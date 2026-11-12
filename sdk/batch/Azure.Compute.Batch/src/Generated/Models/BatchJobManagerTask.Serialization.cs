@@ -39,11 +39,6 @@ namespace Azure.Compute.Batch
     /// </summary>
     public partial class BatchJobManagerTask : IJsonModel<BatchJobManagerTask>
     {
-        /// <summary> Initializes a new instance of <see cref="BatchJobManagerTask"/> for deserialization. </summary>
-        internal BatchJobManagerTask()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BatchJobManagerTask PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

@@ -19,7 +19,7 @@ namespace Azure.Provisioning.SecurityCenter
         private BicepValue<string> _name;
         private SystemData _systemData;
         private SecurityCenterPrivateLinkResourceProperties _properties;
-        private ResourceReference<SecurityCenterPrivateLinkResource> _parent;
+        private ProvisioningResourceReference<SecurityCenterPrivateLinkResource> _parent;
 
         /// <summary> Creates a new PrivateLinkGroup. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -123,7 +123,7 @@ namespace Azure.Provisioning.SecurityCenter
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SecurityCenterPrivateLinkResourceProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<SecurityCenterPrivateLinkResource>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<SecurityCenterPrivateLinkResource>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Sphere
         private BicepValue<string> _name;
         private SystemData _systemData;
         private DeviceGroupProperties _properties;
-        private ResourceReference<SphereProduct> _parent;
+        private ProvisioningResourceReference<SphereProduct> _parent;
 
         /// <summary> Creates a new SphereDeviceGroup. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -213,7 +213,7 @@ namespace Azure.Provisioning.Sphere
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<DeviceGroupProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<SphereProduct>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<SphereProduct>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

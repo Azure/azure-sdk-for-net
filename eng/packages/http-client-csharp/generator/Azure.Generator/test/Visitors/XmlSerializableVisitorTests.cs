@@ -425,11 +425,10 @@ namespace Azure.Generator.Tests.Visitors
             var fromEnumerableMethod = bch!.Methods
                 .FirstOrDefault(m => m.Signature.Name == "FromEnumerable" &&
                                      m.Signature.GenericArguments?.Count == 1 &&
-                                     m.Signature.Parameters.Count == 4 &&
+                                     m.Signature.Parameters.Count == 3 &&
                                      m.Signature.Parameters[0].Name == "enumerable" &&
                                      m.Signature.Parameters[1].Name == "rootNameHint" &&
-                                     m.Signature.Parameters[2].Name == "childNameHint" &&
-                                     m.Signature.Parameters[3].Type.Equals(typeof(ModelReaderWriterOptions)));
+                                     m.Signature.Parameters[2].Name == "childNameHint");
             Assert.IsNotNull(fromEnumerableMethod, "FromEnumerable method should exist in BinaryContentHelper");
 
             var bodyBefore = fromEnumerableMethod!.BodyStatements?.ToDisplayString();

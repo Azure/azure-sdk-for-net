@@ -28,29 +28,29 @@ namespace Payload.MultiPart._FormData.File
         public virtual Task<Response> UploadFileSpecificContentTypeAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
 
         [Experimental("SCME0004")]
-        public virtual Response UploadFileSpecificContentType(UploadFileSpecificContentTypeRequest body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response UploadFileSpecificContentType(UploadFileSpecificContentTypeContent body, CancellationToken cancellationToken = default) => throw null;
 
         [Experimental("SCME0004")]
-        public virtual Task<Response> UploadFileSpecificContentTypeAsync(UploadFileSpecificContentTypeRequest body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> UploadFileSpecificContentTypeAsync(UploadFileSpecificContentTypeContent body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response UploadFileRequiredFilename(RequestContent content, string contentType, RequestContext context = null) => throw null;
 
         public virtual Task<Response> UploadFileRequiredFilenameAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
 
         [Experimental("SCME0004")]
-        public virtual Response UploadFileRequiredFilename(UploadFileRequiredFilenameRequest body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response UploadFileRequiredFilename(UploadFileRequiredFilenameContent body, CancellationToken cancellationToken = default) => throw null;
 
         [Experimental("SCME0004")]
-        public virtual Task<Response> UploadFileRequiredFilenameAsync(UploadFileRequiredFilenameRequest body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> UploadFileRequiredFilenameAsync(UploadFileRequiredFilenameContent body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Response UploadFileArray(RequestContent content, string contentType, RequestContext context = null) => throw null;
 
         public virtual Task<Response> UploadFileArrayAsync(RequestContent content, string contentType, RequestContext context = null) => throw null;
 
         [Experimental("SCME0004")]
-        public virtual Response UploadFileArray(UploadFileArrayRequest body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response UploadFileArray(UploadFileArrayContent body, CancellationToken cancellationToken = default) => throw null;
 
         [Experimental("SCME0004")]
-        public virtual Task<Response> UploadFileArrayAsync(UploadFileArrayRequest body, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response> UploadFileArrayAsync(UploadFileArrayContent body, CancellationToken cancellationToken = default) => throw null;
     }
 }

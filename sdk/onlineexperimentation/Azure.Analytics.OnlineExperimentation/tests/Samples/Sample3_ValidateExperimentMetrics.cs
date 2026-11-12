@@ -18,14 +18,15 @@ namespace Azure.Analytics.OnlineExperimentation.Samples
             var client = new OnlineExperimentationClient(endpoint, new DefaultAzureCredential());
 
             // Define a metric to validate
-            var metricToValidate = new ExperimentMetric(
-                LifecycleStage.Active,
-                "Test metric for validation",
-                "This metric definition will be validated before creation",
-                ["Test"],
-                DesiredDirection.Increase,
-                new EventCountMetricDefinition("TestEvent")
-            );
+            var metricToValidate = new ExperimentMetric
+            {
+                Lifecycle = LifecycleStage.Active,
+                DisplayName = "Test metric for validation",
+                Description = "This metric definition will be validated before creation",
+                Categories = { "Test" },
+                DesiredDirection = DesiredDirection.Increase,
+                Definition = new EventCountMetricDefinition("TestEvent"),
+            };
 
             // Validate the metric - checks for errors in the definition
             var validationResult = client.ValidateMetric(metricToValidate);

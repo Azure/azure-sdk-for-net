@@ -624,7 +624,7 @@ public partial class AgentAdministrationClient
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-        CreateSessionRequest spreadModel = new CreateSessionRequest(agentSessionId, versionIndicator, default);
+        CreateSessionContent spreadModel = new CreateSessionContent(agentSessionId, versionIndicator, default);
         ClientResult result = CreateSession(agentName, spreadModel, cancellationToken.ToRequestOptions());
         return ClientResult.FromValue((ProjectAgentSession)result, result.GetRawResponse());
     }
@@ -645,7 +645,7 @@ public partial class AgentAdministrationClient
     {
         Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
-        CreateSessionRequest spreadModel = new CreateSessionRequest(agentSessionId, versionIndicator, default);
+        CreateSessionContent spreadModel = new CreateSessionContent(agentSessionId, versionIndicator, default);
         ClientResult result = await CreateSessionAsync(agentName, spreadModel, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
         return ClientResult.FromValue((ProjectAgentSession)result, result.GetRawResponse());
     }
@@ -1166,7 +1166,7 @@ public partial class AgentAdministrationClient
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual ClientResult<ProjectsAgentRecord> GenerateAgent(GenerateVoiceAgentRequest body, CancellationToken cancellationToken = default)
+    public virtual ClientResult<ProjectsAgentRecord> GenerateAgent(GenerateVoiceAgentContent body, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(body, nameof(body));
 
@@ -1184,7 +1184,7 @@ public partial class AgentAdministrationClient
     /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual async Task<ClientResult<ProjectsAgentRecord>> GenerateAgentAsync(GenerateVoiceAgentRequest body, CancellationToken cancellationToken = default)
+    public virtual async Task<ClientResult<ProjectsAgentRecord>> GenerateAgentAsync(GenerateVoiceAgentContent body, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNull(body, nameof(body));
 

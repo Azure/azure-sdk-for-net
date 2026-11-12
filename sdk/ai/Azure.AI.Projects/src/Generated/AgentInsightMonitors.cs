@@ -119,7 +119,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(modelDeploymentName, nameof(modelDeploymentName));
 
-            CreateRequest spreadModel = new CreateRequest(
+            CreateContent spreadModel = new CreateContent(
                 agentName,
                 enabled,
                 runIntervalHours,
@@ -145,7 +145,7 @@ namespace Azure.AI.Projects
             Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
             Argument.AssertNotNullOrEmpty(modelDeploymentName, nameof(modelDeploymentName));
 
-            CreateRequest spreadModel = new CreateRequest(
+            CreateContent spreadModel = new CreateContent(
                 agentName,
                 enabled,
                 runIntervalHours,
@@ -567,7 +567,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
 
-            CreateRunRequest spreadModel = new CreateRunRequest(lookbackHours, default);
+            CreateRunContent spreadModel = new CreateRunContent(lookbackHours, default);
             OperationResult result = CreateRun(waitUntilCompleted, monitorId, spreadModel, operationId, cancellationToken.ToRequestOptions());
             return result;
         }
@@ -585,7 +585,7 @@ namespace Azure.AI.Projects
         {
             Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
 
-            CreateRunRequest spreadModel = new CreateRunRequest(lookbackHours, default);
+            CreateRunContent spreadModel = new CreateRunContent(lookbackHours, default);
             OperationResult result = await CreateRunAsync(waitUntilCompleted, monitorId, spreadModel, operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return result;
         }

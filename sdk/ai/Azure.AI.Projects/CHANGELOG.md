@@ -1,8 +1,9 @@
 # Release History
 
-## 3.0.0-beta.7 (Unreleased)
+## 3.0.0-beta.7 (2026-11-12)
 
 ### Features Added
+- Uploading of models now can be cancelled.
 
 - Added experimental `ProjectsLiveClient`, `ProjectsLiveSessionClient`, and `ProjectsLiveSessionClientOptions` for native GPT Live Voice Agent sessions, including generated event streaming, raw audio, text guidance, Responses tool results, and confirmed native graceful shutdown.
 - Native Live connections require TLS-protected WebSocket endpoints and use the authentication token provider's options factory.
@@ -16,6 +17,7 @@
 - Added stored-completions evaluation sources with the `ProjectsMetadata` model.
 
 ### Breaking Changes
+<<<<<<< HEAD
 
 - Realtime connection options no longer allow overriding the client-managed `Authorization` header; these overrides throw `ArgumentException`. Conditional Voice Agents preview opt-ins may be supplied explicitly through the `Foundry-Features` header or `foundry_features` query.
 - Renamed `EvalCsvRunDataSource` to `CsvEvalRunDataSource`, `AzureAITraceDataSourceEvalRunDataSource` to `TraceSourceEvalRunDataSource`, and `AzureAITraceDataSourcePreviewEvalRunDataSource` to `TraceSourcePreviewEvalRunDataSource`, including their model-factory methods.
@@ -42,6 +44,9 @@
 - Added two focused Voice Agent samples: downloading audio retained after an interruption and delegating native GPT Live work to a Foundry-managed agent.
 
 ### Other Changes
+=======
+- Renamed `ModelCredentialRequest` to `ModelCredentialContent`.
+>>>>>>> 515a1f7193a0f514dd0b4215f6f511977dd987bc
 
 - Agent Insights requests again include the required `AgentInsights=V1Preview` feature header.
 - Regenerated from `foundry/snap-20261109` at [`3a17de2b4c2b23eec9e2f0985dbe5f6e2f417e0b`](https://github.com/Azure/azure-rest-api-specs/tree/3a17de2b4c2b23eec9e2f0985dbe5f6e2f417e0b), using OpenAI TypeSpec 1.34.1.

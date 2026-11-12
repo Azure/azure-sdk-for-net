@@ -587,13 +587,13 @@ make it aware of the skill we have created.
 ```C# Snippet:Sample_CreateEndpoint_AgentsEndpoint_Async
 AgentEndpointConfiguration config = new()
 {
-    VersionSelector = new([new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74)]),
+    VersionSelector = new() { VersionSelectionRules = { new FixedRatioVersionSelectionRule(agentVersion: agentVersion.Version, trafficPercentage: 74) } },
     ProtocolConfiguration = new()
     {
         Responses = new()
     }
 };
-AgentCard card = new(version: "1", [new AgentCardSkill(id: simpleSkill.Id, name: SKILL)]);
+AgentCard card = new() { Version = "1", Skills = { new AgentCardSkill(id: simpleSkill.Id, name: SKILL) } };
 PatchAgentOptions patchOptions = new()
 {
     AgentEndpoint = config,

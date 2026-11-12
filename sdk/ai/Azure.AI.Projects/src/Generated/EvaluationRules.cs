@@ -306,9 +306,7 @@ namespace Azure.AI.Projects.Evaluation
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(evaluationRule, nameof(evaluationRule));
 
-            using Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(evaluationRule, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create | LifecycleVisibility.Update, "W"));
-            ClientResult result = CreateOrUpdate(id, content, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
+            ClientResult result = CreateOrUpdate(id, evaluationRule, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
             return ClientResult.FromValue((EvaluationRule)result, result.GetRawResponse());
         }
 
@@ -325,9 +323,7 @@ namespace Azure.AI.Projects.Evaluation
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(evaluationRule, nameof(evaluationRule));
 
-            using Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(evaluationRule, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create | LifecycleVisibility.Update, "W"));
-            ClientResult result = await CreateOrUpdateAsync(id, content, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            ClientResult result = await CreateOrUpdateAsync(id, evaluationRule, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return ClientResult.FromValue((EvaluationRule)result, result.GetRawResponse());
         }
 

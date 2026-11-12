@@ -157,7 +157,7 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(FixedIntervalRetryPolicy))]
     [ModelReaderWriterBuildable(typeof(FixedRatioVersionSelectionRule))]
     [ModelReaderWriterBuildable(typeof(FoundryOpenAIError))]
-    [ModelReaderWriterBuildable(typeof(GenerateVoiceAgentRequest))]
+    [ModelReaderWriterBuildable(typeof(GenerateVoiceAgentContent))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.GitHubCopilotHarness is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(GitHubCopilotHarness))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.GitHubCopilotHarness is experimental and may change in future versions.
@@ -768,7 +768,7 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(TwilioTelephonyBinding))]
     [ModelReaderWriterBuildable(typeof(TwilioTelephonyBindingListItem))]
     [ModelReaderWriterBuildable(typeof(UnknownAgentDefinition))]
-    [ModelReaderWriterBuildable(typeof(UpdateToolboxRequest))]
+    [ModelReaderWriterBuildable(typeof(UpdateToolboxContent))]
     [ModelReaderWriterBuildable(typeof(UserConversationSimulationAudioEffectsConfiguration))]
     [ModelReaderWriterBuildable(typeof(UserConversationSimulationConfiguration))]
     [ModelReaderWriterBuildable(typeof(UserConversationSimulationDefaultInterruptionConfiguration))]

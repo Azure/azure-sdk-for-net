@@ -2,6 +2,12 @@
 
 This sample demonstrates how to create and manage supervised fine-tuning jobs using OpenAI Fine-Tuning API through the Azure AI Projects SDK. The file operations are accessed via the ProjectOpenAIClient `GetFineTuningClient` method. Supervised fine-tuning allows you to customize models for specific tasks using labeled training data.
 
+**Note:** `ProjectResponsesClient` is a preview feature, please suppress `AAIP002` to run this sample.
+
+```C#
+#pragma warning disable AAIP002
+```
+
 ## Supported Models
 Supported OpenAI models: gpt-4o, gpt-4o-mini, gpt-4.1, gpt-4.1-mini
 

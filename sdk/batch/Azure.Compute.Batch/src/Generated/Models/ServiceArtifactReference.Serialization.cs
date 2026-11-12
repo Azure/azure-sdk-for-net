@@ -18,11 +18,6 @@ namespace Azure.Compute.Batch
     /// </summary>
     public partial class ServiceArtifactReference : IJsonModel<ServiceArtifactReference>
     {
-        /// <summary> Initializes a new instance of <see cref="ServiceArtifactReference"/> for deserialization. </summary>
-        internal ServiceArtifactReference()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ServiceArtifactReference PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

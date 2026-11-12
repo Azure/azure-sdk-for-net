@@ -13,8 +13,10 @@ namespace Azure.AI.Projects.Agents
     /// <summary> An MCP tool available to a voice agent. Server endpoints use `server_url`; connector and tunnel identifiers are not supported. </summary>
     public partial class VoiceAgentMcpTool : VoiceAgentTool
     {
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         [Experimental("AAIP002")]
         private McpToolFilter _allowedTools;
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
         private bool _allowedToolsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentMcpTool"/>. </summary>

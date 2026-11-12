@@ -122,9 +122,7 @@ namespace Azure.AI.Projects.Agents
             Argument.AssertNotNullOrEmpty(campaignName, nameof(campaignName));
             Argument.AssertNotNull(campaign, nameof(campaign));
 
-            using Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(campaign, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
-            OperationResult result = Create(waitUntilCompleted, agentName, campaignName, content, operationId, ifMatch, cancellationToken.ToRequestOptions());
+            OperationResult result = Create(waitUntilCompleted, agentName, campaignName, campaign, operationId, ifMatch, cancellationToken.ToRequestOptions());
             return result;
         }
 
@@ -145,9 +143,7 @@ namespace Azure.AI.Projects.Agents
             Argument.AssertNotNullOrEmpty(campaignName, nameof(campaignName));
             Argument.AssertNotNull(campaign, nameof(campaign));
 
-            using Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(campaign, new LifecycleModelReaderWriterOptions(LifecycleVisibility.Create, "W"));
-            OperationResult result = await CreateAsync(waitUntilCompleted, agentName, campaignName, content, operationId, ifMatch, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            OperationResult result = await CreateAsync(waitUntilCompleted, agentName, campaignName, campaign, operationId, ifMatch, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
             return result;
         }
 

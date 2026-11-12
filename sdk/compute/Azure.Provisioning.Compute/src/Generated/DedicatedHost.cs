@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Compute
         private BicepValue<AzureLocation> _location;
         private DedicatedHostProperties _properties;
         private ComputeSku _sku;
-        private ResourceReference<DedicatedHostGroup> _parent;
+        private ProvisioningResourceReference<DedicatedHostGroup> _parent;
 
         /// <summary> Creates a new DedicatedHost. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -278,7 +278,7 @@ namespace Azure.Provisioning.Compute
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<DedicatedHostProperties>(nameof(Properties), new string[] { "properties" });
             _sku = DefineModelProperty<ComputeSku>(nameof(Sku), new string[] { "sku" }, isRequired: true);
-            _parent = DefineResource<DedicatedHostGroup>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<DedicatedHostGroup>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

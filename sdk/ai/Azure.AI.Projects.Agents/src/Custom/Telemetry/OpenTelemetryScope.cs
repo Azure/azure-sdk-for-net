@@ -9,12 +9,14 @@ using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Projects.Agents;
 using Azure.Core;
 using static Azure.AI.Projects.Agents.Telemetry.OpenTelemetryConstants;
 
@@ -277,7 +279,113 @@ namespace Azure.AI.Projects.Agents.Telemetry
             using var memoryStream = new MemoryStream();
             content.WriteTo(memoryStream, CancellationToken.None);
             memoryStream.Position = 0;
-            BinaryData binaryData = BinaryData.FromStream(memoryStream);
+            BinaryData binaryData = null;
+            if (content is MultiPartFormDataBinaryContent multiPartFormContent)
+            {
+                string boundary = null;
+                if (multiPartFormContent.HttpContent is MultipartFormDataContent httpContent)
+                {
+                    boundary = httpContent.Headers.ContentType?.Parameters
+                        .FirstOrDefault(x => string.Equals(x.Name, "boundary", StringComparison.InvariantCultureIgnoreCase))
+                        .Value?.Trim('"');
+                }
+                if (string.IsNullOrEmpty(boundary))
+                {
+                    return null;
+                }
+                else
+                {
+                    // We cannot just parse MultipartFormDataContent, because its parts cannot be deserialized
+                    // to stream in sync manner due to netstandard2.0 limitation.
+                    byte[] btBoundary = Encoding.UTF8.GetBytes($"--{boundary}");
+                    string strContent = "Content-Type: application/json";
+                    byte[] readBuffer = new byte[Math.Max(btBoundary.Length, 1000)];
+                    List<byte> arJson = [];
+                    int read = memoryStream.Read(readBuffer, 0, readBuffer.Length);
+                    bool withinBoundaries = false, badContentType=false, withinContentType=false, doneReading=false;
+                    LinkedList<byte> window = new();
+                    byte symbolBeforeWindow = (byte)'\n'; // At the begin of stream, assume that the last symbol is LF.
+                    while (read > 0)
+                    {
+                        for (int i = 0; i < read; i++)
+                        {
+                            window.AddLast(readBuffer[i]);
+                            if (window.Count > btBoundary.Length)
+                            {
+                                symbolBeforeWindow = window.First();
+                                window.RemoveFirst();
+                            }
+                            // If we see the boundary, reset or exit;
+                            if (window.Count == btBoundary.Length)
+                            {
+                                if (Enumerable.SequenceEqual(window, btBoundary) && symbolBeforeWindow == (byte)'\n')
+                                {
+                                    if (withinContentType && !badContentType)
+                                    {
+                                        // We have already found the json.
+                                        doneReading = true;
+                                        break;
+                                    }
+                                    withinBoundaries = true;
+                                    withinContentType = false;
+                                    badContentType = false;
+                                    window.Clear();
+                                }
+                            }
+                            // If we are within boundary, search for "Content-Type:" and check if it is application/json.
+                            // If it is not, wait for other boundary.
+                            if (withinBoundaries && !withinContentType && window.Count > strContent.Length)
+                            {
+                                string testContent = Encoding.UTF8.GetString([..window]);
+                                int contentTypeIndex = testContent.IndexOf("Content-Type: ");
+                                if (contentTypeIndex >=0 && testContent.Length - contentTypeIndex > strContent.Length)
+                                {
+                                    withinContentType = true;
+                                    badContentType = !testContent.Contains(strContent);
+                                    if (!badContentType)
+                                    {
+                                        for (int j = contentTypeIndex + strContent.Length; j < window.Count; j++)
+                                        {
+                                            arJson.Add(window.ElementAt(j));
+                                        }
+                                    }
+                                    window.Clear();
+                                }
+                            }
+                            // The application/json was found; keep recording json.
+                            else if (withinContentType && !badContentType)
+                            {
+                                arJson.Add(readBuffer[i]);
+                            }
+                        }
+                        if (doneReading)
+                        {
+                            break;
+                        }
+                        read = memoryStream.Read(readBuffer, 0, readBuffer.Length);
+                    }
+                    string jsonPart = Encoding.UTF8.GetString([..arJson]);
+                    int jsonStart = jsonPart.IndexOf('{');
+                    int jsonEnd = jsonPart.LastIndexOf('}');
+                    if (jsonStart > 0 && jsonStart < jsonEnd)
+                    {
+                        binaryData = BinaryData.FromString(jsonPart.Substring(jsonStart, jsonEnd - jsonStart + 1));
+                    }
+                    else
+                    {
+                        // Invalid json.
+                        return null;
+                    }
+                }
+                if (binaryData == null)
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                binaryData = BinaryData.FromStream(memoryStream);
+            }
             ProjectsAgentVersionCreationOptions creationOptions = ModelReaderWriter.Read<ProjectsAgentVersionCreationOptions>(
                 binaryData,
                 ModelSerializationExtensions.WireOptions,
@@ -391,32 +499,13 @@ namespace Azure.AI.Projects.Agents.Telemetry
                 // Handle image-based hosted agent - add all hosted-specific attributes including image
                 scope.SetTagMaybe(GenAiAgentHostedCpu, imageBasedHostedAgentDefinition.Cpu);
                 scope.SetTagMaybe(GenAiAgentHostedMemory, imageBasedHostedAgentDefinition.Memory);
-                scope.SetTagMaybe(GenAiAgentHostedImage, imageBasedHostedAgentDefinition.ContainerConfiguration.Image);
+                scope.SetTagMaybe(GenAiAgentHostedImage, imageBasedHostedAgentDefinition.ContainerConfiguration?.Image);
 
                 // Extract protocol and version from ContainerProtocolVersions if available
                 if (imageBasedHostedAgentDefinition.Versions != null &&
                     imageBasedHostedAgentDefinition.Versions.Count > 0)
                 {
                     var protocolVersion = imageBasedHostedAgentDefinition.Versions[0];
-
-                    // Set protocol name (convert enum to lowercase string for consistency with Python)
-                    string protocolName = protocolVersion.Protocol.ToString().ToLowerInvariant();
-                    scope.SetTagMaybe(GenAiAgentHostedProtocol, protocolName);
-                    scope.SetTagMaybe(GenAiAgentHostedProtocolVersion, protocolVersion.Version);
-                }
-            }
-            else if (agentDefinition is HostedAgentDefinition hostedAgentDefinition)
-            {
-                // Handle non-image-based hosted agent (fallback for base HostedAgentDefinition)
-                scope.SetTagMaybe(GenAiAgentHostedCpu, hostedAgentDefinition.Cpu);
-                scope.SetTagMaybe(GenAiAgentHostedMemory, hostedAgentDefinition.Memory);
-                scope.SetTagMaybe(GenAiAgentHostedImage, hostedAgentDefinition.ContainerConfiguration.Image);
-
-                // Extract protocol and version from ContainerProtocolVersions if available
-                if (hostedAgentDefinition.Versions != null &&
-                    hostedAgentDefinition.Versions.Count > 0)
-                {
-                    var protocolVersion = hostedAgentDefinition.Versions[0];
 
                     // Set protocol name (convert enum to lowercase string for consistency with Python)
                     string protocolName = protocolVersion.Protocol.ToString().ToLowerInvariant();

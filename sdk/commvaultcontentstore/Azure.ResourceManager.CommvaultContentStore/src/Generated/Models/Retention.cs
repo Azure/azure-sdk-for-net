@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Retention"/>. </summary>
-        /// <param name="numberOfSnapshots"> Number of Snapshots. </param>
+        /// <param name="snapshotCount"> Number of Snapshots. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Retention(int? numberOfSnapshots, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Retention(int? snapshotCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            NumberOfSnapshots = numberOfSnapshots;
+            SnapshotCount = snapshotCount;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Number of Snapshots. </summary>
-        public int? NumberOfSnapshots { get; set; }
+        public int? SnapshotCount { get; set; }
     }
 }

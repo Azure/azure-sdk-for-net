@@ -17,11 +17,6 @@ namespace Azure.Analytics.OnlineExperimentation
     /// <summary> Defines experiment metric metadata and computation details. </summary>
     public partial class ExperimentMetric : IJsonModel<ExperimentMetric>
     {
-        /// <summary> Initializes a new instance of <see cref="ExperimentMetric"/> for deserialization. </summary>
-        internal ExperimentMetric()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ExperimentMetric PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

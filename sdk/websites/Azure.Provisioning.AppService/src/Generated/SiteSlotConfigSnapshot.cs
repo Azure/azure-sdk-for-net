@@ -21,7 +21,7 @@ namespace Azure.Provisioning.AppService
         private SystemData _systemData;
         private SiteConfigProperties _properties;
         private BicepValue<string> _kind;
-        private ResourceReference<WebSiteSlotConfig> _parent;
+        private ProvisioningResourceReference<WebSiteSlotConfig> _parent;
 
         /// <summary> Creates a new SiteSlotConfigSnapshot. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -1352,7 +1352,7 @@ namespace Azure.Provisioning.AppService
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SiteConfigProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
-            _parent = DefineResource<WebSiteSlotConfig>(nameof(Parent), new string[] { "parent" });
+            _parent = new ProvisioningResourceReference<WebSiteSlotConfig>(DefineProperty<string>(nameof(Parent), new string[] { "parent" }));
             DefineAdditionalProperties();
         }
 

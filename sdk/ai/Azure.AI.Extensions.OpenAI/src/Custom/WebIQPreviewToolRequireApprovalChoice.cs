@@ -7,6 +7,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary>
     /// The approval required for the tool.
     /// </summary>
+    [Experimental("AAIP001")]
     public partial class WebIQPreviewToolRequireApprovalChoice
     {
         /// <summary>

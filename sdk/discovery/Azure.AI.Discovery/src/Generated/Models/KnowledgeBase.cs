@@ -18,18 +18,10 @@ namespace Azure.AI.Discovery
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBase"/>. </summary>
-        /// <param name="description"> The description. </param>
-        /// <param name="copilotInstruction"> The copilot instruction. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="description"/> or <paramref name="copilotInstruction"/> is null. </exception>
-        public KnowledgeBase(string description, string copilotInstruction)
+        public KnowledgeBase()
         {
-            Argument.AssertNotNull(description, nameof(description));
-            Argument.AssertNotNull(copilotInstruction, nameof(copilotInstruction));
-
             StorageAssetReferences = new ChangeTrackingList<StorageAssetReference>();
             Tags = new ChangeTrackingList<DiscoveryTag>();
-            Description = description;
-            CopilotInstruction = copilotInstruction;
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBase"/>. </summary>

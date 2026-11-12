@@ -1,6 +1,6 @@
 # Release History
 
-## 3.0.0-beta.7 (Unreleased)
+## 3.0.0-beta.8 (Unreleased)
 
 ### Features Added
 - Promoted core Realtime/cascaded Voice Agent definitions, persisted conversations/responses/items, heard/generated audio and recordings, audio/voice/avatar/soundscape configuration, tools, delegate subagents, and non-SIP telephony to GA in the service contract. These shared types and core client operations no longer require a blanket `AAIP001` opt-in.
@@ -47,6 +47,17 @@
 
 ### Other Changes
 - Regenerated from `foundry/snap-20261109` at [`3a17de2b4c2b23eec9e2f0985dbe5f6e2f417e0b`](https://github.com/Azure/azure-rest-api-specs/tree/3a17de2b4c2b23eec9e2f0985dbe5f6e2f417e0b), using OpenAI TypeSpec 1.34.1.
+
+## 3.0.0-beta.7 (2026-11-12)
+
+### Breaking Changes
+- `AzureFunctionDefinitionFunction` was removed, please use the same class from `Azure.AI.Extensions.OpenAI`.
+- Renamed `GenerateVoiceAgentRequest` to `GenerateVoiceAgentContent` and `UpdateToolboxRequest` to `UpdateToolboxContent`.
+- Removed the `AgentCard(string, IEnumerable<AgentCardSkill>)` and `VersionSelector(IEnumerable<VersionSelectionRule>)` constructors. Use the parameterless constructors and set `Version`/`Skills` and `VersionSelectionRules` with initializers.
+- `TelephonyTransferTarget` constructor no longer takes `name`; set the `Name` property instead.
+
+### Bugs Fixed
+- Fixed the cancellation of `ToolboxRecord` update.
 
 ## 3.0.0-beta.6 (2026-10-30)
 

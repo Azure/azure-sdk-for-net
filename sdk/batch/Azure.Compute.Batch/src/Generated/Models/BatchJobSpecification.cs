@@ -17,14 +17,9 @@ namespace Azure.Compute.Batch
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchJobSpecification"/>. </summary>
-        /// <param name="poolInfo"> The Pool on which the Batch service runs the Tasks of Jobs created under this schedule. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="poolInfo"/> is null. </exception>
-        public BatchJobSpecification(BatchPoolInfo poolInfo)
+        public BatchJobSpecification()
         {
-            Argument.AssertNotNull(poolInfo, nameof(poolInfo));
-
             CommonEnvironmentSettings = new ChangeTrackingList<EnvironmentSetting>();
-            PoolInfo = poolInfo;
             Metadata = new ChangeTrackingList<BatchMetadataItem>();
         }
 
@@ -63,6 +58,16 @@ namespace Azure.Compute.Batch
             PoolInfo = poolInfo;
             Metadata = metadata;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BatchJobSpecification"/>. </summary>
+        /// <param name="poolInfo"> The Pool on which the Batch service runs the Tasks of Jobs created under this schedule. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolInfo"/> is null. </exception>
+        public BatchJobSpecification(BatchPoolInfo poolInfo) : this()
+        {
+            Argument.AssertNotNull(poolInfo, nameof(poolInfo));
+
+            PoolInfo = poolInfo;
         }
 
         /// <summary> The priority of Jobs created under this schedule. Priority values can range from -1000 to 1000, with -1000 being the lowest priority and 1000 being the highest priority. The default value is 0. This priority is used as the default for all Jobs under the Job Schedule. You can update a Job's priority after it has been created using by using the update Job API. </summary>

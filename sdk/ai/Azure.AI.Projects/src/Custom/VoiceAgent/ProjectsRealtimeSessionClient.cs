@@ -87,13 +87,13 @@ public class ProjectsRealtimeSessionClient : RealtimeSessionClient
     /// <param name="cancellationToken"> Cancels receiving updates. </param>
     /// <returns> The updates received from the service. </returns>
     /// <remarks> This method blocks its calling thread. Use <see cref="RealtimeSessionClient.ReceiveUpdatesAsync(CancellationToken)"/> for nonblocking consumption. </remarks>
-    public override IEnumerable<RealtimeServerUpdate> ReceiveUpdates(CancellationToken cancellationToken = default)
+    public IEnumerable<RealtimeServerUpdate> ReceiveUpdates(CancellationToken cancellationToken = default)
         => ReadSynchronously(() => ReceiveUpdatesAsync(cancellationToken));
 
     /// <summary> Receives raw Realtime updates synchronously. </summary>
     /// <param name="options"> The request options, including the cancellation token. </param>
     /// <returns> The raw updates received from the service. </returns>
-    public override IEnumerable<ClientResult> ReceiveUpdates(RequestOptions options)
+    public IEnumerable<ClientResult> ReceiveUpdates(RequestOptions options)
         => ReadSynchronously(() => ReceiveUpdatesAsync(options));
 
 #pragma warning disable AZC0102 // WebSocket receive is asynchronous-only; preserve the synchronous API without reading ahead.
