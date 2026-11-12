@@ -60,7 +60,6 @@
     ]
   },
   "devDependencies": {
-    "@inquirer/type": "4.2.1",
     "@azure-tools/azure-http-specs": "0.1.0-alpha.47",
     "@azure-tools/typespec-autorest": "0.74.0",
     "@azure-tools/typespec-azure-core": "0.74.0",
@@ -94,9 +93,6 @@
     "typescript": "~6.0.3",
     "typescript-eslint": "^7.8.0",
     "vitest": "^4.1.11"
-  },
-  "overrides": {
-    "@inquirer/type": "4.2.1"
   },
   "azure-sdk/emitter-package-json-pinning": [
     "@azure-tools/typespec-azure-core",
