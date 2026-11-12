@@ -247,9 +247,30 @@ Describe 'Get-PrReReviewHeadContent' {
         $content | Should -BeExactly ''
         Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi { "abc$([char]0)def" }
         Get-PrReReviewHeadContent -Repository 'Azure/azure-sdk-for-net' -HeadSha 'abc1234' -Path 'binary.dat' | Should -BeNullOrEmpty
+        Mock -ModuleName PrReReviewInput Invoke-PrReReviewGhApi { $null }
+        Get-PrReReviewHeadContent -Repository 'Azure/azure-sdk-for-net' -HeadSha 'abc1234' -Path 'binary.dat' | Should -BeNullOrEmpty
+    }
+
+    It 'fails closed for NUL-free native output containing invalid UTF-8' -ForEach @(
+        @{ Encoded = 'YYBi'; Label = '0x80' }
+        @{ Encoded = 'YYFi'; Label = '0x81' }
+    ) {
+        $arguments = @('-NoProfile', '-NonInteractive', '-Command', "[Console]::OpenStandardOutput().Write([Convert]::FromBase64String('$Encoded'))")
+        { InModuleScope PrReReviewInput -Parameters @{ FilePath = (Get-Process -Id $PID).Path; Arguments = $arguments } {
+            Read-PrReReviewNativeOutput -FilePath $FilePath -Arguments $Arguments
+        } } | Should -Throw
+    }
+
+    It 'recognizes binary native output containing NUL even when it is not UTF-8' {
+        $arguments = @('-NoProfile', '-NonInteractive', '-Command', "[Console]::OpenStandardOutput().Write([Convert]::FromBase64String('YQCA'))")
+        $output = InModuleScope PrReReviewInput -Parameters @{ FilePath = (Get-Process -Id $PID).Path; Arguments = $arguments } {
+            Read-PrReReviewNativeOutput -FilePath $FilePath -Arguments $Arguments
+        }
+        ($null -eq $output) | Should -BeTrue
     }
 
     It 'reads native output byte-for-byte when <Label>' -ForEach @(
+        @{ Label = 'it is empty'; Text = '' }
         @{ Label = 'it ends with a newline'; Text = "a`nb`n" }
         @{ Label = 'it has no final newline'; Text = "a`nb" }
     ) {

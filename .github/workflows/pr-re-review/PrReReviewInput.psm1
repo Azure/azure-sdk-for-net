@@ -29,7 +29,15 @@ function Read-PrReReviewNativeOutput {
         if ($LASTEXITCODE -ne 0) {
             throw "$FilePath $($Arguments -join ' ') failed with exit code $LASTEXITCODE."
         }
-        return [Text.UTF8Encoding]::new($false).GetString([IO.File]::ReadAllBytes($path))
+        $bytes = [IO.File]::ReadAllBytes($path)
+        # Preserve the existing binary fallback, but do not replace invalid text bytes: distinct
+        # files could otherwise decode identically and be reported as unchanged.
+        if ([Array]::IndexOf($bytes, [byte]0) -ge 0) { return $null }
+        try {
+            return [Text.UTF8Encoding]::new($false, $true).GetString($bytes)
+        } catch [Text.DecoderFallbackException] {
+            throw "Cannot decode $FilePath output as UTF-8; refusing to review lossy text."
+        }
     } finally {
         Remove-Item -LiteralPath $path -Force -ErrorAction SilentlyContinue
     }
@@ -90,7 +98,7 @@ function Get-PrReReviewHeadContent {
 
     $encodedPath = ($Path -split '/' | ForEach-Object { [uri]::EscapeDataString($_) }) -join '/'
     $content = Invoke-PrReReviewGhApi -Raw -Arguments @('-H', 'Accept: application/vnd.github.raw+json', "repos/$Repository/contents/${encodedPath}?ref=$HeadSha")
-    if ($content.Contains([char]0)) {
+    if ($null -eq $content -or $content.Contains([char]0)) {
         return $null
     }
     return $content
