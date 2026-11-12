@@ -87,7 +87,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> Initializes a new instance of DocumentIntelligenceClient from a <see cref="DocumentIntelligenceClientSettings"/>. </summary>
         /// <param name="settings"> The settings for DocumentIntelligenceClient. </param>
         [Experimental("SCME0002")]
-        public DocumentIntelligenceClient(DocumentIntelligenceClientSettings settings) : this(string.Equals(settings?.Credential?.CredentialSource, "apikeycredential", StringComparison.OrdinalIgnoreCase) ? new global::Azure.Core.AzureKeyCredentialPolicy(new global::Azure.AzureKeyCredential(settings.Credential.Key), AuthorizationHeader) : new global::Azure.Core.Pipeline.BearerTokenAuthenticationPolicy(settings?.CredentialProvider as global::Azure.Core.TokenCredential, AuthorizationScopes), settings?.Endpoint, settings?.Options)
+        public DocumentIntelligenceClient(DocumentIntelligenceClientSettings settings) : this(string.Equals(settings?.Credential?.CredentialSource, "apikeycredential", StringComparison.OrdinalIgnoreCase) ? new AzureKeyCredentialPolicy(new AzureKeyCredential(settings.Credential.Key), AuthorizationHeader) : new BearerTokenAuthenticationPolicy(settings?.CredentialProvider as TokenCredential, AuthorizationScopes), settings?.Endpoint, settings?.Options)
         {
         }
 
