@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.Providers;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using Azure.Generator.Visitors;
@@ -24,6 +25,44 @@ namespace Azure.Generator.Tests.Visitors
 {
     public class LroVisitorTests
     {
+        [TestCase("public")]
+        [TestCase("internal")]
+        public void SelectedMetadataChangesOnlyAnnotatedOperationAndUsesWireSegments(string access)
+        {
+            var progress = InputFactory.Property("progress", InputPrimitiveType.Int32, isRequired: true,
+                wireName: "percent_done", serializedName: "progress");
+            var details = InputFactory.Property("details", InputFactory.Model("Details", properties: [progress]), wireName: "wire_details");
+            var metadata = new InputLongRunningServiceMetadata(1, InputFactory.OperationResponse(), null,
+                [new InputLroStatusMetadata(progress, [details, progress])], []);
+            var selected = InputFactory.LongRunningServiceMethod("selected", InputFactory.Operation("selected"), access: access, longRunningServiceMetadata: metadata);
+            var ordinary = InputFactory.LongRunningServiceMethod("ordinary", InputFactory.Operation("ordinary"));
+            var inputClient = InputFactory.Client("TestClient", methods: [selected, ordinary]);
+            MockHelpers.LoadMockGenerator(clients: () => [inputClient]);
+            var client = AzureClientGenerator.Instance.TypeFactory.CreateClient(inputClient)!;
+            var visitor = new TestLroVisitor();
+            foreach (var method in client.Methods.OfType<ScmMethodProvider>())
+            {
+                visitor.InvokeVisitMethod(method);
+                var returnType = method.Signature.ReturnType!;
+                if (method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Async))
+                {
+                    returnType = returnType.Arguments[0];
+                }
+                Assert.AreEqual(method.ServiceMethod == selected ? "TestClientSelectedOperation" : "Operation", returnType.Name);
+            }
+            var output = (AzureOutputLibrary)AzureClientGenerator.Instance.OutputLibrary;
+            var operation = output.GetLroOperation(selected, client, protocol: false)!;
+            Assert.AreEqual("TestClientSelectedOperationMetadata", operation.Properties.Single(p => p.Name == "Metadata").Type.Name);
+            var metadataType = output.TypeProviders.OfType<LroStatusMetadataProvider>().Single();
+            Assert.AreEqual(access == "public", operation.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public));
+            Assert.AreEqual(access == "public", metadataType.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Public));
+            var property = metadataType.Properties.Single();
+            Assert.AreEqual(new CSharpType(typeof(int), isNullable: true), property.Type);
+            var body = ((MethodPropertyBody)property.Body).Getter!.ToDisplayString();
+            StringAssert.Contains("\"wire_details\", \"percent_done\"", body);
+            Assert.IsNull(output.GetLroOperation(ordinary, client, protocol: false));
+        }
+
         [Test]
         public void UpdatesLroSignatureNoResponseBody()
         {

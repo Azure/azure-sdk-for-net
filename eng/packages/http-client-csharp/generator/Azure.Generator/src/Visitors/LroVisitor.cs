@@ -166,6 +166,10 @@ namespace Azure.Generator.Visitors
                 (not null, ScmMethodKind.Protocol) => new CSharpType(typeof(Operation<>), typeof(BinaryData)),
                 _ => new CSharpType(typeof(Operation<>), AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(responseType)!),
             };
+            if (GetLroOperation(method) is { } operation)
+            {
+                returnType = operation.Type;
+            }
             var isAsync = method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Async);
 
             // Update the method signature
@@ -223,7 +227,8 @@ namespace Azure.Generator.Visitors
                     }
                     if (serviceMethod.Response.Type != null)
                     {
-                        resultVariable.Update(type: new CSharpType(typeof(Operation<>), typeof(BinaryData)));
+                        resultVariable.Update(type: GetLroOperation(scmMethod, protocol: true)?.Type
+                            ?? new CSharpType(typeof(Operation<>), typeof(BinaryData)));
                     }
                     else
                     {
@@ -261,6 +266,7 @@ namespace Azure.Generator.Visitors
                             diagnosticsProperty,
                             Literal(scopeName),
                         ]);
+                    UpdateMetadataConversion(invokeMethodExpression, scmMethod);
                     break;
                 }
                 // Wrap typed LRO convenience methods that directly forward to the protocol method.
@@ -270,14 +276,15 @@ namespace Azure.Generator.Visitors
                     var (conversionExpression, response, diagnosticsProperty, scopeName) =
                         BuildConvertCallComponents(serviceMethod, scmMethod);
 
-                    return new KeywordExpression("return",
-                        Static(typeof(ProtocolOperationHelpers)).Invoke("Convert",
+                    var conversion = Static(typeof(ProtocolOperationHelpers)).Invoke("Convert",
                         [
                             protocolCallExpression,
                             new FuncExpression([response.Declaration], conversionExpression),
                             diagnosticsProperty,
                             Literal(scopeName),
-                        ])).Terminate();
+                        ]);
+                    UpdateMetadataConversion(conversion, scmMethod);
+                    return Return(conversion);
                 }
             }
 
@@ -285,7 +292,7 @@ namespace Azure.Generator.Visitors
         }
 
         /// <summary>
-        /// Builds the components for a <see cref="ProtocolOperationHelpers.Convert"/> call.
+        /// Builds the components for a <c>ProtocolOperationHelpers.Convert</c> call.
         /// </summary>
         private static (ValueExpression ConversionExpression, VariableExpression Response, PropertyProvider DiagnosticsProperty, string ScopeName)
             BuildConvertCallComponents(InputServiceMethod serviceMethod, ScmMethodProvider scmMethod)
@@ -305,6 +312,19 @@ namespace Azure.Generator.Visitors
                 : new CastExpression(response, responseType);
 
             return (conversionExpression, response, diagnosticsProperty, scopeName);
+        }
+
+        private static LroOperationProvider? GetLroOperation(ScmMethodProvider method, bool? protocol = null) =>
+            ((AzureOutputLibrary)AzureClientGenerator.Instance.OutputLibrary).GetLroOperation(
+                method.ServiceMethod!, (ClientProvider)method.EnclosingType, protocol ?? method.Kind == ScmMethodKind.Protocol);
+
+        private static void UpdateMetadataConversion(InvokeMethodExpression conversion, ScmMethodProvider method)
+        {
+            if (GetLroOperation(method) is { } operation)
+            {
+                conversion.Update(arguments: [.. conversion.Arguments, operation.CreateFactory()],
+                    typeArguments: [typeof(BinaryData), operation.ResultType!, operation.Type]);
+            }
         }
 
         protected override InvokeMethodExpression? VisitInvokeMethodExpression(InvokeMethodExpression expression, MethodProvider method)
@@ -346,6 +366,19 @@ namespace Azure.Generator.Visitors
                         expression.Arguments[1],
                         scmMethod.Signature.Parameters[0]
                     ]);
+                if (GetLroOperation(scmMethod) is { } operation)
+                {
+                    var response = new VariableExpression(typeof(Response), "response");
+                    expression.Update(
+                        methodName: expression.CallAsAsync ? "ProcessMessageAsync" : "ProcessMessage",
+                        arguments:
+                        [
+                            .. expression.Arguments,
+                            new FuncExpression([response.Declaration], operation.CreateResultSelector(response)),
+                            operation.CreateFactory()
+                        ],
+                        typeArguments: [operation.ResultType ?? typeof(VoidValue), operation.Type]);
+                }
             }
 
             return expression;
