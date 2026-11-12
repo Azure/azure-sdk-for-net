@@ -311,17 +311,19 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             Assert.AreEqual(6, Enum.GetValues(typeof(SearchServiceStatus)).Length);
         }
 
-        [Test]
-        public void SearchServiceState_ShouldPreserveNull_WhenConvertingNullableValues()
+        [TestCase(null)]
+        [TestCase("running")]
+        [TestCase("stopped")]
+        [TestCase("futureStatus")]
+        public void SearchServiceState_ShouldPreserveStringAndNull_WhenConvertingNullableValues(string wireValue)
         {
-            string wireValue = null;
             SearchServiceStatus? legacyStatus = null;
             SearchServiceState? fromString = wireValue;
             SearchServiceState? fromLegacy = legacyStatus;
 
-            Assert.IsNull(fromString);
+            Assert.AreEqual(wireValue, fromString?.ToString());
             Assert.IsNull(fromLegacy);
-            Assert.IsNull(ArmSearchModelFactory.SearchServiceData(status: fromString).ServiceStatus);
+            Assert.AreEqual(fromString, ArmSearchModelFactory.SearchServiceData(status: fromString).ServiceStatus);
             Assert.IsNull(ArmSearchModelFactory.SearchServicePatch(status: fromLegacy).ServiceStatus);
         }
     }

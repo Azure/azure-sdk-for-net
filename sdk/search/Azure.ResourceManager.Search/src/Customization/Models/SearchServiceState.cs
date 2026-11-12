@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.Search.Models
 
         /// <summary> Converts a string to a nullable service status, preserving null. </summary>
         /// <param name="value"> The status value. </param>
+        // Keep the null branch explicitly nullable to avoid invoking the non-nullable string conversion.
         public static implicit operator SearchServiceState?(string value) => value is null ? (SearchServiceState?)null : new SearchServiceState(value);
     }
 }
