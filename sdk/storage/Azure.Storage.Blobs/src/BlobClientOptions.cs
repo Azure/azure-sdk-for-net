@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
@@ -344,6 +345,10 @@ namespace Azure.Storage.Blobs
             if (section["Audience"] is string audience)
             {
                 Audience = new BlobAudience(audience);
+            }
+            if (int.TryParse(section["RequestPriority"], NumberStyles.Integer, CultureInfo.InvariantCulture, out int requestPriority))
+            {
+                RequestPriority = requestPriority;
             }
             this.Initialize();
             AddHeadersAndQueryParameters();

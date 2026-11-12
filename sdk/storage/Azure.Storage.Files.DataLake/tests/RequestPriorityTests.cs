@@ -11,6 +11,7 @@ using Azure.Core.TestFramework;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Files.DataLake.Specialized;
 using Azure.Storage.Test.Shared;
+using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 
 namespace Azure.Storage.Files.DataLake.Tests
@@ -69,6 +70,39 @@ namespace Azure.Storage.Files.DataLake.Tests
 				response.Headers.TryGetValue(RequestPriorityHeaderName, out string value),
 				$"Missing {RequestPriorityHeaderName} response header");
 			Assert.AreEqual(GetEffectivePriority(requestPriority).ToString(), value);
+		}
+
+		[Test]
+		[TestCase("0", 0)]
+		[TestCase("5", 5)]
+		[TestCase("7", 7)]
+		[TestCase("-1", -1)]
+		[TestCase("8", 8)]
+		[TestCase("invalid", null)]
+		[TestCase(null, null)]
+		public void RequestPriority_FromConfiguration(string configuredValue, int? expected)
+		{
+			// Arrange
+			Dictionary<string, string> values = new()
+			{
+				["Options:EnableTenantDiscovery"] = "true",
+			};
+			if (configuredValue != null)
+			{
+				values["Options:RequestPriority"] = configuredValue;
+			}
+			IConfigurationSection section = new ConfigurationBuilder()
+				.AddInMemoryCollection(values)
+				.Build()
+				.GetSection("Options");
+
+			// Act
+#pragma warning disable SCME0002 // Experimental
+			DataLakeClientOptions options = new DataLakeClientOptions(section);
+#pragma warning restore SCME0002 // Experimental
+
+			// Assert
+			Assert.AreEqual(expected, options.RequestPriority);
 		}
 
 		[RecordedTest]

@@ -3,6 +3,7 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
@@ -279,6 +280,10 @@ namespace Azure.Storage.Files.DataLake
             if (section["Audience"] is string audience)
             {
                 Audience = new DataLakeAudience(audience);
+            }
+            if (int.TryParse(section["RequestPriority"], NumberStyles.Integer, CultureInfo.InvariantCulture, out int requestPriority))
+            {
+                RequestPriority = requestPriority;
             }
             this.Initialize();
             AddHeadersAndQueryParameters();
