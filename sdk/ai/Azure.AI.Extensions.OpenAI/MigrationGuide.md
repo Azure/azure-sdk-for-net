@@ -35,7 +35,7 @@ and on [experimental APIs](#experimental-apis).
 Use the OpenAI dependency version required by the Extensions version you install. The example below
 uses the latest released Extensions, `3.0.0`, with `OpenAI` 2.15.0. The current
 `3.0.0` source depends on 2.15.0. If you reference `OpenAI` directly,
-use 2.15.0 or later with this dependency; 2.12.0 was the dependency of the historical `3.0.0-beta.1`.
+use 2.15.0 or later with this dependency.
 
 ```xml
 <PackageReference Include="Azure.AI.Extensions.OpenAI" Version="3.0.0" />
@@ -429,7 +429,7 @@ ProjectResponsesClient client = new(projectEndpoint, tokenProvider, responsesOpt
 These clients are independently configured. Setting a transport, retry policy, custom pipeline policy,
 or another option on `openAIOptions` does not configure `responsesOptions`. Use the root factory when
 shared-pipeline behavior is intended. These Responses client/options/factory paths require
-`OPENAI001`; individual response calls may additionally require `AAIP001`.
+`AAIP002`; individual response calls may additionally require `AAIP001`.
 
 ## Code-interpreter container settings
 
@@ -549,14 +549,14 @@ acknowledged before you can compile against them. The applicable diagnostics dep
 
 Suppress only the IDs required by the APIs you use, with `#pragma warning disable` around the call
 site or by adding them to `<NoWarn>` in your project. For example, constructing the root client and
-obtaining its Responses client requires only `OPENAI001` for the APIs shown:
+obtaining its Responses client requires only `AAIP002` for the APIs shown:
 
 ```csharp
-#pragma warning disable OPENAI001
+#pragma warning disable AAIP002
 ProjectOpenAIClientOptions openAIOptions = new();
 ProjectOpenAIClient openAIClient = new(projectEndpoint, tokenProvider, openAIOptions);
 ProjectResponsesClient client = openAIClient.GetProjectResponsesClient();
-#pragma warning restore OPENAI001
+#pragma warning restore AAIP002
 ```
 
 Calling response methods, accessing extension properties, or constructing Azure tools can require

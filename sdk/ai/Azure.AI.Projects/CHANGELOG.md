@@ -1,6 +1,6 @@
 # Release History
 
-## 3.0.0 (2026-11-11)
+## 3.0.0-beta.7 (2026-11-12)
 
 ### Features Added
 - Uploading of models now can be cancelled.

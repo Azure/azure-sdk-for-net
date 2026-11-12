@@ -1392,13 +1392,13 @@ namespace Azure.AI.Extensions.OpenAI
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
         public virtual Azure.AI.Extensions.OpenAI.ProjectConversationsClient GetProjectConversationsClient() { throw null; }
         public virtual Azure.AI.Extensions.OpenAI.ProjectFilesClient GetProjectFilesClient() { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
         public virtual Azure.AI.Extensions.OpenAI.ProjectResponsesClient GetProjectResponsesClient() { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
         public virtual Azure.AI.Extensions.OpenAI.ProjectResponsesClient GetProjectResponsesClientForAgent(Azure.AI.Extensions.OpenAI.AgentReference defaultAgent, string defaultConversationId = null) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
         public virtual Azure.AI.Extensions.OpenAI.ProjectResponsesClient GetProjectResponsesClientForAgentEndpoint(string agentName, string defaultConversationId = null, Azure.AI.Extensions.OpenAI.ProjectOpenAIClientOptions options = null) { throw null; }
-        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
         public virtual Azure.AI.Extensions.OpenAI.ProjectResponsesClient GetProjectResponsesClientForModel(string defaultModel, string defaultConversationId = null) { throw null; }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
         public virtual Azure.AI.Extensions.OpenAI.ProjectVectorStoresClient GetProjectVectorStoresClient() { throw null; }

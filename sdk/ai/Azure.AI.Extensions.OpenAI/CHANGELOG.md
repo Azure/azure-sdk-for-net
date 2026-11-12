@@ -1,6 +1,6 @@
 # Release History
 
-## 3.0.0 (2026-11-11)
+## 3.0.0 (2026-11-12)
 
 ### Breaking Changes
 - Removed the synchronous `ProjectResponsesClient.CreateResponseStreaming` overloads. Use `CreateResponseStreamingAsync` and asynchronous enumeration.
