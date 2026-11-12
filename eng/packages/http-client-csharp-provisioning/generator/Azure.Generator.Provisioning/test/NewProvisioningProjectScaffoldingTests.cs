@@ -104,7 +104,7 @@ namespace Azure.Generator.Provisioning.Tests
         {
             string outputDir = LoadGenerator("sdk");
             var scaffolding = new TestableScaffolding();
-            await scaffolding.WriteFilesAsync();
+            await scaffolding.Execute();
 
             string readme = File.ReadAllText(Path.Combine(outputDir, "README.md"));
             string changelog = File.ReadAllText(Path.Combine(outputDir, "CHANGELOG.md"));
@@ -127,12 +127,11 @@ namespace Azure.Generator.Provisioning.Tests
             });
         }
 
-        [TestCase("sdk")]
-        [TestCase("eng")]
-        public async Task DirectoryBuildPropsUseNormalizedTemplate(string directory)
+        [Test]
+        public async Task SdkDirectoryBuildPropsUseNormalizedTemplate()
         {
-            string outputDir = LoadGenerator(directory);
-            await new TestableScaffolding().WriteFilesAsync();
+            string outputDir = LoadGenerator("sdk");
+            await new TestableScaffolding().Execute();
 
             string content = File.ReadAllText(Path.Combine(outputDir, "Directory.Build.props"));
             var props = XDocument.Parse(content);
@@ -149,62 +148,108 @@ namespace Azure.Generator.Provisioning.Tests
             });
         }
 
-        [Test]
-        public async Task ExistingSdkFilesArePreserved()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ScaffoldingPreservesSdkDocumentationAndBuildPropsButRecreatesProjects(bool existingSourceProject)
         {
             string outputDir = LoadGenerator("sdk");
-            string[] paths = ["README.md", "CHANGELOG.md", "Directory.Build.props", $"tests/{PackageName}.Tests.csproj"];
+            string[] paths = ["README.md", "CHANGELOG.md", "Directory.Build.props"];
             Directory.CreateDirectory(Path.Combine(outputDir, "tests"));
             foreach (string path in paths)
             {
                 File.WriteAllText(Path.Combine(outputDir, path), "customized content");
             }
 
-            await new TestableScaffolding().WriteFilesAsync();
+            string testProject = Path.Combine(outputDir, "tests", $"{PackageName}.Tests.csproj");
+            string sourceProject = Path.Combine(outputDir, "src", $"{PackageName}.csproj");
+            File.WriteAllText(testProject, "customized test project");
+            if (existingSourceProject)
+            {
+                File.WriteAllText(sourceProject, "customized source project");
+            }
+            var scaffolding = new TestableScaffolding();
+            await scaffolding.Execute();
 
             foreach (string path in paths)
             {
                 Assert.That(File.ReadAllText(Path.Combine(outputDir, path)), Is.EqualTo("customized content"), path);
             }
+            Assert.That(File.ReadAllText(testProject), Is.EqualTo(scaffolding.TestProjectContent()));
+            Assert.That(XDocument.Load(sourceProject).ToString(), Is.EqualTo(scaffolding.SourceProject().ToString()));
         }
 
-        [Test]
-        public async Task FixtureBuildPropsAreRegenerated()
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task ExistingRepositoryBuildPropsArePreserved(bool trailingSeparator)
         {
-            string outputDir = LoadGenerator("eng");
+            string outputDir = LoadGenerator("eng", trailingSeparator);
             string propsPath = Path.Combine(outputDir, "Directory.Build.props");
             File.WriteAllText(propsPath, "old fixture properties");
 
-            await new TestableScaffolding().WriteFilesAsync();
+            await new TestableScaffolding().Execute();
 
-            Assert.That(File.ReadAllText(propsPath), Is.EqualTo(ExpectedDirectoryBuildProps));
+            Assert.That(File.ReadAllText(propsPath), Is.EqualTo("old fixture properties"));
         }
 
         [Test]
-        public async Task OnlyBuildPropsAreCreatedOutsideSdk()
+        public async Task FixtureScaffoldingCreatesProjectsWithoutBuildPropsOrDocumentation()
         {
             string outputDir = LoadGenerator("eng");
-            await new TestableScaffolding().WriteFilesAsync();
+            await new TestableScaffolding().Execute();
 
             Assert.Multiple(() =>
             {
                 Assert.That(File.Exists(Path.Combine(outputDir, "README.md")), Is.False);
                 Assert.That(File.Exists(Path.Combine(outputDir, "CHANGELOG.md")), Is.False);
-                Assert.That(File.Exists(Path.Combine(outputDir, "Directory.Build.props")), Is.True);
-                Assert.That(Directory.Exists(Path.Combine(outputDir, "tests")), Is.False);
+                Assert.That(File.Exists(Path.Combine(outputDir, "Directory.Build.props")), Is.False);
+                Assert.That(File.Exists(Path.Combine(outputDir, "tests", $"{PackageName}.Tests.csproj")), Is.True);
+            });
+        }
+
+        [TestCase("eng", false)]
+        [TestCase("eng", true)]
+        [TestCase("standalone", false)]
+        [TestCase("standalone", true)]
+        public async Task NonSdkScaffoldingDoesNotWriteBuildProps(string directory, bool existingBuildProps)
+        {
+            string outputDir = LoadGenerator(directory == "eng" ? "other-eng" : "standalone");
+            string propsPath = Path.Combine(outputDir, "Directory.Build.props");
+            if (existingBuildProps)
+            {
+                File.WriteAllText(propsPath, "customized build properties");
+            }
+
+            await new TestableScaffolding().Execute();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(File.Exists(propsPath), Is.EqualTo(existingBuildProps));
+                if (existingBuildProps)
+                {
+                    Assert.That(File.ReadAllText(propsPath), Is.EqualTo("customized build properties"));
+                }
+                var testProject = XDocument.Load(Path.Combine(outputDir, "tests", $"{PackageName}.Tests.csproj"));
+                Assert.That(testProject.Descendants("Compile").Count(), Is.EqualTo(directory == "eng" ? 1 : 0));
+                Assert.That(testProject.Descendants("ProjectReference").Any(p =>
+                    p.Attribute("Include")?.Value == $@"..\src\{PackageName}.csproj"), Is.True);
             });
         }
 
         private string LoadGenerator(string directory, bool trailingSeparator = false)
         {
-            string outputDir = directory == "sdk"
-                ? Path.Combine(_root, "sdk", "service", PackageName)
-                : Path.Combine(_root, "eng", "packages", "generator", "TestProjects", "Local", PackageName);
+            string outputDir = directory switch
+            {
+                "sdk" => Path.Combine(_root, "sdk", "service", PackageName),
+                "eng" => Path.Combine(_root, "eng", "packages", "generator", "TestProjects", "Local", PackageName),
+                "other-eng" => Path.Combine(_root, "eng", "custom", PackageName),
+                _ => Path.Combine(_root, "my-spec")
+            };
             if (trailingSeparator)
             {
                 outputDir += Path.DirectorySeparatorChar;
             }
             Directory.CreateDirectory(outputDir);
+            Directory.CreateDirectory(Path.Combine(outputDir, "src"));
             var generator = ProvisioningMockHelpers.LoadMockPlugin();
             typeof(Configuration).GetField("<OutputDirectory>k__BackingField", BindingFlags.Instance | BindingFlags.NonPublic)!
                 .SetValue(generator.Object.Configuration, outputDir);
@@ -260,7 +305,6 @@ namespace Azure.Generator.Provisioning.Tests
             public XDocument TestProject() => XDocument.Parse(GetTestProjectFileContent());
             public XDocument Solution() => XDocument.Parse(GetSolutionFileContent());
             public string TestProjectContent() => GetTestProjectFileContent();
-            public Task WriteFilesAsync() => WriteAdditionalFiles();
         }
     }
 }

@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 using Azure.Generator.Primitives;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -54,6 +53,11 @@ namespace Azure.Generator.Provisioning.Primitives
 
         protected override string GetTestProjectFileContent()
         {
+            if (GetRepositoryRoot() is null)
+            {
+                return base.GetTestProjectFileContent();
+            }
+
             string packageName = ProvisioningGenerator.Instance.Configuration.PackageName;
             return $"""
                 <Project Sdk="Microsoft.NET.Sdk">
@@ -76,37 +80,10 @@ namespace Azure.Generator.Provisioning.Primitives
         private static string GetTestInclude(string repositoryPath)
         {
             string outputDir = ProvisioningGenerator.Instance.Configuration.OutputDirectory;
-            var directory = new DirectoryInfo(outputDir);
-            while (directory.Name != "sdk" && directory.Name != "eng")
-            {
-                directory = directory.Parent ?? throw new InvalidOperationException(
-                    $"Cannot locate the repository root above '{outputDir}'.");
-            }
-
-            string repoRoot = directory.Parent?.FullName ?? throw new InvalidOperationException(
+            string repoRoot = GetRepositoryRoot() ?? throw new InvalidOperationException(
                 $"Cannot locate the repository root above '{outputDir}'.");
             return Path.GetRelativePath(Path.Combine(outputDir, "tests"),
                 Path.Combine(repoRoot, repositoryPath.Replace('/', Path.DirectorySeparatorChar))).Replace('/', '\\');
-        }
-
-        protected override async Task WriteAdditionalFiles()
-        {
-            await base.WriteAdditionalFiles();
-            string outputDir = ProvisioningGenerator.Instance.Configuration.OutputDirectory;
-            string packageName = ProvisioningGenerator.Instance.Configuration.PackageName;
-            if (!IsUnderSdkDirectory())
-            {
-                Directory.CreateDirectory(outputDir);
-                File.WriteAllText(Path.Combine(outputDir, "Directory.Build.props"), GetDirectoryBuildPropsContent(packageName));
-                return;
-            }
-
-            string testProjectPath = Path.Combine(outputDir, "tests", $"{packageName}.Tests.csproj");
-            if (!File.Exists(testProjectPath))
-            {
-                Directory.CreateDirectory(Path.Combine(outputDir, "tests"));
-                File.WriteAllText(testProjectPath, GetTestProjectFileContent());
-            }
         }
 
         protected override string GetReadmeContent(string packageName)
@@ -166,5 +143,19 @@ namespace Azure.Generator.Provisioning.Primitives
 
         private static bool IsUnderSdkDirectory()
             => ProvisioningGenerator.Instance.Configuration.OutputDirectory.Replace('\\', '/').Contains("/sdk/");
+
+        private static string? GetRepositoryRoot()
+        {
+            var directory = new DirectoryInfo(ProvisioningGenerator.Instance.Configuration.OutputDirectory);
+            while (directory is not null)
+            {
+                if (directory.Name == "sdk" || directory.Name == "eng")
+                {
+                    return directory.Parent?.FullName;
+                }
+                directory = directory.Parent;
+            }
+            return null;
+        }
     }
 }
