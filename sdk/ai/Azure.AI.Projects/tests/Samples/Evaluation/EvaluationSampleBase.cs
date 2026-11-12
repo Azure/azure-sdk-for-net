@@ -3,10 +3,12 @@
 
 using System;
 using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using OpenAI.Evals;
 
@@ -110,14 +112,18 @@ namespace Azure.AI.Projects.Tests.Samples.Evaluation
         }
         #endregion
         #region Snippet:Sample_GetResultsListAsync_EvaluationSampleBase
-        protected static async Task<List<string>> GetResultsListAsync(EvaluationClient client, string evaluationId, string evaluationRunId)
+        protected static async Task<List<string>> GetResultsListAsync(
+            EvaluationClient client, string evaluationId, string evaluationRunId, CancellationToken cancellationToken = default)
         {
+            RequestOptions options = new() { CancellationToken = cancellationToken };
             List<string> resultJsons = [];
             bool hasMore = false;
             string after = default;
             do
             {
-                ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: new());
+                cancellationToken.ThrowIfCancellationRequested();
+                ClientResult resultList = await client.GetEvaluationRunOutputItemsAsync(evaluationId: evaluationId, evaluationRunId: evaluationRunId, limit: null, order: "asc", after: after, outputItemStatus: default, options: options);
+                cancellationToken.ThrowIfCancellationRequested();
                 Utf8JsonReader reader = new(resultList.GetRawResponse().Content.ToMemory().ToArray());
                 using JsonDocument document = JsonDocument.ParseValue(ref reader);
 

@@ -12,6 +12,10 @@
 
 ### Other Changes
 
+### Sample Updates
+
+- Added samples for recorded-audio evaluation and voice-agent simulation using built-in audio evaluators.
+
 ## 3.0.0-beta.6 (2026-10-30)
 
 ### Features Added
