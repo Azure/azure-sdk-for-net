@@ -19,6 +19,15 @@ namespace Azure.ResourceManager.Search.Tests.Tests
     [Property("Owner", "Azure.ResourceManager.Search")]
     public class SearchServiceCompatibilityTests
     {
+        [Test]
+        public void SearchServiceStatus_ShouldBeHiddenFromIntelliSense_WhenUsingLegacyEnum()
+        {
+            var attribute = typeof(SearchServiceStatus).GetCustomAttribute<System.ComponentModel.EditorBrowsableAttribute>();
+
+            Assert.IsNotNull(attribute);
+            Assert.AreEqual(System.ComponentModel.EditorBrowsableState.Never, attribute.State);
+        }
+
         [TestCase(typeof(SearchServiceData))]
         [TestCase(typeof(SearchServicePatch))]
         public void Status_ShouldWarnAndPointToServiceStatus_WhenMarkedObsolete(Type modelType)
