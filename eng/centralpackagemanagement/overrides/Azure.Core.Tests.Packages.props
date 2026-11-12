@@ -1,0 +1,7 @@
+<Project>
+  <ItemGroup>
+    <!-- Core tests reference Secrets, whose Core 1.65.0 dependency requires ClientModel 1.17.0.
+         Remove this override when the central ClientModel version reaches 1.17.0 or later. -->
+    <PackageVersion Update="System.ClientModel" Version="1.17.0" />
+  </ItemGroup>
+</Project>
