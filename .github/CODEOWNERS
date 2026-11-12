@@ -723,6 +723,9 @@
 # ServiceLabel: %Durable Task Scheduler %Mgmt
 # ServiceOwners:                                                   @berndverst @kaibocai @torosent @philliphoff @cgillum
 
+# PRLabel: %Mgmt
+/sdk/edgeoperator/                                                @kleyvaortega
+
 # PRLabel: %Elastic
 /sdk/elastic/Azure.ResourceManager.Elastic/                        @ArthurMa1978
 
