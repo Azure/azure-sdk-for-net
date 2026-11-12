@@ -1,5 +1,5 @@
 directory: specification/aiinfraoptimization/resource-manager/Microsoft.AIInfraOptimization/AIInfraOptimization
-commit: 008543436e2c12a468f086fcbb2360f62ddcd0d6
+commit: d474b502597fd35044139639d2cb1495db8e3089
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 
