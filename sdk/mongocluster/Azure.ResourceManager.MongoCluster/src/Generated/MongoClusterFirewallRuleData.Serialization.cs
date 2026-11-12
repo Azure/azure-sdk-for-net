@@ -17,7 +17,7 @@ using Azure.ResourceManager.MongoCluster.Models;
 
 namespace Azure.ResourceManager.MongoCluster
 {
-    /// <summary> Represents a mongo cluster firewall rule. </summary>
+    /// <summary> Represents a DocumentDB cluster firewall rule. </summary>
     public partial class MongoClusterFirewallRuleData : ResourceData, IJsonModel<MongoClusterFirewallRuleData>
     {
         /// <param name="data"> The data to parse. </param>

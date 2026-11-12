@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Replica properties of the mongo cluster. </summary>
+    /// <summary> Replica properties of the DocumentDB cluster. </summary>
     public partial class MongoClusterReplicationProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

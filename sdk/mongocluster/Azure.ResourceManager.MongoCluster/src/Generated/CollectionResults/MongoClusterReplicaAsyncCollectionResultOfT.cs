@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// <param name="client"> The Replicas client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="mongoClusterName"> The name of the mongo cluster. </param>
+        /// <param name="mongoClusterName"> The name of the DocumentDB cluster. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
         public MongoClusterReplicaAsyncCollectionResultOfT(Replicas client, Guid subscriptionId, string resourceGroupName, string mongoClusterName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)

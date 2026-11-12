@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> The encryption configuration for the mongo cluster. </summary>
+    /// <summary> The encryption configuration for the DocumentDB cluster. </summary>
     internal partial class EncryptionProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

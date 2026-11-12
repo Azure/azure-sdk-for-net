@@ -11,7 +11,7 @@ using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> The authentication configuration for the Mongo cluster. </summary>
+    /// <summary> The authentication configuration for the DocumentDB cluster. </summary>
     internal partial class AuthConfigProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

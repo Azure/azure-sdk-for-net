@@ -13,7 +13,7 @@ using Azure.ResourceManager.MongoCluster.Models;
 
 namespace Azure.ResourceManager.MongoCluster
 {
-    /// <summary> Represents a mongo cluster firewall rule. </summary>
+    /// <summary> Represents a DocumentDB cluster firewall rule. </summary>
     public partial class MongoClusterFirewallRuleData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -14,7 +14,7 @@ using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> The connection strings for the given mongo cluster. </summary>
+    /// <summary> The connection strings for the given DocumentDB cluster. </summary>
     public partial class MongoClusterConnectionStringsResult : IJsonModel<MongoClusterConnectionStringsResult>
     {
         /// <param name="data"> The data to parse. </param>

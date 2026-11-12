@@ -13,7 +13,7 @@ using Azure.ResourceManager.MongoCluster;
 
 namespace Azure.ResourceManager.MongoCluster.Models
 {
-    /// <summary> Connection string for the mongo cluster. </summary>
+    /// <summary> Connection string for the DocumentDB cluster. </summary>
     public partial class MongoClusterConnectionString : IJsonModel<MongoClusterConnectionString>
     {
         /// <param name="data"> The data to parse. </param>
