@@ -1,251 +1,138 @@
 'use strict';
 
-// gh-aw harness adapter and controller: assign review batches, continue unfinished
-// work, supervise workers and gate publication on a complete validated ledger.
-// A model's size estimate cannot shrink the worklist or change coverage totals.
+// Native gh-aw runtime bridge. Review policy and the authoritative queue live
+// only in the persistent PowerShell host; Node performs asynchronous effects.
 const fs = require('node:fs');
 const path = require('node:path');
 const { spawn } = require('node:child_process');
 const crypto = require('node:crypto');
 const { StringDecoder } = require('node:string_decoder');
 const { verifyDelivery, snapshotDigest, MAX_BATCH_BYTES } = require('./ReviewDelivery.cjs');
-
-const MAX_BATCH_ITEMS = 8;
-// The pinned runner needs 5s shutdown grace plus up to 2s pipe draining to
-// terminate the separately detached CLI group that only it owns.
+const { startContinuationSession, completeResponseBudget, finalResponseBudget, addCompleteWireBytes } = require('./ReviewContinuationSession.cjs');
 const WORKER_SHUTDOWN_GRACE_MS = 10000;
-const text = value => typeof value === 'string' && value.trim().length > 0;
 const sha = value => typeof value === 'string' && /^[a-f0-9]{40}$/i.test(value);
 
-function makeWorklist(snapshot) {
-  if (!snapshot || !sha(snapshot.head_sha) || !sha(snapshot.base_sha) || !Number.isSafeInteger(snapshot.pull_number) || snapshot.pull_number <= 0 ||
-      !Array.isArray(snapshot.files) || snapshot.changed_files !== snapshot.files.length || !Array.isArray(snapshot.threads)) {
-    throw new Error('Invalid review snapshot identity or file count.');
+function checkRuntime(session, deadline) {
+  session.assertHealthy();
+  if (Date.now() >= deadline) throw new Error('Review deadline exhausted.');
+}
+function validateAssignment(value, nonce, items) {
+  if (!value || typeof value.complete !== 'boolean' || !Array.isArray(value.ids)) throw new Error('Invalid continuation assignment.');
+  if (value.complete) {
+    if (value.ids.length || Object.keys(value).length !== 2) throw new Error('Invalid completed continuation assignment.');
+  } else if (Object.keys(value).length !== 4 || !Number.isSafeInteger(value.attempt_id) || value.attempt_id <= 0 || value.nonce !== nonce ||
+      !value.ids.length || value.ids.length > 8 || new Set(value.ids).size !== value.ids.length || value.ids.some(id => typeof id !== 'string' || !items.has(id))) {
+    throw new Error('Invalid continuation assignment.');
   }
-  const filenames = new Set();
-  const threadIds = new Set();
-  const files = snapshot.files.map((file, index) => {
-    if (!text(file.filename) || filenames.has(file.filename)) throw new Error('Invalid or duplicate changed filename.');
-    filenames.add(file.filename);
-    return { id: `file:${index}`, file };
-  });
-  const threads = snapshot.threads.map((thread, index) => {
-    if (!text(thread.id) || threadIds.has(thread.id) || typeof thread.isResolved !== 'boolean' || !Array.isArray(thread.comments) ||
-        !thread.comments.length || !Number.isSafeInteger(thread.comments[0].databaseId) || thread.comments[0].databaseId <= 0) {
-      throw new Error('Invalid, incomplete or duplicate review thread.');
-    }
-    threadIds.add(thread.id);
-    return { id: `thread:${index}`, thread };
-  });
-  // Preserve the workflow's order: verify prior threads, then perform a fresh
-  // full-file pass. A prior review never substitutes for a file result.
-  return [...threads, ...files];
 }
-
-async function nextBatch(work, { deadline = Infinity } = {}) {
-  const { startBatchSession } = require('./ReviewBatchSession.cjs');
-  const selector = startBatchSession({ maxItems: MAX_BATCH_ITEMS, maxBytes: MAX_BATCH_BYTES });
-  try { return await selector.select(work, deadline); }
-  finally { await selector.close(); }
-}
-
-function acceptResults(batch, response) {
-  if (!response || !Array.isArray(response.results)) throw new Error('Invalid worker result.');
-  const assigned = new Map(batch.map(item => [item.id, item]));
-  const seen = new Set();
-  const accepted = [];
-  for (const result of response.results) {
-    if (!result || !assigned.has(result.id) || seen.has(result.id)) throw new Error('Unassigned or duplicate worker result.');
-    seen.add(result.id);
-    if (result.status !== 'complete') {
-      if (!['pending', 'blocked'].includes(result.status)) throw new Error('Invalid worker status.');
-      // A model's blocker/size estimate is not a trusted terminal condition.
-      // Retry unfinished items; actual subprocess errors and the controller's
-      // deadline still fail closed.
-      continue;
-    }
-    if (!text(result.reasoning) || !Array.isArray(result.findings) || !['none', 'resolve', 'reopen'].includes(result.action)) {
-      throw new Error('Invalid worker completion or missing reasoning.');
-    }
-    const item = assigned.get(result.id);
-    if (!item.thread && result.action !== 'none') throw new Error('File result cannot change a thread.');
-    if (result.action === 'resolve' && (item.thread.isResolved || !text(result.reply))) throw new Error('Resolving requires an unresolved thread and a substantive reply.');
-    if (result.action === 'reopen' && (!item.thread.isResolved || !text(result.reply))) throw new Error('Reopening requires a resolved thread and a reply.');
-    if (result.reply !== undefined && result.reply !== null && typeof result.reply !== 'string') throw new Error('Invalid thread reply.');
-    for (const finding of result.findings) {
-      if (!finding || !text(finding.path) || !Number.isSafeInteger(finding.line) || finding.line <= 0 || !text(finding.body) || (finding.side !== undefined && !['LEFT', 'RIGHT'].includes(finding.side))) {
-        throw new Error('Invalid inline finding.');
-      }
-    }
-    // Keep only the supported fields, never arbitrary safe-output payloads.
-    accepted.push({ id: result.id, status: 'complete', reasoning: result.reasoning, findings: result.findings.map(f => ({ path: f.path, line: f.line, body: f.body, ...(f.side ? { side: f.side } : {}) })), action: result.action, ...(text(result.reply) ? { reply: result.reply } : {}) });
+function validateDelta(value, assignment, total) {
+  if (!value || value.attempt_id !== assignment.attempt_id || !Array.isArray(value.accepted) || value.accepted.length > assignment.ids.length ||
+      !Number.isSafeInteger(value.remaining) || value.remaining < 0 || value.remaining > total || !Number.isSafeInteger(value.batch_limit) || value.batch_limit < 1 || value.batch_limit > 8 ||
+      !value.attempt || !Array.isArray(value.attempt.assigned) || !Array.isArray(value.attempt.completed) || !Array.isArray(value.attempt.pending) || typeof value.attempt.reason !== 'string') {
+    throw new Error('Invalid continuation checkpoint delta.');
   }
-  return accepted;
+  const ids=value.accepted.map(item=>item?.id);
+  if (new Set(ids).size !== ids.length || ids.some(id=>!assignment.ids.includes(id)) || JSON.stringify(value.attempt.assigned) !== JSON.stringify(assignment.ids) ||
+      JSON.stringify(value.attempt.completed) !== JSON.stringify(ids)) throw new Error('Invalid continuation checkpoint identities.');
 }
-
-async function runQueue(work, { runBatch, deadline, checkpoint = () => {} }) {
-  const pending = new Map(work.map(item => [item.id, item]));
-  if (pending.size !== work.length) throw new Error('Duplicate work item.');
-  const ledger = { results: [], attempts: [] };
-  let batchLimit = MAX_BATCH_ITEMS;
-  checkpoint(ledger); // Empty reviews also need an authoritative completion artifact.
-  if (!pending.size) return ledger;
-  if (Date.now() >= deadline) throw new Error(`Review deadline exhausted with ${pending.size} items remaining.`);
-  const { startBatchSession } = require('./ReviewBatchSession.cjs');
-  const selector = startBatchSession({ maxItems: MAX_BATCH_ITEMS, maxBytes: MAX_BATCH_BYTES });
-  let failure;
+async function closeRuntime(session, failure) {
+  try { await session.close(); }
+  catch (error) {
+    if (!failure) throw error;
+    if (error !== failure && !(failure instanceof AggregateError && failure.errors.includes(error))) throw new AggregateError([failure,error],`${failure.message}; continuation cleanup failed: ${error.message}`);
+  }
+}
+async function runReview(snapshot, {runBatch,deadline,checkpoint=()=>{}}) {
+  if (!Number.isFinite(deadline)) throw new Error('Invalid review deadline.');
+  if (Date.now() >= deadline) throw new Error('Review deadline exhausted.');
+  const session=startContinuationSession(); let failure, diagnostics, outputs, completeBytes=0;
   try {
-    while (pending.size) {
-      if (Date.now() >= deadline) throw new Error(`Review deadline exhausted with ${pending.size} items remaining.`);
-      const batch = (await selector.select([...pending.values()], deadline)).slice(0, batchLimit);
-      selector.assertHealthy();
-      if (Date.now() >= deadline) throw new Error(`Review deadline exhausted with ${pending.size} items remaining.`);
-      let response;
-      try { response = await runBatch(batch, deadline, selector.signal); }
-      catch (error) {
-        try { selector.assertHealthy(); }
-        catch (selectorError) {
-          if (selectorError !== error) throw new AggregateError([error, selectorError], `${error.message}; ${selectorError.message}`);
-        }
+    const digest=snapshotDigest(snapshot);
+    const init=(await session.request('initialize',{snapshot,snapshotHash:digest},{deadline})).value;
+    checkRuntime(session,deadline);
+    // Mechanical immutable ID bindings only; validation and ordering policy are
+    // in PowerShell, not a second pending queue in the native bridge.
+    const items=new Map([...snapshot.threads.map((thread,i)=>[`thread:${i}`,{id:`thread:${i}`,thread}]),...snapshot.files.map((file,i)=>[`file:${i}`,{id:`file:${i}`,file}])]);
+    const initial=init?.checkpoint;
+    if (init?.work_count !== items.size || !initial || initial.snapshot_sha256 !== digest || initial.head_sha !== snapshot.head_sha || initial.base_sha !== snapshot.base_sha ||
+        !Array.isArray(initial.results) || initial.results.length || !Array.isArray(initial.attempts) || initial.attempts.length) throw new Error('Invalid initial continuation checkpoint.');
+    diagnostics=initial;
+    checkpoint(structuredClone(diagnostics),items.size);
+    while (true) {
+      checkRuntime(session,deadline);
+      const nonce=crypto.randomBytes(16).toString('hex');
+      const assignment=(await session.request('next',{nonce},{deadline})).value;
+      validateAssignment(assignment,nonce,items); checkRuntime(session,deadline);
+      if (assignment.complete) break;
+      const batch=assignment.ids.map(id=>items.get(id));
+      let returned;
+      try {
+        returned=await runBatch(batch,deadline,session.signal,{nonce,attempt_id:assignment.attempt_id});
+        checkRuntime(session,deadline);
+        if (!returned || !returned.response || !Array.isArray(returned.receipts)) throw new Error('Invalid worker effect response.');
+        await verifyDelivery(snapshot,batch,returned.response.results,nonce,returned.receipts,{deadline,signal:session.signal});
+      } catch (error) {
+        try { session.assertHealthy(); } catch (hostError) { if (hostError !== error) throw new AggregateError([error,hostError],`${error.message}; ${hostError.message}`); }
         throw error;
       }
-      selector.assertHealthy();
-      if (Date.now() >= deadline) throw new Error(`Review deadline exhausted with ${pending.size} items remaining.`);
-      const accepted = acceptResults(batch, response);
-      ledger.attempts.push({ assigned: batch.map(x => x.id), completed: accepted.map(x => x.id), reason: typeof response.reason === 'string' ? response.reason : '', pending: response.results.filter(x => x.status !== 'complete').map(x => ({ id: x.id, status: x.status, reasoning: typeof x.reasoning === 'string' ? x.reasoning : '' })) });
-      for (const result of accepted) {
-        pending.delete(result.id);
-        ledger.results.push(result);
-      }
-      checkpoint(ledger);
-      // A clean refusal is not an enforced blocker. Reduce the assignment and
-      // continue while time remains; only actual errors/deadline end the run.
-      batchLimit = accepted.length ? MAX_BATCH_ITEMS : Math.max(1, Math.floor(batchLimit / 2));
+      checkRuntime(session,deadline);
+      // This flag is a trusted runtime assertion constructed only after the
+      // independent verifier succeeds. Never copy it from worker JSON.
+      const response={results:returned.response.results,...(typeof returned.response.reason==='string'?{reason:returned.response.reason}:{})};
+      const packet=await session.request('complete',{attempt_id:assignment.attempt_id,nonce,deliveryVerified:true,response},{deadline,maxResponseBytes:completeResponseBudget});
+      checkRuntime(session,deadline); validateDelta(packet.value,assignment,items.size);
+      completeBytes=addCompleteWireBytes(completeBytes,packet.wireBytes);
+      diagnostics.results.push(...packet.value.accepted); diagnostics.attempts.push(packet.value.attempt);
+      checkpoint(structuredClone(diagnostics),items.size);
     }
-  } catch (error) { failure = error; throw error; }
-  finally {
-    try { await selector.close(); }
-    catch (error) {
-      if (!failure) throw error;
-      if (error !== failure && !(failure instanceof AggregateError && failure.errors.includes(error))) {
-        throw new AggregateError([failure, error], `${failure.message}; batch selector cleanup failed: ${error.message}`);
-      }
-    }
-  }
+    outputs=(await session.request('finish',{},{deadline,maxResponseBytes:finalResponseBudget(completeBytes)})).value;
+    checkRuntime(session,deadline);
+    if (!Array.isArray(outputs) || !outputs.length || outputs.some(item=>!item || typeof item.type !== 'string') || outputs.at(-1).type !== 'submit_pull_request_review') throw new Error('Invalid finalized review outputs.');
+  } catch (error) { failure=error; throw error; }
+  finally { await closeRuntime(session,failure); }
   if (Date.now() >= deadline) throw new Error('Review deadline exhausted before publication.');
-  return ledger;
+  return {ledger:diagnostics,outputs};
 }
 
-function baselineInventory(snapshot) {
-  const relevant = snapshot.files.some(file => /^eng\/apicompatbaselines\/[^/]+\.xml$/.test(file.filename) && file.status !== 'removed');
-  if (relevant && !Array.isArray(snapshot.baseline_suppressions)) throw new Error('Missing captured baseline suppression inventory.');
-  const entries = snapshot.baseline_suppressions || [];
-  if (!Array.isArray(entries)) throw new Error('Invalid baseline suppression inventory.');
-  // Render untrusted data using a small safe alphabet, escaping everything else
-  // as Unicode notation inside code spans. This also keeps each entry on one line.
-  const safe = value => String(value).replace(/[^a-zA-Z0-9 .,:/(){}_-]/gu, char => `\\u{${char.codePointAt(0).toString(16)}}`)
-    .replace(/\/\//g, '\\u{2f}/').replace(/(data|javascript|vbscript|about|mailto|tel|magnet):/gi, '$1\\u{3a}');
-  const containsIdentifier = (body, identifier) => {
-    const identifierChar = /[a-zA-Z0-9_.$:{}()\[\]<>]/;
-    for (let at = body.indexOf(identifier); at >= 0; at = body.indexOf(identifier, at + 1)) {
-      if ((!at || !identifierChar.test(body[at - 1])) && (at + identifier.length === body.length || !identifierChar.test(body[at + identifier.length]))) return true;
-    }
-    return false;
-  };
-  return entries.map(entry => {
-    if (!entry || !snapshot.files.some(file => file.filename === entry.path && /^eng\/apicompatbaselines\/[^/]+\.xml$/.test(file.filename)) ||
-        !entry.fields || typeof entry.fields !== 'object' || Array.isArray(entry.fields) ||
-        !entry.fields.DiagnosticId || !entry.fields.Target || Object.values(entry.fields).some(value => typeof value !== 'string') ||
-        !(entry.nearby_comment === null || typeof entry.nearby_comment === 'string')) throw new Error('Invalid captured suppression.');
-    const fields = Object.keys(entry.fields).sort().map(key => `${safe(key)}=${safe(entry.fields[key])}`).join('; ');
-    const identity = `- 🟡 \`${safe(entry.path)}; ${fields}; nearby comment: `;
-    const line = `${identity}${safe(entry.nearby_comment || 'none identified')}\``;
-    const prior = snapshot.threads.flatMap(thread => thread.comments).find(comment => comment.path === entry.path && typeof comment.body === 'string' && containsIdentifier(comment.body, entry.fields.DiagnosticId) && containsIdentifier(comment.body, entry.fields.Target));
-    const priorReview = (snapshot.reviews || []).find(review => Number.isSafeInteger(review.id) && typeof review.body === 'string' && review.body.split(/\r?\n/).some(text => text.startsWith(identity)));
-    const references = [prior ? `prior review comment ID ${prior.databaseId}` : '', priorReview ? `prior review ID ${priorReview.id}` : ''].filter(Boolean);
-    return line + (references.length ? ` (${references.join('; ')})` : '');
+// Preserve original native String(value)/JSON.stringify compatibility without
+// duplicating review acceptance, output construction or publication policy.
+function encodeActualRouting(output) {
+  let actualRouting,routingError;
+  try {
+    if (Array.isArray(output?.items)) actualRouting=output.items.map(item=>JSON.stringify(Object.fromEntries(Object.keys(item).filter(key=>!['body','reason'].includes(key)).sort().map(key=>[key,String(item[key])]))));
+  } catch (error) { routingError=error.message; }
+  return {actualRouting,routingError};
+}
+function encodeGuardData(progress,output) {
+  // Project only consumed fields, without accepting or validating them here.
+  // This avoids serializing ignored diagnostic/opaque fields that the native
+  // guard never traversed, while PowerShell still validates every known field.
+  const pick=(value,keys)=>value && typeof value==='object' && !Array.isArray(value)?Object.fromEntries(keys.filter(key=>Object.hasOwn(value,key)).map(key=>[key,value[key]])):value;
+  const projected=pick(progress,['snapshot_sha256','head_sha','base_sha','results']);
+  if(Array.isArray(projected?.results))projected.results=projected.results.map(result=>{
+    const entry=pick(result,['id','status','reasoning','findings','action','reply']);
+    if(Array.isArray(entry?.findings))entry.findings=entry.findings.map(finding=>pick(finding,['path','line','body','side']));
+    return entry;
   });
+  const buffered=pick(output,['items','errors']);
+  if(Array.isArray(buffered?.items))buffered.items=buffered.items.map(item=>({
+    type:typeof item?.type==='string'?item.type:null,
+    body:typeof item?.body==='string'?item.body:null,
+  }));
+  return {progress:projected,output:buffered};
 }
-
-function buildOutputs(snapshot, ledger) {
-  const work = makeWorklist(snapshot);
-  const validated = acceptResults(work, { results: ledger.results });
-  if (validated.length !== work.length) throw new Error('Incomplete review ledger; refusing publication.');
-  const items = new Map(work.map(item => [item.id, item]));
-  const changedPaths = new Set(snapshot.files.map(file => file.filename));
-  const outputs = [];
-  const findings = new Set();
-  const summaries = [];
-  for (const result of validated) {
-    const item = items.get(result.id);
-    for (const finding of result.findings) {
-      if (!changedPaths.has(finding.path)) throw new Error('Inline finding is outside the captured changed files.');
-      const key = JSON.stringify(finding);
-      if (!findings.has(key)) {
-        findings.add(key);
-        const file = snapshot.files.find(file => file.filename === finding.path);
-        outputs.push({ type: 'create_pull_request_review_comment', ...finding, side: finding.side || (file.status === 'removed' ? 'LEFT' : 'RIGHT') });
-      }
-    }
-    if (!item.thread) continue;
-    const root = item.thread.comments[0].databaseId;
-    if (result.reply) outputs.push({ type: 'reply_to_pull_request_review_comment', comment_id: root, body: result.reply });
-    if (['resolve', 'reopen'].includes(result.action)) outputs.push({ type: 'unresolve_review_thread', operation: result.action, comment_id: root, reason: result.reasoning });
-    summaries.push(`- Thread ${root}: ${result.action === 'none' ? 'verified, unchanged' : `requested ${result.action}`}. ${result.reasoning}`);
-  }
-  if (outputs.filter(x => x.type === 'create_pull_request_review_comment').length > 100 ||
-      outputs.filter(x => x.type === 'reply_to_pull_request_review_comment').length > 50 ||
-      outputs.filter(x => x.type === 'unresolve_review_thread' && x.operation === 'resolve').length > 50 ||
-      outputs.filter(x => x.type === 'unresolve_review_thread' && x.operation === 'reopen').length > 50) throw new Error('Review exceeds configured safe-output limits.');
-  const unresolved = snapshot.threads.filter(thread => !thread.isResolved).length;
-  const inventory = baselineInventory(snapshot);
-  const inventoryText = inventory.length ? `\n\n## New ApiCompat suppressions\n\n${inventory.join('\n')}` : '';
-  const body = `## Re-review summary\n\nCoverage: ${snapshot.threads.length}/${snapshot.threads.length} threads fetched, ${unresolved}/${unresolved} unresolved threads verified, ${snapshot.changed_files}/${snapshot.changed_files} changed files reviewed\n\n${findings.size ? `${findings.size} new finding(s); see inline comments.` : inventory.length ? 'See the suppression inventory below.' : 'No new findings.'}${inventoryText}\n\n${summaries.join('\n').slice(0, 12000)}${summaries.join('\n').length > 12000 ? '\n\nFurther thread conclusions are recorded in the review-progress artifact.' : ''}`.trim();
-  if (Buffer.byteLength(body) > 60000) throw new Error('Review summary exceeds the safe publication limit.');
-  outputs.push({ type: 'submit_pull_request_review', event: 'COMMENT', body });
-  return outputs;
+function encodePublicationRequest(snapshot,progress,output,agentResult) {
+  const routing=encodeActualRouting(output);
+  return {snapshot,...encodeGuardData(progress,output),agentResult,snapshotHash:snapshotDigest(snapshot),...routing};
 }
-
-function assertPublication(snapshot, progress, output, agentResult) {
-  // gh-aw can process buffered outputs from a failed agent. Do not let a
-  // failed/tainted batch publish replies or thread actions, even if it wrote a
-  // plausible progress file. The job result comes from Actions, not the model.
-  if (agentResult !== 'success') throw new Error('Review controller did not complete successfully; refusing all publication.');
-  const digest = snapshotDigest(snapshot);
-  if (progress.snapshot_sha256 !== digest || progress.head_sha !== snapshot.head_sha || progress.base_sha !== snapshot.base_sha) {
-    throw new Error('Review progress does not belong to the captured snapshot.');
-  }
-  const expected = buildOutputs(snapshot, progress);
-  if (!output || !Array.isArray(output.items) || !Array.isArray(output.errors) || output.errors.length || output.items.length !== expected.length) {
-    throw new Error('Buffered outputs do not match the completed review ledger.');
-  }
-  // gh-aw owns text sanitization. Validate identity/routing and completeness,
-  // not a reconstruction of sanitized Markdown from a different job.
-  const canonical = item => JSON.stringify(Object.fromEntries(Object.keys(item)
-    .filter(key => !['body', 'reason'].includes(key)).sort().map(key => [key, String(item[key])])));
-  const wanted = expected.map(canonical).sort();
-  const actual = output.items.map(canonical).sort();
-  if (JSON.stringify(wanted) !== JSON.stringify(actual)) throw new Error('Buffered output routing differs from the accepted review results.');
-  // Free-form text may be sanitized, but the coverage claim must still match
-  // the trusted snapshot and completed ledger before *any* output is applied.
-  const body = output.items.find(item => item.type === 'submit_pull_request_review')?.body;
-  if (typeof body !== 'string') throw new Error('Missing review coverage.');
-  const lines = body.split(/\r?\n/).map(line => line.replace(/[*_`]/g, '').trim().replace(/^(?:>\s*)+/, '').replace(/^[-+]\s+/, '').trim()).filter(line => /^coverage\s*:/i.test(line));
-  const match = lines.length === 1 && /^coverage\s*:\s*(\d{1,6})\s*\/\s*(\d{1,6})\s+threads\s+fetched\s*,\s*(\d{1,6})\s*\/\s*(\d{1,6})\s+unresolved\s+threads\s+verified\s*,\s*(\d{1,6})\s*\/\s*(\d{1,6})\s+changed\s+files\s+reviewed\s*\.?$/i.exec(lines[0]);
-  const unresolved = snapshot.threads.filter(thread => !thread.isResolved).length;
-  const counts = [snapshot.threads.length, snapshot.threads.length, unresolved, unresolved, snapshot.changed_files, snapshot.changed_files];
-  if (!match || counts.some((count, i) => Number(match[i + 1]) !== count)) throw new Error('Buffered review coverage differs from the captured complete ledger.');
-  // Unlike free-form worker prose, each deterministic inventory line is
-  // required to survive sanitization unchanged and in full.
-  const inventory = baselineInventory(snapshot);
-  if (inventory.length) {
-    const section = `## New ApiCompat suppressions\n\n${inventory.join('\n')}`;
-    const normalized = body.replace(/\r\n/g, '\n');
-    const index = normalized.indexOf(section);
-    const prefix = normalized.slice(0, index);
-    if (index < 0 || normalized.indexOf(section, index + 1) >= 0 || /(?:^|\n)\s*(?:```|~~~)/.test(prefix) || prefix.includes('No new findings.') ||
-        !['', '\n'].includes(normalized.slice(index + section.length, index + section.length + 1))) throw new Error('Buffered review omits or hides a captured baseline suppression.');
-  }
+async function assertPublication(snapshot,progress,output,agentResult) {
+  const session=startContinuationSession();let failure;
+  try {
+    const payload=encodePublicationRequest(snapshot,progress,output,agentResult);
+    const result=(await session.request('assert-publication',payload,{deadline:Date.now()+22*60*1000})).value;
+    if (!result || result.verified !== true || Object.keys(result).length !== 1) throw new Error('Invalid publication verification result.');
+  } catch (error) { failure=error;throw error; }
+  finally { await closeRuntime(session,failure); }
 }
 
 function workerArguments(args, promptFile, logDir) {
@@ -355,68 +242,52 @@ function workerPrompt(original, snapshot, batch, nonce) {
 }
 
 async function main() {
-  const [copilot, ...args] = process.argv.slice(2);
+  const [copilot,...args]=process.argv.slice(2);
   if (!copilot) throw new Error('Missing compiler-provided Copilot command.');
-  const promptIndex = args.indexOf('--prompt-file');
-  if (promptIndex < 0 || !args[promptIndex + 1]) throw new Error('Missing compiler-provided prompt file.');
-  const original = fs.readFileSync(args[promptIndex + 1], 'utf8');
-  const root = process.env.GH_AW_REVIEW_ROOT || '/tmp/gh-aw/pr-re-review';
-  const contextRoot = process.env.GH_AW_REVIEW_CONTEXT || path.join(__dirname, 'review-input');
-  const snapshot = JSON.parse(fs.readFileSync(path.join(contextRoot, 'snapshot.json'), 'utf8'));
-  const work = makeWorklist(snapshot);
-  const digest = snapshotDigest(snapshot);
-  const harness = path.join(__dirname, 'copilot_harness.cjs');
-  const softDeadline = Date.now() + 22 * 60 * 1000;
-  let invocation = 0;
-  const safeOutputsPath = process.env.GH_AW_SAFE_OUTPUTS;
+  const promptIndex=args.indexOf('--prompt-file');
+  if (promptIndex<0 || !args[promptIndex+1]) throw new Error('Missing compiler-provided prompt file.');
+  const original=fs.readFileSync(args[promptIndex+1],'utf8');
+  const root=process.env.GH_AW_REVIEW_ROOT||'/tmp/gh-aw/pr-re-review';
+  const contextRoot=process.env.GH_AW_REVIEW_CONTEXT||path.join(__dirname,'review-input');
+  const snapshot=JSON.parse(fs.readFileSync(path.join(contextRoot,'snapshot.json'),'utf8'));
+  const harness=path.join(__dirname,'copilot_harness.cjs');
+  const softDeadline=Date.now()+22*60*1000;let invocation=0;
+  const safeOutputsPath=process.env.GH_AW_SAFE_OUTPUTS;
   if (!safeOutputsPath) throw new Error('Missing safe-output path.');
-  const beforeOutputs = fs.existsSync(safeOutputsPath) ? fs.readFileSync(safeOutputsPath, 'utf8') : '';
-  const unchangedOutputs = () => {
-    const after = fs.existsSync(safeOutputsPath) ? fs.readFileSync(safeOutputsPath, 'utf8') : '';
-    if (beforeOutputs !== after) throw new Error('A read-only review worker attempted to emit safe outputs.');
+  const beforeOutputs=fs.existsSync(safeOutputsPath)?fs.readFileSync(safeOutputsPath,'utf8'):'';
+  const unchangedOutputs=()=>{
+    const after=fs.existsSync(safeOutputsPath)?fs.readFileSync(safeOutputsPath,'utf8'):'';
+    if(beforeOutputs!==after)throw new Error('A read-only review worker attempted to emit safe outputs.');
   };
-  const ledger = await runQueue(work, {
-    deadline: softDeadline,
-    checkpoint: state => {
+  const {outputs}=await runReview(snapshot,{
+    deadline:softDeadline,
+    checkpoint:(diagnostic,total)=>{
       unchangedOutputs();
-      // Diagnostic checkpoint only: never reload an agent-writable ledger as
-      // authoritative completion state, even across a retry of this workflow.
-      fs.writeFileSync(path.join(root, 'progress.json'), JSON.stringify({ head_sha: snapshot.head_sha, base_sha: snapshot.base_sha, snapshot_sha256: digest, ...state }, null, 2), { mode: 0o600 });
-      console.error(`[review-continuation] ${state.results.length}/${work.length} assigned items completed.`);
+      // Diagnostic output only. Never reload this artifact into host authority.
+      fs.writeFileSync(path.join(root,'progress.json'),JSON.stringify(diagnostic,null,2),{mode:0o600});
+      console.error(`[review-continuation] ${diagnostic.results.length}/${total} assigned items completed.`);
     },
-    runBatch: async (batch, deadline, signal) => {
-      const directory = path.join(root, `worker-${++invocation}`);
-      fs.mkdirSync(directory, { recursive: false });
-      const promptFile = path.join(directory, 'prompt.txt');
-      const nonce = crypto.randomBytes(16).toString('hex');
-      fs.writeFileSync(promptFile, workerPrompt(original, snapshot, batch, nonce), { mode: 0o600 });
-      const env = { ...process.env, GITHUB_OUTPUT: path.join(directory, 'runtime-outputs.txt'), GH_AW_HARNESS_MAX_RETRIES: '0' };
-      const output = await runProcess(process.execPath, [harness, copilot, ...workerArguments(args, promptFile, path.join(directory, 'logs'))], { deadline, env, outputFile: path.join(directory, 'execution.log'), signal });
+    runBatch:async(batch,deadline,signal,{nonce})=>{
+      const directory=path.join(root,`worker-${++invocation}`);fs.mkdirSync(directory,{recursive:false});
+      const promptFile=path.join(directory,'prompt.txt');
+      fs.writeFileSync(promptFile,workerPrompt(original,snapshot,batch,nonce),{mode:0o600});
+      const env={...process.env,GITHUB_OUTPUT:path.join(directory,'runtime-outputs.txt'),GH_AW_HARNESS_MAX_RETRIES:'0'};
+      const output=await runProcess(process.execPath,[harness,copilot,...workerArguments(args,promptFile,path.join(directory,'logs'))],{deadline,env,signal,outputFile:path.join(directory,'execution.log')});
       unchangedOutputs();
-      const response = parseWorkerResult(output);
-      const receiptDir = process.env.GH_AW_REVIEW_RECEIPTS || path.join(process.env.RUNNER_TEMP || '', 'gh-aw', 'safeoutputs', 'review-receipts');
-      const receiptFile = path.join(receiptDir, `${nonce}.jsonl`);
-      const contents = fs.existsSync(receiptFile) ? fs.readFileSync(receiptFile, 'utf8') : '';
-      if (Buffer.byteLength(contents) > 16 * 1024 * 1024) throw new Error('Delivery receipt limit exceeded.');
-      const receipts = contents.split('\n').filter(Boolean).map(line => JSON.parse(line));
-      await verifyDelivery(snapshot, batch, response.results, nonce, receipts, { deadline, signal });
-      return response;
+      const response=parseWorkerResult(output);
+      const receiptDir=process.env.GH_AW_REVIEW_RECEIPTS||path.join(process.env.RUNNER_TEMP||'','gh-aw','safeoutputs','review-receipts');
+      const receiptFile=path.join(receiptDir,`${nonce}.jsonl`);
+      const contents=fs.existsSync(receiptFile)?fs.readFileSync(receiptFile,'utf8'):'';
+      if(Buffer.byteLength(contents)>16*1024*1024)throw new Error('Delivery receipt limit exceeded.');
+      const receipts=contents.split('\n').filter(Boolean).map(line=>JSON.parse(line));
+      return {response,receipts};
     },
   });
   unchangedOutputs();
-  const outputs = buildOutputs(snapshot, ledger);
-  // The normal gh-aw safe-output collector, threat detection and publication
-  // guard still handle every write. Workers never publish independently.
-  const { runSafeOutputsCLI } = require(path.join(__dirname, 'safeoutputs_cli.cjs'));
-  for (const item of outputs) {
-    const { type, ...payload } = item;
-    runSafeOutputsCLI(type, Object.fromEntries(Object.entries(payload).map(([key, value]) => [key, String(value)])));
-  }
+  // Final outputs were constructed by PowerShell and held until verified clean
+  // host shutdown. Preserve gh-aw's ordinary collector/threat-detection path.
+  const {runSafeOutputsCLI}=require(path.join(__dirname,'safeoutputs_cli.cjs'));
+  for(const item of outputs){const {type,...payload}=item;runSafeOutputsCLI(type,Object.fromEntries(Object.entries(payload).map(([key,value])=>[key,String(value)])));}
 }
-
-module.exports = { makeWorklist, nextBatch, runQueue, buildOutputs, assertPublication, workerArguments, parseWorkerResult, workerPrompt, runProcess, acceptResults };
-if (require.main === module) main().catch(error => {
-  console.error(`[review-continuation] ${error.stack || error}`);
-  // Fail closed. No invented coverage or downgrade to a successful no-op.
-  process.exitCode = 1;
-});
+module.exports={runReview,assertPublication,encodePublicationRequest,workerArguments,parseWorkerResult,workerPrompt,runProcess};
+if(require.main===module)main().catch(error=>{console.error(`[review-continuation] ${error.stack||error}`);process.exitCode=1;});

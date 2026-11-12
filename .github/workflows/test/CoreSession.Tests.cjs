@@ -6,7 +6,8 @@ const os = require('node:os');
 const path = require('node:path');
 const { spawn } = require('node:child_process');
 const { once } = require('node:events');
-const { startBatchSession } = require('../pr-re-review/ReviewBatchSession.cjs');
+const { startContinuationSession } = require('../pr-re-review/ReviewContinuationSession.cjs');
+function startBatchSession() { const session=startContinuationSession();session.select=async(work,deadline)=>{const {value}=await session.request('probe',{work},{deadline});assert.equal(value,1);return work;};return session; }
 
 function fixture(t, mode) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'batch-session-'));
@@ -29,6 +30,7 @@ function fixture(t, mode) {
       fs.writeFileSync(path.join(dir,'verifier.pid.tmp'),String(process.pid));fs.renameSync(path.join(dir,'verifier.pid.tmp'),path.join(dir,'verifier.pid'));
       process.stdin.resume();setInterval(()=>{},1000);return;
     }
+    if(process.argv.some(arg=>arg.endsWith('ReviewVerifyDelivery.ps1'))) {process.stdin.resume();process.stdin.on('end',()=>process.stdout.write('{}'));return;}
     if(['hang','hang-child','ignore-eof','flood-stubborn'].includes(mode)) process.on('SIGTERM',()=>{});
     fs.writeFileSync(path.join(dir,'selector.pid.tmp'),String(process.pid));fs.renameSync(path.join(dir,'selector.pid.tmp'),path.join(dir,'selector.pid'));
     if(mode==='hang') {process.stdin.resume();setInterval(()=>{},1000);return;}
@@ -39,17 +41,19 @@ function fixture(t, mode) {
       child.once('message',()=>{fs.writeFileSync(path.join(dir,'child.pid.tmp'),String(child.pid));fs.renameSync(path.join(dir,'child.pid.tmp'),path.join(dir,'child.pid'));child.disconnect();});
       process.stdin.resume();setInterval(()=>{},1000);return;
     }
+    let completed=false;
     readline.createInterface({input:process.stdin}).on('line',line=>{
       const req=JSON.parse(line);
-      if(mode==='partial-next') {if(req.id===1)process.stdout.write(JSON.stringify({id:1,count:1})+'\\n'+ '{"id":2,');else process.stdout.write('"count":1}\\n');}
-      else if(mode==='close-stdout') {fs.writeSync(1,JSON.stringify({id:req.id,count:1})+'\\n');fs.closeSync(1);}
+      if(mode==='error-exit') {fs.writeSync(1,JSON.stringify({id:req.id,error:'Exact policy refusal'})+'\\n');process.exit(1);}
+      else if(mode==='partial-next') {if(req.id===1)process.stdout.write(JSON.stringify({id:1,result:1})+'\\n'+ '{"id":2,');else process.stdout.write('"result":1}\\n');}
+      else if(mode==='close-stdout') {fs.writeSync(1,JSON.stringify({id:req.id,result:1})+'\\n');fs.closeSync(1);}
       else if(mode==='malformed') process.stdout.write('not-json\\n');
-      else if(mode==='wrong-id') process.stdout.write(JSON.stringify({id:req.id+1,count:1})+'\\n');
-      else if(mode==='extra') process.stdout.write(JSON.stringify({id:req.id,count:1,extra:true})+'\\n');
+      else if(mode==='wrong-id') process.stdout.write(JSON.stringify({id:req.id+1,result:1})+'\\n');
+      else if(mode==='extra') process.stdout.write(JSON.stringify({id:req.id,result:1,extra:true})+'\\n');
       else if(mode==='flood') process.stdout.write('x'.repeat(5000));
       else if(mode==='flood-stubborn') setInterval(()=>process.stdout.write('x'.repeat(65536)),1);
       else if(mode==='invalid-utf8') process.stdout.write(Buffer.from([0xff,0x0a]));
-      else if(mode==='trailing-utf8') {process.stdout.write(JSON.stringify({id:req.id,count:1})+'\\n');process.stdout.write(Buffer.from([0xe2]));}
+      else if(mode==='trailing-utf8') {process.stdout.write(JSON.stringify({id:req.id,result:1})+'\\n');process.stdout.write(Buffer.from([0xe2]));}
       else if(mode==='partial') {process.stdout.write('{"id":');process.exit(1);}
       else if(mode==='term-exit-pipe') {
         const {spawn}=require('node:child_process');const escaped=spawn(process.execPath,['-e','setInterval(()=>{},1000)'],{detached:true,stdio:['ignore','inherit','inherit']});
@@ -60,9 +64,28 @@ function fixture(t, mode) {
         const {spawn}=require('node:child_process');const escaped=spawn(process.execPath,['-e','setInterval(()=>{},1000)'],{detached:true,stdio:['ignore','inherit','inherit']});
         fs.writeFileSync(path.join(dir,'child.pid.tmp'),String(escaped.pid));fs.renameSync(path.join(dir,'child.pid.tmp'),path.join(dir,'child.pid'));process.exit(1);
       }
-      else if(mode==='duplicate') process.stdout.write(JSON.stringify({id:req.id,count:1})+'\\n'+JSON.stringify({id:req.id,count:1})+'\\n');
-      else if(mode==='split') {const response=JSON.stringify({id:req.id,count:1})+'\\n';process.stdout.write(response.slice(0,5));setTimeout(()=>process.stdout.write(response.slice(5)),20);}
-      else {process.stdout.write(JSON.stringify({id:req.id,count:1})+'\\n');if(['die-after-reply','eof-after-reply','die-during-verifier'].includes(mode)){const timer=setInterval(()=>{if(fs.existsSync(path.join(dir,'die'))){clearInterval(timer);if(mode==='eof-after-reply')fs.closeSync(1);else process.exit(1);}},10);}}
+      else if(mode==='duplicate') process.stdout.write(JSON.stringify({id:req.id,result:1})+'\\n'+JSON.stringify({id:req.id,result:1})+'\\n');
+      else if(mode==='split') {const response=JSON.stringify({id:req.id,result:1})+'\\n';process.stdout.write(response.slice(0,5));setTimeout(()=>process.stdout.write(response.slice(5)),20);}
+      else {let result=1;
+        if(req.operation==='initialize')result={work_count:req.payload.snapshot.files.length+req.payload.snapshot.threads.length,checkpoint:{head_sha:req.payload.snapshot.head_sha,base_sha:req.payload.snapshot.base_sha,snapshot_sha256:req.payload.snapshotHash,results:[],attempts:[]}};
+        else if(req.operation==='next')result=completed?{complete:true,ids:[]}:{complete:false,attempt_id:1,nonce:req.payload.nonce,ids:['file:0']};
+        else if(req.operation==='complete'){completed=true;result={attempt_id:1,accepted:req.payload.response.results,remaining:0,batch_limit:8,attempt:{assigned:['file:0'],completed:['file:0'],pending:[],reason:''}};}
+        else if(req.operation==='finish'){
+          result=[{type:'submit_pull_request_review',body:'held privately'}];
+          fs.writeFileSync(path.join(dir,'finished'),'frame');
+          if(mode==='finish-nonzero')process.stdin.on('end',()=>process.exit(1));
+          if(mode==='finish-flood')process.stdin.on('end',()=>{process.stdout.write('x'.repeat(65536));setInterval(()=>{},1000);});
+          if(mode==='finish-hang'){process.on('SIGTERM',()=>{});process.stdin.on('end',()=>setInterval(()=>{},1000));}
+        }
+        if(req.operation==='next'){
+          if(mode==='assignment-empty')result.ids=[];
+          if(mode==='assignment-too-many')result.ids=Array.from({length:9},(_,i)=>'file:'+i);
+          if(mode==='assignment-foreign')result.ids=['file:999'];
+          if(mode==='assignment-nonce')result.nonce='wrong';
+          if(mode==='assignment-extra')result.extra=true;
+          if(mode==='assignment-complete-ids')result={complete:true,ids:['file:0']};
+        }
+        process.stdout.write(JSON.stringify({id:req.id,result})+'\\n');if(['die-after-reply','eof-after-reply','die-during-verifier'].includes(mode)){const timer=setInterval(()=>{if(fs.existsSync(path.join(dir,'die'))){clearInterval(timer);if(mode==='eof-after-reply')fs.closeSync(1);else process.exit(1);}},10);}}
     });
   `, { mode: 0o755 });
   process.env.GH_AW_REVIEW_PWSH = script; process.env.BATCH_FAKE_MODE = mode; process.env.BATCH_FAKE_DIR = dir;
@@ -82,12 +105,13 @@ function alive(pid) {
   catch (error) { if (error.code === 'ESRCH' || error.code === 'ENOENT') return false; throw error; }
 }
 const work = [{ id:'file:0', file:{ filename:'f.cs', status:'modified', patch:'diff' } }];
+const snapshot={head_sha:'a'.repeat(40),base_sha:'b'.repeat(40),files:work.map(item=>item.file),threads:[],changed_files:1};
 
 for (const mode of ['malformed', 'wrong-id', 'extra', 'flood', 'flood-stubborn', 'invalid-utf8', 'partial']) test(`session rejects ${mode} responses`, { skip: process.platform === 'win32', timeout: 6000 }, async t => {
   const { dir } = fixture(t, mode);
   const session = startBatchSession({ maxItems:8, maxBytes:48000 });
-  await assert.rejects(session.select(work, Date.now()+3000), /batch select/i);
-  await assert.rejects(session.close(), /batch select/i);
+  await assert.rejects(session.select(work, Date.now()+3000), /continuation/i);
+  await assert.rejects(session.close(), /continuation/i);
   fs.rmSync(path.join(dir, 'selector.pid'), { force: true });
 });
 
@@ -107,7 +131,7 @@ test('session rejects an unsolicited duplicate response', { skip: process.platfo
     const timer=setTimeout(()=>reject(new Error('Duplicate response was not rejected')),3000);
     session.signal.addEventListener('abort',()=>{clearTimeout(timer);resolve();},{once:true});
   });
-  await assert.rejects(session.close(), /batch select/i);
+  await assert.rejects(session.close(), /continuation/i);
   fs.rmSync(path.join(dir, 'selector.pid'), { force: true });
 });
 
@@ -116,9 +140,9 @@ test('unsolicited partial output cannot become the next request response', { ski
   const session = startBatchSession({ maxItems:8, maxBytes:48000 });
   try {
     try { await session.select(work, Date.now()+3000); }
-    catch (error) { assert.match(error.message, /unexpected batch selection output/i); }
-    await assert.rejects(session.select(work, Date.now()+3000), /unexpected batch selection output/i);
-    await assert.rejects(session.close(), /unexpected batch selection output/i);
+    catch (error) { assert.match(error.message, /unexpected continuation(?: host)? output/i); }
+    await assert.rejects(session.select(work, Date.now()+3000), /unexpected continuation(?: host)? output/i);
+    await assert.rejects(session.close(), /unexpected continuation(?: host)? output/i);
   } finally { await session.close().catch(()=>{}); }
   fs.rmSync(path.join(dir, 'selector.pid'), { force: true });
 });
@@ -127,10 +151,10 @@ test('stdout EOF immediately marks the selector failed while it remains alive', 
   const { dir } = fixture(t, 'close-stdout');
   const session = startBatchSession({ maxItems:8, maxBytes:48000 });
   try {
-    await session.select(work, Date.now()+3000).catch(error=>assert.match(error.message,/batch select/i));
+    await session.select(work, Date.now()+3000).catch(error=>assert.match(error.message,/continuation/i));
     if (!session.signal.aborted) await new Promise(resolve=>setTimeout(resolve,100));
     assert.equal(session.signal.aborted, true, 'An unexpected stdout EOF must immediately fail the session');
-    await assert.rejects(session.close(), /batch select/i);
+    await assert.rejects(session.close(), /continuation/i);
   } finally { await session.close().catch(()=>{}); }
   fs.rmSync(path.join(dir, 'selector.pid'), { force: true });
 });
@@ -147,8 +171,8 @@ test('session accepts split response frames and closes cleanly', { skip: process
 test('session rejects an incomplete UTF-8 suffix on orderly shutdown', { skip: process.platform === 'win32', timeout: 6000 }, async t => {
   const { dir } = fixture(t, 'trailing-utf8');
   const session = startBatchSession({ maxItems:8, maxBytes:48000 });
-  await session.select(work, Date.now()+3000).catch(error=>assert.match(error.message,/batch select/i));
-  await assert.rejects(session.close(), /batch select/i);
+  await session.select(work, Date.now()+3000).catch(error=>assert.match(error.message,/continuation/i));
+  await assert.rejects(session.close(), /continuation/i);
   fs.rmSync(path.join(dir, 'selector.pid'), { force: true });
 });
 
@@ -168,8 +192,8 @@ test('selector exit cancels delayed group escalation while inherited pipes drain
   process.kill = function(pid, signal) { if (pid < -1) sent.push(signal); return originalKill.call(process, pid, signal); };
   t.after(() => { process.kill = originalKill; });
   const session = startBatchSession({ maxItems:8, maxBytes:48000 });
-  await assert.rejects(session.select(work, Date.now()+3000), /output exceeds/i);
-  await assert.rejects(session.close(), /output exceeds/i);
+  await assert.rejects(session.select(work, Date.now()+3000), /exceeds/i);
+  await assert.rejects(session.close(), /exceeds/i);
   assert.deepEqual(sent, ['SIGTERM', 'SIGKILL'], 'Do not signal an exited selector group again after a delay');
   fs.rmSync(path.join(dir, 'selector.pid'), { force: true });
 });
@@ -178,8 +202,8 @@ test('escaped pipe holder cannot suppress selector failure indefinitely', { skip
   const { dir } = fixture(t, 'escape-pipe');
   const session = startBatchSession({ maxItems:8, maxBytes:48000 });
   const start = Date.now();
-  await assert.rejects(session.select(work, Date.now()+3000), /batch select/i);
-  await assert.rejects(session.close(), /batch select/i);
+  await assert.rejects(session.select(work, Date.now()+3000), /continuation/i);
+  await assert.rejects(session.close(), /continuation/i);
   assert.ok(Date.now()-start < 2500, 'pipe draining must be bounded');
   assert.ok(fs.existsSync(path.join(dir,'child.pid')));
 });
@@ -207,8 +231,8 @@ test('session timeout stays bounded when a selector does not read a large reques
 
 for (const signal of ['SIGTERM', 'SIGINT']) test(`session ${signal} terminates selector and stubborn descendant`, { skip: process.platform === 'win32', timeout: 10000 }, async t => {
   const { dir } = fixture(t, 'hang-child');
-  const entry = path.join(dir, 'session.cjs'), sessionPath = path.join(__dirname, '../pr-re-review/ReviewBatchSession.cjs');
-  fs.writeFileSync(entry, `const {startBatchSession}=require(${JSON.stringify(sessionPath)});const s=startBatchSession({maxItems:8,maxBytes:48000});s.select(${JSON.stringify(work)},Date.now()+10000).then(()=>process.exitCode=2,async error=>{try{await s.close()}catch{}console.error(error.message);process.exitCode=1;});`);
+  const entry = path.join(dir, 'session.cjs'), sessionPath = path.join(__dirname, '../pr-re-review/ReviewContinuationSession.cjs');
+  fs.writeFileSync(entry, `const {startContinuationSession}=require(${JSON.stringify(sessionPath)});const s=startContinuationSession();s.request('probe',{work:${JSON.stringify(work)}},{deadline:Date.now()+10000}).then(()=>process.exitCode=2,async error=>{try{await s.close()}catch{}console.error(error.message);process.exitCode=1;});`);
   const controller = spawn(process.execPath, [entry], { env: process.env, stdio:['ignore','ignore','pipe'] });
   const selectorPidFile = path.join(dir, 'selector.pid'), childPidFile = path.join(dir, 'child.pid');
   t.after(() => { try { controller.kill('SIGKILL'); } catch { /* exited */ } for(const file of [selectorPidFile,childPidFile])if(fs.existsSync(file)){const pid=Number(fs.readFileSync(file,'utf8'));if(Number.isSafeInteger(pid)&&pid>1)try{process.kill(pid,'SIGKILL')}catch{}} });
@@ -227,7 +251,7 @@ for (const signal of ['SIGTERM', 'SIGINT']) test(`controller ${signal} cancels b
   fs.writeFileSync(cli, `const fs=require('node:fs');process.on('SIGTERM',()=>{fs.writeFileSync(${JSON.stringify(termFile)},'term');});fs.writeFileSync(${JSON.stringify(cliPidFile + '.tmp')},String(process.pid));fs.renameSync(${JSON.stringify(cliPidFile + '.tmp')},${JSON.stringify(cliPidFile)});setInterval(()=>{},1000);`);
   fs.writeFileSync(harness, `const {runProcess}=require(${JSON.stringify(path.join(actions,'process_runner.cjs'))});runProcess({command:process.execPath,args:[${JSON.stringify(cli)}],attempt:0,log:()=>{}}).then(result=>{process.exitCode=result.exitCode;});`);
   const entry = path.join(dir, 'controller.cjs'), modulePath = path.join(__dirname, '../pr-re-review/ReviewContinuation.cjs');
-  fs.writeFileSync(entry, `const {runQueue,runProcess}=require(${JSON.stringify(modulePath)});runQueue(${JSON.stringify(work)},{deadline:Date.now()+15000,runBatch:async(_batch,deadline,signal)=>{await runProcess(process.execPath,[${JSON.stringify(harness)}],{deadline,signal,outputFile:${JSON.stringify(path.join(dir,'execution.log'))}});return {results:[]}}}).then(()=>process.exitCode=2,error=>{console.error(error.message);process.exitCode=1;});`);
+  fs.writeFileSync(entry, `const {runReview,runProcess}=require(${JSON.stringify(modulePath)});runReview(${JSON.stringify(snapshot)},{deadline:Date.now()+15000,runBatch:async(_batch,deadline,signal)=>{await runProcess(process.execPath,[${JSON.stringify(harness)}],{deadline,signal,outputFile:${JSON.stringify(path.join(dir,'execution.log'))}});return {results:[]}}}).then(()=>process.exitCode=2,error=>{console.error(error.message);process.exitCode=1;});`);
   const controller = spawn(process.execPath, [entry], { env: process.env, stdio:['ignore','ignore','pipe'] });
   t.after(() => { try { controller.kill('SIGKILL'); } catch { /* exited */ } if (fs.existsSync(cliPidFile)) { const pid=Number(fs.readFileSync(cliPidFile,'utf8')); if(Number.isSafeInteger(pid)&&pid>1)try{process.kill(-pid,'SIGKILL')}catch{} } });
   let stderr='';controller.stderr.on('data',d=>{stderr+=d;});const closed=once(controller,'close');
@@ -245,8 +269,8 @@ for (const signal of ['SIGTERM', 'SIGINT']) test(`controller ${signal} cancels b
 
 test('worker errors remain visible when the selector also fails', { skip: process.platform === 'win32', timeout: 6000 }, async t => {
   const { dir } = fixture(t, 'die-after-reply');
-  const { runQueue } = require('../pr-re-review/ReviewContinuation.cjs');
-  await assert.rejects(runQueue(work, {
+  const { runReview } = require('../pr-re-review/ReviewContinuation.cjs');
+  await assert.rejects(runReview(snapshot, {
     deadline:Date.now()+5000,
     runBatch:async(_batch,_deadline,signal)=>{
       fs.writeFileSync(path.join(dir,'die'),'exit');
@@ -259,7 +283,7 @@ test('worker errors remain visible when the selector also fails', { skip: proces
   }), error=>{
     assert.ok(error instanceof AggregateError);
     assert.match(error.message,/Original worker I\/O failure/);
-    assert.match(error.message,/selector.*unexpected/i);
+    assert.match(error.message,/continuation.*unexpected/i);
     assert.equal(error.errors.length,2);
     return true;
   });
@@ -269,12 +293,12 @@ test('worker errors remain visible when the selector also fails', { skip: proces
 test('unexpected selector failure cancels an active delivery verifier', { skip: process.platform === 'win32', timeout: 10000 }, async t => {
   const { dir } = fixture(t, 'die-during-verifier');
   const entry = path.join(dir,'controller.cjs'), controllerModule = path.join(__dirname,'../pr-re-review/ReviewContinuation.cjs'), deliveryModule = path.join(__dirname,'../pr-re-review/ReviewDelivery.cjs');
-  fs.writeFileSync(entry, `const {runQueue}=require(${JSON.stringify(controllerModule)}),{verifyDelivery}=require(${JSON.stringify(deliveryModule)});const snapshot={files:[],threads:[]};runQueue(${JSON.stringify(work)},{deadline:Date.now()+10000,runBatch:async(batch,deadline,signal)=>{const results=batch.map(item=>({id:item.id,status:'complete',delivery_tokens:[],reasoning:'read',findings:[],action:'none'}));await verifyDelivery(snapshot,batch,results,'1'.repeat(32),[],{deadline,signal});return {results};}}).then(()=>process.exitCode=2,error=>{console.error(error.message);process.exitCode=1;});`);
+  fs.writeFileSync(entry, `const {runReview}=require(${JSON.stringify(controllerModule)});runReview(${JSON.stringify(snapshot)},{deadline:Date.now()+10000,runBatch:async(batch)=>({response:{results:batch.map(item=>({id:item.id,status:'complete',delivery_tokens:[],reasoning:'read',findings:[],action:'none'}))},receipts:[]})}).then(()=>process.exitCode=2,error=>{console.error(error.message);process.exitCode=1;});`);
   const controller=spawn(process.execPath,[entry],{env:process.env,stdio:['ignore','ignore','pipe']});
   t.after(()=>{try{controller.kill('SIGKILL')}catch{}});let stderr='';controller.stderr.on('data',d=>{stderr+=d;});const closed=once(controller,'close');
   const verifierPidFile=path.join(dir,'verifier.pid');await waitForFile(verifierPidFile,controller);const pid=Number(fs.readFileSync(verifierPidFile,'utf8'));assert.ok(alive(pid));fs.writeFileSync(path.join(dir,'die'),'exit');
   let timer;const [code]=await Promise.race([closed,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('Verifier did not stop after selector failure')),3500);})]).finally(()=>clearTimeout(timer));
-  assert.equal(code,1);assert.match(stderr,/selector.*unexpected/i);assert.equal(fs.readFileSync(path.join(dir,'verifier.term'),'utf8'),'term');assert.equal(alive(pid),false);
+  assert.equal(code,1);assert.match(stderr,/continuation.*unexpected/i);assert.equal(fs.readFileSync(path.join(dir,'verifier.term'),'utf8'),'term');assert.equal(alive(pid),false);
   fs.unlinkSync(verifierPidFile);fs.unlinkSync(path.join(dir,'selector.pid'));
 });
 
@@ -286,13 +310,33 @@ for (const mode of ['die-after-reply', 'eof-after-reply']) test(`selector ${mode
   fs.writeFileSync(cli, `const fs=require('node:fs');process.on('SIGTERM',()=>{fs.writeFileSync(${JSON.stringify(termFile)},'term');process.exit(0)});fs.writeFileSync(${JSON.stringify(cliPidFile + '.tmp')},String(process.pid));fs.renameSync(${JSON.stringify(cliPidFile + '.tmp')},${JSON.stringify(cliPidFile)});setInterval(()=>{},1000);`);
   fs.writeFileSync(harness, `const {runProcess}=require(${JSON.stringify(path.join(actions,'process_runner.cjs'))});runProcess({command:process.execPath,args:[${JSON.stringify(cli)}],attempt:0,log:()=>{}}).then(result=>{process.exitCode=result.exitCode;});`);
   const entry = path.join(dir, 'controller.cjs'), modulePath = path.join(__dirname, '../pr-re-review/ReviewContinuation.cjs');
-  fs.writeFileSync(entry, `const {runQueue,runProcess}=require(${JSON.stringify(modulePath)});runQueue(${JSON.stringify(work)},{deadline:Date.now()+15000,runBatch:async(_batch,deadline,signal)=>{await runProcess(process.execPath,[${JSON.stringify(harness)}],{deadline,signal,outputFile:${JSON.stringify(path.join(dir,'execution.log'))}});return {results:[]}}}).then(()=>process.exitCode=2,error=>{console.error(error.message);process.exitCode=1;});`);
+  fs.writeFileSync(entry, `const {runReview,runProcess}=require(${JSON.stringify(modulePath)});runReview(${JSON.stringify(snapshot)},{deadline:Date.now()+15000,runBatch:async(_batch,deadline,signal)=>{await runProcess(process.execPath,[${JSON.stringify(harness)}],{deadline,signal,outputFile:${JSON.stringify(path.join(dir,'execution.log'))}});return {results:[]}}}).then(()=>process.exitCode=2,error=>{console.error(error.message);process.exitCode=1;});`);
   const controller = spawn(process.execPath, [entry], { env: process.env, stdio:['ignore','ignore','pipe'] });
   t.after(() => { try { controller.kill('SIGKILL'); } catch { /* exited */ } if (fs.existsSync(cliPidFile)) { const pid=Number(fs.readFileSync(cliPidFile,'utf8')); if(Number.isSafeInteger(pid)&&pid>1)try{process.kill(-pid,'SIGKILL')}catch{} } });
   let stderr='';controller.stderr.on('data',d=>{stderr+=d;});const closed=once(controller,'close');
   await waitForFile(cliPidFile,controller);const pid=Number(fs.readFileSync(cliPidFile,'utf8'));assert.ok(alive(pid));
   fs.writeFileSync(path.join(dir,'die'),'exit');
   let timer;const [code]=await Promise.race([closed,new Promise((_,reject)=>{timer=setTimeout(()=>reject(new Error('Controller did not stop after selector failure')),12000);})]).finally(()=>clearTimeout(timer));
-  assert.equal(code,1);assert.match(stderr,/selector.*unexpected/i);assert.equal(fs.readFileSync(termFile,'utf8'),'term');assert.equal(alive(pid),false);
+  assert.equal(code,1);assert.match(stderr,/continuation.*unexpected/i);assert.equal(fs.readFileSync(termFile,'utf8'),'term');assert.equal(alive(pid),false);
   fs.unlinkSync(cliPidFile); fs.unlinkSync(path.join(dir,'selector.pid'));
+});
+
+test('structured error is retained when the policy host exits immediately',{skip:process.platform==='win32',timeout:6000},async t=>{
+ const {dir}=fixture(t,'error-exit'),session=startContinuationSession();
+ await assert.rejects(session.request('probe',{}),/Exact policy refusal/);
+ await assert.rejects(session.close(),/Exact policy refusal/);
+ fs.rmSync(path.join(dir,'selector.pid'),{force:true});
+});
+for(const mode of ['finish-nonzero','finish-flood','finish-hang'])test(`runtime withholds finalized outputs after ${mode}`,{skip:process.platform==='win32',timeout:12000},async t=>{
+ const {dir}=fixture(t,mode);const {runReview}=require('../pr-re-review/ReviewContinuation.cjs');let published=false;
+ await assert.rejects(runReview(snapshot,{deadline:Date.now()+10000,runBatch:async batch=>({response:{results:batch.map(item=>({id:item.id,status:'complete',reasoning:'read',findings:[],action:'none'}))},receipts:[]})}).then(value=>{published=true;return value;}),/unexpected|output|did not stop/i);
+ assert.equal(published,false);assert.ok(fs.existsSync(path.join(dir,'finished')),'Valid finish frame must precede shutdown failure');
+ fs.rmSync(path.join(dir,'selector.pid'),{force:true});
+});
+
+for(const mode of ['assignment-empty','assignment-too-many','assignment-foreign','assignment-nonce','assignment-extra','assignment-complete-ids'])test(`bad assignment ${mode} cannot start a worker`,{skip:process.platform==='win32',timeout:6000},async t=>{
+ const {dir}=fixture(t,mode);const {runReview}=require('../pr-re-review/ReviewContinuation.cjs');let called=false;
+ const s={...snapshot,files:Array.from({length:9},(_,i)=>({filename:`f${i}.cs`,status:'modified',patch:'diff'})),changed_files:9};
+ await assert.rejects(runReview(s,{deadline:Date.now()+4000,runBatch:async()=>{called=true;return {response:{results:[]},receipts:[]};}}),/invalid.*assignment/i);
+ assert.equal(called,false);fs.rmSync(path.join(dir,'selector.pid'),{force:true});
 });

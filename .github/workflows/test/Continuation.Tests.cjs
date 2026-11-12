@@ -2,7 +2,7 @@
 
 const assert = require('node:assert/strict');
 const { test } = require('node:test');
-const { runQueue, makeWorklist, nextBatch, buildOutputs, assertPublication, workerArguments, parseWorkerResult, workerPrompt } = require('../pr-re-review/ReviewContinuation.cjs');
+const { runQueue, makeWorklist, nextBatch, buildOutputs, assertPublication, workerArguments, parseWorkerResult, workerPrompt } = require('./TestContinuationPolicy.cjs');
 const crypto = require('node:crypto');
 const { snapshotDigest } = require('../pr-re-review/ReviewDelivery.cjs');
 const { requiredInputs } = require('./TestDeliveryReference.cjs');
@@ -460,7 +460,7 @@ test('trusted helper checkout precedes capture on a clean agent runner', () => {
   assert.ok(end > capture, 'The capture step must precede input preservation.');
   const captureStep = workflow.slice(capture, end);
   assert.match(captureStep, /for \(const helper of \[[^\]]*'ReviewSerialization\.psm1'[^\]]*\]\)/, 'The capture step must copy the delivery module.');
-  assert.match(captureStep, /for \(const helper of \[[^\]]*'Select-ReviewBatch\.ps1'[^\]]*\]\)/, 'The capture step must copy the batch selector.');
-  assert.match(captureStep, /for \(const helper of \[[^\]]*'ReviewBatchSession\.cjs'[^\]]*\]\)/, 'The capture step must copy the selector lifecycle adapter.');
+  assert.match(captureStep, /for \(const helper of \[[^\]]*'ReviewContinuationHost\.ps1'[^\]]*\]\)/, 'The capture step must copy the persistent policy host.');
+  assert.match(captureStep, /for \(const helper of \[[^\]]*'ReviewContinuationSession\.cjs'[^\]]*\]\)/, 'The capture step must copy the policy host lifecycle adapter.');
   assert.ok(captureStep.includes('await exportContext('), 'Capture must finish before the workflow proceeds.');
 });

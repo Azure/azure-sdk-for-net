@@ -6,7 +6,7 @@ const path = require('node:path');
 const { nextBatch } = require('./TestBatchReference.cjs');
 
 // Compare compact JSON-derived work items with the original JavaScript selector.
-test('PowerShell batch sizing preserves JavaScript ordering and UTF-8 limits', { timeout: 30000 }, async () => {
+test('PowerShell batch sizing preserves JavaScript ordering and UTF-8 limits', { timeout: 30000 }, async t => {
   const item = (index, bytes, unicode = false) => {
     const value = { id: `file:${index}`, file: { filename: `src/${index}.cs`, status: 'modified', patch: '' } };
     const remaining = bytes - Buffer.byteLength(JSON.stringify(value));
@@ -36,12 +36,22 @@ test('PowerShell batch sizing preserves JavaScript ordering and UTF-8 limits', {
   const result = spawnSync(process.env.GH_AW_REVIEW_PWSH || 'pwsh', ['-NoLogo', '-NoProfile', '-NonInteractive', '-File', path.join(__dirname, 'Invoke-BatchCases.ps1')], { input, encoding: 'utf8', maxBuffer: 8 * 1024 * 1024 });
   assert.equal(result.status, 0, result.stderr);
   assert.deepEqual(JSON.parse(result.stdout), expected);
-  const { startBatchSession } = require('../pr-re-review/ReviewBatchSession.cjs');
-  const session = startBatchSession({ maxItems: 8, maxBytes: 48000 });
+  // Stream all original arbitrary-item cases through the actual generic
+  // transport and shared selector. The new production host accepts snapshots,
+  // not this retired standalone selector protocol; use a test-only dispatcher.
+  const fs=require('node:fs'),os=require('node:os');
+  const directory=fs.mkdtempSync(path.join(os.tmpdir(),'core-batch-parity-')),proxy=path.join(directory,'pwsh');
+  const previous=process.env.GH_AW_REVIEW_PWSH,executable=previous||'pwsh';
+  fs.writeFileSync(proxy,'#!/usr/bin/env node\n'+`const child=require('node:child_process').spawn(${JSON.stringify(executable)},['-NoLogo','-NoProfile','-NonInteractive','-File',${JSON.stringify(path.join(__dirname,'Invoke-BatchCases.ps1'))},'-Stream'],{stdio:'inherit'});child.on('error',error=>{console.error(error);process.exitCode=1;});child.on('exit',(code,signal)=>{process.exitCode=signal?1:code;});`,{mode:0o755});
+  process.env.GH_AW_REVIEW_PWSH=proxy;
+  t.after(()=>{if(previous===undefined)delete process.env.GH_AW_REVIEW_PWSH;else process.env.GH_AW_REVIEW_PWSH=previous;fs.rmSync(directory,{recursive:true,force:true});});
+  const { startContinuationSession } = require('../pr-re-review/ReviewContinuationSession.cjs');
+  const session = startContinuationSession();
   try {
     for (const [i, work] of cases.entries()) {
-      const selected = await session.select(work, Date.now() + 10000);
-      assert.deepEqual(selected, work.slice(0, expected[i]), `streaming case ${i}`);
+      const {value}=await session.request('batch',{work},{deadline:Date.now()+10000});
+      assert.equal(value,expected[i],`streaming count ${i}`);
+      assert.deepEqual(work.slice(0,value), work.slice(0, expected[i]), `streaming case ${i}`);
     }
   } finally { await session.close(); }
 });

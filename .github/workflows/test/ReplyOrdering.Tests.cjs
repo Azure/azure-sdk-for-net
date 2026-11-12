@@ -1,6 +1,6 @@
 'use strict';
 const {test}=require('node:test'); const assert=require('node:assert/strict'); const path=require('node:path');
-const {buildOutputs}=require('../pr-re-review/ReviewContinuation.cjs');
+const {buildOutputs}=require('./TestContinuationPolicy.cjs');
 const actions=process.env.GH_AW_TEST_ACTIONS_DIR;assert.ok(actions,'Pinned handler manager required.');
 test('real manager never resolves after a failed reply; resolution is delegated to the applied-reply guard',async()=>{
  global.core={info:()=>{},warning:()=>{},error:()=>{},debug:()=>{},setOutput:()=>{}};

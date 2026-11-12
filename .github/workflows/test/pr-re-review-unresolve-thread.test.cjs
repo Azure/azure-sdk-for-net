@@ -128,7 +128,8 @@ test('requested thread mutations fail on missing, invalid, or incomplete agent o
 });
 
 test('a partially missing or changed thread-action artifact cannot mutate or succeed', async () => {
-  const { buildOutputs, assertPublication } = require('../pr-re-review/ReviewContinuation.cjs');
+  const { assertPublication } = require('../pr-re-review/ReviewContinuation.cjs');
+  const { buildOutputs } = require('./TestContinuationReference.cjs');
   const { snapshotDigest } = require('../pr-re-review/ReviewDelivery.cjs');
   const head = 'a'.repeat(40), base = 'b'.repeat(40);
   const snapshot = {
@@ -140,7 +141,7 @@ test('a partially missing or changed thread-action artifact cannot mutate or suc
     results: snapshot.threads.map((thread, index) => ({ id: `thread:${index}`, status: 'complete', reasoning: 'still open', findings: [], action: 'reopen', reply: 'Still open.' })),
   };
   const complete = { items: buildOutputs(snapshot, progress), errors: [] };
-  assert.doesNotThrow(() => assertPublication(snapshot, progress, complete, 'success'));
+  await assert.doesNotReject(() => assertPublication(snapshot, progress, complete, 'success'));
   const variants = [
     complete.items.filter(item => !(item.type === 'unresolve_review_thread' && item.comment_id === 202)),
     complete.items.map(item => item.type === 'unresolve_review_thread' && item.comment_id === 202 ? { ...item, comment_id: 303 } : item),
@@ -172,7 +173,8 @@ test('a partially missing or changed thread-action artifact cannot mutate or suc
 });
 
 test('sanitized multi-action output passes the ledger and real reply-freshness checks', { skip: !process.env.GH_AW_TEST_ACTIONS_DIR }, async () => {
-  const { buildOutputs, assertPublication } = require('../pr-re-review/ReviewContinuation.cjs');
+  const { assertPublication } = require('../pr-re-review/ReviewContinuation.cjs');
+  const { buildOutputs } = require('./TestContinuationReference.cjs');
   const { snapshotDigest } = require('../pr-re-review/ReviewDelivery.cjs');
   const { assertMutationFresh } = require('../pr-re-review/ReviewSnapshot.cjs');
   const { sanitizeContent } = require(path.join(process.env.GH_AW_TEST_ACTIONS_DIR, 'sanitize_content.cjs'));

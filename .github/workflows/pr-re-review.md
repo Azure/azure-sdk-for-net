@@ -93,7 +93,7 @@ safe-outputs:
           const { assertPublication } = require(path.join(process.env.GITHUB_WORKSPACE, '.github/workflows/pr-re-review/ReviewContinuation.cjs'));
           const { assertFresh } = require(path.join(process.env.GITHUB_WORKSPACE, '.github/workflows/pr-re-review/ReviewSnapshot.cjs'));
           const output = JSON.parse(fs.readFileSync(process.env.AGENT_OUTPUT, 'utf8'));
-          assertPublication(snapshot, progress, output, process.env.AGENT_RESULT);
+          await assertPublication(snapshot, progress, output, process.env.AGENT_RESULT);
           await assertFresh(github, context.repo, snapshot);
     - name: Require complete re-review coverage before publishing
       shell: pwsh
@@ -262,7 +262,7 @@ safe-outputs:
               const progress = JSON.parse(fs.readFileSync(process.env.GH_AW_REVIEW_PROGRESS, 'utf8'));
               const path = require('path');
               const { assertPublication } = require(path.join(process.env.GITHUB_WORKSPACE, '.github/workflows/pr-re-review/ReviewContinuation.cjs'));
-              assertPublication(snapshot, progress, output, process.env.GH_AW_AGENT_RESULT);
+              await assertPublication(snapshot, progress, output, process.env.GH_AW_AGENT_RESULT);
               // Lookup uses the already complete captured history. Fetch current
               // state once below, not once for every requested mutation.
 
@@ -409,7 +409,7 @@ jobs:
             fs.mkdirSync(path.join(process.env.RUNNER_TEMP, 'gh-aw', 'safeoutputs', 'review-receipts'), { recursive: true });
             // Custom harnesses are provisioned into gh-aw's trusted action folder;
             // selecting harness.use does not copy a repository script by itself.
-            for (const helper of ['ReviewContinuation.cjs', 'ReviewDelivery.cjs', 'ReviewInputServer.ps1', 'ReviewVerifyDelivery.ps1', 'ReviewSerialization.psm1', 'Select-ReviewBatch.ps1', 'ReviewBatchSession.cjs'])
+            for (const helper of ['ReviewContinuation.cjs', 'ReviewDelivery.cjs', 'ReviewInputServer.ps1', 'ReviewVerifyDelivery.ps1', 'ReviewSerialization.psm1', 'ReviewContinuation.psm1', 'ReviewContinuationHost.ps1', 'ReviewContinuationSession.cjs'])
               fs.copyFileSync(path.join(process.env.GITHUB_WORKSPACE, '.github/workflows/pr-re-review', helper),
                 path.join(process.env.RUNNER_TEMP, 'gh-aw', 'actions', helper));
             core.info(`Captured ${manifest.changed_files} changed files and ${snapshot.threads.length} threads for the event head.`);
