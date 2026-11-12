@@ -191,6 +191,75 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             Assert.IsNull(patch.Status);
         }
 
+        [TestCase("enabled", SearchServicePublicNetworkAccess.Enabled)]
+        [TestCase("disabled", SearchServicePublicNetworkAccess.Disabled)]
+        [TestCase("ENABLED", SearchServicePublicNetworkAccess.Enabled)]
+        [TestCase("DISABLED", SearchServicePublicNetworkAccess.Disabled)]
+        public void PublicNetworkAccess_ShouldPreserveLegacyMapping_WhenValueIsKnown(string wireValue, SearchServicePublicNetworkAccess expected)
+        {
+            BinaryData json = BinaryData.FromString($$$"""{"location":"eastus","properties":{"publicNetworkAccess":"{{{wireValue}}}"}}""");
+            SearchServiceData data = ModelReaderWriter.Read<SearchServiceData>(json);
+            SearchServicePatch patch = ModelReaderWriter.Read<SearchServicePatch>(json);
+
+            Assert.AreEqual(expected, data.PublicNetworkAccess);
+            Assert.AreEqual(expected, patch.PublicNetworkAccess);
+            Assert.AreEqual(new SearchServicePublicInternetAccess(wireValue), data.PublicInternetAccess);
+            Assert.AreEqual(new SearchServicePublicInternetAccess(wireValue), patch.PublicInternetAccess);
+
+            data.PublicNetworkAccess = expected;
+            patch.PublicNetworkAccess = expected;
+            Assert.AreEqual(new SearchServicePublicInternetAccess(wireValue), data.PublicInternetAccess);
+            Assert.AreEqual(new SearchServicePublicInternetAccess(wireValue), patch.PublicInternetAccess);
+
+            data.PublicNetworkAccess = null;
+            patch.PublicNetworkAccess = null;
+            Assert.IsNull(data.PublicNetworkAccess);
+            Assert.IsNull(patch.PublicNetworkAccess);
+            Assert.IsNull(data.PublicInternetAccess);
+            Assert.IsNull(patch.PublicInternetAccess);
+        }
+
+        [TestCase("securedByPerimeter")]
+        [TestCase("SecuredByPerimeter")]
+        [TestCase("futureAccess")]
+        public void PublicNetworkAccess_ShouldReturnNullAndPreserveWireValue_WhenLegacyEnumCannotRepresentValue(string wireValue)
+        {
+            BinaryData json = BinaryData.FromString($$$"""{"location":"eastus","properties":{"publicNetworkAccess":"{{{wireValue}}}"}}""");
+            SearchServiceData data = ModelReaderWriter.Read<SearchServiceData>(json);
+            SearchServicePatch patch = ModelReaderWriter.Read<SearchServicePatch>(json);
+
+            Assert.IsNull(data.PublicNetworkAccess);
+            Assert.IsNull(patch.PublicNetworkAccess);
+            Assert.AreEqual(wireValue, data.PublicInternetAccess?.ToString());
+            Assert.AreEqual(wireValue, patch.PublicInternetAccess?.ToString());
+            Assert.AreEqual(wireValue, ModelReaderWriter.Read<SearchServiceData>(ModelReaderWriter.Write(data)).PublicInternetAccess?.ToString());
+            Assert.AreEqual(wireValue, ModelReaderWriter.Read<SearchServicePatch>(ModelReaderWriter.Write(patch)).PublicInternetAccess?.ToString());
+        }
+
+        [TestCase("""{"location":"eastus"}""")]
+        [TestCase("""{"location":"eastus","properties":{}}""")]
+        [TestCase("""{"location":"eastus","properties":{"publicNetworkAccess":null}}""")]
+        public void PublicNetworkAccess_ShouldRemainNull_WhenValueIsAbsent(string json)
+        {
+            SearchServiceData data = ModelReaderWriter.Read<SearchServiceData>(BinaryData.FromString(json));
+            SearchServicePatch patch = ModelReaderWriter.Read<SearchServicePatch>(BinaryData.FromString(json));
+
+            Assert.IsNull(data.PublicNetworkAccess);
+            Assert.IsNull(patch.PublicNetworkAccess);
+            Assert.IsNull(data.PublicInternetAccess);
+            Assert.IsNull(patch.PublicInternetAccess);
+        }
+
+        [Test]
+        public void PublicNetworkAccess_ShouldRemainNull_WhenModelsAreNew()
+        {
+            var data = new SearchServiceData(AzureLocation.EastUS);
+            var patch = new SearchServicePatch(AzureLocation.EastUS);
+
+            Assert.IsNull(data.PublicNetworkAccess);
+            Assert.IsNull(patch.PublicNetworkAccess);
+        }
+
         [TestCase(SearchServiceStatus.Running)]
         [TestCase(SearchServiceStatus.Provisioning)]
         [TestCase(SearchServiceStatus.Deleting)]
