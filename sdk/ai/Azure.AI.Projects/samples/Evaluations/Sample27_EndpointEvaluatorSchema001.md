@@ -301,12 +301,24 @@ foreach (string result in evaluationResults)
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_EndpointEvaluatorSchema001_Sync
-evaluationClient.DeleteEvaluation(evaluationId, new System.ClientModel.Primitives.RequestOptions());
-projectClient.Evaluators.DeleteVersion(name: evaluator.Name, version: evaluator.Version);
+try
+{
+    evaluationClient.DeleteEvaluation(evaluationId, new System.ClientModel.Primitives.RequestOptions());
+}
+finally
+{
+    projectClient.Evaluators.DeleteVersion(name: evaluator.Name, version: evaluator.Version);
+}
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_Cleanup_EndpointEvaluatorSchema001_Async
-await evaluationClient.DeleteEvaluationAsync(evaluationId, new System.ClientModel.Primitives.RequestOptions());
-await projectClient.Evaluators.DeleteVersionAsync(name: evaluator.Name, version: evaluator.Version);
+try
+{
+    await evaluationClient.DeleteEvaluationAsync(evaluationId, new System.ClientModel.Primitives.RequestOptions());
+}
+finally
+{
+    await projectClient.Evaluators.DeleteVersionAsync(name: evaluator.Name, version: evaluator.Version);
+}
 ```
