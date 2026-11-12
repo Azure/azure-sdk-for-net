@@ -35,10 +35,6 @@ namespace Azure.ResourceManager.Network
             ETag = eTag;
         }
 
-        /// <summary> Properties of the interconnect group. </summary>
-        [WirePath("properties")]
-        public InterconnectGroupPropertiesFormat Properties { get; set; }
-
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public string ETag { get; }

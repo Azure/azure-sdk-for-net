@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Nat64Capability"/>, <see cref="PLGatewayCapability"/>, <see cref="PLGatewayFastpathCapability"/>, and <see cref="PLIPForwardersCapability"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownVirtualNetworkApplianceCapability))]
-    public abstract partial class VirtualNetworkApplianceCapabilityData : VirtualNetworkApplianceCapabilityBaseData, IJsonModel<VirtualNetworkApplianceCapabilityData>
+    public abstract partial class VirtualNetworkApplianceCapabilityData : ResourceData, IJsonModel<VirtualNetworkApplianceCapabilityData>
     {
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkApplianceCapabilityData"/> for deserialization. </summary>
         internal VirtualNetworkApplianceCapabilityData()
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkApplianceCapabilityData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkApplianceCapabilityData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -107,6 +107,26 @@ namespace Azure.ResourceManager.Network
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -115,7 +135,7 @@ namespace Azure.ResourceManager.Network
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkApplianceCapabilityData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

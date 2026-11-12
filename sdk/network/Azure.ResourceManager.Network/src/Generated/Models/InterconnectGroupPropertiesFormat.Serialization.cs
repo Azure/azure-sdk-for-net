@@ -13,8 +13,7 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Interconnect group properties. </summary>
-    public partial class InterconnectGroupPropertiesFormat : IJsonModel<InterconnectGroupPropertiesFormat>
+    internal partial class InterconnectGroupPropertiesFormat : IJsonModel<InterconnectGroupPropertiesFormat>
     {
         /// <summary> Initializes a new instance of <see cref="InterconnectGroupPropertiesFormat"/> for deserialization. </summary>
         internal InterconnectGroupPropertiesFormat()

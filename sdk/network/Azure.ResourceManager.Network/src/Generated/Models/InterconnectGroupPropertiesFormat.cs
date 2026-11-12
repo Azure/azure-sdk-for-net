@@ -11,19 +11,15 @@ using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> Interconnect group properties. </summary>
-    public partial class InterconnectGroupPropertiesFormat
+    internal partial class InterconnectGroupPropertiesFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="InterconnectGroupPropertiesFormat"/>. </summary>
         /// <param name="subgroupProfile"> The subgroup profile of the interconnect group resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subgroupProfile"/> is null. </exception>
         public InterconnectGroupPropertiesFormat(SubgroupProfile subgroupProfile)
         {
-            Argument.AssertNotNull(subgroupProfile, nameof(subgroupProfile));
-
             Subgroups = new ChangeTrackingList<InterconnectGroupSubgroupData>();
             SubgroupProfile = subgroupProfile;
         }
