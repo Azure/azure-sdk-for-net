@@ -16,10 +16,8 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI;
 
-#pragma warning disable SCME0001
-
 /// <summary> Provides response operations for an Azure AI project through the OpenAI responses API. </summary>
-[Experimental("OPENAI001")]
+[Experimental("AAIP002")]
 public partial class ProjectResponsesClient : ResponsesClient
 {
     private readonly string _defaultModelName;

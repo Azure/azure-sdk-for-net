@@ -3,6 +3,13 @@
 This sample demonstrates how to create and run an evaluation for an Azure AI agent response
 using the `AIProjectClient`.
 
+
+**Note:** `ProjectResponsesClient` is a preview feature, please suppress `AAIP002` to run this sample.
+
+```C#
+#pragma warning disable AAIP002
+```
+
 1. First, we need to create project client and read the environment variables which will be used in the next steps. We will also create an `EvaluationClient` for creating and running evaluations.
 
 ```C# Snippet:Sample_CreateClients_EvaluationsFunction
