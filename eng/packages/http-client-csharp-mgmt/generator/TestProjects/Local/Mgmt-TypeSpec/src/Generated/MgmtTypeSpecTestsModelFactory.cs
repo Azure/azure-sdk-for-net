@@ -1567,6 +1567,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new HcrpConfigurationAssignmentProperties(configurationName, machineComplianceStatus, default);
         }
 
+        /// <summary> A public wire property plus independent internal state supplied by customization. </summary>
+        /// <param name="value"> Public value that must remain nested when the model has independent internal state. </param>
+        /// <returns> A new <see cref="Models.IndependentInternalPropertyModel"/> instance for mocking. </returns>
+        public static IndependentInternalPropertyModel IndependentInternalPropertyModel(string value = default)
+        {
+            return new IndependentInternalPropertyModel(value, default);
+        }
+
         /// <summary>
         /// Test resource for verifying explicit ResourceName on ExtensionOperations.
         /// Same model used by two different extension interfaces with different parent paths.

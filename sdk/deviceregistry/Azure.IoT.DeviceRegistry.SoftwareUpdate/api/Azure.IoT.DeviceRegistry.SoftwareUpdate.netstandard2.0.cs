@@ -108,8 +108,8 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         public static Azure.IoT.DeviceRegistry._SoftwareUpdate.DeviceClassProperties DeviceClassProperties(System.Collections.Generic.IDictionary<string, string> compatProperties = null, int agentProfile = 0) { throw null; }
         public static Azure.IoT.DeviceRegistry._SoftwareUpdate.FileImportMetadata FileImportMetadata(string fileName = null, string url = null) { throw null; }
         public static Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportManifestMetadata ImportManifestMetadata(string url = null, long sizeInBytes = (long)0, System.Collections.Generic.IDictionary<string, string> hashes = null) { throw null; }
+        public static Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateContent ImportUpdateContent(System.Collections.Generic.IEnumerable<Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateInputItem> importUpdateInput = null, bool? enableScan = default(bool?)) { throw null; }
         public static Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateInputItem ImportUpdateInputItem(Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportManifestMetadata importManifest = null, string friendlyName = null, System.Collections.Generic.IEnumerable<Azure.IoT.DeviceRegistry._SoftwareUpdate.FileImportMetadata> files = null) { throw null; }
-        public static Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateRequest ImportUpdateRequest(System.Collections.Generic.IEnumerable<Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateInputItem> importUpdateInput = null, bool? enableScan = default(bool?)) { throw null; }
         public static Azure.IoT.DeviceRegistry._SoftwareUpdate.SoftwareUpdateCompatibility SoftwareUpdateCompatibility(System.Collections.Generic.IReadOnlyDictionary<string, string> additionalProperties = null) { throw null; }
         public static Azure.IoT.DeviceRegistry._SoftwareUpdate.SoftwareUpdateInstructions SoftwareUpdateInstructions(System.Collections.Generic.IEnumerable<Azure.IoT.DeviceRegistry._SoftwareUpdate.SoftwareUpdateStep> steps = null) { throw null; }
         public static Azure.IoT.DeviceRegistry._SoftwareUpdate.SoftwareUpdateStep SoftwareUpdateStep(Azure.IoT.DeviceRegistry._SoftwareUpdate.StepType? type = default(Azure.IoT.DeviceRegistry._SoftwareUpdate.StepType?), string description = null, string handler = null, System.Collections.Generic.IDictionary<string, System.BinaryData> handlerProperties = null, System.Collections.Generic.IEnumerable<string> fileNames = null, Azure.IoT.DeviceRegistry._SoftwareUpdate.UpdateId updateId = null) { throw null; }
@@ -152,6 +152,22 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportManifestMetadata>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportManifestMetadata>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ImportUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateContent>
+    {
+        public ImportUpdateContent(System.Collections.Generic.IEnumerable<Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateInputItem> importUpdateInput) { }
+        public bool? EnableScan { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateInputItem> ImportUpdateInput { get { throw null; } }
+        protected virtual Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static implicit operator Azure.Core.RequestContent (Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateContent importUpdateContent) { throw null; }
+        protected virtual Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateContent PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ImportUpdateInputItem : System.ClientModel.Primitives.IJsonModel<Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateInputItem>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateInputItem>
     {
         public ImportUpdateInputItem(Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportManifestMetadata importManifest) { }
@@ -167,22 +183,6 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateInputItem System.ClientModel.Primitives.IPersistableModel<Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateInputItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateInputItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateInputItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ImportUpdateRequest : System.ClientModel.Primitives.IJsonModel<Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateRequest>
-    {
-        public ImportUpdateRequest(System.Collections.Generic.IEnumerable<Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateInputItem> importUpdateInput) { }
-        public bool? EnableScan { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateInputItem> ImportUpdateInput { get { throw null; } }
-        protected virtual Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateRequest JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static implicit operator Azure.Core.RequestContent (Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateRequest importUpdateRequest) { throw null; }
-        protected virtual Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateRequest PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateRequest System.ClientModel.Primitives.IJsonModel<Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateRequest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateRequest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateRequest System.ClientModel.Primitives.IPersistableModel<Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateRequest>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateRequest>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateRequest>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OperationState : System.IEquatable<Azure.IoT.DeviceRegistry._SoftwareUpdate.OperationState>
@@ -249,9 +249,9 @@ namespace Azure.IoT.DeviceRegistry._SoftwareUpdate
         public virtual Azure.AsyncPageable<System.BinaryData> GetVersionsAsync(string provider, string name, string filter, Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<string> GetVersionsAsync(string provider, string name, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Operation ImportUpdate(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation ImportUpdate(Azure.WaitUntil waitUntil, Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateRequest importUpdateRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation ImportUpdate(Azure.WaitUntil waitUntil, Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateContent importUpdateRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> ImportUpdateAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation> ImportUpdateAsync(Azure.WaitUntil waitUntil, Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateRequest importUpdateRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation> ImportUpdateAsync(Azure.WaitUntil waitUntil, Azure.IoT.DeviceRegistry._SoftwareUpdate.ImportUpdateContent importUpdateRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SoftwareUpdateCompatibility : System.ClientModel.Primitives.IJsonModel<Azure.IoT.DeviceRegistry._SoftwareUpdate.SoftwareUpdateCompatibility>, System.ClientModel.Primitives.IPersistableModel<Azure.IoT.DeviceRegistry._SoftwareUpdate.SoftwareUpdateCompatibility>
     {

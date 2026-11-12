@@ -210,7 +210,7 @@ namespace Azure.AI.Discovery
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            CreateRequest spreadModel = new CreateRequest(projectName, investigationName, displayName, default);
+            CreateContent spreadModel = new CreateContent(projectName, investigationName, displayName, default);
             Response result = Create(spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((DiscoveryConversation)result, result);
         }
@@ -227,7 +227,7 @@ namespace Azure.AI.Discovery
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            CreateRequest spreadModel = new CreateRequest(projectName, investigationName, displayName, default);
+            CreateContent spreadModel = new CreateContent(projectName, investigationName, displayName, default);
             Response result = await CreateAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((DiscoveryConversation)result, result);
         }

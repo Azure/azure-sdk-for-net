@@ -39,7 +39,25 @@
     "dist/generator/**"
   ],
   "dependencies": {
-    "@typespec/http-client-csharp": "1.0.0-alpha.20261104.4"
+    "@typespec/http-client-csharp": "1.0.0-alpha.20261110.5"
+  },
+  "peerDependencies": {
+    "@azure-tools/typespec-azure-core": ">=0.73.0 <0.74.0",
+    "@azure-tools/typespec-client-generator-core": ">=0.73.1 <0.74.0",
+    "@typespec/compiler": "^1.17.0",
+    "@typespec/events": ">=0.87.0 <0.88.0",
+    "@typespec/http": "^1.17.0",
+    "@typespec/http-client": "0.17.0",
+    "@typespec/openapi": "^1.17.0",
+    "@typespec/rest": ">=0.87.0 <0.88.0",
+    "@typespec/sse": ">=0.87.0 <0.88.0",
+    "@typespec/streams": ">=0.87.0 <0.88.0",
+    "@typespec/versioning": ">=0.87.0 <0.88.0"
+  },
+  "playgroundConfig": {
+    "bundlePeerDependencies": [
+      "@typespec/http-client"
+    ]
   },
   "devDependencies": {
     "@azure-tools/azure-http-specs": "0.1.0-alpha.46",

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
+#nullable disable
 
 using System.ComponentModel;
 using Microsoft.TypeSpec.Generator.Customizations;
@@ -23,7 +23,7 @@ public partial class FunctionAppScaleAndConcurrency : ProvisionableConstruct
     {
         get
         {
-            return Triggers is null ? default! : Triggers.ConcurrentHttpPerInstanceConcurrency;
+            return Triggers is null ? default : Triggers.ConcurrentHttpPerInstanceConcurrency;
         }
         set
         {
@@ -41,10 +41,10 @@ public partial class FunctionAppScaleAndConcurrency : ProvisionableConstruct
     [EditorBrowsable(EditorBrowsableState.Never)]
     public BicepValue<float> MaximumInstanceCount
     {
-        get { Initialize(); return _maximumInstanceCount!; }
-        set { Initialize(); _maximumInstanceCount!.Assign(value); }
+        get { Initialize(); return _maximumInstanceCount; }
+        set { Initialize(); _maximumInstanceCount.Assign(value); }
     }
-    private BicepValue<float>? _maximumInstanceCount;
+    private BicepValue<float> _maximumInstanceCount;
 
     /// <summary>
     /// Set the amount of memory allocated to each instance of the function app
@@ -53,10 +53,10 @@ public partial class FunctionAppScaleAndConcurrency : ProvisionableConstruct
     [EditorBrowsable(EditorBrowsableState.Never)]
     public BicepValue<float> InstanceMemoryMB
     {
-        get { Initialize(); return _instanceMemoryMB!; }
-        set { Initialize(); _instanceMemoryMB!.Assign(value); }
+        get { Initialize(); return _instanceMemoryMB; }
+        set { Initialize(); _instanceMemoryMB.Assign(value); }
     }
-    private BicepValue<float>? _instanceMemoryMB;
+    private BicepValue<float> _instanceMemoryMB;
 
     /// <summary>
     /// The maximum number of concurrent HTTP trigger invocations per instance.
@@ -66,7 +66,7 @@ public partial class FunctionAppScaleAndConcurrency : ProvisionableConstruct
     {
         get
         {
-            return Triggers?.Http?.HttpPerInstanceConcurrency ?? default!;
+            return Triggers?.Http?.HttpPerInstanceConcurrency ?? default;
         }
         set
         {

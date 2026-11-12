@@ -131,7 +131,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationDefinitionName, SolutionsApplicationDefinitionData.ToRequestContent(data), context);
+                HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationDefinitionName, SolutionsApplicationDefinitionData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SolutionsApplicationDefinitionData> response = Response.FromValue(SolutionsApplicationDefinitionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -190,7 +190,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationDefinitionName, SolutionsApplicationDefinitionData.ToRequestContent(data), context);
+                HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationDefinitionName, SolutionsApplicationDefinitionData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SolutionsApplicationDefinitionData> response = Response.FromValue(SolutionsApplicationDefinitionData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -246,7 +246,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationDefinitionName, context);
+                HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationDefinitionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SolutionsApplicationDefinitionData> response = Response.FromValue(SolutionsApplicationDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -299,7 +299,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationDefinitionName, context);
+                HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationDefinitionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SolutionsApplicationDefinitionData> response = Response.FromValue(SolutionsApplicationDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -354,7 +354,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationDefinitionName, SolutionsApplicationDefinitionPatch.ToRequestContent(patch), context);
+                HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationDefinitionName, SolutionsApplicationDefinitionPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SolutionsApplicationDefinitionData> response = Response.FromValue(SolutionsApplicationDefinitionData.FromResponse(result), result);
                 if (response.Value == null)
@@ -409,7 +409,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationDefinitionName, SolutionsApplicationDefinitionPatch.ToRequestContent(patch), context);
+                HttpMessage message = _solutionsApplicationDefinitionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, applicationDefinitionName, SolutionsApplicationDefinitionPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SolutionsApplicationDefinitionData> response = Response.FromValue(SolutionsApplicationDefinitionData.FromResponse(result), result);
                 if (response.Value == null)

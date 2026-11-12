@@ -771,16 +771,23 @@ namespace Azure.Analytics.OnlineExperimentation.Samples
             TokenCredential credential = new DefaultAzureCredential();
             OnlineExperimentationClient client = new OnlineExperimentationClient(endpoint, credential);
 
-            ExperimentMetric body = new ExperimentMetric(
-                LifecycleStage.Active,
-                "Average revenue per purchase [USD]",
-                "The average revenue per purchase transaction in USD. Refund transactions are excluded from this metric. The total revenue might increase while this metric decreases if the number of purchases increases.",
-                new string[] { "Monetization" },
-                DesiredDirection.Increase,
-                new AverageMetricDefinition(new AggregatedValue("Transaction", "Revenue")
+            ExperimentMetric body = new ExperimentMetric
+            {
+                Lifecycle = LifecycleStage.Active,
+                DisplayName = "Average revenue per purchase [USD]",
+                Description = "The average revenue per purchase transaction in USD. Refund transactions are excluded from this metric. The total revenue might increase while this metric decreases if the number of purchases increases.",
+                Categories = { "Monetization" },
+                DesiredDirection = DesiredDirection.Increase,
+                Definition = new AverageMetricDefinition
                 {
-                    Filter = "Revenue >",
-                }));
+                    Value = new AggregatedValue
+                    {
+                        EventName = "Transaction",
+                        EventProperty = "Revenue",
+                        Filter = "Revenue >",
+                    },
+                },
+            };
             Response<ExperimentMetricValidationResult> response = client.ValidateMetric(body);
         }
 
@@ -792,16 +799,23 @@ namespace Azure.Analytics.OnlineExperimentation.Samples
             TokenCredential credential = new DefaultAzureCredential();
             OnlineExperimentationClient client = new OnlineExperimentationClient(endpoint, credential);
 
-            ExperimentMetric body = new ExperimentMetric(
-                LifecycleStage.Active,
-                "Average revenue per purchase [USD]",
-                "The average revenue per purchase transaction in USD. Refund transactions are excluded from this metric. The total revenue might increase while this metric decreases if the number of purchases increases.",
-                new string[] { "Monetization" },
-                DesiredDirection.Increase,
-                new AverageMetricDefinition(new AggregatedValue("Transaction", "Revenue")
+            ExperimentMetric body = new ExperimentMetric
+            {
+                Lifecycle = LifecycleStage.Active,
+                DisplayName = "Average revenue per purchase [USD]",
+                Description = "The average revenue per purchase transaction in USD. Refund transactions are excluded from this metric. The total revenue might increase while this metric decreases if the number of purchases increases.",
+                Categories = { "Monetization" },
+                DesiredDirection = DesiredDirection.Increase,
+                Definition = new AverageMetricDefinition
                 {
-                    Filter = "Revenue >",
-                }));
+                    Value = new AggregatedValue
+                    {
+                        EventName = "Transaction",
+                        EventProperty = "Revenue",
+                        Filter = "Revenue >",
+                    },
+                },
+            };
             Response<ExperimentMetricValidationResult> response = await client.ValidateMetricAsync(body);
         }
 

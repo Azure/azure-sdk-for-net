@@ -20,16 +20,8 @@ namespace Azure.Compute.Batch
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineConfiguration"/>. </summary>
-        /// <param name="imageReference"> A reference to the Azure Virtual Machines Marketplace Image or the custom Virtual Machine Image to use. </param>
-        /// <param name="nodeAgentSkuId"> The SKU of the Batch Compute Node agent to be provisioned on Compute Nodes in the Pool. The Batch Compute Node agent is a program that runs on each Compute Node in the Pool, and provides the command-and-control interface between the Compute Node and the Batch service. There are different implementations of the Compute Node agent, known as SKUs, for different operating systems. You must specify a Compute Node agent SKU which matches the selected Image reference. To get the list of supported Compute Node agent SKUs along with their list of verified Image references, see the 'List supported Compute Node agent SKUs' operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageReference"/> or <paramref name="nodeAgentSkuId"/> is null. </exception>
-        public VirtualMachineConfiguration(BatchVmImageReference imageReference, string nodeAgentSkuId)
+        public VirtualMachineConfiguration()
         {
-            Argument.AssertNotNull(imageReference, nameof(imageReference));
-            Argument.AssertNotNull(nodeAgentSkuId, nameof(nodeAgentSkuId));
-
-            ImageReference = imageReference;
-            NodeAgentSkuId = nodeAgentSkuId;
             DataDisks = new ChangeTrackingList<DataDisk>();
             Extensions = new ChangeTrackingList<VMExtension>();
         }
@@ -84,6 +76,19 @@ namespace Azure.Compute.Batch
             Placement = placement;
             ResiliencyPolicy = resiliencyPolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineConfiguration"/>. </summary>
+        /// <param name="imageReference"> A reference to the Azure Virtual Machines Marketplace Image or the custom Virtual Machine Image to use. </param>
+        /// <param name="nodeAgentSkuId"> The SKU of the Batch Compute Node agent to be provisioned on Compute Nodes in the Pool. The Batch Compute Node agent is a program that runs on each Compute Node in the Pool, and provides the command-and-control interface between the Compute Node and the Batch service. There are different implementations of the Compute Node agent, known as SKUs, for different operating systems. You must specify a Compute Node agent SKU which matches the selected Image reference. To get the list of supported Compute Node agent SKUs along with their list of verified Image references, see the 'List supported Compute Node agent SKUs' operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="imageReference"/> or <paramref name="nodeAgentSkuId"/> is null. </exception>
+        public VirtualMachineConfiguration(BatchVmImageReference imageReference, string nodeAgentSkuId) : this()
+        {
+            Argument.AssertNotNull(imageReference, nameof(imageReference));
+            Argument.AssertNotNull(nodeAgentSkuId, nameof(nodeAgentSkuId));
+
+            ImageReference = imageReference;
+            NodeAgentSkuId = nodeAgentSkuId;
         }
 
         /// <summary> A reference to the Azure Virtual Machines Marketplace Image or the custom Virtual Machine Image to use. </summary>

@@ -14,13 +14,8 @@ namespace Azure.Analytics.OnlineExperimentation
     public partial class EventCountMetricDefinition : ExperimentMetricDefinition
     {
         /// <summary> Initializes a new instance of <see cref="EventCountMetricDefinition"/>. </summary>
-        /// <param name="event"> Event to observe. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="event"/> is null. </exception>
-        public EventCountMetricDefinition(ObservedEvent @event) : base(ExperimentMetricType.EventCount)
+        public EventCountMetricDefinition() : base(ExperimentMetricType.EventCount)
         {
-            Argument.AssertNotNull(@event, nameof(@event));
-
-            Event = @event;
         }
 
         /// <summary> Initializes a new instance of <see cref="EventCountMetricDefinition"/>. </summary>

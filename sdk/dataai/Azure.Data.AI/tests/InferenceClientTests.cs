@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -38,9 +39,11 @@ namespace Azure.Data.AI.Tests
             Assert.That(client, Is.Not.Null);
         }
 
-        [TestCase(false)]
-        [TestCase(true)]
-        public async Task RerankingUsesGaApiVersion(bool explicitVersion)
+        [TestCase(false, false)]
+        [TestCase(false, true)]
+        [TestCase(true, false)]
+        [TestCase(true, true)]
+        public async Task RerankingUsesGaApiVersion(bool explicitVersion, bool isAsync)
         {
             using var handler = new ApiVersionHandler("2026-10-30");
             using var httpClient = new HttpClient(handler);
@@ -53,8 +56,16 @@ namespace Azure.Data.AI.Tests
                 new AzureKeyCredential("api-key"),
                 options);
 
-            await client.SemanticRerankAsync(
-                new SemanticRerankingInferenceContent("query", new[] { "document" }));
+            var request = new SemanticRerankingContent("query", new[] { "{\"meta\":{\"content\":\"document\"},\"id\":\"1\"}" })
+            {
+                DocumentType = SemanticRerankingDocumentType.Json,
+                TargetPaths = { "meta.content", "id" }
+            };
+            Response<SemanticRerankingResult> response = isAsync
+                ? await client.SemanticRerankAsync(request)
+                : client.SemanticRerank(request);
+
+            Assert.That(response.Value.Metadata.ModelName, Is.EqualTo("reranker"));
         }
 
         // InferenceClientSettings and the settings-based constructor are gated behind
@@ -87,7 +98,11 @@ namespace Azure.Data.AI.Tests
             var client = new InferenceClient(settings);
 
             await client.SemanticRerankAsync(
-                new SemanticRerankingInferenceContent("query", new[] { "document" }));
+                new SemanticRerankingContent("query", new[] { "{\"meta\":{\"content\":\"document\"},\"id\":\"1\"}" })
+                {
+                    DocumentType = SemanticRerankingDocumentType.Json,
+                    TargetPaths = { "meta.content", "id" }
+                });
         }
 
         [Test]
@@ -143,13 +158,13 @@ namespace Azure.Data.AI.Tests
         public void RequestRequiresQuery()
         {
             Assert.Throws<ArgumentNullException>(() =>
-                new SemanticRerankingInferenceContent(null, new[] { "document" }));
+                new SemanticRerankingContent(null, new[] { "document" }));
         }
 
         [Test]
         public void RequestSerializesSentenceScoreOption()
         {
-            var request = new SemanticRerankingInferenceContent("query", new[] { "document" })
+            var request = new SemanticRerankingContent("query", new[] { "document" })
             {
                 ReturnDocuments = true,
                 ReturnSentenceScore = true
@@ -182,7 +197,7 @@ namespace Azure.Data.AI.Tests
                 }
                 """);
 
-            SemanticRerankingInferenceResult result = ModelReaderWriter.Read<SemanticRerankingInferenceResult>(
+            SemanticRerankingResult result = ModelReaderWriter.Read<SemanticRerankingResult>(
                 json,
                 ModelReaderWriterOptions.Json,
                 AzureDataAIContext.Default);
@@ -192,22 +207,129 @@ namespace Azure.Data.AI.Tests
             Assert.That(result.Scores[0].SentenceScores[0].Score, Is.EqualTo(0.98f));
         }
 
+        [TestCase("J", 1)]
+        [TestCase("W", 1)]
+        [TestCase("J", 2)]
+        [TestCase("W", 2)]
+        [TestCase("J", 100)]
+        [TestCase("W", 100)]
+        public void TargetPathsRoundTripAsCommaDelimitedString(string format, int pathCount)
+        {
+            var request = new SemanticRerankingContent("query", new[] { "{\"meta\":{\"content\":\"document\"}}" })
+            {
+                DocumentType = SemanticRerankingDocumentType.Json
+            };
+            for (int i = 0; i < pathCount; i++)
+            {
+                request.TargetPaths.Add($"meta.content{i}");
+            }
+
+            var options = new ModelReaderWriterOptions(format);
+            BinaryData data = ModelReaderWriter.Write(request, options, AzureDataAIContext.Default);
+            using JsonDocument json = JsonDocument.Parse(data);
+            Assert.That(json.RootElement.GetProperty("targetPaths").ValueKind, Is.EqualTo(JsonValueKind.String));
+            Assert.That(json.RootElement.GetProperty("targetPaths").GetString(), Is.EqualTo(string.Join(",", request.TargetPaths)));
+            Assert.That(json.RootElement.GetProperty("documentType").GetString(), Is.EqualTo("json"));
+
+            var roundTrip = ModelReaderWriter.Read<SemanticRerankingContent>(data, options, AzureDataAIContext.Default);
+            Assert.That(roundTrip.TargetPaths, Is.EqualTo(request.TargetPaths));
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void UnsetTargetPathsAreOmitted(string format)
+        {
+            var request = new SemanticRerankingContent("query", new[] { "document" });
+            BinaryData data = ModelReaderWriter.Write(request, new ModelReaderWriterOptions(format), AzureDataAIContext.Default);
+            using JsonDocument json = JsonDocument.Parse(data);
+
+            Assert.That(request.TargetPaths, Is.Empty);
+            Assert.That(json.RootElement.TryGetProperty("targetPaths", out _), Is.False);
+        }
+
+        [TestCase("{}")]
+        [TestCase("{\"targetPaths\":null}")]
+        [TestCase("{\"targetPaths\":\"\"}")]
+        public void MissingOrEmptyTargetPathsDeserializeToEmptyCollection(string json)
+        {
+            var request = ModelReaderWriter.Read<SemanticRerankingContent>(
+                BinaryData.FromString(json), ModelReaderWriterOptions.Json, AzureDataAIContext.Default);
+
+            Assert.That(request.TargetPaths, Is.Empty);
+        }
+
+        [TestCase("J")]
+        [TestCase("W")]
+        public void MetadataKeepsMetaWireName(string format)
+        {
+            BinaryData data = BinaryData.FromString(
+                """
+                {
+                  "scores": [],
+                  "meta": {
+                    "tokenUsage": { "totalTokens": 12 },
+                    "latency": {
+                      "dataPreprocessTime": 1.5,
+                      "inferenceTime": 2.5,
+                      "postProcessTime": 3.5
+                    },
+                    "modelName": "reranker",
+                    "modelVersion": "1"
+                  }
+                }
+                """);
+            var options = new ModelReaderWriterOptions(format);
+            var result = ModelReaderWriter.Read<SemanticRerankingResult>(data, options, AzureDataAIContext.Default);
+
+            Assert.That(result.Metadata.ModelName, Is.EqualTo("reranker"));
+            Assert.That(result.Metadata.ModelVersion, Is.EqualTo("1"));
+            Assert.That(result.Metadata.TokenUsage.TotalTokens, Is.EqualTo(12));
+            Assert.That(result.Metadata.Latency.DataPreprocessDuration, Is.EqualTo(TimeSpan.FromMilliseconds(1.5)));
+            Assert.That(result.Metadata.Latency.InferenceDuration, Is.EqualTo(TimeSpan.FromMilliseconds(2.5)));
+            Assert.That(result.Metadata.Latency.PostProcessDuration, Is.EqualTo(TimeSpan.FromMilliseconds(3.5)));
+
+            using JsonDocument json = JsonDocument.Parse(ModelReaderWriter.Write(result, options, AzureDataAIContext.Default));
+            Assert.That(json.RootElement.GetProperty("meta").GetProperty("modelName").GetString(), Is.EqualTo("reranker"));
+            Assert.That(json.RootElement.TryGetProperty("metadata", out _), Is.False);
+        }
+
+        [Test]
+        public void ModelFactoryUsesReviewedModelNames()
+        {
+            var request = InferenceModelFactory.SemanticRerankingContent(
+                query: "query", documents: new[] { "document" }, targetPaths: new[] { "meta.content", "id" });
+            var metadata = InferenceModelFactory.SemanticRerankingMetadata(modelName: "reranker");
+            var result = InferenceModelFactory.SemanticRerankingResult(metadata: metadata);
+
+            Assert.That(request.TargetPaths, Is.EqualTo(new[] { "meta.content", "id" }));
+            Assert.That(result.Metadata, Is.SameAs(metadata));
+        }
+
         private sealed class ApiVersionHandler : HttpMessageHandler
         {
             private readonly string _expectedVersion;
 
             public ApiVersionHandler(string expectedVersion) => _expectedVersion = expectedVersion;
 
-            protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+#if NET5_0_OR_GREATER
+            protected override HttpResponseMessage Send(HttpRequestMessage request, CancellationToken cancellationToken) =>
+                SendAsync(request, cancellationToken).GetAwaiter().GetResult();
+#endif
+
+            protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
             {
                 Assert.That(request.Method, Is.EqualTo(HttpMethod.Post));
                 Assert.That(request.RequestUri.AbsolutePath, Is.EqualTo("/inference/semanticReranking"));
                 Assert.That(request.RequestUri.Query, Is.EqualTo($"?api-version={_expectedVersion}"));
                 Assert.That(request.Headers.GetValues("Ocp-Apim-Subscription-Key"), Is.EquivalentTo(new[] { "api-key" }));
-                return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+                using JsonDocument body = JsonDocument.Parse(await request.Content.ReadAsStringAsync().ConfigureAwait(false));
+                Assert.That(body.RootElement.GetProperty("targetPaths").ValueKind, Is.EqualTo(JsonValueKind.String));
+                Assert.That(body.RootElement.GetProperty("targetPaths").GetString(), Is.EqualTo("meta.content,id"));
+                Assert.That(body.RootElement.GetProperty("documentType").GetString(), Is.EqualTo("json"));
+                return new HttpResponseMessage(HttpStatusCode.OK)
                 {
-                    Content = new StringContent("{\"scores\":[]}")
-                });
+                    Content = new StringContent("{\"scores\":[],\"meta\":{\"modelName\":\"reranker\"}}")
+                };
             }
         }
 

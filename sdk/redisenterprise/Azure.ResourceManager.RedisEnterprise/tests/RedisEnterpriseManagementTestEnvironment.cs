@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             => new ChainedTokenCredential(
                 new AzureCliCredential(new AzureCliCredentialOptions
                 {
-                    ProcessTimeout = System.TimeSpan.FromSeconds(60)
+                    ProcessTimeout = System.TimeSpan.FromSeconds(180)
                 }),
                 base.CreateDeveloperCredential());
     }

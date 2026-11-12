@@ -629,7 +629,7 @@ namespace Azure.AI.Discovery
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="investigationName"/> or <paramref name="taskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="investigationName"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DiscoveryTask> Start(string projectName, string investigationName, string taskName, StartTaskRequest body = default, CancellationToken cancellationToken = default)
+        public virtual Response<DiscoveryTask> Start(string projectName, string investigationName, string taskName, StartTaskContent body = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(investigationName, nameof(investigationName));
@@ -648,7 +648,7 @@ namespace Azure.AI.Discovery
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="investigationName"/> or <paramref name="taskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="investigationName"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DiscoveryTask>> StartAsync(string projectName, string investigationName, string taskName, StartTaskRequest body = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DiscoveryTask>> StartAsync(string projectName, string investigationName, string taskName, StartTaskContent body = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(investigationName, nameof(investigationName));

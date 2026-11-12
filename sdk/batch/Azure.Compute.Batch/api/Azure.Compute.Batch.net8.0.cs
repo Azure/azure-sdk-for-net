@@ -231,6 +231,7 @@ namespace Azure.Compute.Batch
     }
     public partial class BatchAutoPoolSpecification : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchAutoPoolSpecification>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchAutoPoolSpecification>
     {
+        public BatchAutoPoolSpecification() { }
         public BatchAutoPoolSpecification(Azure.Compute.Batch.BatchPoolLifetimeOption poolLifetimeOption) { }
         public string AutoPoolIdPrefix { get { throw null; } set { } }
         public bool? KeepAlive { get { throw null; } set { } }
@@ -535,6 +536,7 @@ namespace Azure.Compute.Batch
     }
     public partial class BatchContainerConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchContainerConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchContainerConfiguration>
     {
+        public BatchContainerConfiguration() { }
         public BatchContainerConfiguration(Azure.Compute.Batch.ContainerType type) { }
         public System.Collections.Generic.IList<string> ContainerImageNames { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Compute.Batch.ContainerRegistryReference> ContainerRegistries { get { throw null; } }
@@ -960,6 +962,7 @@ namespace Azure.Compute.Batch
     }
     public partial class BatchJobManagerTask : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobManagerTask>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobManagerTask>
     {
+        public BatchJobManagerTask() { }
         public BatchJobManagerTask(string id, string commandLine) { }
         public bool? AllowLowPriorityNode { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Compute.Batch.BatchApplicationPackageReference> ApplicationPackageReferences { get { throw null; } }
@@ -987,6 +990,7 @@ namespace Azure.Compute.Batch
     }
     public partial class BatchJobNetworkConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobNetworkConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobNetworkConfiguration>
     {
+        public BatchJobNetworkConfiguration() { }
         public BatchJobNetworkConfiguration(string subnetId) { }
         public bool? SkipWithdrawFromVnet { get { throw null; } set { } }
         public string SubnetId { get { throw null; } set { } }
@@ -1020,6 +1024,7 @@ namespace Azure.Compute.Batch
     }
     public partial class BatchJobPreparationTask : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobPreparationTask>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobPreparationTask>
     {
+        public BatchJobPreparationTask() { }
         public BatchJobPreparationTask(string commandLine) { }
         public string CommandLine { get { throw null; } set { } }
         public Azure.Compute.Batch.BatchTaskConstraints Constraints { get { throw null; } set { } }
@@ -1083,6 +1088,7 @@ namespace Azure.Compute.Batch
     }
     public partial class BatchJobReleaseTask : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobReleaseTask>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobReleaseTask>
     {
+        public BatchJobReleaseTask() { }
         public BatchJobReleaseTask(string commandLine) { }
         public string CommandLine { get { throw null; } set { } }
         public Azure.Compute.Batch.BatchTaskContainerSettings ContainerSettings { get { throw null; } set { } }
@@ -1306,6 +1312,7 @@ namespace Azure.Compute.Batch
     }
     public partial class BatchJobSpecification : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobSpecification>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobSpecification>
     {
+        public BatchJobSpecification() { }
         public BatchJobSpecification(Azure.Compute.Batch.BatchPoolInfo poolInfo) { }
         public bool? AllowTaskPreemption { get { throw null; } set { } }
         public Azure.Compute.Batch.BatchAllTasksCompleteMode? AllTasksCompleteMode { get { throw null; } set { } }
@@ -2049,6 +2056,7 @@ namespace Azure.Compute.Batch
     }
     public partial class BatchPoolEndpointConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolEndpointConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchPoolEndpointConfiguration>
     {
+        public BatchPoolEndpointConfiguration() { }
         public BatchPoolEndpointConfiguration(System.Collections.Generic.IEnumerable<Azure.Compute.Batch.BatchInboundNatPool> inboundNatPools) { }
         public System.Collections.Generic.IList<Azure.Compute.Batch.BatchInboundNatPool> InboundNatPools { get { throw null; } }
         protected virtual Azure.Compute.Batch.BatchPoolEndpointConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2233,6 +2241,7 @@ namespace Azure.Compute.Batch
     }
     public partial class BatchPoolSpecification : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPoolSpecification>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchPoolSpecification>
     {
+        public BatchPoolSpecification() { }
         public BatchPoolSpecification(string vmSize) { }
         public System.Collections.Generic.IList<Azure.Compute.Batch.BatchApplicationPackageReference> ApplicationPackageReferences { get { throw null; } }
         public System.TimeSpan? AutoScaleEvaluationInterval { get { throw null; } set { } }
@@ -2344,6 +2353,7 @@ namespace Azure.Compute.Batch
     }
     public partial class BatchStartTask : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchStartTask>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchStartTask>
     {
+        public BatchStartTask() { }
         public BatchStartTask(string commandLine) { }
         public string CommandLine { get { throw null; } set { } }
         public Azure.Compute.Batch.BatchTaskContainerSettings ContainerSettings { get { throw null; } set { } }
@@ -2556,6 +2566,7 @@ namespace Azure.Compute.Batch
     }
     public partial class BatchTaskContainerSettings : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskContainerSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskContainerSettings>
     {
+        public BatchTaskContainerSettings() { }
         public BatchTaskContainerSettings(string imageName) { }
         public System.Collections.Generic.IList<Azure.Compute.Batch.ContainerHostBatchBindMountEntry> ContainerHostBatchBindMounts { get { throw null; } }
         public string ContainerRunOptions { get { throw null; } set { } }
@@ -2794,6 +2805,7 @@ namespace Azure.Compute.Batch
     }
     public partial class BatchTaskSchedulingPolicy : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchTaskSchedulingPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchTaskSchedulingPolicy>
     {
+        public BatchTaskSchedulingPolicy() { }
         public BatchTaskSchedulingPolicy(Azure.Compute.Batch.BatchNodeFillType nodeFillType) { }
         public Azure.Compute.Batch.BatchJobDefaultOrder? JobDefaultOrder { get { throw null; } set { } }
         public Azure.Compute.Batch.BatchNodeFillType NodeFillType { get { throw null; } set { } }
@@ -4270,6 +4282,7 @@ namespace Azure.Compute.Batch
     }
     public partial class ServiceArtifactReference : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ServiceArtifactReference>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ServiceArtifactReference>
     {
+        public ServiceArtifactReference() { }
         public ServiceArtifactReference(string id) { }
         public string Id { get { throw null; } set { } }
         protected virtual Azure.Compute.Batch.ServiceArtifactReference JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4391,6 +4404,7 @@ namespace Azure.Compute.Batch
     }
     public partial class UpgradePolicy : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.UpgradePolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.UpgradePolicy>
     {
+        public UpgradePolicy() { }
         public UpgradePolicy(Azure.Compute.Batch.UpgradeMode mode) { }
         public Azure.Compute.Batch.AutomaticOsUpgradePolicy AutomaticOsUpgradePolicy { get { throw null; } set { } }
         public Azure.Compute.Batch.UpgradeMode Mode { get { throw null; } set { } }
@@ -4474,6 +4488,7 @@ namespace Azure.Compute.Batch
     }
     public partial class VirtualMachineConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.VirtualMachineConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.VirtualMachineConfiguration>
     {
+        public VirtualMachineConfiguration() { }
         public VirtualMachineConfiguration(Azure.Compute.Batch.BatchVmImageReference imageReference, string nodeAgentSkuId) { }
         public Azure.Compute.Batch.BatchContainerConfiguration ContainerConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Compute.Batch.DataDisk> DataDisks { get { throw null; } }

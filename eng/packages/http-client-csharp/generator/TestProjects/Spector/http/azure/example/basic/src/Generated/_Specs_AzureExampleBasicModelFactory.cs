@@ -11,7 +11,7 @@ namespace Specs.Azure.Example.Basic
 {
     public static partial class _Specs_AzureExampleBasicModelFactory
     {
-        public static ActionRequest ActionRequest(string stringProperty = default, Model modelProperty = default, IEnumerable<string> arrayProperty = default, IDictionary<string, string> recordProperty = default) => throw null;
+        public static ActionContent ActionContent(string stringProperty = default, Model modelProperty = default, IEnumerable<string> arrayProperty = default, IDictionary<string, string> recordProperty = default) => throw null;
 
         public static Model Model(int? int32Property = default, float? float32Property = default, Enum? enumProperty = default) => throw null;
 

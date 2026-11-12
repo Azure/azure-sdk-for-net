@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Developer.LoadTesting
 {
@@ -21,13 +20,10 @@ namespace Azure.Developer.LoadTesting
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NotificationRule"/>. </summary>
-        /// <param name="displayName"> The name of the notification rule. </param>
-        /// <param name="actionGroupIds"> The action groups to notify. </param>
         /// <param name="scope"> The scope of the notification rule. </param>
-        private protected NotificationRule(string displayName, IEnumerable<string> actionGroupIds, NotificationScopeType scope)
+        private protected NotificationRule(NotificationScopeType scope)
         {
-            DisplayName = displayName;
-            ActionGroupIds = actionGroupIds.ToList();
+            ActionGroupIds = new ChangeTrackingList<string>();
             Scope = scope;
         }
 

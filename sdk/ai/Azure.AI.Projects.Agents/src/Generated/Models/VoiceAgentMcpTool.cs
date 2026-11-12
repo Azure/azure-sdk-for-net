@@ -14,7 +14,9 @@ namespace Azure.AI.Projects.Agents
     [Experimental("AAIP001")]
     public partial class VoiceAgentMcpTool : VoiceAgentTool
     {
+#pragma warning disable OPENAI001 // This generated code depends on experimental functionality.
         private McpToolFilter _allowedTools;
+#pragma warning restore OPENAI001 // This generated code depends on experimental functionality.
         private bool _allowedToolsIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="VoiceAgentMcpTool"/>. </summary>

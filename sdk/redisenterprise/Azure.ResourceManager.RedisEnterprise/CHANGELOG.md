@@ -1,5 +1,13 @@
 # Release History
 
+## 1.5.0-beta.1 (2026-11-11)
+
+### Features Added
+
+- Updated the default service API version to `2026-10-01-preview`.
+- Added cluster firewall rules for Azure Managed Redis. Use an empty array to clear rules; omit `firewallRules` on PATCH to leave them unchanged unless public network access is disabled.
+- Reintroduced custom Redis ACL access strings and provisioning error details to access policy assignments, previously available in `1.4.0-beta.2` but not in `1.4.0`.
+
 ## 1.4.0 (2026-10-30)
 
 ### Features Added

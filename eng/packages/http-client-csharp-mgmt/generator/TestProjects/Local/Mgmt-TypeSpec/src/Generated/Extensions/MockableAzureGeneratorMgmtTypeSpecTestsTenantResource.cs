@@ -139,7 +139,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = NetworkProviderActionsRestClient.CreateQueryNetworkSiblingSetRequest(QueryNetworkSiblingSetRequest.ToRequestContent(content), context);
+                HttpMessage message = NetworkProviderActionsRestClient.CreateQueryNetworkSiblingSetRequest(QueryNetworkSiblingSetRequest.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<NetworkSiblingSet> operation = new TestsArmOperation<NetworkSiblingSet>(
                     new NetworkSiblingSetOperationSource(),
@@ -196,7 +196,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                using HttpMessage message = NetworkProviderActionsRestClient.CreateQueryNetworkSiblingSetRequest(QueryNetworkSiblingSetRequest.ToRequestContent(content), context);
+                HttpMessage message = NetworkProviderActionsRestClient.CreateQueryNetworkSiblingSetRequest(QueryNetworkSiblingSetRequest.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<NetworkSiblingSet> operation = new TestsArmOperation<NetworkSiblingSet>(
                     new NetworkSiblingSetOperationSource(),

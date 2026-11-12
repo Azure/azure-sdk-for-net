@@ -15,13 +15,9 @@ namespace Azure.Analytics.PlanetaryComputer
     public partial class PointGeometry : GeoJsonGeometry
     {
         /// <summary> Initializes a new instance of <see cref="PointGeometry"/>. </summary>
-        /// <param name="coordinates"> The coordinates of the point as [longitude, latitude]. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
-        public PointGeometry(IEnumerable<float> coordinates) : base(GeometryKind.Point)
+        public PointGeometry() : base(GeometryKind.Point)
         {
-            Argument.AssertNotNull(coordinates, nameof(coordinates));
-
-            Coordinates = coordinates.ToList();
+            Coordinates = new ChangeTrackingList<float>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PointGeometry"/>. </summary>
@@ -32,6 +28,16 @@ namespace Azure.Analytics.PlanetaryComputer
         internal PointGeometry(GeometryKind @type, IList<float> boundingBox, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<float> coordinates) : base(@type, boundingBox, additionalBinaryDataProperties)
         {
             Coordinates = coordinates;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PointGeometry"/>. </summary>
+        /// <param name="coordinates"> The coordinates of the point as [longitude, latitude]. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="coordinates"/> is null. </exception>
+        public PointGeometry(IEnumerable<float> coordinates) : this()
+        {
+            Argument.AssertNotNull(coordinates, nameof(coordinates));
+
+            Coordinates = coordinates.ToList();
         }
 
         /// <summary> The coordinates of the point as [longitude, latitude]. </summary>
