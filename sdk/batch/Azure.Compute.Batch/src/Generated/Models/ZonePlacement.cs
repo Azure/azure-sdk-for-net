@@ -17,10 +17,8 @@ namespace Azure.Compute.Batch
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ZonePlacement"/>. </summary>
-        /// <param name="zonePlacementPolicy"> The zone placement policy. Auto delegates zone selection and balancing to the Virtual Machine Scale Set. </param>
-        public ZonePlacement(ZonePlacementPolicyType zonePlacementPolicy)
+        public ZonePlacement()
         {
-            ZonePlacementPolicy = zonePlacementPolicy;
         }
 
         /// <summary> Initializes a new instance of <see cref="ZonePlacement"/>. </summary>

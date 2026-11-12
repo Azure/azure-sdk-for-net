@@ -15,11 +15,6 @@ namespace Azure.Compute.Batch
     /// <summary> The resiliency policy for Compute Nodes in a Pool. </summary>
     public partial class ResiliencyPolicy : IJsonModel<ResiliencyPolicy>
     {
-        /// <summary> Initializes a new instance of <see cref="ResiliencyPolicy"/> for deserialization. </summary>
-        internal ResiliencyPolicy()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResiliencyPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- https://learn.microsoft.com/dotnet/fundamentals/package-validation/diagnostic-ids -->
+<!--
+  Proposed exceptions for the intentional Azure.Compute.Batch 2.0.0 changes documented
+  in sdk/batch/Azure.Compute.Batch/CHANGELOG.md. Architecture approval is still pending.
+  Service API 2026-10-01 removes pool usage metrics and usage statistics.
+  RetainedData is no longer supported by the service.
+  RegistryServerUri and PublicIpAddress now use string to match the service contract;
+  their former Uri/IPAddress property getters and factory signatures are removed.
+  Keep ApiCompatVersion at 1.0.0 and compatibility validation enabled.
+-->
+<Suppressions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Azure.Compute.Batch.BatchPoolUsageMetrics</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0001</DiagnosticId>
+    <Target>T:Azure.Compute.Batch.BatchPoolUsageStatistics</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.Compute.Batch.BatchClient.GetPoolUsageMetrics(System.Nullable{System.TimeSpan},System.Nullable{System.DateTimeOffset},System.Nullable{System.Int32},System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset},System.String,Azure.RequestContext)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.Compute.Batch.BatchClient.GetPoolUsageMetrics(System.Nullable{System.TimeSpan},System.Nullable{System.DateTimeOffset},System.Nullable{System.Int32},System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset},System.String,System.Threading.CancellationToken)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.Compute.Batch.BatchClient.GetPoolUsageMetricsAsync(System.Nullable{System.TimeSpan},System.Nullable{System.DateTimeOffset},System.Nullable{System.Int32},System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset},System.String,Azure.RequestContext)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.Compute.Batch.BatchClient.GetPoolUsageMetricsAsync(System.Nullable{System.TimeSpan},System.Nullable{System.DateTimeOffset},System.Nullable{System.Int32},System.Nullable{System.DateTimeOffset},System.Nullable{System.DateTimeOffset},System.String,System.Threading.CancellationToken)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.Compute.Batch.BatchNodeDeallocateOption.get_RetainedData</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.Compute.Batch.BatchNodeDeallocationOption.get_RetainedData</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.Compute.Batch.BatchNodeRebootKind.get_RetainedData</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.Compute.Batch.BatchNodeReimageOption.get_RetainedData</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.Compute.Batch.BatchPoolStatistics.get_UsageStatistics</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.Compute.Batch.ComputeBatchModelFactory.BatchPoolStatistics(System.Uri,System.DateTimeOffset,System.DateTimeOffset,Azure.Compute.Batch.BatchPoolUsageStatistics,Azure.Compute.Batch.BatchPoolResourceStatistics)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.Compute.Batch.ComputeBatchModelFactory.BatchPoolUsageMetrics(System.String,System.DateTimeOffset,System.DateTimeOffset,System.String,System.Single)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.Compute.Batch.ComputeBatchModelFactory.BatchPoolUsageStatistics(System.DateTimeOffset,System.DateTimeOffset,System.TimeSpan)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.Compute.Batch.ComputeBatchModelFactory.ContainerRegistryReference(System.String,System.String,System.Uri,Azure.Compute.Batch.BatchNodeIdentityReference)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.Compute.Batch.ComputeBatchModelFactory.InboundEndpoint(System.String,Azure.Compute.Batch.InboundEndpointProtocol,System.Net.IPAddress,System.String,System.Int32,System.Int32)</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.Compute.Batch.ContainerRegistryReference.get_RegistryServerUri</Target>
+  </Suppression>
+  <Suppression>
+    <DiagnosticId>CP0002</DiagnosticId>
+    <Target>M:Azure.Compute.Batch.InboundEndpoint.get_PublicIpAddress</Target>
+  </Suppression>
+</Suppressions>

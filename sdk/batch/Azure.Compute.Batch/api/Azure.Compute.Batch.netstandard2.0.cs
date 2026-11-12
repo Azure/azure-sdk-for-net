@@ -3819,7 +3819,7 @@ namespace Azure.Compute.Batch
     }
     public partial class MaxInstancePercentPerZonePolicy : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.MaxInstancePercentPerZonePolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.MaxInstancePercentPerZonePolicy>
     {
-        public MaxInstancePercentPerZonePolicy(int value) { }
+        public MaxInstancePercentPerZonePolicy() { }
         public bool? Enabled { get { throw null; } set { } }
         public int Value { get { throw null; } set { } }
         protected virtual Azure.Compute.Batch.MaxInstancePercentPerZonePolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4128,7 +4128,7 @@ namespace Azure.Compute.Batch
     }
     public partial class ResiliencyPolicy : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ResiliencyPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ResiliencyPolicy>
     {
-        public ResiliencyPolicy(Azure.Compute.Batch.ZoneAllocationPolicy zoneAllocationPolicy) { }
+        public ResiliencyPolicy() { }
         public Azure.Compute.Batch.ZoneAllocationPolicy ZoneAllocationPolicy { get { throw null; } set { } }
         protected virtual Azure.Compute.Batch.ResiliencyPolicy JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4673,7 +4673,7 @@ namespace Azure.Compute.Batch
     }
     public partial class ZonePlacement : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.ZonePlacement>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.ZonePlacement>
     {
-        public ZonePlacement(Azure.Compute.Batch.ZonePlacementPolicyType zonePlacementPolicy) { }
+        public ZonePlacement() { }
         public Azure.Compute.Batch.ZonePlacementPolicyType ZonePlacementPolicy { get { throw null; } set { } }
         protected virtual Azure.Compute.Batch.ZonePlacement JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

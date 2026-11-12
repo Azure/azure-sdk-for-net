@@ -17,13 +17,8 @@ namespace Azure.Compute.Batch
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResiliencyPolicy"/>. </summary>
-        /// <param name="zoneAllocationPolicy"> The policy that controls allocation across availability zones. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="zoneAllocationPolicy"/> is null. </exception>
-        public ResiliencyPolicy(ZoneAllocationPolicy zoneAllocationPolicy)
+        public ResiliencyPolicy()
         {
-            Argument.AssertNotNull(zoneAllocationPolicy, nameof(zoneAllocationPolicy));
-
-            ZoneAllocationPolicy = zoneAllocationPolicy;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResiliencyPolicy"/>. </summary>

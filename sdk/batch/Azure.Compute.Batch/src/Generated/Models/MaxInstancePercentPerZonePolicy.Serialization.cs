@@ -15,11 +15,6 @@ namespace Azure.Compute.Batch
     /// <summary> The policy that limits the percentage of Pool instances that may be allocated in a single availability zone. </summary>
     public partial class MaxInstancePercentPerZonePolicy : IJsonModel<MaxInstancePercentPerZonePolicy>
     {
-        /// <summary> Initializes a new instance of <see cref="MaxInstancePercentPerZonePolicy"/> for deserialization. </summary>
-        internal MaxInstancePercentPerZonePolicy()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual MaxInstancePercentPerZonePolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

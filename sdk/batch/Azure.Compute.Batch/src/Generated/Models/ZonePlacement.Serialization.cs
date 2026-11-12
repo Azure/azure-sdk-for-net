@@ -15,11 +15,6 @@ namespace Azure.Compute.Batch
     /// <summary> The placement policy for Compute Nodes in a Pool. </summary>
     public partial class ZonePlacement : IJsonModel<ZonePlacement>
     {
-        /// <summary> Initializes a new instance of <see cref="ZonePlacement"/> for deserialization. </summary>
-        internal ZonePlacement()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ZonePlacement PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)

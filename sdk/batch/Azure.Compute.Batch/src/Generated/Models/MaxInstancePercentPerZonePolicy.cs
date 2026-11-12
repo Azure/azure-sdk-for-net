@@ -17,10 +17,8 @@ namespace Azure.Compute.Batch
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MaxInstancePercentPerZonePolicy"/>. </summary>
-        /// <param name="value"> The maximum percentage of Pool instances that may be allocated in a single availability zone. </param>
-        public MaxInstancePercentPerZonePolicy(int value)
+        public MaxInstancePercentPerZonePolicy()
         {
-            Value = value;
         }
 
         /// <summary> Initializes a new instance of <see cref="MaxInstancePercentPerZonePolicy"/>. </summary>
