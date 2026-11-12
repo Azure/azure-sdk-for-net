@@ -8,10 +8,6 @@
 - Added regular compute placement scoring through `GetComputePlacementScores(AzureLocation)`, which requires the scoring location. The new request and result models expose zonal scope as `IsZonal`.
 - Added `ComputeRecommenderPlacementScore.PlacementPreference`.
 
-### Breaking Changes
-
-- Renamed the preview model `SkuMixPlacementVMSize` to `SkuMixPlacementVmSize` to follow .NET acronym naming conventions.
-
 ### Other Changes
 
 - Upgraded Azure.Core from 1.62.0 to 1.64.0.
