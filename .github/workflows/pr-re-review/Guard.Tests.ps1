@@ -759,6 +759,22 @@ Describe 'Re-review prompt' {
         $script:PromptBody | Should -Not -Match '\bget_files\b'
     }
 
+    It 'instructs the agent to recover spilled parts in a single successful tool result' {
+        $script:PromptBody | Should -Match '(?i)reread each affected part individually'
+        $script:PromptBody | Should -Match '(?i)single successful tool result'
+        $script:PromptBody | Should -Match '(?i)cannot.*single successful tool result.*report_incomplete'
+    }
+
+    It 'routes <Area> to the changelog rule even when the changelog is unchanged' -ForEach @(
+        @{ Area = '`api/*.cs`, new or changed `public`/`protected` API' }
+        @{ Area = 'Client or model implementation under `src/**`' }
+    ) {
+        $skill = [IO.File]::ReadAllLines((Join-Path $script:RepoRoot '.github/skills/code-review/SKILL.md'))
+        $row = @($skill | Where-Object { $_.StartsWith("| $Area |", [StringComparison]::Ordinal) })
+        $row.Count | Should -Be 1
+        $row[0] | Should -Match 'Packaging, Versioning, Dependencies'
+    }
+
     It 'pages review threads with the get_review_comments cursor' {
         $script:PromptBody | Should -Match '\bget_review_comments\b'
         $script:PromptBody | Should -Match '`after`'
