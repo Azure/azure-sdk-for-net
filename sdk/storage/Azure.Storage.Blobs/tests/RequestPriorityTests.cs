@@ -137,7 +137,7 @@ namespace Azure.Storage.Blobs.Tests
 			using (policy.CheckRequestScope())
 			{
 				// Act - partitioned upload (stage blocks + commit block list)
-				await blob.UploadAsync(
+				Response<BlobContentInfo> upload = await blob.UploadAsync(
 					BinaryData.FromBytes(data),
 					new BlobUploadOptions { TransferOptions = transferOptions });
 
@@ -156,6 +156,7 @@ namespace Azure.Storage.Blobs.Tests
 				}
 
 				// Assert
+				AssertResponsePriority(upload.GetRawResponse(), priority);
 				AssertResponsePriority(download, priority);
 				CollectionAssert.AreEqual(data, destination.ToArray());
 				Assert.AreEqual(1, blobs.Count);
