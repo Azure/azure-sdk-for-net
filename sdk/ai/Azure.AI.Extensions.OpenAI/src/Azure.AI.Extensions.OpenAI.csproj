@@ -13,7 +13,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -22,7 +21,6 @@
   
   <ItemGroup>
     <PackageReference Include="OpenAI" />
-    <PackageReference Include="Azure.Core" />
   </ItemGroup>
 
   <ItemGroup>

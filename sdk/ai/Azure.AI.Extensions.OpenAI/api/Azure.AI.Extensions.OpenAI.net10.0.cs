@@ -898,6 +898,7 @@ namespace Azure.AI.Extensions.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.FabricIQPreviewTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.FabricIQPreviewTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class FabricIQPreviewToolRequireApprovalChoice : System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.FabricIQPreviewToolRequireApprovalChoice>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.FabricIQPreviewToolRequireApprovalChoice>
     {
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
@@ -1421,7 +1422,7 @@ namespace Azure.AI.Extensions.OpenAI
         public Azure.AI.Extensions.OpenAI.ProjectOpenAIClientOptions Options { get { throw null; } set { } }
         protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
-    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP002")]
     public partial class ProjectResponsesClient : OpenAI.Responses.ResponsesClient
     {
         protected ProjectResponsesClient() { }
@@ -1824,6 +1825,7 @@ namespace Azure.AI.Extensions.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.WebIQPreviewTool>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.WebIQPreviewTool>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("AAIP001")]
     public partial class WebIQPreviewToolRequireApprovalChoice : System.ClientModel.Primitives.IJsonModel<Azure.AI.Extensions.OpenAI.WebIQPreviewToolRequireApprovalChoice>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Extensions.OpenAI.WebIQPreviewToolRequireApprovalChoice>
     {
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("OPENAI001")]

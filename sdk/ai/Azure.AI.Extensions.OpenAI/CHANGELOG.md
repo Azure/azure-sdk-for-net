@@ -10,6 +10,7 @@
   before enumerating updates.
 - The `ProjectConversationsClient` constructor now accepts `ConversationClientOptions` instead of `OpenAIClientOptions`.
 - `ProjectResponsesClient.GetResponseStreamingAsync` now yields strongly typed response items.
+- `ProjectResponsesClient`'s experimental diagnostic changed from `OPENAI001` to `AAIP002`.
 
 ### Other Changes
 - Updated the `OpenAI` package dependency to `2.15.0`. See the [OpenAI 2.15.0 release notes](https://github.com/openai/openai-dotnet/blob/OpenAI_2.15.0/CHANGELOG.md#2150-2026-11-04) for the upstream breaking changes to experimental APIs, including the async-only streaming methods that `ProjectResponsesClient` inherits.

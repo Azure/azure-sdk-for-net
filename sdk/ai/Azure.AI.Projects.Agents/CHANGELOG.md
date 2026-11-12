@@ -1,6 +1,6 @@
 # Release History
 
-## 3.0.0 (20926-11-11)
+## 3.0.0 (2026-11-11)
 
 ### Breaking Changes
 - `AzureFunctionDefinitionFunction` was removed, please use the same class from `Azure.AI.Extensions.OpenAI`.
