@@ -1,8 +1,6 @@
 # Release History
 
-## 4.11.0-beta.1 (Unreleased)
-
-### Features Added
+## 4.11.0-beta.1 (2026-11-11)
 
 ### Breaking Changes
 
@@ -13,6 +11,8 @@
 - Preserved the service version value shipped for `2026-04-01` in version `4.10.0`.
 
 ### Other Changes
+
+- Updated the `Azure.Core` dependency to `1.65.0`, which includes the MSAL `4.92.0` update.
 
 ## 4.10.0 (2026-10-27)
 
