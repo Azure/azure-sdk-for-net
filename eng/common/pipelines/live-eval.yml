@@ -1,4 +1,4 @@
-# Live-tier eval CI: nightly end-to-end run of the live workflow scenarios against the real
+# Live-tier eval CI: nightly run of live workflow scenarios and customization tool evals against the real
 # azsdk-cli MCP and real Azure DevOps (writes confined to a test area).
 
 # Nightly only — no CI/PR trigger.
@@ -35,6 +35,7 @@ extends:
     vallyRoot: evals
     evalGlobs:
       - 'workflows/live/*.eval.yaml'
+      - 'tools/azsdk-customized-code-update-tool/**/*.eval.yaml'
     # Run each shard under AzureCLI@2 so the real MCP's DevOps calls are authenticated.
     UseAzSdkAuthentication: true
     failOnFailedTests: true
