@@ -120,6 +120,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             RedisEnterpriseTlsVersion? minimumTlsVersion = default;
             ClusterPropertiesEncryption encryption = default;
             MaintenanceConfiguration maintenanceConfiguration = default;
+            IList<RedisEnterpriseFirewallRule> firewallRules = default;
             string hostName = default;
             RedisEnterpriseProvisioningStatus? provisioningState = default;
             RedisEnterpriseRedundancyMode? redundancyMode = default;
@@ -165,6 +166,20 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                         continue;
                     }
                     maintenanceConfiguration = MaintenanceConfiguration.DeserializeMaintenanceConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("firewallRules"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<RedisEnterpriseFirewallRule> array = new List<RedisEnterpriseFirewallRule>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(RedisEnterpriseFirewallRule.DeserializeRedisEnterpriseFirewallRule(item, options));
+                    }
+                    firewallRules = array;
                     continue;
                 }
                 if (prop.NameEquals("hostName"u8))
@@ -243,6 +258,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 minimumTlsVersion,
                 encryption,
                 maintenanceConfiguration,
+                firewallRules ?? new ChangeTrackingList<RedisEnterpriseFirewallRule>(),
                 hostName,
                 provisioningState,
                 redundancyMode,
