@@ -717,6 +717,18 @@ Describe 'Compiled re-review input export' {
         Get-StepProperty (Get-AgentStep 'Remove exported-patch markers from the runner') 'run' | Should -BeExactly 'rm -rf "${RUNNER_TEMP}/pr-re-review-input"'
     }
 
+    It 'exports the patches inside the agent sandbox mounts and keeps the markers outside them' {
+        $execute = (Get-AgentStep 'Execute GitHub Copilot CLI').Lines -join "`n"
+        $mounts = @([regex]::Matches($execute, '--mount "?([^":\s]+):([^":\s]+):r[ow]') | ForEach-Object { $_.Groups[2].Value.TrimEnd('/') + '/' })
+        $mounts | Should -Contain '/tmp/gh-aw/'
+        $environment = Get-StepMapping (Get-AgentStep 'Export changed-file patches for the re-review') 'env'
+        $inputDirectory = $environment['REVIEW_INPUT_DIR'].Replace('${{ runner.temp }}', '${RUNNER_TEMP}') + '/'
+        $markers = $environment['REVIEW_INPUT_MARKERS'].Replace('${{ runner.temp }}', '${RUNNER_TEMP}')
+        $markersDirectory = $markers.Substring(0, $markers.LastIndexOf('/') + 1)
+        @($mounts | Where-Object { $inputDirectory.StartsWith($_, [StringComparison]::Ordinal) }).Count | Should -BeGreaterThan 0
+        @($mounts | Where-Object { $markersDirectory.StartsWith($_, [StringComparison]::Ordinal) }).Count | Should -Be 0
+    }
+
     It '<Name> has no condition or continue-on-error that would start the agent without it' -ForEach @(
         @{ Name = 'Export changed-file patches for the re-review' }
         @{ Name = 'Upload exported-patch markers' }
