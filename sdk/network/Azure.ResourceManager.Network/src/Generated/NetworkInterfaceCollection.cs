@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network
         internal NetworkInterfaceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _networkInterfacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", NetworkInterfaceResource.ResourceType.Namespace, Diagnostics);
-            _networkInterfacesRestClient = new NetworkInterfaces(_networkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _networkInterfacesRestClient = new NetworkInterfaces(_networkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/networkInterfaces", out string networkInterfacesApiVersionOverride) ? networkInterfacesApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 

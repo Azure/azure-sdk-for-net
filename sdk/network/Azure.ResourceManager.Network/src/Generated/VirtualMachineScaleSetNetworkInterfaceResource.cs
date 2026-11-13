@@ -49,9 +49,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal VirtualMachineScaleSetNetworkInterfaceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string virtualMachineScaleSetNetworkInterfaceApiVersion);
             _virtualMachineScaleSetNetworkInterfacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _virtualMachineScaleSetNetworkInterfacesRestClient = new VirtualMachineScaleSetNetworkInterfaces(_virtualMachineScaleSetNetworkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualMachineScaleSetNetworkInterfaceApiVersion ?? "2018-10-01");
+            _virtualMachineScaleSetNetworkInterfacesRestClient = new VirtualMachineScaleSetNetworkInterfaces(_virtualMachineScaleSetNetworkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Compute/virtualMachineScaleSets/virtualMachines/networkInterfaces", out string virtualMachineScaleSetNetworkInterfacesApiVersionOverride) ? virtualMachineScaleSetNetworkInterfacesApiVersionOverride : "2018-10-01");
             ValidateResourceId(id);
         }
 
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NetworkInterfaces_GetVirtualMachineScaleSetNetworkInterface. </description>
+        /// <description> VmssNetworkInterfaces_GetVirtualMachineScaleSetNetworkInterface. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -151,7 +150,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> NetworkInterfaces_GetVirtualMachineScaleSetNetworkInterface. </description>
+        /// <description> VmssNetworkInterfaces_GetVirtualMachineScaleSetNetworkInterface. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

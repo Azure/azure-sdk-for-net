@@ -12,7 +12,7 @@ using Azure.ResourceManager.Network;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Interconnect group properties. </summary>
-    public partial class InterconnectGroupPropertiesFormat
+    internal partial class InterconnectGroupPropertiesFormat
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> A list of subgroups of the interconnect group. </summary>
         [WirePath("subgroups")]
-        public IReadOnlyList<InterconnectGroupSubgroupData> Subgroups { get; }
+        public IReadOnlyList<InterconnectGroupSubgroupData> Subgroups { get; } = new ChangeTrackingList<InterconnectGroupSubgroupData>();
 
         /// <summary> The provisioning state of the interconnect group resource. </summary>
         [WirePath("provisioningState")]

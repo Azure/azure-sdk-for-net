@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         internal ExpressRoutePortResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _expressRoutePortsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _expressRoutePortsRestClient = new ExpressRoutePorts(_expressRoutePortsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _expressRoutePortsRestClient = new ExpressRoutePorts(_expressRoutePortsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/ExpressRoutePorts", out string expressRoutePortsApiVersionOverride) ? expressRoutePortsApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 

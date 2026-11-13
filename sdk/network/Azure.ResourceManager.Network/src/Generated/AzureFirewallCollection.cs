@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         internal AzureFirewallCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _azureFirewallsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", AzureFirewallResource.ResourceType.Namespace, Diagnostics);
-            _azureFirewallsRestClient = new AzureFirewalls(_azureFirewallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _azureFirewallsRestClient = new AzureFirewalls(_azureFirewallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/azureFirewalls", out string azureFirewallsApiVersionOverride) ? azureFirewallsApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network
         internal PublicIPAddressResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             _publicIPAddressesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _publicIPAddressesRestClient = new PublicIPAddresses(_publicIPAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, resourceType => TryGetApiVersion(resourceType, out string apiVersion) ? apiVersion : null);
+            _publicIPAddressesRestClient = new PublicIPAddresses(_publicIPAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, TryGetApiVersion("Microsoft.Network/publicIPAddresses", out string publicIPAddressesApiVersionOverride) ? publicIPAddressesApiVersionOverride : "2026-03-01");
             ValidateResourceId(id);
         }
 

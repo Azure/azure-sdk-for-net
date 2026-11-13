@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- `VirtualNetworkApplianceCapabilityData` now derives directly from `ResourceData`. The intermediate `VirtualNetworkApplianceCapabilityBaseData` type introduced in `1.18.0-beta.3` has been removed.
+
 ### Bugs Fixed
 
 ### Other Changes
