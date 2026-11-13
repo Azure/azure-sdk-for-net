@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Messaging.ServiceBus.Amqp;
 using Azure.Messaging.ServiceBus.Core;
+using Azure.Messaging.ServiceBus.Tests.Amqp;
 using Moq;
 using NUnit.Framework;
 
@@ -16,6 +17,61 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
 {
     public class SessionReceiverTests
     {
+        [TestCase("receive", false)]
+        [TestCase("complete", false)]
+        [TestCase("abandon", false)]
+        [TestCase("defer", false)]
+        [TestCase("dead-letter", false)]
+        [TestCase("get-state", false)]
+        [TestCase("set-state", false)]
+        [TestCase("renew", false)]
+        [TestCase("receive", true)]
+        [TestCase("complete", true)]
+        [TestCase("abandon", true)]
+        [TestCase("defer", true)]
+        [TestCase("dead-letter", true)]
+        [TestCase("get-state", true)]
+        [TestCase("set-state", true)]
+        [TestCase("renew", true)]
+        public async Task SessionLossSurfacesUnlessCallerExplicitlyClosesReceiver(string operation, bool callerClosed)
+        {
+            var (transport, failure) = await AmqpReceiverTests.CreateLostSessionReceiverAsync();
+            var connection = ServiceBusTestUtilities.CreateMockConnection();
+            connection.Setup(value => value.CreateTransportReceiver(
+                It.IsAny<string>(), It.IsAny<ServiceBusRetryPolicy>(), It.IsAny<ServiceBusReceiveMode>(),
+                It.IsAny<uint>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<bool>(), It.IsAny<bool>(),
+                It.IsAny<bool>(), It.IsAny<Guid?>(), It.IsAny<CancellationToken>())).Returns(transport);
+            await using var receiver = new ServiceBusSessionReceiver(
+                connection.Object, "queue", options: new ServiceBusSessionReceiverOptions(), cancellationToken: default);
+            var message = ServiceBusModelFactory.ServiceBusReceivedMessage(lockTokenGuid: Guid.NewGuid(), sessionId: "session");
+            Assert.IsTrue(receiver.IsClosed);
+            if (callerClosed)
+            {
+                await receiver.CloseAsync();
+                Assert.ThrowsAsync<ObjectDisposedException>(InvokeOperation);
+            }
+            else
+            {
+                Assert.AreSame(failure, Assert.ThrowsAsync<ServiceBusException>(InvokeOperation));
+            }
+
+            async Task InvokeOperation()
+            {
+                switch (operation)
+                {
+                    case "receive": await receiver.ReceiveMessageAsync(); break;
+                    case "complete": await receiver.CompleteMessageAsync(message); break;
+                    case "abandon": await receiver.AbandonMessageAsync(message); break;
+                    case "defer": await receiver.DeferMessageAsync(message); break;
+                    case "dead-letter": await receiver.DeadLetterMessageAsync(message); break;
+                    case "get-state": await receiver.GetSessionStateAsync(); break;
+                    case "set-state": await receiver.SetSessionStateAsync(new BinaryData("state")); break;
+                    case "renew": await receiver.RenewSessionLockAsync(); break;
+                    default: throw new ArgumentOutOfRangeException(nameof(operation));
+                }
+            }
+        }
+
         [Test]
         public async Task PurgeMessagesUsesFixedCutoffUntilServiceReturnsZero()
         {
