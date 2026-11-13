@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.5.0-beta.1 (2026-11-13)
 
 ### Features Added
 
@@ -9,11 +9,9 @@
 - Added cluster manager rollout ring configuration.
 - Added the cluster edge management service CA certificate and the `EdgeManagement` access bridge name.
 
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
+
+- Upgraded dependent Azure.Core to 1.63.0.
 
 ## 1.4.0 (2026-10-08)
 
