@@ -16,7 +16,6 @@
 
 ### Other Changes
 
-- Migrated SDK code generation from AutoRest to TypeSpec.
 - Preview-only features from the `1.2.0-beta.*` releases are not included in the stable `2026-11-01` API version: MQTT v5 support (`IotHubConnectionProfile`, `MqttV5TopicGroup`), routing message payload format (`IotHubMessagePayloadFormat`), `RoutingRuleProperties.DataSchema`, encryption (`IotHubEncryptionProperties`, `IotHubKeyVaultKeyProperties`), root certificate (`IotHubRootCertificateProperties`), IP version (`IotHubIPVersion`), device streams, the `GEN2` SKU, and the `DigitalTwinChangeEvents` and `MqttBrokerMessages` routing sources.
 - Upgraded dependent `Azure.Core` to `1.63.0`.
 - Upgraded dependent `Azure.ResourceManager` to `1.14.0`.
