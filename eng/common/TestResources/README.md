@@ -174,6 +174,12 @@ remove-test-resources.yml like in the following examples:
 Be sure to link the **Secrets for Resource Provisioner** variable group
 into the test pipeline for these scripts to work.
 
+Subscription configurations can contain secrets. Don't print the configuration
+or its secret values to pipeline logs. Use `Set-PipelineVariable` to escape
+logging-command values before passing them between steps. Multiline secrets are
+registered for masking one line at a time because Azure Pipelines doesn't allow
+multiline secret variables.
+
 ## Documentation
 
 To regenerate documentation for scripts within this directory, you can install

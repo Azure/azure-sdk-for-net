@@ -1,3 +1,5 @@
+. (Join-Path $PSScriptRoot .. scripts logging.ps1)
+
 function BuildServiceDirectoryPrefix([string]$serviceName) {
     if(!$serviceName) {
         return ""
@@ -115,19 +117,31 @@ function ShouldMarkValueAsSecret([string]$serviceName, [string]$key, [string]$va
     return $true
 }
 
+function Set-TestResourceSecret([string]$name, [string]$value) {
+    if ($value -notmatch '[\r\n]') {
+        Set-PipelineVariable -Name "_$name" -Value $value -IsSecret
+        return
+    }
+
+    # Azure Pipelines rejects multiline secret variables, so mask each line separately.
+    foreach ($line in ($value -split '\r\n|\r|\n')) {
+        if ($line) {
+            Write-Host "##vso[task.setsecret]$(ConvertTo-DevOpsLoggingValue $line)"
+        }
+    }
+}
+
 function SetSubscriptionConfiguration([object]$subscriptionConfiguration)
 {
     foreach ($pair in $subscriptionConfiguration.GetEnumerator()) {
         if ($pair.Value -is [Hashtable]) {
             foreach($nestedPair in $pair.Value.GetEnumerator()) {
-                # Mark values as secret so we don't print json blobs containing secrets in the logs.
-                # Prepend underscore to the variable name, so we can still access the variable names via environment
-                # variables if they get set subsequently.
+                # Mask values without marking their original variable names as secret.
                 if ([Environment]::GetEnvironmentVariable($nestedPair.Name)) {
                     throw "Environment variable '$($nestedPair.Name)' is already set. Check the tests.yml/ci.yml EnvVars parameter does not conflict with the subscription config json"
                 }
                 if (ShouldMarkValueAsSecret "AZURE_" $nestedPair.Name $nestedPair.Value) {
-                    Write-Host "##vso[task.setvariable variable=_$($nestedPair.Name);issecret=true;]$($nestedPair.Value)"
+                    Set-TestResourceSecret -name $nestedPair.Name -value $nestedPair.Value
                 }
             }
         } else {
@@ -135,7 +149,7 @@ function SetSubscriptionConfiguration([object]$subscriptionConfiguration)
                 throw "Environment variable '$($pair.Name)' is already set. Check the tests.yml/ci.yml EnvVars parameter does not conflict with the subscription config json"
             }
             if (ShouldMarkValueAsSecret "AZURE_" $pair.Name $pair.Value) {
-                Write-Host "##vso[task.setvariable variable=_$($pair.Name);issecret=true;]$($pair.Value)"
+                Set-TestResourceSecret -name $pair.Name -value $pair.Value
             }
         }
     }
@@ -151,17 +165,15 @@ function UpdateSubscriptionConfiguration([object]$subscriptionConfigurationBase,
                 $subscriptionConfigurationBase[$pair.Name] = @{}
             }
             foreach($nestedPair in $pair.Value.GetEnumerator()) {
-                # Mark values as secret so we don't print json blobs containing secrets in the logs.
-                # Prepend underscore to the variable name, so we can still access the variable names via environment
-                # variables if they get set subsequently.
+                # Mask values without marking their original variable names as secret.
                 if (ShouldMarkValueAsSecret "AZURE_" $nestedPair.Name $nestedPair.Value $allowedValues) {
-                    Write-Host "##vso[task.setvariable variable=_$($nestedPair.Name);issecret=true;]$($nestedPair.Value)"
+                    Set-TestResourceSecret -name $nestedPair.Name -value $nestedPair.Value
                 }
                 $subscriptionConfigurationBase[$pair.Name][$nestedPair.Name] = $nestedPair.Value
             }
         } else {
             if (ShouldMarkValueAsSecret "AZURE_" $pair.Name $pair.Value $allowedValues) {
-                Write-Host "##vso[task.setvariable variable=_$($pair.Name);issecret=true;]$($pair.Value)"
+                Set-TestResourceSecret -name $pair.Name -value $pair.Value
             }
             $subscriptionConfigurationBase[$pair.Name] = $pair.Value
         }
@@ -237,7 +249,6 @@ function BuildAndSetSubscriptionConfig([string]$baseSubConfigJson, [string]$addi
   Write-Host "Merging sub config from files"
   $finalConfig = UpdateSubscriptionConfigurationWithFiles $finalConfig $subConfigFilesJson
 
-  Write-Host ($finalConfig | ConvertTo-Json)
   $serialized = $finalConfig | ConvertTo-Json -Compress
-  Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]$serialized"
+  Set-PipelineVariable -Name 'SubscriptionConfiguration' -Value $serialized -IsSecret
 }

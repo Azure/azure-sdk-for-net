@@ -454,17 +454,19 @@ function SetDeploymentOutputs(
             $deploymentEnvironmentVariables[$key] = $value
 
             if ($CI) {
+                $escapedValue = ConvertTo-DevOpsLoggingValue $value
                 if (ShouldMarkValueAsSecret $serviceName $key $value $notSecretValues) {
-                    # Treat all ARM template output variables as secrets since "SecureString" variables do not set values.
-                    # In order to mask secrets but set environment variables for any given ARM template, we set variables twice as shown below.
-                    LogVsoCommand "##vso[task.setvariable variable=_$key;issecret=true;]$value"
+                    # Mask secrets separately so their original names remain available as environment variables.
+                    if (!$SuppressVsoCommands) {
+                        Set-TestResourceSecret -name $key -value $value
+                    }
                     Write-Host "Setting variable as secret '$key'"
                 }
                 else {
                     Write-Host "Setting variable '$key': $value"
                     $notSecretValues += $value
                 }
-                LogVsoCommand "##vso[task.setvariable variable=$key;]$value"
+                LogVsoCommand "##vso[task.setvariable variable=$key;]$escapedValue"
             }
             else {
                 Write-Host ($shellExportFormat -f $key, $value)
