@@ -506,6 +506,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="EdgeConnectorResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetEdgeConnectorResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EdgeConnectorResource"/> object. </returns>
+        public static EdgeConnectorResource GetEdgeConnectorResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableManagedNetworkFabricArmClient(client).GetEdgeConnectorResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="FabricResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableManagedNetworkFabricArmClient.GetFabricResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="FabricResource"/> object. </returns>
+        public static FabricResource GetFabricResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableManagedNetworkFabricArmClient(client).GetFabricResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of NetworkFabricAccessControlLists in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -1551,6 +1587,116 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         }
 
         /// <summary>
+        /// Gets a collection of EdgeConnectors in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetEdgeConnectors()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of EdgeConnectors and their operations over a EdgeConnectorResource. </returns>
+        public static EdgeConnectorCollection GetEdgeConnectors(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetEdgeConnectors();
+        }
+
+        /// <summary>
+        /// Gets the specified EdgeConnector.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetEdgeConnectorAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="edgeConnectorName"> Name of the EdgeConnector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<EdgeConnectorResource>> GetEdgeConnectorAsync(this ResourceGroupResource resourceGroupResource, string edgeConnectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetEdgeConnectorAsync(edgeConnectorName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified EdgeConnector.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetEdgeConnector(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="edgeConnectorName"> Name of the EdgeConnector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<EdgeConnectorResource> GetEdgeConnector(this ResourceGroupResource resourceGroupResource, string edgeConnectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetEdgeConnector(edgeConnectorName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of Fabrics in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetFabrics()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of Fabrics and their operations over a FabricResource. </returns>
+        public static FabricCollection GetFabrics(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetFabrics();
+        }
+
+        /// <summary>
+        /// Gets the specified Fabric.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetFabricAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="fabricName"> Name of the Fabric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<FabricResource>> GetFabricAsync(this ResourceGroupResource resourceGroupResource, string fabricName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetFabricAsync(fabricName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified Fabric.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableManagedNetworkFabricResourceGroupResource.GetFabric(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="fabricName"> Name of the Fabric. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<FabricResource> GetFabric(this ResourceGroupResource resourceGroupResource, string fabricName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableManagedNetworkFabricResourceGroupResource(resourceGroupResource).GetFabric(fabricName, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets a collection of NetworkDeviceSkus in the <see cref="SubscriptionResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -2342,6 +2488,78 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetNetworkBootstrapDevices(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists EdgeConnectors by subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetEdgeConnectorsAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="EdgeConnectorResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<EdgeConnectorResource> GetEdgeConnectorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetEdgeConnectorsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists EdgeConnectors by subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetEdgeConnectors(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="EdgeConnectorResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<EdgeConnectorResource> GetEdgeConnectors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetEdgeConnectors(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists Fabrics by subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetFabricsAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="FabricResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<FabricResource> GetFabricsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetFabricsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists Fabrics by subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableManagedNetworkFabricSubscriptionResource.GetFabrics(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="FabricResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<FabricResource> GetFabrics(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableManagedNetworkFabricSubscriptionResource(subscriptionResource).GetFabrics(cancellationToken);
         }
     }
 }

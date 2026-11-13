@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -83,6 +84,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     Properties = new NetworkBootstrapDevicePatchProperties();
                 }
                 Properties.SerialNumber = value;
+            }
+        }
+
+        /// <summary> Control Plane Access Control List ARM resource IDs. </summary>
+        public IList<ResourceIdentifier> ControlPlaneAcls
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkBootstrapDevicePatchProperties();
+                }
+                return Properties.ControlPlaneAcls;
             }
         }
     }

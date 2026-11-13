@@ -172,5 +172,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 Properties.SerialNumber = value;
             }
         }
+
+        /// <summary> Operational state of networkBootstrapInterface indicating if the interface is reachable. </summary>
+        public OperationalState? OperationalState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OperationalState;
+            }
+        }
     }
 }
