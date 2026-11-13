@@ -26,10 +26,7 @@ namespace Azure.AI.ContentSafety
             uri.Reset(_endpoint);
             uri.AppendPath("/contentsafety", false);
             uri.AppendPath("/provenance:detect", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
@@ -47,10 +44,7 @@ namespace Azure.AI.ContentSafety
             uri.AppendPath("/contentsafety", false);
             uri.AppendPath("/provenance/operations/", false);
             uri.AppendPath(operationId, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
+            uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
