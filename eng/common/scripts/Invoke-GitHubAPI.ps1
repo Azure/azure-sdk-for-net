@@ -518,7 +518,7 @@ function Update-GitHubIssue {
     [string]$Body,
     [ValidateSet("open","closed")]
     [string]$State,
-    [int]$Milestome,
+    [int]$Milestone,
     $Labels,
     $Assignees,
     [ValidateNotNullOrEmpty()]
