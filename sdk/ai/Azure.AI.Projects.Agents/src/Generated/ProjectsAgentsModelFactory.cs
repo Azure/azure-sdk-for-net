@@ -2201,7 +2201,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// A destination for a telephony transfer target.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.PSTNTelephonyTransferDestination"/>, <see cref="Agents.SipTelephonyTransferDestination"/>, and <see cref="Agents.TeamsTelephonyTransferDestination"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.PstnTelephonyTransferDestination"/>, <see cref="Agents.SipTelephonyTransferDestination"/>, and <see cref="Agents.TeamsTelephonyTransferDestination"/>.
         /// </summary>
         /// <param name="kind"> The telephony transfer destination type. </param>
         /// <returns> A new <see cref="Agents.TelephonyTransferDestination"/> instance for mocking. </returns>
@@ -2213,11 +2213,11 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> A PSTN destination for a telephony transfer target. </summary>
         /// <param name="value"> The E.164 phone number to call. </param>
-        /// <returns> A new <see cref="Agents.PSTNTelephonyTransferDestination"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Agents.PstnTelephonyTransferDestination"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static PSTNTelephonyTransferDestination PSTNTelephonyTransferDestination(string value = default)
+        public static PstnTelephonyTransferDestination PstnTelephonyTransferDestination(string value = default)
         {
-            return new PSTNTelephonyTransferDestination(TelephonyTransferDestinationKind.Pstn, additionalBinaryDataProperties: null, value);
+            return new PstnTelephonyTransferDestination(TelephonyTransferDestinationKind.Pstn, additionalBinaryDataProperties: null, value);
         }
 
         /// <summary> A Microsoft Teams destination for a telephony transfer target. </summary>
@@ -2546,7 +2546,7 @@ namespace Azure.AI.Projects.Agents
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <param name="serverLabel"> A label for this MCP server, used to identify it in tool calls. </param>
-        /// <param name="serverUri">
+        /// <param name="serverUrl">
         /// The URL for the MCP server. One of `server_url`, `connector_id`, or
         ///   `tunnel_id` must be provided.
         /// </param>
@@ -2573,12 +2573,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="headers"></param>
         /// <param name="allowedTools"></param>
         /// <param name="allowedCallers"></param>
-        /// <param name="requireApprovalInternal"></param>
+        /// <param name="requireApproval"></param>
         /// <param name="deferLoading"> Whether this MCP tool is deferred and discovered via tool search. </param>
         /// <param name="projectConnectionId"> The connection ID in the project for the MCP server. The connection stores authentication and other connection details needed to connect to the MCP server. </param>
         /// <returns> A new <see cref="Agents.MCPToolboxTool"/> instance for mocking. </returns>
         [Experimental("AAIP002")]
-        public static MCPToolboxTool MCPToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, string serverLabel = default, Uri serverUri = default, McpToolConnectorId? connectorId = default, string tunnelId = default, string authorization = default, string serverDescription = default, IDictionary<string, string> headers = default, McpToolFilter allowedTools = default, IEnumerable<CallableToolAllowedCaller> allowedCallers = default, BinaryData requireApprovalInternal = default, bool? deferLoading = default, string projectConnectionId = default)
+        public static MCPToolboxTool MCPToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, string serverLabel = default, Uri serverUrl = default, McpToolConnectorId? connectorId = default, string tunnelId = default, string authorization = default, string serverDescription = default, IDictionary<string, string> headers = default, McpToolFilter allowedTools = default, IEnumerable<CallableToolAllowedCaller> allowedCallers = default, BinaryData requireApproval = default, bool? deferLoading = default, string projectConnectionId = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
             headers ??= new ChangeTrackingDictionary<string, string>();
@@ -2591,7 +2591,7 @@ namespace Azure.AI.Projects.Agents
                 toolConfigs,
                 additionalBinaryDataProperties: null,
                 serverLabel,
-                serverUri,
+                serverUrl,
                 connectorId,
                 tunnelId,
                 authorization,
@@ -2599,7 +2599,7 @@ namespace Azure.AI.Projects.Agents
                 headers,
                 allowedTools,
                 allowedCallers.ToList(),
-                requireApprovalInternal,
+                requireApproval,
                 deferLoading,
                 projectConnectionId);
         }
