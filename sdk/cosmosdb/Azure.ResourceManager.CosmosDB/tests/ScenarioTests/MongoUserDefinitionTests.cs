@@ -123,8 +123,6 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
 
         [RecordedTest]
-
-        [Ignore("MPG migration WIP: LRO completion-state divergence (Task is not completed).")]
         public async Task MognoUserDefinitionDelete()
         {
             string databaseName = _mongoDBDatabaseId.Name;

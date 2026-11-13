@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             : base(isAsync, mode)
         {
             CompareBodies = false;
-            // MPG SDK omits the Accept header on some operations (notably DELETEs) where AutoRest used to set
-            // it. Ignore the header for matching purposes; it does not affect server semantics.
-            IgnoredHeaders.Add("Accept");
+            // MPG omits Accept on some operations. Exclude it entirely because IgnoredHeaders
+            // still requires the header to be present in both the request and recording.
+            LegacyExcludedHeaders.Add("Accept");
             // MPG-generated SDK has a different LRO polling/HTTP-call sequence than the recordings (originally
             // captured against AutoRest-generated SDK). This causes the per-test TestRandom state to diverge,
             // making `Recording.GenerateAssetName(prefix)` produce different numeric suffixes at runtime than
@@ -144,6 +144,21 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         {
             Assert.That(throughput.Resource.Throughput, Is.GreaterThan(0));
             Assert.IsNull(throughput.Resource.AutoscaleSettings);
+        }
+
+        internal static async Task<RestorableCosmosDBAccountResource> FindRestorableDatabaseAccountAsync(
+            AsyncPageable<RestorableCosmosDBAccountResource> accounts, string accountName)
+        {
+            // These scenarios only need their own account, not every account in the subscription.
+            await foreach (RestorableCosmosDBAccountResource account in accounts)
+            {
+                if (account.Data.AccountName == accountName)
+                {
+                    return account;
+                }
+            }
+
+            throw new AssertionException($"Restorable database account '{accountName}' was not found.");
         }
 
         protected async Task<ResourceIdentifier> GetSubnetId(string vnetName, VirtualNetworkData vnet)
