@@ -9,6 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.CarbonOptimization.Mocking;
 using Azure.ResourceManager.CarbonOptimization.Models;
 using Azure.ResourceManager.Resources;
@@ -18,10 +20,54 @@ namespace Azure.ResourceManager.CarbonOptimization
     /// <summary> A class to add extension methods to Azure.ResourceManager.CarbonOptimization. </summary>
     public static partial class CarbonOptimizationExtensions
     {
+        /// <param name="client"></param>
+        private static MockableCarbonOptimizationArmClient GetMockableCarbonOptimizationArmClient(ArmClient client)
+        {
+            return client.GetCachedClient(client0 => new MockableCarbonOptimizationArmClient(client0, ResourceIdentifier.Root));
+        }
+
         /// <param name="tenantResource"></param>
         private static MockableCarbonOptimizationTenantResource GetMockableCarbonOptimizationTenantResource(TenantResource tenantResource)
         {
             return tenantResource.GetCachedClient(client => new MockableCarbonOptimizationTenantResource(client, tenantResource.Id));
+        }
+
+        /// <summary>
+        /// API for Carbon Emissions Reports scoped to a billing account.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCarbonOptimizationArmClient.QueryCarbonEmissionReportsByBillingAccountAsync(ResourceIdentifier, BillingAccountQueryFilter, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="queryParameters"> Query parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static async Task<Response<CarbonEmissionListResult>> QueryCarbonEmissionReportsByBillingAccountAsync(this ArmClient client, ResourceIdentifier scope, BillingAccountQueryFilter queryParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableCarbonOptimizationArmClient(client).QueryCarbonEmissionReportsByBillingAccountAsync(scope, queryParameters, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// API for Carbon Emissions Reports scoped to a billing account.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCarbonOptimizationArmClient.QueryCarbonEmissionReportsByBillingAccount(ResourceIdentifier, BillingAccountQueryFilter, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="queryParameters"> Query parameters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static Response<CarbonEmissionListResult> QueryCarbonEmissionReportsByBillingAccount(this ArmClient client, ResourceIdentifier scope, BillingAccountQueryFilter queryParameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCarbonOptimizationArmClient(client).QueryCarbonEmissionReportsByBillingAccount(scope, queryParameters, cancellationToken);
         }
 
         /// <summary>
