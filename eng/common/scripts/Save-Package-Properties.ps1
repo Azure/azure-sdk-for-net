@@ -12,7 +12,9 @@ builds.
 
 In cases of collisions where track 2 packages (IsNewSdk = true) have the same
 filename as track 1 packages (e.g. same artifact name or package name), the
-track 2 package properties will be written.
+track 2 package properties will be written. Collision winners are selected before
+writing any metadata so existing release metadata remains available for
+dev-version updates.
 
 .PARAMETER serviceDirectory
 Service directory in which to search for packages.
@@ -27,10 +29,10 @@ files
 .PARAMETER addDevVersion
 Reads the version out of the source and adds a DevVersion property to the
 package properties JSON file. If the package properties JSON file already
-exists, read the Version property from the existing package properties JSON file
-and set that as the Version property for the new output. This has the effect of
-"adding" a DevVersion property to the file which could be different from the
-Version property in that file.
+exists for the same package name, group, and SDK track, preserve its metadata
+and Version property. This has the effect of "adding" a DevVersion property
+which could be different from the Version property in that file. Metadata for
+a different package sharing the output filename is replaced.
 
 .PARAMETER artifactList
 Optional array of artifact names to filter the package properties. Only packages
@@ -52,15 +54,20 @@ Param (
 function SetOutput($outputPath, $incomingPackageSpec)
 {
 
-  # If there is an exsiting package info json file read that and set that as output object which gets properties updated here.
-  if (Test-Path $outputPath)
+  # Reusing JSON solely by filename can restore track 1 after track 2 wins a collision.
+  # Preserve release metadata only when adding a dev version for the same package;
+  # otherwise write the selected package's properties.
+  $outputObject = $incomingPackageSpec
+  if ($addDevVersion -and (Test-Path $outputPath))
   {
-    Write-Host "Found existing package info json."
-    $outputObject = ConvertFrom-Json (Get-Content $outputPath -Raw)
-  }
-  else
-  {
-    $outputObject = $incomingPackageSpec
+    $existingPackageSpec = ConvertFrom-Json (Get-Content $outputPath -Raw)
+    if ($existingPackageSpec.Name -eq $incomingPackageSpec.Name -and
+        [string]$existingPackageSpec.Group -eq [string]$incomingPackageSpec.Group -and
+        $existingPackageSpec.IsNewSdk -eq $incomingPackageSpec.IsNewSdk)
+    {
+      Write-Host "Preserving existing package info for a dev-version update."
+      $outputObject = $existingPackageSpec
+    }
   }
 
 
@@ -103,7 +110,7 @@ function GetRelativePath($path)
   return $relativePath
 }
 
-$exportedPaths = @{}
+$selectedPackages = @{}
 
 $allPackageProperties = @()
 
@@ -169,6 +176,8 @@ if ($artifactList)
   }
 }
 
+# Select collision winners before writing so a losing package cannot overwrite
+# release metadata needed by the selected package's dev-version update.
 foreach ($pkg in $allPackageProperties)
 {
   if ($pkg.Name)
@@ -202,17 +211,20 @@ foreach ($pkg in $allPackageProperties)
       New-Item -ItemType Directory -Path $outDir | Out-Null
     }
 
-    # If package properties for a track 2 (IsNewSdk = true) package has
-    # already been written, skip writing to that same path.
-    if ($exportedPaths.ContainsKey($outputPath) -and $exportedPaths[$outputPath].IsNewSdk -eq $true)
+    # Keep the first track 2 (IsNewSdk = true) package selected for each path.
+    if ($selectedPackages.ContainsKey($outputPath) -and $selectedPackages[$outputPath].IsNewSdk -eq $true)
     {
-      Write-Host "Track 2 package info with file name $($outputPath) already exported. Skipping export."
+      Write-Host "Track 2 package info with file name $($outputPath) already selected. Skipping package."
       continue
     }
 
-    $exportedPaths[$outputPath] = $pkg
-    SetOutput $outputPath $pkg
+    $selectedPackages[$outputPath] = $pkg
   }
+}
+
+foreach ($outputPath in $selectedPackages.Keys)
+{
+  SetOutput $outputPath $selectedPackages[$outputPath]
 }
 
 $fileNames = (Get-ChildItem -Path $outDirectory).Name
