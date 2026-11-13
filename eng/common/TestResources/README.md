@@ -171,6 +171,11 @@ remove-test-resources.yml like in the following examples:
 - template: /eng/common/TestResources/remove-test-resources.yml
 ```
 
+Failed or canceled ARM deployments raise a terminating error so the deploy task
+fails. Self-contained post-deployment scripts are generated only after successful
+deployment; subsequent steps with the default success condition are skipped when
+deployment fails.
+
 Be sure to link the **Secrets for Resource Provisioner** variable group
 into the test pipeline for these scripts to work.
 
