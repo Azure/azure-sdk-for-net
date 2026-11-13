@@ -103,10 +103,10 @@ network:
     # The nested azsdk Copilot client calls this API directly, unlike the outer managed-proxy agent.
     - api.githubcopilot.com
 
-# Toolchain: the SDK build + the azsdk engine both require the .NET 10 SDK.
+# Toolchain: the SDK build + the azsdk engine both require the .NET 11 SDK.
 runtimes:
   dotnet:
-    version: "10.0.x"
+    version: "11.0.x"
 
 # Install the shared azsdk CLI (the engine) onto PATH before the agent runs. The agent
 # then invokes `azsdk tsp client customized-update` from bash. (gh-aw cannot host the

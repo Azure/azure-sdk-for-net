@@ -1,7 +1,7 @@
 param([string]$targetNetFramework)
 
 dotnet restore
-$publishOutput = dotnet publish --framework net8.0 -nodeReuse:false /p:UseSharedCompilation=false /p:ExposeExperimentalFeatures=true
+$publishOutput = dotnet publish --framework net10.0 -nodeReuse:false /p:UseSharedCompilation=false /p:ExposeExperimentalFeatures=true
 
 if ($LASTEXITCODE -ne 0)
 {

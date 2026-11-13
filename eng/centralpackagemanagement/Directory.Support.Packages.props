@@ -52,8 +52,7 @@
 
     <!-- The AspNetCore.Mvc.Testing package has a hard association on a specific target framework -->
     <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="10.0.1"/>
-    <PackageVersion Update="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.11" Condition="'$(TargetFramework)' == 'net9.0'"/>
-    <PackageVersion Update="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.22" Condition="'$(TargetFramework)' == 'net8.0'"/>
+    <PackageVersion Update="Microsoft.AspNetCore.Mvc.Testing" Version="11.0.0" Condition="'$(TargetFramework)' == 'net11.0'"/>
 
     <PackageVersion Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.3.0" />
     <PackageVersion Include="Microsoft.AspNetCore.Server.Kestrel.Core" Version="2.3.6" />

@@ -194,8 +194,12 @@
     <LtsTargetFramework>net10.0</LtsTargetFramework>
     <RequiredRunnableTargetFrameworks>$(LtsTargetFramework);net8.0</RequiredRunnableTargetFrameworks>
 
-    <!-- The set of all runnable modern target frameworks that have not yet reached end-of-life. -->
-    <AllActiveCurrentTargetFrameworks>$(RequiredRunnableTargetFrameworks);net9.0</AllActiveCurrentTargetFrameworks>
+    <!--
+      The set of all runnable modern target frameworks that have not yet reached end-of-life, used for tests.
+      This is intentionally not derived from RequiredRunnableTargetFrameworks, as package targets are retained
+      for 6 months after a framework reaches end-of-life.
+    -->
+    <AllActiveCurrentTargetFrameworks>$(LtsTargetFramework);net11.0</AllActiveCurrentTargetFrameworks>
 
     <!--
       The set of frameworks for API Compat checks when the current LTS is being built.  These ensure that

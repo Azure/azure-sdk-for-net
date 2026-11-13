@@ -2,7 +2,7 @@
 
 # Set the path to your main benchmark project (update if needed)
 $benchmarkProject = "perf/Azure.Core.Perf.csproj"
-$framework = "net8.0"
+$framework = "net10.0"
 
 # Define the benchmark filters
 $benchmarkFilters = @(
