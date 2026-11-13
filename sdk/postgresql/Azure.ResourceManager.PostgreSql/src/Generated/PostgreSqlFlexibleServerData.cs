@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         /// <summary> Major version of PostgreSQL database engine. </summary>
         [WirePath("properties.version")]
-        public PostgreSqlFlexibleServerVersion? Version
+        public string Version
         {
             get
             {
@@ -403,6 +403,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     Properties = new ServerProperties();
                 }
                 Properties.Cluster = value;
+            }
+        }
+
+        /// <summary> Indicates if FIPS (Federal Information Processing Standards) mode is enabled on the server. If not specified on create, it defaults to Disabled. </summary>
+        [WirePath("properties.fipsMode")]
+        public FipsMode? FipsMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FipsMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServerProperties();
+                }
+                Properties.FipsMode = value;
             }
         }
     }

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version.Value.ToString());
+                writer.WriteStringValue(Version);
             }
             if (options.Format != "W" && Optional.IsDefined(MinorVersion))
             {
@@ -191,6 +191,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("cluster"u8);
                 writer.WriteObjectValue(Cluster, options);
             }
+            if (Optional.IsDefined(FipsMode))
+            {
+                writer.WritePropertyName("fipsMode"u8);
+                writer.WriteStringValue(FipsMode.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -235,7 +240,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             string administratorLogin = default;
             string administratorLoginPassword = default;
-            PostgreSqlFlexibleServerVersion? version = default;
+            string version = default;
             string minorVersion = default;
             PostgreSqlFlexibleServerState? state = default;
             string fullyQualifiedDomainName = default;
@@ -255,6 +260,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             PostgreSqlFlexibleServerCreateMode? createMode = default;
             IReadOnlyList<PostgreSqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections = default;
             PostgreSqlFlexibleServerClusterProperties cluster = default;
+            FipsMode? fipsMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -270,11 +276,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 if (prop.NameEquals("version"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    version = new PostgreSqlFlexibleServerVersion(prop.Value.GetString());
+                    version = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("minorVersion"u8))
@@ -441,6 +443,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     cluster = PostgreSqlFlexibleServerClusterProperties.DeserializePostgreSqlFlexibleServerClusterProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("fipsMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fipsMode = new FipsMode(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, prop.Value.GetUtf8Bytes());
@@ -469,6 +480,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 createMode,
                 privateEndpointConnections ?? new ChangeTrackingList<PostgreSqlFlexibleServersPrivateEndpointConnectionData>(),
                 cluster,
+                fipsMode,
                 additionalBinaryDataProperties);
         }
     }
