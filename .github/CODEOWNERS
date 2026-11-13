@@ -705,6 +705,9 @@
 # ServiceLabel: %Datadog %Mgmt
 # ServiceOwners: @jbhanuchand
 
+# PRLabel: %KoreAIArtemis
+/sdk/koreaiartemis/Azure.ResourceManager.*/                        @poshett
+
 # PRLabel: %Device Registry
 /sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/          @jobeland @chgennar @vascoveigams @siongithub
 

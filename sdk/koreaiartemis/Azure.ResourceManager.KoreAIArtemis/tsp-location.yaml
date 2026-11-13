@@ -1,0 +1,6 @@
+directory: specification/azure-native-integrations/resource-manager/Kore.AgentPlatform/AgentPlatform
+commit: 01859725603b610b5f452589f348fdfe08554181
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
