@@ -34,9 +34,5 @@ namespace Azure.Data.AppConfiguration
         /// <summary> items_count. </summary>
         [CodeGenMember("ItemsCount")]
         public static SnapshotFields ItemCount { get; } = new SnapshotFields(ItemsCountValue);
-
-        /// <summary> etag. </summary>
-        [CodeGenMember("Etag")]
-        public static SnapshotFields ETag { get; } = new SnapshotFields(EtagValue);
     }
 }
