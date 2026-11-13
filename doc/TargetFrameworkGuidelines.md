@@ -82,7 +82,7 @@ Known gap: Azure.Core targets `net472`, but CI runs .NET Framework tests only on
   the test on that framework only, with the issue in the skip reason:
 
   ```csharp
-  #if NET11_0_OR_GREATER
+  #if NET11_0
       Assert.Ignore("https://github.com/Azure/azure-sdk-for-net/issues/<number>");
   #endif
   ```
