@@ -94,10 +94,17 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("scalingMethod"u8);
                 writer.WriteStringValue(ScalingMethod.Value.ToString());
             }
-            if (Optional.IsDefined(CreateDelete))
+            if (Optional.IsDefined(CreateDelete, _createDeleteIsDefined))
             {
-                writer.WritePropertyName("createDelete"u8);
-                writer.WriteObjectValue(CreateDelete, options);
+                if (CreateDelete != null)
+                {
+                    writer.WritePropertyName("createDelete"u8);
+                    writer.WriteObjectValue(CreateDelete, options);
+                }
+                else
+                {
+                    writer.WriteNull("createDelete"u8);
+                }
             }
             if (Optional.IsDefined(RampUpStartTime))
             {
@@ -224,6 +231,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             string scheduleName = default;
             IList<DesktopVirtualizationDayOfWeek> daysOfWeek = default;
             DesktopVirtualizationScalingMethodType? scalingMethod = default;
+            bool createDeleteIsDefined = false;
             DesktopVirtualizationCreateDeleteProperties createDelete = default;
             ScalingActionTime rampUpStartTime = default;
             SessionHostLoadBalancingAlgorithm? rampUpLoadBalancingAlgorithm = default;
@@ -274,8 +282,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
                 if (prop.NameEquals("createDelete"u8))
                 {
+                    createDeleteIsDefined = true;
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        createDelete = null;
                         continue;
                     }
                     createDelete = DesktopVirtualizationCreateDeleteProperties.DeserializeDesktopVirtualizationCreateDeleteProperties(prop.Value, options);
@@ -447,7 +457,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 rampDownNotificationMessage,
                 offPeakStartTime,
                 offPeakLoadBalancingAlgorithm,
-                additionalBinaryDataProperties);
+                additionalBinaryDataProperties)
+            {
+                _createDeleteIsDefined = createDeleteIsDefined
+            };
         }
     }
 }

@@ -114,6 +114,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WritePropertyName("applicationType"u8);
                 writer.WriteStringValue(ApplicationType.Value.ToString());
             }
+            if (Optional.IsDefined(ShortcutsExtension))
+            {
+                writer.WritePropertyName("shortcutsExtension"u8);
+                writer.WriteObjectValue(ShortcutsExtension, options);
+            }
             writer.WritePropertyName("commandLineSetting"u8);
             writer.WriteStringValue(CommandLineSetting.ToString());
             if (Optional.IsDefined(CommandLineArguments))
@@ -202,6 +207,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             string msixPackageFamilyName = default;
             string msixPackageApplicationId = default;
             RemoteApplicationType? applicationType = default;
+            ShortcutsExtension shortcutsExtension = default;
             VirtualApplicationCommandLineSetting commandLineSetting = default;
             string commandLineArguments = default;
             bool? showInPortal = default;
@@ -249,6 +255,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         continue;
                     }
                     applicationType = new RemoteApplicationType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("shortcutsExtension"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    shortcutsExtension = ShortcutsExtension.DeserializeShortcutsExtension(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("commandLineSetting"u8))
@@ -311,6 +326,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 msixPackageFamilyName,
                 msixPackageApplicationId,
                 applicationType,
+                shortcutsExtension,
                 commandLineSetting,
                 commandLineArguments,
                 showInPortal,

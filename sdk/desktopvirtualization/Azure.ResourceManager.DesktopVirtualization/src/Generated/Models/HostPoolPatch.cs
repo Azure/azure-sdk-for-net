@@ -18,6 +18,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private ManagedServiceIdentity _identity;
+        private bool _identityIsDefined;
 
         /// <summary> Initializes a new instance of <see cref="HostPoolPatch"/>. </summary>
         public HostPoolPatch()
@@ -38,7 +40,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         {
             Tags = tags;
             Properties = properties;
-            Identity = identity;
+            _identity = identity;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -48,7 +50,18 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity
+        {
+            get
+            {
+                return _identity;
+            }
+            set
+            {
+                _identity = value;
+                _identityIsDefined = true;
+            }
+        }
 
         /// <summary> Friendly name of HostPool. </summary>
         [WirePath("properties.friendlyName")]

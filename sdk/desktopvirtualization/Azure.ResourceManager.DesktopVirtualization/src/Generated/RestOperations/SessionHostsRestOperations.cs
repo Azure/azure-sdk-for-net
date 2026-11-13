@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, string hostPoolName, int? pageSize, bool? isDescending, int? initialSkip, string vmPath, RequestContext context)
+        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string resourceGroupName, string hostPoolName, int? pageSize, bool? isDescending, int? initialSkip, ResourceIdentifier vmPath, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
             if (vmPath != null)
             {
-                uri.AppendQuery("vmPath", vmPath, true);
+                uri.AppendQuery("vmPath", TypeFormatters.ConvertToString(vmPath), true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string hostPoolName, int? pageSize, bool? isDescending, int? initialSkip, string vmPath, RequestContext context)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string hostPoolName, int? pageSize, bool? isDescending, int? initialSkip, ResourceIdentifier vmPath, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -272,6 +272,31 @@ namespace Azure.ResourceManager.DesktopVirtualization
             request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateNextGetSingleSessionHostRegistrationTokensRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
     }

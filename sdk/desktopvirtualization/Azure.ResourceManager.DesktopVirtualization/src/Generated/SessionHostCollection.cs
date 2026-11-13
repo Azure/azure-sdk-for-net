@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             TryGetApiVersion(SessionHostResource.ResourceType, out string sessionHostApiVersion);
             _sessionHostsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DesktopVirtualization", SessionHostResource.ResourceType.Namespace, Diagnostics);
-            _sessionHostsRestClient = new SessionHosts(_sessionHostsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sessionHostApiVersion ?? "2026-03-01-preview");
+            _sessionHostsRestClient = new SessionHosts(_sessionHostsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sessionHostApiVersion ?? "2026-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="vmPath"> The path to the VM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SessionHostResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SessionHostResource> GetAllAsync(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, string vmPath = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SessionHostResource> GetAllAsync(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, ResourceIdentifier vmPath = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="vmPath"> The path to the VM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SessionHostResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SessionHostResource> GetAll(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, string vmPath = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SessionHostResource> GetAll(int? pageSize = default, bool? isDescending = default, int? initialSkip = default, ResourceIdentifier vmPath = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
