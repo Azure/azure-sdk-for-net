@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.KoreAIArtemis;
 
 namespace Azure.ResourceManager.KoreAIArtemis.Models
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
             }
             string subscriptionId = default;
             KoreAIArtemisMarketplaceSubscriptionStatus? subscriptionStatus = default;
-            string saasResourceId = default;
+            ResourceIdentifier saasResourceId = default;
             KoreAIArtemisOfferDetails offerDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -161,7 +162,11 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
                 }
                 if (prop.NameEquals("saasResourceId"u8))
                 {
-                    saasResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    saasResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("offerDetails"u8))

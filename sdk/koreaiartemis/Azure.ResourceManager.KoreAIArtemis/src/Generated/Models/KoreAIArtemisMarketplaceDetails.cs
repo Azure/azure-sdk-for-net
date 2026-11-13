@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.KoreAIArtemis;
 
 namespace Azure.ResourceManager.KoreAIArtemis.Models
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <param name="saasResourceId"> Marketplace SaaS Resource Id. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KoreAIArtemisMarketplaceDetails(string subscriptionId, KoreAIArtemisMarketplaceSubscriptionStatus? subscriptionStatus, string saasResourceId, KoreAIArtemisOfferDetails offerDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KoreAIArtemisMarketplaceDetails(string subscriptionId, KoreAIArtemisMarketplaceSubscriptionStatus? subscriptionStatus, ResourceIdentifier saasResourceId, KoreAIArtemisOfferDetails offerDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubscriptionId = subscriptionId;
             SubscriptionStatus = subscriptionStatus;
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         public KoreAIArtemisMarketplaceSubscriptionStatus? SubscriptionStatus { get; }
 
         /// <summary> Marketplace SaaS Resource Id. </summary>
-        public string SaasResourceId { get; set; }
+        public ResourceIdentifier SaasResourceId { get; set; }
 
         /// <summary> Offer details for the marketplace that is selected by the user. </summary>
         public KoreAIArtemisOfferDetails OfferDetails { get; set; }

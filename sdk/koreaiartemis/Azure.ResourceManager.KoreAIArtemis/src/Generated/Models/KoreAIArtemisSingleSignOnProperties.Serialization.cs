@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(AadDomains))
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
             KoreAIArtemisSingleSignOnType @type = default;
             KoreAIArtemisSingleSignOnState? state = default;
             string enterpriseAppId = default;
-            string uri = default;
+            Uri uri = default;
             IList<string> aadDomains = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -186,7 +186,11 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
                 }
                 if (prop.NameEquals("url"u8))
                 {
-                    uri = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    uri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
                 if (prop.NameEquals("aadDomains"u8))

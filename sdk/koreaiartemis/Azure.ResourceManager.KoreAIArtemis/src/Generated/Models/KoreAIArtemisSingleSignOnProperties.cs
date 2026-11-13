@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <param name="uri"> URL for SSO to be used by the partner to redirect the user to their system. </param>
         /// <param name="aadDomains"> List of AAD domains fetched from Microsoft Graph for user. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KoreAIArtemisSingleSignOnProperties(KoreAIArtemisSingleSignOnType @type, KoreAIArtemisSingleSignOnState? state, string enterpriseAppId, string uri, IList<string> aadDomains, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KoreAIArtemisSingleSignOnProperties(KoreAIArtemisSingleSignOnType @type, KoreAIArtemisSingleSignOnState? state, string enterpriseAppId, Uri uri, IList<string> aadDomains, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             State = state;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         public string EnterpriseAppId { get; }
 
         /// <summary> URL for SSO to be used by the partner to redirect the user to their system. </summary>
-        public string Uri { get; }
+        public Uri Uri { get; }
 
         /// <summary> List of AAD domains fetched from Microsoft Graph for user. </summary>
         public IList<string> AadDomains { get; }

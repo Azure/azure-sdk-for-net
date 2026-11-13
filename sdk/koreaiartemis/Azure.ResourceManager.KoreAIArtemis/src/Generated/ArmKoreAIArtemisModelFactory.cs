@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <param name="saasResourceId"> Marketplace SaaS Resource Id. </param>
         /// <param name="offerDetails"> Offer details for the marketplace that is selected by the user. </param>
         /// <returns> A new <see cref="Models.KoreAIArtemisMarketplaceDetails"/> instance for mocking. </returns>
-        public static KoreAIArtemisMarketplaceDetails KoreAIArtemisMarketplaceDetails(string subscriptionId = default, KoreAIArtemisMarketplaceSubscriptionStatus? subscriptionStatus = default, string saasResourceId = default, KoreAIArtemisOfferDetails offerDetails = default)
+        public static KoreAIArtemisMarketplaceDetails KoreAIArtemisMarketplaceDetails(string subscriptionId = default, KoreAIArtemisMarketplaceSubscriptionStatus? subscriptionStatus = default, ResourceIdentifier saasResourceId = default, KoreAIArtemisOfferDetails offerDetails = default)
         {
             return new KoreAIArtemisMarketplaceDetails(subscriptionId, subscriptionStatus, saasResourceId, offerDetails, default);
         }
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.KoreAIArtemis.Models
         /// <param name="uri"> URL for SSO to be used by the partner to redirect the user to their system. </param>
         /// <param name="aadDomains"> List of AAD domains fetched from Microsoft Graph for user. </param>
         /// <returns> A new <see cref="Models.KoreAIArtemisSingleSignOnProperties"/> instance for mocking. </returns>
-        public static KoreAIArtemisSingleSignOnProperties KoreAIArtemisSingleSignOnProperties(KoreAIArtemisSingleSignOnType @type = default, KoreAIArtemisSingleSignOnState? state = default, string enterpriseAppId = default, string uri = default, IEnumerable<string> aadDomains = default)
+        public static KoreAIArtemisSingleSignOnProperties KoreAIArtemisSingleSignOnProperties(KoreAIArtemisSingleSignOnType @type = default, KoreAIArtemisSingleSignOnState? state = default, string enterpriseAppId = default, Uri uri = default, IEnumerable<string> aadDomains = default)
         {
             aadDomains ??= new ChangeTrackingList<string>();
 
