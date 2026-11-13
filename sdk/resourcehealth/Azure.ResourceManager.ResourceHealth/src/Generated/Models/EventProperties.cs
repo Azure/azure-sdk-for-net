@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <summary> Initializes a new instance of <see cref="EventProperties"/>. </summary>
         /// <param name="eventType"> Type of event. </param>
         /// <param name="eventSubType"> Sub-type of event. </param>
+        /// <param name="advisorRecommendations"> Operation for listing Advisor recommendations associated with this event's tracking ID in the response subscription. </param>
         /// <param name="eventSource"> Source of event. </param>
         /// <param name="status"> Current status of event. </param>
         /// <param name="title"> Title text of event. </param>
@@ -67,10 +68,11 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="currencyType"> Billing currency type information. Example: USD, CAD. </param>
         /// <param name="billingId"> Billing identifier information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventProperties(ResourceHealthEventTypeValue? eventType, EventSubTypeValue? eventSubType, ResourceHealthEventSourceValue? eventSource, ResourceHealthEventStatusValue? status, string title, string summary, string header, ResourceHealthEventInsightLevelValue? level, ResourceHealthEventLevelValue? eventLevel, bool? isEventSensitive, string externalIncidentId, string reason, ResourceHealthEventArticle article, IList<ResourceHealthEventLink> links, DateTimeOffset? impactStartsOn, DateTimeOffset? impactMitigationOn, IList<ResourceHealthEventImpact> impact, ResourceHealthEventRecommendedActions recommendedActions, IList<ResourceHealthEventFaq> faqs, bool? isHirEvent, bool? isMicrosoftSupportEnabled, string description, bool? isPlatformInitiated, bool? isChatWithUsEnabled, int? priority, DateTimeOffset? lastUpdateOn, string hirStage, ResourceHealthEventAdditionalInformation additionalInformation, int? duration, string impactType, IList<string> eventTags, double? newRate, double? oldRate, string currencyType, string billingId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventProperties(ResourceHealthEventTypeValue? eventType, EventSubTypeValue? eventSubType, ApiOperationLink advisorRecommendations, ResourceHealthEventSourceValue? eventSource, ResourceHealthEventStatusValue? status, string title, string summary, string header, ResourceHealthEventInsightLevelValue? level, ResourceHealthEventLevelValue? eventLevel, bool? isEventSensitive, string externalIncidentId, string reason, ResourceHealthEventArticle article, IList<ResourceHealthEventLink> links, DateTimeOffset? impactStartsOn, DateTimeOffset? impactMitigationOn, IList<ResourceHealthEventImpact> impact, ResourceHealthEventRecommendedActions recommendedActions, IList<ResourceHealthEventFaq> faqs, bool? isHirEvent, bool? isMicrosoftSupportEnabled, string description, bool? isPlatformInitiated, bool? isChatWithUsEnabled, int? priority, DateTimeOffset? lastUpdateOn, string hirStage, ResourceHealthEventAdditionalInformation additionalInformation, int? duration, string impactType, IList<string> eventTags, double? newRate, double? oldRate, string currencyType, string billingId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EventType = eventType;
             EventSubType = eventSubType;
+            AdvisorRecommendations = advisorRecommendations;
             EventSource = eventSource;
             Status = status;
             Title = title;
@@ -112,6 +114,9 @@ namespace Azure.ResourceManager.ResourceHealth.Models
 
         /// <summary> Sub-type of event. </summary>
         public EventSubTypeValue? EventSubType { get; }
+
+        /// <summary> Operation for listing Advisor recommendations associated with this event's tracking ID in the response subscription. </summary>
+        public ApiOperationLink AdvisorRecommendations { get; }
 
         /// <summary> Source of event. </summary>
         public ResourceHealthEventSourceValue? EventSource { get; }
